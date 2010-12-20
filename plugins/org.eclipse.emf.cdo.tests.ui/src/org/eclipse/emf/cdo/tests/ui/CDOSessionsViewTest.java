@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
 import org.eclipse.swt.SWT;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
-import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.keyboard.Keyboard;
 import org.eclipse.swtbot.swt.finder.keyboard.KeyboardFactory;
@@ -25,8 +24,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.ui.IViewPart;
 
 import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -34,24 +31,8 @@ import org.junit.runner.RunWith;
  * @author Martin Fluegge
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class CDOSessionsViewTest extends AbstractCDOUITest
+public class CDOSessionsViewTest extends AbstractCDOUITest<SWTWorkbenchBot>
 {
-  private static SWTWorkbenchBot bot;
-
-  @BeforeClass
-  public static void beforeClass() throws Exception
-  {
-    bot = new SWTGefBot();
-    bot.viewByTitle("Welcome").close();
-  }
-
-  @Override
-  @Before
-  public void setUp() throws Exception
-  {
-    super.setUp();
-  }
-
   @Override
   @After
   public void tearDown() throws Exception
@@ -61,16 +42,16 @@ public class CDOSessionsViewTest extends AbstractCDOUITest
   }
 
   @Test
-  public void openSessionsView() throws Exception
+  public void testOpenSessionsView() throws Exception
   {
-    bot.menu("Window").menu("Show View").menu("Other...").click();
+    getBot().menu("Window").menu("Show View").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("Show View");
+    SWTBotShell shell = getBot().shell("Show View");
     shell.activate();
-    bot.tree().expandNode("CDO").select("CDO Sessions");
-    bot.button("OK").click();
+    getBot().tree().expandNode("CDO").select("CDO Sessions");
+    getBot().button("OK").click();
 
-    SWTBotView activeView = bot.activeView();
+    SWTBotView activeView = getBot().activeView();
     assertEquals("CDO Sessions", activeView.getViewReference().getTitle());
     IViewPart view = activeView.getViewReference().getView(false);
     assertInstanceOf(CDOSessionsView.class, view);
@@ -79,9 +60,9 @@ public class CDOSessionsViewTest extends AbstractCDOUITest
     activeView.toolbarButton(org.eclipse.emf.cdo.internal.ui.messages.Messages.getString("OpenSessionAction.0"))
         .click();
 
-    SWTBotShell openSessionDialog = bot.shell("Open Session");
+    SWTBotShell openSessionDialog = getBot().shell("Open Session");
     openSessionDialog.activate();
-    SWTBotCCombo ccomboBox = bot.ccomboBox(0);
+    SWTBotCCombo ccomboBox = getBot().ccomboBox(0);
     ccomboBox.setFocus();
 
     Keyboard keyboard = KeyboardFactory.getDefaultKeyboard(ccomboBox.widget, null);
@@ -91,15 +72,15 @@ public class CDOSessionsViewTest extends AbstractCDOUITest
     keyboard.pressShortcut(SWT.SHIFT, '7');
     keyboard.typeText("localhost");
 
-    SWTBotCCombo repositoryNameCcomboBox = bot.ccomboBox(1);
+    SWTBotCCombo repositoryNameCcomboBox = getBot().ccomboBox(1);
     repositoryNameCcomboBox.setFocus();
 
-    typeTextToFocusedWidget("repo1", bot, false);
+    typeTextToFocusedWidget("repo1", getBot(), false);
 
-    bot.button("OK").click();
+    getBot().button("OK").click();
 
     activeView.setFocus();
-    SWTBotTree tree = bot.tree(0);
+    SWTBotTree tree = getBot().tree(0);
     sleep(3000);
     assertEquals(1, tree.getAllItems().length);
     assertEquals("Session repo1 [2]", tree.getAllItems()[0].getText());

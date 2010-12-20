@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassAssociat
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassCompositionsEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassImplementedInterfacesEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassSubClassesEditPart;
-import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
+import org.eclipse.emf.cdo.dawn.tests.AbstractDawnGEFTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -36,14 +36,10 @@ import org.eclipse.gmf.runtime.notation.NotationFactory;
 import org.eclipse.gmf.runtime.notation.RelativeBendpoints;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.gmf.runtime.notation.datatype.RelativeBendpoint;
-import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -54,40 +50,15 @@ import java.util.List;
  * @author Martin Fluegge
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class MultipleResourcesTest extends AbstractDawnUITest
+public class MultipleResourcesTest extends AbstractDawnGEFTest
 {
-  private static SWTGefBot bot;
-
-  @BeforeClass
-  public static void beforeClass() throws Exception
-  {
-    bot = new SWTGefBot();
-    DawnSWTBotUtil.initTest(bot);
-  }
-
-  @Override
-  @Before
-  public void setUp() throws Exception
-  {
-    super.setUp();
-  }
-
-  @Override
-  @After
-  public void tearDown() throws Exception
-  {
-    sleep(500);
-    closeAllEditors();
-    super.tearDown();
-  }
-
   @Test
   public void testRemotelyRenameAClass() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
 
     editor.save();
 
@@ -95,7 +66,7 @@ public class MultipleResourcesTest extends AbstractDawnUITest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource2 = transaction.getResource("/default.acore_diagram");
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 250, 100, "B", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 250, 100, "B", getBot(), editor);
 
     editor.save();
 
@@ -121,10 +92,10 @@ public class MultipleResourcesTest extends AbstractDawnUITest
   @Test
   public void testRemotelyMoveNode() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
 
     editor.save();
 
@@ -162,7 +133,7 @@ public class MultipleResourcesTest extends AbstractDawnUITest
   @Test
   public void testCreateNodeRemotely() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
     editor.save();
 
@@ -218,10 +189,10 @@ public class MultipleResourcesTest extends AbstractDawnUITest
   @Test
   public void testAddNodeRemotely() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
 
     editor.save();
 
@@ -275,11 +246,11 @@ public class MultipleResourcesTest extends AbstractDawnUITest
   @Test
   public void testModifyConnectionRemotely() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", getBot(), editor);
 
     List<SWTBotGefEditPart> aClassEditParts = DawnAcoreTestUtil.getAClassEditParts(editor);
 
@@ -332,10 +303,10 @@ public class MultipleResourcesTest extends AbstractDawnUITest
   @Test
   public void testCreateAssociationConnectionRemotely() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", getBot(), editor);
 
     editor.save();
     {
@@ -371,10 +342,10 @@ public class MultipleResourcesTest extends AbstractDawnUITest
   @Test
   public void testCreateAggregationConnectionRemotely() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", getBot(), editor);
     editor.save();
     {
       CDOSession session = openSession();
@@ -409,10 +380,10 @@ public class MultipleResourcesTest extends AbstractDawnUITest
   @Test
   public void testCreateCompositionConnectionRemotely() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", getBot(), editor);
 
     editor.save();
     {
@@ -448,10 +419,10 @@ public class MultipleResourcesTest extends AbstractDawnUITest
   @Test
   public void testCreateInheritanceConnectionRemotely() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", getBot(), editor);
 
     editor.save();
     {
@@ -487,10 +458,10 @@ public class MultipleResourcesTest extends AbstractDawnUITest
   @Test
   public void testCreateImplementsConnectionRemotely() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 100, 100, "A", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 100, 100, "A", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", getBot(), editor);
 
     editor.save();
     {

@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.swt.finder.SWTBot;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.keyboard.Keyboard;
@@ -37,14 +38,40 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Martin Fluegge
  */
-public abstract class AbstractCDOUITest extends AbstractCDOTest
+public abstract class AbstractCDOUITest<T extends SWTWorkbenchBot> extends AbstractCDOTest
 {
+  private T bot;
+
   @Override
   public void setUp() throws Exception
   {
+    super.setUp();
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
     SWTBotPreferences.SCREENSHOTS_DIR = OMPlatform.INSTANCE.getProperty("java.io.tmpdir") + "/cdotests";
-    super.setUp();
+    createBot();
+  }
+
+  @SuppressWarnings("unchecked")
+  protected void createBot()
+  {
+    setBot((T)new SWTWorkbenchBot());
+  }
+
+  protected T getBot()
+  {
+    return bot;
+  }
+
+  protected void setBot(T bot)
+  {
+    this.bot = bot;
+  }
+
+  @Override
+  public void tearDown() throws Exception
+  {
+    super.tearDown();
+    closeAllEditors();
   }
 
   protected void closeAllEditors()

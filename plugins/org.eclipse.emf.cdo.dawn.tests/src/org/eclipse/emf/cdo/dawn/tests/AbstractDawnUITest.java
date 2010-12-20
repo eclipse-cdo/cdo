@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
+import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -19,6 +20,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.gmf.runtime.notation.Bounds;
 import org.eclipse.gmf.runtime.notation.Node;
+import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
@@ -29,18 +31,29 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
+import org.junit.Before;
+
 /**
  * @author Martin Fluegge
  */
-public abstract class AbstractDawnUITest extends AbstractCDOUITest// AbstractDawnTest
+public abstract class AbstractDawnUITest<T extends SWTWorkbenchBot> extends AbstractCDOUITest<SWTWorkbenchBot>
 {
   @Override
+  @Before
   public void setUp() throws Exception
   {
-    SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
+    super.setUp();
     SWTBotPreferences.SCREENSHOTS_DIR = DawnTestPlatform.instance.getTestFolder();
     resetWorkbench();
-    super.setUp();
+    DawnSWTBotUtil.initTest(getBot());
+    getBot().viewByTitle("CDO Sessions").close();
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  protected T getBot()
+  {
+    return (T)super.getBot();
   }
 
   /**

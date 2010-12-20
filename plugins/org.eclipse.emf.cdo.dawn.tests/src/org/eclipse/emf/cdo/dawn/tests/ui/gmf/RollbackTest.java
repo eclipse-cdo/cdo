@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.dawn.tests.ui.gmf;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
-import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
+import org.eclipse.emf.cdo.dawn.tests.AbstractDawnGEFTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -21,14 +21,10 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Node;
-import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -38,43 +34,15 @@ import java.util.List;
  * @author Martin Fluegge
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class RollbackTest extends AbstractDawnUITest
+public class RollbackTest extends AbstractDawnGEFTest
 {
-  private static SWTGefBot bot;
-
-  @BeforeClass
-  public static void beforeClass() throws Exception
-  {
-    bot = new SWTGefBot();
-    DawnSWTBotUtil.initTest(bot);
-  }
-
-  @Override
-  @Before
-  public void setUp() throws Exception
-  {
-    super.setUp();
-    bot = new SWTGefBot();
-    DawnSWTBotUtil.initTest(bot);
-    bot.viewByTitle("CDO Sessions").close();
-  }
-
-  @Override
-  @After
-  public void tearDown() throws Exception
-  {
-    // closeAllEditors();
-    sleep(1000);
-    super.tearDown();
-  }
-
   @Test
   public void testGMFAClassConflictMove() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
     editor.save();
 
     editor.drag(100, 100, 200, 200);
@@ -102,7 +70,7 @@ public class RollbackTest extends AbstractDawnUITest
     assertEquals(true, DawnAcoreTestUtil.showsConflict(classBEditpart.part()));
     editor.clickContextMenu("Solve Conflict");
 
-    bot.button("yes").click();
+    getBot().button("yes").click();
 
     assertEquals(false, ((IDawnEditor)editor.getReference().getEditor(false)).getView().hasConflict());
 

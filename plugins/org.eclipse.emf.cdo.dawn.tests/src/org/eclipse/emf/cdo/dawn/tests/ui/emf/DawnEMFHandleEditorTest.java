@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
 import org.eclipse.emf.cdo.dawn.examples.acore.AInterface;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcoreFactory;
 import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
-import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
+import org.eclipse.emf.cdo.dawn.tests.AbstractDawnEMFTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnEMFEditorBot;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotEMFEditor;
@@ -32,7 +32,6 @@ import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,24 +40,15 @@ import org.junit.runner.RunWith;
  * @author Martin Fluegge
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class DawnEMFHandleEditorTest extends AbstractDawnUITest
+public class DawnEMFHandleEditorTest extends AbstractDawnEMFTest
 {
-  private static DawnEMFEditorBot bot;
-
   @Override
   @Before
   public void setUp() throws Exception
   {
-    bot = new DawnEMFEditorBot();
-    DawnSWTBotUtil.initTest(bot);
+    setBot(new DawnEMFEditorBot());
+    DawnSWTBotUtil.initTest(getBot());
     super.setUp();
-  }
-
-  @Override
-  @After
-  public void tearDown() throws Exception
-  {
-    super.tearDown();
   }
 
   @Test
@@ -86,7 +76,8 @@ public class DawnEMFHandleEditorTest extends AbstractDawnUITest
     CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
         PreferenceConstants.getServerName());
     CDOConnectionUtil.instance.openSession();
-    DawnSWTBotEMFEditor editor = DawnAcoreTestUtil.openAcoreEMFEditor(URI.createURI("cdo://repo1/default.acore"), bot);
+    DawnSWTBotEMFEditor editor = DawnAcoreTestUtil.openAcoreEMFEditor(URI.createURI("cdo://repo1/default.acore"),
+        getBot());
     assertNotNull(editor);
     SWTBotTree tree = editor.getSelectionPageTree();
 
@@ -111,7 +102,7 @@ public class DawnEMFHandleEditorTest extends AbstractDawnUITest
   @Test
   public void testCreateNewElement() throws Exception
   {
-    DawnSWTBotEMFEditor editor = DawnAcoreTestUtil.openNewAcoreEMFEditor("default.acore", bot);
+    DawnSWTBotEMFEditor editor = DawnAcoreTestUtil.openNewAcoreEMFEditor("default.acore", getBot());
     assertNotNull(editor);
     SWTBotTree tree = editor.getSelectionPageTree();
 

@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.dawn.tests.ui.gmf;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
-import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
+import org.eclipse.emf.cdo.dawn.tests.AbstractDawnGEFTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -26,14 +26,10 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.Node;
-import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,41 +39,15 @@ import java.util.List;
  * @author Martin Fluegge
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class ConflictTest extends AbstractDawnUITest
+public class ConflictTest extends AbstractDawnGEFTest
 {
-  private static SWTGefBot bot;
-
-  @BeforeClass
-  public static void beforeClass() throws Exception
-  {
-    bot = new SWTGefBot();
-    DawnSWTBotUtil.initTest(bot);
-  }
-
-  @Override
-  @Before
-  public void setUp() throws Exception
-  {
-    super.setUp();
-    bot.viewByTitle("CDO Sessions").close();
-  }
-
-  @Override
-  @After
-  public void tearDown() throws Exception
-  {
-    // closeAllEditors();
-    sleep(1000);
-    super.tearDown();
-  }
-
   @Test
   public void testAClassConflictMove() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
     editor.save();
 
     editor.drag(100, 100, 200, 200);
@@ -108,10 +78,10 @@ public class ConflictTest extends AbstractDawnUITest
   @Test
   public void testAClassConflictbyRemoteNameChange() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
     editor.save();
 
     SWTBotGefEditPart swtBotGefEditPart = DawnAcoreTestUtil.getAClassEditParts(editor).get(0);
@@ -153,10 +123,10 @@ public class ConflictTest extends AbstractDawnUITest
   @Test
   public void testAInterfaceConflictMove() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 100, 100, "A", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 100, 100, "A", getBot(), editor);
     editor.save();
 
     editor.drag(100, 100, 200, 200);
@@ -186,10 +156,10 @@ public class ConflictTest extends AbstractDawnUITest
   @Test
   public void testAAssociationConflict() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 200, 200, "B", getBot(), editor);
     List<SWTBotGefEditPart> aClassEditParts = DawnAcoreTestUtil.getAClassEditParts(editor);
 
     Node nodeA = (Node)aClassEditParts.get(0).part().getModel();

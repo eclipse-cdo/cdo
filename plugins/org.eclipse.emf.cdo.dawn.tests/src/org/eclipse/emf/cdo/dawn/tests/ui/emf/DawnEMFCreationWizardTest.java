@@ -10,9 +10,8 @@
  */
 package org.eclipse.emf.cdo.dawn.tests.ui.emf;
 
-import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
+import org.eclipse.emf.cdo.dawn.tests.AbstractDawnEMFTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
-import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -20,7 +19,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
-import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.keyboard.Keyboard;
@@ -32,8 +30,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -41,56 +37,31 @@ import org.junit.runner.RunWith;
  * @author Martin Fluegge
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class DawnEMFCreationWizardTest extends AbstractDawnUITest
+public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
 {
-  private static SWTWorkbenchBot bot;
-
-  // @BeforeClass
-  // public static void beforeClass() throws Exception
-  // {
-  // bot = new SWTGefBot();
-  // DawnSWTBotUtil.initTest(bot);
-  // }
-
-  @Override
-  @Before
-  public void setUp() throws Exception
-  {
-    bot = new SWTWorkbenchBot();
-    DawnSWTBotUtil.initTest(bot);
-    super.setUp();
-  }
-
-  @Override
-  @After
-  public void tearDown() throws Exception
-  {
-    super.tearDown();
-  }
-
   @Test
-  public void createNewDawnAcoreEditor() throws Exception
+  public void testCreateNewDawnAcoreEditor() throws Exception
   {
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
-    bot.button("Next >").click();
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    getBot().button("Next >").click();
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New");
+    shell = getBot().shell("New");
     shell.activate();
 
-    SWTBotCombo comboBox = bot.comboBox(0);// bot.ccomboBox(0);
+    SWTBotCombo comboBox = getBot().comboBox(0);// bot.ccomboBox(0);
     comboBox.setFocus();
     comboBox.setSelection("ACore Root");
 
-    bot.button("Finish").click();
+    getBot().button("Finish").click();
 
     sleep(500);
 
-    SWTBotEditor editor = bot.editorByTitle("default.acore");
+    SWTBotEditor editor = getBot().editorByTitle("default.acore");
     assertNotNull(editor);
     editor.close();
     {
@@ -99,61 +70,61 @@ public class DawnEMFCreationWizardTest extends AbstractDawnUITest
   }
 
   @Test
-  public void createNewDawnEditorSetName() throws Exception
+  public void testCreateNewDawnEditorSetName() throws Exception
   {
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New");
+    shell = getBot().shell("New");
     shell.activate();
 
-    SWTBotText fileSemanticNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
     fileSemanticNameLabel.setText("test.acore");
     assertEquals("test.acore", fileSemanticNameLabel.getText());
 
-    bot.button("Next >").click();
+    getBot().button("Next >").click();
 
-    SWTBotCombo comboBox = bot.comboBox(0);// bot.ccomboBox(0);
+    SWTBotCombo comboBox = getBot().comboBox(0);// bot.ccomboBox(0);
     comboBox.setFocus();
     comboBox.setSelection("ACore Root");
 
-    bot.button("Finish").click();
+    getBot().button("Finish").click();
 
-    SWTBotEditor editor = bot.editorByTitle("test.acore");
+    SWTBotEditor editor = getBot().editorByTitle("test.acore");
     assertNotNull(editor);
     editor.close();
   }
 
   @Test
-  public void createNewDawnEditorWrongResourceName() throws Exception
+  public void testCreateNewDawnEditorWrongResourceName() throws Exception
   {
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New");
+    shell = getBot().shell("New");
     shell.activate();
 
-    SWTBotText fileSemanticNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
     Keyboard keyboard = KeyboardFactory.getDefaultKeyboard(fileSemanticNameLabel.widget, null);
     fileSemanticNameLabel.setFocus();
     fileSemanticNameLabel.typeText("x", 500);
 
     keyboard.pressShortcut(Keystrokes.BS);
-    assertEquals(false, bot.button("Next >").isEnabled());
-    bot.button("Cancel").click();
+    assertEquals(false, getBot().button("Next >").isEnabled());
+    getBot().button("Cancel").click();
   }
 
   @Test
-  public void createNewDawnEditorSelectFolder() throws Exception
+  public void testCreateNewDawnEditorSelectFolder() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -165,32 +136,32 @@ public class DawnEMFCreationWizardTest extends AbstractDawnUITest
       transaction.commit();
     }
 
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New");
+    shell = getBot().shell("New");
     shell.activate();
 
-    SWTBotText fileNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
     fileNameLabel.setText("test.acore");
 
-    SWTBotTree tree = bot.tree(0);
+    SWTBotTree tree = getBot().tree(0);
 
     selectFolder(tree.getAllItems(), "folder", false);
 
-    bot.button("Next >").click();
+    getBot().button("Next >").click();
 
-    SWTBotCombo comboBox = bot.comboBox(0);// bot.ccomboBox(0);
+    SWTBotCombo comboBox = getBot().comboBox(0);// bot.ccomboBox(0);
     comboBox.setFocus();
     comboBox.setSelection("ACore Root");
 
-    bot.button("Finish").click();
+    getBot().button("Finish").click();
 
-    SWTBotEditor editor = bot.editorByTitle("test.acore");
+    SWTBotEditor editor = getBot().editorByTitle("test.acore");
     assertNotNull(editor);
     editor.close();
 
@@ -200,7 +171,7 @@ public class DawnEMFCreationWizardTest extends AbstractDawnUITest
   }
 
   @Test
-  public void createNewDawnDiagramTypeFolder() throws Exception
+  public void testCreateNewDawnDiagramTypeFolder() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -212,32 +183,32 @@ public class DawnEMFCreationWizardTest extends AbstractDawnUITest
       transaction.commit();
     }
 
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New");
+    shell = getBot().shell("New");
     shell.activate();
 
-    SWTBotText fileNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
     fileNameLabel.setText("test.acore");
 
-    SWTBotText folder = bot.textWithLabel("Enter or select the parent folder: ");
+    SWTBotText folder = getBot().textWithLabel("Enter or select the parent folder: ");
     folder.setText("/folder");
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
 
-    bot.button("Next >").click();
+    getBot().button("Next >").click();
 
-    SWTBotCombo comboBox = bot.comboBox(0);// bot.ccomboBox(0);
+    SWTBotCombo comboBox = getBot().comboBox(0);// bot.ccomboBox(0);
     comboBox.setFocus();
     comboBox.setSelection("ACore Root");
 
-    bot.button("Finish").click();
+    getBot().button("Finish").click();
 
-    SWTBotEditor editor = bot.editorByTitle("test.acore");
+    SWTBotEditor editor = getBot().editorByTitle("test.acore");
     assertNotNull(editor);
     editor.close();
 

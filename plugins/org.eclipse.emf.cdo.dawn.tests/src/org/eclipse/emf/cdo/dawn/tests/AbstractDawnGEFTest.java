@@ -8,23 +8,27 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.tests.ui.emf;
+package org.eclipse.emf.cdo.dawn.tests;
 
-import org.eclipse.emf.cdo.dawn.tests.AbstractDawnEMFTest;
+import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 
-import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.Before;
 
 /**
  * @author Martin Fluegge
  */
-@RunWith(SWTBotJunit4ClassRunner.class)
-public class EMFEditorRollbackTest extends AbstractDawnEMFTest
+public abstract class AbstractDawnGEFTest extends AbstractDawnUITest<SWTGefBot>
 {
-  @Test
-  public void testGMFAClassConflictMove() throws Exception
+  @Override
+  @Before
+  public void setUp() throws Exception
   {
+    super.setUp();
+  }
+
+  @Override
+  protected void createBot()
+  {
+    setBot(new SWTGefBot());
   }
 }

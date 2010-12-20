@@ -11,26 +11,62 @@
 package org.eclipse.emf.cdo.dawn.tests;
 
 import org.eclipse.emf.cdo.dawn.tests.bugzillas.Bugzilla_321024_Test;
+import org.eclipse.emf.cdo.dawn.tests.ui.DawnPreferencesTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.DawnProjectExplorerTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnEMFCreationWizardTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnEMFHandleEditorTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.emf.EMFEditorRollbackTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.gmf.ConflictTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnCreationWizardSWTBotTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.gmf.MultipleResourcesTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.gmf.RollbackTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.gmf.SimpleDiagramTest;
+import org.eclipse.emf.cdo.tests.AllTests;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import java.util.List;
 
-/**
- * This test suite should be executed as SWTBot test.
- * 
- * @author Martin Fluegge
- * @formatter:off
- */
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
-@RunWith(Suite.class)
-@SuiteClasses({ 
-  AllTestsDawnUISWTBotGMF.class,
-  AllTestsDawnUISWTBotEMF.class,
-  Bugzilla_321024_Test.class 
-   })
-   
-   
-public class AllTestsDawnUISWTBot
+public class AllTestsDawnUISWTBot extends ConfigTestSuite
 {
+  public static Test suite()
+  {
+    TestSuite testSuite = (TestSuite)new AllTestsDawnUISWTBot().getTestSuite(AllTests.class.getName());
+    // testSuite.addTest(new JUnit4TestAdapter(AllTestsDawnUISWTBotGMF.class));
+    return testSuite;
+  }
+
+  @Override
+  protected void initConfigSuites(TestSuite parent)
+  {
+    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
+    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
+    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, LEGACY);
+    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, LEGACY);
+  }
+
+  @Override
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  {
+    /******************** GMF **********************/
+    testClasses.add(RollbackTest.class);
+    testClasses.add(DawnPreferencesTest.class);
+    testClasses.add(DawnCreationWizardSWTBotTest.class);
+    testClasses.add(SimpleDiagramTest.class);
+    testClasses.add(MultipleResourcesTest.class);
+    // MultipleResourcesDeletionTest.class, //excluded because of ui freeze
+    testClasses.add(DawnProjectExplorerTest.class);
+    testClasses.add(ConflictTest.class);
+
+    /******************** EMF **********************/
+    testClasses.add(DawnEMFCreationWizardTest.class);
+    testClasses.add(EMFEditorRollbackTest.class);
+    testClasses.add(DawnEMFHandleEditorTest.class);
+
+    /******************** Bugzilla **********************/
+    testClasses.add(Bugzilla_321024_Test.class);
+  }
 }

@@ -16,9 +16,8 @@ import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
 import org.eclipse.emf.cdo.dawn.examples.acore.AInterface;
 import org.eclipse.emf.cdo.dawn.examples.acore.AOperation;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassEditPart;
-import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
+import org.eclipse.emf.cdo.dawn.tests.AbstractDawnGEFTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
-import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -26,66 +25,33 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.gmf.runtime.notation.Diagram;
-import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.matchers.AbstractMatcher;
 
 import org.hamcrest.Description;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author Martin Fluegge
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class SimpleDiagramTest extends AbstractDawnUITest
+public class SimpleDiagramTest extends AbstractDawnGEFTest
 {
-  private static SWTGefBot bot;
-
-  {
-    Locale.setDefault(Locale.US);
-  }
-
-  @BeforeClass
-  public static void beforeClass() throws Exception
-  {
-    bot = new SWTGefBot();
-    DawnSWTBotUtil.initTest(bot);
-  }
-
-  @Override
-  @Before
-  public void setUp() throws Exception
-  {
-    super.setUp();
-  }
-
-  @Override
-  @After
-  public void tearDown() throws Exception
-  {
-    closeAllEditors();
-    super.tearDown();
-  }
-
   @Test
   public void testCreateNewDawnDiagramAndAddElements() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 250, 100, "B", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 150, 250, "C", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 250, 100, "B", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 150, 250, "C", getBot(), editor);
 
     editor.saveAndClose();
 
@@ -117,12 +83,12 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testCreateNewDawnDiagramAndAddElementsWithEdges() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 250, 100, "B", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 150, 250, "C", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 250, 100, "B", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 150, 250, "C", getBot(), editor);
 
     createEdge(DawnAcoreTestUtil.CONNECTION_IHERITS, 100, 100, 250, 100, editor);
     createEdge(DawnAcoreTestUtil.CONNECTION_IHERITS, 100, 100, 150, 250, editor);
@@ -176,13 +142,13 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testAClassWithAttributes() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
 
     editor.activateTool(DawnAcoreTestUtil.A_ATTRIBUTE);
     editor.click(100, 100);
 
-    typeTextToFocusedWidget("public foo:int", bot, true);
+    typeTextToFocusedWidget("public foo:int", getBot(), true);
     editor.save();
 
     {
@@ -215,13 +181,13 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testAClassWithOperations() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
 
     editor.activateTool(DawnAcoreTestUtil.A_OPERATION);
     editor.click(100, 100);
 
-    typeTextToFocusedWidget("public foo():int", bot, true);
+    typeTextToFocusedWidget("public foo():int", getBot(), true);
     editor.save();
     {
       CDOSession session = openSession();
@@ -252,13 +218,13 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testAInterfaceWithOperations() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
-    createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 100, 100, "A", bot, editor);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
+    createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 100, 100, "A", getBot(), editor);
 
     editor.activateTool(DawnAcoreTestUtil.A_OPERATION);
     editor.click(100, 100);
 
-    typeTextToFocusedWidget("public foo():int", bot, true);
+    typeTextToFocusedWidget("public foo():int", getBot(), true);
 
     editor.save();
     {
@@ -288,14 +254,14 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testConnections() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
 
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 300, 100, "B", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 300, "C", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 300, 300, "D", bot, editor);
-    createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 200, 200, "Interface", bot, editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 100, "A", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 300, 100, "B", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 100, 300, "C", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_CLASS, 300, 300, "D", getBot(), editor);
+    createNodeWithLabel(DawnAcoreTestUtil.A_INTERFACE, 200, 200, "Interface", getBot(), editor);
 
     createEdge(DawnAcoreTestUtil.CONNECTION_IHERITS, 100, 100, 300, 100, editor);
     createEdge(DawnAcoreTestUtil.CONNECTION_ASSOCIATION, 310, 110, 310, 310, editor);
@@ -358,7 +324,7 @@ public class SimpleDiagramTest extends AbstractDawnUITest
   @Test
   public void testExceptionOnClose() throws Exception
   {
-    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", bot);
+    SWTBotGefEditor editor = DawnAcoreTestUtil.openNewAcoreGMFEditor("default.acore_diagram", getBot());
     assertNotNull(editor);
     editor.close();
   }

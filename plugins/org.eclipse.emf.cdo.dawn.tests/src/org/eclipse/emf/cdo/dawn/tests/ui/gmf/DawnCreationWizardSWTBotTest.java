@@ -10,8 +10,7 @@
  */
 package org.eclipse.emf.cdo.dawn.tests.ui.gmf;
 
-import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
-import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
+import org.eclipse.emf.cdo.dawn.tests.AbstractDawnGEFTest;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -19,7 +18,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
-import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.keyboard.Keyboard;
@@ -30,9 +28,6 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -40,43 +35,20 @@ import org.junit.runner.RunWith;
  * @author Martin Fluegge
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
+public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
 {
-  private static SWTGefBot bot;
-
-  @BeforeClass
-  public static void beforeClass() throws Exception
-  {
-    bot = new SWTGefBot();
-    DawnSWTBotUtil.initTest(bot);
-  }
-
-  @Override
-  @Before
-  public void setUp() throws Exception
-  {
-    super.setUp();
-  }
-
-  @Override
-  @After
-  public void tearDown() throws Exception
-  {
-    super.tearDown();
-  }
-
   @Test
-  public void createNewDawnDiagram() throws Exception
+  public void testCreateNewDawnDiagram() throws Exception
   {
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
-    bot.button("Next >").click();
-    bot.button("Finish").click();
+    getBot().tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
+    getBot().button("Next >").click();
+    getBot().button("Finish").click();
 
-    SWTBotGefEditor editor = bot.gefEditor("default.acore_diagram");
+    SWTBotGefEditor editor = getBot().gefEditor("default.acore_diagram");
     assertNotNull(editor);
     editor.close();
     {
@@ -86,19 +58,19 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
   }
 
   @Test
-  public void createNewDawnDiagramBothPages() throws Exception
+  public void testCreateNewDawnDiagramBothPages() throws Exception
   {
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
+    getBot().tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
 
-    bot.button("Next >").click();
-    bot.button("Next >").click();
-    bot.button("Finish").click();
+    getBot().button("Next >").click();
+    getBot().button("Next >").click();
+    getBot().button("Finish").click();
 
-    SWTBotGefEditor editor = bot.gefEditor("default.acore_diagram");
+    SWTBotGefEditor editor = getBot().gefEditor("default.acore_diagram");
     assertNotNull(editor);
     editor.close();
 
@@ -109,63 +81,63 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
   }
 
   @Test
-  public void createNewDawnDiagramBothPagesSetName() throws Exception
+  public void testCreateNewDawnDiagramBothPagesSetName() throws Exception
   {
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New Acore Diagram");
+    shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
     fileNameLabel.setText("test.acore_diagram");
 
-    bot.button("Next >").click();
+    getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
     assertEquals("test.acore", fileSemanticNameLabel.getText());
 
-    bot.button("Finish").click();
+    getBot().button("Finish").click();
 
-    SWTBotGefEditor editor = bot.gefEditor("test.acore_diagram");
+    SWTBotGefEditor editor = getBot().gefEditor("test.acore_diagram");
     assertNotNull(editor);
     editor.close();
   }
 
   @Test
-  public void createNewDawnDiagramBothPagesSetDifferenNames() throws Exception
+  public void testCreateNewDawnDiagramBothPagesSetDifferenNames() throws Exception
   {
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New Acore Diagram");
+    shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
     fileNameLabel.setText("notational.acore_diagram");
 
-    bot.button("Next >").click();
+    getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
     assertEquals("notational.acore", fileSemanticNameLabel.getText());
 
-    fileNameLabel = bot.textWithLabel("File name:");
+    fileNameLabel = getBot().textWithLabel("File name:");
     fileNameLabel.setText("semantic.acore");
 
-    fileSemanticNameLabel = bot.textWithLabel("File name:");
+    fileSemanticNameLabel = getBot().textWithLabel("File name:");
     assertEquals("semantic.acore", fileSemanticNameLabel.getText());
 
-    bot.button("Finish").click();
+    getBot().button("Finish").click();
 
-    SWTBotGefEditor editor = bot.gefEditor("notational.acore_diagram");
+    SWTBotGefEditor editor = getBot().gefEditor("notational.acore_diagram");
     assertNotNull(editor);
     editor.close();
 
@@ -176,60 +148,60 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
   }
 
   @Test
-  public void createNewDawnDiagramEmptyNotationalResourceName() throws Exception
+  public void testCreateNewDawnDiagramEmptyNotationalResourceName() throws Exception
   {
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New Acore Diagram");
+    shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
     fileNameLabel.setText("");
 
     Keyboard keyboard = KeyboardFactory.getDefaultKeyboard(fileNameLabel.widget, null);
     fileNameLabel.setFocus();
     fileNameLabel.typeText("x", 500);
     keyboard.pressShortcut(Keystrokes.BS);
-    assertEquals(false, bot.button("Next >").isEnabled());
-    bot.button("Cancel").click();
+    assertEquals(false, getBot().button("Next >").isEnabled());
+    getBot().button("Cancel").click();
   }
 
   @Test
-  public void createNewDawnDiagramEmptySemanticResourceName() throws Exception
+  public void testCreateNewDawnDiagramEmptySemanticResourceName() throws Exception
   {
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New Acore Diagram");
+    shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
     fileNameLabel.setText("notational.acore_diagram");
 
-    bot.button("Next >").click();
+    getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
     Keyboard keyboard = KeyboardFactory.getDefaultKeyboard(fileSemanticNameLabel.widget, null);
     fileSemanticNameLabel.setFocus();
     fileSemanticNameLabel.typeText("x", 500);
 
     keyboard.pressShortcut(Keystrokes.BS);
-    assertEquals(false, bot.button("Next >").isEnabled());
-    bot.button("Cancel").click();
+    assertEquals(false, getBot().button("Next >").isEnabled());
+    getBot().button("Cancel").click();
   }
 
   @Test
-  public void createNewDawnDiagramSelectFolder() throws Exception
+  public void testCreateNewDawnDiagramSelectFolder() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -241,30 +213,30 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
       transaction.commit();
     }
 
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New Acore Diagram");
+    shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
     fileNameLabel.setText("test.acore_diagram");
 
-    SWTBotTree tree = bot.tree(0);
+    SWTBotTree tree = getBot().tree(0);
 
     selectFolder(tree.getAllItems(), "folder", false);
-    bot.button("Next >").click();
+    getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
     assertEquals("test.acore", fileSemanticNameLabel.getText());
 
-    bot.button("Finish").click();
+    getBot().button("Finish").click();
 
-    SWTBotGefEditor editor = bot.gefEditor("test.acore_diagram");
+    SWTBotGefEditor editor = getBot().gefEditor("test.acore_diagram");
     assertNotNull(editor);
     editor.close();
 
@@ -275,7 +247,7 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
   }
 
   @Test
-  public void createNewDawnDiagramTypeFolder() throws Exception
+  public void testCreateNewDawnDiagramTypeFolder() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -287,31 +259,31 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
       transaction.commit();
     }
 
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New Acore Diagram");
+    shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
     fileNameLabel.setText("test.acore_diagram");
 
-    SWTBotText folder = bot.textWithLabel("Enter or select the parent folder: ");
+    SWTBotText folder = getBot().textWithLabel("Enter or select the parent folder: ");
     folder.setText("/folder");
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
 
-    bot.button("Next >").click();
+    getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
     assertEquals("test.acore", fileSemanticNameLabel.getText());
 
-    bot.button("Finish").click();
+    getBot().button("Finish").click();
 
-    SWTBotGefEditor editor = bot.gefEditor("test.acore_diagram");
+    SWTBotGefEditor editor = getBot().gefEditor("test.acore_diagram");
     assertNotNull(editor);
     editor.close();
 
@@ -322,7 +294,7 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
   }
 
   @Test
-  public void createNewDawnDiagramSelectDifferentFolders() throws Exception
+  public void testCreateNewDawnDiagramSelectDifferentFolders() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -335,33 +307,33 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnUITest
       transaction.commit();
     }
 
-    bot.menu("File").menu("New").menu("Other...").click();
+    getBot().menu("File").menu("New").menu("Other...").click();
 
-    SWTBotShell shell = bot.shell("New");
+    SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
-    bot.button("Next >").click();
+    getBot().tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
+    getBot().button("Next >").click();
 
-    shell = bot.shell("New Acore Diagram");
+    shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
     fileNameLabel.setText("test.acore_diagram");
 
-    SWTBotTree tree = bot.tree(0);
+    SWTBotTree tree = getBot().tree(0);
 
     selectFolder(tree.getAllItems(), "folder1", false);
-    bot.button("Next >").click();
+    getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
     assertEquals("test.acore", fileSemanticNameLabel.getText());
 
-    tree = bot.tree(0);
+    tree = getBot().tree(0);
     selectFolder(tree.getAllItems(), "folder2", false);
 
-    bot.button("Finish").click();
+    getBot().button("Finish").click();
 
-    SWTBotGefEditor editor = bot.gefEditor("test.acore_diagram");
+    SWTBotGefEditor editor = getBot().gefEditor("test.acore_diagram");
     assertNotNull(editor);
     editor.close();
 

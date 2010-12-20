@@ -10,17 +10,40 @@
  */
 package org.eclipse.emf.cdo.tests.ui;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import org.eclipse.emf.cdo.tests.AllTests;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
+
+import java.util.List;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * This test suite should be executed as SWTBot test.
  * 
  * @author Martin Fluegge
  */
-@RunWith(Suite.class)
-@SuiteClasses({ CDOSessionsViewTest.class })
-public class AllTestsCDOUISWTBot
+public class AllTestsCDOUISWTBot extends ConfigTestSuite
 {
+  public static Test suite()
+  {
+    TestSuite testSuite = (TestSuite)new AllTestsCDOUISWTBot().getTestSuite(AllTests.class.getName());
+    return testSuite;
+  }
+
+  @Override
+  protected void initConfigSuites(TestSuite parent)
+  {
+    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
+    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
+    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, LEGACY);
+    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, LEGACY);
+  }
+
+  @Override
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  {
+    testClasses.add(CDOSessionsViewTest.class);
+  }
 }

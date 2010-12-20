@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.dawn.tests.ui.gmf;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
-import org.eclipse.emf.cdo.dawn.tests.AbstractDawnUITest;
+import org.eclipse.emf.cdo.dawn.tests.AbstractDawnGEFTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -42,7 +42,7 @@ import java.util.List;
  * @author Martin Fluegge
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class MultipleResourcesDeletionTest extends AbstractDawnUITest
+public class MultipleResourcesDeletionTest extends AbstractDawnGEFTest
 {
   private static SWTGefBot bot;
 

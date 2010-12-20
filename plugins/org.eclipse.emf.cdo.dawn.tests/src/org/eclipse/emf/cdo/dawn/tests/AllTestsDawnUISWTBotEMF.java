@@ -24,7 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Martin Fluegge
  * @formatter:off
  */
-
+@Deprecated
 @RunWith(Suite.class)
 @SuiteClasses({ 
   DawnEMFCreationWizardTest.class,

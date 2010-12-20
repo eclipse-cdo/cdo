@@ -36,7 +36,7 @@ import org.junit.Before;
 /**
  * @author Martin Fluegge
  */
-public abstract class AbstractDawnUITest<T extends SWTWorkbenchBot> extends AbstractCDOUITest<SWTWorkbenchBot>
+public abstract class AbstractDawnUITest<T extends SWTWorkbenchBot> extends AbstractCDOUITest<T>
 {
   @Override
   @Before
@@ -47,13 +47,6 @@ public abstract class AbstractDawnUITest<T extends SWTWorkbenchBot> extends Abst
     resetWorkbench();
     DawnSWTBotUtil.initTest(getBot());
     getBot().viewByTitle("CDO Sessions").close();
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  protected T getBot()
-  {
-    return (T)super.getBot();
   }
 
   /**

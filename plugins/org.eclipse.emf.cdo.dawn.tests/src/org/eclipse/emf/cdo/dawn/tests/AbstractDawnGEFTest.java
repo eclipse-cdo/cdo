@@ -12,20 +12,11 @@ package org.eclipse.emf.cdo.dawn.tests;
 
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 
-import org.junit.Before;
-
 /**
  * @author Martin Fluegge
  */
 public abstract class AbstractDawnGEFTest extends AbstractDawnUITest<SWTGefBot>
 {
-  @Override
-  @Before
-  public void setUp() throws Exception
-  {
-    super.setUp();
-  }
-
   @Override
   protected void createBot()
   {

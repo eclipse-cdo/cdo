@@ -12,20 +12,11 @@ package org.eclipse.emf.cdo.dawn.tests;
 
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnEMFEditorBot;
 
-import org.junit.Before;
-
 /**
  * @author Martin Fluegge
  */
 public abstract class AbstractDawnEMFTest extends AbstractDawnUITest<DawnEMFEditorBot>
 {
-  @Override
-  @Before
-  public void setUp() throws Exception
-  {
-    super.setUp();
-  }
-
   @Override
   protected void createBot()
   {

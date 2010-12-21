@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
+import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,22 +64,8 @@ public final class CDORevisionDeltaUtil
   public static CDOChangeSetData createChangeSetData(Set<CDOID> ids, final CDOBranchPoint startPoint,
       final CDOBranchPoint endPoint, final CDORevisionManager revisionManager)
   {
-    CDORevisionProvider startProvider = new CDORevisionProvider()
-    {
-      public CDORevision getRevision(CDOID id)
-      {
-        return revisionManager.getRevision(id, startPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
-      }
-    };
-
-    CDORevisionProvider endProvider = new CDORevisionProvider()
-    {
-      public CDORevision getRevision(CDOID id)
-      {
-        return revisionManager.getRevision(id, endPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
-      }
-    };
-
+    CDORevisionProvider startProvider = new ManagedRevisionProvider(revisionManager, startPoint);
+    CDORevisionProvider endProvider = new ManagedRevisionProvider(revisionManager, endPoint);
     return createChangeSetData(ids, startProvider, endProvider);
   }
 

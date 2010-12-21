@@ -80,6 +80,8 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
+import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
+
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.MoveableList;
@@ -308,6 +310,12 @@ public class Repository extends Container<Object> implements InternalRepository
   public void setRootResourceID(CDOID rootResourceID)
   {
     this.rootResourceID = rootResourceID;
+  }
+
+  public Object processPackage(Object value)
+  {
+    CDOFactoryImpl.prepareDynamicEPackage(value);
+    return value;
   }
 
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
@@ -1416,6 +1424,7 @@ public class Repository extends Container<Object> implements InternalRepository
     checkState(lockManager, "lockingManager"); //$NON-NLS-1$
 
     packageRegistry.setReplacingDescriptors(true);
+    packageRegistry.setPackageProcessor(this);
     packageRegistry.setPackageLoader(this);
     branchManager.setBranchLoader(this);
     branchManager.setTimeProvider(this);

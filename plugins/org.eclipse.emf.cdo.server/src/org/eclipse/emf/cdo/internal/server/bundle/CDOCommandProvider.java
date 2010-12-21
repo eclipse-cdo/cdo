@@ -1,12 +1,23 @@
 package org.eclipse.emf.cdo.internal.server.bundle;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -37,11 +48,13 @@ public class CDOCommandProvider implements CommandProvider
   {
     StringBuffer buffer = new StringBuffer();
     buffer.append("---CDO commands---\n");
+    buffer.append("\tcdo list - list all active repositories\n");
     buffer.append("\tcdo start - start repositories from a config file\n");
     buffer.append("\tcdo stop - stop a repository\n");
     buffer.append("\tcdo export - export the contents of a repository to an XML file\n");
     buffer.append("\tcdo import - import the contents of a repository from an XML file\n");
-    buffer.append("\tcdo list - list all active repositories\n");
+    buffer.append("\tcdo sessions - dump the sessions of a repository\n");
+    buffer.append("\tcdo packages - dump the packages of a repository\n");
     return buffer.toString();
   }
 
@@ -50,6 +63,12 @@ public class CDOCommandProvider implements CommandProvider
     try
     {
       String cmd = interpreter.nextArgument();
+      if ("list".equals(cmd))
+      {
+        list(interpreter);
+        return null;
+      }
+
       if ("start".equals(cmd))
       {
         start(interpreter);
@@ -74,13 +93,47 @@ public class CDOCommandProvider implements CommandProvider
         return null;
       }
 
-      if ("list".equals(cmd))
+      if ("sessions".equals(cmd))
       {
-        list(interpreter);
+        sessions(interpreter);
+        return null;
+      }
+
+      if ("packages".equals(cmd))
+      {
+        packages(interpreter);
+        return null;
+      }
+
+      if ("test".equals(cmd))
+      {
+        InternalRepository repository = getRepository(interpreter, "error1");
+        InternalSession session = repository.getSessionManager().openSession(null);
+        StoreThreadLocal.setSession(session);
+
+        try
+        {
+          CDOView view = CDOServerUtil
+              .openView(session, repository.getBranchManager().getMainBranch().getHead(), false);
+
+          CDOID id = CDOIDUtil.createLong(Long.valueOf(nextArgument(interpreter, "error2")));
+          CDOObject object = view.getObject(id);
+          System.out.println(object);
+        }
+        finally
+        {
+          StoreThreadLocal.release();
+          session.close();
+        }
+
         return null;
       }
 
       interpreter.println(getHelp());
+    }
+    catch (CommandException ex)
+    {
+      interpreter.println(ex.getMessage());
     }
     catch (Exception ex)
     {
@@ -90,14 +143,22 @@ public class CDOCommandProvider implements CommandProvider
     return null;
   }
 
-  private void start(CommandInterpreter interpreter) throws Exception
+  protected void list(CommandInterpreter interpreter) throws Exception
   {
-    String configFile = interpreter.nextArgument();
-    if (configFile == null)
+    IPluginContainer container = CDOServerApplication.getContainer();
+    for (Object element : container.getElements(RepositoryFactory.PRODUCT_GROUP))
     {
-      interpreter.println("Syntax: cdo start <config-file>");
-      return;
+      if (element instanceof InternalRepository)
+      {
+        InternalRepository repository = (InternalRepository)element;
+        interpreter.println(repository.getName());
+      }
     }
+  }
+
+  protected void start(CommandInterpreter interpreter) throws Exception
+  {
+    String configFile = nextArgument(interpreter, "Syntax: cdo start <config-file>");
 
     IPluginContainer container = CDOServerApplication.getContainer();
     RepositoryConfigurator repositoryConfigurator = new RepositoryConfigurator(container);
@@ -113,43 +174,18 @@ public class CDOCommandProvider implements CommandProvider
     }
   }
 
-  private void stop(CommandInterpreter interpreter) throws Exception
+  protected void stop(CommandInterpreter interpreter) throws Exception
   {
-    String repositoryName = interpreter.nextArgument();
-    if (repositoryName == null)
-    {
-      interpreter.println("Syntax: cdo stop <repository-name>");
-      return;
-    }
-
-    InternalRepository repository = getRepository(repositoryName);
-    if (repository == null)
-    {
-      interpreter.println("Repository not found: " + repositoryName);
-      return;
-    }
-
+    InternalRepository repository = getRepository(interpreter, "Syntax: cdo stop <repository-name>");
     LifecycleUtil.deactivate(repository);
-    interpreter.println("Repository stopped: " + repositoryName);
+    interpreter.println("Repository stopped");
   }
 
-  private void exportXML(CommandInterpreter interpreter) throws Exception
+  protected void exportXML(CommandInterpreter interpreter) throws Exception
   {
-    String repositoryName = interpreter.nextArgument();
-    String exportFile = interpreter.nextArgument();
-    if (repositoryName == null || exportFile == null)
-    {
-      interpreter.println("Syntax: cdo export <repository-name> <export-file>");
-      return;
-    }
-
-    InternalRepository repository = getRepository(repositoryName);
-    if (repository == null)
-    {
-      interpreter.println("Repository not found: " + repositoryName);
-      return;
-    }
-
+    String syntax = "Syntax: cdo export <repository-name> <export-file>";
+    InternalRepository repository = getRepository(interpreter, syntax);
+    String exportFile = nextArgument(interpreter, syntax);
     OutputStream out = null;
 
     try
@@ -158,7 +194,7 @@ public class CDOCommandProvider implements CommandProvider
 
       CDOServerExporter.XML exporter = new CDOServerExporter.XML(repository);
       exporter.exportRepository(out);
-      interpreter.println("Repository exported: " + repositoryName);
+      interpreter.println("Repository exported");
     }
     finally
     {
@@ -166,23 +202,11 @@ public class CDOCommandProvider implements CommandProvider
     }
   }
 
-  private void importXML(CommandInterpreter interpreter) throws Exception
+  protected void importXML(CommandInterpreter interpreter) throws Exception
   {
-    String repositoryName = interpreter.nextArgument();
-    String importFile = interpreter.nextArgument();
-    if (repositoryName == null || importFile == null)
-    {
-      interpreter.println("Syntax: cdo import <repository-name> <import-file>");
-      return;
-    }
-
-    InternalRepository repository = getRepository(repositoryName);
-    if (repository == null)
-    {
-      interpreter.println("Repository not found: " + repositoryName);
-      return;
-    }
-
+    String syntax = "Syntax: cdo import <repository-name> <import-file>";
+    InternalRepository repository = getRepository(interpreter, syntax);
+    String importFile = nextArgument(interpreter, syntax);
     InputStream in = null;
 
     try
@@ -196,7 +220,7 @@ public class CDOCommandProvider implements CommandProvider
       IPluginContainer container = CDOServerApplication.getContainer();
       CDOServerUtil.addRepository(container, repository);
 
-      interpreter.println("Repository imported: " + repositoryName);
+      interpreter.println("Repository imported");
     }
     finally
     {
@@ -204,17 +228,55 @@ public class CDOCommandProvider implements CommandProvider
     }
   }
 
-  private void list(CommandInterpreter interpreter) throws Exception
+  protected void sessions(CommandInterpreter interpreter)
   {
-    IPluginContainer container = CDOServerApplication.getContainer();
-    for (Object element : container.getElements(RepositoryFactory.PRODUCT_GROUP))
+    InternalRepository repository = getRepository(interpreter, "Syntax: cdo sessions <repository-name>");
+    InternalSessionManager sessionManager = repository.getSessionManager();
+    for (InternalSession session : sessionManager.getSessions())
     {
-      if (element instanceof InternalRepository)
+      interpreter.println(session);
+      for (InternalView view : session.getViews())
       {
-        InternalRepository repository = (InternalRepository)element;
-        interpreter.println(repository.getName());
+        interpreter.println("  " + view);
       }
     }
+  }
+
+  protected void packages(CommandInterpreter interpreter)
+  {
+    InternalRepository repository = getRepository(interpreter, "Syntax: cdo packages <repository-name>");
+    InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+    for (InternalCDOPackageUnit packageUnit : packageRegistry.getPackageUnits())
+    {
+      interpreter.println(packageUnit);
+      for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())
+      {
+        interpreter.println("  " + packageInfo);
+      }
+    }
+  }
+
+  private String nextArgument(CommandInterpreter interpreter, String syntax)
+  {
+    String argument = interpreter.nextArgument();
+    if (argument == null)
+    {
+      throw new CommandException(syntax);
+    }
+
+    return argument;
+  }
+
+  private InternalRepository getRepository(CommandInterpreter interpreter, String syntax)
+  {
+    String repositoryName = nextArgument(interpreter, syntax);
+    InternalRepository repository = getRepository(repositoryName);
+    if (repository == null)
+    {
+      throw new CommandException("Repository not found: " + repositoryName);
+    }
+
+    return repository;
   }
 
   private InternalRepository getRepository(String name)
@@ -233,5 +295,18 @@ public class CDOCommandProvider implements CommandProvider
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CommandException extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public CommandException(String message)
+    {
+      super(message);
+    }
   }
 }

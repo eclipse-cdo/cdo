@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.ServerCDOView;
@@ -25,6 +26,7 @@ import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
 import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
@@ -68,6 +70,16 @@ public final class CDOServerUtil
   public static CDOView openView(ISession session, CDOBranchPoint branchPoint, boolean legacyModeEnabled,
       CDORevisionProvider revisionProvider)
   {
+    return new ServerCDOView((InternalSession)session, branchPoint, legacyModeEnabled, revisionProvider);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDOView openView(ISession session, CDOBranchPoint branchPoint, boolean legacyModeEnabled)
+  {
+    CDORevisionManager revisionManager = session.getManager().getRepository().getRevisionManager();
+    CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, branchPoint);
     return new ServerCDOView((InternalSession)session, branchPoint, legacyModeEnabled, revisionProvider);
   }
 

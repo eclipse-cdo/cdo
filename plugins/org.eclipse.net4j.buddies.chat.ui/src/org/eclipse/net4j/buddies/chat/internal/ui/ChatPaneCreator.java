@@ -14,7 +14,7 @@ import org.eclipse.net4j.buddies.chat.IChat;
 import org.eclipse.net4j.buddies.internal.ui.views.CollaborationsPane;
 import org.eclipse.net4j.buddies.internal.ui.views.FacilityPane;
 import org.eclipse.net4j.buddies.ui.IFacilityPaneCreator;
-import org.eclipse.net4j.ui.internal.icons.SharedIcons;
+import org.eclipse.net4j.ui.shared.SharedIcons;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 

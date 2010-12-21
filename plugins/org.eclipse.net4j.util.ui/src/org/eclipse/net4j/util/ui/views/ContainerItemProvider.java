@@ -11,7 +11,7 @@
 package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.ui.internal.icons.SharedIcons;
+import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.ISlow;

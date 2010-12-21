@@ -14,7 +14,7 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.ui.messages.Messages;
-import org.eclipse.net4j.ui.internal.icons.SharedIcons;
+import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;

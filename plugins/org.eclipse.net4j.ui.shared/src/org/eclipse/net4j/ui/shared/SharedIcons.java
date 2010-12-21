@@ -8,9 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.ui.internal.icons;
+package org.eclipse.net4j.ui.shared;
 
-import org.eclipse.net4j.ui.internal.icons.bundle.OM;
+import org.eclipse.net4j.ui.internal.shared.bundle.OM;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;

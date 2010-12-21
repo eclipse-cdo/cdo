@@ -16,7 +16,7 @@ import org.eclipse.net4j.buddies.chat.internal.ui.messages.Messages;
 import org.eclipse.net4j.buddies.internal.chat.CommentEvent;
 import org.eclipse.net4j.buddies.internal.ui.views.CollaborationsPane;
 import org.eclipse.net4j.buddies.internal.ui.views.FacilityPane;
-import org.eclipse.net4j.ui.internal.icons.SharedIcons;
+import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.ui.actions.SafeAction;

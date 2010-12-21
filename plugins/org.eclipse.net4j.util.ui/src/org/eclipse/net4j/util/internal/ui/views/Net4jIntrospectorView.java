@@ -10,7 +10,7 @@
  */
 package org.eclipse.net4j.util.internal.ui.views;
 
-import org.eclipse.net4j.ui.internal.icons.SharedIcons;
+import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;

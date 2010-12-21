@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.ui.internal.icons.SharedIcons;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.emf.ecore.EPackage;
 

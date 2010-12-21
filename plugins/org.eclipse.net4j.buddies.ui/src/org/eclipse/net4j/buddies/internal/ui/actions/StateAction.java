@@ -15,7 +15,7 @@ import org.eclipse.net4j.buddies.ISessionManager;
 import org.eclipse.net4j.buddies.common.IBuddy.State;
 import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
 import org.eclipse.net4j.internal.buddies.Self;
-import org.eclipse.net4j.ui.internal.icons.SharedIcons;
+import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 import org.eclipse.jface.action.Action;

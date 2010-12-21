@@ -9,9 +9,9 @@
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
  */
-package org.eclipse.emf.cdo.ui.internal.icons;
+package org.eclipse.emf.cdo.ui.shared;
 
-import org.eclipse.emf.cdo.ui.internal.icons.bundle.OM;
+import org.eclipse.emf.cdo.ui.internal.shared.bundle.OM;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;

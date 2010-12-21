@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
-import org.eclipse.emf.cdo.ui.internal.icons.SharedIcons;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ui.UIUtil;

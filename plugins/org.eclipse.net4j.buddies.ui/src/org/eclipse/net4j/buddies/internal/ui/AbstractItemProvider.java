@@ -15,7 +15,7 @@ import org.eclipse.net4j.buddies.common.IBuddy;
 import org.eclipse.net4j.buddies.common.ICollaboration;
 import org.eclipse.net4j.buddies.common.IMembership;
 import org.eclipse.net4j.buddies.internal.ui.messages.Messages;
-import org.eclipse.net4j.ui.internal.icons.SharedIcons;
+import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.UIUtil;

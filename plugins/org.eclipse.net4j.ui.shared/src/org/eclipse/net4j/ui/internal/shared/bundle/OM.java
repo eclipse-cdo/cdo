@@ -6,10 +6,9 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Eike Stepper - initial API and implementation
- *    Victor Roldan Betancort - maintenance
+ *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.ui.internal.icons.bundle;
+package org.eclipse.net4j.ui.internal.shared.bundle;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -24,13 +23,11 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
  */
 public abstract class OM
 {
-  public static final String BUNDLE_ID = "org.eclipse.emf.cdo.ui.shared"; //$NON-NLS-1$
+  public static final String BUNDLE_ID = "org.eclipse.net4j.ui.shared"; //$NON-NLS-1$
 
   public static final OMBundle BUNDLE = OMPlatform.INSTANCE.bundle(BUNDLE_ID, OM.class);
 
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
-
-  public static final OMTracer TEST = BUNDLE.tracer("test"); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();
 

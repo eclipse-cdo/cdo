@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
-import org.eclipse.emf.cdo.ui.internal.icons.SharedIcons;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 

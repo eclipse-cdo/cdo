@@ -1,14 +1,11 @@
 package org.eclipse.emf.cdo.internal.server.bundle;
 
-import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -17,7 +14,6 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -55,6 +51,7 @@ public class CDOCommandProvider implements CommandProvider
     buffer.append("\tcdo import - import the contents of a repository from an XML file\n");
     buffer.append("\tcdo sessions - dump the sessions of a repository\n");
     buffer.append("\tcdo packages - dump the packages of a repository\n");
+    buffer.append("\tcdo branches - dump the branches of a repository\n");
     return buffer.toString();
   }
 
@@ -105,27 +102,9 @@ public class CDOCommandProvider implements CommandProvider
         return null;
       }
 
-      if ("test".equals(cmd))
+      if ("branches".equals(cmd))
       {
-        InternalRepository repository = getRepository(interpreter, "error1");
-        InternalSession session = repository.getSessionManager().openSession(null);
-        StoreThreadLocal.setSession(session);
-
-        try
-        {
-          CDOView view = CDOServerUtil
-              .openView(session, repository.getBranchManager().getMainBranch().getHead(), false);
-
-          CDOID id = CDOIDUtil.createLong(Long.valueOf(nextArgument(interpreter, "error2")));
-          CDOObject object = view.getObject(id);
-          System.out.println(object);
-        }
-        finally
-        {
-          StoreThreadLocal.release();
-          session.close();
-        }
-
+        branches(interpreter);
         return null;
       }
 
@@ -253,6 +232,22 @@ public class CDOCommandProvider implements CommandProvider
       {
         interpreter.println("  " + packageInfo);
       }
+    }
+  }
+
+  protected void branches(CommandInterpreter interpreter)
+  {
+    InternalRepository repository = getRepository(interpreter, "Syntax: cdo branches <repository-name>");
+    branches(interpreter, repository.getBranchManager().getMainBranch(), "");
+  }
+
+  private void branches(CommandInterpreter interpreter, InternalCDOBranch branch, String prefix)
+  {
+    interpreter.println(prefix + branch);
+    prefix += "  ";
+    for (InternalCDOBranch child : branch.getBranches())
+    {
+      branches(interpreter, child, prefix);
     }
   }
 

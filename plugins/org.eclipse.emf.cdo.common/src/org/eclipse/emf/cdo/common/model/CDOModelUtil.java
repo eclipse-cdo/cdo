@@ -7,9 +7,11 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - Bug 332912 - Caching subtype-relationships in the CDOPackageRegistry
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOClassInfoImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageInfoImpl;
@@ -42,7 +44,9 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -514,6 +518,49 @@ public final class CDOModelUtil
             msg = String.format(msg, resourceURI, pkg.getNsURI());
             throw new IllegalStateException(msg);
           }
+        }
+      }
+    }
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static Map<EClass, List<EClass>> getSubTypes(EPackage.Registry packageRegistry)
+  {
+    Map<EClass, List<EClass>> result = new HashMap<EClass, List<EClass>>();
+    for (String nsURI : packageRegistry.keySet())
+    {
+      EPackage ePackage = packageRegistry.getEPackage(nsURI);
+      getSubTypes(ePackage, result);
+    }
+
+    return result;
+  }
+
+  private static void getSubTypes(EPackage ePackage, Map<EClass, List<EClass>> result)
+  {
+    for (EClassifier classifier : ePackage.getEClassifiers())
+    {
+      if (classifier instanceof EClass)
+      {
+        EClass eClass = (EClass)classifier;
+        for (EClass eSuperType : eClass.getEAllSuperTypes())
+        {
+          if (eSuperType.eIsProxy())
+          {
+            OM.LOG.warn("getSubTypes encountered a proxy EClass which will be ignored: " + eSuperType);
+            continue;
+          }
+
+          List<EClass> list = result.get(eSuperType);
+          if (list == null)
+          {
+            list = new ArrayList<EClass>();
+            result.put(eSuperType, list);
+          }
+
+          list.add(eClass);
         }
       }
     }

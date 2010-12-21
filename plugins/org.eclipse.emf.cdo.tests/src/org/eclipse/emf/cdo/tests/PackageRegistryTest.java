@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - Bug 332912 - Caching subtype-relationships in the CDOPackageRegistry
  */
 package org.eclipse.emf.cdo.tests;
 
@@ -40,11 +41,17 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -674,6 +681,83 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     Company company = (Company)res.getContents().get(0);
     assertEquals("Eike", company.getName());
+  }
+
+  public void testSubclassCacheInvalidation() throws IOException
+  {
+    ResourceSet rs = new ResourceSetImpl();
+    rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new XMIResourceFactoryImpl());
+    Resource r1 = rs.createResource(URI.createURI("file:///SubclassTest1.ecore"));
+    r1.load(OM.BUNDLE.getInputStream("SubclassTest1.ecore"), null);
+    EPackage p1 = (EPackage)r1.getContents().get(0);
+    Resource r2 = rs.createResource(URI.createURI("file:///SubclassTest2.ecore"));
+    r2.load(OM.BUNDLE.getInputStream("SubclassTest2.ecore"), null);
+    EPackage p2 = (EPackage)r2.getContents().get(0);
+
+    CDOSession session = openSession();
+    CDOPackageRegistry registry = session.getPackageRegistry();
+    registry.putEPackage(p1);
+    registry.putEPackage(p2);
+
+    Map<EClass, List<EClass>> subTypes = registry.getSubTypes();
+
+    assertSubtypes((EClass)p1.getEClassifier("RootClass"), subTypes,
+        Arrays.asList("Child1", "Child4", "SubChild", "SubChild3", "Child5", "Child6", "SubChild2", "Child7", "Child8"));
+    assertSubtypes((EClass)p1.getEClassifier("RootAbstractClass"), subTypes,
+        Arrays.asList("Child2", "Child4", "SubChild", "SubChild3", "Child6", "SubChild2", "Child8"));
+    assertSubtypes((EClass)p1.getEClassifier("RootInterface"), subTypes,
+        Arrays.asList("Child3", "Child4", "SubChild", "SubChild3", "Child6", "SubChild2", "Child8"));
+  }
+
+  public void testSubclassCache() throws IOException
+  {
+    ResourceSet rs = new ResourceSetImpl();
+    rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new XMIResourceFactoryImpl());
+    Resource r1 = rs.createResource(URI.createURI("file:///SubclassTest1.ecore"));
+    r1.load(OM.BUNDLE.getInputStream("SubclassTest1.ecore"), null);
+    EPackage p1 = (EPackage)r1.getContents().get(0);
+    Resource r2 = rs.createResource(URI.createURI("file:///SubclassTest2.ecore"));
+    r2.load(OM.BUNDLE.getInputStream("SubclassTest2.ecore"), null);
+    EPackage p2 = (EPackage)r2.getContents().get(0);
+
+    CDOSession session = openSession();
+    CDOPackageRegistry registry = session.getPackageRegistry();
+    registry.putEPackage(p1);
+    Map<EClass, List<EClass>> subTypes = registry.getSubTypes();
+
+    assertSubtypes((EClass)p1.getEClassifier("RootClass"), subTypes,
+        Arrays.asList("Child1", "Child4", "SubChild", "SubChild3", "Child5", "Child6", "SubChild2"));
+    assertSubtypes((EClass)p1.getEClassifier("RootAbstractClass"), subTypes,
+        Arrays.asList("Child2", "Child4", "SubChild", "SubChild3", "Child6", "SubChild2"));
+    assertSubtypes((EClass)p1.getEClassifier("RootInterface"), subTypes,
+        Arrays.asList("Child3", "Child4", "SubChild", "SubChild3", "Child6", "SubChild2"));
+
+    registry.putEPackage(p2);
+    subTypes = registry.getSubTypes();
+
+    assertSubtypes((EClass)p1.getEClassifier("RootClass"), subTypes,
+        Arrays.asList("Child1", "Child4", "SubChild", "SubChild3", "Child5", "Child6", "SubChild2", "Child7", "Child8"));
+    assertSubtypes((EClass)p1.getEClassifier("RootAbstractClass"), subTypes,
+        Arrays.asList("Child2", "Child4", "SubChild", "SubChild3", "Child6", "SubChild2", "Child8"));
+    assertSubtypes((EClass)p1.getEClassifier("RootInterface"), subTypes,
+        Arrays.asList("Child3", "Child4", "SubChild", "SubChild3", "Child6", "SubChild2", "Child8"));
+  }
+
+  private void assertSubtypes(EClass eClass, Map<EClass, List<EClass>> subTypes, List<String> expected)
+  {
+    List<EClass> actual = subTypes.get(eClass);
+    String[] actualArray = new String[actual.size()];
+    for (int i = 0; i < actualArray.length; i++)
+    {
+      actualArray[i] = actual.get(i).getName();
+    }
+
+    String[] expectedArray = expected.toArray(new String[expected.size()]);
+
+    Arrays.sort(actualArray);
+    Arrays.sort(expectedArray);
+
+    assertEquals(expectedArray, actualArray);
   }
 
   public static EPackage loadModel(String fileName) throws IOException

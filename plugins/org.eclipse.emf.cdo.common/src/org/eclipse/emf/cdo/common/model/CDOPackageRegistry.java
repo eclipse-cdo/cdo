@@ -7,12 +7,17 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - Bug 332912 - Caching subtype-relationships in the CDOPackageRegistry
  */
 package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.common.util.Enumerator;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -52,6 +57,11 @@ public interface CDOPackageRegistry extends EPackage.Registry
    * Returns all package infos that are registered in this package registry.
    */
   public CDOPackageInfo[] getPackageInfos();
+
+  /**
+   * @since 4.0
+   */
+  public Map<EClass, List<EClass>> getSubTypes();
 
   /**
    * @since 4.0

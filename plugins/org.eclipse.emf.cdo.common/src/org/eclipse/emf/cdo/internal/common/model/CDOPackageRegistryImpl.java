@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - Bug 332912 - Caching subtype-relationships in the CDOPackageRegistry
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
@@ -35,6 +36,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -74,6 +76,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
   @ExcludeFromDump
   private transient InternalCDOPackageUnit[] packageUnits;
+
+  @ExcludeFromDump
+  private transient Map<EClass, List<EClass>> subTypes;
 
   private Map<Enumerator, EEnumLiteral> enumLiterals = new HashMap<Enumerator, EEnumLiteral>();
 
@@ -534,6 +539,16 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return result;
   }
 
+  public synchronized Map<EClass, List<EClass>> getSubTypes()
+  {
+    if (subTypes == null)
+    {
+      subTypes = CDOModelUtil.getSubTypes(this);
+    }
+
+    return subTypes;
+  }
+
   @Override
   public String toString()
   {
@@ -607,6 +622,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
     packageInfos = null;
     packageUnits = null;
+    subTypes = null;
   }
 
   protected void initPackageUnit(EPackage ePackage)
@@ -620,10 +636,12 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   {
     packageInfos = null;
     packageUnits = null;
+    subTypes = null;
     if (eagerInternalCaches)
     {
       getPackageInfos();
       getPackageUnits();
+      getSubTypes();
     }
   }
 

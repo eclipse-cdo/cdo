@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="package1"
+    nsURI="http://cdo.eclipse.org/tests/PackageRegistry/SubclassTest1.ecore" nsPrefix="p1">
+  <eClassifiers xsi:type="ecore:EClass" name="RootClass"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RootAbstractClass" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RootInterface" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Child1" eSuperTypes="#//RootClass"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Child2" eSuperTypes="#//RootAbstractClass"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Child3" eSuperTypes="#//RootInterface"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Child4" eSuperTypes="#//RootAbstractClass #//RootClass #//RootInterface"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SubChild" eSuperTypes="#//Child4"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SubChild3" eSuperTypes="#//RootClass #//SubChild"/>
+  <eSubpackages name="subpackage" nsURI="http://cdo.eclipse.org/tests/PackageRegistry/SubclassTest1.ecore#subpackage"
+      nsPrefix="sp">
+    <eClassifiers xsi:type="ecore:EClass" name="Child5" eSuperTypes="#//RootClass"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Child6" eSuperTypes="#//RootAbstractClass #//RootClass #//RootInterface"/>
+    <eClassifiers xsi:type="ecore:EClass" name="SubChild2" eSuperTypes="#//Child4"/>
+  </eSubpackages>
+</ecore:EPackage>

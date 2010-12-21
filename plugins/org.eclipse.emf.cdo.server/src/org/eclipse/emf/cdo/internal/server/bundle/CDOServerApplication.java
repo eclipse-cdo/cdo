@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.server.messages.Messages;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.IAppExtension;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -50,7 +51,7 @@ public class CDOServerApplication extends OSGiApplication
   protected void doStart() throws Exception
   {
     super.doStart();
-    IPluginContainer container = getContainer();
+    IManagedContainer container = getContainer();
 
     OM.LOG.info(Messages.getString("CDOServerApplication.1")); //$NON-NLS-1$
     File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml"); //$NON-NLS-1$
@@ -129,7 +130,7 @@ public class CDOServerApplication extends OSGiApplication
     }
   }
 
-  public static IPluginContainer getContainer()
+  public static IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
   }

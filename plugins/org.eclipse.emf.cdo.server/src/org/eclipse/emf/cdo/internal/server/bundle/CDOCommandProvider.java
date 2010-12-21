@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -124,7 +124,7 @@ public class CDOCommandProvider implements CommandProvider
 
   protected void list(CommandInterpreter interpreter) throws Exception
   {
-    IPluginContainer container = CDOServerApplication.getContainer();
+    IManagedContainer container = CDOServerApplication.getContainer();
     for (Object element : container.getElements(RepositoryFactory.PRODUCT_GROUP))
     {
       if (element instanceof InternalRepository)
@@ -139,7 +139,7 @@ public class CDOCommandProvider implements CommandProvider
   {
     String configFile = nextArgument(interpreter, "Syntax: cdo start <config-file>");
 
-    IPluginContainer container = CDOServerApplication.getContainer();
+    IManagedContainer container = CDOServerApplication.getContainer();
     RepositoryConfigurator repositoryConfigurator = new RepositoryConfigurator(container);
     IRepository[] repositories = repositoryConfigurator.configure(new File(configFile));
 
@@ -196,7 +196,7 @@ public class CDOCommandProvider implements CommandProvider
       CDOServerImporter.XML importer = new CDOServerImporter.XML(repository);
       importer.importRepository(in);
 
-      IPluginContainer container = CDOServerApplication.getContainer();
+      IManagedContainer container = CDOServerApplication.getContainer();
       CDOServerUtil.addRepository(container, repository);
 
       interpreter.println("Repository imported");
@@ -276,7 +276,7 @@ public class CDOCommandProvider implements CommandProvider
 
   private InternalRepository getRepository(String name)
   {
-    IPluginContainer container = CDOServerApplication.getContainer();
+    IManagedContainer container = CDOServerApplication.getContainer();
     for (Object element : container.getElements(RepositoryFactory.PRODUCT_GROUP))
     {
       if (element instanceof InternalRepository)

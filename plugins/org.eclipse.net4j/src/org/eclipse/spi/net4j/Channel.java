@@ -15,6 +15,7 @@ import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
+import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
@@ -248,6 +249,12 @@ public class Channel extends Lifecycle implements InternalChannel
   @Override
   public String toString()
   {
+    if (receiveHandler instanceof IProtocol)
+    {
+      IProtocol<?> protocol = (IProtocol<?>)receiveHandler;
+      return MessageFormat.format("Channel[{0}, {1}, {2}]", id, getLocation(), protocol.getType()); //$NON-NLS-1$
+    }
+
     return MessageFormat.format("Channel[{0}, {1}]", id, getLocation()); //$NON-NLS-1$
   }
 

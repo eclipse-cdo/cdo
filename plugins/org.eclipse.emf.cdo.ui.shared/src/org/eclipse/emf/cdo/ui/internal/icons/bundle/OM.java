@@ -15,7 +15,6 @@ import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
-import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
 /**
@@ -34,8 +33,6 @@ public abstract class OM
   public static final OMTracer TEST = BUNDLE.tracer("test"); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();
-
-  public static final OMPreferences PREFS = BUNDLE.preferences();
 
   /**
    * @author Eike Stepper

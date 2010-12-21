@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.ui;
 
+import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.OSGiActivator.StateHandler;
@@ -54,6 +55,7 @@ public class UIActivator extends AbstractUIPlugin
     {
       super.start(context);
       omBundle.setBundleContext(context);
+      ((AbstractBundle)omBundle).start();
       doStart();
     }
     catch (Error error)
@@ -80,6 +82,7 @@ public class UIActivator extends AbstractUIPlugin
     try
     {
       doStop();
+      ((AbstractBundle)omBundle).stop();
       omBundle.setBundleContext(null);
       super.stop(context);
     }

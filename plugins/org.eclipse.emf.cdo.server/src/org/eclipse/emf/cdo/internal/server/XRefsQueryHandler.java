@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - Bug 331619 - Support cross-referencing (XRef) for abstract classes and class hierarchies
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -29,6 +30,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
 
@@ -120,32 +122,45 @@ public class XRefsQueryHandler implements IQueryHandler
   public static void collectSourceCandidates(EClass eClass, Collection<EClass> concreteTypes,
       Map<EClass, List<EReference>> sourceCandidates)
   {
-
-    for (EStructuralFeature eStructuralFeature : eClass.getEStructuralFeatures())
+    for (EStructuralFeature eStructuralFeature : eClass.getEAllStructuralFeatures())
     {
       if (eStructuralFeature instanceof EReference && EMFUtil.isPersistent(eStructuralFeature))
       {
-        collectSourceCandidates((EReference)eStructuralFeature, concreteTypes, sourceCandidates);
+        collectSourceCandidates(eClass, (EReference)eStructuralFeature, concreteTypes, sourceCandidates);
       }
     }
   }
 
   public static void collectSourceCandidates(EReference eReference, Collection<EClass> concreteTypes,
+      Map<EClass, List<EReference>> sourceCandidates, CDOPackageRegistry packageRegistry)
+  {
+    EClass rootClass = eReference.getEContainingClass();
+    Collection<EClass> descendentClasses = packageRegistry.getSubTypes().get(rootClass);
+
+    for (EClass candidateClass : descendentClasses)
+    {
+      collectSourceCandidates(candidateClass, eReference, concreteTypes, sourceCandidates);
+    }
+  }
+
+  public static void collectSourceCandidates(EClass eClass, EReference eReference, Collection<EClass> concreteTypes,
       Map<EClass, List<EReference>> sourceCandidates)
   {
-    if (!eReference.isContainer() && !eReference.isContainment())
+    if (!eClass.isAbstract() && !eClass.isInterface())
     {
-      if (canReference(eReference.getEReferenceType(), concreteTypes))
+      if (!eReference.isContainer() && !eReference.isContainment())
       {
-        EClass eClass = eReference.getEContainingClass();
-        List<EReference> list = sourceCandidates.get(eClass);
-        if (list == null)
+        if (canReference(eReference.getEReferenceType(), concreteTypes))
         {
-          list = new ArrayList<EReference>();
-          sourceCandidates.put(eClass, list);
-        }
+          List<EReference> list = sourceCandidates.get(eClass);
+          if (list == null)
+          {
+            list = new ArrayList<EReference>();
+            sourceCandidates.put(eClass, list);
+          }
 
-        list.add(eReference);
+          list.add(eReference);
+        }
       }
     }
   }
@@ -283,9 +298,11 @@ public class XRefsQueryHandler implements IQueryHandler
 
         if (sourceReferences.length != 0)
         {
+          InternalRepository repository = (InternalRepository)context.getView().getRepository();
+          InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
           for (EReference eReference : sourceReferences)
           {
-            collectSourceCandidates(eReference, concreteTypes, sourceCandidates);
+            collectSourceCandidates(eReference, concreteTypes, sourceCandidates, packageRegistry);
           }
         }
         else

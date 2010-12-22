@@ -289,7 +289,10 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
           int index = cdoContents.indexOf(cdoObject);
           if (index != -1)
           {
-            cdoContents.move(i, index);
+            if (index != i)
+            {
+              cdoContents.move(i, index);
+            }
           }
           else
           {

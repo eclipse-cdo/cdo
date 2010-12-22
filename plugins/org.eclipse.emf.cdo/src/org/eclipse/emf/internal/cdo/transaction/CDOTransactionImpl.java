@@ -386,6 +386,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
+    return merge(source, null, merger);
+  }
+
+  public CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOMerger merger)
+  {
     InternalCDOSession session = getSession();
     synchronized (session.getInvalidationLock())
     {
@@ -407,21 +412,37 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new IllegalArgumentException("Source is already contained in " + target);
       }
 
+      if (sourceBase != null && CDOBranchUtil.isContainedBy(sourceBase, source))
+      {
+        throw new IllegalArgumentException("Source base is not contained in " + source);
+      }
+
       CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
 
       CDORevisionAvailabilityInfo ancestorInfo = session.createRevisionAvailabilityInfo(ancestor);
       CDORevisionAvailabilityInfo targetInfo = session.createRevisionAvailabilityInfo(target);
       CDORevisionAvailabilityInfo sourceInfo = session.createRevisionAvailabilityInfo(source);
+      CDORevisionAvailabilityInfo baseInfo = sourceBase != null ? session.createRevisionAvailabilityInfo(sourceBase)
+          : null;
 
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-      Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, ancestorInfo, null);
+      Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, ancestorInfo, baseInfo);
 
       session.cacheRevisions(targetInfo);
       session.cacheRevisions(sourceInfo);
       session.cacheRevisions(ancestorInfo);
 
+      if (baseInfo != null)
+      {
+        session.cacheRevisions(baseInfo);
+      }
+      else
+      {
+        baseInfo = ancestorInfo;
+      }
+
       CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
-      CDOChangeSet sourceChanges = createChangeSet(ids, ancestorInfo, sourceInfo);
+      CDOChangeSet sourceChanges = createChangeSet(ids, baseInfo, sourceInfo);
 
       CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
       if (result == null)

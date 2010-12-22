@@ -71,6 +71,11 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction, CDOChangeSe
   /**
    * @since 4.0
    */
+  public CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOMerger merger);
+
+  /**
+   * @since 4.0
+   */
   public CDOResourceFolder createResourceFolder(String path);
 
   /**

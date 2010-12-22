@@ -74,6 +74,9 @@ public class CollaborationsItemProvider extends AbstractItemProvider
     return getImage(membership.getBuddy());
   }
 
+  /**
+   * @since 4.0
+   */
   @Override
   public void refreshElement(Object element, boolean updateLabels)
   {

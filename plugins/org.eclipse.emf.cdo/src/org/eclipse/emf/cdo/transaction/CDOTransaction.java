@@ -79,6 +79,11 @@ public interface CDOTransaction extends CDOView, CDOUserTransaction, CDOChangeSe
   public CDOResourceFolder createResourceFolder(String path);
 
   /**
+   * @since 4.0
+   */
+  public CDOResourceFolder getOrCreateResourceFolder(String path);
+
+  /**
    * @see ResourceSet#createResource(URI)
    */
   public CDOResource createResource(String path);

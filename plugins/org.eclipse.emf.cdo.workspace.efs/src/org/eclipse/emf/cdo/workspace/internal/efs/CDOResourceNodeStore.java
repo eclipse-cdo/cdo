@@ -150,7 +150,8 @@ public final class CDOResourceNodeStore extends AbstractResourceNodeStore
       @Override
       protected CDOResourceFolder run(CDOView view)
       {
-        return ((CDOTransaction)view).createResourceFolder(getPath());
+        String path = getPath();
+        return ((CDOTransaction)view).getOrCreateResourceFolder(path);
       }
     }.run(true);
 

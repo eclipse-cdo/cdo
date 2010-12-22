@@ -789,6 +789,26 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     attachNewResourceNode(folder, resourceName, resource);
   }
 
+  public CDOResourceFolder getOrCreateResourceFolder(String path)
+  {
+    checkActive();
+
+    try
+    {
+      CDOID id = getResourceNodeID(path);
+      if (!CDOIDUtil.isNull(id))
+      {
+        return (CDOResourceFolder)getObject(id);
+      }
+    }
+    catch (Exception ignore)
+    {
+      // Just create the missing resource
+    }
+
+    return createResourceFolder(path);
+  }
+
   /**
    * @return never <code>null</code>;
    * @since 2.0

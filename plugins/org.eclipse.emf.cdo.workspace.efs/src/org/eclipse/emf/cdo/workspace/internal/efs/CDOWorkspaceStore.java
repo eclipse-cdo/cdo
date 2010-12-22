@@ -262,7 +262,7 @@ public final class CDOWorkspaceStore extends AbstractResourceNodeStore
 
       try
       {
-        CDOResource cdoResource = transaction.getResource(cdoPath);
+        CDOResource cdoResource = transaction.getOrCreateResource(cdoPath);
         saveContents(xmiResource.getContents(), cdoResource.getContents());
       }
       finally

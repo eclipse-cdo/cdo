@@ -440,6 +440,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getOrCreateResource(path);
   }
 
+  /**
+   * @since 4.0
+   */
+  public CDOResourceFolder getOrCreateResourceFolder(String path)
+  {
+    return delegate.getOrCreateResourceFolder(path);
+  }
+
   public CDOResource getResource(String path, boolean loadOnDemand)
   {
     return delegate.getResource(path, loadOnDemand);

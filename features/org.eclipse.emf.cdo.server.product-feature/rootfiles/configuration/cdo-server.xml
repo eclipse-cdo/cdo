@@ -15,6 +15,7 @@
 		<property name="overrideUUID" value=""/>
 		<property name="supportingAudits" value="true"/>
 		<property name="supportingBranches" value="true"/>
+		<property name="supportingEcore" value="true"/>
 
 		<!--
 		<userManager type="file" description="_database/repo1.users"/>

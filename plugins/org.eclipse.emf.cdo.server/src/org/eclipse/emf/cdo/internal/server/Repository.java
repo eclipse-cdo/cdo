@@ -132,6 +132,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private boolean supportingBranches;
 
+  private boolean supportingEcore;
+
   private boolean ensuringReferentialIntegrity;
 
   private InternalCDOPackageRegistry packageRegistry;
@@ -285,6 +287,11 @@ public class Repository extends Container<Object> implements InternalRepository
   public boolean isSupportingBranches()
   {
     return supportingBranches;
+  }
+
+  public boolean isSupportingEcore()
+  {
+    return supportingEcore;
   }
 
   public boolean isEnsuringReferentialIntegrity()
@@ -1290,8 +1297,8 @@ public class Repository extends Container<Object> implements InternalRepository
       InternalCDOPackageUnit ecoreUnit = initSystemPackage(EcorePackage.eINSTANCE);
       InternalCDOPackageUnit eresourceUnit = initSystemPackage(EresourcePackage.eINSTANCE);
       InternalCDOPackageUnit etypesUnit = initSystemPackage(EtypesPackage.eINSTANCE);
-      InternalCDOPackageUnit[] systemUnits = { ecoreUnit, eresourceUnit, etypesUnit };
 
+      InternalCDOPackageUnit[] systemUnits = { ecoreUnit, eresourceUnit, etypesUnit };
       writer.writePackageUnits(systemUnits, new Monitor());
       writer.commit(new Monitor());
     }
@@ -1465,7 +1472,13 @@ public class Repository extends Container<Object> implements InternalRepository
       }
     }
 
-    revisionManager.setSupportingBranches(supportingBranches);
+    {
+      String value = getProperties().get(Props.SUPPORTING_ECORE);
+      if (value != null)
+      {
+        supportingEcore = Boolean.valueOf(value);
+      }
+    }
 
     {
       String value = getProperties().get(Props.ENSURE_REFERENTIAL_INTEGRITY);
@@ -1474,6 +1487,8 @@ public class Repository extends Container<Object> implements InternalRepository
         ensuringReferentialIntegrity = Boolean.valueOf(value);
       }
     }
+
+    revisionManager.setSupportingBranches(supportingBranches);
   }
 
   @Override

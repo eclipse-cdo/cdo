@@ -1573,7 +1573,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         EPackage topLevelPackage = EMFUtil.getTopLevelPackage(ePackage);
         if (ePackage == topLevelPackage || usedPackages.add(topLevelPackage))
         {
-          if (!CDOModelUtil.isSystemPackage(topLevelPackage))
+          // if (!CDOModelUtil.isSystemPackage(topLevelPackage))
           {
             CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(topLevelPackage);
             if (packageUnit.getState() == CDOPackageUnit.State.NEW)
@@ -1611,7 +1611,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     for (EPackage usedPackage : usedTopLevelPackages)
     {
-      if (!CDOModelUtil.isSystemPackage(usedPackage))
+      // if (!CDOModelUtil.isSystemPackage(usedPackage))
       {
         CDOPackageUnit packageUnit = packageRegistry.getPackageUnit(usedPackage);
         if (packageUnit == null)

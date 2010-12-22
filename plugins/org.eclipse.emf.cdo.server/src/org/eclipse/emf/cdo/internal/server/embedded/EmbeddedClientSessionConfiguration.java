@@ -125,6 +125,11 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
       return session.getRepository().isSupportingBranches();
     }
 
+    public boolean isSupportingEcore()
+    {
+      return session.getRepository().isSupportingEcore();
+    }
+
     public boolean isEnsuringReferentialIntegrity()
     {
       return session.getRepository().isEnsuringReferentialIntegrity();

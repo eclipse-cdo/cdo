@@ -459,10 +459,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   private void mapPackageInfos(InternalCDOPackageInfo[] packageInfos, Connection connection, boolean unmap)
   {
+    boolean supportingEcore = getStore().getRepository().isSupportingEcore();
     for (InternalCDOPackageInfo packageInfo : packageInfos)
     {
       EPackage ePackage = packageInfo.getEPackage();
-      if (!CDOModelUtil.isCorePackage(ePackage))
+      if (!CDOModelUtil.isCorePackage(ePackage) || supportingEcore)
       {
         mapClasses(connection, unmap, EMFUtil.getPersistentClasses(ePackage));
       }

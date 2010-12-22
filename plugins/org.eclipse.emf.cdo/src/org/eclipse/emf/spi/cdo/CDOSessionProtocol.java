@@ -251,6 +251,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private boolean repositorySupportingBranches;
 
+    private boolean repositorySupportingEcore;
+
     private boolean repositoryEnsuringReferentialIntegrity;
 
     private List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
@@ -261,7 +263,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public OpenSessionResult(int sessionID, String userID, String repositoryUUID,
         CDOCommonRepository.Type repositoryType, CDOCommonRepository.State repositoryState, String storeType,
         Set<CDOID.ObjectType> objectIDTypes, long repositoryCreationTime, long lastUpdateTime, CDOID rootResourceID,
-        boolean repositorySupportingAudits, boolean repositorySupportingBranches,
+        boolean repositorySupportingAudits, boolean repositorySupportingBranches, boolean repositorySupportingEcore,
         boolean repositoryEnsuringReferentialIntegrity)
     {
       this.sessionID = sessionID;
@@ -276,6 +278,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       this.rootResourceID = rootResourceID;
       this.repositorySupportingAudits = repositorySupportingAudits;
       this.repositorySupportingBranches = repositorySupportingBranches;
+      this.repositorySupportingEcore = repositorySupportingEcore;
       this.repositoryEnsuringReferentialIntegrity = repositoryEnsuringReferentialIntegrity;
     }
 
@@ -353,6 +356,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public boolean isRepositorySupportingBranches()
     {
       return repositorySupportingBranches;
+    }
+
+    /**
+     * @since 4.0
+     */
+    public boolean isRepositorySupportingEcore()
+    {
+      return repositorySupportingEcore;
     }
 
     /**

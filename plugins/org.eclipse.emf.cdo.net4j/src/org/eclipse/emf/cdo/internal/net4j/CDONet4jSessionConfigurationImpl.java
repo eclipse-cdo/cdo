@@ -147,6 +147,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private boolean supportingBranches;
 
+    private boolean supportingEcore;
+
     private boolean ensuringReferentialIntegrity;
 
     private InternalCDOSession session;
@@ -164,6 +166,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       rootResourceID = result.getRootResourceID();
       supportingAudits = result.isRepositorySupportingAudits();
       supportingBranches = result.isRepositorySupportingBranches();
+      supportingEcore = result.isRepositorySupportingBranches();
       ensuringReferentialIntegrity = result.isRepositoryEnsuringReferentialIntegrity();
       this.session = session;
     }
@@ -244,6 +247,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public boolean isSupportingBranches()
     {
       return supportingBranches;
+    }
+
+    public boolean isSupportingEcore()
+    {
+      return supportingEcore;
     }
 
     public boolean isEnsuringReferentialIntegrity()

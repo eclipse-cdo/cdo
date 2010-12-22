@@ -201,6 +201,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
     public static final String SUPPORTING_BRANCHES = "supportingBranches"; //$NON-NLS-1$
 
     /**
+     * @since 4.0
+     */
+    public static final String SUPPORTING_ECORE = "supportingEcore"; //$NON-NLS-1$
+
+    /**
      * @since 3.0
      */
     public static final String ENSURE_REFERENTIAL_INTEGRITY = "ensureReferentialIntegrity"; //$NON-NLS-1$

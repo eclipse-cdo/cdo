@@ -74,6 +74,13 @@ public interface CDOCommonRepository extends CDOTimeProvider
   public boolean isSupportingBranches();
 
   /**
+   * Returns <code>true</code> if this repository supports instances of Ecore, <code>false</code> otherwise.
+   * 
+   * @since 4.0
+   */
+  public boolean isSupportingEcore();
+
+  /**
    * Returns <code>true</code> if this repository ensures referential integrity, <code>false</code> otherwise.
    * 
    * @since 4.0

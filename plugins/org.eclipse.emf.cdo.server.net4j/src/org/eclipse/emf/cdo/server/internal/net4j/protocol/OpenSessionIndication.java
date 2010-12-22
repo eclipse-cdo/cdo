@@ -137,6 +137,7 @@ public class OpenSessionIndication extends RepositoryTimeIndication
     out.writeCDOID(repository.getRootResourceID());
     out.writeBoolean(repository.isSupportingAudits());
     out.writeBoolean(repository.isSupportingBranches());
+    out.writeBoolean(repository.isSupportingEcore());
     out.writeBoolean(repository.isEnsuringReferentialIntegrity());
 
     CDOPackageUnit[] packageUnits = repository.getPackageRegistry().getPackageUnits();

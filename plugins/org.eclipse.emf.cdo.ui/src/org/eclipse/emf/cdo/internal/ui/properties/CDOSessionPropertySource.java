@@ -48,6 +48,10 @@ public class CDOSessionPropertySource extends CDOPropertySource<CDOSession>
 
   private static final String SUPPORTING_BRANCHES = "supportingBranches"; //$NON-NLS-1$
 
+  private static final String SUPPORTING_ECORE = "supportingEcore"; //$NON-NLS-1$
+
+  private static final String ENSURE_REFERENTIAL_INTEGRITY = "ensureReferentialIntegrity"; //$NON-NLS-1$
+
   private static final String STORE_TYPE = "storeType"; //$NON-NLS-1$
 
   private static final String OBJECT_ID_TYPES = "objectIDTypes"; //$NON-NLS-1$
@@ -55,32 +59,64 @@ public class CDOSessionPropertySource extends CDOPropertySource<CDOSession>
   public CDOSessionPropertySource(CDOSession object)
   {
     super(object);
-    addPropertyDescriptor(CATEGORY_SESSION, SESSION_ID,
-        Messages.getString("CDOSessionPropertySource_0"), Messages.getString("CDOSessionPropertySource_3")); //$NON-NLS-1$ //$NON-NLS-2$
-    addPropertyDescriptor(CATEGORY_SESSION, USER_ID,
-        Messages.getString("CDOSessionPropertySource_4"), Messages.getString("CDOSessionPropertySource_5")); //$NON-NLS-1$ //$NON-NLS-2$
-    addPropertyDescriptor(CATEGORY_SESSION, PASSIVE_UPDATE_ENABLED, Messages.getString("CDOSessionPropertySource_6"), //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_SESSION, SESSION_ID,//
+        Messages.getString("CDOSessionPropertySource_0"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_3")); //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_SESSION, USER_ID, //
+        Messages.getString("CDOSessionPropertySource_4"), Messages.getString("CDOSessionPropertySource_5")); //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_SESSION, PASSIVE_UPDATE_ENABLED, //
+        Messages.getString("CDOSessionPropertySource_6"), //$NON-NLS-1$
         Messages.getString("CDOSessionPropertySource_7")); //$NON-NLS-1$
-    addPropertyDescriptor(CATEGORY_SESSION, PASSIVE_UPDATE_MODE, Messages.getString("CDOSessionPropertySource_8"), //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_SESSION, PASSIVE_UPDATE_MODE, //
+        Messages.getString("CDOSessionPropertySource_8"), //$NON-NLS-1$
         Messages.getString("CDOSessionPropertySource_9")); //$NON-NLS-1$
-    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_NAME,
-        Messages.getString("CDOSessionPropertySource_10"), Messages.getString("CDOSessionPropertySource_11")); //$NON-NLS-1$ //$NON-NLS-2$
-    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_UUID,
-        Messages.getString("CDOSessionPropertySource_12"), Messages.getString("CDOSessionPropertySource_13")); //$NON-NLS-1$ //$NON-NLS-2$
-    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_TYPE, Messages.getString("CDOSessionPropertySource_14"), //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_NAME, //
+        Messages.getString("CDOSessionPropertySource_10"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_11")); //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_UUID, //
+        Messages.getString("CDOSessionPropertySource_12"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_13")); //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_TYPE, //
+        Messages.getString("CDOSessionPropertySource_14"), //$NON-NLS-1$
         Messages.getString("CDOSessionPropertySource_15")); //$NON-NLS-1$
-    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_STATE, Messages.getString("CDOSessionPropertySource_16"), //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_STATE, //
+        Messages.getString("CDOSessionPropertySource_16"), //$NON-NLS-1$
         Messages.getString("CDOSessionPropertySource_17")); //$NON-NLS-1$
-    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_CREATION_TIME,
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, REPOSITORY_CREATION_TIME, //
         Messages.getString("CDOSessionPropertySource_18"), //$NON-NLS-1$
         Messages.getString("CDOSessionPropertySource_19")); //$NON-NLS-1$
-    addPropertyDescriptor(CATEGORY_REPOSITORY, SUPPORTING_AUDITS, Messages.getString("CDOSessionPropertySource_20"), //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, SUPPORTING_AUDITS, //
+        Messages.getString("CDOSessionPropertySource_20"), //$NON-NLS-1$
         Messages.getString("CDOSessionPropertySource_21")); //$NON-NLS-1$
-    addPropertyDescriptor(CATEGORY_REPOSITORY, SUPPORTING_BRANCHES, Messages.getString("CDOSessionPropertySource_22"), //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, SUPPORTING_BRANCHES, //
+        Messages.getString("CDOSessionPropertySource_22"), //$NON-NLS-1$
         Messages.getString("CDOSessionPropertySource_23")); //$NON-NLS-1$
-    addPropertyDescriptor(CATEGORY_REPOSITORY, STORE_TYPE, Messages.getString("CDOSessionPropertySource_24"), //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, SUPPORTING_ECORE, //
+        Messages.getString("CDOSessionPropertySource_28"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_29")); //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, ENSURE_REFERENTIAL_INTEGRITY, //
+        Messages.getString("CDOSessionPropertySource_30"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_31")); //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, STORE_TYPE, //
+        Messages.getString("CDOSessionPropertySource_24"), //$NON-NLS-1$
         Messages.getString("CDOSessionPropertySource_25")); //$NON-NLS-1$
-    addPropertyDescriptor(CATEGORY_REPOSITORY, OBJECT_ID_TYPES, Messages.getString("CDOSessionPropertySource_26"), //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, OBJECT_ID_TYPES, //
+        Messages.getString("CDOSessionPropertySource_26"), //$NON-NLS-1$
         Messages.getString("CDOSessionPropertySource_27")); //$NON-NLS-1$
   }
 

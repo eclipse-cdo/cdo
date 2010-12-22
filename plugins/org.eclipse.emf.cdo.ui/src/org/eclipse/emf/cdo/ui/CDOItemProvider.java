@@ -127,9 +127,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     {
       CDOResourceNode node = (CDOResourceNode)element;
       CDOResourceNode parent = (CDOResourceNode)node.eContainer();
-      if (parent.isRoot())
+      if (parent == null || parent.isRoot())
       {
-        return parent.cdoView();
+        return node.cdoView();
       }
 
       return parent;

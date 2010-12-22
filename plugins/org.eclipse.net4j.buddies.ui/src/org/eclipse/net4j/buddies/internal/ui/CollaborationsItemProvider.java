@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -75,7 +75,7 @@ public class CollaborationsItemProvider extends AbstractItemProvider
   }
 
   @Override
-  protected void refreshElement(Object element, boolean updateLabels)
+  public void refreshElement(Object element, boolean updateLabels)
   {
     super.refreshElement(null, updateLabels);
   }

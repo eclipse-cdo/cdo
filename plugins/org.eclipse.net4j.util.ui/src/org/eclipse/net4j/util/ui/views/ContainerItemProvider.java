@@ -44,6 +44,9 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
+/**
+ * @author Eike Stepper
+ */
 public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends ItemProvider<CONTAINER>
 {
   private Map<Object, Node> nodes = new HashMap<Object, Node>();

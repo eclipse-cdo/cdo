@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -111,7 +112,10 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     refreshElement(null, updateLabels);
   }
 
-  protected void refreshElement(final Object element, final boolean updateLabels)
+  /**
+   * @since 3.1
+   */
+  public void refreshElement(final Object element, final boolean updateLabels)
   {
     try
     {
@@ -135,9 +139,9 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
   }
 
   /**
-   * @since 2.0
+   * @since 3.1
    */
-  protected void refreshSynced(final Object element, final boolean updateLabels)
+  public void refreshSynced(final Object element, final boolean updateLabels)
   {
     if (element != null && element != input)
     {
@@ -149,7 +153,10 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     }
   }
 
-  protected void updateLabels(final Object element)
+  /**
+   * @since 3.1
+   */
+  public void updateLabels(final Object element)
   {
     try
     {
@@ -172,17 +179,46 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
     }
   }
 
-  protected void revealElement(final Object element)
+  /**
+   * @since 3.1
+   */
+  public void revealElement(final Object element)
   {
     try
     {
-      getDisplay().syncExec(new Runnable()
+      getDisplay().asyncExec(new Runnable()
       {
         public void run()
         {
           try
           {
             viewer.reveal(element);
+          }
+          catch (RuntimeException ignore)
+          {
+          }
+        }
+      });
+    }
+    catch (RuntimeException ignore)
+    {
+    }
+  }
+
+  /**
+   * @since 3.1
+   */
+  public void selectElement(final Object element, final boolean reveal)
+  {
+    try
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            viewer.setSelection(new StructuredSelection(element), reveal);
           }
           catch (RuntimeException ignore)
           {

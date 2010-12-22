@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -75,7 +76,9 @@ public class CreateResourceNodeAction extends ViewAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
+    CDOTransaction transaction = getTransaction();
     CDOResourceNode node = null;
+
     if (createFolder)
     {
       node = EresourceFactory.eINSTANCE.createCDOResourceFolder();
@@ -93,14 +96,17 @@ public class CreateResourceNodeAction extends ViewAction
     {
       if (selectedNode instanceof CDOResourceFolder)
       {
-        getTransaction().createResource(selectedNode.getPath() + "/" + resourceNodeName); //$NON-NLS-1$
+        node = transaction.createResource(selectedNode.getPath() + "/" + resourceNodeName); //$NON-NLS-1$
       }
       else
       {
-        getTransaction().createResource(resourceNodeName);
+        node = transaction.createResource(resourceNodeName);
       }
     }
 
+    transaction.commit();
+
     itemProvider.refreshViewer(true);
+    itemProvider.selectElement(node, true);
   }
 }

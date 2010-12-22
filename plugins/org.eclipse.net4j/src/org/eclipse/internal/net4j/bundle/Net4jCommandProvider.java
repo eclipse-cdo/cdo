@@ -1,8 +1,6 @@
 package org.eclipse.internal.net4j.bundle;
 
-import org.eclipse.net4j.acceptor.IAcceptor;
-import org.eclipse.net4j.channel.IChannel;
-import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.osgi.framework.console.CommandInterpreter;
@@ -26,23 +24,35 @@ public class Net4jCommandProvider implements CommandProvider
   {
     StringBuffer buffer = new StringBuffer();
     buffer.append("---Net4j commands---\n");
-    buffer.append("\tacceptors list - list all active acceptors, their connectors and channels\n");
-    buffer.append("\tconnectors list - list all active connectors and their channels\n");
+    buffer.append("\telements - list all managed elements\n");
+    buffer.append("\tacceptors - list all active acceptors, their connectors and channels\n");
+    buffer.append("\tconnectors - list all active connectors and their channels\n");
     return buffer.toString();
+  }
+
+  public Object _elements(CommandInterpreter interpreter)
+  {
+    try
+    {
+      for (String productGroup : getContainer().getProductGroups())
+      {
+        interpreter.println(productGroup);
+        printFactoryTypes(interpreter, productGroup, "  ");
+      }
+    }
+    catch (Exception ex)
+    {
+      interpreter.printStackTrace(ex);
+    }
+
+    return null;
   }
 
   public Object _acceptors(CommandInterpreter interpreter)
   {
     try
     {
-      String cmd = interpreter.nextArgument();
-      if ("list".equals(cmd))
-      {
-        acceptorsList(interpreter);
-        return null;
-      }
-
-      interpreter.println(getHelp());
+      printFactoryTypes(interpreter, AcceptorFactory.PRODUCT_GROUP, "");
     }
     catch (Exception ex)
     {
@@ -56,14 +66,7 @@ public class Net4jCommandProvider implements CommandProvider
   {
     try
     {
-      String cmd = interpreter.nextArgument();
-      if ("list".equals(cmd))
-      {
-        connectorsList(interpreter);
-        return null;
-      }
-
-      interpreter.println(getHelp());
+      printFactoryTypes(interpreter, ConnectorFactory.PRODUCT_GROUP, "");
     }
     catch (Exception ex)
     {
@@ -73,38 +76,30 @@ public class Net4jCommandProvider implements CommandProvider
     return null;
   }
 
-  protected void acceptorsList(CommandInterpreter interpreter) throws Exception
+  protected IPluginContainer getContainer()
   {
-    for (Object element : IPluginContainer.INSTANCE.getElements(AcceptorFactory.PRODUCT_GROUP))
+    return IPluginContainer.INSTANCE;
+  }
+
+  private void printFactoryTypes(CommandInterpreter interpreter, String productGroup, String prefix)
+  {
+    IPluginContainer container = getContainer();
+    for (String factoryType : container.getFactoryTypes(productGroup))
     {
-      if (element instanceof IAcceptor)
-      {
-        IAcceptor acceptor = (IAcceptor)element;
-        interpreter.println(acceptor);
-        for (IConnector connector : acceptor.getAcceptedConnectors())
-        {
-          interpreter.println("  " + connector);
-          for (IChannel channel : connector.getChannels())
-          {
-            interpreter.println("    " + channel);
-          }
-        }
-      }
+      interpreter.println(prefix + factoryType);
+      printElements(interpreter, container.getElements(productGroup, factoryType), prefix + "  ");
     }
   }
 
-  protected void connectorsList(CommandInterpreter interpreter) throws Exception
+  private void printElements(CommandInterpreter interpreter, Object[] elements, String prefix)
   {
-    for (Object element : IPluginContainer.INSTANCE.getElements(ConnectorFactory.PRODUCT_GROUP))
+    for (Object element : elements)
     {
-      if (element instanceof IConnector)
+      interpreter.println(prefix + element);
+      if (element instanceof IContainer)
       {
-        IConnector connector = (IConnector)element;
-        interpreter.println(connector);
-        for (IChannel channel : connector.getChannels())
-        {
-          interpreter.println("    " + channel);
-        }
+        IContainer<?> container = (IContainer<?>)element;
+        printElements(interpreter, container.getElements(), prefix + "  ");
       }
     }
   }

@@ -2210,7 +2210,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       EPackage ePackage = (EPackage)value;
       CDOPackageInfo packageInfo = packageRegistry.getPackageInfo(ePackage);
       CDOPackageUnit packageUnit = packageInfo.getPackageUnit();
-      if (packageUnit.isSystem())
+      if (packageUnit.isResource())
       {
         return null;
       }

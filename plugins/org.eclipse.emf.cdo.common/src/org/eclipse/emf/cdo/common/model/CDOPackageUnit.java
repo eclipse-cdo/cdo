@@ -93,10 +93,20 @@ public interface CDOPackageUnit extends Comparable<CDOPackageUnit>
    * Returns <code>true</code> is this package unit describes one of the models <i>Ecore</i>, <i>Eresource</i> or
    * <i>Etypes</i>, <code>false</code> otherwise.
    * <p>
-   * Note that the models <i>Ecore</i>, <i>Eresource</i> and <i>Etypes</i> are expected to present as generated
+   * Note that the models <i>Ecore</i>, <i>Eresource</i> and <i>Etypes</i> are expected to be present as generated
    * {@link Type#NATIVE NATIVE} models in all deployments.
    */
   public boolean isSystem();
+
+  /**
+   * Returns <code>true</code> is this package unit describes the model <i>Eresource</i> , <code>false</code> otherwise.
+   * <p>
+   * Note that the model <i>Eresource</i> is expected to bepresent as generated {@link Type#NATIVE NATIVE} models in all
+   * deployments.
+   * 
+   * @since 4.0
+   */
+  public boolean isResource();
 
   /**
    * Describes the possible states a {@link CDOPackageUnit package unit} may be in during its lifecycle.

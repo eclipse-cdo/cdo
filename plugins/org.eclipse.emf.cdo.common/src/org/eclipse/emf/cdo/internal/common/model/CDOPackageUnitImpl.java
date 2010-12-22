@@ -200,6 +200,11 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     return getTopLevelPackageInfo().isSystemPackage();
   }
 
+  public boolean isResource()
+  {
+    return getTopLevelPackageInfo().isResourcePackage();
+  }
+
   public void init(EPackage ePackage)
   {
     EPackage topLevelPackage = EMFUtil.getTopLevelPackage(ePackage);

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.presentation;
 
@@ -393,7 +393,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated
+     * @generated NOT
      */
     public void createControl(Composite parent)
     {
@@ -428,9 +428,16 @@ public class AcoreModelWizard extends Wizard implements INewWizard
         initialObjectField.setLayoutData(data);
       }
 
+      int i = 0;
       for (String objectName : getInitialObjectNames())
       {
         initialObjectField.add(getLabel(objectName));
+        if (AcorePackage.Literals.ACORE_ROOT.getName().equals(objectName))
+        {
+          initialObjectField.select(i);
+        }
+
+        ++i;
       }
 
       if (initialObjectField.getItemCount() == 1)

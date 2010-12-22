@@ -843,14 +843,6 @@ public class DawnResourceHelper
     }
   }
 
-  public static void printResourceSysout(Resource r)
-  {
-    for (EObject o : r.getContents())
-    {
-      printEObjectFullSysout(o, 0);
-    }
-  }
-
   public static void printEObject(EObject o, int level)
   {
     for (Object child : o.eContents())
@@ -861,157 +853,77 @@ public class DawnResourceHelper
 
   public static void printEObjectFull(EObject o, int level)
   {
-    System.out.println(tabs(level) + "--------------------------------------------");
-    System.out.println(tabs(level) + "Object: " + o);
-    System.out.println(tabs(level) + "o.eContainer: " + o.eContainer());
-    System.out.println(tabs(level) + "o.eContainingFeature: " + o.eContainingFeature());
-    System.out.println(tabs(level) + "o.eContainmentFeature: " + o.eContainmentFeature());
-    System.out.println(tabs(level) + "o.eIsProxy: " + o.eIsProxy());
-    System.out.println(tabs(level) + "o.eResource: " + o.eResource());
-    System.out.println(tabs(level) + "o.getClass: " + o.getClass());
-    System.out.println(tabs(level) + "o.eClass: " + o.eClass());
-    System.out.println(tabs(level) + "o.eCrossReferences: " + o.eCrossReferences());
+    print(tabs(level) + "--------------------------------------------");
+    print(tabs(level) + "Object: " + o);
+    print(tabs(level) + "o.eContainer: " + o.eContainer());
+    print(tabs(level) + "o.eContainingFeature: " + o.eContainingFeature());
+    print(tabs(level) + "o.eContainmentFeature: " + o.eContainmentFeature());
+    print(tabs(level) + "o.eIsProxy: " + o.eIsProxy());
+    print(tabs(level) + "o.eResource: " + o.eResource());
+    print(tabs(level) + "o.getClass: " + o.getClass());
+    print(tabs(level) + "o.eClass: " + o.eClass());
+    print(tabs(level) + "o.eCrossReferences: " + o.eCrossReferences());
 
-    System.out.println(tabs(level) + "o.eClass.getClassifierID: " + o.eClass().getClassifierID());
-    System.out.println(tabs(level) + "o.eClass.getFeatureCount: " + o.eClass().getFeatureCount());
-    System.out.println(tabs(level) + "o.eClass.getInstanceClassName: " + o.eClass().getInstanceClassName());
-    System.out.println(tabs(level) + "o.eClass.getInstanceTypeName: " + o.eClass().getInstanceTypeName());
-    System.out.println(tabs(level) + "o.eClass.getName: " + o.eClass().getName());
-    System.out.println(tabs(level) + "o.eClass.getDefaultValue: " + o.eClass().getDefaultValue());
-    System.out.println(tabs(level) + "o.eClass.getEPackage: " + o.eClass().getEPackage());
-    System.out.println(tabs(level) + "o.eClass.getEIDAttribute: " + o.eClass().getEIDAttribute());
-    System.out.println(tabs(level) + "o.eClass.getInstanceClass: " + o.eClass().getInstanceClass());
+    print(tabs(level) + "o.eClass.getClassifierID: " + o.eClass().getClassifierID());
+    print(tabs(level) + "o.eClass.getFeatureCount: " + o.eClass().getFeatureCount());
+    print(tabs(level) + "o.eClass.getInstanceClassName: " + o.eClass().getInstanceClassName());
+    print(tabs(level) + "o.eClass.getInstanceTypeName: " + o.eClass().getInstanceTypeName());
+    print(tabs(level) + "o.eClass.getName: " + o.eClass().getName());
+    print(tabs(level) + "o.eClass.getDefaultValue: " + o.eClass().getDefaultValue());
+    print(tabs(level) + "o.eClass.getEPackage: " + o.eClass().getEPackage());
+    print(tabs(level) + "o.eClass.getEIDAttribute: " + o.eClass().getEIDAttribute());
+    print(tabs(level) + "o.eClass.getInstanceClass: " + o.eClass().getInstanceClass());
 
     for (EAttribute attribute : o.eClass().getEAllAttributes())
     {
-      System.out.println(tabs(level + 1) + "o.eClass.getEAllAttributes.attribute: '" + attribute.getName() + "': "
+      print(tabs(level + 1) + "o.eClass.getEAllAttributes.attribute: '" + attribute.getName() + "': "
           + o.eGet(attribute));
     }
     for (EAnnotation annotation : o.eClass().getEAnnotations())
     {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAnnotations().annotation: '" + annotation);
+      print(tabs(level + 1) + "o.eClass().getEAnnotations().annotation: '" + annotation);
     }
     for (EReference containment : o.eClass().getEAllContainments())
     {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllContainments().containment: '" + containment);
+      print(tabs(level + 1) + "o.eClass().getEAllContainments().containment: '" + containment);
     }
     for (EGenericType genericSupertype : o.eClass().getEAllGenericSuperTypes())
     {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllGenericSuperTypes().genericSupertype: '"
-          + genericSupertype);
+      print(tabs(level + 1) + "o.eClass().getEAllGenericSuperTypes().genericSupertype: '" + genericSupertype);
     }
     for (EOperation operation : o.eClass().getEAllOperations())
     {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllOperations().operation: '" + operation);
+      print(tabs(level + 1) + "o.eClass().getEAllOperations().operation: '" + operation);
     }
 
     for (EReference reference : o.eClass().getEAllReferences())
     {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllReferences().reference: '" + reference);
+      print(tabs(level + 1) + "o.eClass().getEAllReferences().reference: '" + reference);
     }
     for (EClass supertype : o.eClass().getEAllSuperTypes())
     {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllSuperTypes().supertype: '" + supertype);
+      print(tabs(level + 1) + "o.eClass().getEAllSuperTypes().supertype: '" + supertype);
     }
     for (EStructuralFeature structuralFeature : o.eClass().getEAllStructuralFeatures())
     {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllStructuralFeatures().structuralFeature: '"
-          + structuralFeature);
+      print(tabs(level + 1) + "o.eClass().getEAllStructuralFeatures().structuralFeature: '" + structuralFeature);
     }
     for (EAnnotation annotation : o.eClass().getEAnnotations())
     {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAnnotations().annotation: '" + annotation);
+      print(tabs(level + 1) + "o.eClass().getEAnnotations().annotation: '" + annotation);
     }
     for (EAttribute attribute : o.eClass().getEAttributes())
     {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAttributes().annotation: '" + attribute);
+      print(tabs(level + 1) + "o.eClass().getEAttributes().annotation: '" + attribute);
     }
     for (Adapter adapter : o.eClass().eAdapters())
     {
-      System.out.println(tabs(level + 1) + "o.eClass().eAdapters().adapter: '" + adapter);
+      print(tabs(level + 1) + "o.eClass().eAdapters().adapter: '" + adapter);
     }
 
     for (Object child : o.eContents())
     {
       printEObjectFull((EObject)child, level + 2);
-    }
-  }
-
-  public static void printEObjectFullSysout(EObject o, int level)
-  {
-    System.out.println(tabs(level) + "--------------------------------------------");
-    System.out.println(tabs(level) + "Object: " + o);
-    System.out.println(tabs(level) + "o.eContainer: " + o.eContainer());
-    System.out.println(tabs(level) + "o.eContainingFeature: " + o.eContainingFeature());
-    System.out.println(tabs(level) + "o.eContainmentFeature: " + o.eContainmentFeature());
-    System.out.println(tabs(level) + "o.eIsProxy: " + o.eIsProxy());
-    System.out.println(tabs(level) + "o.eResource: " + o.eResource());
-    System.out.println(tabs(level) + "o.getClass: " + o.getClass());
-    System.out.println(tabs(level) + "o.eClass: " + o.eClass());
-    System.out.println(tabs(level) + "o.eCrossReferences: " + o.eCrossReferences());
-
-    System.out.println(tabs(level) + "o.eClass.getClassifierID: " + o.eClass().getClassifierID());
-    System.out.println(tabs(level) + "o.eClass.getFeatureCount: " + o.eClass().getFeatureCount());
-    System.out.println(tabs(level) + "o.eClass.getInstanceClassName: " + o.eClass().getInstanceClassName());
-    System.out.println(tabs(level) + "o.eClass.getInstanceTypeName: " + o.eClass().getInstanceTypeName());
-    System.out.println(tabs(level) + "o.eClass.getName: " + o.eClass().getName());
-    System.out.println(tabs(level) + "o.eClass.getDefaultValue: " + o.eClass().getDefaultValue());
-    System.out.println(tabs(level) + "o.eClass.getEPackage: " + o.eClass().getEPackage());
-    System.out.println(tabs(level) + "o.eClass.getEIDAttribute: " + o.eClass().getEIDAttribute());
-    System.out.println(tabs(level) + "o.eClass.getInstanceClass: " + o.eClass().getInstanceClass());
-
-    for (EAttribute attribute : o.eClass().getEAllAttributes())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass.getEAllAttributes.attribute: '" + attribute.getName() + "': "
-          + o.eGet(attribute));
-    }
-    for (EAnnotation annotation : o.eClass().getEAnnotations())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAnnotations().annotation: '" + annotation);
-    }
-    for (EReference containment : o.eClass().getEAllContainments())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllContainments().containment: '" + containment);
-    }
-    for (EGenericType genericSupertype : o.eClass().getEAllGenericSuperTypes())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllGenericSuperTypes().genericSupertype: '"
-          + genericSupertype);
-    }
-    for (EOperation operation : o.eClass().getEAllOperations())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllOperations().operation: '" + operation);
-    }
-
-    for (EReference reference : o.eClass().getEAllReferences())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllReferences().reference: '" + reference);
-    }
-    for (EClass supertype : o.eClass().getEAllSuperTypes())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllSuperTypes().supertype: '" + supertype);
-    }
-    for (EStructuralFeature structuralFeature : o.eClass().getEAllStructuralFeatures())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAllStructuralFeatures().structuralFeature: '"
-          + structuralFeature);
-    }
-    for (EAnnotation annotation : o.eClass().getEAnnotations())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAnnotations().annotation: '" + annotation);
-    }
-    for (EAttribute attribute : o.eClass().getEAttributes())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass().getEAttributes().annotation: '" + attribute);
-    }
-    for (Adapter adapter : o.eClass().eAdapters())
-    {
-      System.out.println(tabs(level + 1) + "o.eClass().eAdapters().adapter: '" + adapter);
-    }
-
-    for (Object child : o.eContents())
-    {
-      printEObjectFullSysout((EObject)child, level + 2);
     }
   }
 
@@ -1060,5 +972,13 @@ public class DawnResourceHelper
       }
     }
     return null;
+  }
+
+  protected static void print(String s)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace(s);
+    }
   }
 }

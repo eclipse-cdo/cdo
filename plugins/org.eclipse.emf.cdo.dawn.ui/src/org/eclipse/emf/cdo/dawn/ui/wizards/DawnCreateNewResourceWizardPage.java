@@ -225,7 +225,6 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
   private void validatePage()
   {
     boolean valid = false;
-    System.out.println(resourceText.getText());
     if (resourceText.getText().length() != 0)
     {
       setPageComplete(true);

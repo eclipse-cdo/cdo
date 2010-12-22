@@ -38,7 +38,6 @@ public class DawnItemProvider extends CDOItemProvider
   @Override
   public Object[] getChildren(Object element)
   {
-    System.out.println(element);
     // if (element instanceof CDOView)
     // {
     // return ((CDOView)element).getRootResource().getContents().toArray();
@@ -66,7 +65,7 @@ public class DawnItemProvider extends CDOItemProvider
 
     if (obj instanceof CDOResource)
     {
-      CDOResource resource = ((CDOResource)obj);
+      CDOResource resource = (CDOResource)obj;
       Image img = EditorDescriptionHelper.getImageForEditor(resource.getName());
       if (img != null)
       {

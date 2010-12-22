@@ -58,19 +58,7 @@ public class ProjectCreationHelper
   public IProject createProject() throws CoreException
   {
     IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(name);
-    // List<IClasspathEntry> classpathEntries = new ArrayList<IClasspathEntry>();
 
-    // if (project.exists())
-    // {
-    // try
-    // {
-    // project.delete(true, null);
-    // }
-    // catch (Exception e)
-    // {
-    // System.out.println("Project could not be deleted!!!");
-    // }
-    // }
     if (!project.exists())
     {
       project.create(null);
@@ -175,10 +163,7 @@ public class ProjectCreationHelper
         newEntries.add(classpathEntry);
       }
     }
-    // IClasspathEntry[] newEntries = new IClasspathEntry[oldEntries.length + 1];
-    // System.arraycopy(oldEntries, 0, newEntries, 0, oldEntries.length);
 
-    // newEntries[oldEntries.length] = newEntry;
     IClasspathEntry[] newEntriesArray = new IClasspathEntry[newEntries.size()];
     javaProject.setRawClasspath(newEntries.toArray(newEntriesArray), null);
   }

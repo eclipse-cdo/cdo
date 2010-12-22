@@ -151,7 +151,7 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
 
     File folder = TMPUtil.createTempFolder("cdo-");
     CDOWorkspaceBase base = CDOWorkspaceUtil.createFolderWorkspaceBase(folder);
-    System.err.println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
+    IOUtil.ERR().println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
 
     InternalCDOWorkspace workspace = (InternalCDOWorkspace)CDOWorkspaceUtil.checkout(localStore, base, remote,
         branchPath, timeStamp);

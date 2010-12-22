@@ -134,8 +134,6 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     // to solve an issue with older versions of teneo
     hbm = hbm.replaceAll("_cont", "cont"); //$NON-NLS-1$ //$NON-NLS-2$
 
-    // System.err.println(hbm);
-
     return hbm;
   }
 

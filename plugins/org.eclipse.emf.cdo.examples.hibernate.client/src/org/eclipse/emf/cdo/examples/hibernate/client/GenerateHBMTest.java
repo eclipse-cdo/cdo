@@ -16,6 +16,9 @@ import junit.framework.TestCase;
 
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.server.hibernate.teneo.CDOMappingGenerator;
+
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.teneo.PersistenceOptions;
 
@@ -35,7 +38,7 @@ import org.eclipse.emf.teneo.PersistenceOptions;
  * <li>org.apache.commons.logging</li>
  * </ul>
  * The first two dependencies normally do not exist on a client side application.
- * 
+ *
  * @author Martin Taal
  */
 public class GenerateHBMTest extends TestCase
@@ -61,6 +64,6 @@ public class GenerateHBMTest extends TestCase
 
     // show it somewhere....
     // then store the hbm somewhere in a file and change it manually
-    System.err.println(mapping);
+    IOUtil.ERR().println(mapping);
   }
 }

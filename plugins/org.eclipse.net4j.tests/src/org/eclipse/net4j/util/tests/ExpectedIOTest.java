@@ -56,7 +56,7 @@ public class ExpectedIOTest extends AbstractOMTest
           for (int i = 0; i < LOOPS; i++)
           {
             out.writeInt(i);
-            System.err.println(i);
+            IOUtil.ERR().println(i);
             ConcurrencyUtil.sleep(100);
           }
         }
@@ -135,7 +135,7 @@ public class ExpectedIOTest extends AbstractOMTest
           for (int i = 0; i < LOOPS; i++)
           {
             out.writeInt(i);
-            System.err.println(i);
+            IOUtil.ERR().println(i);
             ConcurrencyUtil.sleep(100);
           }
         }
@@ -215,10 +215,10 @@ public class ExpectedIOTest extends AbstractOMTest
           {
             int c = 'a' + i;
             out.write(c);
-            System.err.println(c);
+            IOUtil.ERR().println(c);
 
             out.write(c + 1);
-            System.err.println(c + 1);
+            IOUtil.ERR().println(c + 1);
             ConcurrencyUtil.sleep(100);
           }
         }
@@ -311,10 +311,10 @@ public class ExpectedIOTest extends AbstractOMTest
           {
             int c = 'a' + i;
             out.write(c);
-            System.err.println(c);
+            IOUtil.ERR().println(c);
 
             out.write(c + 1);
-            System.err.println(c + 1);
+            IOUtil.ERR().println(c + 1);
             ConcurrencyUtil.sleep(100);
           }
         }

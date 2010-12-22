@@ -639,7 +639,7 @@ public class WorkspaceTest extends AbstractCDOTest
   public void testCheckinAfterAdd() throws Exception
   {
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
-    System.err.println("Checkout done");
+    IOUtil.ERR().println("Checkout done");
 
     CDOTransaction transaction = workspace.openTransaction();
     CDOResource resource = transaction.getResource(RESOURCE);
@@ -1205,7 +1205,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
     File folder = TMPUtil.createTempFolder("cdo-");
     CDOWorkspaceBase base = CDOWorkspaceUtil.createFolderWorkspaceBase(folder);
-    System.err.println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
+    IOUtil.ERR().println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
 
     InternalCDOWorkspace workspace = (InternalCDOWorkspace)CDOWorkspaceUtil.checkout(localStore, base, remote,
         branchPath, timeStamp);

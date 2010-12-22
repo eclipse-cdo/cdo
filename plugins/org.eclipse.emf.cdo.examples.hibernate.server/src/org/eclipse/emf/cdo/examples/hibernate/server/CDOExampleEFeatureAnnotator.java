@@ -12,12 +12,15 @@
 package org.eclipse.emf.cdo.examples.hibernate.server;
 
 import org.eclipse.emf.cdo.server.hibernate.teneo.CDOEFeatureAnnotator;
+
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.teneo.annotations.pamodel.PAnnotatedEStructuralFeature;
 
 /**
  * An example of providing an extension for Teneo Mapping. See <a
  * href="http://wiki.eclipse.org/Teneo/Hibernate/Extensions">here</a> for more information on Teneo extensions.
- * 
+ *
  * @author Martin Taal
  */
 public class CDOExampleEFeatureAnnotator extends CDOEFeatureAnnotator
@@ -25,7 +28,7 @@ public class CDOExampleEFeatureAnnotator extends CDOEFeatureAnnotator
   @Override
   public void annotate(PAnnotatedEStructuralFeature aStructuralFeature)
   {
-    System.err.println("This method should be called"); //$NON-NLS-1$
+    IOUtil.ERR().println("This method should be called"); //$NON-NLS-1$
     super.annotate(aStructuralFeature);
   }
 }

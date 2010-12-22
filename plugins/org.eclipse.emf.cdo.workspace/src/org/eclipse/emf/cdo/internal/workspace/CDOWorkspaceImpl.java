@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStore;
@@ -142,11 +143,11 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
     localRepository = createLocalRepository(local);
 
-    // Map<String, InternalRepository> repositories = new HashMap<String, InternalRepository>();
-    // repositories.put(localRepository.getName(), localRepository);
-    // CDOServerBrowser browser = new CDOServerBrowser(repositories);
-    // browser.setPort(7778);
-    // browser.activate();
+    Map<String, InternalRepository> repositories = new HashMap<String, InternalRepository>();
+    repositories.put(localRepository.getName(), localRepository);
+    CDOServerBrowser browser = new CDOServerBrowser(repositories);
+    browser.setPort(7778);
+    browser.activate();
 
     this.base = base;
     this.base.init(this);
@@ -175,7 +176,6 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
           public boolean handleRevision(CDORevision revision)
           {
             InternalCDORevision rev = (InternalCDORevision)revision;
-            System.err.println(rev);
             accessor.rawStore(rev, monitor);
 
             long commitTime = revision.getTimeStamp();

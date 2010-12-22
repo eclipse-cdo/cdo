@@ -1,5 +1,7 @@
 package com.swtdesigner;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -439,7 +441,7 @@ public class SWTResourceManager
         }
         catch (Throwable e)
         {
-          System.err.println("Unable to set underline or strikeout" + " (probably on a non-Windows platform). " + e); //$NON-NLS-1$ //$NON-NLS-2$
+          IOUtil.ERR().println("Unable to set underline or strikeout" + " (probably on a non-Windows platform). " + e); //$NON-NLS-1$ //$NON-NLS-2$
         }
       }
 

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.tests.db.bundle.OM;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.postgresql.PostgreSQLAdapter;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.postgresql.jdbc3.Jdbc3SimpleDataSource;
 
@@ -160,7 +161,7 @@ public class AllTestsDBPsql extends DBConfigs
       }
       catch (SQLException ignore)
       {
-        System.err.println(ignore);
+        IOUtil.ERR().println(ignore);
       }
       finally
       {

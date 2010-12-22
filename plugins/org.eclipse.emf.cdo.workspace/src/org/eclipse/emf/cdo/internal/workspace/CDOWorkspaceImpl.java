@@ -163,13 +163,13 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
     try
     {
-      InternalCDOSession session = openRemoteSession();
+      InternalCDOSession remoteSession = openRemoteSession();
 
       try
       {
-        localRepository.setRootResourceID(session.getRepositoryInfo().getRootResourceID());
+        localRepository.setRootResourceID(remoteSession.getRepositoryInfo().getRootResourceID());
 
-        InternalCDOPackageUnit[] packageUnits = session.getPackageRegistry().getPackageUnits(false);
+        InternalCDOPackageUnit[] packageUnits = remoteSession.getPackageRegistry().getPackageUnits(false);
         localRepository.getPackageRegistry(false).putPackageUnits(packageUnits, CDOPackageUnit.State.LOADED);
         accessor.rawStore(packageUnits, monitor);
 
@@ -190,12 +190,12 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
           }
         };
 
-        CDOBranch branch = session.getBranchManager().getBranch(branchPath);
-        session.getSessionProtocol().handleRevisions(null, branch, false, timeStamp, false, handler);
+        CDOBranch branch = remoteSession.getBranchManager().getBranch(branchPath);
+        remoteSession.getSessionProtocol().handleRevisions(null, branch, false, timeStamp, false, handler);
       }
       finally
       {
-        LifecycleUtil.deactivate(session);
+        LifecycleUtil.deactivate(remoteSession);
       }
 
       accessor.rawCommit(monitor);
@@ -267,16 +267,16 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   public InternalCDOTransaction merge(CDOMerger merger, String branchPath, long timeStamp)
   {
-    InternalCDOSession session = openRemoteSession();
+    InternalCDOSession remoteSession = openRemoteSession();
 
     try
     {
-      InternalCDOBranchManager branchManager = session.getBranchManager();
+      InternalCDOBranchManager branchManager = remoteSession.getBranchManager();
       CDOBranchPoint basePoint = branchManager.getBranch(branchPath).getPoint(this.timeStamp);
       CDOBranchPoint remotePoint = branchManager.getBranch(branchPath).getPoint(timeStamp);
 
       CDOBranchPointRange range = CDOBranchUtil.createRange(basePoint, remotePoint);
-      CDOChangeSetData remoteData = session.getSessionProtocol().loadChangeSets(range)[0];
+      CDOChangeSetData remoteData = remoteSession.getSessionProtocol().loadChangeSets(range)[0];
 
       CDOChangeSetData localData = getLocalChanges();
       if (!localData.isEmpty())
@@ -314,7 +314,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     }
     finally
     {
-      LifecycleUtil.deactivate(session);
+      LifecycleUtil.deactivate(remoteSession);
     }
   }
 
@@ -337,12 +337,12 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   public CDOCommitInfo checkin(String comment) throws CommitException
   {
-    InternalCDOSession session = openRemoteSession();
+    InternalCDOSession remoteSession = openRemoteSession();
 
     try
     {
-      InternalCDOBranch branch = session.getBranchManager().getBranch(branchPath);
-      InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction(branch);
+      InternalCDOBranch branch = remoteSession.getBranchManager().getBranch(branchPath);
+      InternalCDOTransaction transaction = (InternalCDOTransaction)remoteSession.openTransaction(branch);
 
       CDOChangeSetData changes = getLocalChanges();
 
@@ -367,7 +367,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     }
     finally
     {
-      LifecycleUtil.deactivate(session);
+      LifecycleUtil.deactivate(remoteSession);
     }
   }
 

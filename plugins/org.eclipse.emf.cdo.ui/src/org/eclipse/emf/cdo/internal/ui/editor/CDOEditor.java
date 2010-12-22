@@ -2273,7 +2273,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         public int compare(EObject o1, EObject o2)
         {
-          return getLabelText(o1).compareTo(getLabelText(o2));
+          return o1.eClass().getName().compareTo(o2.eClass().getName());
         }
       });
 
@@ -2288,7 +2288,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  private String getLabelText(Object object)
+  protected String getLabelText(Object object)
   {
     try
     {
@@ -2304,6 +2304,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
     catch (Exception ignore)
     {
+      ignore.printStackTrace();
     }
 
     return ""; //$NON-NLS-1$
@@ -2312,7 +2313,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  private Object getLabelImage(Object object)
+  protected Object getLabelImage(Object object)
   {
     try
     {
@@ -2324,6 +2325,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
     catch (Exception ignore)
     {
+      ignore.printStackTrace();
     }
 
     return null;
@@ -2562,9 +2564,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     private CreateRootAction(EObject object)
     {
-      super(getEditorSite().getPage(), getLabelText(object), ExtendedImageRegistry.getInstance().getImageDescriptor(
-          getLabelImage(object)));
-      // super(getEditorSite().getPage(), getLabel(object), SharedIcons.getDescriptor(SharedIcons.OBJ_ECLASS));
+      super(getEditorSite().getPage(), object.eClass().getName(), ExtendedImageRegistry.getInstance()
+          .getImageDescriptor(getLabelImage(object)));
       this.object = object;
     }
 

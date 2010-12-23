@@ -258,6 +258,22 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     }
   }
 
+  private void sleepRetryInterval()
+  {
+    long end = System.currentTimeMillis() + 1000L * retryInterval;
+
+    for (;;)
+    {
+      long now = System.currentTimeMillis();
+      if (now >= end || !isActive())
+      {
+        break;
+      }
+
+      ConcurrencyUtil.sleep(Math.min(100L, end - now));
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -341,19 +357,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
           if (isActive())
           {
             OM.LOG.warn("Connection attempt failed. Retrying in " + retryInterval + " seconds...", ex);
-            long end = System.currentTimeMillis() + 1000L * retryInterval;
-
-            for (;;)
-            {
-              long now = System.currentTimeMillis();
-              if (now >= end || !isActive())
-              {
-                break;
-              }
-
-              ConcurrencyUtil.sleep(Math.min(100L, end - now));
-            }
-
+            sleepRetryInterval();
             reconnect();
           }
 
@@ -407,28 +411,40 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
 
     public void run()
     {
-      checkActive();
-      if (TRACER.isEnabled())
+      try
       {
-        TRACER.trace("Synchronizing with master..."); //$NON-NLS-1$
+        checkActive();
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Synchronizing with master..."); //$NON-NLS-1$
+        }
+
+        localRepository.setState(CDOCommonRepository.State.SYNCING);
+
+        CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
+        OMMonitor monitor = new NotifyingMonitor("Synchronizing", getListeners());
+
+        if (isRawReplication())
+        {
+          sessionProtocol.replicateRepositoryRaw(localRepository, monitor);
+        }
+        else
+        {
+          sessionProtocol.replicateRepository(localRepository, monitor);
+        }
+
+        localRepository.setState(CDOCommonRepository.State.ONLINE);
+        OM.LOG.info("Synchronized with master.");
       }
-
-      localRepository.setState(CDOCommonRepository.State.SYNCING);
-
-      CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
-      OMMonitor monitor = new NotifyingMonitor("Synchronizing", getListeners());
-
-      if (isRawReplication())
+      catch (RuntimeException ex)
       {
-        sessionProtocol.replicateRepositoryRaw(localRepository, monitor);
+        if (isActive())
+        {
+          OM.LOG.warn("Replication attempt failed. Retrying in " + retryInterval + " seconds...", ex);
+          sleepRetryInterval();
+          disconnect();
+        }
       }
-      else
-      {
-        sessionProtocol.replicateRepository(localRepository, monitor);
-      }
-
-      localRepository.setState(CDOCommonRepository.State.ONLINE);
-      OM.LOG.info("Synchronized with master.");
     }
 
     @Override

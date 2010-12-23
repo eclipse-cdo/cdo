@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -45,9 +44,19 @@ public class CheckoutAction implements IObjectActionDelegate
     this.part = part;
   }
 
+  public IWorkbenchPart getPart()
+  {
+    return part;
+  }
+
   public void selectionChanged(IAction action, ISelection selection)
   {
     this.selection = selection;
+  }
+
+  public ISelection getSelection()
+  {
+    return selection;
   }
 
   public void run(IAction action)
@@ -57,40 +66,36 @@ public class CheckoutAction implements IObjectActionDelegate
       final Object element = ((IStructuredSelection)selection).getFirstElement();
       if (element instanceof ICheckoutSource)
       {
-        final ICheckoutSource checkoutSource = (ICheckoutSource)element;
-        String projectNameDefault = checkoutSource.getRepositoryLocation().getRepositoryName();
-
-        Shell shell = part.getSite().getShell();
-        CheckoutDialog dialog = new CheckoutDialog(shell, projectNameDefault);
-
-        if (dialog.open() == CheckoutDialog.OK)
-        {
-          final String projectName = dialog.getProjectName();
-
-          new Job("Checking out...")
-          {
-            @Override
-            protected IStatus run(IProgressMonitor monitor)
-            {
-              try
-              {
-                CDOFS.checkout(checkoutSource, projectName, monitor);
-                return Status.OK_STATUS;
-              }
-              catch (CoreException ex)
-              {
-                ex.printStackTrace();
-                return ex.getStatus();
-              }
-              catch (Exception ex)
-              {
-                ex.printStackTrace();
-                return new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getLocalizedMessage(), ex);
-              }
-            }
-          }.schedule();
-        }
+        ICheckoutSource checkoutSource = (ICheckoutSource)element;
+        String projectName = checkoutSource.getRepositoryLocation().getRepositoryName();
+        checkout(checkoutSource, projectName);
       }
     }
+  }
+
+  protected void checkout(final ICheckoutSource checkoutSource, final String projectName)
+  {
+    new Job("Checking out...")
+    {
+      @Override
+      protected IStatus run(IProgressMonitor monitor)
+      {
+        try
+        {
+          CDOFS.checkout(checkoutSource, projectName, monitor);
+          return Status.OK_STATUS;
+        }
+        catch (CoreException ex)
+        {
+          ex.printStackTrace();
+          return ex.getStatus();
+        }
+        catch (Exception ex)
+        {
+          ex.printStackTrace();
+          return new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getLocalizedMessage(), ex);
+        }
+      }
+    }.schedule();
   }
 }

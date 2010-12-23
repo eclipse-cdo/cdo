@@ -271,11 +271,7 @@ public final class EMFUtil
       Resource resource = null;
       if (lookForResource)
       {
-        resource = resourceSet.getResource(URI.createURI(uri), false);
-        if (resource != null)
-        {
-          resource.unload();
-        }
+        resource = resourceSet.getResource(URI.createURI(uri), true);
       }
 
       if (resource == null)

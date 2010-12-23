@@ -11,35 +11,27 @@
  */
 package org.eclipse.emf.cdo.ui.internal.workspace;
 
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.emf.cdo.location.ICheckoutSource;
+
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IObjectActionDelegate;
-import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * @author Eike Stepper
  */
-public class CheckoutAsAction implements IObjectActionDelegate
+public class CheckoutAsAction extends CheckoutAction
 {
-  private Shell shell;
-
   public CheckoutAsAction()
   {
   }
 
-  public void setActivePart(IAction action, IWorkbenchPart targetPart)
+  @Override
+  protected void checkout(ICheckoutSource checkoutSource, String projectName)
   {
-    shell = targetPart.getSite().getShell();
-  }
-
-  public void selectionChanged(IAction action, ISelection selection)
-  {
-  }
-
-  public void run(IAction action)
-  {
-    MessageDialog.openInformation(shell, "CDO Model Repository Client UI Workspace", "Checkout... was executed.");
+    Shell shell = getPart().getSite().getShell();
+    CheckoutDialog dialog = new CheckoutDialog(shell, projectName);
+    if (dialog.open() == CheckoutDialog.OK)
+    {
+      super.checkout(checkoutSource, dialog.getProjectName());
+    }
   }
 }

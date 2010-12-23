@@ -21,7 +21,9 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -29,6 +31,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.FeatureMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -262,6 +265,10 @@ public class DB4ORevision
 
           values.add(i, list);
         }
+        else if (listContainsInstancesOfClass(obj, CDOFeatureMapEntry.class)) // FeatureMap
+        {
+          values.add(i, DB4OFeatureMapEntry.getPrimitiveFeatureMapEntryList(obj));
+        }
         else
         {
           values.add(i, obj);
@@ -308,6 +315,10 @@ public class DB4ORevision
 
         value = list;
       }
+      else if (listContainsInstancesOfClass(value, DB4OFeatureMapEntry.class))
+      {
+        value = DB4OFeatureMapEntry.getCDOFeatureMapEntryList(eClass, value);
+      }
 
       revision.setValue(feature, value);
     }
@@ -343,5 +354,88 @@ public class DB4ORevision
     }
 
     return CDOIDUtil.createLong((Long)id);
+  }
+
+  public static boolean listContainsInstancesOfClass(Object obj, Class<?> clazz)
+  {
+    if (obj instanceof List)
+    {
+      List<?> list = (List<?>)obj;
+      for (Object potentialFeatureMap : list)
+      {
+        if (!clazz.isAssignableFrom(potentialFeatureMap.getClass()))
+        {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
+  private static final class DB4OFeatureMapEntry
+  {
+
+    private int featureID;
+
+    private Object valueID;
+
+    public DB4OFeatureMapEntry(int featureID, Object valueID)
+    {
+      setFeatureID(featureID);
+      setValueID(valueID);
+    }
+
+    private void setFeatureID(int featureID)
+    {
+      this.featureID = featureID;
+    }
+
+    public int getFeatureID()
+    {
+      return featureID;
+    }
+
+    private void setValueID(Object valueID)
+    {
+      this.valueID = valueID;
+    }
+
+    public Object getValueID()
+    {
+      return valueID;
+    }
+
+    public static List<DB4OFeatureMapEntry> getPrimitiveFeatureMapEntryList(Object obj)
+    {
+      InternalCDOList cdoList = (InternalCDOList)obj;
+      List<DB4OFeatureMapEntry> list = new ArrayList<DB4OFeatureMapEntry>();
+      for (Object listElement : cdoList)
+      {
+        if (listElement instanceof FeatureMap.Entry)
+        {
+          FeatureMap.Entry entry = (FeatureMap.Entry)listElement;
+          EStructuralFeature entryFeature = entry.getEStructuralFeature();
+          CDOID entryValue = (CDOID)entry.getValue();
+          DB4OFeatureMapEntry db4oEntry = new DB4OFeatureMapEntry(entryFeature.getFeatureID(), getDB4OID(entryValue));
+          list.add(db4oEntry);
+        }
+      }
+      return list;
+    }
+
+    public static CDOList getCDOFeatureMapEntryList(EClass eClass, Object value)
+    {
+      List<?> sourceList = (List<?>)value;
+      CDOList list = CDOListFactory.DEFAULT.createList(sourceList.size(), sourceList.size(), CDORevision.UNCHUNKED);
+      for (int j = 0; j < sourceList.size(); j++)
+      {
+        DB4OFeatureMapEntry mapEntry = (DB4OFeatureMapEntry)sourceList.get(j);
+        EStructuralFeature entryFeature = eClass.getEStructuralFeature(mapEntry.getFeatureID());
+        CDOID valueID = getCDOID(mapEntry.getValueID());
+        list.set(j, CDORevisionUtil.createFeatureMapEntry(entryFeature, valueID));
+      }
+      return list;
+    }
   }
 }

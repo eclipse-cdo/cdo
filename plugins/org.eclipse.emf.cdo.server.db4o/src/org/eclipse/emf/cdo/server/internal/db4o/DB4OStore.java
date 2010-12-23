@@ -30,6 +30,7 @@ import com.db4o.ObjectServer;
 import com.db4o.ObjectSet;
 import com.db4o.config.Configuration;
 import com.db4o.query.Query;
+import com.db4o.reflect.jdk.JdkReflector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -240,7 +241,9 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
   protected Configuration createServerConfiguration()
   {
-    return Db4o.newConfiguration();
+    Configuration config = Db4o.newConfiguration();
+    config.reflectWith(new JdkReflector(getClass().getClassLoader()));
+    return config;
   }
 
   @Override

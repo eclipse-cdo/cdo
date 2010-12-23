@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
@@ -33,7 +34,6 @@ import org.eclipse.emf.cdo.server.internal.db4o.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -72,8 +72,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -106,7 +108,9 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
-    return packageUnit.getEPackages(true);
+    DB4OPackageUnit db4OPackageUnit = getPrimitivePackageUnitMap().get(
+        packageUnit.getTopLevelPackageInfo().getPackageURI());
+    return EMFUtil.getAllPackages(db4OPackageUnit.getEPackage());
   }
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
@@ -137,17 +141,34 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
-    List<InternalCDOPackageUnit> result = new ArrayList<InternalCDOPackageUnit>();
-    InternalCDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
+    Map<InternalCDOPackageUnit, DB4OPackageUnit> map = getPackageUnitMap();
+    return map.keySet();
+  }
+
+  private Map<InternalCDOPackageUnit, DB4OPackageUnit> getPackageUnitMap()
+  {
+    Map<InternalCDOPackageUnit, DB4OPackageUnit> map = new HashMap<InternalCDOPackageUnit, DB4OPackageUnit>();
     Collection<DB4OPackageUnit> primitivePackageUnits = getObjectContainer().query(DB4OPackageUnit.class);
 
     for (DB4OPackageUnit primitivePackageUnit : primitivePackageUnits)
     {
-      InternalCDOPackageUnit packageUnit = DB4OPackageUnit.getPackageUnit(packageRegistry, primitivePackageUnit);
-      result.add(packageUnit);
+      InternalCDOPackageUnit packageUnit = DB4OPackageUnit.getPackageUnit(primitivePackageUnit);
+      map.put(packageUnit, primitivePackageUnit);
     }
+    return map;
+  }
 
-    return result;
+  private Map<String, DB4OPackageUnit> getPrimitivePackageUnitMap()
+  {
+    Map<String, DB4OPackageUnit> map = new HashMap<String, DB4OPackageUnit>();
+    Collection<DB4OPackageUnit> primitivePackageUnits = getObjectContainer().query(DB4OPackageUnit.class);
+
+    for (DB4OPackageUnit primitivePackageUnit : primitivePackageUnits)
+    {
+      InternalCDOPackageUnit packageUnit = DB4OPackageUnit.getPackageUnit(primitivePackageUnit);
+      map.put(packageUnit.getTopLevelPackageInfo().getPackageURI(), primitivePackageUnit);
+    }
+    return map;
   }
 
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
@@ -168,7 +189,10 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     final long folderID = CDOIDUtil.getLong(context.getFolderID());
     final String name = context.getName();
     final boolean exactMatch = context.exactMatch();
-    final Object rootResourceID = DB4ORevision.getDB4OID(getStore().getRepository().getRootResourceID());
+    // RootResource may not be initialized, as there may be queries during IStore activation
+    CDOID rootResourceID = getStore().getRepository().getRootResourceID();
+    final Object rootResourceLongID = rootResourceID != null ? DB4ORevision.getDB4OID(getStore().getRepository()
+        .getRootResourceID()) : null;
 
     ObjectSet<DB4ORevision> revisionObjectSet = getObjectContainer().query(new Predicate<DB4ORevision>()
     {
@@ -182,7 +206,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
           return false;
         }
 
-        if (ObjectUtil.equals(rootResourceID, revision.getID()))
+        if (ObjectUtil.equals(rootResourceLongID, revision.getID()))
         {
           // is Root resource
           return false;
@@ -193,7 +217,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
           String candidateName = (String)revision.getValues().get(EresourcePackage.CDO_RESOURCE__NAME);
           if (exactMatch)
           {
-            if (candidateName != null && candidateName.equals(name))
+            if (ObjectUtil.equals(candidateName, name))
             {
               return true;
             }
@@ -214,7 +238,8 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
     for (DB4ORevision revision : revisionObjectSet)
     {
-      if (!context.addResource(DB4ORevision.getCDOID(revision.getID())))
+      CDOID id = DB4ORevision.getCDOID(revision.getID());
+      if (!context.addResource(id))
       {
         // No more results allowed
         break;

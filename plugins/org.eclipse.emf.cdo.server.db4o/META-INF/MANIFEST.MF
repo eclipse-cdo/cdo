@@ -13,6 +13,8 @@ Import-Package: com.db4o;version="[7.4.0,8.0.0)",
  com.db4o.config;version="[7.4.0,8.0.0)",
  com.db4o.ext;version="[7.4.0,8.0.0)",
  com.db4o.query;version="[7.4.0,8.0.0)",
+ com.db4o.reflect;version="[7.4.0,8.0.0)",
+ com.db4o.reflect.jdk;version="[7.4.0,8.0.0)",
  org.osgi.framework;version="[1.5.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName

@@ -15,8 +15,10 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+
+import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -38,12 +40,16 @@ public class DB4OPackageUnit
 
   private List<Byte> ePackageBytes;
 
-  public DB4OPackageUnit(String id, Integer ordinalType, Long timeStamp, List<Byte> ePackageBytes)
+  private List<Pair<String, String>> packageInfos;
+
+  public DB4OPackageUnit(String id, Integer ordinalType, Long timeStamp, List<Byte> ePackageBytes,
+      List<Pair<String, String>> packageInfos)
   {
     setId(id);
     setOrdinalType(ordinalType);
     setTimeStamp(timeStamp);
-    setePackageBytes(ePackageBytes);
+    setEPackageBytes(ePackageBytes);
+    setPackageInfos(packageInfos);
   }
 
   public void setId(String id)
@@ -76,33 +82,44 @@ public class DB4OPackageUnit
     return timeStamp;
   }
 
-  public void setePackageBytes(List<Byte> ePackageBytes)
+  public void setEPackageBytes(List<Byte> ePackageBytes)
   {
     this.ePackageBytes = ePackageBytes;
   }
 
-  public List<Byte> getePackageBytes()
+  public List<Byte> getEPackageBytes()
   {
     return ePackageBytes;
   }
 
   public static DB4OPackageUnit getPrimitivePackageUnit(IStore store, InternalCDOPackageUnit packageUnit)
   {
-    return new DB4OPackageUnit(new String(packageUnit.getID()), new Integer(packageUnit.getOriginalType()
-        .ordinal()), new Long(packageUnit.getTimeStamp()), getEPackageBytes(store, packageUnit));
+    return new DB4OPackageUnit(new String(packageUnit.getID()), new Integer(packageUnit.getOriginalType().ordinal()),
+        new Long(packageUnit.getTimeStamp()), getEPackageBytes(store, packageUnit),
+        getPackageInfosAsPair(packageUnit.getPackageInfos()));
   }
 
-  public static InternalCDOPackageUnit getPackageUnit(InternalCDOPackageRegistry packageRegistry,
-      DB4OPackageUnit packageUnit)
+  public static InternalCDOPackageUnit getPackageUnit(DB4OPackageUnit packageUnit)
   {
     InternalCDOPackageUnit cdoPackageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
     CDOPackageUnit.Type type = CDOPackageUnit.Type.values()[packageUnit.getOrdinalType()];
     cdoPackageUnit.setOriginalType(type);
     cdoPackageUnit.setTimeStamp(packageUnit.getTimeStamp());
-    EPackage ePackage = getEPackageFromBytes(packageUnit.getePackageBytes());
-    cdoPackageUnit.setPackageRegistry(packageRegistry);
-    cdoPackageUnit.init(ePackage);
+    cdoPackageUnit.setPackageInfos(getPackageInfos(packageUnit));
     return cdoPackageUnit;
+  }
+
+  private static InternalCDOPackageInfo[] getPackageInfos(DB4OPackageUnit packageUnit)
+  {
+    List<InternalCDOPackageInfo> list = new ArrayList<InternalCDOPackageInfo>();
+    for (Pair<String, String> infoPair : packageUnit.getPackageInfos())
+    {
+      InternalCDOPackageInfo packageInfo = (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
+      packageInfo.setParentURI(infoPair.getElement1());
+      packageInfo.setPackageURI(infoPair.getElement2());
+      list.add(packageInfo);
+    }
+    return list.toArray(new InternalCDOPackageInfo[list.size()]);
   }
 
   private static List<Byte> getEPackageBytes(IStore store, InternalCDOPackageUnit packageUnit)
@@ -130,5 +147,33 @@ public class DB4OPackageUnit
 
     EPackage ePackage = EMFUtil.createEPackage("", packageBytes, true, rSet, false);
     return ePackage;
+  }
+
+  public EPackage getEPackage()
+  {
+    return getEPackageFromBytes(getEPackageBytes());
+  }
+
+  private static List<Pair<String, String>> getPackageInfosAsPair(InternalCDOPackageInfo[] packageInfos)
+  {
+    List<Pair<String, String>> infos = new ArrayList<Pair<String, String>>();
+    for (InternalCDOPackageInfo info : packageInfos)
+    {
+      Pair<String, String> pair = new Pair<String, String>();
+      pair.setElement1(info.getParentURI());
+      pair.setElement2(info.getPackageURI());
+      infos.add(pair);
+    }
+    return infos;
+  }
+
+  public void setPackageInfos(List<Pair<String, String>> packageInfos)
+  {
+    this.packageInfos = packageInfos;
+  }
+
+  public List<Pair<String, String>> getPackageInfos()
+  {
+    return packageInfos;
   }
 }

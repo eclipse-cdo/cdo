@@ -29,7 +29,6 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpart.EditPartService;
 import org.eclipse.gmf.runtime.emf.core.util.CrossReferenceAdapter;
-import org.eclipse.gmf.runtime.notation.Connector;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
@@ -153,7 +152,7 @@ public class DawnDiagramUpdater
         {
           if (connectionEditPart instanceof EditPart)
           {
-            if (((Connector)((EditPart)connectionEditPart).getModel()).getBendpoints() != null)
+            if (((Edge)((EditPart)connectionEditPart).getModel()).getBendpoints() != null)
             {
               refeshEditpartInternal((EditPart)connectionEditPart);
             }

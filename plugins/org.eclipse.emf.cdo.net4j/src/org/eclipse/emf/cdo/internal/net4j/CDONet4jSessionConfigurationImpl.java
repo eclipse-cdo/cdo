@@ -166,7 +166,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       rootResourceID = result.getRootResourceID();
       supportingAudits = result.isRepositorySupportingAudits();
       supportingBranches = result.isRepositorySupportingBranches();
-      supportingEcore = result.isRepositorySupportingBranches();
+      supportingEcore = result.isRepositorySupportingEcore();
       ensuringReferentialIntegrity = result.isRepositoryEnsuringReferentialIntegrity();
       this.session = session;
     }

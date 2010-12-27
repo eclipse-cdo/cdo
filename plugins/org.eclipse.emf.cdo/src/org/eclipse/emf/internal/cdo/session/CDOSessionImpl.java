@@ -730,10 +730,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       Map<CDOBranch, List<InternalCDOView>> views = new HashMap<CDOBranch, List<InternalCDOView>>();
       Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions = new HashMap<CDOBranch, Map<CDOID, InternalCDORevision>>();
       collectViewedRevisions(views, viewedRevisions);
-      if (viewedRevisions.isEmpty())
-      {
-        return CDOBranchPoint.UNSPECIFIED_DATE;
-      }
+      cleanupRevisionCache(viewedRevisions);
 
       CDOSessionProtocol sessionProtocol = getSessionProtocol();
       long lastUpdateTime = getLastUpdateTime();
@@ -741,8 +738,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
       RefreshSessionResult result = sessionProtocol.refresh(lastUpdateTime, viewedRevisions, initialChunkSize,
           enablePassiveUpdates);
-      setLastUpdateTime(result.getLastUpdateTime());
 
+      setLastUpdateTime(result.getLastUpdateTime());
       registerPackageUnits(result.getPackageUnits());
 
       for (Entry<CDOBranch, List<InternalCDOView>> entry : views.entrySet())
@@ -823,6 +820,28 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
             viewedRevisions.put(branch, revisions);
           }
         }
+      }
+    }
+  }
+
+  private void cleanupRevisionCache(Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
+  {
+    Set<InternalCDORevision> set = new HashSet<InternalCDORevision>();
+    for (Map<CDOID, InternalCDORevision> revisions : viewedRevisions.values())
+    {
+      for (InternalCDORevision revision : revisions.values())
+      {
+        set.add(revision);
+      }
+    }
+
+    InternalCDORevisionCache cache = getRevisionManager().getCache();
+    List<CDORevision> currentRevisions = cache.getCurrentRevisions();
+    for (CDORevision revision : currentRevisions)
+    {
+      if (!set.contains(revision))
+      {
+        cache.removeRevision(revision.getID(), revision);
       }
     }
   }

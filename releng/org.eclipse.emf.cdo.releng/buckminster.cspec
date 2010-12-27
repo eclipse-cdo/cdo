@@ -20,6 +20,8 @@
 		<cs:dependency name="org.eclipse.ocl.source" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.transaction" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.transaction.source" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.emf.workspace" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.emf.workspace.source" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.teneo.hibernate" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.teneo.hibernate.source" componentType="eclipse.feature"/>
 

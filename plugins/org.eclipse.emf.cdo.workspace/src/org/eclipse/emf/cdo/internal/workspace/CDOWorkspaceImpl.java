@@ -198,7 +198,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         LifecycleUtil.deactivate(remoteSession);
       }
 
-      accessor.rawCommit(monitor);
+      accessor.rawCommit(1, monitor);
     }
     finally
     {
@@ -429,7 +429,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
       accessor.rawStore(revision, monitor);
     }
 
-    accessor.rawCommit(monitor);
+    accessor.rawCommit(1, monitor);
   }
 
   protected InternalCDORevision adjustRevision(IStoreAccessor.Raw accessor, CDOID id, CDOIDMapper idMapper)

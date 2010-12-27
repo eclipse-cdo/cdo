@@ -1084,29 +1084,26 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     int commitWork = 4;
     monitor.begin(commitWork + size + commitWork);
 
+    Collection<InternalCDOPackageUnit> packageUnits = new HashSet<InternalCDOPackageUnit>();
+
     try
     {
       DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES, monitor.fork());
       DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS, monitor.fork());
       DBUtil.deserializeTable(in, connection, CDODBSchema.EXTERNAL_REFS, monitor.fork());
-      rawImportPackageUnits(in, fromCommitTime, toCommitTime, monitor.fork());
-
+      rawImportPackageUnits(in, fromCommitTime, toCommitTime, packageUnits, monitor.fork());
       mappingStrategy.rawImport(this, in, fromCommitTime, toCommitTime, monitor.fork(size));
-
-      Async async = monitor.forkAsync(commitWork);
-
-      try
-      {
-        connection.commit();
-      }
-      catch (SQLException ex)
-      {
-        throw new DBException(ex);
-      }
-      finally
-      {
-        async.stop();
-      }
+      rawCommit(commitWork, monitor);
+    }
+    catch (RuntimeException ex)
+    {
+      rawRollback(packageUnits);
+      throw ex;
+    }
+    catch (IOException ex)
+    {
+      rawRollback(packageUnits);
+      throw ex;
     }
     finally
     {
@@ -1114,8 +1111,23 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
   }
 
-  protected void rawImportPackageUnits(CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor)
-      throws IOException
+  private void rawRollback(Collection<InternalCDOPackageUnit> packageUnits)
+  {
+    try
+    {
+      connection.rollback();
+    }
+    catch (SQLException ex)
+    {
+      OM.LOG.error(ex);
+    }
+
+    getStore().getMappingStrategy().removeMapping(getConnection(),
+        packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]));
+  }
+
+  protected void rawImportPackageUnits(CDODataInput in, long fromCommitTime, long toCommitTime,
+      Collection<InternalCDOPackageUnit> packageUnits, OMMonitor monitor) throws IOException
   {
     monitor.begin(2);
 
@@ -1123,8 +1135,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       DBStore store = getStore();
       IMetaDataManager metaDataManager = store.getMetaDataManager();
-      Collection<InternalCDOPackageUnit> packageUnits = metaDataManager.rawImport(getConnection(), in, fromCommitTime,
-          toCommitTime, monitor.fork());
+
+      packageUnits.addAll(metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork()));
 
       InternalRepository repository = store.getRepository();
       InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
@@ -1135,8 +1147,20 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       }
 
       IMappingStrategy mappingStrategy = store.getMappingStrategy();
-      mappingStrategy.createMapping(connection, packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]),
-          monitor.fork());
+
+      // Using another connection because CREATE TABLE (which is called in createMapping) on H2 databases does a commit.
+      Connection connection2 = null;
+      try
+      {
+        connection2 = store.getConnection();
+
+        mappingStrategy.createMapping(connection2,
+            packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]), monitor.fork());
+      }
+      finally
+      {
+        DBUtil.close(connection2);
+      }
     }
     finally
     {
@@ -1182,7 +1206,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     mapping.detachObject(this, id, version, branch, CDOBranchPoint.UNSPECIFIED_DATE, monitor.fork());
   }
 
-  public void rawCommit(OMMonitor monitor)
+  public void rawCommit(double commitWork, OMMonitor monitor)
   {
     Async async = monitor.forkAsync();
 

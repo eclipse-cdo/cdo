@@ -275,7 +275,7 @@ public abstract class CDOServerImporter
 
     public void flush()
     {
-      accessor.rawCommit(monitor);
+      accessor.rawCommit(1, monitor);
     }
 
     private void collectPackageInfos()

@@ -537,8 +537,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * operation.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
-     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
-     * accumulated backend changes can be committed atomically.
+     * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
+     * where the accumulated backend changes can be committed atomically.
      * 
      * @param packageUnits
      *          the package units to be stored in the backend represented by this {@link IStoreAccessor.Raw raw store
@@ -547,7 +547,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
      *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly
      *          to prevent timeouts from expiring in the caller.
-     * @see #rawCommit(OMMonitor)
+     * @see #rawCommit(double, OMMonitor)
      */
     public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor);
 
@@ -558,8 +558,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * stamps}, which is not desired in the context of a replication operation.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
-     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
-     * accumulated backend changes can be committed atomically.
+     * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
+     * where the accumulated backend changes can be committed atomically.
      * 
      * @param revision
      *          the revision to be stored in the backend represented by this {@link IStoreAccessor.Raw raw store
@@ -568,7 +568,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
      *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly
      *          to prevent timeouts from expiring in the caller.
-     * @see #rawCommit(OMMonitor)
+     * @see #rawCommit(double, OMMonitor)
      */
     public void rawStore(InternalCDORevision revision, OMMonitor monitor);
 
@@ -577,8 +577,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * accessor} without going through a regular {@link IStoreAccessor#commit(OMMonitor) commit}.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
-     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
-     * accumulated backend changes can be committed atomically.
+     * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
+     * where the accumulated backend changes can be committed atomically.
      * 
      * @param id
      *          the {@link CDOBlob#getID() ID} of the blob to be stored in the backend represented by this
@@ -589,7 +589,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @param inputStream
      *          the {@link CDOBlob#getContents() contents} of the blob to be stored in the backend represented by this
      *          {@link IStoreAccessor.Raw raw store accessor}.
-     * @see #rawCommit(OMMonitor)
+     * @see #rawCommit(double, OMMonitor)
      */
     public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException;
 
@@ -598,8 +598,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * accessor} without going through a regular {@link IStoreAccessor#commit(OMMonitor) commit}.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
-     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
-     * accumulated backend changes can be committed atomically.
+     * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
+     * where the accumulated backend changes can be committed atomically.
      * 
      * @param id
      *          the {@link CDOClob#getID() ID} of the clob to be stored in the backend represented by this
@@ -610,7 +610,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @param reader
      *          the {@link CDOClob#getContents() contents} of the clob to be stored in the backend represented by this
      *          {@link IStoreAccessor.Raw raw store accessor}.
-     * @see #rawCommit(OMMonitor)
+     * @see #rawCommit(double, OMMonitor)
      */
     public void rawStore(byte[] id, long size, Reader reader) throws IOException;
 
@@ -619,8 +619,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * store accessor} without going through a regular {@link IStoreAccessor#commit(OMMonitor) commit}.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
-     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
-     * accumulated backend changes can be committed atomically.
+     * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
+     * where the accumulated backend changes can be committed atomically.
      * 
      * @param branch
      *          the {@link CDOCommitInfo#getBranch() branch} of the commit info to be stored in the backend represented
@@ -637,7 +637,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @param comment
      *          the {@link CDOCommitInfo#getComment() comment} of the commit info to be stored in the backend
      *          represented by this {@link IStoreAccessor.Raw raw store accessor}.
-     * @see #rawCommit(OMMonitor)
+     * @see #rawCommit(double, OMMonitor)
      */
     public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
         OMMonitor monitor);
@@ -648,16 +648,18 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * {@link IStoreAccessor#commit(OMMonitor) commit}.
      * <p>
      * <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
-     * this method are followed by a single final call to the {@link #rawCommit(OMMonitor) rawCommit()} method where the
-     * accumulated backend changes can be committed atomically.
+     * this method are followed by a single final call to the {@link #rawCommit(double, OMMonitor) rawCommit()} method
+     * where the accumulated backend changes can be committed atomically.
      * 
-     * @see #rawCommit(OMMonitor)
+     * @see #rawCommit(double, OMMonitor)
      */
     public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor);
 
     /**
      * Atomically commits the accumulated backend changes resulting from previous calls to the rawStore() methods.
      * 
+     * @param commitWork
+     *          the amount of work to use up from the monitor while executing the commit.
      * @param monitor
      *          a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
      *          <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly
@@ -668,6 +670,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @see #rawStore(byte[], long, Reader)
      * @see #rawStore(CDOBranch, long, long, String, String, OMMonitor)
      */
-    public void rawCommit(OMMonitor monitor);
+    public void rawCommit(double commitWork, OMMonitor monitor);
   }
 }

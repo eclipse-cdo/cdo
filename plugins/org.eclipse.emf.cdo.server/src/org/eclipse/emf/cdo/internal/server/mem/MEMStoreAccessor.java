@@ -390,7 +390,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAcces
     getStore().rawDelete(id, version, branch);
   }
 
-  public void rawCommit(OMMonitor monitor)
+  public void rawCommit(double commitWork, OMMonitor monitor)
   {
     // Do nothing
   }

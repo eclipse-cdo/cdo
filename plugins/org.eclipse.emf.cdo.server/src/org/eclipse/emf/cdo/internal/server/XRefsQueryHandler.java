@@ -135,11 +135,15 @@ public class XRefsQueryHandler implements IQueryHandler
       Map<EClass, List<EReference>> sourceCandidates, CDOPackageRegistry packageRegistry)
   {
     EClass rootClass = eReference.getEContainingClass();
-    Collection<EClass> descendentClasses = packageRegistry.getSubTypes().get(rootClass);
+    collectSourceCandidates(rootClass, eReference, concreteTypes, sourceCandidates);
 
-    for (EClass candidateClass : descendentClasses)
+    Collection<EClass> descendentClasses = packageRegistry.getSubTypes().get(rootClass);
+    if (descendentClasses != null)
     {
-      collectSourceCandidates(candidateClass, eReference, concreteTypes, sourceCandidates);
+      for (EClass candidateClass : descendentClasses)
+      {
+        collectSourceCandidates(candidateClass, eReference, concreteTypes, sourceCandidates);
+      }
     }
   }
 

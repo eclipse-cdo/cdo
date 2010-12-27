@@ -265,8 +265,23 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
       boolean exactMatch);
 
   /**
-   * Returns a list of the resources in the given folder with a name equal to or starting with the value of the name
-   * parameter.
+   * Returns a list of {@link CDOObjectReference object references} that represent the cross references to the specified
+   * target object.
+   * 
+   * @param targetObject
+   *          The target object that referencing objects are requested for.
+   * @param sourceReferences
+   *          The reference features that referencing objects are requested for, or an empty array if all reference
+   *          features are to be used in the request.
+   * @since 4.0
+   * @see CDOView#queryXRefs(Set, EReference...)
+   * @see CDOView#queryXRefsAsync(Set, EReference...)
+   */
+  public List<CDOObjectReference> queryXRefs(CDOObject targetObject, EReference... sourceReferences);
+
+  /**
+   * Returns a list of {@link CDOObjectReference object references} that represent the cross references to the specified
+   * target objects.
    * 
    * @param targetObjects
    *          The set of target objects that referencing objects are requested for.
@@ -274,12 +289,14 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
    *          The reference features that referencing objects are requested for, or an empty array if all reference
    *          features are to be used in the request.
    * @since 3.0
+   * @see CDOView#queryXRefs(CDOObject, EReference...)
+   * @see CDOView#queryXRefsAsync(Set, EReference...)
    */
   public List<CDOObjectReference> queryXRefs(Set<CDOObject> targetObjects, EReference... sourceReferences);
 
   /**
-   * Returns an iterator over the resources in the given folder with a name equal to or starting with the value of the
-   * name parameter. The underlying query will be executed asynchronously.
+   * Returns an iterator over the {@link CDOObjectReference object references} that represent the cross references to
+   * the specified target objects. The underlying query will be executed asynchronously.
    * 
    * @param targetObjects
    *          The set of target objects that referencing objects are requested for.
@@ -287,6 +304,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
    *          The reference features that referencing objects are requested for, or an empty array if all reference
    *          features are to be used in the request.
    * @since 3.0
+   * @see CDOView#queryXRefs(CDOObject, EReference...)
+   * @see CDOView#queryXRefs(Set, EReference...)
    */
   public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
       EReference... sourceReferences);

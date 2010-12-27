@@ -28,6 +28,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -198,6 +200,7 @@ public class XRefTest extends AbstractCDOTest
         assertTrue(false);
       }
     }
+
     assertTrue(found1 && found2 && found3);
 
     view.close();
@@ -293,15 +296,258 @@ public class XRefTest extends AbstractCDOTest
       {
         found1 = true;
       }
-      if (id == 2)
+      else if (id == 2)
       {
         found2 = true;
       }
-
     }
+
     assertTrue(found1 && found2);
 
     view.close();
     session2.close();
+  }
+
+  @SuppressWarnings({ "unchecked", "unused" })
+  public void testSpecificReferences0() throws Exception
+  {
+    EClass a = EcoreFactory.eINSTANCE.createEClass();
+    a.setName("A");
+
+    EClass b = EcoreFactory.eINSTANCE.createEClass();
+    b.setName("B");
+
+    EReference aa1 = addReference(a, a, true);
+    EReference aa2 = addReference(a, a, true);
+    EReference aa3 = addReference(a, a, false);
+    EReference aa4 = addReference(a, a, false);
+    EReference ab5 = addReference(a, b, true);
+    EReference ab6 = addReference(a, b, true);
+    EReference ab7 = addReference(a, b, false);
+    EReference ab8 = addReference(a, b, false);
+
+    EReference ba1 = addReference(b, a, true);
+    EReference ba2 = addReference(b, a, true);
+    EReference ba3 = addReference(b, a, false);
+    EReference ba4 = addReference(b, a, false);
+    EReference bb5 = addReference(b, b, true);
+    EReference bb6 = addReference(b, b, true);
+    EReference bb7 = addReference(b, b, false);
+    EReference bb8 = addReference(b, b, false);
+
+    EPackage xref = EcoreFactory.eINSTANCE.createEPackage();
+    xref.setName("xref");
+    xref.setNsPrefix("xref");
+    xref.setNsURI("http://xref");
+    xref.getEClassifiers().add(a);
+    xref.getEClassifiers().add(b);
+
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(xref);
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    EObject a1 = addObject(resource, a);
+    EObject a2 = addObject(resource, a);
+    EObject a3 = addObject(resource, a);
+    EObject a4 = addObject(resource, a);
+
+    EObject b1 = addObject(resource, b);
+    EObject b2 = addObject(resource, b);
+    EObject b3 = addObject(resource, b);
+    EObject b4 = addObject(resource, b);
+
+    ((EList<EObject>)a1.eGet(ab5)).add(b1);
+    ((EList<EObject>)a1.eGet(ab5)).add(b2);
+    ((EList<EObject>)a1.eGet(ab5)).add(b3);
+    ((EList<EObject>)a1.eGet(ab5)).add(b4);
+
+    ((EList<EObject>)a1.eGet(ab6)).add(b1);
+    ((EList<EObject>)a1.eGet(ab6)).add(b2);
+    ((EList<EObject>)a1.eGet(ab6)).add(b3);
+    ((EList<EObject>)a1.eGet(ab6)).add(b4);
+
+    transaction.commit();
+
+    /******************/
+
+    List<CDOObjectReference> results = transaction.queryXRefs(CDOUtil.getCDOObject(b1));
+    assertEquals(2, results.size());
+
+    assertEquals(0, results.get(0).getSourceIndex());
+    assertEquals(ab5, results.get(0).getSourceReference());
+    assertEquals(a1, results.get(0).getSourceObject());
+    assertEquals(b1, results.get(0).getTargetObject());
+
+    assertEquals(0, results.get(1).getSourceIndex());
+    assertEquals(ab6, results.get(1).getSourceReference());
+    assertEquals(a1, results.get(1).getSourceObject());
+    assertEquals(b1, results.get(1).getTargetObject());
+  }
+
+  @SuppressWarnings({ "unchecked", "unused" })
+  public void testSpecificReferences1() throws Exception
+  {
+    EClass a = EcoreFactory.eINSTANCE.createEClass();
+    a.setName("A");
+
+    EClass b = EcoreFactory.eINSTANCE.createEClass();
+    b.setName("B");
+
+    EReference aa1 = addReference(a, a, true);
+    EReference aa2 = addReference(a, a, true);
+    EReference aa3 = addReference(a, a, false);
+    EReference aa4 = addReference(a, a, false);
+    EReference ab5 = addReference(a, b, true);
+    EReference ab6 = addReference(a, b, true);
+    EReference ab7 = addReference(a, b, false);
+    EReference ab8 = addReference(a, b, false);
+
+    EReference ba1 = addReference(b, a, true);
+    EReference ba2 = addReference(b, a, true);
+    EReference ba3 = addReference(b, a, false);
+    EReference ba4 = addReference(b, a, false);
+    EReference bb5 = addReference(b, b, true);
+    EReference bb6 = addReference(b, b, true);
+    EReference bb7 = addReference(b, b, false);
+    EReference bb8 = addReference(b, b, false);
+
+    EPackage xref = EcoreFactory.eINSTANCE.createEPackage();
+    xref.setName("xref");
+    xref.setNsPrefix("xref");
+    xref.setNsURI("http://xref");
+    xref.getEClassifiers().add(a);
+    xref.getEClassifiers().add(b);
+
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(xref);
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    EObject a1 = addObject(resource, a);
+    EObject a2 = addObject(resource, a);
+    EObject a3 = addObject(resource, a);
+    EObject a4 = addObject(resource, a);
+
+    EObject b1 = addObject(resource, b);
+    EObject b2 = addObject(resource, b);
+    EObject b3 = addObject(resource, b);
+    EObject b4 = addObject(resource, b);
+
+    ((EList<EObject>)a1.eGet(ab5)).add(b1);
+    ((EList<EObject>)a1.eGet(ab5)).add(b2);
+    ((EList<EObject>)a1.eGet(ab5)).add(b3);
+    ((EList<EObject>)a1.eGet(ab5)).add(b4);
+
+    ((EList<EObject>)a1.eGet(ab6)).add(b1);
+    ((EList<EObject>)a1.eGet(ab6)).add(b2);
+    ((EList<EObject>)a1.eGet(ab6)).add(b3);
+    ((EList<EObject>)a1.eGet(ab6)).add(b4);
+
+    transaction.commit();
+
+    /******************/
+
+    List<CDOObjectReference> results = transaction.queryXRefs(CDOUtil.getCDOObject(b1), ab5);
+    assertEquals(1, results.size());
+
+    assertEquals(0, results.get(0).getSourceIndex());
+    assertEquals(ab5, results.get(0).getSourceReference());
+    assertEquals(a1, results.get(0).getSourceObject());
+    assertEquals(b1, results.get(0).getTargetObject());
+  }
+
+  @SuppressWarnings({ "unchecked", "unused" })
+  public void testSpecificReferences2() throws Exception
+  {
+    EClass a = EcoreFactory.eINSTANCE.createEClass();
+    a.setName("A");
+
+    EClass b = EcoreFactory.eINSTANCE.createEClass();
+    b.setName("B");
+
+    EReference aa1 = addReference(a, a, true);
+    EReference aa2 = addReference(a, a, true);
+    EReference aa3 = addReference(a, a, false);
+    EReference aa4 = addReference(a, a, false);
+    EReference ab5 = addReference(a, b, true);
+    EReference ab6 = addReference(a, b, true);
+    EReference ab7 = addReference(a, b, false);
+    EReference ab8 = addReference(a, b, false);
+
+    EReference ba1 = addReference(b, a, true);
+    EReference ba2 = addReference(b, a, true);
+    EReference ba3 = addReference(b, a, false);
+    EReference ba4 = addReference(b, a, false);
+    EReference bb5 = addReference(b, b, true);
+    EReference bb6 = addReference(b, b, true);
+    EReference bb7 = addReference(b, b, false);
+    EReference bb8 = addReference(b, b, false);
+
+    EPackage xref = EcoreFactory.eINSTANCE.createEPackage();
+    xref.setName("xref");
+    xref.setNsPrefix("xref");
+    xref.setNsURI("http://xref");
+    xref.getEClassifiers().add(a);
+    xref.getEClassifiers().add(b);
+
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(xref);
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    EObject a1 = addObject(resource, a);
+    EObject a2 = addObject(resource, a);
+    EObject a3 = addObject(resource, a);
+    EObject a4 = addObject(resource, a);
+
+    EObject b1 = addObject(resource, b);
+    EObject b2 = addObject(resource, b);
+    EObject b3 = addObject(resource, b);
+    EObject b4 = addObject(resource, b);
+
+    ((EList<EObject>)a1.eGet(ab5)).add(b1);
+    ((EList<EObject>)a1.eGet(ab5)).add(b2);
+    ((EList<EObject>)a1.eGet(ab5)).add(b3);
+    ((EList<EObject>)a1.eGet(ab5)).add(b4);
+
+    ((EList<EObject>)a1.eGet(ab6)).add(b1);
+    ((EList<EObject>)a1.eGet(ab6)).add(b2);
+    ((EList<EObject>)a1.eGet(ab6)).add(b3);
+    ((EList<EObject>)a1.eGet(ab6)).add(b4);
+
+    transaction.commit();
+
+    /******************/
+
+    List<CDOObjectReference> results = transaction.queryXRefs(CDOUtil.getCDOObject(b1), ab6);
+    assertEquals(1, results.size());
+
+    assertEquals(0, results.get(0).getSourceIndex());
+    assertEquals(ab6, results.get(0).getSourceReference());
+    assertEquals(a1, results.get(0).getSourceObject());
+    assertEquals(b1, results.get(0).getTargetObject());
+  }
+
+  private EObject addObject(CDOResource resource, EClass eClass)
+  {
+    EObject b8 = EcoreUtil.create(eClass);
+    resource.getContents().add(b8);
+    return b8;
+  }
+
+  private EReference addReference(EClass source, EClass target, boolean many)
+  {
+    EReference reference = EcoreFactory.eINSTANCE.createEReference();
+    EList<EStructuralFeature> features = source.getEStructuralFeatures();
+    features.add(reference);
+
+    reference.setName(target.getName().toLowerCase() + features.size());
+    reference.setEType(target);
+    reference.setUpperBound(many ? -1 : 1);
+    return reference;
   }
 }

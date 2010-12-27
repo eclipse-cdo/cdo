@@ -561,6 +561,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.queryResourcesAsync(folder, name, exactMatch);
   }
 
+  /**
+   * @since 4.0
+   */
+  public List<CDOObjectReference> queryXRefs(CDOObject targetObject, EReference... sourceReferences)
+  {
+    return delegate.queryXRefs(targetObject, sourceReferences);
+  }
+
   public List<CDOObjectReference> queryXRefs(Set<CDOObject> targetObjects, EReference... sourceReferences)
   {
     return delegate.queryXRefs(targetObjects, sourceReferences);

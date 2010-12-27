@@ -88,6 +88,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -541,6 +542,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     return query;
   }
 
+  public List<CDOObjectReference> queryXRefs(CDOObject targetObject, EReference... sourceReferences)
+  {
+    return queryXRefs(Collections.singleton(targetObject), sourceReferences);
+  }
+
   public List<CDOObjectReference> queryXRefs(Set<CDOObject> targetObjects, EReference... sourceReferences)
   {
     CDOQuery xrefsQuery = createXRefsQuery(targetObjects, sourceReferences);
@@ -614,7 +620,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
         builder.append("|");
       }
 
-      CDOClassifierRef classifierRef = new CDOClassifierRef(sourceReference.eClass());
+      CDOClassifierRef classifierRef = new CDOClassifierRef(sourceReference.getEContainingClass());
       builder.append(classifierRef.getURI());
       builder.append("|");
       builder.append(sourceReference.getName());

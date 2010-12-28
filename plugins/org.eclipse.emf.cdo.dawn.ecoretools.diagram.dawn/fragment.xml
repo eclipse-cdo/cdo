@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+	Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Martin Fluegge - initial API and implementation
+-->
+<fragment>
+<extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.emf.cdo.dawn.ecoretools.diagram.part.DawnEcoreDiagramEditor"
+            contributorClass="org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramActionBarContributor"
+            default="true"
+	            extensions="Ecore_diagram"
+	            icon="platform:/plugin/org.eclipse.emf.ecoretools.diagram/icons/obj16/EcoreDiagramFile.gif"
+	            id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.part.DawnEcoreDiagramEditor"
+	            matchingStrategy="org.eclipse.emf.ecoretools.diagram.part.EcoreMatchingStrategy"
+	            name="Dawn Ecore Diagram">
+	      </editor>
+	   </extension>
+	       <extension
+          point="org.eclipse.ui.newWizards">
+       <wizard
+             category="org.eclipse.emf.cdo.dawn.ui.category.examples"
+             class="org.eclipse.emf.cdo.dawn.ecoretools.diagram.part.DawnEcoreCreationWizard"
+             icon="platform:/plugin/org.eclipse.emf.ecoretools.diagram/icons/obj16/EcoreDiagramFile.gif"
+             id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn.part.EcoreCreationWizardID"
+             name="Dawn Ecore Diagram">
+          <description>
+             description body text
+          </description>
+       </wizard>
+
+    </extension>
+        <extension
+              point="org.eclipse.gmf.runtime.diagram.ui.resources.editor.documentProviders">
+           <provider
+                 class="org.eclipse.emf.cdo.dawn.ecoretools.diagram.part.DawnEcoreDocumentProvider"
+                 documentType="org.eclipse.gmf.runtime.diagram.ui.editor.IDocument"
+                 id="org.eclipse.emf.ecoretools.diagram.part"
+                 inputTypes="org.eclipse.emf.common.ui .URIEditorInput">
+           </provider>
+        </extension>
+       <extension
+             point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
+          <editpolicyProvider
+                class="org.eclipse.emf.cdo.dawn.ecoretools.diagram.providers.DawnEcoreEditPolicyProvider">
+             <Priority
+                   name="Low">
+             </Priority>
+          </editpolicyProvider>
+       </extension>
+      <extension point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders" id="ep-provider">
+      <?gmfgen generated="true"?>
+       <editpartProvider class="org.eclipse.emf.cdo.dawn.ecoretools.diagram.providers.DawnEcoreEditPartProvider">
+         <Priority name="Medium"/>
+         <object class="org.eclipse.gmf.runtime.notation.Diagram" id="generated-diagram">
+            <method name="getType()" value="EcoreTools"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-nodes">
+            <method name="getType()" value="1001,1002,1003,1004,1005,2001,2002,2003,2004,2005,2006,2007"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Edge" id="generated-links">
+            <method name="getType()" value="3001,3002,3003"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-labels">
+            <method name="getType()" value="4001,4006,4007,4008,4009,4010,4002,4003,4004,4005"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-compartments">
+            <method name="getType()" value="5001,5002,5003,5004,5005,5006,5007,5008"/>
+         </object>
+         <context views="generated-diagram,generated-nodes,generated-links,generated-labels,generated-compartments"/>
+      </editpartProvider>
+     </extension>
+</fragment>

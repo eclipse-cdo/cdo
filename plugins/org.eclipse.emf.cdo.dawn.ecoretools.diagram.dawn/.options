@@ -1,0 +1,4 @@
+# Debugging and tracing options
+
+org.eclipse.emf.cdo.dawn/debug = true
+

@@ -5,5 +5,6 @@
   <mspec:property key="target.arch" value="*"/>
   <mspec:property key="cvs.repository" value=":pserver:anonymous@dev.eclipse.org:/cvsroot/modeling"/>
   <mspec:property key="eclipse.downloads" value="http://download.eclipse.org"/>
+  <mspec:property key="resolve.target.platform" value="true"/>
   <mspec:mspecNode materializer="workspace" filter="(buckminster.source=true)"/>
 </mspec:mspec>

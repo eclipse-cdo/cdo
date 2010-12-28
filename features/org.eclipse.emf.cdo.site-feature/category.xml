@@ -3,52 +3,61 @@
    <feature id="org.eclipse.emf.cdo" version="0.0.0">
       <category name="org.eclipse.emf.cdo"/>
    </feature>
-   <feature id="org.eclipse.emf.cdo.server" version="0.0.0">
-      <category name="org.eclipse.emf.cdo"/>
-   </feature>
    <feature id="org.eclipse.emf.cdo.defs" version="0.0.0">
       <category name="org.eclipse.emf.cdo"/>
    </feature>
    <feature id="org.eclipse.emf.cdo.doc" version="0.0.0">
       <category name="org.eclipse.emf.cdo"/>
    </feature>
+   <feature id="org.eclipse.emf.cdo.epp" version="0.0.0">
+      <category name="org.eclipse.emf.cdo"/>
+   </feature>
    <feature id="org.eclipse.emf.cdo.examples" version="0.0.0">
+      <category name="org.eclipse.emf.cdo"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.releng.version" version="0.0.0">
       <category name="org.eclipse.emf.cdo"/>
    </feature>
    <feature id="org.eclipse.emf.cdo.sdk" version="0.0.0">
       <category name="org.eclipse.emf.cdo"/>
    </feature>
+   <feature id="org.eclipse.emf.cdo.server" version="0.0.0">
+      <category name="org.eclipse.emf.cdo"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.server.db" version="0.0.0">
+      <category name="org.eclipse.emf.cdo"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.server.db4o" version="0.0.0">
+      <category name="org.eclipse.emf.cdo"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.server.hibernate" version="0.0.0">
+      <category name="org.eclipse.emf.cdo"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.server.objectivity" version="0.0.0">
+      <category name="org.eclipse.emf.cdo"/>
+   </feature>
    <feature id="org.eclipse.emf.cdo.server.product" version="0.0.0">
       <category name="org.eclipse.emf.cdo"/>
    </feature>
-   <feature url="features/org.gastro_3.0.0.qualifier.jar" id="org.gastro" version="3.0.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.tests" version="0.0.0">
       <category name="org.eclipse.emf.cdo"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.tests_3.0.0.qualifier.jar" id="org.eclipse.emf.cdo.tests" version="3.0.0.qualifier">
+   <feature id="org.gastro" version="0.0.0">
       <category name="org.eclipse.emf.cdo"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.dawn" version="0.0.0">
+      <category name="org.eclipse.emf.cdo.dawn"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.dawn.codegen" version="0.0.0">
+      <category name="org.eclipse.emf.cdo.dawn"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.dawn.examples" version="0.0.0">
+      <category name="org.eclipse.emf.cdo.dawn"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.dawn.sdk" version="0.0.0">
+      <category name="org.eclipse.emf.cdo.dawn"/>
    </feature>
    <feature id="org.eclipse.net4j" version="0.0.0">
-      <category name="org.eclipse.net4j"/>
-   </feature>
-   <feature id="org.eclipse.net4j.ui" version="0.0.0">
-      <category name="org.eclipse.net4j"/>
-   </feature>
-   <feature id="org.eclipse.net4j.db" version="0.0.0">
-      <category name="org.eclipse.net4j"/>
-   </feature>
-   <feature id="org.eclipse.net4j.db.derby" version="0.0.0">
-      <category name="org.eclipse.net4j"/>
-   </feature>
-   <feature id="org.eclipse.net4j.db.h2" version="0.0.0">
-      <category name="org.eclipse.net4j"/>
-   </feature>
-   <feature id="org.eclipse.net4j.db.hsqldb" version="0.0.0">
-      <category name="org.eclipse.net4j"/>
-   </feature>
-   <feature id="org.eclipse.net4j.db.mysql" version="0.0.0">
-      <category name="org.eclipse.net4j"/>
-   </feature>
-   <feature id="org.eclipse.net4j.db.postgresql" version="0.0.0">
       <category name="org.eclipse.net4j"/>
    </feature>
    <feature id="org.eclipse.net4j.defs" version="0.0.0">
@@ -60,15 +69,35 @@
    <feature id="org.eclipse.net4j.sdk" version="0.0.0">
       <category name="org.eclipse.net4j"/>
    </feature>
-   <feature url="features/org.eclipse.net4j.tests_3.0.0.qualifier.jar" id="org.eclipse.net4j.tests" version="3.0.0.qualifier">
+   <feature id="org.eclipse.net4j.tests" version="0.0.0">
       <category name="org.eclipse.net4j"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.server.hibernate_3.0.0.qualifier.jar" id="org.eclipse.emf.cdo.server.hibernate" version="3.0.0.qualifier">
-      <category name="org.eclipse.emf.cdo"/>
+   <feature id="org.eclipse.net4j.ui" version="0.0.0">
+      <category name="org.eclipse.net4j"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.dawn.sdk_0.2.0.qualifier.jar" id="org.eclipse.emf.cdo.dawn.sdk" version="0.2.0.qualifier">
-      <category name="org.eclipse.emf.cdo"/>
+   <feature id="org.eclipse.net4j.db" version="0.0.0">
+      <category name="org.eclipse.net4j.db"/>
+   </feature>
+   <feature id="org.eclipse.net4j.db.db2" version="0.0.0">
+      <category name="org.eclipse.net4j.db"/>
+   </feature>
+   <feature id="org.eclipse.net4j.db.derby" version="0.0.0">
+      <category name="org.eclipse.net4j.db"/>
+   </feature>
+   <feature id="org.eclipse.net4j.db.h2" version="0.0.0">
+      <category name="org.eclipse.net4j.db"/>
+   </feature>
+   <feature id="org.eclipse.net4j.db.hsqldb" version="0.0.0">
+      <category name="org.eclipse.net4j.db"/>
+   </feature>
+   <feature id="org.eclipse.net4j.db.mysql" version="0.0.0">
+      <category name="org.eclipse.net4j.db"/>
+   </feature>
+   <feature id="org.eclipse.net4j.db.postgresql" version="0.0.0">
+      <category name="org.eclipse.net4j.db"/>
    </feature>
    <category-def name="org.eclipse.emf.cdo" label="CDO Model Repository"/>
+   <category-def name="org.eclipse.emf.cdo.dawn" label="CDO Dawn"/>
    <category-def name="org.eclipse.net4j" label="Net4j Signalling Platform"/>
+   <category-def name="org.eclipse.net4j.db" label="Net4j DB Framework"/>
 </site>

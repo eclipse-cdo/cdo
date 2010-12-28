@@ -41,9 +41,9 @@
          id="org.eclipse.emf.cdo.dawn"
          version="0.0.0"/>
 
- <!--<includes
+ 	 <includes
          id="org.eclipse.emf.cdo.dawn.codegen"
-         version="0.0.0"/>-->
+         version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.cdo.dawn.examples"

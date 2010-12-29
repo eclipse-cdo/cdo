@@ -152,8 +152,9 @@ public abstract class AbstractCDOUITest<T extends SWTWorkbenchBot> extends Abstr
   /**
    * Walks through the tree and selects the first element which matches the name.
    */
-  protected void selectFolder(SWTBotTreeItem[] items, String name, boolean exactMatch)
+  protected SWTBotTreeItem selectFolder(SWTBotTreeItem[] items, String name, boolean exactMatch)
   {
+    SWTBotTreeItem ret = null;
     for (SWTBotTreeItem item : items)
     {
       if (exactMatch)
@@ -161,7 +162,7 @@ public abstract class AbstractCDOUITest<T extends SWTWorkbenchBot> extends Abstr
         if (item.getText().equals(name))
         {
           item.select();
-          return;
+          return item;
         }
       }
       else
@@ -169,13 +170,14 @@ public abstract class AbstractCDOUITest<T extends SWTWorkbenchBot> extends Abstr
         if (item.getText().contains(name))
         {
           item.select();
-          return;
+          return item;
         }
       }
 
       item.expand();
-      selectFolder(item.getItems(), name, exactMatch);
+      ret = selectFolder(item.getItems(), name, exactMatch);
     }
+    return ret;
   }
 
   protected void typeTextToFocusedWidget(String text, SWTBot bot, boolean hitCR)

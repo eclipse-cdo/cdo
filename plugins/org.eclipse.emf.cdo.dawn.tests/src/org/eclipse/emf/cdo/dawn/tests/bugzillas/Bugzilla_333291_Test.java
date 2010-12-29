@@ -114,7 +114,7 @@ public class Bugzilla_333291_Test extends AbstractDawnEMFTest
 
     SWTBotTree tree = editor.getSelectionPageTree();
 
-    SWTBotTreeItem item = selectFolder(tree.getAllItems(), "", true);
+    selectFolder(tree.getAllItems(), "", true);
 
     editor.clickContextMenu(tree.widget, "EClass");
     editor.clickContextMenu(tree.widget, "EData Type");

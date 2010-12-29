@@ -75,9 +75,9 @@ public class DawnAcoreTestUtil
 
   public static final String CONNECTION_COMPOSITION = "composition";
 
-  public static final String CREATTION_WIZARD_NAME_GMF = "Dawn Acore Diagram";
+  public static final String CREATION_WIZARD_NAME_GMF = "Dawn Acore Diagram";
 
-  public static final String CREATTION_WIZARD_NAME_EMF = "Dawn Acore Model";
+  public static final String CREATION_WIZARD_NAME_EMF = "Dawn Acore Model";
 
   private static IViewProvider viewProvider = new AcoreViewProvider();
 
@@ -126,7 +126,7 @@ public class DawnAcoreTestUtil
 
     SWTBotShell shell = bot.shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    bot.tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATION_WIZARD_NAME_EMF);
     bot.button("Next >").click();
 
     shell = bot.shell("New");

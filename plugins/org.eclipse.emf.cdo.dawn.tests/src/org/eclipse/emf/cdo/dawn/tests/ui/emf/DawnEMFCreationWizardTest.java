@@ -46,7 +46,7 @@ public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
 
     SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATION_WIZARD_NAME_EMF);
     getBot().button("Next >").click();
     getBot().button("Next >").click();
 
@@ -76,7 +76,7 @@ public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
 
     SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATION_WIZARD_NAME_EMF);
     getBot().button("Next >").click();
 
     shell = getBot().shell("New");
@@ -106,7 +106,7 @@ public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
 
     SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATION_WIZARD_NAME_EMF);
     getBot().button("Next >").click();
 
     shell = getBot().shell("New");
@@ -140,7 +140,7 @@ public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
 
     SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATION_WIZARD_NAME_EMF);
     getBot().button("Next >").click();
 
     shell = getBot().shell("New");
@@ -187,7 +187,7 @@ public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
 
     SWTBotShell shell = getBot().shell("New");
     shell.activate();
-    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATTION_WIZARD_NAME_EMF);
+    getBot().tree().expandNode("Dawn Examples").select(DawnAcoreTestUtil.CREATION_WIZARD_NAME_EMF);
     getBot().button("Next >").click();
 
     shell = getBot().shell("New");

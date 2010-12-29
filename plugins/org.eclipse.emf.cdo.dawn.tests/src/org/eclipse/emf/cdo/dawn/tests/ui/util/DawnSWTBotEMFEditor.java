@@ -13,11 +13,13 @@ package org.eclipse.emf.cdo.dawn.tests.ui.util;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefContextMenu;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.part.MultiPageEditorPart;
@@ -240,5 +242,20 @@ public class DawnSWTBotEMFEditor extends SWTBotEditor
       }
     }
     return method;
+  }
+
+  public void setText(final SWTBotTreeItem item, final String text)
+  {
+    MultiPageEditorPart editor = (MultiPageEditorPart)getReference().getEditor(false);
+    Display display = editor.getEditorSite().getShell().getDisplay();
+
+    display.asyncExec(new Runnable()
+    {
+
+      public void run()
+      {
+        item.widget.setData(text);
+      }
+    });
   }
 }

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -108,5 +109,8 @@ public class CreateResourceNodeAction extends ViewAction
 
     itemProvider.refreshViewer(true);
     itemProvider.selectElement(node, true);
+
+    String resourcePath = node.getPath();
+    CDOEditorUtil.openEditor(getPage(), transaction, resourcePath);
   }
 }

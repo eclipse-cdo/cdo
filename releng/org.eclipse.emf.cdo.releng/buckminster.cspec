@@ -14,6 +14,8 @@
 		<cs:dependency name="org.eclipse.pde" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.pde.source" componentType="eclipse.feature"/>
 
+		<cs:dependency name="org.eclipse.emf.base" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.emf.base.source" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.source" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.ocl" componentType="eclipse.feature"/>

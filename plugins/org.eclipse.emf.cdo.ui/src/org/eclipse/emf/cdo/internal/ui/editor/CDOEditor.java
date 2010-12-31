@@ -557,19 +557,13 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * 
    * @generated
    */
-  protected void handleActivate()
+  protected void handleActivateGen()
   {
-    // Recompute the read only state.
-    //
     if (editingDomain.getResourceToReadOnlyMap() != null)
     {
       editingDomain.getResourceToReadOnlyMap().clear();
-
-      // Refresh any actions that may become enabled or disabled.
-      //
       setSelection(getSelection());
     }
-
     if (!removedResources.isEmpty())
     {
       if (handleDirtyConflict())
@@ -590,6 +584,17 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       changedResources.clear();
       savedResources.clear();
     }
+  }
+
+  /**
+   * Handles activation of the editor or it's associated views. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated NOT
+   */
+  protected void handleActivate()
+  {
+    handleActivateGen();
+    setCurrentViewer(selectionViewer);
   }
 
   /**

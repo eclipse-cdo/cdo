@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -43,7 +43,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
    * 
    * @generated
    */
-  public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -175,8 +175,7 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
     // Obtain or create and register package
     CompanyPackageImpl theCompanyPackage = (CompanyPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CompanyPackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI)
-        : new CompanyPackageImpl());
+        .get(eNS_URI) : new CompanyPackageImpl());
 
     isInited = true;
 

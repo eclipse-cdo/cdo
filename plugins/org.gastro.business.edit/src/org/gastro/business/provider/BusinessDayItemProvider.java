@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -81,9 +81,10 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addDatePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_BusinessDay_date_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_BusinessDay_date_feature", "_UI_BusinessDay_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_BusinessDay_date_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_BusinessDay_date_feature", "_UI_BusinessDay_type"),
         BusinessPackage.Literals.BUSINESS_DAY__DATE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }
@@ -95,9 +96,10 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addMenuCardPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_BusinessDay_menuCard_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_BusinessDay_menuCard_feature", "_UI_BusinessDay_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_BusinessDay_menuCard_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_BusinessDay_menuCard_feature", "_UI_BusinessDay_type"),
         BusinessPackage.Literals.BUSINESS_DAY__MENU_CARD, true, false, true, null, null, null));
   }
 
@@ -108,9 +110,10 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addClosedPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_BusinessDay_closed_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_BusinessDay_closed_feature", "_UI_BusinessDay_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_BusinessDay_closed_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_BusinessDay_closed_feature", "_UI_BusinessDay_type"),
         BusinessPackage.Literals.BUSINESS_DAY__CLOSED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
         null, null));
   }

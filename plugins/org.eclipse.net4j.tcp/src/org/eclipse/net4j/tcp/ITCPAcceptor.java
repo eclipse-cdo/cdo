@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,7 +22,8 @@ public interface ITCPAcceptor extends IAcceptor
   public static final String DEFAULT_ADDRESS = "0.0.0.0"; //$NON-NLS-1$
 
   /**
-   * The value of the <i>org.eclipse.net4j.tcp.port</i> bundle/system property if defined, the value <i>2036</i> otherwise.
+   * The value of the <i>org.eclipse.net4j.tcp.port</i> bundle/system property if defined, the value <i>2036</i>
+   * otherwise.
    */
   public static final int DEFAULT_PORT = OM.getDefaultPort();
 

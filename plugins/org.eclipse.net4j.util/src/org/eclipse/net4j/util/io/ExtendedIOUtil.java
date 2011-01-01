@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -64,7 +64,7 @@ public final class ExtendedIOUtil
     {
       return null;
     }
-  
+
     byte[] b;
     try
     {
@@ -74,7 +74,7 @@ public final class ExtendedIOUtil
     {
       throw new IOException("Unable to allocate " + length + " bytes"); //$NON-NLS-1$ //$NON-NLS-2$
     }
-  
+
     in.readFully(b);
     return b;
   }
@@ -179,7 +179,7 @@ public final class ExtendedIOUtil
         size -= chunk;
       } while (size > 0);
     }
-  
+
     out.writeBoolean(false);
   }
 

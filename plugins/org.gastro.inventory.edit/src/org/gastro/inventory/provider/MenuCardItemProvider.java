@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -78,9 +78,10 @@ public class MenuCardItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addTitlePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_MenuCard_title_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_MenuCard_title_feature", "_UI_MenuCard_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_MenuCard_title_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_MenuCard_title_feature", "_UI_MenuCard_type"),
         InventoryPackage.Literals.MENU_CARD__TITLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }

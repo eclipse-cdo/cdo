@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -79,9 +79,10 @@ public class OrderDetailItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addOfferingPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_OrderDetail_offering_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_OrderDetail_offering_feature", "_UI_OrderDetail_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_offering_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_offering_feature", "_UI_OrderDetail_type"),
         BusinessPackage.Literals.ORDER_DETAIL__OFFERING, true, false, true, null, null, null));
   }
 
@@ -92,9 +93,10 @@ public class OrderDetailItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addQuantityPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_OrderDetail_quantity_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_OrderDetail_quantity_feature", "_UI_OrderDetail_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_quantity_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_quantity_feature", "_UI_OrderDetail_type"),
         BusinessPackage.Literals.ORDER_DETAIL__QUANTITY, true, false, false,
         ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
@@ -106,9 +108,10 @@ public class OrderDetailItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addStatePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_OrderDetail_state_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_OrderDetail_state_feature", "_UI_OrderDetail_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_state_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_state_feature", "_UI_OrderDetail_type"),
         BusinessPackage.Literals.ORDER_DETAIL__STATE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
   }
@@ -120,9 +123,10 @@ public class OrderDetailItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addPricePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_OrderDetail_price_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_OrderDetail_price_feature", "_UI_OrderDetail_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_price_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_price_feature", "_UI_OrderDetail_type"),
         BusinessPackage.Literals.ORDER_DETAIL__PRICE, false, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE,
         null, null));
   }

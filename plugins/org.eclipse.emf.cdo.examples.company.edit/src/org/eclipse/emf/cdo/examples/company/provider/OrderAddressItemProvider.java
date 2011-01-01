@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -50,7 +50,7 @@ public class OrderAddressItemProvider extends AddressItemProvider implements IEd
    * 
    * @generated
    */
-  public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -88,9 +88,10 @@ public class OrderAddressItemProvider extends AddressItemProvider implements IEd
    */
   protected void addProductPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_OrderDetail_product_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_OrderDetail_product_feature", "_UI_OrderDetail_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_product_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_product_feature", "_UI_OrderDetail_type"),
         CompanyPackage.Literals.ORDER_DETAIL__PRODUCT, true, false, true, null, null, null));
   }
 
@@ -101,9 +102,10 @@ public class OrderAddressItemProvider extends AddressItemProvider implements IEd
    */
   protected void addPricePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_OrderDetail_price_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_OrderDetail_price_feature", "_UI_OrderDetail_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_OrderDetail_price_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_OrderDetail_price_feature", "_UI_OrderDetail_type"),
         CompanyPackage.Literals.ORDER_DETAIL__PRICE, true, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null,
         null));
   }
@@ -115,10 +117,12 @@ public class OrderAddressItemProvider extends AddressItemProvider implements IEd
    */
   protected void addTestAttributePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_OrderAddress_testAttribute_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_OrderAddress_testAttribute_feature", "_UI_OrderAddress_type"),
-        CompanyPackage.Literals.ORDER_ADDRESS__TEST_ATTRIBUTE, true, false, false,
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_OrderAddress_testAttribute_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_OrderAddress_testAttribute_feature",
+            "_UI_OrderAddress_type"), CompanyPackage.Literals.ORDER_ADDRESS__TEST_ATTRIBUTE, true, false, false,
         ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
@@ -225,11 +229,11 @@ public class OrderAddressItemProvider extends AddressItemProvider implements IEd
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.ORDER__ORDER_DETAILS, CompanyFactory.eINSTANCE
-        .createOrderDetail()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.ORDER__ORDER_DETAILS,
+        CompanyFactory.eINSTANCE.createOrderDetail()));
 
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.ORDER__ORDER_DETAILS, CompanyFactory.eINSTANCE
-        .createOrderAddress()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.ORDER__ORDER_DETAILS,
+        CompanyFactory.eINSTANCE.createOrderAddress()));
   }
 
 }

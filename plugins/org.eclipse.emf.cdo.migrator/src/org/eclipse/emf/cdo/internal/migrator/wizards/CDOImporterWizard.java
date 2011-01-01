@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,15 +36,15 @@ public class CDOImporterWizard extends ModelImporterWizard
   @Override
   public void addPages()
   {
-    ModelImporterDetailPage detailPage = new ModelImporterDetailPage(getModelImporter(), Messages
-        .getString("CDOImporterWizard_0")); //$NON-NLS-1$
+    ModelImporterDetailPage detailPage = new ModelImporterDetailPage(getModelImporter(),
+        Messages.getString("CDOImporterWizard_0")); //$NON-NLS-1$
     detailPage.setTitle(Messages.getString("CDOImporterWizard_1")); //$NON-NLS-1$
     detailPage.setDescription(detailPage.showGenModel() ? Messages.getString("CDOImporterWizard_2") //$NON-NLS-1$
         : Messages.getString("CDOImporterWizard_3")); //$NON-NLS-1$
     addPage(detailPage);
 
-    ModelImporterPackagePage packagePage = new ModelImporterPackagePage(getModelImporter(), Messages
-        .getString("CDOImporterWizard_4")); //$NON-NLS-1$
+    ModelImporterPackagePage packagePage = new ModelImporterPackagePage(getModelImporter(),
+        Messages.getString("CDOImporterWizard_4")); //$NON-NLS-1$
     packagePage.setShowReferencedGenModels(true);
     addPage(packagePage);
   }

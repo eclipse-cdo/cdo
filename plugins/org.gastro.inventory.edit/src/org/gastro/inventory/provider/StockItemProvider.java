@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -78,9 +78,10 @@ public class StockItemProvider extends ItemProviderAdapter implements IEditingDo
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Stock_name_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Stock_name_feature", "_UI_Stock_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Stock_name_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Stock_name_feature", "_UI_Stock_type"),
         InventoryPackage.Literals.STOCK__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }
@@ -197,8 +198,8 @@ public class StockItemProvider extends ItemProviderAdapter implements IEditingDo
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.STOCK__PRODUCTS, InventoryFactory.eINSTANCE
-        .createStockProduct()));
+    newChildDescriptors.add(createChildParameter(InventoryPackage.Literals.STOCK__PRODUCTS,
+        InventoryFactory.eINSTANCE.createStockProduct()));
   }
 
   /**

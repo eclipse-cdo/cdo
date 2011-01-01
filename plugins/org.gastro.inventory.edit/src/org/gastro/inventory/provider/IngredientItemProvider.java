@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -77,9 +77,10 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
    */
   protected void addProductPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Ingredient_product_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Ingredient_product_feature", "_UI_Ingredient_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Ingredient_product_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Ingredient_product_feature", "_UI_Ingredient_type"),
         InventoryPackage.Literals.INGREDIENT__PRODUCT, true, false, true, null, null, null));
   }
 
@@ -90,9 +91,10 @@ public class IngredientItemProvider extends ItemProviderAdapter implements IEdit
    */
   protected void addQuantityPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Ingredient_quantity_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Ingredient_quantity_feature", "_UI_Ingredient_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Ingredient_quantity_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Ingredient_quantity_feature", "_UI_Ingredient_type"),
         InventoryPackage.Literals.INGREDIENT__QUANTITY, true, false, false,
         ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }

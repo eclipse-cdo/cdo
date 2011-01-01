@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -444,7 +444,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
       EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
       annotation.setSource("http://www.eclipse.org/CDO/DBStore");
       annotation.getDetails().put("tableMapping", "NONE");
-      
+
       // ID is defined in plugin.xml
       annotation.getDetails().put("typeMapping", "org.eclipse.emf.cdo.tests.db.EIntToVarchar");
 

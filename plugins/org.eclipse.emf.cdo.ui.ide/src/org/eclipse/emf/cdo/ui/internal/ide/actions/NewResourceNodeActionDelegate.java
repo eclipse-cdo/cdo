@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -37,8 +37,10 @@ public abstract class NewResourceNodeActionDelegate extends TransactionalBackgro
   @Override
   protected CDOObject preRun(CDOObject object)
   {
-    InputDialog dialog = new InputDialog(getTargetPart().getSite().getShell(), getText(), Messages
-        .getString("NewResourceNodeAction_0"), null, new ResourceNodeNameInputValidator((CDOResourceNode)object)); //$NON-NLS-1$
+    InputDialog dialog = new InputDialog(
+        getTargetPart().getSite().getShell(),
+        getText(),
+        Messages.getString("NewResourceNodeAction_0"), null, new ResourceNodeNameInputValidator((CDOResourceNode)object)); //$NON-NLS-1$
     if (dialog.open() == Dialog.OK)
     {
       setNewResourceNode(createNewResourceNode());

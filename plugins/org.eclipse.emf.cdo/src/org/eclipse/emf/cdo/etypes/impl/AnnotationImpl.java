@@ -1,8 +1,12 @@
 /**
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id: AnnotationImpl.java,v 1.1 2010-11-17 06:17:27 estepper Exp $
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
@@ -17,21 +21,21 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Annotation</b></em>'.
  * 
  * @since 4.0 <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getSource <em>Source</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getDetails <em>Details</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getModelElement <em>Model Element</em>}</li>
- * </ul>
- * </p>
- *
+ *        <p>
+ *        The following features are implemented:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getSource <em>Source</em>}</li>
+ *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getDetails <em>Details</em>}</li>
+ *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getModelElement <em>Model Element</em>}</li>
+ *        </ul>
+ *        </p>
  * @generated
  */
 public class AnnotationImpl extends ModelElementImpl implements Annotation
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected AnnotationImpl()
@@ -41,6 +45,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -51,6 +56,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getSource()
@@ -60,6 +66,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setSource(String newSource)
@@ -69,6 +76,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -79,6 +87,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ModelElement getModelElement()
@@ -88,6 +97,7 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setModelElement(ModelElement newModelElement)

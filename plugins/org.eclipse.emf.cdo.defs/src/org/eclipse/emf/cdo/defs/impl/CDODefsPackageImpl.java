@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,84 +39,98 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass cdoViewDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass cdoTransactionDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass cdoAuditDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass cdoSessionDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass cdoPackageRegistryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass cdoEagerPackageRegistryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass cdoLazyPackageRegistryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass ePackageDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass eDynamicPackageDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass eGlobalPackageDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass cdoClientProtocolFactoryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EClass cdoResourceDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private EEnum resourceModeEEnum = null;
@@ -141,17 +155,18 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
-   * <p>This method is used to initialize {@link CDODefsPackage#eINSTANCE} when that field is accessed.
-   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-   * <!-- begin-user-doc -->
+   * <p>
+   * This method is used to initialize {@link CDODefsPackage#eINSTANCE} when that field is accessed. Clients should not
+   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -187,6 +202,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getCDOViewDef()
@@ -196,6 +212,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getCDOViewDef_CdoSessionDef()
@@ -205,6 +222,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getCDOTransactionDef()
@@ -214,6 +232,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getCDOAuditDef()
@@ -223,6 +242,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getCDOAuditDef_TimeStamp()
@@ -232,6 +252,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getCDOSessionDef()
@@ -241,6 +262,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getCDOSessionDef_ConnectorDef()
@@ -250,6 +272,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getCDOSessionDef_RepositoryName()
@@ -259,6 +282,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getCDOSessionDef_CdoPackageRegistryDef()
@@ -268,6 +292,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getCDOSessionDef_LegacySupportEnabled()
@@ -277,6 +302,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getCDOPackageRegistryDef()
@@ -286,6 +312,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getCDOPackageRegistryDef_Packages()
@@ -295,6 +322,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getCDOEagerPackageRegistryDef()
@@ -304,6 +332,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getCDOLazyPackageRegistryDef()
@@ -313,6 +342,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getEPackageDef()
@@ -322,6 +352,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getEPackageDef_NsURI()
@@ -331,6 +362,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getEDynamicPackageDef()
@@ -340,6 +372,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getEDynamicPackageDef_ResourceURI()
@@ -349,6 +382,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getEGlobalPackageDef()
@@ -358,6 +392,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getCDOClientProtocolFactoryDef()
@@ -367,6 +402,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getCDOResourceDef()
@@ -376,6 +412,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getCDOResourceDef_CdoTransaction()
@@ -385,6 +422,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getCDOResourceDef_ResourceMode()
@@ -394,6 +432,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EAttribute getCDOResourceDef_Path()
@@ -403,6 +442,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EEnum getResourceMode()
@@ -412,6 +452,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDODefsFactory getCDODefsFactory()
@@ -421,14 +462,15 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package.  This method is
-   * guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
+   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void createPackageContents()
@@ -480,14 +522,15 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model.  This
-   * method is guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
+   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void initializePackageContents()

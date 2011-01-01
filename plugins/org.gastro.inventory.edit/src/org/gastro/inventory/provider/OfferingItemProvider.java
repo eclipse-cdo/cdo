@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -79,9 +79,10 @@ public class OfferingItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addProductPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Offering_product_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Offering_product_feature", "_UI_Offering_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Offering_product_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Offering_product_feature", "_UI_Offering_type"),
         InventoryPackage.Literals.OFFERING__PRODUCT, true, false, true, null, null, null));
   }
 
@@ -92,9 +93,10 @@ public class OfferingItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Offering_name_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Offering_name_feature", "_UI_Offering_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Offering_name_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Offering_name_feature", "_UI_Offering_type"),
         InventoryPackage.Literals.OFFERING__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }
@@ -106,9 +108,10 @@ public class OfferingItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addDescriptionPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Offering_description_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Offering_description_feature", "_UI_Offering_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Offering_description_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Offering_description_feature", "_UI_Offering_type"),
         InventoryPackage.Literals.OFFERING__DESCRIPTION, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
@@ -120,9 +123,10 @@ public class OfferingItemProvider extends ItemProviderAdapter implements IEditin
    */
   protected void addPricePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Offering_price_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Offering_price_feature", "_UI_Offering_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Offering_price_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Offering_price_feature", "_UI_Offering_type"),
         InventoryPackage.Literals.OFFERING__PRICE, true, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null,
         null));
   }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -23,6 +23,7 @@ import java.util.List;
 /**
  * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>Resource Mode</b></em>', and
  * utility methods for working with them. <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.cdo.defs.CDODefsPackage#getResourceMode()
  * @model
  * @generated
@@ -79,13 +80,13 @@ public enum ResourceMode implements Enumerator
   };
 
   /**
-   * The '<em><b>GET</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>GET</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>GET</b></em>' literal object isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #GET
    * @model
    * @generated
@@ -94,13 +95,13 @@ public enum ResourceMode implements Enumerator
   public static final int GET_VALUE = 0;
 
   /**
-   * The '<em><b>CREATE</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>CREATE</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>CREATE</b></em>' literal object isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #CREATE
    * @model
    * @generated
@@ -109,13 +110,13 @@ public enum ResourceMode implements Enumerator
   public static final int CREATE_VALUE = 0;
 
   /**
-   * The '<em><b>GET OR CREATE</b></em>' literal value.
-   * <!-- begin-user-doc -->
+   * The '<em><b>GET OR CREATE</b></em>' literal value. <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>GET OR CREATE</b></em>' literal object isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @see #GET_OR_CREATE
    * @model
    * @generated
@@ -124,24 +125,24 @@ public enum ResourceMode implements Enumerator
   public static final int GET_OR_CREATE_VALUE = 0;
 
   /**
-   * An array of all the '<em><b>Resource Mode</b></em>' enumerators.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * An array of all the '<em><b>Resource Mode</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private static final ResourceMode[] VALUES_ARRAY = new ResourceMode[] { GET, CREATE, GET_OR_CREATE, };
 
   /**
-   * A public read-only list of all the '<em><b>Resource Mode</b></em>' enumerators.
-   * <!-- begin-user-doc --> <!--
+   * A public read-only list of all the '<em><b>Resource Mode</b></em>' enumerators. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   public static final List<ResourceMode> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
   /**
-   * Returns the '<em><b>Resource Mode</b></em>' literal with the specified literal value.
-   * <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>Resource Mode</b></em>' literal with the specified literal value. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   public static ResourceMode get(String literal)
@@ -158,9 +159,9 @@ public enum ResourceMode implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Resource Mode</b></em>' literal with the specified name.
-   * <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>Resource Mode</b></em>' literal with the specified name. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   public static ResourceMode getByName(String name)
@@ -177,9 +178,9 @@ public enum ResourceMode implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Resource Mode</b></em>' literal with the specified integer value.
-   * <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>Resource Mode</b></em>' literal with the specified integer value. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   public static ResourceMode get(int value)
@@ -194,25 +195,28 @@ public enum ResourceMode implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final int value;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final String name;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private final String literal;
 
   /**
-   * Only this class can construct instances.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Only this class can construct instances. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   private ResourceMode(int value, String name, String literal)
@@ -224,6 +228,7 @@ public enum ResourceMode implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getValue()
@@ -233,6 +238,7 @@ public enum ResourceMode implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -242,6 +248,7 @@ public enum ResourceMode implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getLiteral()
@@ -250,9 +257,9 @@ public enum ResourceMode implements Enumerator
   }
 
   /**
-   * Returns the literal value of the enumerator, which is its string representation.
-   * <!-- begin-user-doc --> <!--
+   * Returns the literal value of the enumerator, which is its string representation. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @generated
    */
   @Override

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -74,9 +74,10 @@ public class TableItemProvider extends StationItemProvider implements IEditingDo
    */
   protected void addSeatsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Table_seats_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Table_seats_feature", "_UI_Table_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Table_seats_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Table_seats_feature", "_UI_Table_type"),
         InventoryPackage.Literals.TABLE__SEATS, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null,
         null));
   }

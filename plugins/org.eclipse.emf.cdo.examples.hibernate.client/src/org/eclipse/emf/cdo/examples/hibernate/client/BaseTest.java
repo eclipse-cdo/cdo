@@ -1,12 +1,12 @@
 /**
- * Copyright (c) 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Martin Taal - initial API and implementation
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.examples.hibernate.client;
 
@@ -29,7 +29,7 @@ import junit.framework.TestCase;
 /**
  * This class contains code to connect to a CDO server in a standalone manner . So the junit test is not running inside
  * an OSGI container.
- *
+ * 
  * @author Martin Taal
  */
 public class BaseTest extends TestCase
@@ -68,7 +68,7 @@ public class BaseTest extends TestCase
     Net4jUtil.prepareContainer(container); // Register Net4j factories
     TCPUtil.prepareContainer(container); // Register TCP factories
     CDONet4jUtil.prepareContainer(container); // Register CDO factories
-//    LifecycleUtil.activate(container);
+    // LifecycleUtil.activate(container);
     container.activate();
 
     // Create connector

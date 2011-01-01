@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -178,8 +178,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
     // Obtain or create and register package
     Net4jDefsPackageImpl theNet4jDefsPackage = (Net4jDefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Net4jDefsPackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI)
-        : new Net4jDefsPackageImpl());
+        .get(eNS_URI) : new Net4jDefsPackageImpl());
 
     isInited = true;
 

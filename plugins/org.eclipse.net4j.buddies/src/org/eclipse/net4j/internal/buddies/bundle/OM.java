@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -35,16 +35,16 @@ public abstract class OM
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
-  public static final OMPreference<String> PREF_CONNECTOR_DESCRIPTION = // 
+  public static final OMPreference<String> PREF_CONNECTOR_DESCRIPTION = //
   PREFS.init("PREF_CONNECTOR_DESCRIPTION", "tcp://localhost"); //$NON-NLS-1$ //$NON-NLS-2$
 
-  public static final OMPreference<String> PREF_USER_ID = // 
+  public static final OMPreference<String> PREF_USER_ID = //
   PREFS.init("PREF_USER_ID", System.getProperty("user.name")); //$NON-NLS-1$ //$NON-NLS-2$
 
-  public static final OMPreference<String> PREF_PASSWORD = // 
+  public static final OMPreference<String> PREF_PASSWORD = //
   PREFS.initString("PREF_PASSWORD"); //$NON-NLS-1$
 
-  public static final OMPreference<Boolean> PREF_AUTO_CONNECT = // 
+  public static final OMPreference<Boolean> PREF_AUTO_CONNECT = //
   PREFS.init("PREF_AUTO_CONNECT", false); //$NON-NLS-1$
 
   /**

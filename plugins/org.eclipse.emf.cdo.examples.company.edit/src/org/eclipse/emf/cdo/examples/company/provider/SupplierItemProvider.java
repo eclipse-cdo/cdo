@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -48,7 +48,7 @@ public class SupplierItemProvider extends AddressItemProvider implements IEditin
    * 
    * @generated
    */
-  public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -85,9 +85,10 @@ public class SupplierItemProvider extends AddressItemProvider implements IEditin
    */
   protected void addPurchaseOrdersPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Supplier_purchaseOrders_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Supplier_purchaseOrders_feature", "_UI_Supplier_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Supplier_purchaseOrders_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Supplier_purchaseOrders_feature", "_UI_Supplier_type"),
         CompanyPackage.Literals.SUPPLIER__PURCHASE_ORDERS, true, false, true, null, null, null));
   }
 
@@ -98,9 +99,10 @@ public class SupplierItemProvider extends AddressItemProvider implements IEditin
    */
   protected void addPreferredPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Supplier_preferred_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Supplier_preferred_feature", "_UI_Supplier_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Supplier_preferred_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Supplier_preferred_feature", "_UI_Supplier_type"),
         CompanyPackage.Literals.SUPPLIER__PREFERRED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
         null, null));
   }

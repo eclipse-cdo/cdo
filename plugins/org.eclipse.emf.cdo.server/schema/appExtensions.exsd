@@ -23,21 +23,21 @@
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
@@ -52,7 +52,7 @@
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.emf.cdo.spi.server.IAppExtension"/>
@@ -90,11 +90,12 @@
    </annotation>
 
    <annotation>
-      <appInfo>
-         <meta.section type="implementation"/>
-      </appInfo>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;br&gt;
+All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at &lt;a href=&quot;http://www.eclipse.org/legal/epl-v10.html&quot;&gt;http://www.eclipse.org/legal/epl-v10.html&lt;/a&gt;
       </documentation>
    </annotation>
 

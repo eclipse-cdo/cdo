@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,8 +12,8 @@ package org.eclipse.net4j.jms.internal.server.protocol.admin;
 
 import org.eclipse.net4j.jms.JMSAdminProtocolConstants;
 import org.eclipse.net4j.jms.server.IDestination;
-import org.eclipse.net4j.jms.server.IServer;
 import org.eclipse.net4j.jms.server.IDestination.Type;
+import org.eclipse.net4j.jms.server.IServer;
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;

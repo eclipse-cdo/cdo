@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -58,8 +58,8 @@ public abstract class SafeActionDelegate implements IActionDelegate
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-      MessageDialog.openError(null, getText(), ex.getLocalizedMessage()
-          + "\n" + Messages.getString("SafeActionDelegate_0")); //$NON-NLS-1$ //$NON-NLS-2$
+      MessageDialog.openError(null, getText(),
+          ex.getLocalizedMessage() + "\n" + Messages.getString("SafeActionDelegate_0")); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

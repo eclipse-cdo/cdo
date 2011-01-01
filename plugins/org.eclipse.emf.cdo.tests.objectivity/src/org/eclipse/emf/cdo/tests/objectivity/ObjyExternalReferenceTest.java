@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -140,172 +140,71 @@ public class ObjyExternalReferenceTest extends AbstractCDOTest
 
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
-  	return;
+    return;
 
-  	/*
-    byte[] dataOfresD = null;
-    getRepository(REPOSITORY2_NAME);
-
-    {
-      CDOSession sessionA = openSession();
-      CDOSession sessionB = openSession(REPOSITORY2_NAME);
-      ResourceSet resourceSet = new ResourceSetImpl();
-      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
-
-      sessionA.getPackageRegistry().putEPackage(getModel1Package());
-      sessionA.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
-      sessionB.getPackageRegistry().putEPackage(getModel1Package());
-      sessionB.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
-
-      CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
-      CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
-
-      CDOResource resA = transactionA1.createResource("/resA");
-      CDOResource resB = transactionB1.createResource("/resB");
-
-      EList<Resource> resources = resourceSet.getResources();
-      assertEquals(4, resources.size());
-
-      CDOResource resC = transactionA1.createResource("/resC");
-      assertNotNull(resC);
-      assertEquals(5, resources.size());
-
-      Resource resD = resourceSet.createResource(URI.createURI("test://1"));
-      assertEquals(6, resources.size());
-      assertEquals(false, resD instanceof CDOResource);
-
-      Company companyA = getModel1Factory().createCompany();
-      companyA.setName("VALUEA");
-
-      Company companyB = getModel1Factory().createCompany();
-      companyB.setName("VALUEB");
-
-      Company companyD = getModel1Factory().createCompany();
-      companyD.setName("VALUED");
-
-      resD.getContents().add(companyD);
-      resA.getContents().add(companyA);
-      resB.getContents().add(companyB);
-
-      Supplier supplier = getModel1Factory().createSupplier();
-      PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
-
-      supplier.getPurchaseOrders().add(purchaseOrder);
-      resD.getContents().add(supplier);
-      resA.getContents().add(purchaseOrder);
-
-      CDOXATransaction transSet = CDOUtil.createXATransaction();
-
-      transSet.add(CDOUtil.getViewSet(resourceSet));
-
-      transactionA1.commit();
-
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-      resD.save(outputStream, null);
-      dataOfresD = outputStream.toByteArray();
-    }
-
-    clearCache(getRepository().getRevisionManager());
-
-    {
-      ResourceSet resourceSet = new ResourceSetImpl();
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction(resourceSet);
-
-      CDOSession session2 = openSession(REPOSITORY2_NAME);
-      CDOTransaction transaction2 = session2.openTransaction(resourceSet);
-
-      CDOViewSet set = CDOUtil.getViewSet(resourceSet);
-      assertNotNull(set);
-
-      resourceSet.getPackageRegistry().put(getModel1Package().getNsURI(), getModel1Package());
-      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
-
-      Resource resD = resourceSet.createResource(URI.createURI("test://1"));
-      resD.load(new ByteArrayInputStream(dataOfresD), null);
-
-      CDOResource resA = transaction.getResource("/resA");
-      CDOResource resB = transaction2.getResource("/resB");
-      Company companyA = (Company)resA.getContents().get(0);
-      Company companyB = (Company)resB.getContents().get(0);
-      Company companyD = (Company)resD.getContents().get(0);
-
-      assertNotSame(resA.getURI(), resB.getURI());
-      assertNotSame(resA.getPath(), "/resA");
-      assertNotSame(resB.getPath(), "/resB");
-      assertNotSame(resA.cdoView(), transaction2);
-      assertNotSame(resB.cdoView(), transaction);
-
-      assertEquals("VALUEA", companyA.getName());
-      assertEquals("VALUEB", companyB.getName());
-      assertEquals("VALUED", companyD.getName());
-
-      Supplier supplierD = (Supplier)resD.getContents().get(1);
-      PurchaseOrder pO = supplierD.getPurchaseOrders().get(0);
-      assertEquals(transaction, CDOUtil.getCDOObject(pO).cdoView());
-      assertEquals(supplierD, pO.getSupplier());
-    }
-    */
+    /*
+     * byte[] dataOfresD = null; getRepository(REPOSITORY2_NAME); { CDOSession sessionA = openSession(); CDOSession
+     * sessionB = openSession(REPOSITORY2_NAME); ResourceSet resourceSet = new ResourceSetImpl();
+     * resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
+     * sessionA.getPackageRegistry().putEPackage(getModel1Package());
+     * sessionA.getPackageRegistry().putEPackage(Model2Package.eINSTANCE);
+     * sessionB.getPackageRegistry().putEPackage(getModel1Package());
+     * sessionB.getPackageRegistry().putEPackage(Model2Package.eINSTANCE); CDOTransaction transactionA1 =
+     * sessionA.openTransaction(resourceSet); CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
+     * CDOResource resA = transactionA1.createResource("/resA"); CDOResource resB =
+     * transactionB1.createResource("/resB"); EList<Resource> resources = resourceSet.getResources(); assertEquals(4,
+     * resources.size()); CDOResource resC = transactionA1.createResource("/resC"); assertNotNull(resC); assertEquals(5,
+     * resources.size()); Resource resD = resourceSet.createResource(URI.createURI("test://1")); assertEquals(6,
+     * resources.size()); assertEquals(false, resD instanceof CDOResource); Company companyA =
+     * getModel1Factory().createCompany(); companyA.setName("VALUEA"); Company companyB =
+     * getModel1Factory().createCompany(); companyB.setName("VALUEB"); Company companyD =
+     * getModel1Factory().createCompany(); companyD.setName("VALUED"); resD.getContents().add(companyD);
+     * resA.getContents().add(companyA); resB.getContents().add(companyB); Supplier supplier =
+     * getModel1Factory().createSupplier(); PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+     * supplier.getPurchaseOrders().add(purchaseOrder); resD.getContents().add(supplier);
+     * resA.getContents().add(purchaseOrder); CDOXATransaction transSet = CDOUtil.createXATransaction();
+     * transSet.add(CDOUtil.getViewSet(resourceSet)); transactionA1.commit(); ByteArrayOutputStream outputStream = new
+     * ByteArrayOutputStream(); resD.save(outputStream, null); dataOfresD = outputStream.toByteArray(); }
+     * clearCache(getRepository().getRevisionManager()); { ResourceSet resourceSet = new ResourceSetImpl(); CDOSession
+     * session = openSession(); CDOTransaction transaction = session.openTransaction(resourceSet); CDOSession session2 =
+     * openSession(REPOSITORY2_NAME); CDOTransaction transaction2 = session2.openTransaction(resourceSet); CDOViewSet
+     * set = CDOUtil.getViewSet(resourceSet); assertNotNull(set);
+     * resourceSet.getPackageRegistry().put(getModel1Package().getNsURI(), getModel1Package());
+     * resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
+     * Resource resD = resourceSet.createResource(URI.createURI("test://1")); resD.load(new
+     * ByteArrayInputStream(dataOfresD), null); CDOResource resA = transaction.getResource("/resA"); CDOResource resB =
+     * transaction2.getResource("/resB"); Company companyA = (Company)resA.getContents().get(0); Company companyB =
+     * (Company)resB.getContents().get(0); Company companyD = (Company)resD.getContents().get(0);
+     * assertNotSame(resA.getURI(), resB.getURI()); assertNotSame(resA.getPath(), "/resA");
+     * assertNotSame(resB.getPath(), "/resB"); assertNotSame(resA.cdoView(), transaction2);
+     * assertNotSame(resB.cdoView(), transaction); assertEquals("VALUEA", companyA.getName()); assertEquals("VALUEB",
+     * companyB.getName()); assertEquals("VALUED", companyD.getName()); Supplier supplierD =
+     * (Supplier)resD.getContents().get(1); PurchaseOrder pO = supplierD.getPurchaseOrders().get(0);
+     * assertEquals(transaction, CDOUtil.getCDOObject(pO).cdoView()); assertEquals(supplierD, pO.getSupplier()); }
+     */
   }
 
   public void testManyViewsOnOneResourceSet() throws Exception
   {
-  	/*
-    getRepository(REPOSITORY2_NAME);
-
-    {
-      CDOSession sessionA = openSession();
-      sessionA.getPackageRegistry().putEPackage(getModel1Package());
-
-      CDOSession sessionB = openSession(REPOSITORY2_NAME);
-
-      ResourceSet resourceSet = new ResourceSetImpl();
-      CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
-      CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
-
-      CDOResource resA = transactionA1.createResource("/resA");
-      CDOResource resB = transactionB1.createResource("/resB");
-
-      Supplier supplier = getModel1Factory().createSupplier();
-      PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
-
-      supplier.getPurchaseOrders().add(purchaseOrder);
-      resB.getContents().add(supplier);
-      resA.getContents().add(purchaseOrder);
-
-      CDOXATransaction transSet = CDOUtil.createXATransaction();
-      transSet.add(CDOUtil.getViewSet(resourceSet));
-
-      transactionA1.commit();
-    }
-
-    clearCache(getRepository().getRevisionManager());
-
-    {
-      ResourceSet resourceSet = new ResourceSetImpl();
-      CDOSession sessionA = openSession();
-      CDOTransaction transactionA = sessionA.openTransaction(resourceSet);
-
-      CDOSession sessionB = openSession(REPOSITORY2_NAME);
-      CDOTransaction transactionB = sessionB.openTransaction(resourceSet);
-
-      CDOResource resA = transactionA.getResource("/resA");
-      assertNotNull(resA);
-
-      CDOResource resB = transactionB.getResource("/resB");
-      assertNotNull(resB);
-
-      Supplier supplierB = (Supplier)resB.getContents().get(0);
-      PurchaseOrder pO = supplierB.getPurchaseOrders().get(0);
-
-      assertEquals(transactionA, CDOUtil.getCDOObject(pO).cdoView());
-
-      assertEquals(transactionB, CDOUtil.getCDOObject(supplierB).cdoView());
-
-      assertEquals(supplierB, pO.getSupplier());
-      assertEquals(supplierB.getPurchaseOrders().get(0), pO);
-    }
-    */
+    /*
+     * getRepository(REPOSITORY2_NAME); { CDOSession sessionA = openSession();
+     * sessionA.getPackageRegistry().putEPackage(getModel1Package()); CDOSession sessionB =
+     * openSession(REPOSITORY2_NAME); ResourceSet resourceSet = new ResourceSetImpl(); CDOTransaction transactionA1 =
+     * sessionA.openTransaction(resourceSet); CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
+     * CDOResource resA = transactionA1.createResource("/resA"); CDOResource resB =
+     * transactionB1.createResource("/resB"); Supplier supplier = getModel1Factory().createSupplier(); PurchaseOrder
+     * purchaseOrder = getModel1Factory().createPurchaseOrder(); supplier.getPurchaseOrders().add(purchaseOrder);
+     * resB.getContents().add(supplier); resA.getContents().add(purchaseOrder); CDOXATransaction transSet =
+     * CDOUtil.createXATransaction(); transSet.add(CDOUtil.getViewSet(resourceSet)); transactionA1.commit(); }
+     * clearCache(getRepository().getRevisionManager()); { ResourceSet resourceSet = new ResourceSetImpl(); CDOSession
+     * sessionA = openSession(); CDOTransaction transactionA = sessionA.openTransaction(resourceSet); CDOSession
+     * sessionB = openSession(REPOSITORY2_NAME); CDOTransaction transactionB = sessionB.openTransaction(resourceSet);
+     * CDOResource resA = transactionA.getResource("/resA"); assertNotNull(resA); CDOResource resB =
+     * transactionB.getResource("/resB"); assertNotNull(resB); Supplier supplierB = (Supplier)resB.getContents().get(0);
+     * PurchaseOrder pO = supplierB.getPurchaseOrders().get(0); assertEquals(transactionA,
+     * CDOUtil.getCDOObject(pO).cdoView()); assertEquals(transactionB, CDOUtil.getCDOObject(supplierB).cdoView());
+     * assertEquals(supplierB, pO.getSupplier()); assertEquals(supplierB.getPurchaseOrders().get(0), pO); }
+     */
   }
 
   public void testObjectNotAttached() throws Exception

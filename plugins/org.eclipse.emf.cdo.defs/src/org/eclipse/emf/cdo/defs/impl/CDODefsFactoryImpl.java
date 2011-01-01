@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,13 +36,14 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 {
   /**
-   * Creates the default factory implementation.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static CDODefsFactory init()
@@ -64,8 +65,8 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
   }
 
   /**
-   * Creates an instance of the factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDODefsFactoryImpl()
@@ -75,6 +76,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -111,6 +113,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -127,6 +130,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -143,6 +147,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOViewDef createCDOViewDef()
@@ -153,6 +158,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOTransactionDef createCDOTransactionDef()
@@ -163,6 +169,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOAuditDef createCDOAuditDef()
@@ -173,6 +180,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOSessionDef createCDOSessionDef()
@@ -183,6 +191,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOPackageRegistryDef createCDOPackageRegistryDef()
@@ -193,6 +202,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOEagerPackageRegistryDef createCDOEagerPackageRegistryDef()
@@ -203,6 +213,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOLazyPackageRegistryDef createCDOLazyPackageRegistryDef()
@@ -213,6 +224,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EDynamicPackageDef createEDynamicPackageDef()
@@ -223,6 +235,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EGlobalPackageDef createEGlobalPackageDef()
@@ -233,6 +246,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOClientProtocolFactoryDef createCDOClientProtocolFactoryDef()
@@ -243,6 +257,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOResourceDef createCDOResourceDef()
@@ -253,6 +268,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public ResourceMode createResourceModeFromString(EDataType eDataType, String initialValue)
@@ -266,6 +282,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String convertResourceModeToString(EDataType eDataType, Object instanceValue)
@@ -275,6 +292,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDODefsPackage getCDODefsPackage()
@@ -284,6 +302,7 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @deprecated
    * @generated
    */

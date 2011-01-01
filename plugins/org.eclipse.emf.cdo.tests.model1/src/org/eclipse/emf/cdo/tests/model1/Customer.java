@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -34,7 +34,7 @@ public interface Customer extends Address
    * 
    * @generated
    */
-  String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * Returns the value of the '<em><b>Sales Orders</b></em>' reference list. The list contents are of type
@@ -66,7 +66,8 @@ public interface Customer extends Address
    * 
    * @return the value of the '<em>Order By Product</em>' map.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCustomer_OrderByProduct()
-   * @model mapType="org.eclipse.emf.cdo.tests.model1.ProductToOrder<org.eclipse.emf.cdo.tests.model1.Product1, org.eclipse.emf.cdo.tests.model1.SalesOrder>"
+   * @model mapType=
+   *        "org.eclipse.emf.cdo.tests.model1.ProductToOrder<org.eclipse.emf.cdo.tests.model1.Product1, org.eclipse.emf.cdo.tests.model1.SalesOrder>"
    * @generated
    */
   EMap<Product1, SalesOrder> getOrderByProduct();

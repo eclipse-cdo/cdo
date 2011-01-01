@@ -23,7 +23,7 @@
 			overview="${overview}"
 
 			windowtitle="CDO Model Repository Javadocs"
-			footer="Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.&lt;br&gt; All Rights Reserved."
+			footer="Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;br&gt; All Rights Reserved."
 
 			access="protected" 
 			additionalparam="-breakiterator -tag model:X -tag generated:X -tag ordered:X"

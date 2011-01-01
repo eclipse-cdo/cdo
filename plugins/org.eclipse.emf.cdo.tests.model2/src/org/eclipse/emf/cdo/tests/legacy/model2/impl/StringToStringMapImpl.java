@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
- * $Id: StringToStringMapImpl.java,v 1.1 2010-03-11 20:34:58 mfluegge Exp $
+ * $Id: StringToStringMapImpl.java,v 1.2 2011-01-01 11:01:57 estepper Exp $
  */
 package org.eclipse.emf.cdo.tests.legacy.model2.impl;
 

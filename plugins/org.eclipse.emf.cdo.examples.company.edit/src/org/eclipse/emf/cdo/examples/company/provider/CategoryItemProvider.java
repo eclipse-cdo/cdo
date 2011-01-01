@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -53,7 +53,7 @@ public class CategoryItemProvider extends CDOItemProviderAdapter implements IEdi
    * 
    * @generated
    */
-  public static final String copyright = "Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
+  public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -89,9 +89,10 @@ public class CategoryItemProvider extends CDOItemProviderAdapter implements IEdi
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Category_name_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Category_name_feature", "_UI_Category_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Category_name_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Category_name_feature", "_UI_Category_type"),
         CompanyPackage.Literals.CATEGORY__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }
@@ -211,11 +212,11 @@ public class CategoryItemProvider extends CDOItemProviderAdapter implements IEdi
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.CATEGORY__CATEGORIES, CompanyFactory.eINSTANCE
-        .createCategory()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.CATEGORY__CATEGORIES,
+        CompanyFactory.eINSTANCE.createCategory()));
 
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.CATEGORY__PRODUCTS, CompanyFactory.eINSTANCE
-        .createProduct()));
+    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.CATEGORY__PRODUCTS,
+        CompanyFactory.eINSTANCE.createProduct()));
   }
 
   /**

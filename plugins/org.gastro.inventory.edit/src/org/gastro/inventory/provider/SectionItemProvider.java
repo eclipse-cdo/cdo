@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -79,9 +79,10 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
    */
   protected void addTitlePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Section_title_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Section_title_feature", "_UI_Section_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Section_title_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Section_title_feature", "_UI_Section_type"),
         InventoryPackage.Literals.SECTION__TITLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }
@@ -93,9 +94,10 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
    */
   protected void addTextPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_Section_text_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_Section_text_feature", "_UI_Section_type"),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Section_text_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Section_text_feature", "_UI_Section_type"),
         InventoryPackage.Literals.SECTION__TEXT, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
         null));
   }

@@ -181,6 +181,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(OCLQueryTest.class);
     testClasses.add(ViewProviderTest.class);
     testClasses.add(WorkspaceTest.class);
+    testClasses.add(BackupTest.class);
 
     // Bugzilla verifications
     testClasses.add(Bugzilla_241464_Test.class);

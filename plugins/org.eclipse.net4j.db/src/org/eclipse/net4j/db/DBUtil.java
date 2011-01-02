@@ -323,8 +323,12 @@ public final class DBUtil
     }
   }
 
-  public static void dropAllTables(Connection connection, String dbName)
+  /**
+   * @since 4.0
+   */
+  public static List<Exception> dropAllTables(Connection connection, String dbName)
   {
+    List<Exception> exceptions = new ArrayList<Exception>();
     Statement statement = null;
 
     try
@@ -334,7 +338,15 @@ public final class DBUtil
       {
         String sql = "DROP TABLE " + tableName; //$NON-NLS-1$
         trace(sql);
-        statement.execute(sql);
+
+        try
+        {
+          statement.execute(sql);
+        }
+        catch (SQLException ex)
+        {
+          exceptions.add(ex);
+        }
       }
     }
     catch (SQLException ex)
@@ -345,6 +357,8 @@ public final class DBUtil
     {
       DBUtil.close(statement);
     }
+
+    return exceptions;
   }
 
   /**

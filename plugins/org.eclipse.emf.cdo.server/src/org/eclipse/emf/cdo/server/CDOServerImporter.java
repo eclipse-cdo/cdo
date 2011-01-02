@@ -489,7 +489,7 @@ public abstract class CDOServerImporter
             if ((length & 1) == 1) // odd length?
             {
               --length;
-              blobChar = ch[ch.length - 1];
+              blobChar = ch[length];
             }
 
             if (start != 0 || length != ch.length)

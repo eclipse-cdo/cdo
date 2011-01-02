@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -100,13 +99,6 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   protected void checkXRefs()
   {
     // Do nothing
-  }
-
-  @Override
-  protected InternalCDORevision getOldRevision(InternalCDORevisionManager revisionManager,
-      InternalCDORevisionDelta delta)
-  {
-    return super.getOldRevision(revisionManager, delta);
   }
 
   private static InternalCDOPackageUnit[] getNewPackageUnits(CDOCommitInfo commitInfo,

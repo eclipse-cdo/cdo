@@ -370,8 +370,6 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.begin(107);
 
       dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
-      lockObjects();
-      monitor.worked();
 
       // Could throw an exception
       long[] times = createTimeStamp(monitor.fork());
@@ -379,6 +377,9 @@ public class TransactionCommitContext implements InternalCommitContext
       previousTimeStamp = times[1];
 
       adjustForCommit();
+      monitor.worked();
+
+      lockObjects();
       monitor.worked();
 
       InternalRepository repository = transaction.getRepository();
@@ -861,7 +862,7 @@ public class TransactionCommitContext implements InternalCommitContext
     InternalRepository repository = transaction.getRepository();
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
-    InternalCDORevision oldRevision = getOldRevision(revisionManager, delta);
+    InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(delta.getID(), delta, CDORevision.UNCHUNKED, true);
     if (oldRevision == null)
     {
       throw new IllegalStateException("Origin revision not found for " + delta);
@@ -888,12 +889,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
     delta.apply(newRevision);
     return newRevision;
-  }
-
-  protected InternalCDORevision getOldRevision(InternalCDORevisionManager revisionManager,
-      InternalCDORevisionDelta delta)
-  {
-    return revisionManager.getRevisionByVersion(delta.getID(), delta, CDORevision.UNCHUNKED, true);
   }
 
   private void applyIDMappings(InternalCDORevision[] revisions, OMMonitor monitor)

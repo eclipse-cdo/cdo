@@ -29,10 +29,10 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
-import org.eclipse.emf.internal.cdo.CDOObjectMerger;
-import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.object.CDOObjectMerger;
+import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.event.IEvent;

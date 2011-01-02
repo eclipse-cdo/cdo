@@ -51,11 +51,9 @@ import org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent;
 import org.eclipse.emf.cdo.view.CDOViewEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
-import org.eclipse.emf.internal.cdo.CDOStateMachine;
-import org.eclipse.emf.internal.cdo.CDOStore;
-import org.eclipse.emf.internal.cdo.CDOURIHandler;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.object.CDOLegacyAdapter;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 
 import org.eclipse.net4j.util.ImplementationError;
@@ -79,6 +77,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -113,7 +112,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
   private ConcurrentMap<CDOID, InternalCDOObject> objects;
 
-  private CDOStore store = new CDOStore(this);
+  private CDOStore store = new CDOStoreImpl(this);
 
   private ReentrantLock lock = new ReentrantLock(true);
 
@@ -938,7 +937,8 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       {
         try
         {
-          InternalCDOObject object = FSMUtil.getLegacyAdapter(((InternalEObject)potentialObject).eAdapters());
+          InternalCDOObject object = (InternalCDOObject)EcoreUtil.getAdapter(
+              ((InternalEObject)potentialObject).eAdapters(), CDOLegacyAdapter.class);
           if (object != null)
           {
             CDOID id = getID(object, onlyPersistedID);

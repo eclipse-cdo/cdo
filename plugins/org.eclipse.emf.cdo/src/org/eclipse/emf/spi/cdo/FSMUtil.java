@@ -16,9 +16,9 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.CDOLegacyAdapter;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.object.CDOLegacyAdapter;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
@@ -126,23 +126,10 @@ public final class FSMUtil
     // return wrapper;
   }
 
-  public static CDOLegacyAdapter getLegacyAdapter(EList<Adapter> adapters)
+  private static CDOLegacyAdapter getLegacyAdapter(EList<Adapter> adapters)
   {
     return (CDOLegacyAdapter)EcoreUtil.getAdapter(adapters, CDOLegacyAdapter.class);
   }
-
-  // public static CDOLegacyWrapper getLegacyWrapper(EList<?> listeners)
-  // {
-  // for (Object listener : listeners)
-  // {
-  // if (listener.getClass() == CDOLegacyWrapper.class)
-  // {
-  // return (CDOLegacyWrapper)listener;
-  // }
-  // }
-  //
-  // return null;
-  // }
 
   public static Iterator<InternalCDOObject> iterator(final Iterator<?> delegate, final InternalCDOView view)
   {

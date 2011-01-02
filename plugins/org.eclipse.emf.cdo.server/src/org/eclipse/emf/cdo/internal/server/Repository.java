@@ -80,7 +80,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
-import org.eclipse.emf.internal.cdo.CDOFactoryImpl;
+import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;

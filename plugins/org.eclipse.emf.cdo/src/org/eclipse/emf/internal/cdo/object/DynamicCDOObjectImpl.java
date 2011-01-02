@@ -9,7 +9,9 @@
  *    Eike Stepper - initial API and implementation
  *    Martin Fluegge - EMap support
  */
-package org.eclipse.emf.internal.cdo;
+package org.eclipse.emf.internal.cdo.object;
+
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.ecore.EClass;

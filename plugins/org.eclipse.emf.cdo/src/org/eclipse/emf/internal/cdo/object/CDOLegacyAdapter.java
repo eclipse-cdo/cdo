@@ -9,17 +9,19 @@
  *    Eike Stepper - initial API and implementation
  *    Martin Fluegge - bug 247226: Transparently support legacy models
  */
-package org.eclipse.emf.internal.cdo;
+package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.spi.cdo.CDOStore;
 
 import java.util.List;
 

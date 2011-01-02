@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
  */
-package org.eclipse.emf.internal.cdo;
+package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.collection.Pair;

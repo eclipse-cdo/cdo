@@ -12,7 +12,7 @@
  *    Simon McDuff - bug 246705
  *    Simon McDuff - bug 246622
  */
-package org.eclipse.emf.internal.cdo;
+package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.spi.cdo.CDOElementProxy;
+import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -62,21 +63,21 @@ import java.util.concurrent.locks.ReentrantLock;
  * - Keep CDOID only when the object (!isNew && !isTransient) // Only when CDOID will not changed.<br>
  * - Keep EObject for external reference, new, transient and that until commit time.<br>
  * It is important since these objects could changed and we need to keep a reference to {@link EObject} until the end.
- * It is the reason why {@link CDOStore} always call {@link InternalCDOView#convertObjectToID(Object, boolean)} with
+ * It is the reason why {@link CDOStoreImpl} always call {@link InternalCDOView#convertObjectToID(Object, boolean)} with
  * true.
  * 
  * @author Eike Stepper
  */
-public final class CDOStore implements EStore
+public final class CDOStoreImpl implements CDOStore
 {
-  private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_STORE, CDOStore.class);
+  private final ContextTracer TRACER = new ContextTracer(OM.DEBUG_STORE, CDOStoreImpl.class);
 
   private InternalCDOView view;
 
   /**
    * @since 2.0
    */
-  public CDOStore(InternalCDOView view)
+  public CDOStoreImpl(InternalCDOView view)
   {
     this.view = view;
   }

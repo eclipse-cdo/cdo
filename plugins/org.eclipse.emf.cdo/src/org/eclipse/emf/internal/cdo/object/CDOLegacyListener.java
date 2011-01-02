@@ -8,7 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.internal.cdo;
+package org.eclipse.emf.internal.cdo.object;
+
+import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.emf.ecore.InternalEObject;
 

@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.internal.common.CDOQueryInfoImpl;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.CDOObjectReferenceImpl;
+import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 

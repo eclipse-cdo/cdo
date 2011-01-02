@@ -37,12 +37,11 @@ import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
-import org.eclipse.emf.internal.cdo.CDODeltaNotificationImpl;
-import org.eclipse.emf.internal.cdo.CDOInvalidationNotificationImpl;
-import org.eclipse.emf.internal.cdo.CDONotificationBuilder;
-import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.object.CDODeltaNotificationImpl;
+import org.eclipse.emf.internal.cdo.object.CDOInvalidationNotificationImpl;
+import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;

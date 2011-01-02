@@ -89,15 +89,15 @@ import org.eclipse.emf.cdo.util.CommitIntegrityCheck;
 import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
-import org.eclipse.emf.internal.cdo.CDOObjectMerger;
-import org.eclipse.emf.internal.cdo.CDOObjectWrapper;
-import org.eclipse.emf.internal.cdo.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.object.CDOObjectMerger;
+import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
+import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;

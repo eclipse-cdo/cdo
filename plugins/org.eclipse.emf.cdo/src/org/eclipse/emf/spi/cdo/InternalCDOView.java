@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.CDOStore;
-
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -53,6 +51,9 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
   public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer);
 
+  /**
+   * @since 4.0
+   */
   public CDOStore getStore();
 
   public InternalCDOTransaction toTransaction();

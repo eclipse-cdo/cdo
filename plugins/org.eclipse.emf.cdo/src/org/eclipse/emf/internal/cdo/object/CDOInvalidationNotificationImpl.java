@@ -9,7 +9,7 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.internal.cdo;
+package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
 

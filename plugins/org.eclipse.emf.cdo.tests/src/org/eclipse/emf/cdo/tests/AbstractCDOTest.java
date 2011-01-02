@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.CDOLegacyWrapper;
+import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 
 import org.eclipse.net4j.util.io.IOUtil;
 

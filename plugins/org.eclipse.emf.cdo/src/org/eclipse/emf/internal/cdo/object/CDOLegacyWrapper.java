@@ -62,6 +62,7 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
+ * @author Martin Fluegge
  * @since 2.0
  */
 public abstract class CDOLegacyWrapper extends CDOObjectWrapper
@@ -69,8 +70,8 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOLegacyWrapper.class);
 
   /**
-   * This local ThreadMap stores all pre-registered objects. This avoids a neverending loop when setting the container
-   * for the object.
+   * This ThreadLocal map stores all pre-registered objects. This avoids a never-ending loop when setting the container
+   * of an object.
    */
   private static ThreadLocal<Map<CDOID, CDOLegacyWrapper>> wrapperRegistry = new InheritableThreadLocal<Map<CDOID, CDOLegacyWrapper>>()
   {
@@ -205,8 +206,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
           for (int i = 0; i < size; i++)
           {
             EObject object = (EObject)getValueFromRevision(feature, i);
-            CDOObjectWrapper wrapper = (CDOObjectWrapper)CDOUtil.getCDOObject(object);
-            setOppositeReference(wrapper, oppositeReference);
+            adjustPersistentOppositeReference(this, object, oppositeReference);
           }
         }
         else
@@ -214,37 +214,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
           EObject oppositeObject = (EObject)instance.eGet(feature);
           if (oppositeObject != null)
           {
-            CDOObjectWrapper wrapper = (CDOObjectWrapper)CDOUtil.getCDOObject(oppositeObject);
-            setOppositeReference(wrapper, oppositeReference);
-          }
-        }
-      }
-    }
-  }
-
-  private void setOppositeReference(CDOObjectWrapper wrapper, EReference oppositeReference)
-  {
-    if (wrapper != null)
-    {
-      InternalCDOView view = wrapper.cdoView();
-      if (view != null)
-      {
-        CDOStore store = view.getStore();
-        if (store != null)
-        {
-          if (oppositeReference.isMany())
-          {
-            EObject eObject = wrapper.cdoInternalInstance();
-            @SuppressWarnings("unchecked")
-            EList<Object> list = (EList<Object>)eObject.eGet(oppositeReference);
-            if (!store.isEmpty(wrapper, oppositeReference))
-            {
-              store.set(wrapper, oppositeReference, list.indexOf(instance), this);
-            }
-          }
-          else
-          {
-            store.set(wrapper, oppositeReference, 0, this);
+            adjustPersistentOppositeReference(this, oppositeObject, oppositeReference);
           }
         }
       }
@@ -287,7 +257,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
           {
             @SuppressWarnings("unchecked")
             InternalEList<Object> list = (InternalEList<Object>)instance.eGet(feature);
-            clearList(feature, list);
+            clearEList(list);
           }
           else
           {
@@ -511,7 +481,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         @SuppressWarnings("unchecked")
         InternalEList<Object> list = (InternalEList<Object>)instance.eGet(feature);
 
-        clearList(feature, list);
+        clearEList(list);
         for (int i = 0; i < size; i++)
         {
           Object object = getValueFromRevision(feature, i);
@@ -575,7 +545,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
             if (!EMFUtil.isPersistent(oppositeReference))
             {
-              adjustOppositeReference(instance, (InternalEObject)object, oppositeReference);
+              adjustTransientOppositeReference(instance, (InternalEObject)object, oppositeReference);
             }
           }
         }
@@ -596,50 +566,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
           TRACER.format(("Added object " + object + " to feature " + feature + " in instance " + instance)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
       }
-    }
-  }
-
-  private void adjustOppositeReference(InternalEObject instance, InternalEObject object, EReference oppositeReference)
-  {
-    boolean wasDeliver = object.eDeliver(); // Disable notifications
-    if (wasDeliver)
-    {
-      object.eSetDeliver(false);
-    }
-
-    try
-    {
-      if (oppositeReference.isMany())
-      {
-        // TODO Martin: Is this enough??
-        @SuppressWarnings("unchecked")
-        InternalEList<Object> list = (InternalEList<Object>)object.eGet(oppositeReference);
-        list.basicAdd(instance, null);
-      }
-      else
-      {
-        // TODO Martin: This only increases performance if getter is cheaper than setter. Should discuss this.
-        if (object.eGet(oppositeReference) != instance)
-        {
-          object.eInverseAdd(instance, oppositeReference.getFeatureID(), ((EObject)instance).getClass(), null);
-        }
-      }
-    }
-    finally
-    {
-      if (wasDeliver)
-      {
-        object.eSetDeliver(true);
-      }
-    }
-  }
-
-  private void clearList(EStructuralFeature feature, InternalEList<Object> list)
-  {
-    for (int i = list.size() - 1; i >= 0; --i)
-    {
-      Object obj = list.get(i);
-      ((InternalEList<?>)list).basicRemove(obj, null);
     }
   }
 
@@ -827,15 +753,12 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return (InternalEObject)Proxy.newProxyInstance(classLoader, interfaces, handler);
   }
 
-  /**
-   * TODO Martin: Can this be optimized?
-   */
-  protected void clearEList(InternalEList<Object> list)
+  protected void clearEList(InternalEList<?> list)
   {
-    while (!list.isEmpty())
+    for (int i = list.size() - 1; i >= 0; --i)
     {
-      Object toBeRemoved = list.basicGet(0);
-      list.basicRemove(toBeRemoved, null);
+      Object obj = list.get(i);
+      list.basicRemove(obj, null);
     }
   }
 
@@ -855,7 +778,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
   }
 
-  /*
+  /**
    * IMPORTANT: Compile errors in this method might indicate an old version of EMF. Legacy support is only enabled for
    * EMF with fixed bug #247130. These compile errors do not affect native models!
    */
@@ -1028,50 +951,90 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return wrapperRegistry.get().containsKey(wrapper.cdoID());
   }
 
-  private static void adjustOppositeReference(InternalCDOObject instance, InternalEObject object, EReference feature)
+  private void adjustOppositeReference(InternalCDOObject cdoObject, EObject oppositeObject, EReference oppositeReference)
   {
-    if (object != null)
+    if (oppositeObject != null)
     {
-      InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(object);
-      if (cdoObject != null && !FSMUtil.isTransient(cdoObject))
+      InternalCDOObject oppositeCDOObject = (InternalCDOObject)CDOUtil.getCDOObject(oppositeObject);
+
+      if (!FSMUtil.isTransient(oppositeCDOObject) && !EMFUtil.isPersistent(oppositeReference))
       {
-        EStore eStore = cdoObject.eStore();
-        if (eStore != null)
-        {
-          if (feature.isMany())
-          {
-            int index = eStore.indexOf(cdoObject, feature, instance.cdoID());
-            if (index != EStore.NO_INDEX)
-            {
-              eStore.set(cdoObject, feature, index, instance);
-            }
-          }
-          else
-          {
-            eStore.set(cdoObject, feature, 0, instance);
-          }
-        }
+        adjustPersistentOppositeReference(cdoObject, oppositeObject, oppositeReference);
       }
       else
       {
-        if (feature.isResolveProxies())
+        if (oppositeReference.isResolveProxies())
         {
-          // We should not trigger events. But we have no choice :-(.
-          if (feature.isMany())
+          adjustTransientOppositeReference(instance, (InternalEObject)oppositeObject, oppositeReference);
+        }
+      }
+    }
+  }
+
+  private void adjustPersistentOppositeReference(InternalCDOObject cdoObject, EObject oppositeObject,
+      EReference oppositeReference)
+  {
+    InternalCDOObject oppositeCDOObject = (InternalCDOObject)CDOUtil.getCDOObject(oppositeObject);
+    if (oppositeCDOObject != null)
+    {
+      InternalCDOView view = oppositeCDOObject.cdoView();
+      if (view != null)
+      {
+        CDOStore store = view.getStore();
+        if (store != null)
+        {
+          if (oppositeReference.isMany())
           {
+            EObject eObject = oppositeCDOObject.cdoInternalInstance();
+
             @SuppressWarnings("unchecked")
-            InternalEList<Object> list = (InternalEList<Object>)object.eGet(feature);
+            EList<Object> list = (EList<Object>)eObject.eGet(oppositeReference);
             int index = list.indexOf(instance);
-            if (index != EStore.NO_INDEX)
+
+            if (!store.isEmpty(oppositeCDOObject, oppositeReference) && index != EStore.NO_INDEX)
             {
-              list.set(index, instance);
+              store.set(oppositeCDOObject, oppositeReference, index, cdoObject);
             }
           }
           else
           {
-            object.eSet(feature, instance);
+            store.set(oppositeCDOObject, oppositeReference, 0, cdoObject);
           }
         }
+      }
+    }
+  }
+
+  private void adjustTransientOppositeReference(InternalEObject instance, InternalEObject object,
+      EReference oppositeReference)
+  {
+    boolean wasDeliver = object.eDeliver(); // Disable notifications
+    if (wasDeliver)
+    {
+      object.eSetDeliver(false);
+    }
+
+    try
+    {
+      if (oppositeReference.isMany())
+      {
+        @SuppressWarnings("unchecked")
+        InternalEList<Object> list = (InternalEList<Object>)object.eGet(oppositeReference);
+        list.basicAdd(instance, null);
+      }
+      else
+      {
+        if (object.eGet(oppositeReference) != instance)
+        {
+          object.eInverseAdd(instance, oppositeReference.getFeatureID(), ((EObject)instance).getClass(), null);
+        }
+      }
+    }
+    finally
+    {
+      if (wasDeliver)
+      {
+        object.eSetDeliver(true);
       }
     }
   }

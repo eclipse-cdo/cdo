@@ -323,8 +323,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
-
-    sleep(1000000);
   }
 
   public void testImportCustomDataType() throws Exception

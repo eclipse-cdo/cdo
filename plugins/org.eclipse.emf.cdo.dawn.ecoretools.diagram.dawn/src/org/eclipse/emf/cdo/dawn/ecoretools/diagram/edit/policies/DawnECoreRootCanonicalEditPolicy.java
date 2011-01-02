@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany).
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany).
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,15 +10,16 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.ecoretools.diagram.edit.policies;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecoretools.diagram.edit.policies.EPackageCanonicalEditPolicy;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorPlugin;
+
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest.ViewDescriptor;
 import org.eclipse.gmf.runtime.notation.View;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Martin Fluegge

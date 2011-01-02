@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany).
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany).
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.dawn.ecoretools.diagram.edit.parts;
 import org.eclipse.emf.ecoretools.diagram.edit.parts.EcoreEditPartFactory;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorPlugin;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreVisualIDRegistry;
+
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.notation.View;
 

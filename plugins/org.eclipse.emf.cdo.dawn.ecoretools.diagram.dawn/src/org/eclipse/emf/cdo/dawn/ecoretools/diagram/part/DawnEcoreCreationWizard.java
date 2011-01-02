@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany).
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany).
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,24 +10,26 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.ecoretools.diagram.part;
 
-import java.lang.reflect.InvocationTargetException;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewDiagramResourceWizardPage;
 import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewResourceWizardPage;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreCreationWizard;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorPlugin;
 import org.eclipse.emf.ecoretools.diagram.part.Messages;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Martin Fluegge

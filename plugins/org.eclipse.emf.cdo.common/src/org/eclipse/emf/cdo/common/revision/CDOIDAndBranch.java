@@ -8,15 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.id;
+package org.eclipse.emf.cdo.common.revision;
+
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.id.CDOID;
 
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @since 4.0
  */
-public interface CDOIDAndVersion
+public interface CDOIDAndBranch
 {
   public CDOID getID();
 
-  public int getVersion();
+  public CDOBranch getBranch();
 }

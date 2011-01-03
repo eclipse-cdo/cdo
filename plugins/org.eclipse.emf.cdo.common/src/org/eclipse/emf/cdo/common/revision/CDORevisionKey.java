@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
-import org.eclipse.emf.cdo.common.id.CDOIDAndVersion;
 
 /**
  * @author Eike Stepper

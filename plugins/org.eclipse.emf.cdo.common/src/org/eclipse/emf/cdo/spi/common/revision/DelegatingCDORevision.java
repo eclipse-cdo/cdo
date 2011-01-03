@@ -48,9 +48,9 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.0
    */
-  public boolean adjustReferences(CDOReferenceAdjuster revisionAdjuster)
+  public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
-    return getDelegate().adjustReferences(revisionAdjuster);
+    return getDelegate().adjustReferences(referenceAdjuster);
   }
 
   public long getTimeStamp()

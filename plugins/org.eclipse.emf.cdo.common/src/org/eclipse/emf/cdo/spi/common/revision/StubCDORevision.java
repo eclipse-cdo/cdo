@@ -250,7 +250,7 @@ public class StubCDORevision extends AbstractCDORevision
   /**
    * @since 4.0
    */
-  public boolean adjustReferences(CDOReferenceAdjuster revisionAdjuster)
+  public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
     throw new UnsupportedOperationException(getExceptionMessage());
   }

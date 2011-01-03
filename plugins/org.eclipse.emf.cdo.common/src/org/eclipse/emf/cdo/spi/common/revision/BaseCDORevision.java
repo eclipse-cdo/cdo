@@ -495,7 +495,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   /**
    * @since 4.0
    */
-  public boolean adjustReferences(CDOReferenceAdjuster revisionAdjuster)
+  public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
     if (TRACER.isEnabled())
     {
@@ -504,14 +504,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     boolean changed = false;
 
-    CDOID id1 = (CDOID)revisionAdjuster.adjustReference(resourceID);
+    CDOID id1 = (CDOID)referenceAdjuster.adjustReference(resourceID);
     if (id1 != resourceID)
     {
       resourceID = id1;
       changed = true;
     }
 
-    Object id2 = revisionAdjuster.adjustReference(containerID);
+    Object id2 = referenceAdjuster.adjustReference(containerID);
     if (id2 != containerID)
     {
       containerID = id2;
@@ -529,14 +529,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
           InternalCDOList list = (InternalCDOList)getValueAsList(i);
           if (list != null)
           {
-            changed |= list.adjustReferences(revisionAdjuster, feature);
+            changed |= list.adjustReferences(referenceAdjuster, feature);
           }
         }
         else
         {
           CDOType type = CDOModelUtil.getType(feature);
           Object oldValue = getValue(i);
-          Object newValue = type.adjustReferences(revisionAdjuster, oldValue);
+          Object newValue = type.adjustReferences(referenceAdjuster, oldValue);
           if (oldValue != newValue) // Just an optimization for NOOP adjusters
           {
             setValue(i, newValue);

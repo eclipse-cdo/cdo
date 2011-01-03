@@ -245,7 +245,7 @@ public final class EMFUtil
       Resource resource = ePackage.eResource();
       if (resource == null)
       {
-        ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(packageRegistry);
+        ResourceSet resourceSet = newEcoreResourceSet(packageRegistry);
         resource = resourceSet.createResource(URI.createURI(ePackage.getNsURI()));
         resource.getContents().add(ePackage);
       }
@@ -407,11 +407,11 @@ public final class EMFUtil
       Notifier notifier = it.next();
       if (notifier instanceof EObject)
       {
-        EMFUtil.safeResolve((EObject)notifier, resourceSet);
+        safeResolve((EObject)notifier, resourceSet);
         Iterator<EObject> it2 = ((EObject)notifier).eCrossReferences().iterator();
         while (it2.hasNext())
         {
-          EMFUtil.safeResolve(it2.next(), resourceSet);
+          safeResolve(it2.next(), resourceSet);
         }
       }
     }

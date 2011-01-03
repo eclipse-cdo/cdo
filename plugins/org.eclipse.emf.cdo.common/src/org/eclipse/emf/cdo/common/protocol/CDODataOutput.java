@@ -87,8 +87,14 @@ public interface CDODataOutput extends ExtendedDataOutput
 
   public void writeCDOID(CDOID id) throws IOException;
 
+  /**
+   * @since 4.0
+   */
   public void writeCDOIDAndVersion(CDOIDAndVersion idAndVersion) throws IOException;
 
+  /**
+   * @since 4.0
+   */
   public void writeCDOIDAndBranch(CDOIDAndBranch idAndBranch) throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////

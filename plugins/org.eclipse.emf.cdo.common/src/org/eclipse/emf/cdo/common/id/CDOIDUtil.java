@@ -150,13 +150,16 @@ public final class CDOIDUtil
     return new CDOIDExternalImpl(uri);
   }
 
+  /**
+   * @since 4.0
+   */
   public static CDOIDAndVersion createIDAndVersion(CDOID id, int version)
   {
     return new CDOIDAndVersionImpl(id, version);
   }
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
   public static CDOIDAndVersion createIDAndVersion(CDOIDAndVersion source)
   {
@@ -164,7 +167,7 @@ public final class CDOIDUtil
   }
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
   public static CDOIDAndBranch createIDAndBranch(CDOID id, CDOBranch branch)
   {

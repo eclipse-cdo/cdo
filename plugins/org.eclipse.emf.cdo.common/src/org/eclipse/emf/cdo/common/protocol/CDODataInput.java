@@ -82,8 +82,14 @@ public interface CDODataInput extends ExtendedDataInput
 
   public CDOID readCDOID() throws IOException;
 
+  /**
+   * @since 4.0
+   */
   public CDOIDAndVersion readCDOIDAndVersion() throws IOException;
 
+  /**
+   * @since 4.0
+   */
   public CDOIDAndBranch readCDOIDAndBranch() throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////

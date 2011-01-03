@@ -31,10 +31,10 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -338,7 +338,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public InternalCDORevisionDelta compare(CDORevision origin)
   {
-    return (InternalCDORevisionDelta)CDORevisionDeltaUtil.create(origin, this);
+    return new CDORevisionDeltaImpl(origin, this);
   }
 
   public int compareTo(CDOBranchPoint o)

@@ -27,7 +27,6 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOLockImpl;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -967,7 +966,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   @Override
   protected void eInitializeContainer()
   {
-    throw new ImplementationError();
+    throw new UnsupportedOperationException();
   }
 
   @Override

@@ -58,7 +58,16 @@
 		<cs:dependency name="org.postgresql.jdbc3" componentType="eclipse.feature"/>
 		<cs:dependency name="org.hibernate" componentType="eclipse.feature"/>
 		<cs:dependency name="com.db4o" componentType="eclipse.feature"/>
+
+		<!--
+		<cs:dependency name="com.google.collect" componentType="osgi.bundle"/>
+		<cs:dependency name="com.google.collect.source" componentType="osgi.bundle"/>
+		<cs:dependency name="com.google.inject" componentType="osgi.bundle"/>
+		<cs:dependency name="com.google.inject.source" componentType="osgi.bundle"/>
+		-->
+
 	</cs:dependencies>
+
 	<cs:actions>
 		<cs:public name="clear.site" actor="ant" always="true">
 			<cs:actorProperties>

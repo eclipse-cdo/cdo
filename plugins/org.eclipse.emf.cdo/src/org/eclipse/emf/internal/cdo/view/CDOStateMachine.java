@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -700,7 +699,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       // Compute a revision delta and register it with the tx
       CDORevision cleanRevision = revisionManager.getRevisionByVersion(id, revKey, -1, true);
-      CDORevisionDelta revisionDelta = CDORevisionDeltaUtil.create(cleanRevision, revision);
+      CDORevisionDelta revisionDelta = revision.compare(cleanRevision);
       transaction.registerRevisionDelta(revisionDelta);
       transaction.registerDirty(object, null);
       changeState(object, CDOState.DIRTY);

@@ -34,7 +34,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
@@ -1098,7 +1097,7 @@ public class Repository extends Container<Object> implements InternalRepository
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     Set<CDOID> ids = accessor.readChangeSet(new Monitor(), segments);
 
-    return CDORevisionDeltaUtil.createChangeSetData(ids, startPoint, endPoint, revisionManager);
+    return CDORevisionUtil.createChangeSetData(ids, startPoint, endPoint, revisionManager);
   }
 
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,

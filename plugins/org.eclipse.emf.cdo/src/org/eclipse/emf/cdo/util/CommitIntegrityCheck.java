@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -145,7 +144,7 @@ public class CommitIntegrityCheck
     InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
     CheckUtil.checkNull(cleanRev, "Could not obtain clean revision for dirty object " + dirtyObject);
     InternalCDORevision dirtyRev = dirtyObject.cdoRevision();
-    CDORevisionDelta rDelta = CDORevisionDeltaUtil.create(cleanRev, dirtyRev);
+    CDORevisionDelta rDelta = dirtyRev.compare(cleanRev);
 
     for (CDOFeatureDelta featureDelta : rDelta.getFeatureDeltas())
     {

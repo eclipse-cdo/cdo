@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
@@ -321,7 +320,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         CDORevisionDeltaImpl revisionDelta = (CDORevisionDeltaImpl)revisionDeltas.get(entry.getKey());
         if (revisionDelta == null)
         {
-          revisionDeltas.put(entry.getKey(), CDORevisionDeltaUtil.copy(entry.getValue()));
+          revisionDeltas.put(entry.getKey(), entry.getValue().copy());
         }
         else
         {

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -33,7 +34,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
-import org.eclipse.emf.cdo.internal.common.id.CDOIDRevisionDeltaLockWrapper;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ContainmentCycleDetectedException;
@@ -649,7 +649,7 @@ public class TransactionCommitContext implements InternalCommitContext
         InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
         CDOID id = delta.getID();
         Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
-        lockedObjects.add(new CDOIDRevisionDeltaLockWrapper(key, delta));
+        lockedObjects.add(new DeltaLockWrapper(key, delta));
 
         if (hasContainmentChanges(delta))
         {
@@ -732,13 +732,13 @@ public class TransactionCommitContext implements InternalCommitContext
     final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
     Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
 
-    CDOIDRevisionDeltaLockWrapper lockWrapper = new CDOIDRevisionDeltaLockWrapper(key, null);
+    DeltaLockWrapper lockWrapper = new DeltaLockWrapper(key, null);
     if (lockManager.hasLockByOthers(LockType.WRITE, transaction, lockWrapper))
     {
       Object object = lockManager.getLockEntryObject(lockWrapper);
-      if (object instanceof CDOIDRevisionDeltaLockWrapper)
+      if (object instanceof DeltaLockWrapper)
       {
-        InternalCDORevisionDelta delta = ((CDOIDRevisionDeltaLockWrapper)object).getDelta();
+        InternalCDORevisionDelta delta = ((DeltaLockWrapper)object).getDelta();
         if (delta != null && hasContainmentChanges(delta))
         {
           return true;
@@ -862,7 +862,8 @@ public class TransactionCommitContext implements InternalCommitContext
     InternalRepository repository = transaction.getRepository();
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
-    InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(delta.getID(), delta, CDORevision.UNCHUNKED, true);
+    InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(delta.getID(), delta, CDORevision.UNCHUNKED,
+        true);
     if (oldRevision == null)
     {
       throw new IllegalStateException("Origin revision not found for " + delta);
@@ -1102,6 +1103,66 @@ public class TransactionCommitContext implements InternalCommitContext
     public Collection<Object> values()
     {
       throw new UnsupportedOperationException();
+    }
+  }
+
+  /**
+   * @author Martin Fluegge
+   */
+  private static final class DeltaLockWrapper implements CDOIDAndBranch
+  {
+    private Object key;
+
+    private InternalCDORevisionDelta delta;
+
+    public DeltaLockWrapper(Object key, InternalCDORevisionDelta delta)
+    {
+      this.key = key;
+      this.delta = delta;
+    }
+
+    public Object getKey()
+    {
+      return key;
+    }
+
+    public InternalCDORevisionDelta getDelta()
+    {
+      return delta;
+    }
+
+    public CDOID getID()
+    {
+      return key instanceof CDOIDAndBranch ? ((CDOIDAndBranch)key).getID() : (CDOID)key;
+    }
+
+    public CDOBranch getBranch()
+    {
+      return key instanceof CDOIDAndBranch ? ((CDOIDAndBranch)key).getBranch() : null;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+      if (obj instanceof DeltaLockWrapper)
+      {
+        DeltaLockWrapper wrapper = (DeltaLockWrapper)obj;
+        return key.equals(wrapper.getKey());
+      }
+
+      return key.equals(obj);
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return key.hashCode();
+    }
+
+    @Override
+    public String toString()
+    {
+      return key.toString();
     }
   }
 

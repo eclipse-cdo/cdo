@@ -48,7 +48,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -457,8 +456,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo,
       CDORevisionAvailabilityInfo endInfo)
   {
-    CDOChangeSetData data = CDORevisionDeltaUtil.createChangeSetData(ids, startInfo, endInfo);
-    return CDORevisionDeltaUtil.createChangeSet(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
+    CDOChangeSetData data = CDORevisionUtil.createChangeSetData(ids, startInfo, endInfo);
+    return CDORevisionUtil.createChangeSet(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
   }
 
   public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(
@@ -1499,7 +1498,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDORevisionDelta revisionDelta = lastSavepoint.getRevisionDeltas().get(id);
       if (revisionDelta == null)
       {
-        revisionDelta = CDORevisionDeltaUtil.create(object.cdoRevision());
+        revisionDelta = CDORevisionUtil.createDelta(object.cdoRevision());
         lastSavepoint.getRevisionDeltas().put(id, revisionDelta);
       }
 

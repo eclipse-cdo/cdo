@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaUtil;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
@@ -281,8 +280,8 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
       CDOChangeSetData localData = getLocalChanges();
       if (!localData.isEmpty())
       {
-        CDOChangeSet localChanges = CDORevisionDeltaUtil.createChangeSet(basePoint, null, localData);
-        CDOChangeSet remoteChanges = CDORevisionDeltaUtil.createChangeSet(basePoint, remotePoint, remoteData);
+        CDOChangeSet localChanges = CDORevisionUtil.createChangeSet(basePoint, null, localData);
+        CDOChangeSet remoteChanges = CDORevisionUtil.createChangeSet(basePoint, remotePoint, remoteData);
         remoteData = merger.merge(localChanges, remoteChanges);
       }
 
@@ -503,7 +502,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
   public CDOChangeSetData getLocalChanges()
   {
     Set<CDOID> ids = base.getIDs();
-    return CDORevisionDeltaUtil.createChangeSetData(ids, base, this);
+    return CDORevisionUtil.createChangeSetData(ids, base, this);
   }
 
   protected IManagedContainer createContainer(IStore local)

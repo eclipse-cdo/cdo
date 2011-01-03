@@ -245,6 +245,7 @@ public final class EMFUtil
       Resource resource = ePackage.eResource();
       if (resource == null)
       {
+        // Happens e.g. for dynamic packages that were not loaded from a resource
         ResourceSet resourceSet = newEcoreResourceSet(packageRegistry);
         resource = resourceSet.createResource(URI.createURI(ePackage.getNsURI()));
         resource.getContents().add(ePackage);

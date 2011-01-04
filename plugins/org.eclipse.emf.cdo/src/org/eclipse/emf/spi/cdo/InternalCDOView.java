@@ -134,4 +134,9 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    * give them want they need.
    */
   public ReentrantLock getStateLock();
+
+  /**
+   * @since 4.0
+   */
+  public Object getObjectsLock();
 }

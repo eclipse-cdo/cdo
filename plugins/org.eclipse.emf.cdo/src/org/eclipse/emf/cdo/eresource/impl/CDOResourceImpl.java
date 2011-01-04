@@ -779,18 +779,18 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
       if (!FSMUtil.isTransient(this))
       {
         CDOID id = cdoID();
-        if (id == null || !view.isObjectRegistered(id))
+        if (id == null)
         {
-          try
+          registerProxy(view);
+        }
+        else
+        {
+          synchronized (view.getObjectsLock())
           {
-            view.registerProxyResource(this);
-          }
-          catch (Exception ex)
-          {
-            OM.LOG.error(ex);
-            setExisting(false);
-            cdoInternalSetState(CDOState.TRANSIENT);
-            throw new IOWrappedException(ex);
+            if (!view.isObjectRegistered(id))
+            {
+              registerProxy(view);
+            }
           }
         }
       }
@@ -851,6 +851,21 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
       // // setTimeStamp(timeStamp);
       // // }
       // }
+    }
+  }
+
+  private void registerProxy(InternalCDOView view) throws IOWrappedException
+  {
+    try
+    {
+      view.registerProxyResource(this);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      setExisting(false);
+      cdoInternalSetState(CDOState.TRANSIENT);
+      throw new IOWrappedException(ex);
     }
   }
 

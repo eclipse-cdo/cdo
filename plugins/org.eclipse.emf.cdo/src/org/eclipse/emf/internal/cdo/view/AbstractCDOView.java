@@ -301,6 +301,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     return stateLock;
   }
 
+  public Object getObjectsLock()
+  {
+    return objects;
+  }
+
   public boolean isDirty()
   {
     return false;
@@ -1074,18 +1079,14 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
     if (old != null)
     {
-      if (CDOUtil.isLegacyObject(object))
+      if (old != object)
       {
-        if (old != object)
-        {
-          throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.30"), object.cdoID())); //$NON-NLS-1$
-        }
-
-        OM.LOG.warn("Legacy object has been registered multiple times: " + object);
+        throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.30"), object.cdoID())); //$NON-NLS-1$
       }
-      else
+
+      if (TRACER.isEnabled())
       {
-        throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.20"), object)); //$NON-NLS-1$
+        TRACER.format(Messages.getString("CDOViewImpl.20"), old); //$NON-NLS-1$
       }
     }
   }

@@ -4,29 +4,30 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.eresource.provider;
+package org.eclipse.emf.cdo.edit;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 
 /**
- * This is the central singleton for the Eresource edit plugin. <!-- begin-user-doc --> <!-- end-user-doc -->
+ * This is the central singleton for the Etypes edit plugin. <!-- begin-user-doc -->
  * 
+ * @since 4.0 <!-- end-user-doc -->
  * @generated
  */
-public final class EresourceEditPlugin extends EMFPlugin
+public final class CDOEditPlugin extends EMFPlugin
 {
   /**
    * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */
-  public static final EresourceEditPlugin INSTANCE = new EresourceEditPlugin();
+  public static final CDOEditPlugin INSTANCE = new CDOEditPlugin();
 
   /**
    * Keep track of the singleton. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -40,7 +41,7 @@ public final class EresourceEditPlugin extends EMFPlugin
    * 
    * @generated
    */
-  public EresourceEditPlugin()
+  public CDOEditPlugin()
   {
     super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE, });
   }

@@ -97,9 +97,7 @@ public class EtypesSwitch<T>
       ModelElement modelElement = (ModelElement)theEObject;
       T result = caseModelElement(modelElement);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case EtypesPackage.ANNOTATION:
@@ -107,13 +105,9 @@ public class EtypesSwitch<T>
       Annotation annotation = (Annotation)theEObject;
       T result = caseAnnotation(annotation);
       if (result == null)
-      {
         result = caseModelElement(annotation);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     default:

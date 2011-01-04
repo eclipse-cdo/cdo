@@ -28,8 +28,12 @@ import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.util.io.IOUtil;
+
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -221,6 +225,28 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
+
+    useAfterImport("repo2");
+  }
+
+  private void useAfterImport(String repoName) throws CommitException
+  {
+    CDOSession session2 = openSession(repoName);
+    CDOTransaction transaction2 = session2.openTransaction();
+
+    // Read all repo contents
+    TreeIterator<EObject> iter = transaction2.getRootResource().getAllContents();
+    while (iter.hasNext())
+    {
+      iter.next();
+    }
+
+    // Add content from a new package
+    CDOResource resource = transaction2.createResource("/r1");
+    resource.getContents().add(getModel3Factory().createPolygon());
+    transaction2.commit();
+
+    session2.close();
   }
 
   public void testImportDate() throws Exception

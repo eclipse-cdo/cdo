@@ -95,13 +95,15 @@ public interface IClassMapping
    *          the accessor to use.
    * @param revision
    *          the revision to write.
-   * @param newRevision
+   * @param mapType
    *          <code>true</code> if the type of the object is supposed to be mapped, <code>false</code> otherwise.
+   * @param revise
+   *          <code>true</code> if the previous revision is supposed to be revised, <code>false</code> otherwise.
    * @param monitor
    *          the monitor to indicate progress.
    * @since 4.0
    */
-  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean newRevision,
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise,
       OMMonitor monitor);
 
   /**

@@ -742,7 +742,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   }
 
   @Override
-  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean newRevision,
+  public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean mapType, boolean revise,
       OMMonitor monitor)
   {
     Async async = null;
@@ -754,14 +754,14 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       {
         async = monitor.forkAsync();
         CDOID id = revision.getID();
-        if (newRevision)
+        if (mapType)
         {
           // put new objects into objectTypeMapper
           long timeStamp = revision.getTimeStamp();
           AbstractHorizontalMappingStrategy mappingStrategy = (AbstractHorizontalMappingStrategy)getMappingStrategy();
           mappingStrategy.putObjectType(accessor, timeStamp, id, getEClass());
         }
-        else if (revision.getVersion() > CDOBranchVersion.FIRST_VERSION)
+        else if (revise && revision.getVersion() > CDOBranchVersion.FIRST_VERSION)
         {
           // if revision is not the first one, revise the old revision
           long revised = revision.getTimeStamp() - 1;
@@ -1107,7 +1107,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       newRevision.adjustForCommit(accessor.getTransaction().getBranch(), created);
       delta.apply(newRevision);
       monitor.worked();
-      writeRevision(accessor, newRevision, false, monitor.fork());
+      writeRevision(accessor, newRevision, false, true, monitor.fork());
     }
     finally
     {

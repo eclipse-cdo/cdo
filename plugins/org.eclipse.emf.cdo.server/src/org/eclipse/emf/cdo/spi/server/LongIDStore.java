@@ -105,4 +105,16 @@ public abstract class LongIDStore extends Store
     long value = CDOIDUtil.getLong(id);
     return value > nextLocalObjectID.get();
   }
+
+  /**
+   * @since 4.0
+   */
+  public void ensureLastObjectID(CDOID id)
+  {
+    long addedID = CDOIDUtil.getLong(id);
+    if (addedID > getLastObjectID())
+    {
+      setLastObjectID(addedID);
+    }
+  }
 }

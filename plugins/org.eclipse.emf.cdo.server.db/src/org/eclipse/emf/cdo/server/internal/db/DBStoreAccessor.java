@@ -541,7 +541,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       monitor.begin(revisions.length);
       for (InternalCDORevision revision : revisions)
       {
-        writeRevision(revision, newObjects.contains(revision.getID()), monitor.fork());
+        writeRevision(revision, newObjects.contains(revision.getID()), true, monitor.fork());
       }
     }
     finally
@@ -551,7 +551,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
   }
 
-  protected void writeRevision(InternalCDORevision revision, boolean newRevision, OMMonitor monitor)
+  protected void writeRevision(InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor)
   {
     if (TRACER.isEnabled())
     {
@@ -559,8 +559,9 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
 
     EClass eClass = revision.getEClass();
+
     IClassMapping mapping = getStore().getMappingStrategy().getClassMapping(eClass);
-    mapping.writeRevision(this, revision, newRevision, monitor);
+    mapping.writeRevision(this, revision, mapType, revise, monitor);
   }
 
   /*
@@ -1175,7 +1176,25 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public void rawStore(InternalCDORevision revision, OMMonitor monitor)
   {
-    writeRevision(revision, true, monitor);
+    CDOID id = revision.getID();
+
+    CDOClassifierRef classifierRef = getStore().getMappingStrategy().readObjectType(this, id);
+    boolean isFirstRevision = classifierRef == null;
+
+    if (!isFirstRevision)
+    {
+      EClass eClass = revision.getEClass();
+      boolean namesMatch = classifierRef.getClassifierName().equals(eClass.getName());
+      boolean packagesMatch = classifierRef.getPackageURI().equals(eClass.getEPackage().getNsURI());
+      if (!namesMatch || !packagesMatch)
+      {
+        throw new IllegalStateException();
+      }
+    }
+
+    writeRevision(revision, isFirstRevision, false, monitor);
+
+    getStore().ensureLastObjectID(id);
   }
 
   public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException

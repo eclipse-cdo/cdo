@@ -427,6 +427,11 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     }
 
     addRevision(list, revision, raw);
+
+    if (raw)
+    {
+      ensureLastObjectID(revision.getID());
+    }
   }
 
   public synchronized void addCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,

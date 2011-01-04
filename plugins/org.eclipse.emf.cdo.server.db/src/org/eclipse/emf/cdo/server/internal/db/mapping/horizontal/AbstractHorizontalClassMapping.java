@@ -11,15 +11,22 @@
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
  *    Victor Roldan - 289237: [DB] [maintenance] Support external references
  *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
+ *    Caspar De Groot - https://bugs.eclipse.org/333260
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRevisionManager;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -71,6 +78,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
   private List<IListMapping> listMappings;
 
+  private String sqlSelectForHandle;
+
   public AbstractHorizontalClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
     this.mappingStrategy = mappingStrategy;
@@ -78,6 +87,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
     initTable();
     initFeatures();
+    initSQLStrings();
   }
 
   private void initTable()
@@ -186,10 +196,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       revision.setVersion(resultSet.getInt(i++));
       revision.setCreated(resultSet.getLong(i++));
       revision.setRevised(resultSet.getLong(i++));
-      revision.setResourceID(InternalCDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor, resultSet
-          .getLong(i++)));
-      revision.setContainerID(InternalCDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor, resultSet
-          .getLong(i++)));
+      revision.setResourceID(InternalCDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor,
+          resultSet.getLong(i++)));
+      revision.setContainerID(InternalCDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor,
+          resultSet.getLong(i++)));
       revision.setContainingFeatureID(resultSet.getInt(i++));
 
       for (ITypeMapping mapping : valueMappings)
@@ -389,4 +399,66 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
   protected abstract void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision);
 
   protected abstract void reviseObject(IDBStoreAccessor accessor, CDOID id, long revised);
+
+  public void handleRevisions(IDBStoreAccessor accessor, CDORevisionHandler handler)
+  {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
+    IRepository repository = accessor.getStore().getRepository();
+    IRevisionManager revisionManager = repository.getRevisionManager();
+
+    PreparedStatement stmt = null;
+    ResultSet rs = null;
+
+    // TODO: test for timeStamp == INVALID_TIME and encode revision.isValid() as WHERE instead of fetching all revisions
+    // in order to increase performance
+
+    StringBuilder builder = new StringBuilder(sqlSelectForHandle);
+
+    int timeParameters = 0;
+
+    try
+    {
+      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
+      for (int i = 0; i < timeParameters; i++)
+      {
+        stmt.setLong(i + 1, -1/* CDOBranchPoint.INVALID_DATE */);
+      }
+
+      rs = stmt.executeQuery();
+      while (rs.next())
+      {
+        long id = rs.getLong(1);
+        int version = rs.getInt(2);
+
+        InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(
+            CDOIDUtil.createLong(id), CDORevision.UNCHUNKED, version, true);
+
+        if (!handler.handleRevision(revision))
+        {
+          break;
+        }
+      }
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(rs);
+      statementCache.releasePreparedStatement(stmt);
+    }
+  }
+
+  private void initSQLStrings()
+  {
+    // ----------- Select all revisions (for handleRevisions) ---
+    StringBuilder builder = new StringBuilder("SELECT "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_ID);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.ATTRIBUTES_VERSION);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    sqlSelectForHandle = builder.toString();
+  }
 }

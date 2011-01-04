@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - https://bugs.eclipse.org/333260
  */
 package org.eclipse.emf.cdo.internal.server.bundle;
 
@@ -55,6 +56,12 @@ public abstract class OM
     public Activator()
     {
       super(BUNDLE);
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      new CDOCommandProvider(bundleContext);
     }
   }
 }

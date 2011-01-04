@@ -9,11 +9,13 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/201266
  *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Caspar De Groot - https://bugs.eclipse.org/333260
  */
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -203,4 +205,9 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
   protected abstract void doPassivate() throws Exception;
 
   protected abstract void doUnpassivate() throws Exception;
+
+  public void handleRevisions(CDORevisionHandler handler)
+  {
+    throw new RuntimeException("handleRevisions not supported");
+  }
 }

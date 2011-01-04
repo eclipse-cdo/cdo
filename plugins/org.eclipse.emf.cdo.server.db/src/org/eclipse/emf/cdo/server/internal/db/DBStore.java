@@ -11,12 +11,17 @@
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
  *    Victor Roldan - 289237: [DB] [maintenance] Support external references
+ *    Caspar De Groot - https://bugs.eclipse.org/333260
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -40,6 +45,8 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -64,6 +71,8 @@ public class DBStore extends LongIDStore implements InternalIDBStore
   private IMetaDataManager metaDataManager;
 
   private IExternalReferenceManager.Internal externalReferenceManager;
+
+  private CDOID rootResourceID;
 
   @ExcludeFromDump
   private transient ProgressDistributor accessorWriteDistributor = new ProgressDistributor.Geometric()
@@ -238,8 +247,8 @@ public class DBStore extends LongIDStore implements InternalIDBStore
     checkNull(dbAdapter, Messages.getString("DBStore.1")); //$NON-NLS-1$
     checkNull(dbConnectionProvider, Messages.getString("DBStore.0")); //$NON-NLS-1$
 
-    checkState(getRevisionTemporality() == RevisionTemporality.AUDITING == mappingStrategy.hasAuditSupport(), Messages
-        .getString("DBStore.7")); //$NON-NLS-1$
+    checkState(getRevisionTemporality() == RevisionTemporality.AUDITING == mappingStrategy.hasAuditSupport(),
+        Messages.getString("DBStore.7")); //$NON-NLS-1$
   }
 
   @Override
@@ -406,5 +415,57 @@ public class DBStore extends LongIDStore implements InternalIDBStore
   protected long getShutdownTime()
   {
     return System.currentTimeMillis();
+  }
+
+  @Override
+  public CDOID getRootResourceID()
+  {
+    if (rootResourceID != null)
+    {
+      return rootResourceID;
+    }
+
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    final List<CDOID> resourceIDs = new LinkedList<CDOID>();
+    accessor.queryResources(new IStoreAccessor.QueryResourcesContext()
+    {
+      public long getTimeStamp()
+      {
+        return CDORevision.UNSPECIFIED_DATE;
+      }
+
+      public CDOID getFolderID()
+      {
+        return null;
+      }
+
+      public String getName()
+      {
+        return null;
+      }
+
+      public boolean exactMatch()
+      {
+        return true;
+      }
+
+      public int getMaxResults()
+      {
+        return 2;
+      }
+
+      public boolean addResource(CDOID resourceID)
+      {
+        return resourceIDs.add(resourceID);
+      }
+    });
+
+    if (resourceIDs.size() != 1)
+    {
+      throw new RuntimeException("Could not deduce rootResourceID");
+    }
+
+    rootResourceID = resourceIDs.get(0);
+    return rootResourceID;
   }
 }

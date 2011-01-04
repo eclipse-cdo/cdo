@@ -10,13 +10,18 @@
  *    Stefan Winkler - major refactoring
  *    Stefan Winkler - 271444: [DB] Multiple refactorings https://bugs.eclipse.org/bugs/show_bug.cgi?id=271444
  *    Victor Roldan Betancort - 289360: [DB] [maintenance] Support FeatureMaps
+ *    Caspar De Groot - https://bugs.eclipse.org/333260
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -26,6 +31,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.ObjectIDIterator;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalClassMapping;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
@@ -41,6 +47,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -84,6 +91,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   private Map<String, String> properties;
 
   private ConcurrentMap<EClass, IClassMapping> classMappings;
+
+  private boolean allClassMappingsCreated;
 
   public AbstractMappingStrategy()
   {
@@ -367,7 +376,47 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public final Map<EClass, IClassMapping> getClassMappings()
   {
+    return getClassMappings(true);
+  }
+
+  public final Map<EClass, IClassMapping> getClassMappings(boolean createOnDemand)
+  {
+    if (createOnDemand)
+    {
+      synchronized (classMappings)
+      {
+        if (!allClassMappingsCreated)
+        {
+          createAllClassMappings();
+          allClassMappingsCreated = true;
+        }
+      }
+    }
+
     return classMappings;
+  }
+
+  private void createAllClassMappings()
+  {
+    IRepository repository = getStore().getRepository();
+    CDOPackageRegistry packageRegistry = repository.getPackageRegistry();
+    for (CDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
+    {
+      if (!packageInfo.isSystemPackage())
+      {
+        for (EClassifier eClassifier : packageInfo.getEPackage().getEClassifiers())
+        {
+          if (eClassifier instanceof EClass)
+          {
+            EClass eClass = (EClass)eClassifier;
+            if (!eClass.isAbstract() && !eClass.isInterface())
+            {
+              getClassMapping(eClass); // Get or create it
+            }
+          }
+        }
+      }
+    }
   }
 
   public final IClassMapping getClassMapping(EClass eClass)
@@ -416,4 +465,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   public abstract IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature);
 
   public abstract IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature);
+
+  public void handleRevisions(IDBStoreAccessor accessor, CDORevisionHandler handler)
+  {
+    Collection<IClassMapping> values = getClassMappings().values();
+    for (IClassMapping mapping : values)
+    {
+      ((AbstractHorizontalClassMapping)mapping).handleRevisions(accessor, handler);
+    }
+  }
 }

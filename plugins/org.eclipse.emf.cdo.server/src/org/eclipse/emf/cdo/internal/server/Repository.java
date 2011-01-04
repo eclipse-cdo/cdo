@@ -11,15 +11,18 @@
  *    Simon McDuff - http://bugs.eclipse.org/233273
  *    Simon McDuff - http://bugs.eclipse.org/233490
  *    Stefan Winkler - changed order of determining audit and revision delta support.
+ *    Caspar De Groot - https://bugs.eclipse.org/333260
  */
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDMetaRange;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.server.IQueryHandler;
@@ -32,9 +35,11 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
+import org.eclipse.emf.cdo.spi.server.Store;
+import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -666,6 +671,24 @@ public class Repository extends Container<Object> implements IRepository, Intern
       LifecycleUtil.deactivate(reader); // Don't let the null-context accessor go to the pool!
       StoreThreadLocal.release();
     }
+  }
+
+  public void handleRevisions(final CDORevisionHandler handler)
+  {
+    CDORevisionHandler wrapper = handler;
+
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    ((StoreAccessor)accessor).handleRevisions(wrapper);
+  }
+
+  public CDOID getRootResourceID()
+  {
+    return ((Store)getStore()).getRootResourceID();
+  }
+
+  public long getLastCommitTimeStamp()
+  {
+    return System.currentTimeMillis() - 1;
   }
 
   /**

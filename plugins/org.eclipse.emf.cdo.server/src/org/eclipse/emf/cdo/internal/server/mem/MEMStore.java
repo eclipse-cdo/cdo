@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -28,6 +30,9 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
@@ -48,6 +53,8 @@ public class MEMStore extends LongIDStore implements IMEMStore
   private Map<CDOID, List<InternalCDORevision>> revisions = new HashMap<CDOID, List<InternalCDORevision>>();
 
   private int listLimit;
+
+  private CDOID rootResourceID;
 
   /**
    * @param listLimit
@@ -381,5 +388,55 @@ public class MEMStore extends LongIDStore implements IMEMStore
     {
       list.remove(0);
     }
+  }
+
+  public synchronized void handleRevisions(CDORevisionHandler handler)
+  {
+    for (List<InternalCDORevision> list : revisions.values())
+    {
+      for (InternalCDORevision revision : list)
+      {
+        if (!handleRevision(revision, handler))
+        {
+          return;
+        }
+      }
+    }
+  }
+
+  private boolean handleRevision(InternalCDORevision revision, CDORevisionHandler handler)
+  {
+    return handler.handleRevision(revision);
+  }
+
+  public CDOID getRootResourceID()
+  {
+    if (rootResourceID != null)
+    {
+      return rootResourceID;
+    }
+
+    EClass eResourceEClass = EresourcePackage.eINSTANCE.getCDOResource();
+    EAttribute nameAttr = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
+    EReference folderRef = EresourcePackage.eINSTANCE.getCDOResourceNode_Folder();
+    for (List<InternalCDORevision> list : revisions.values())
+    {
+      InternalCDORevision firstRev = list.get(0);
+      if (firstRev.getEClass() == eResourceEClass)
+      {
+        CDOID folderID = (CDOID)firstRev.get(folderRef, 0);
+        if (folderID.isNull())
+        {
+          String name = (String)firstRev.get(nameAttr, 0);
+          if (name == null)
+          {
+            rootResourceID = firstRev.getID();
+            return rootResourceID;
+          }
+        }
+      }
+    }
+
+    throw new RuntimeException("Could not deduce rootResourceID");
   }
 }

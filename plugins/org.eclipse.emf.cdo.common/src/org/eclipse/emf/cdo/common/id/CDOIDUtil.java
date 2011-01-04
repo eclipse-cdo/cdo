@@ -8,7 +8,8 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - http://bugs.eclipse.org/226778    
- *    Simon McDuff - http://bugs.eclipse.org/213402   
+ *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Caspar De Groot - https://bugs.eclipse.org/333260
  */
 package org.eclipse.emf.cdo.common.id;
 
@@ -225,6 +226,29 @@ public final class CDOIDUtil
     }
 
     builder.append("/" + id.toURIFragment()); //$NON-NLS-1$
+  }
+
+  /**
+   * Backport of 4.0's implementation of write(StringBuilder,CDOID),
+   * or more accurately: a limited emulation of the 4.0 behavior
+   */
+  public static void write40(StringBuilder builder, CDOID id)
+  {
+    if (id == null)
+    {
+      id = CDOID.NULL;
+    }
+
+    if (id instanceof CDOIDLongImpl)
+    {
+      builder.append('L');
+    }
+    else
+    {
+      throw new RuntimeException("Runtime type of CDOID not supported: " + id.getClass().getName());
+    }
+
+    builder.append(id.toURIFragment());
   }
 
   public static CDOIDMeta createMeta(long value)

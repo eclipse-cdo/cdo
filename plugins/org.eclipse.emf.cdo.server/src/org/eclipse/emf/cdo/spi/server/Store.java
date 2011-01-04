@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - https://bugs.eclipse.org/333260    
  */
 package org.eclipse.emf.cdo.spi.server;
 
@@ -22,8 +23,8 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -362,5 +363,10 @@ public abstract class Store extends Lifecycle implements IStore
   protected static <T> Set<T> set(T... elements)
   {
     return Collections.unmodifiableSet(new HashSet<T>(Arrays.asList(elements)));
+  }
+
+  public CDOID getRootResourceID()
+  {
+    throw new RuntimeException("Method getRootResourceID not supported");
   }
 }

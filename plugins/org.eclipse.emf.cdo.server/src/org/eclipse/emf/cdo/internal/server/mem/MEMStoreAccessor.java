@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server.mem;
 
 import org.eclipse.emf.cdo.common.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
@@ -323,5 +324,10 @@ public class MEMStoreAccessor extends LongIDStoreAccessor
   protected void doUnpassivate() throws Exception
   {
     // Pooling of store accessors not supported
+  }
+
+  public void handleRevisions(CDORevisionHandler handler)
+  {
+    getStore().handleRevisions(handler);
   }
 }

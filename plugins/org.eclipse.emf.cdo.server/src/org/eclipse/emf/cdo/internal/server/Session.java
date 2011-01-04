@@ -11,6 +11,7 @@
  *    Simon McDuff - http://bugs.eclipse.org/230832
  *    Simon McDuff - http://bugs.eclipse.org/233490
  *    Simon McDuff - http://bugs.eclipse.org/213402
+ *    Caspar De Groot - https://bugs.eclipse.org/333260
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -38,6 +39,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -96,7 +98,7 @@ public class Session extends Container<IView> implements ISession, CDOIDProvider
     this.protocol = protocol;
     this.sessionID = sessionID;
     this.userID = userID;
-    protocol.addListener(protocolListener);
+    EventUtil.addListener(protocol, protocolListener);
 
     try
     {

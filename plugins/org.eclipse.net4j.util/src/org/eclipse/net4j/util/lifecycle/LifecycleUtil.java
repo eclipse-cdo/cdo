@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.log.OMLogger.Level;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -127,23 +128,45 @@ public final class LifecycleUtil
 
   public static boolean waitForActive(Object object, long millis)
   {
+    return waitFor(object, millis, LifecycleState.ACTIVE);
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static boolean waitForInactive(Object object, long millis)
+  {
+    return waitFor(object, millis, LifecycleState.INACTIVE);
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static boolean waitFor(Object object, long millis, final LifecycleState state)
+  {
     try
     {
       if (object instanceof ILifecycle)
       {
         Lifecycle lifecycle = (Lifecycle)object;
-        if (lifecycle.isActive())
+        if (lifecycle.getLifecycleState() == state)
         {
           return true;
         }
 
         final CountDownLatch latch = new CountDownLatch(1);
-        LifecycleEventAdapter adapter = new LifecycleEventAdapter()
+        IListener adapter = new IListener()
         {
-          @Override
-          protected void onActivated(ILifecycle lifecycle)
+          public void notifyEvent(IEvent event)
           {
-            latch.countDown();
+            if (event instanceof ILifecycleEvent)
+            {
+              ILifecycleEvent e = (ILifecycleEvent)event;
+              if (e.getSource().getLifecycleState() == state)
+              {
+                latch.countDown();
+              }
+            }
           }
         };
 
@@ -157,7 +180,7 @@ public final class LifecycleUtil
           lifecycle.removeListener(adapter);
         }
 
-        return lifecycle.isActive();
+        return lifecycle.getLifecycleState() == state;
       }
 
       return true;

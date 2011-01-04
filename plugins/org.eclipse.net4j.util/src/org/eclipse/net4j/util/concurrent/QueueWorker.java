@@ -69,11 +69,16 @@ public abstract class QueueWorker<E> extends Worker
     }
     else
     {
-      E element = queue.poll(pollMillis, TimeUnit.MILLISECONDS);
-      if (element != null)
-      {
-        work(context, element);
-      }
+      doWork(context);
+    }
+  }
+
+  private void doWork(WorkContext context) throws InterruptedException
+  {
+    E element = queue.poll(pollMillis, TimeUnit.MILLISECONDS);
+    if (element != null)
+    {
+      work(context, element);
     }
   }
 
@@ -82,6 +87,14 @@ public abstract class QueueWorker<E> extends Worker
   protected BlockingQueue<E> createQueue()
   {
     return new LinkedBlockingQueue<E>();
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected boolean doRemainingWorkBeforeDeactivate()
+  {
+    return false;
   }
 
   @Override
@@ -97,7 +110,19 @@ public abstract class QueueWorker<E> extends Worker
     super.doDeactivate();
     if (queue != null)
     {
-      queue.clear();
+      if (doRemainingWorkBeforeDeactivate())
+      {
+        WorkContext context = new WorkContext();
+        while (!queue.isEmpty())
+        {
+          doWork(context);
+        }
+      }
+      else
+      {
+        queue.clear();
+      }
+
       queue = null;
     }
   }

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -97,8 +98,6 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
 
   public InternalCommitContext createCommitContext(InternalTransaction transaction);
 
-  public void setRootResourceID(CDOID rootResourceID);
-
   /**
    * Returns a commit time stamp that is guaranteed to be unique in this repository. At index 1 of the returned
    * <code>long</code> array is the previous commit time.
@@ -106,6 +105,13 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    * @since 4.0
    */
   public long[] createCommitTimeStamp(OMMonitor monitor);
+
+  /**
+   * @since 4.0
+   */
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo);
+
+  public void setRootResourceID(CDOID rootResourceID);
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,
       int chunkEnd);

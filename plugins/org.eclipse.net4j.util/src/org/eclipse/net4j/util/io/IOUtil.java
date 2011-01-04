@@ -578,6 +578,29 @@ public final class IOUtil
     }
   }
 
+  /**
+   * @since 3.1
+   */
+  public static String readTextFile(File file) throws IORuntimeException
+  {
+    Reader input = openReader(file);
+
+    try
+    {
+      CharArrayWriter output = new CharArrayWriter();
+      copyCharacter(input, output);
+      return output.toString();
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+    finally
+    {
+      closeSilent(input);
+    }
+  }
+
   public static byte[] readFile(File file) throws IORuntimeException
   {
     if (file.length() > Integer.MAX_VALUE)

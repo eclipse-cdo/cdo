@@ -237,7 +237,7 @@ public abstract class Worker extends Lifecycle
   /**
    * @author Eike Stepper
    */
-  public final class WorkContext
+  public class WorkContext
   {
     private long count;
 

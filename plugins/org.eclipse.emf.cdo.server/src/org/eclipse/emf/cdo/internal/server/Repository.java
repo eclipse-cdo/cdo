@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -156,6 +157,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private List<ReadAccessHandler> readAccessHandlers = new ArrayList<ReadAccessHandler>();
 
   private List<WriteAccessHandler> writeAccessHandlers = new ArrayList<WriteAccessHandler>();
+
+  private List<CDOCommitInfoHandler> commitInfoHandlers = new ArrayList<CDOCommitInfoHandler>();
 
   @ExcludeFromDump
   private transient long lastCommitTimeStamp;
@@ -820,6 +823,54 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   /**
+   * @since 4.0
+   */
+  public void addCommitInfoHandler(CDOCommitInfoHandler handler)
+  {
+    synchronized (commitInfoHandlers)
+    {
+      if (!commitInfoHandlers.contains(handler))
+      {
+        commitInfoHandlers.add(handler);
+      }
+    }
+  }
+
+  /**
+   * @since 4.0
+   */
+  public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
+  {
+    synchronized (commitInfoHandlers)
+    {
+      commitInfoHandlers.remove(handler);
+    }
+  }
+
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
+  {
+    sessionManager.sendCommitNotification(sender, commitInfo);
+
+    CDOCommitInfoHandler[] handlers;
+    synchronized (commitInfoHandlers)
+    {
+      handlers = commitInfoHandlers.toArray(new CDOCommitInfoHandler[commitInfoHandlers.size()]);
+    }
+
+    for (CDOCommitInfoHandler handler : handlers)
+    {
+      try
+      {
+        handler.handleCommitInfo(commitInfo);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+  }
+
+  /**
    * @since 2.0
    */
   public IQueryHandlerProvider getQueryHandlerProvider()
@@ -951,7 +1002,6 @@ public class Repository extends Container<Object> implements InternalRepository
         }
       }
     }
-
   }
 
   /**

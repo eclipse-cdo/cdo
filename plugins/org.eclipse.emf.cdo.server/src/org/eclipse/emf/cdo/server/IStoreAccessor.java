@@ -377,6 +377,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public Map<CDOID, CDOID> getIDMappings();
 
     /**
+     * @since 4.0
+     */
+    public CDOCommitInfo createCommitInfo();
+
+    /**
      * @since 3.0
      */
     public String getRollbackMessage();

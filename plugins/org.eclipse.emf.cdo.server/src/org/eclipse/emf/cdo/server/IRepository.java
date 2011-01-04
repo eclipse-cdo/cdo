@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -86,6 +87,16 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
    * @since 2.0
    */
   public void validateTimeStamp(long timeStamp) throws IllegalArgumentException;
+
+  /**
+   * @since 4.0
+   */
+  public void addCommitInfoHandler(CDOCommitInfoHandler handler);
+
+  /**
+   * @since 4.0
+   */
+  public void removeCommitInfoHandler(CDOCommitInfoHandler handler);
 
   /**
    * @since 2.0

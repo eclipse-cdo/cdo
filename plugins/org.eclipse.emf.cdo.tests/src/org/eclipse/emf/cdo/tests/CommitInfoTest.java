@@ -15,17 +15,25 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.commit.AsyncCommitInfoHandler;
+import org.eclipse.emf.cdo.spi.common.commit.TextCommitInfoLog;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.UserManager;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -828,6 +836,108 @@ public class CommitInfoTest extends AbstractCDOTest
     {
       assertEquals(expected.get(i), infos.get(1 + i));
     }
+  }
+
+  public void testLogThroughClient() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+
+    final int COMMITS = 20;
+    for (int i = 0; i < COMMITS; i++)
+    {
+      resource.getContents().add(getModel1Factory().createProduct1());
+      transaction.setCommitComment("Commit " + i);
+      transaction.commit();
+    }
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    TextCommitInfoLog log = new TextCommitInfoLog(baos);
+
+    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
+        CDOBranchPoint.UNSPECIFIED_DATE, log);
+
+    System.out.println(baos.toString());
+  }
+
+  public void testLogThroughWriteAccessHandler() throws Exception
+  {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    final TextCommitInfoLog log = new TextCommitInfoLog(baos);
+
+    getRepository().addHandler(new IRepository.WriteAccessHandler()
+    {
+      public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
+          OMMonitor monitor) throws RuntimeException
+      {
+      }
+
+      public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
+          OMMonitor monitor)
+      {
+        log.handleCommitInfo(commitContext.createCommitInfo());
+      }
+    });
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+
+    final int COMMITS = 20;
+    for (int i = 0; i < COMMITS; i++)
+    {
+      resource.getContents().add(getModel1Factory().createProduct1());
+      transaction.setCommitComment("Commit " + i);
+      transaction.commit();
+    }
+
+    System.out.println(baos.toString());
+  }
+
+  public void testLogThroughCommitInfoHandler() throws Exception
+  {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    getRepository().addCommitInfoHandler(new TextCommitInfoLog(baos));
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+
+    final int COMMITS = 20;
+    for (int i = 0; i < COMMITS; i++)
+    {
+      resource.getContents().add(getModel1Factory().createProduct1());
+      transaction.setCommitComment("Commit " + i);
+      transaction.commit();
+    }
+
+    System.out.println(baos.toString());
+  }
+
+  public void testLogAsync() throws Exception
+  {
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    AsyncCommitInfoHandler log = new AsyncCommitInfoHandler(new TextCommitInfoLog(baos));
+    log.activate();
+    getRepository().addCommitInfoHandler(log);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+
+    final int COMMITS = 20;
+    for (int i = 0; i < COMMITS; i++)
+    {
+      resource.getContents().add(getModel1Factory().createProduct1());
+      transaction.setCommitComment("Commit " + i);
+      transaction.commit();
+    }
+
+    log.deactivate();
+    LifecycleUtil.waitForInactive(log, Long.MAX_VALUE);
+
+    System.out.println(baos.toString());
   }
 
   /**

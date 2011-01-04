@@ -55,7 +55,6 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
-import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -385,12 +384,11 @@ public class TransactionCommitContext implements InternalCommitContext
       InternalRepository repository = transaction.getRepository();
       computeDirtyObjects(monitor.fork());
       checkXRefs();
-
       monitor.worked();
 
-      repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
       detachObjects(monitor.fork());
 
+      repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
       accessor.write(this, monitor.fork(100));
     }
     catch (Throwable t)
@@ -479,8 +477,8 @@ public class TransactionCommitContext implements InternalCommitContext
         InternalSession sender = transaction.getSession();
         CDOCommitInfo commitInfo = createCommitInfo();
 
-        InternalSessionManager sessionManager = transaction.getRepository().getSessionManager();
-        sessionManager.sendCommitNotification(sender, commitInfo);
+        InternalRepository repository = transaction.getRepository();
+        repository.sendCommitNotification(sender, commitInfo);
       }
     }
     catch (Exception ex)
@@ -491,36 +489,23 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       StoreThreadLocal.release();
       accessor = null;
-      timeStamp = CDORevision.UNSPECIFIED_DATE;
+      lockedTargets = null;
 
       if (packageRegistry != null)
       {
         packageRegistry.deactivate();
         packageRegistry = null;
       }
-
-      if (idMappings != null)
-      {
-        idMappings.clear();
-        idMappings = null;
-      }
-
-      lockedTargets = null;
-      rollbackMessage = null;
-      newPackageUnits = null;
-      newObjects = null;
-      dirtyObjectDeltas = null;
-      dirtyObjects = null;
     }
   }
 
-  private CDOCommitInfo createCommitInfo()
+  public CDOCommitInfo createCommitInfo()
   {
-    InternalCDOCommitInfoManager commitInfoManager = transaction.getRepository().getCommitInfoManager();
-
     CDOBranch branch = transaction.getBranch();
     String userID = transaction.getSession().getUserID();
     CDOCommitData commitData = createCommitData();
+
+    InternalCDOCommitInfoManager commitInfoManager = transaction.getRepository().getCommitInfoManager();
     return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, commitData);
   }
 

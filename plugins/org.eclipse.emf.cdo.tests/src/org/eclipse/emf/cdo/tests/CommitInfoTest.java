@@ -802,6 +802,34 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  public void testMultipleEntries() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+
+    List<CDOCommitInfo> expected = new ArrayList<CDOCommitInfo>();
+    final int COMMITS = 20;
+    for (int i = 0; i < COMMITS; i++)
+    {
+      resource.getContents().add(getModel1Factory().createProduct1());
+      transaction.setCommitComment("Commit " + i);
+      expected.add(transaction.commit());
+    }
+
+    Handler handler = new Handler();
+    session.getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
+        CDOBranchPoint.UNSPECIFIED_DATE, handler);
+
+    List<CDOCommitInfo> infos = handler.getInfos();
+
+    assertEquals(1 + COMMITS, infos.size()); // Initial root resource commit + COMMITS
+    for (int i = 0; i < COMMITS; i++)
+    {
+      assertEquals(expected.get(i), infos.get(1 + i));
+    }
+  }
+
   /**
    * @author Eike Stepper
    */

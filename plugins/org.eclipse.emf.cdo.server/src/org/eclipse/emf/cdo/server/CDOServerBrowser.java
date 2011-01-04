@@ -1064,11 +1064,12 @@ public class CDOServerBrowser extends Worker
 
       try
       {
+        final boolean auditing = repository.isSupportingAudits();
         repository.getCommitInfoManager().getCommitInfos(0, 0, new CDOCommitInfoHandler()
         {
           public void handleCommitInfo(CDOCommitInfo commitInfo)
           {
-            if (showCommitInfo(out, commitInfo, browser, param))
+            if (showCommitInfo(out, commitInfo, browser, param, auditing))
             {
               details[0] = commitInfo;
             }
@@ -1077,17 +1078,24 @@ public class CDOServerBrowser extends Worker
 
         out.print("</table>\r\n");
         out.print("</td>\r\n");
+        out.print("<td>&nbsp;&nbsp;&nbsp;</td>\r\n");
+        out.print("<td valign=\"top\">\r\n");
 
-        CDOCommitInfo commitInfo = details[0];
-        if (commitInfo != null)
+        if (auditing)
         {
-          out.print("<td>&nbsp;&nbsp;&nbsp;</td>\r\n");
-          out.print("<td valign=\"top\">\r\n");
-          out.print("<h3>Commit Info " + commitInfo.getTimeStamp() + "</h3>\r\n");
-          showCommitData(out, commitInfo, browser);
-          out.print("</td>\r\n");
+          CDOCommitInfo commitInfo = details[0];
+          if (commitInfo != null)
+          {
+            out.print("<h3>Commit Info " + commitInfo.getTimeStamp() + "</h3>\r\n");
+            showCommitData(out, commitInfo, browser);
+          }
+        }
+        else
+        {
+          out.print("<h3>No audit data available in this repository.</h3>\r\n");
         }
 
+        out.print("</td>\r\n");
         out.print("</tr>\r\n");
         out.print("</table>\r\n");
       }
@@ -1097,13 +1105,18 @@ public class CDOServerBrowser extends Worker
       }
     }
 
-    protected boolean showCommitInfo(PrintStream out, CDOCommitInfo commitInfo, CDOServerBrowser browser, String param)
+    protected boolean showCommitInfo(PrintStream out, CDOCommitInfo commitInfo, CDOServerBrowser browser, String param,
+        boolean auditing)
     {
       String timeStamp = String.valueOf(commitInfo.getTimeStamp());
       boolean selected = timeStamp.equals(param);
 
       String formatted = CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp());
-      String label = selected ? formatted : browser.href(formatted, getName(), "time", timeStamp);
+      String label = formatted;
+      if (!selected && auditing)
+      {
+        label = browser.href(formatted, getName(), "time", timeStamp);
+      }
 
       out.print("<tr>\r\n");
       out.print("<td valign=\"top\">\r\n");

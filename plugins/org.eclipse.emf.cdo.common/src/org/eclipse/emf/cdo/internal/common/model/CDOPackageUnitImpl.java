@@ -234,12 +234,12 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     setState(State.DISPOSED);
   }
 
-  public synchronized void load()
+  public synchronized void load(boolean resolve)
   {
-    load(packageRegistry.getPackageLoader());
+    load(packageRegistry.getPackageLoader(), resolve);
   }
 
-  public synchronized void load(PackageLoader packageLoader)
+  public synchronized void load(PackageLoader packageLoader, boolean resolve)
   {
     if (state == State.PROXY)
     {
@@ -257,7 +257,10 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
         synchronized (ePackage)
         {
           EMFUtil.addAdapter(ePackage, packageInfo);
-          EcoreUtil.resolveAll(ePackage);
+          if (resolve)
+          {
+            EcoreUtil.resolveAll(ePackage);
+          }
         }
       }
 

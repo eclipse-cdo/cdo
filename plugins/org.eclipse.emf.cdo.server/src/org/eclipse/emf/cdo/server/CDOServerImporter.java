@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.model.EMFUtil.ExtResourceSet;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.model.lob.CDOLobUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -48,7 +49,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -200,10 +200,10 @@ public abstract class CDOServerImporter
       InternalCDOPackageUnit[] array = packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]);
       packageUnits = null;
 
+      final ExtResourceSet resourceSet = EMFUtil.createExtResourceSet(packageRegistry, false, false);
+
       PackageLoader loader = new PackageLoader()
       {
-        private ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(packageRegistry);
-
         public EPackage[] loadPackages(CDOPackageUnit packageUnit)
         {
           String id = packageUnit.getID();
@@ -217,8 +217,14 @@ public abstract class CDOServerImporter
       packageRegistry.putPackageUnits(array, CDOPackageUnit.State.PROXY);
       for (InternalCDOPackageUnit packageUnit : array)
       {
-        packageUnit.load(loader);
+        packageUnit.load(loader, false);
       }
+
+      // Before we resolve, we configure the resourceSet to start delegating, which means
+      // it will consult the packageRegistry for packages it didn't just load -- such as the Ecore
+      // package
+      resourceSet.setDelegating(true);
+      EMFUtil.safeResolveAll(resourceSet);
 
       accessor.rawStore(array, monitor);
 

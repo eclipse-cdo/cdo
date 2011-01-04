@@ -115,7 +115,7 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
 
     if (loadOnDemand)
     {
-      packageUnit.load();
+      packageUnit.load(true); // TODO (CD) Dubious: is resolution-on-load really a good idea?
       return (EPackage)getTarget();
     }
 

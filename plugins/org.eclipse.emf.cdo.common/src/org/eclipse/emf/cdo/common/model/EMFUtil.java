@@ -12,6 +12,8 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+
 import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -38,6 +40,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -415,6 +418,80 @@ public final class EMFUtil
           safeResolve(it2.next(), resourceSet);
         }
       }
+    }
+  }
+
+  /**
+   * @see ExtResourceSet
+   * @since 4.0
+   */
+  public static ExtResourceSet createExtResourceSet(InternalCDOPackageRegistry packageRegistry, boolean delegating,
+      boolean demandLoading)
+  {
+    Resource.Factory resourceFactory = new EcoreResourceFactoryImpl();
+
+    ExtResourceSet resourceSet = new ExtResourceSet(delegating, demandLoading);
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
+    resourceSet.setPackageRegistry(packageRegistry);
+    return resourceSet;
+  }
+
+  /**
+   * An extension of {@link ResourceSetImpl} that allows demandLoading of resources and delegation of resource lookups,
+   * to be switched on/off as desired.
+   * 
+   * @since 4.0
+   */
+  public static class ExtResourceSet extends ResourceSetImpl
+  {
+    private boolean delegating;
+
+    private boolean demandLoading;
+
+    ExtResourceSet(boolean delegating, boolean demandLoading)
+    {
+      this.delegating = delegating;
+      this.demandLoading = demandLoading;
+    }
+
+    public boolean isDelegating()
+    {
+      return delegating;
+    }
+
+    public void setDelegating(boolean delegating)
+    {
+      this.delegating = delegating;
+    }
+
+    public boolean isDemandLoading()
+    {
+      return demandLoading;
+    }
+
+    public void setDemandLoading(boolean demandLoading)
+    {
+      this.demandLoading = demandLoading;
+    }
+
+    @Override
+    protected void demandLoad(Resource resource) throws IOException
+    {
+      if (demandLoading)
+      {
+        super.demandLoad(resource);
+      }
+    }
+
+    @Override
+    protected Resource delegatedGetResource(URI uri, boolean loadOnDemand)
+    {
+      if (delegating)
+      {
+        return super.delegatedGetResource(uri, loadOnDemand);
+      }
+
+      return null;
     }
   }
 }

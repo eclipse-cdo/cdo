@@ -44,12 +44,15 @@ public interface InternalCDOPackageUnit extends CDOPackageUnit
 
   public void setPackageInfos(InternalCDOPackageInfo[] packageInfos);
 
-  public void load();
+  /**
+   * @since 4.0
+   */
+  public void load(boolean resolve);
 
   /**
    * @since 4.0
    */
-  public void load(PackageLoader packageLoader);
+  public void load(PackageLoader packageLoader, boolean resolve);
 
   /**
    * @since 3.0

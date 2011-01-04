@@ -444,6 +444,11 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
     return stateLock;
   }
 
+  public Object getObjectsLock()
+  {
+    return objects;
+  }
+
   /**
    * @throws InterruptedException
    * @since 2.0
@@ -1351,7 +1356,7 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
   {
     URI uri = resource.getURI();
     String path = CDOURIUtil.extractResourcePath(uri);
-    boolean isRoot = "/".equals(path); //$NON-NLS-1$
+    boolean isRoot = CDOURIUtil.SEGMENT_SEPARATOR.equals(path);
 
     try
     {
@@ -1386,13 +1391,14 @@ public class CDOViewImpl extends Lifecycle implements InternalCDOView
 
     if (old != null)
     {
-      if (CDOUtil.isLegacyObject(object))
-      {
-        OM.LOG.warn("Legacy object has been registered multiple times: " + object);
-      }
-      else
+      if (old != object)
       {
         throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOViewImpl.20"), object)); //$NON-NLS-1$
+      }
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Object was already registered: {0}", object); //$NON-NLS-1$
       }
     }
   }

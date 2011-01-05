@@ -401,7 +401,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       {
         CDOBranchVersion old = revision.getBranch().getVersion(oldVersion);
         InternalCDORevision oldRevision = getCachedRevisionByVersion(revision.getID(), old);
-        if (oldRevision != null)
+        if (oldRevision != null && oldRevision.getRevised() == CDOBranchPoint.UNSPECIFIED_DATE)
         {
           oldRevision.setRevised(revision.getTimeStamp() - 1);
         }

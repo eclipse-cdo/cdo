@@ -57,6 +57,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -369,12 +370,10 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.begin(107);
       dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
 
-      lockObjects(); // Can take long and must come before createTimeStamp()
+      lockObjects(); // Can take long and must come before setTimeStamp()
       monitor.worked();
 
-      long[] times = createTimeStamp(monitor.fork()); // Could throw an exception
-      timeStamp = times[0];
-      previousTimeStamp = times[1];
+      setTimeStamp(monitor.fork());
 
       adjustForCommit();
       monitor.worked();
@@ -440,6 +439,14 @@ public class TransactionCommitContext implements InternalCommitContext
     }
 
     throw WrappedException.wrap((Exception)ex);
+  }
+
+  private void setTimeStamp(OMMonitor mmonitor)
+  {
+    long[] times = createTimeStamp(mmonitor); // Could throw an exception
+    timeStamp = times[0];
+    previousTimeStamp = times[1];
+    CheckUtil.checkState(timeStamp != CDOBranchPoint.UNSPECIFIED_DATE, "Commit timestamp must not be 0");
   }
 
   /**
@@ -676,8 +683,9 @@ public class TransactionCommitContext implements InternalCommitContext
         {
           for (CDOID id : lockedTargets)
           {
-            InternalCDORevision revision = revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED,
-                CDORevision.DEPTH_NONE, true);
+            InternalCDORevision revision = //
+            revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+
             if (revision == null || revision instanceof DetachedCDORevision)
             {
               throw new IllegalStateException("Object " + id
@@ -850,8 +858,8 @@ public class TransactionCommitContext implements InternalCommitContext
     InternalRepository repository = transaction.getRepository();
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
-    InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(delta.getID(), delta, CDORevision.UNCHUNKED,
-        true);
+    CDOID id = delta.getID();
+    InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
     if (oldRevision == null)
     {
       throw new IllegalStateException("Origin revision not found for " + delta);

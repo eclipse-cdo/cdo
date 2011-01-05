@@ -40,10 +40,13 @@
 
 	<rm:locator pattern="^com\.db4o$" searchPathRef="net4j.plus" />
 	<rm:locator pattern="^com\.mysql\.jdbc$" searchPathRef="net4j.plus" />
-	<!-- consuming an older hibernate from an alternative location per Martin Taal's request -->
-	<rm:locator pattern="^org\.hibernate$" searchPathRef="alternative.net4j.plus" />
 	<rm:locator pattern="^org\.hsqldb$" searchPathRef="net4j.plus" />
 	<rm:locator pattern="^org\.postgresql\.jdbc3$" searchPathRef="net4j.plus" />
+
+	<!-- consuming an older hibernate from an alternative location per Martin Taal's request -->
+	<rm:locator pattern="^org\.hibernate$" searchPathRef="elver.org" />
+	<rm:locator pattern="^javax\.persistence$" searchPathRef="elver.org" />
+	<rm:locator pattern="^org\.dom4j$" searchPathRef="elver.org" />
 
 	<rm:locator searchPathRef="platform" />
 
@@ -179,7 +182,7 @@
 		</rm:provider>
 	</rm:searchPath>
 
-	<rm:searchPath name="alternative.net4j.plus">
+	<rm:searchPath name="elver.org">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="http://www.elver.org/eclipse/update_1.1.2" />

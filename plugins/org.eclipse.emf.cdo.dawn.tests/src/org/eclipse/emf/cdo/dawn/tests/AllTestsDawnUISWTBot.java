@@ -53,13 +53,13 @@ public class AllTestsDawnUISWTBot extends ConfigTestSuite
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     /******************** GMF **********************/
-    testClasses.add(RollbackTest.class);
     testClasses.add(DawnPreferencesTest.class);
     testClasses.add(DawnCreationWizardSWTBotTest.class);
     testClasses.add(SimpleDiagramTest.class);
     testClasses.add(MultipleResourcesTest.class);
     // MultipleResourcesDeletionTest.class, //excluded because of ui freeze
     testClasses.add(DawnProjectExplorerTest.class);
+    testClasses.add(RollbackTest.class);
     testClasses.add(ConflictTest.class);
 
     /******************** EMF **********************/

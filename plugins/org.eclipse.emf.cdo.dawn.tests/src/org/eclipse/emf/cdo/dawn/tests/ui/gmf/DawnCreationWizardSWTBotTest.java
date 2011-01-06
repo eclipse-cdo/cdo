@@ -37,6 +37,8 @@ import org.junit.runner.RunWith;
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
 {
+  private String resourceFieldLabel = org.eclipse.emf.cdo.dawn.ui.messages.Messages.DawnCreateNewResourceWizardPage_6;
+
   @Test
   public void testCreateNewDawnDiagram() throws Exception
   {
@@ -93,12 +95,12 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
     shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileNameLabel.setText("test.acore_diagram");
 
     getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     assertEquals("test.acore", fileSemanticNameLabel.getText());
 
     getBot().button("Finish").click();
@@ -121,18 +123,18 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
     shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileNameLabel.setText("notational.acore_diagram");
 
     getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     assertEquals("notational.acore", fileSemanticNameLabel.getText());
 
-    fileNameLabel = getBot().textWithLabel("File name:");
+    fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileNameLabel.setText("semantic.acore");
 
-    fileSemanticNameLabel = getBot().textWithLabel("File name:");
+    fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     assertEquals("semantic.acore", fileSemanticNameLabel.getText());
 
     getBot().button("Finish").click();
@@ -160,7 +162,7 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
     shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileNameLabel.setText("");
 
     Keyboard keyboard = KeyboardFactory.getDefaultKeyboard(fileNameLabel.widget, null);
@@ -184,12 +186,12 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
     shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileNameLabel.setText("notational.acore_diagram");
 
     getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
     Keyboard keyboard = KeyboardFactory.getDefaultKeyboard(fileSemanticNameLabel.widget, null);
     fileSemanticNameLabel.setFocus();
@@ -223,7 +225,7 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
     shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileNameLabel.setText("test.acore_diagram");
 
     SWTBotTree tree = getBot().tree(0);
@@ -231,7 +233,7 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
     selectFolder(tree.getAllItems(), "folder", false);
     getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     assertEquals("test.acore", fileSemanticNameLabel.getText());
 
     getBot().button("Finish").click();
@@ -269,7 +271,7 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
     shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileNameLabel.setText("test.acore_diagram");
 
     SWTBotText folder = getBot().textWithLabel("Enter or select the parent folder: ");
@@ -278,7 +280,7 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
 
     getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     assertEquals("test.acore", fileSemanticNameLabel.getText());
 
     getBot().button("Finish").click();
@@ -317,7 +319,7 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
     shell = getBot().shell("New Acore Diagram");
     shell.activate();
 
-    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileNameLabel.setText("test.acore_diagram");
 
     SWTBotTree tree = getBot().tree(0);
@@ -325,7 +327,7 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
     selectFolder(tree.getAllItems(), "folder1", false);
     getBot().button("Next >").click();
 
-    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     assertEquals("test.acore", fileSemanticNameLabel.getText());
 
     tree = getBot().tree(0);

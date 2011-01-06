@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.dawn.tests.ui.gmf;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.DawnAcoreCreationWizard;
 import org.eclipse.emf.cdo.dawn.helper.DawnEditorHelper;
+import org.eclipse.emf.cdo.dawn.ui.composites.CDOResourceNodeChooserComposite.ResourceChooserValidator;
 import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewDiagramResourceWizardPage;
 import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewResourceWizardPage;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
@@ -120,9 +121,9 @@ public class DawnCreationWizardTest extends AbstractCDOTest
         .getNextPage();
 
     dawnDomainModelFilePage.setVisible(true);
-    dawnDomainModelFilePage.setResourceValidationType(DawnCreateNewResourceWizardPage.VALIDATION_ERROR);
+    dawnDomainModelFilePage.setResourceValidationType(ResourceChooserValidator.VALIDATION_ERROR);
 
-    assertEquals(DawnCreateNewResourceWizardPage.VALIDATION_ERROR, dawnDiagramModelFilePage.getResourceValidationType());
+    assertEquals(ResourceChooserValidator.VALIDATION_ERROR, dawnDiagramModelFilePage.getResourceValidationType());
 
     dawnDomainModelFilePage.setResourceNamePrefix("");
     callValidatePage(dawnDomainModelFilePage);
@@ -176,8 +177,8 @@ public class DawnCreationWizardTest extends AbstractCDOTest
 
     DawnCreateNewDiagramResourceWizardPage dawnDiagramModelFilePage = (DawnCreateNewDiagramResourceWizardPage)pages[0];
     dawnDiagramModelFilePage.setVisible(true);
-    dawnDiagramModelFilePage.setResourceValidationType(DawnCreateNewResourceWizardPage.VALIDATION_ERROR);
-    assertEquals(DawnCreateNewResourceWizardPage.VALIDATION_ERROR, dawnDiagramModelFilePage.getResourceValidationType());
+    dawnDiagramModelFilePage.setResourceValidationType(ResourceChooserValidator.VALIDATION_ERROR);
+    assertEquals(ResourceChooserValidator.VALIDATION_ERROR, dawnDiagramModelFilePage.getResourceValidationType());
 
     dawnDiagramModelFilePage.setResourceNamePrefix("default5.acore_diagram");
     assertEquals("default5.acore_diagram", getResourceText(dawnDiagramModelFilePage).getText());
@@ -206,8 +207,8 @@ public class DawnCreationWizardTest extends AbstractCDOTest
 
     DawnCreateNewDiagramResourceWizardPage dawnDiagramModelFilePage = (DawnCreateNewDiagramResourceWizardPage)pages[0];
     dawnDiagramModelFilePage.setVisible(true);
-    dawnDiagramModelFilePage.setResourceValidationType(DawnCreateNewResourceWizardPage.VALIDATION_WARN);
-    assertEquals(DawnCreateNewResourceWizardPage.VALIDATION_WARN, dawnDiagramModelFilePage.getResourceValidationType());
+    dawnDiagramModelFilePage.setResourceValidationType(ResourceChooserValidator.VALIDATION_WARN);
+    assertEquals(ResourceChooserValidator.VALIDATION_WARN, dawnDiagramModelFilePage.getResourceValidationType());
 
     dawnDiagramModelFilePage.setResourceNamePrefix("default5.acore_diagram");
     assertEquals("default5.acore_diagram", getResourceText(dawnDiagramModelFilePage).getText());
@@ -236,8 +237,8 @@ public class DawnCreationWizardTest extends AbstractCDOTest
 
     DawnCreateNewDiagramResourceWizardPage dawnDiagramModelFilePage = (DawnCreateNewDiagramResourceWizardPage)pages[0];
     dawnDiagramModelFilePage.setVisible(true);
-    dawnDiagramModelFilePage.setResourceValidationType(DawnCreateNewResourceWizardPage.VALIDATION_NONE);
-    assertEquals(DawnCreateNewResourceWizardPage.VALIDATION_NONE, dawnDiagramModelFilePage.getResourceValidationType());
+    dawnDiagramModelFilePage.setResourceValidationType(ResourceChooserValidator.VALIDATION_NONE);
+    assertEquals(ResourceChooserValidator.VALIDATION_NONE, dawnDiagramModelFilePage.getResourceValidationType());
 
     dawnDiagramModelFilePage.setResourceNamePrefix("default5.acore_diagram");
     assertEquals("default5.acore_diagram", getResourceText(dawnDiagramModelFilePage).getText());

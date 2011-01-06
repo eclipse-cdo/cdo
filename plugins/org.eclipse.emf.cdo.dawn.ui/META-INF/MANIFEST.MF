@@ -26,7 +26,9 @@ Export-Package: org.eclipse.emf.cdo.dawn.internal.ui.bundle;version="1.0.0";
    org.osgi.framework,
    org.eclipse.emf.common.ui,
    org.eclipse.emf.cdo.ui",
+ org.eclipse.emf.cdo.dawn.ui.composites;version="1.0.0",
  org.eclipse.emf.cdo.dawn.ui.helper;version="1.0.0";uses:="org.eclipse.emf.ecore.resource,org.eclipse.ui,org.eclipse.swt.graphics",
+ org.eclipse.emf.cdo.dawn.ui.messages;version="1.0.0";x-friends:="org.eclipse.emf.cdo.dawn.tests",
  org.eclipse.emf.cdo.dawn.ui.views;version="1.0.0";
   uses:="org.eclipse.emf.cdo.internal.ui.views,
    org.eclipse.emf.cdo.view,

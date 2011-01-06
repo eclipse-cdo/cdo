@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -23,8 +23,6 @@ import org.eclipse.emf.cdo.spi.server.InternalQueryResult;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
-
-import org.eclipse.emf.ecore.EReference;
 
 import java.io.IOException;
 
@@ -75,17 +73,8 @@ public class QueryIndication extends CDOReadIndication
 
       if (xrefs)
       {
-        Object[] values = (Object[])object;
-        CDOID targetID = (CDOID)values[0];
-        CDOID sourceID = (CDOID)values[1];
-        EReference sourceReference = (EReference)values[2];
-        int sourceIndex = (Integer)values[3];
-
-        out.writeCDOID(targetID);
-        out.writeCDOID(sourceID);
-        out.writeCDOClassifierRef(sourceReference.getEContainingClass());
-        out.writeString(sourceReference.getName());
-        out.writeInt(sourceIndex);
+        CDOIDReference idReference = (CDOIDReference)object;
+        out.writeCDOIDReference(idReference);
       }
       else
       {

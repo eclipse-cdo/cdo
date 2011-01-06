@@ -149,7 +149,7 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
   {
     if (value != UNKNOWN_VALUE)
     {
-      Object adjustedValue = referenceAdjuster.adjustReference(value);
+      Object adjustedValue = referenceAdjuster.adjustReference(value, getFeature(), NO_INDEX);
       if (adjustedValue != value)
       {
         value = adjustedValue;

@@ -61,7 +61,7 @@ public class CommitXATransactionPhase1Indication extends CommitTransactionIndica
       exceptionMessage = commitContext.getRollbackMessage();
     }
 
-    boolean success = respondingException(out, exceptionMessage);
+    boolean success = respondingException(out, exceptionMessage, null);
     if (success)
     {
       respondingResult(out);

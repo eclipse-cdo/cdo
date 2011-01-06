@@ -15,10 +15,12 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -35,6 +37,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
+
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -45,6 +49,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -57,8 +62,6 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   private CDOIDProvider idProvider; // CDOTransaction
 
-  private int transactionID;
-
   private String comment;
 
   private boolean releaseLocks;
@@ -66,6 +69,8 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
   private CDOCommitData commitData;
 
   private Collection<CDOLob<?>> lobs;
+
+  private CDOTransaction transaction;
 
   public CommitTransactionRequest(CDOClientProtocol protocol, int transactionID, String comment, boolean releaseLocks,
       CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs)
@@ -78,7 +83,8 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
       boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs)
   {
     super(protocol, signalID);
-    this.transactionID = transactionID;
+
+    transaction = (CDOTransaction)getSession().getView(transactionID);
     this.comment = comment;
     this.releaseLocks = releaseLocks;
     this.idProvider = idProvider;
@@ -108,7 +114,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   protected void requestingTransactionInfo(CDODataOutput out) throws IOException
   {
-    out.writeInt(transactionID);
+    out.writeInt(transaction.getViewID());
   }
 
   protected void requestingCommit(CDODataOutput out) throws IOException
@@ -200,7 +206,6 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   protected EClass getObjectType(CDOID id)
   {
-    CDOTransaction transaction = (CDOTransaction)getSession().getView(transactionID);
     CDOObject object = transaction.getObject(id);
     return object.eClass();
   }
@@ -226,7 +231,20 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     {
       String rollbackMessage = in.readString();
       OM.LOG.error(rollbackMessage);
-      return new CommitTransactionResult(idProvider, rollbackMessage);
+
+      List<CDOObjectReference> xRefs = null;
+      int size = in.readInt();
+      if (size != 0)
+      {
+        xRefs = new ArrayList<CDOObjectReference>(size);
+        for (int i = 0; i < size; i++)
+        {
+          CDOIDReference idReference = in.readCDOIDReference();
+          xRefs.add(new CDOObjectReferenceImpl(transaction, idReference));
+        }
+      }
+
+      return new CommitTransactionResult(idProvider, rollbackMessage, xRefs);
     }
 
     return null;

@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.cdo.common.id.CDOReference;
 
 /**
  * @author Eike Stepper
@@ -18,13 +18,6 @@ import org.eclipse.emf.ecore.EReference;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface CDOObjectReference
+public interface CDOObjectReference extends CDOReference<CDOObject>
 {
-  public CDOObject getTargetObject();
-
-  public CDOObject getSourceObject();
-
-  public EReference getSourceReference();
-
-  public int getSourceIndex();
 }

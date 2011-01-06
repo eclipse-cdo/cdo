@@ -30,8 +30,6 @@ import java.text.MessageFormat;
  */
 public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
 {
-  public static final int NO_INDEX = -1;
-
   private EStructuralFeature feature;
 
   protected CDOFeatureDeltaImpl(EStructuralFeature feature)

@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -330,8 +331,7 @@ public class XRefsQueryHandler implements IQueryHandler
         return true;
       }
 
-      Object[] result = { targetID, sourceID, sourceReference, sourceIndex };
-      return context.addResult(result);
+      return context.addResult(new CDOIDReference(targetID, sourceID, sourceReference, sourceIndex));
     }
 
     public int compareTo(CDOBranchPoint o)

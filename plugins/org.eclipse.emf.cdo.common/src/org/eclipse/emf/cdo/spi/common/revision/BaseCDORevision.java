@@ -30,6 +30,8 @@ import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
@@ -504,14 +506,16 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     boolean changed = false;
 
-    CDOID id1 = (CDOID)referenceAdjuster.adjustReference(resourceID);
+    CDOID id1 = (CDOID)referenceAdjuster.adjustReference(resourceID, CDOContainerFeatureDelta.CONTAINER_FEATURE,
+        CDOFeatureDelta.NO_INDEX);
     if (id1 != resourceID)
     {
       resourceID = id1;
       changed = true;
     }
 
-    Object id2 = referenceAdjuster.adjustReference(containerID);
+    Object id2 = referenceAdjuster.adjustReference(containerID, CDOContainerFeatureDelta.CONTAINER_FEATURE,
+        CDOFeatureDelta.NO_INDEX);
     if (id2 != containerID)
     {
       containerID = id2;
@@ -536,7 +540,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
         {
           CDOType type = CDOModelUtil.getType(feature);
           Object oldValue = getValue(i);
-          Object newValue = type.adjustReferences(referenceAdjuster, oldValue);
+          Object newValue = type.adjustReferences(referenceAdjuster, oldValue, feature, CDOFeatureDelta.NO_INDEX);
           if (oldValue != newValue) // Just an optimization for NOOP adjusters
           {
             setValue(i, newValue);

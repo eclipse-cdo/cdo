@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -238,6 +239,11 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     }
 
     ((AbstractCDOID)id).write(this);
+  }
+
+  public void writeCDOIDReference(CDOIDReference idReference) throws IOException
+  {
+    idReference.write(this);
   }
 
   public void writeCDOIDAndVersion(CDOIDAndVersion idAndVersion) throws IOException

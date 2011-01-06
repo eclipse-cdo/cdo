@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -27,6 +28,7 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -130,6 +132,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private String rollbackMessage;
 
+  private List<CDOIDReference> xRefs;
+
   private boolean ensuringReferentialIntegrity;
 
   private boolean autoReleaseLocksEnabled;
@@ -175,6 +179,11 @@ public class TransactionCommitContext implements InternalCommitContext
   public String getRollbackMessage()
   {
     return rollbackMessage;
+  }
+
+  public List<CDOIDReference> getXRefs()
+  {
+    return xRefs;
   }
 
   public InternalCDOPackageRegistry getPackageRegistry()
@@ -382,6 +391,10 @@ public class TransactionCommitContext implements InternalCommitContext
 
       checkXRefs();
       monitor.worked();
+      if (rollbackMessage != null)
+      {
+        return;
+      }
 
       detachObjects(monitor.fork());
 
@@ -625,7 +638,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
         CDOReferenceAdjuster revisionTargetLocker = new CDOReferenceAdjuster()
         {
-          public Object adjustReference(Object value)
+          public Object adjustReference(Object value, EStructuralFeature feature, int index)
           {
             lockTarget(value, newIDs, supportingBranches);
             return value;
@@ -807,17 +820,14 @@ public class TransactionCommitContext implements InternalCommitContext
 
   protected void checkXRefs()
   {
-    if (!ensuringReferentialIntegrity || detachedObjectTypes == null)
+    if (ensuringReferentialIntegrity && detachedObjectTypes != null)
     {
-      return;
-    }
-
-    XRefContext context = new XRefContext();
-    Set<CDOID> xRefs = context.getXRefs(accessor);
-    if (!xRefs.isEmpty())
-    {
-      throw new IllegalStateException(
-          "The following objects are still pointing to one or more of the objects to be detached: " + xRefs);
+      XRefContext context = new XRefContext();
+      xRefs = context.getXRefs(accessor);
+      if (!xRefs.isEmpty())
+      {
+        rollbackMessage = "Referential integrity violated";
+      }
     }
   }
 
@@ -1173,7 +1183,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
     private Set<CDOID> dirtyIDs = new HashSet<CDOID>();
 
-    private Set<CDOID> xRefs = new HashSet<CDOID>();
+    private List<CDOIDReference> result = new ArrayList<CDOIDReference>();
 
     public XRefContext()
     {
@@ -1190,13 +1200,11 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     }
 
-    public Set<CDOID> getXRefs(IStoreAccessor accessor)
+    public List<CDOIDReference> getXRefs(IStoreAccessor accessor)
     {
       accessor.queryXRefs(this);
-
       checkDirtyObjects();
-
-      return xRefs;
+      return result;
     }
 
     private void checkDirtyObjects()
@@ -1204,11 +1212,15 @@ public class TransactionCommitContext implements InternalCommitContext
       final CDOID[] dirtyID = { null };
       CDOReferenceAdjuster dirtyObjectChecker = new CDOReferenceAdjuster()
       {
-        public Object adjustReference(Object targetID)
+        public Object adjustReference(Object targetID, EStructuralFeature feature, int index)
         {
-          if (detachedIDs.contains(targetID))
+          if (feature != CDOContainerFeatureDelta.CONTAINER_FEATURE)
           {
-            xRefs.add(dirtyID[0]);
+            if (detachedIDs.contains(targetID))
+            {
+              result.add(new CDOIDReference((CDOID)targetID, dirtyID[0], feature, index));
+            }
+
           }
 
           return targetID;
@@ -1261,7 +1273,7 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       if (CDOIDUtil.isNull(targetID))
       {
-        // Compensate issues with the XRef implementation in the store accessor.
+        // Compensate potential issues with the XRef implementation in the store accessor.
         return true;
       }
 
@@ -1277,7 +1289,7 @@ public class TransactionCommitContext implements InternalCommitContext
         return true;
       }
 
-      xRefs.add(sourceID);
+      result.add(new CDOIDReference(targetID, sourceID, sourceReference, sourceIndex));
       return true;
     }
   }

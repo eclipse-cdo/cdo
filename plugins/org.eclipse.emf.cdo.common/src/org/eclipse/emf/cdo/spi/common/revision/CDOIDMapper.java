@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import java.util.Map;
 
 /**
@@ -52,7 +54,10 @@ public class CDOIDMapper implements CDOReferenceAdjuster
     this.allowUnmappedTempIDs = allowUnmappedTempIDs;
   }
 
-  public Object adjustReference(Object value)
+  /**
+   * @since 4.0
+   */
+  public Object adjustReference(Object value, EStructuralFeature feature, int index)
   {
     return CDORevisionUtil.remapID(value, idMappings, allowUnmappedTempIDs);
   }

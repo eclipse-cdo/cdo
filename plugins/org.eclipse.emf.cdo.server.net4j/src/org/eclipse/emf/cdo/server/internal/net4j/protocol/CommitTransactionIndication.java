@@ -14,6 +14,7 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -40,6 +41,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -238,7 +240,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
     try
     {
-      success = respondingException(out, commitContext.getRollbackMessage());
+      success = respondingException(out, commitContext.getRollbackMessage(), commitContext.getXRefs());
       if (success)
       {
         respondingResult(out);
@@ -251,13 +253,27 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     }
   }
 
-  protected boolean respondingException(CDODataOutput out, String rollbackMessage) throws Exception
+  protected boolean respondingException(CDODataOutput out, String rollbackMessage, List<CDOIDReference> xRefs)
+      throws Exception
   {
     boolean success = rollbackMessage == null;
     out.writeBoolean(success);
     if (!success)
     {
       out.writeString(rollbackMessage);
+
+      if (xRefs != null)
+      {
+        out.writeInt(xRefs.size());
+        for (CDOIDReference xRef : xRefs)
+        {
+          out.writeCDOIDReference(xRef);
+        }
+      }
+      else
+      {
+        out.writeInt(0);
+      }
     }
 
     return success;

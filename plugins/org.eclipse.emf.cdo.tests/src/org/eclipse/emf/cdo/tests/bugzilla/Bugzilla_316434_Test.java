@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -17,8 +18,9 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ReferentialIntegrityException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,10 +63,12 @@ public class Bugzilla_316434_Test extends AbstractCDOTest
     try
     {
       transaction.commit();
-      fail("CommitException expected");
+      fail("ReferentialIntegrityException expected");
     }
-    catch (CommitException expected)
+    catch (ReferentialIntegrityException expected)
     {
+      List<CDOObjectReference> xRefs = expected.getXRefs();
+      assertEquals(1, xRefs.size());
       // SUCCESS
     }
   }

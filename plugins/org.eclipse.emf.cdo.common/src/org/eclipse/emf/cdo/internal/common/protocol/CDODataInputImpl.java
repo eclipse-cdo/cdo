@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -326,6 +327,11 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     AbstractCDOID id = CDOIDUtil.createCDOIDObject(subType);
     id.read(this);
     return id;
+  }
+
+  public CDOIDReference readCDOIDReference() throws IOException
+  {
+    return new CDOIDReference(this);
   }
 
   public CDOIDAndVersion readCDOIDAndVersion() throws IOException

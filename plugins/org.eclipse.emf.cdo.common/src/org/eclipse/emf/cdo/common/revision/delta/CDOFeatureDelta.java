@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
@@ -21,6 +22,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public interface CDOFeatureDelta
 {
+  /**
+   * @since 4.0
+   */
+  public static final int NO_INDEX = Notification.NO_INDEX;
+
   /**
    * @since 3.0
    */

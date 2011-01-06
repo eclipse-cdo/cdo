@@ -112,8 +112,8 @@ public class WrappedHibernateList implements InternalCDOList
     for (int i = 0; i < size; i++)
     {
       Object element = get(i);
-      Object newID = type.adjustReferences(adjuster, element);
-      if (newID != element)
+      Object newID = type.adjustReferences(adjuster, element, feature, i);
+      if (newID != element) // Just an optimization for NOOP adjusters
       {
         set(i, newID);
         changed = true;

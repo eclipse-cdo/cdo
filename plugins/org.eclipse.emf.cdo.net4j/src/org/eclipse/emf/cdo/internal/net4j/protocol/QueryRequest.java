@@ -11,9 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -79,13 +78,8 @@ public class QueryRequest extends CDOClientRequest<Boolean>
         Object element;
         if (xrefs)
         {
-          CDOID targetID = in.readCDOID();
-          CDOID sourceID = in.readCDOID();
-          CDOClassifierRef classifierRef = in.readCDOClassifierRef();
-          String featureName = in.readString();
-          int sourceIndex = in.readInt();
-
-          element = new CDOObjectReferenceImpl(view, targetID, sourceID, classifierRef, featureName, sourceIndex);
+          CDOIDReference delegate = in.readCDOIDReference();
+          element = new CDOObjectReferenceImpl(view, delegate);
         }
         else
         {

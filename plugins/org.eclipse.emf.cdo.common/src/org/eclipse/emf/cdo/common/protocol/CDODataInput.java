@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -81,6 +82,11 @@ public interface CDODataInput extends ExtendedDataInput
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 
   public CDOID readCDOID() throws IOException;
+
+  /**
+   * @since 4.0
+   */
+  public CDOIDReference readCDOIDReference() throws IOException;
 
   /**
    * @since 4.0

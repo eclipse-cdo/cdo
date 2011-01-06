@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.model.lob.CDOClob;
@@ -385,6 +386,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @since 3.0
      */
     public String getRollbackMessage();
+
+    /**
+     * @since 4.0
+     */
+    public List<CDOIDReference> getXRefs();
   }
 
   /**

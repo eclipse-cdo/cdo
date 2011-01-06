@@ -321,7 +321,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   @Override
   public String toString()
   {
-    return "CDOLegacyWrapper[" + id + ", " + instance.getClass().getName() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    return "CDOLegacyWrapper[" + instance.getClass().getSimpleName() + "@" + id + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
   }
 
   /**

@@ -256,9 +256,9 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature, int index)
     {
-      return adjuster.adjustReference(value);
+      return adjuster.adjustReference(value, feature, index);
     }
   };
 
@@ -680,15 +680,15 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature, int index)
     {
       FeatureMap.Entry entry = (FeatureMap.Entry)value;
       EStructuralFeature innerFeature = entry.getEStructuralFeature();
       Object innerValue = entry.getValue();
       CDOType innerType = CDOModelUtil.getType(innerFeature.getEType());
 
-      Object innerCopy = innerType.adjustReferences(adjuster, innerValue);
-      if (innerCopy != innerValue)
+      Object innerCopy = innerType.adjustReferences(adjuster, innerValue, feature, index);
+      if (innerCopy != innerValue) // Just an optimization for NOOP adjusters
       {
         value = CDORevisionUtil.createFeatureMapEntry(innerFeature, innerCopy);
       }
@@ -801,22 +801,22 @@ public abstract class CDOTypeImpl implements CDOType
     }
 
     @Override
-    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature, int index)
     {
-      // CHECK: should the same object array be returned with updated values
-      // or a new object array?
-      final Object[] objects = (Object[])value;
+      Object[] objects = (Object[])value;
       int i = 0;
       for (Object object : objects)
       {
         if (object instanceof CDOID)
         {
-          objects[i++] = adjuster.adjustReference(object);
+          objects[i] = adjuster.adjustReference(object, feature, i);
         }
         else
         {
-          objects[i++] = object;
+          objects[i] = object;
         }
+
+        ++i;
       }
 
       return objects;
@@ -892,12 +892,14 @@ public abstract class CDOTypeImpl implements CDOType
     out.writeInt(typeID);
   }
 
-  final public Object adjustReferences(CDOReferenceAdjuster adjuster, Object value)
+  final public Object adjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature,
+      int index)
   {
-    return value == null ? null : doAdjustReferences(adjuster, value);
+    return value == null ? null : doAdjustReferences(adjuster, value, feature, index);
   }
 
-  protected Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value)
+  protected Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature,
+      int indexs)
   {
     return value;
   }

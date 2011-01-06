@@ -204,7 +204,7 @@ public class XRefTest extends AbstractCDOTest
     {
       CDOObjectReference result = results.get(0);
       assertEquals(1, result.getSourceIndex());
-      assertEquals(ref.getName(), result.getSourceReference().getName());
+      assertEquals(ref.getName(), result.getSourceFeature().getName());
       CDOObject sourceObject = results.get(0).getSourceObject();
       assertEquals(1, sourceObject.eGet(sourceObject.eClass().getEStructuralFeature("id")));
     }
@@ -218,7 +218,7 @@ public class XRefTest extends AbstractCDOTest
 
     for (CDOObjectReference result : results)
     {
-      assertEquals(ref.getName(), results.get(0).getSourceReference().getName());
+      assertEquals(ref.getName(), results.get(0).getSourceFeature().getName());
 
       CDOObject sourceObject = result.getSourceObject();
       Integer id = (Integer)sourceObject.eGet(sourceObject.eClass().getEStructuralFeature("id"));
@@ -313,7 +313,7 @@ public class XRefTest extends AbstractCDOTest
       CDOObjectReference result = results.get(0);
       assertEquals(0, result.getSourceIndex());
 
-      assertEquals(ref.getName(), result.getSourceReference().getName());
+      assertEquals(ref.getName(), result.getSourceFeature().getName());
       CDOObject sourceObject = results.get(0).getSourceObject();
       assertEquals(3, sourceObject.eGet(sourceObject.eClass().getEStructuralFeature("id")));
     }
@@ -326,7 +326,7 @@ public class XRefTest extends AbstractCDOTest
 
     for (CDOObjectReference result : results)
     {
-      assertEquals(ref.getName(), results.get(0).getSourceReference().getName());
+      assertEquals(ref.getName(), results.get(0).getSourceFeature().getName());
 
       CDOObject sourceObject = result.getSourceObject();
       Integer id = (Integer)sourceObject.eGet(sourceObject.eClass().getEStructuralFeature("id"));
@@ -417,12 +417,12 @@ public class XRefTest extends AbstractCDOTest
     assertEquals(2, results.size());
 
     assertEquals(0, results.get(0).getSourceIndex());
-    assertEquals(ab5, results.get(0).getSourceReference());
+    assertEquals(ab5, results.get(0).getSourceFeature());
     assertEquals(a1, results.get(0).getSourceObject());
     assertEquals(b1, results.get(0).getTargetObject());
 
     assertEquals(0, results.get(1).getSourceIndex());
-    assertEquals(ab6, results.get(1).getSourceReference());
+    assertEquals(ab6, results.get(1).getSourceFeature());
     assertEquals(a1, results.get(1).getSourceObject());
     assertEquals(b1, results.get(1).getTargetObject());
   }
@@ -495,7 +495,7 @@ public class XRefTest extends AbstractCDOTest
     assertEquals(1, results.size());
 
     assertEquals(0, results.get(0).getSourceIndex());
-    assertEquals(ab5, results.get(0).getSourceReference());
+    assertEquals(ab5, results.get(0).getSourceFeature());
     assertEquals(a1, results.get(0).getSourceObject());
     assertEquals(b1, results.get(0).getTargetObject());
   }
@@ -568,7 +568,7 @@ public class XRefTest extends AbstractCDOTest
     assertEquals(1, results.size());
 
     assertEquals(0, results.get(0).getSourceIndex());
-    assertEquals(ab6, results.get(0).getSourceReference());
+    assertEquals(ab6, results.get(0).getSourceFeature());
     assertEquals(a1, results.get(0).getSourceObject());
     assertEquals(b1, results.get(0).getTargetObject());
   }

@@ -24,6 +24,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.ImplementationError;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -190,7 +191,7 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
       final CDOReferenceAdjuster defaultReferenceAdjuster = result.getReferenceAdjuster();
       result.setReferenceAdjuster(new CDOReferenceAdjuster()
       {
-        public Object adjustReference(Object id)
+        public Object adjustReference(Object id, EStructuralFeature feature, int index)
         {
           CDOIDTempObjectExternalImpl externalID = objectToID.get(id);
           if (externalID != null)
@@ -198,7 +199,7 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
             id = externalID;
           }
 
-          return defaultReferenceAdjuster.adjustReference(id);
+          return defaultReferenceAdjuster.adjustReference(id, feature, index);
         }
       });
     }

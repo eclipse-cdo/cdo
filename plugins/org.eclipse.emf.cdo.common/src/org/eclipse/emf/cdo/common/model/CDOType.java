@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 
@@ -118,9 +119,9 @@ public interface CDOType
   public Object copyValue(Object value);
 
   /**
-   * @since 2.0
+   * @since 4.0
    */
-  public Object adjustReferences(CDOReferenceAdjuster adjuster, Object value);
+  public Object adjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature, int index);
 
   /**
    * @since 3.0

@@ -12,13 +12,10 @@ package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Eike Stepper
@@ -28,46 +25,52 @@ public class CDOObjectReferenceImpl implements CDOObjectReference
 {
   private CDOView view;
 
-  private CDOID targetID;
+  private CDOIDReference delegate;
 
-  private CDOID sourceID;
-
-  private CDOClassifierRef classifierRef;
-
-  private String featureName;
-
-  private int sourceIndex;
-
-  public CDOObjectReferenceImpl(CDOView view, CDOID targetID, CDOID sourceID, CDOClassifierRef classifierRef,
-      String featureName, int sourceIndex)
+  public CDOObjectReferenceImpl(CDOView view, CDOIDReference delegate)
   {
     this.view = view;
-    this.targetID = targetID;
-    this.sourceID = sourceID;
-    this.classifierRef = classifierRef;
-    this.featureName = featureName;
-    this.sourceIndex = sourceIndex;
+    this.delegate = delegate;
   }
 
   public CDOObject getTargetObject()
   {
-    return view.getObject(targetID);
+    return view.getObject(delegate.getTargetObject());
   }
 
   public CDOObject getSourceObject()
   {
-    return view.getObject(sourceID);
+    return view.getObject(delegate.getSourceObject());
   }
 
-  public EReference getSourceReference()
+  public EStructuralFeature getSourceFeature()
   {
-    CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
-    EClass eClass = (EClass)classifierRef.resolve(packageRegistry);
-    return (EReference)eClass.getEStructuralFeature(featureName);
+    return delegate.getSourceFeature();
   }
 
   public int getSourceIndex()
   {
-    return sourceIndex;
+    return delegate.getSourceIndex();
   }
+
+  @Override
+  public String toString()
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(getSourceObject());
+    builder.append(".");
+    builder.append(getSourceFeature().getName());
+    int sourceIndex = getSourceIndex();
+    if (sourceIndex != NO_INDEX)
+    {
+      builder.append("[");
+      builder.append(sourceIndex);
+      builder.append("]");
+    }
+
+    builder.append(" --> ");
+    builder.append(getTargetObject());
+    return builder.toString();
+  }
+
 }

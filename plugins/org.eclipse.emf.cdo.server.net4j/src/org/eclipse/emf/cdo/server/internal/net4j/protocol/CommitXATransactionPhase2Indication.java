@@ -86,7 +86,7 @@ public class CommitXATransactionPhase2Indication extends CommitTransactionIndica
       exceptionMessage = commitContext.getRollbackMessage();
     }
 
-    respondingException(out, exceptionMessage);
+    respondingException(out, exceptionMessage, null);
   }
 
   @Override

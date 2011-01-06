@@ -1161,36 +1161,21 @@ public class PartialCommitTest extends AbstractCDOTest
     }
     else
     {
-      try
+      // We always make company99 dirty if it's present
+      // (This is just a control object to verify that some stuff does NOT get
+      // committed.)
+      if (company99 != null)
       {
-        // We always make company99 dirty if it's present
-        // (This is just a control object to verify that some stuff does NOT get
-        // committed.)
-        if (company99 != null)
-        {
-          company99.setName("000");
-        }
-
-        tx.commit();
-
-        // And we verify that it didn't get included in the commit
-        if (company99 != null)
-        {
-          assertDirty(company99, tx);
-          assertTrue("Transaction should still have been dirty", tx.isDirty());
-        }
+        company99.setName("000");
       }
-      catch (CommitException e)
+
+      tx.commit();
+
+      // And we verify that it didn't get included in the commit
+      if (company99 != null)
       {
-        Throwable cause = e.getCause().getCause();
-        if (cause instanceof CommitIntegrityException)
-        {
-          fail("---> Should not have failed with: " + e.getCause().getMessage());
-        }
-        else
-        {
-          throw e;
-        }
+        assertDirty(company99, tx);
+        assertTrue("Transaction should still have been dirty", tx.isDirty());
       }
     }
   }

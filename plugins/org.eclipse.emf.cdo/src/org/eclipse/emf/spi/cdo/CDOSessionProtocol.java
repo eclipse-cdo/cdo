@@ -11,6 +11,7 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -571,6 +572,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private String rollbackMessage;
 
+    private List<CDOObjectReference> xRefs;
+
     private CDOBranchPoint branchPoint;
 
     private long previousTimeStamp;
@@ -580,12 +583,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     private CDOReferenceAdjuster referenceAdjuster;
 
     /**
-     * @since 3.0
+     * @since 4.0
      */
-    public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage)
+    public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage, List<CDOObjectReference> xRefs)
     {
       this.idProvider = idProvider;
       this.rollbackMessage = rollbackMessage;
+      this.xRefs = xRefs;
     }
 
     /**
@@ -616,6 +620,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public String getRollbackMessage()
     {
       return rollbackMessage;
+    }
+
+    /**
+     * @since 4.0
+     */
+    public List<CDOObjectReference> getXRefs()
+    {
+      return xRefs;
     }
 
     /**
@@ -680,7 +692,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
         this.idMapper = idMapper;
       }
 
-      public Object adjustReference(Object id)
+      /**
+       * @since 4.0
+       */
+      public Object adjustReference(Object id, EStructuralFeature feature, int index)
       {
         if (id == null || id == CDOID.NULL)
         {
@@ -692,7 +707,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
           id = idProvider.provideCDOID(id);
         }
 
-        return idMapper.adjustReference(id);
+        return idMapper.adjustReference(id, feature, index);
       }
     }
   }

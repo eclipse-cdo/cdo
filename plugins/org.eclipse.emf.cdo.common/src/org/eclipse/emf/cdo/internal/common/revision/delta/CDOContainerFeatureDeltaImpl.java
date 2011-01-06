@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.EStructuralFeatureImpl;
+import org.eclipse.emf.ecore.impl.EReferenceImpl;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -95,14 +95,14 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   {
     boolean changed = false;
 
-    CDOID id1 = (CDOID)referenceAdjuster.adjustReference(newResourceID);
+    CDOID id1 = (CDOID)referenceAdjuster.adjustReference(newResourceID, CONTAINER_FEATURE, NO_INDEX);
     if (id1 != newResourceID)
     {
       newResourceID = id1;
       changed = true;
     }
 
-    Object id2 = referenceAdjuster.adjustReference(newContainerID);
+    Object id2 = referenceAdjuster.adjustReference(newContainerID, CONTAINER_FEATURE, NO_INDEX);
     if (id2 != newContainerID)
     {
       newContainerID = id2;
@@ -150,16 +150,24 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
   /**
    * @author Simon McDuff
    */
-  public static final class ContainerFeature extends EStructuralFeatureImpl
+  public static final class ContainerFeature extends EReferenceImpl
   {
+    public static final String NAME = "eContainer";
+
     public ContainerFeature()
     {
     }
 
     @Override
+    public String getName()
+    {
+      return null;
+    }
+
+    @Override
     public String toString()
     {
-      return "CONTAINER_FEATURE"; //$NON-NLS-1$
+      return NAME;
     }
   }
 }

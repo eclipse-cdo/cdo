@@ -585,12 +585,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     StringBuilder builder = new StringBuilder();
     for (CDOObject target : targetObjects)
     {
-      if (FSMUtil.isTransient(target))
-      {
-        throw new IllegalArgumentException("Cross referencing for transient objects not supported " + target);
-      }
-
-      CDOID id = target.cdoID();
+      CDOID id = getXRefTargetID(target);
       if (id.isTemporary())
       {
         throw new IllegalArgumentException("Cross referencing for uncommitted new objects not supported " + target);
@@ -631,6 +626,16 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     }
 
     return builder.toString();
+  }
+
+  protected CDOID getXRefTargetID(CDOObject target)
+  {
+    if (FSMUtil.isTransient(target))
+    {
+      throw new IllegalArgumentException("Cross referencing for transient objects not supported " + target);
+    }
+
+    return target.cdoID();
   }
 
   public CDOResourceImpl getResource(CDOID resourceID)

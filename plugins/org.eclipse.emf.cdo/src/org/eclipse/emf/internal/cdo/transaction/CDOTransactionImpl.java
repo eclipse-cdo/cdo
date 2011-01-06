@@ -191,7 +191,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private String commitComment;
 
-  // Bug 283985 (Re-attachment)
+  // Bug 283985 (Re-attachment), queryXRefs()
   private Map<InternalCDOObject, CDORevisionKey> formerRevisionKeys = new HashMap<InternalCDOObject, CDORevisionKey>();
 
   // Bug 283985 (Re-attachment)
@@ -1913,6 +1913,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public Map<InternalCDOObject, CDORevisionKey> getFormerRevisionKeys()
   {
     return formerRevisionKeys;
+  }
+
+  @Override
+  protected CDOID getXRefTargetID(CDOObject target)
+  {
+    CDORevisionKey key = formerRevisionKeys.get(target);
+    if (key != null)
+    {
+      return key.getID();
+    }
+
+    return super.getXRefTargetID(target);
   }
 
   @Override

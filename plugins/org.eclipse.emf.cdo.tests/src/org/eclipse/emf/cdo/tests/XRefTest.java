@@ -86,6 +86,47 @@ public class XRefTest extends AbstractCDOTest
     }
   }
 
+  public void testLocallyDetachedObject() throws Exception
+  {
+    PurchaseOrder purchaseOrder1 = getModel1Factory().createPurchaseOrder();
+    PurchaseOrder purchaseOrder2 = getModel1Factory().createPurchaseOrder();
+    PurchaseOrder purchaseOrder3 = getModel1Factory().createPurchaseOrder();
+    PurchaseOrder purchaseOrder4 = getModel1Factory().createPurchaseOrder();
+
+    Supplier supplier = getModel1Factory().createSupplier();
+    supplier.getPurchaseOrders().add(purchaseOrder1);
+    supplier.getPurchaseOrders().add(purchaseOrder2);
+    supplier.getPurchaseOrders().add(purchaseOrder3);
+    supplier.getPurchaseOrders().add(purchaseOrder4);
+
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+
+    CDOResource resource = transaction1.createResource("/test1");
+    resource.getContents().add(supplier);
+    resource.getContents().add(purchaseOrder1);
+    resource.getContents().add(purchaseOrder2);
+    resource.getContents().add(purchaseOrder3);
+    resource.getContents().add(purchaseOrder4);
+
+    transaction1.commit();
+
+    /******************/
+
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+    supplier = (Supplier)transaction2.getResource("/test1").getContents().remove(0);
+
+    List<CDOObjectReference> results = transaction2.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(supplier)));
+    assertEquals(4, results.size());
+
+    for (CDOObjectReference result : results)
+    {
+      CDOObject sourceObject = result.getSourceObject();
+      assertInstanceOf(PurchaseOrder.class, CDOUtil.getEObject(sourceObject));
+    }
+  }
+
   @SuppressWarnings("unchecked")
   public void testXRefsToMany() throws Exception
   {

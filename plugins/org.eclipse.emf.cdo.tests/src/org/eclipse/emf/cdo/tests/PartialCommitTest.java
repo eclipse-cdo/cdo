@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.legacy.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.legacy.model4.model4Package;
@@ -31,10 +32,11 @@ import org.eclipse.emf.cdo.tests.model4.SingleNonContainedElement;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.util.CommitIntegrityCheck;
-import org.eclipse.emf.cdo.util.CommitIntegrityCheck.Style;
 import org.eclipse.emf.cdo.util.CommitIntegrityException;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.internal.cdo.util.CommitIntegrityCheck;
+import org.eclipse.emf.internal.cdo.util.CommitIntegrityCheck.Style;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -44,6 +46,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -88,6 +91,14 @@ public class PartialCommitTest extends AbstractCDOTest
     session = openSession();
     session.options().setPassiveUpdateEnabled(false);
     tx = (InternalCDOTransaction)session.openTransaction();
+  }
+
+  @Override
+  public synchronized Map<String, Object> getTestProperties()
+  {
+    Map<String, Object> map = super.getTestProperties();
+    map.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "true");
+    return map;
   }
 
   @Override
@@ -934,6 +945,134 @@ public class PartialCommitTest extends AbstractCDOTest
     tx.setCommittables(createSet(multiNonContainedElement1, resource1));
     badAll(createSet(refMultiNonContained1));
   }
+
+  /* --------- DANGLING REFERENCE PROBLEMS: Single refs ---------- */
+
+  public void testIgnoreDanglingSingleRef_newToDetached() throws CommitException
+  {
+    simpleModel4SingleBidiSetup();
+
+    RefSingleNonContained refSingleNonContained3 = model4Factory.eINSTANCE.createRefSingleNonContained();
+    resource1.getContents().add(refSingleNonContained3);
+
+    EcoreUtil.delete(singleNonContainedElement2);
+    refSingleNonContained3.setElement(singleNonContainedElement2);
+
+    tx.setCommittables(createSet(refSingleNonContained3, singleNonContainedElement2, resource1));
+    good(Style.EXCEPTION);
+  }
+
+  public void testIgnoreDanglingSingleRef_newToTransient() throws CommitException
+  {
+    simpleModel4SingleBidiSetup();
+
+    RefSingleNonContained refSingleNonContained3 = model4Factory.eINSTANCE.createRefSingleNonContained();
+    resource1.getContents().add(refSingleNonContained3);
+
+    SingleNonContainedElement singleNonContainedElement3 = model4Factory.eINSTANCE.createSingleNonContainedElement();
+    refSingleNonContained3.setElement(singleNonContainedElement3);
+
+    tx.setCommittables(createSet(refSingleNonContained3, singleNonContainedElement3, resource1));
+    good(Style.EXCEPTION);
+  }
+
+  public void testIgnoreDanglingSingleRef_dirtyToDetached() throws CommitException
+  {
+    simpleModel4SingleBidiSetup();
+
+    EcoreUtil.delete(singleNonContainedElement2);
+    refSingleNonContained2.setElement(singleNonContainedElement2);
+
+    tx.setCommittables(createSet(refSingleNonContained2, singleNonContainedElement2, resource1));
+    good(Style.EXCEPTION);
+  }
+
+  public void testIgnoreDanglingSingleRef_dirtyToTransient() throws CommitException
+  {
+    simpleModel4SingleBidiSetup();
+
+    SingleNonContainedElement singleNonContainedElement3 = model4Factory.eINSTANCE.createSingleNonContainedElement();
+    refSingleNonContained2.setElement(singleNonContainedElement3);
+
+    tx.setCommittables(createSet(refSingleNonContained2));
+    good(Style.EXCEPTION);
+  }
+
+  public void testIgnoreDanglingSingleRef_dirtyToTransient2() throws CommitException
+  {
+    simpleModel4SingleBidiSetup();
+
+    SingleNonContainedElement singleNonContainedElement3 = model4Factory.eINSTANCE.createSingleNonContainedElement();
+    refSingleNonContained1.setElement(singleNonContainedElement3);
+
+    tx.setCommittables(createSet(refSingleNonContained1, singleNonContainedElement1));
+    good(Style.EXCEPTION);
+  }
+
+  /* --------- DANGLING REFERENCE PROBLEMS: Multi refs ---------- */
+
+  public void testIgnoreDanglingMultiRef_newToDetached() throws CommitException
+  {
+    simpleModel4MultiBidiSetup();
+
+    RefMultiNonContained refMultiNonContained3 = model4Factory.eINSTANCE.createRefMultiNonContained();
+    resource1.getContents().add(refMultiNonContained3);
+
+    EcoreUtil.delete(multiNonContainedElement2);
+    refMultiNonContained3.getElements().add(multiNonContainedElement2);
+
+    tx.setCommittables(createSet(refMultiNonContained3, multiNonContainedElement2, resource1));
+    good(Style.EXCEPTION);
+  }
+
+  public void testIgnoreDanglingMultiRef_newToTransient() throws CommitException
+  {
+    simpleModel4SingleBidiSetup();
+
+    RefMultiNonContained refMultiNonContained3 = model4Factory.eINSTANCE.createRefMultiNonContained();
+    resource1.getContents().add(refMultiNonContained3);
+
+    MultiNonContainedElement multiNonContainedElement3 = model4Factory.eINSTANCE.createMultiNonContainedElement();
+    refMultiNonContained3.getElements().add(multiNonContainedElement3);
+
+    tx.setCommittables(createSet(refMultiNonContained3, multiNonContainedElement3, resource1));
+    good(Style.EXCEPTION);
+  }
+
+  public void testIgnoreDanglingMultiRef_dirtyToDetached() throws CommitException
+  {
+    simpleModel4MultiBidiSetup();
+
+    EcoreUtil.delete(multiNonContainedElement2);
+    refMultiNonContained2.getElements().add(multiNonContainedElement2);
+
+    tx.setCommittables(createSet(refMultiNonContained2, multiNonContainedElement2, resource1));
+    good(Style.EXCEPTION);
+  }
+
+  public void testIgnoreDanglingMultiRef_dirtyToTransient() throws CommitException
+  {
+    simpleModel4MultiBidiSetup();
+
+    MultiNonContainedElement multiNonContainedElement3 = model4Factory.eINSTANCE.createMultiNonContainedElement();
+    refMultiNonContained2.getElements().add(multiNonContainedElement3);
+
+    tx.setCommittables(createSet(refMultiNonContained2, resource1));
+    good(Style.EXCEPTION);
+  }
+
+  public void testIgnoreDanglingMultiRef_dirtyToTransient2() throws CommitException
+  {
+    simpleModel4MultiBidiSetup();
+
+    MultiNonContainedElement multiNonContainedElement3 = model4Factory.eINSTANCE.createMultiNonContainedElement();
+    refMultiNonContained1.getElements().add(multiNonContainedElement3);
+
+    tx.setCommittables(createSet(refMultiNonContained1, multiNonContainedElement1));
+    good(Style.EXCEPTION);
+  }
+
+  /* --------- END OF DANGLING REFERENCE PROBLEMS ---------- */
 
   public void testCheckWithoutCommit_exceptionFast() throws CommitException
   {

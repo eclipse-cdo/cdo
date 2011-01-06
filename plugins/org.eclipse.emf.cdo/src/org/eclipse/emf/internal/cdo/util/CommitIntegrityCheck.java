@@ -8,11 +8,11 @@
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
-package org.eclipse.emf.cdo.util;
+package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOID.Type;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitIntegrityException;
 
 import org.eclipse.net4j.util.CheckUtil;
 
@@ -64,7 +66,7 @@ public class CommitIntegrityCheck
   {
     transaction = commitContext.getTransaction();
 
-    CheckUtil.checkNull(style, "style should not be null");
+    CheckUtil.checkArg(style, "style");
     this.style = style;
 
     newIDs = commitContext.getNewObjects().keySet();
@@ -97,7 +99,6 @@ public class CommitIntegrityCheck
     // (or that the child is included if we are considering the dirty parent),
     // and that for a bi-di reference, the object holding the other end of the bi-di is included, as
     // well as possibly the *former* object holding the other end.
-    //
     for (CDOID dirtyID : dirtyIDs)
     {
       CDOObject dirtyObject = transaction.getObject(dirtyID);
@@ -124,7 +125,7 @@ public class CommitIntegrityCheck
       containerOrResourceID = (CDOID)transaction.convertObjectToID(idOrObject);
     }
 
-    if (containerOrResourceID == null || containerOrResourceID.getType() == Type.NULL)
+    if (CDOIDUtil.isNull(containerOrResourceID))
     {
       idOrObject = revision.getResourceID();
       if (idOrObject != null)
@@ -140,9 +141,9 @@ public class CommitIntegrityCheck
   {
     // Getting the deltas from the TX is not a good idea...
     // We better recompute a fresh delta:
-    //
     InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
     CheckUtil.checkNull(cleanRev, "Could not obtain clean revision for dirty object " + dirtyObject);
+
     InternalCDORevision dirtyRev = dirtyObject.cdoRevision();
     CDORevisionDelta rDelta = dirtyRev.compare(cleanRev);
 
@@ -162,28 +163,41 @@ public class CommitIntegrityCheck
         EReference ref = (EReference)feat;
         if (ref.isContainment() || ref.getEOpposite() != null)
         {
-          // Object is dirty with respect to a containment feature
-          // We must ensure that any children that were added/removed, are also
+          // Object is dirty with respect to a containment feature or a feature with an eOpposite
+          // We must ensure that any reference targets that were added/removed/set, are also
           // included in the commit
-
           if (featureDelta instanceof CDOListFeatureDelta)
           {
             for (CDOFeatureDelta innerFeatDelta : ((CDOListFeatureDelta)featureDelta).getListChanges())
             {
-              checkContainmentDelta(innerFeatDelta, dirtyObject);
+              checkFeatureDelta(innerFeatDelta, dirtyObject);
             }
           }
           else
           {
-            checkContainmentDelta(featureDelta, dirtyObject);
+            checkFeatureDelta(featureDelta, dirtyObject);
           }
         }
       }
     }
   }
 
-  private void checkContainmentDelta(CDOFeatureDelta featureDelta, CDOObject dirtyObject)
-      throws CommitIntegrityException
+  private void checkIncluded(Object idOrObject, String msg, CDOObject o) throws CommitIntegrityException
+  {
+    idOrObject = transaction.convertObjectToID(idOrObject);
+    if (idOrObject instanceof CDOID)
+    {
+      CDOID id = (CDOID)idOrObject;
+      if (!id.isNull())
+      {
+        checkIncluded(id, msg, o);
+      }
+    }
+
+    // else: Transient object -- ignore
+  }
+
+  private void checkFeatureDelta(CDOFeatureDelta featureDelta, CDOObject dirtyObject) throws CommitIntegrityException
   {
     if (featureDelta instanceof CDORemoveFeatureDelta)
     {
@@ -194,11 +208,7 @@ public class CommitIntegrityCheck
     else if (featureDelta instanceof CDOAddFeatureDelta)
     {
       Object idOrObject = ((CDOAddFeatureDelta)featureDelta).getValue();
-      CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
-      if (id.getType() != CDOID.Type.NULL)
-      {
-        checkIncluded(id, "added child of", dirtyObject);
-      }
+      checkIncluded(idOrObject, "added child of", dirtyObject);
     }
     else if (featureDelta instanceof CDOSetFeatureDelta)
     {
@@ -207,24 +217,15 @@ public class CommitIntegrityCheck
       CDOID oldID = (CDOID)transaction.convertObjectToID(oldIDOrObject);
       if (oldIDOrObject != null)
       {
-        if (newIDOrObject == null)
-        {
-          // Removal: old child must be included
-          checkIncluded(oldID, "removed child of", dirtyObject);
-        }
-        else
-        {
-          // Change: both old and new child must be included
-          checkIncluded(oldID, "former child of", dirtyObject);
-          CDOID newID = (CDOID)transaction.convertObjectToID(newIDOrObject);
-          checkIncluded(newID, "new child of", dirtyObject);
-        }
+        // Old child must be included
+        checkIncluded(oldID, "removed/former child of", dirtyObject);
       }
-      else
+
+      if (newIDOrObject != null)
       {
-        // New child, no old child
-        CDOID newID = (CDOID)transaction.convertObjectToID(newIDOrObject);
-        checkIncluded(newID, "new child of", dirtyObject);
+        // New child must be included
+        newIDOrObject = transaction.convertObjectToID(newIDOrObject);
+        checkIncluded(newIDOrObject, "new child of", dirtyObject);
       }
     }
     else if (featureDelta instanceof CDOClearFeatureDelta)
@@ -255,9 +256,9 @@ public class CommitIntegrityCheck
 
   private void checkIncluded(CDOID id, String msg, CDOObject o) throws CommitIntegrityException
   {
-    if (id.getType() == Type.NULL)
+    if (id.isNull())
     {
-      throw new IllegalArgumentException("CDOID must not be of type NULL");
+      throw new IllegalArgumentException("CDOID must not be NULL");
     }
 
     if (!dirtyIDs.contains(id) && !detachedIDs.contains(id) && !newIDs.contains(id))
@@ -267,12 +268,14 @@ public class CommitIntegrityCheck
       {
         throw new IllegalStateException("Could not find object for CDOID " + id);
       }
+
       missingObjects.add(missingObject);
 
       if (exceptionMessage.length() > 0)
       {
         exceptionMessage.append('\n');
       }
+
       String m = String.format("The %s object %s needs to be included in the commit but isn't", msg, o);
       exceptionMessage.append(m);
 
@@ -290,9 +293,6 @@ public class CommitIntegrityCheck
 
   /**
    * Checks whether the container of a given object is included in the commit
-   * 
-   * @param msgFrag
-   * @throws CommitIntegrityException
    */
   private void checkContainerIncluded(CDOObject object, String msgFrag) throws CommitIntegrityException
   {
@@ -321,7 +321,7 @@ public class CommitIntegrityCheck
           EList<?> list = (EList<?>)referencer.eGet(eRef);
           for (Object element : list)
           {
-            checkBidiRefTargetIncluded(element, referencer, msgFrag);
+            checkBidiRefTargetIncluded(element, referencer, eRef.getName(), msgFrag);
           }
         }
         else
@@ -329,7 +329,7 @@ public class CommitIntegrityCheck
           Object refTarget = referencer.eGet(eRef);
           if (refTarget != null)
           {
-            checkBidiRefTargetIncluded(refTarget, referencer, msgFrag);
+            checkBidiRefTargetIncluded(refTarget, referencer, eRef.getName(), msgFrag);
           }
         }
       }
@@ -342,7 +342,6 @@ public class CommitIntegrityCheck
     // that we can find the pre-detach revision in tx.getFormerRevisions(). However,
     // the object may have already been dirty prior to detachment, so we check the
     // clean revisions first.
-    //
     InternalCDORevision cleanRev = transaction.getCleanRevisions().get(referencer);
     CheckUtil.checkState(cleanRev, "cleanRev");
 
@@ -358,19 +357,19 @@ public class CommitIntegrityCheck
             EList<?> list = (EList<?>)value;
             for (Object element : list)
             {
-              checkBidiRefTargetIncluded(element, referencer, msgFrag);
+              checkBidiRefTargetIncluded(element, referencer, eRef.getName(), msgFrag);
             }
           }
           else
           {
-            checkBidiRefTargetIncluded(value, referencer, msgFrag);
+            checkBidiRefTargetIncluded(value, referencer, eRef.getName(), msgFrag);
           }
         }
       }
     }
   }
 
-  private void checkBidiRefTargetIncluded(Object refTarget, CDOObject referencer, String msgFrag)
+  private void checkBidiRefTargetIncluded(Object refTarget, CDOObject referencer, String refName, String msgFrag)
       throws CommitIntegrityException
   {
     CheckUtil.checkArg(refTarget, "refTarget");
@@ -378,18 +377,25 @@ public class CommitIntegrityCheck
     if (refTarget instanceof EObject)
     {
       refTargetID = CDOUtil.getCDOObject((EObject)refTarget).cdoID();
+      if (refTargetID == null)
+      {
+        // No ID, means object is TRANSIENT; ignore.
+        return;
+      }
     }
     else if (refTarget instanceof CDOID)
     {
       refTargetID = (CDOID)refTarget;
     }
-    checkIncluded(refTargetID, "reference target of " + msgFrag, referencer);
+
+    checkIncluded(refTargetID, "target of reference '" + refName + "' of " + msgFrag, referencer);
   }
 
   private void checkFormerContainerIncluded(CDOObject detachedObject) throws CommitIntegrityException
   {
     InternalCDORevision rev = transaction.getCleanRevisions().get(detachedObject);
     CheckUtil.checkNull(rev, "Could not obtain clean revision for detached object " + detachedObject);
+
     CDOID id = getContainerOrResourceID(rev);
     checkIncluded(id, "former container (or resource) of detached", detachedObject);
   }
@@ -399,7 +405,7 @@ public class CommitIntegrityCheck
    * 
    * @author Caspar De Groot
    */
-  public enum Style
+  public static enum Style
   {
     /**
      * Throw an exception as soon as this {@link CommitIntegrityCheck} encounters the first problem

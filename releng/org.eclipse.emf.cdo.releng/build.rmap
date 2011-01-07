@@ -185,6 +185,12 @@
 	<rm:searchPath name="elver.org">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
+			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/interim">
+				<bc:propertyRef key="eclipse.downloads" />
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="http://www.elver.org/eclipse/update_1.1.2" />
 		</rm:provider>
 	</rm:searchPath>

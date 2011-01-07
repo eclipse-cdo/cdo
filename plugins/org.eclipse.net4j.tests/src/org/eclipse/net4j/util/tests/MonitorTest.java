@@ -288,8 +288,8 @@ public class MonitorTest extends AbstractOMTest
       double newWork = main.getWork();
       System.out.println(newWork);
 
-      // assertTrue("Worked not enough: " + work, newWork > work);
-      // assertTrue("Worked too much: " + newWork, newWork < OMMonitor.ONE + OMMonitor.ONE);
+      // assertEquals(true, "Worked not enough: " + work, newWork > work);
+      // assertEquals(true, "Worked too much: " + newWork, newWork < OMMonitor.ONE + OMMonitor.ONE);
       work = newWork;
     }
 

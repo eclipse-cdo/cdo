@@ -48,11 +48,11 @@ public class DynamicPackageTest extends AbstractCDOTest
 
     if (!isConfig(LEGACY))
     {
-      assertTrue(mapContainer instanceof DynamicCDOObjectImpl);
+      assertEquals(true, mapContainer instanceof DynamicCDOObjectImpl);
     }
     else
     {
-      assertTrue(mapContainer instanceof DynamicEObjectImpl);
+      assertEquals(true, mapContainer instanceof DynamicEObjectImpl);
     }
   }
 

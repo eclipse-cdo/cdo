@@ -168,7 +168,7 @@ public class FeatureMapTest extends AbstractCDOTest
     assertEquals(5, fmDb.getValue(3));
     assertEquals(integer, fmDb.getEStructuralFeature(3));
 
-    assertFalse((Boolean)fmDb.getValue(4));
+    assertEquals(false, (boolean)(Boolean)fmDb.getValue(4));
     assertEquals(bool, fmDb.getEStructuralFeature(4));
 
     assertEquals(dummyDb, fmDb.getValue(5));

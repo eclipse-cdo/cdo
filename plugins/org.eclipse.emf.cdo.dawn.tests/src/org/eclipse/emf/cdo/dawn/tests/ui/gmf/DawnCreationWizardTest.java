@@ -296,7 +296,7 @@ public class DawnCreationWizardTest extends AbstractCDOTest
     assertEquals("cdo://repo1/folder/default.acore", dawnDomainModelFilePage.getURI().toString());
 
     boolean performFinish = creationWizard.performFinish();
-    assertTrue(performFinish);
+    assertEquals(true, performFinish);
 
     {
       CDOSession session = openSession();

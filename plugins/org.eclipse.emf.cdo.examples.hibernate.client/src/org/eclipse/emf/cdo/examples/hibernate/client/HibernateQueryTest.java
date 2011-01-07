@@ -207,7 +207,7 @@ public class HibernateQueryTest extends BaseTest
                 found |= od.getProduct() == product;
               }
 
-              assertTrue(found);
+              assertEquals(true, found);
             }
           }
           else
@@ -289,13 +289,13 @@ public class HibernateQueryTest extends BaseTest
       query.setParameter("vat", VAT.VAT15); //$NON-NLS-1$
       for (Object[] values : query.getResult(Object[].class))
       {
-        assertTrue(values[0] instanceof OrderDetail);
-        assertTrue(values[1] instanceof SalesOrder);
-        assertTrue(values[2] instanceof VAT);
+        assertEquals(true, values[0] instanceof OrderDetail);
+        assertEquals(true, values[1] instanceof SalesOrder);
+        assertEquals(true, values[2] instanceof VAT);
         assertEquals(VAT.VAT15, values[2]);
-        assertTrue(values[3] instanceof Float);
+        assertEquals(true, values[3] instanceof Float);
         final SalesOrder order = (SalesOrder)values[1];
-        assertTrue(order.getOrderDetails().contains(values[0]));
+        assertEquals(true, order.getOrderDetails().contains(values[0]));
       }
     }
 
@@ -319,11 +319,11 @@ public class HibernateQueryTest extends BaseTest
         // NOTE: firstResult is a special parameter for the hql query language
         productQuery.setParameter("firstResult", page * pageSize); //$NON-NLS-1$
         final List<Product> queriedProducts = productQuery.getResult(Product.class);
-        assertTrue(queriedProducts.size() <= pageSize);
+        assertEquals(true, queriedProducts.size() <= pageSize);
         // a product should not have been read yet
         for (Product newProduct : queriedProducts)
         {
-          assertTrue(!allProducts.contains(newProduct));
+          assertEquals(true, !allProducts.contains(newProduct));
         }
 
         allProducts.addAll(queriedProducts);
@@ -349,7 +349,7 @@ public class HibernateQueryTest extends BaseTest
       {
         final Product product = iterator.next();
         // meaningless but do something
-        assertTrue(product != null);
+        assertEquals(true, product != null);
         counter++;
         if (counter == NUM_OF_PRODUCTS / 2)
         {

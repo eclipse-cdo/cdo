@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -50,11 +50,11 @@ public class GeneratedEcoreTest extends AbstractCDOTest
 
     EList<EObject> contents = res2.getContents();
     EPackage root2 = (EPackage)contents.get(0);
-    assertFalse("Unresolved proxy", root2.eIsProxy());
+    assertEquals("Unresolved proxy", false, root2.eIsProxy());
     assertEquals(res2, root2.eResource());
 
     CDOUtil.load(root2, transaction2);
     TestEMFUtil.saveEcore("model1X.ecore", root2);
-    // assertTrue("Models differ", EcoreUtil.equals(root1, root2));
+    // assertEquals(true, "Models differ", EcoreUtil.equals(root1, root2));
   }
 }

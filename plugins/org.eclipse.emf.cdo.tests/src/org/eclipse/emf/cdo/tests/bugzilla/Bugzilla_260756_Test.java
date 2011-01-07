@@ -64,8 +64,8 @@ public class Bugzilla_260756_Test extends AbstractCDOTest
 
     List<Category> queryResult = cdoQuery.getResult(Category.class);
     assertEquals(2, queryResult.size());
-    assertTrue(objects.contains(queryResult.get(0)));
-    assertTrue(objects.contains(queryResult.get(1)));
+    assertEquals(true, objects.contains(queryResult.get(0)));
+    assertEquals(true, objects.contains(queryResult.get(1)));
 
     Object[] array1 = queryResult.toArray();
     Category[] arrayOfCategory = queryResult.toArray(new Category[queryResult.size()]);

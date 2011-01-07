@@ -63,7 +63,7 @@ public class TCPConnectorDefImplTest extends AbstractProtocolTest
     ITCPConnector tcpConnector = (ITCPConnector)tcpConnectorDef.getInstance();
 
     tcpConnector.waitForConnection(DELAY + TIMEOUT);
-    assertTrue(LifecycleUtil.isActive(tcpConnector));
+    assertEquals(true, LifecycleUtil.isActive(tcpConnector));
 
     LifecycleUtil.deactivate(tcpConnector);
   }
@@ -81,13 +81,13 @@ public class TCPConnectorDefImplTest extends AbstractProtocolTest
     ITCPConnector thisTcpConnector = (ITCPConnector)tcpConnectorDef.getInstance();
     tcpConnectorDef.setPort(PORT + 1);
 
-    assertTrue(tcpConnectorDef.isTouched());
+    assertEquals(true, tcpConnectorDef.isTouched());
 
     ITCPConnector thatTcpConnector = (ITCPConnector)tcpConnectorDef.getInstance();
 
-    assertTrue(!LifecycleUtil.isActive(thisTcpConnector));
-    assertTrue(!tcpConnectorDef.isTouched());
-    assertTrue(thisTcpConnector != thatTcpConnector);
+    assertEquals(true, !LifecycleUtil.isActive(thisTcpConnector));
+    assertEquals(true, !tcpConnectorDef.isTouched());
+    assertEquals(true, thisTcpConnector != thatTcpConnector);
 
     LifecycleUtil.deactivate(thisTcpConnector);
     LifecycleUtil.deactivate(thatTcpConnector);
@@ -117,7 +117,7 @@ public class TCPConnectorDefImplTest extends AbstractProtocolTest
     ITCPConnector tcpConnector = (ITCPConnector)tcpConnectorDef.getInstance();
 
     tcpConnector.waitForConnection(DELAY + TIMEOUT);
-    assertTrue(LifecycleUtil.isActive(tcpConnector));
+    assertEquals(true, LifecycleUtil.isActive(tcpConnector));
 
     LifecycleUtil.deactivate(tcpConnector);
 

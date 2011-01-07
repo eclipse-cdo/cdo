@@ -66,10 +66,10 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     // Commit tx #1
     trans.commit();
 
-    assertFalse(FSMUtil.isConflict(res2));
+    assertEquals(false, FSMUtil.isConflict(res2));
 
     session2.refresh();
-    assertTrue(FSMUtil.isConflict(res2));
+    assertEquals(true, FSMUtil.isConflict(res2));
 
     try
     {
@@ -112,10 +112,10 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     trans.commit();
 
     clearCache(session2.getRevisionManager());
-    assertFalse(FSMUtil.isConflict(res2));
+    assertEquals(false, FSMUtil.isConflict(res2));
 
     session2.refresh();
-    assertTrue(FSMUtil.isConflict(res2));
+    assertEquals(true, FSMUtil.isConflict(res2));
 
     try
     {

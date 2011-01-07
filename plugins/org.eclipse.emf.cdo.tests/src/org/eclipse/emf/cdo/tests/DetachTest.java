@@ -357,7 +357,7 @@ public class DetachTest extends AbstractCDOTest
     final ResourceSet rSet2 = res2.getResourceSet();
 
     res.delete(null);
-    assertTrue(transaction1.isDirty());
+    assertEquals(true, transaction1.isDirty());
     transaction1.commit();
 
     new PollingTimeOuter()
@@ -399,7 +399,7 @@ public class DetachTest extends AbstractCDOTest
 
     msg("Deleting resource");
     resource.delete(null);
-    assertTrue(resource.isExisting());
+    assertEquals(true, resource.isExisting());
     transaction.commit();
   }
 }

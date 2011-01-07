@@ -84,11 +84,11 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
-      assertTrue(transaction.isDirty());
+      assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       msg("Publish previous modifications");
       pushTransaction.push();
-      assertFalse(transaction.isDirty());
+      assertEquals(false, transaction.isDirty());
       session.close();
     }
 
@@ -123,11 +123,11 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
-      assertTrue(transaction.isDirty());
+      assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       msg("Publish previous modifications");
       pushTransaction.push();
-      assertFalse(transaction.isDirty());
+      assertEquals(false, transaction.isDirty());
       session.close();
     }
 
@@ -160,13 +160,13 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
-      assertTrue(transaction.isDirty());
+      assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDORevisionDelta delta = transaction.getRevisionDeltas().values().iterator().next();
       assertNotNull(delta);
       msg("Publish previous modifications");
       pushTransaction.push();
-      assertFalse(transaction.isDirty());
+      assertEquals(false, transaction.isDirty());
       session.close();
     }
 
@@ -199,13 +199,13 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
-      assertTrue(transaction.isDirty());
+      assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDORevisionDelta delta = transaction.getRevisionDeltas().values().iterator().next();
       assertNotNull(delta);
       msg("Publish previous modifications");
       pushTransaction.push();
-      assertFalse(transaction.isDirty());
+      assertEquals(false, transaction.isDirty());
       session.close();
     }
 
@@ -239,7 +239,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
-      assertTrue(transaction.isDirty());
+      assertEquals(true, transaction.isDirty());
       CDOResource resource = transaction.getOrCreateResource(resourcePath);
       CDOResource resource2 = (CDOResource)resource.getContents().get(2);
       assertNotNull(resource2);
@@ -291,13 +291,13 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
-      assertTrue(transaction.isDirty());
+      assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDOResource resource = transaction.getOrCreateResource(resourcePath);
       assertEquals(4, resource.getContents().size());
       msg("Publish previous modifications");
       pushTransaction.push();
-      assertFalse(transaction.isDirty());
+      assertEquals(false, transaction.isDirty());
       session.close();
     }
 
@@ -344,7 +344,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
-      assertTrue(transaction.isDirty());
+      assertEquals(true, transaction.isDirty());
       CDOResource resource = transaction.getOrCreateResource(resourcePath);
       assertEquals(supplierName, ((Supplier)resource.getContents().get(1)).getName());
       msg("Publish previous modifications");
@@ -384,7 +384,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
-      assertTrue(transaction.isDirty());
+      assertEquals(true, transaction.isDirty());
       CDOResource resource = transaction.getOrCreateResource(resourcePath);
       assertEquals(0, resource.getContents().size());
       msg("Publish previous modifications");
@@ -419,7 +419,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
-      assertTrue(transaction.isDirty());
+      assertEquals(true, transaction.isDirty());
       CDOResource resource = transaction.getOrCreateResource(resourcePath);
       Supplier supplier = (Supplier)resource.getContents().get(0);
       assertNull(supplier.getName());
@@ -509,7 +509,7 @@ public class PushTransactionTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
-    assertTrue(transaction.hasConflict());
+    assertEquals(true, transaction.hasConflict());
 
     try
     {

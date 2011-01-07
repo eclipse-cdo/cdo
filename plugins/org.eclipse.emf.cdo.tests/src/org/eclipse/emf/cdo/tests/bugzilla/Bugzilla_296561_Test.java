@@ -136,7 +136,7 @@ public class Bugzilla_296561_Test extends AbstractCDOTest
       transaction.setSavepoint();
       res.getContents().remove(customer2);
       transaction.rollback();
-      assertFalse(res.getContents().contains(customer2));
+      assertEquals(false, res.getContents().contains(customer2));
     }
   }
 }

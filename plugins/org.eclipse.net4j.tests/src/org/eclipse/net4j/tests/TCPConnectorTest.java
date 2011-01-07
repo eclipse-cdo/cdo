@@ -517,7 +517,7 @@ public class TCPConnectorTest extends AbstractOMTest
       channels[i] = c;
     }
 
-    assertTrue(queue.isEmpty());
+    assertEquals(true, queue.isEmpty());
     assertNull(queue.peek());
     assertNull(queue.poll());
 
@@ -542,7 +542,7 @@ public class TCPConnectorTest extends AbstractOMTest
       assertSame(peek1, poll);
     }
 
-    assertTrue(queue.isEmpty());
+    assertEquals(true, queue.isEmpty());
     assertNull(queue.peek());
     assertNull(queue.poll());
   }

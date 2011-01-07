@@ -98,13 +98,13 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
     order1.getOrderDetails().remove(detail1);
     assertTransient(detail1);
 
-    assertTrue(sp.getDetachedObjects().containsValue(CDOUtil.getCDOObject(detail1)));
+    assertEquals(true, sp.getDetachedObjects().containsValue(CDOUtil.getCDOObject(detail1)));
 
     sp = (InternalCDOSavepoint)transaction.setSavepoint();
-    assertTrue(sp.getPreviousSavepoint().getDetachedObjects().containsValue(CDOUtil.getCDOObject(detail1)));
+    assertEquals(true, sp.getPreviousSavepoint().getDetachedObjects().containsValue(CDOUtil.getCDOObject(detail1)));
 
     order1.getOrderDetails().add(detail1);
-    assertTrue(sp.getReattachedObjects().containsValue(CDOUtil.getCDOObject(detail1)));
+    assertEquals(true, sp.getReattachedObjects().containsValue(CDOUtil.getCDOObject(detail1)));
     assertDirty(detail1, transaction);
 
     sp.rollback();
@@ -112,7 +112,7 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
     assertTransient(detail1);
 
     transaction.commit();
-    assertFalse(order1.getOrderDetails().contains(detail1));
+    assertEquals(false, order1.getOrderDetails().contains(detail1));
   }
 
   public void test3() throws CommitException
@@ -138,7 +138,7 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
 
     transaction.commit();
 
-    assertTrue(order1.getOrderDetails().contains(detail1));
+    assertEquals(true, order1.getOrderDetails().contains(detail1));
     assertEquals(id, CDOUtil.getCDOObject(detail1).cdoID());
   }
 

@@ -39,11 +39,11 @@ public class Bugzilla_328790_Test extends AbstractCDOTest
     EObject object = getModel1Factory().createAddress();
     resource.getContents().add(object);
 
-    assertTrue(resource.isLoaded());
+    assertEquals(true, resource.isLoaded());
 
     tx.commit();
 
-    assertTrue(resource.isLoaded());
+    assertEquals(true, resource.isLoaded());
 
     tx.close();
     session.close();
@@ -58,11 +58,11 @@ public class Bugzilla_328790_Test extends AbstractCDOTest
     EObject object = getModel1Factory().createAddress();
     resource.getContents().add(object);
 
-    assertTrue(resource.isLoaded());
+    assertEquals(true, resource.isLoaded());
 
     tx.commit();
 
-    assertTrue(resource.isLoaded());
+    assertEquals(true, resource.isLoaded());
 
     tx.close();
     session.close();
@@ -76,11 +76,11 @@ public class Bugzilla_328790_Test extends AbstractCDOTest
     CDOResource resource = tx.createResource("/myUri");
     resource.getContents().clear();
 
-    assertTrue(resource.isLoaded());
+    assertEquals(true, resource.isLoaded());
 
     tx.commit();
 
-    assertTrue(resource.isLoaded());
+    assertEquals(true, resource.isLoaded());
 
     tx.close();
     session.close();

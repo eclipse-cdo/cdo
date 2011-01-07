@@ -250,6 +250,30 @@ public abstract class AbstractOMTest extends TestCase
   {
   }
 
+  @Deprecated
+  public static void assertTrue(String message, boolean condition)
+  {
+    throw new UnsupportedOperationException("Use assertEquals()");
+  }
+
+  @Deprecated
+  public static void assertTrue(boolean condition)
+  {
+    throw new UnsupportedOperationException("Use assertEquals()");
+  }
+
+  @Deprecated
+  public static void assertFalse(String message, boolean condition)
+  {
+    throw new UnsupportedOperationException("Use assertEquals()");
+  }
+
+  @Deprecated
+  public static void assertFalse(boolean condition)
+  {
+    throw new UnsupportedOperationException("Use assertEquals()");
+  }
+
   public static void assertEquals(Object[] expected, Object[] actual)
   {
     if (!Arrays.deepEquals(expected, actual))
@@ -299,7 +323,8 @@ public abstract class AbstractOMTest extends TestCase
 
   public static void assertInstanceOf(Class<?> expected, Object object)
   {
-    assertTrue("Not an instance of " + expected + ": " + object.getClass().getName(), expected.isInstance(object));
+    assertEquals("Not an instance of " + expected + ": " + object.getClass().getName(), true,
+        expected.isInstance(object));
   }
 
   public static void assertActive(Object object) throws InterruptedException

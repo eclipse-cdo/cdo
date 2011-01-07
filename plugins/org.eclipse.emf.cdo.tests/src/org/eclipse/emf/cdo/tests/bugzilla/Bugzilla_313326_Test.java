@@ -66,6 +66,6 @@ public class Bugzilla_313326_Test extends AbstractCDOTest
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature());
 
     tr1.commit();
-    assertFalse(tr1.isDirty());
+    assertEquals(false, tr1.isDirty());
   }
 }

@@ -108,9 +108,9 @@ public class Bugzilla_331619_Test extends AbstractCDOTest
       String conName1 = (String)results.get(0).getSourceObject().eGet(conName);
       String conName2 = (String)results.get(1).getSourceObject().eGet(conName);
 
-      assertTrue(conName1.equals("con1") || conName1.equals("con2"));
-      assertTrue(conName2.equals("con1") || conName2.equals("con2"));
-      assertTrue(!conName1.equals(conName2));
+      assertEquals(true, conName1.equals("con1") || conName1.equals("con2"));
+      assertEquals(true, conName2.equals("con1") || conName2.equals("con2"));
+      assertEquals(true, !conName1.equals(conName2));
 
       oRef = res.getContents().get(2);
       assertEquals("ref2", oRef.eGet(refName));

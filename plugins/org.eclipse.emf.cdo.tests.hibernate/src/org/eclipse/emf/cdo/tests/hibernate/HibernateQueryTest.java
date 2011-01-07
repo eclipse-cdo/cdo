@@ -68,8 +68,8 @@ public class HibernateQueryTest extends AbstractCDOTest
       CDOQuery cdoQuery = transaction.createQuery("hql", "from Product1");
       addCacheParameter(cdoQuery);
       final List<Product1> products = cdoQuery.getResult(Product1.class);
-      assertTrue(products.get(0).getOrderDetails().size() > 0);
-      assertTrue(products.get(0).getOrderDetails().get(0).getOrder() != null);
+      assertEquals(true, products.get(0).getOrderDetails().size() > 0);
+      assertEquals(true, products.get(0).getOrderDetails().get(0).getOrder() != null);
       assertEquals(NUM_OF_PRODUCTS, products.size());
     }
 
@@ -89,7 +89,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       CDOQuery cdoQuery = transaction.createQuery("hql", "from Customer");
       addCacheParameter(cdoQuery);
       final List<Customer> customers = cdoQuery.getResult(Customer.class);
-      assertTrue(customers.get(0).getSalesOrders().size() > 0);
+      assertEquals(true, customers.get(0).getSalesOrders().size() > 0);
 
       assertEquals(NUM_OF_CUSTOMERS, customers.size());
     }
@@ -206,7 +206,7 @@ public class HibernateQueryTest extends AbstractCDOTest
                 found |= od.getProduct() == product;
               }
 
-              assertTrue(found);
+              assertEquals(true, found);
             }
           }
           else
@@ -315,7 +315,7 @@ public class HibernateQueryTest extends AbstractCDOTest
         assertEquals(VAT.VAT15, values[2]);
         assertInstanceOf(Float.class, values[3]);
         final SalesOrder order = (SalesOrder)values[1];
-        assertTrue(order.getOrderDetails().contains(values[0]));
+        assertEquals(true, order.getOrderDetails().contains(values[0]));
       }
     }
 
@@ -345,11 +345,11 @@ public class HibernateQueryTest extends AbstractCDOTest
         productQuery.setParameter(IHibernateStore.FIRST_RESULT, page * pageSize);
         addCacheParameter(productQuery);
         final List<Product1> queriedProducts = productQuery.getResult(Product1.class);
-        assertTrue(queriedProducts.size() <= pageSize);
+        assertEquals(true, queriedProducts.size() <= pageSize);
         // a product should not have been read yet
         for (Product1 newProduct : queriedProducts)
         {
-          assertTrue(!allProducts.contains(newProduct));
+          assertEquals(true, !allProducts.contains(newProduct));
         }
 
         allProducts.addAll(queriedProducts);
@@ -382,7 +382,7 @@ public class HibernateQueryTest extends AbstractCDOTest
       {
         final Product1 product = iterator.next();
         // meaningless but do something
-        assertTrue(product != null);
+        assertEquals(true, product != null);
         counter++;
         if (counter == NUM_OF_PRODUCTS / 2)
         {

@@ -53,11 +53,11 @@ public class EMapTest extends AbstractCDOTest
         Customer customer = (Customer)eObject;
         for (Product1 product : customer.getOrderByProduct().keySet())
         {
-          assertTrue(res.getContents().contains(product));
+          assertEquals(true, res.getContents().contains(product));
           SalesOrder order = customer.getOrderByProduct().get(product);
           assertNotNull(order);
           assertEquals(product.getName(), order.getId() + "");
-          assertTrue(res.getContents().contains(order));
+          assertEquals(true, res.getContents().contains(order));
         }
       }
     }

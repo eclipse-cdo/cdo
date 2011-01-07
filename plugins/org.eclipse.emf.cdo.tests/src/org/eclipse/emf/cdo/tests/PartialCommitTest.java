@@ -178,7 +178,7 @@ public class PartialCommitTest extends AbstractCDOTest
     assertClean(company1, tx);
     assertDirty(company2, tx);
     assertDirty(company3, tx);
-    assertTrue(tx.isDirty());
+    assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(company2));
     tx.commit();
@@ -186,7 +186,7 @@ public class PartialCommitTest extends AbstractCDOTest
     assertClean(company1, tx);
     assertClean(company2, tx);
     assertDirty(company3, tx);
-    assertTrue(tx.isDirty());
+    assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(company3));
     tx.commit();
@@ -194,7 +194,7 @@ public class PartialCommitTest extends AbstractCDOTest
     assertClean(company1, tx);
     assertClean(company2, tx);
     assertClean(company3, tx);
-    assertFalse(tx.isDirty());
+    assertEquals(false, tx.isDirty());
   }
 
   public void testPartialCleanUp_newObjects() throws CommitException
@@ -221,7 +221,7 @@ public class PartialCommitTest extends AbstractCDOTest
     assertClean(company4, tx);
     assertNew(po, tx);
     assertNew(product, tx);
-    assertTrue(tx.isDirty());
+    assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(po, company2));
     tx.commit();
@@ -229,7 +229,7 @@ public class PartialCommitTest extends AbstractCDOTest
     assertClean(company4, tx);
     assertClean(po, tx);
     assertNew(product, tx);
-    assertTrue(tx.isDirty());
+    assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(product, cat));
     tx.commit();
@@ -237,11 +237,11 @@ public class PartialCommitTest extends AbstractCDOTest
     assertClean(company4, tx);
     assertClean(po, tx);
     assertClean(product, tx);
-    assertTrue(tx.isDirty());
+    assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(company1));
     tx.commit();
-    assertFalse(tx.isDirty());
+    assertEquals(false, tx.isDirty());
   }
 
   public void testPartialCleanUp_detachedObjects() throws CommitException
@@ -266,50 +266,50 @@ public class PartialCommitTest extends AbstractCDOTest
     company2.getPurchaseOrders().remove(po);
     cat.getProducts().remove(product);
 
-    assertTrue(tx.getDetachedObjects().containsValue(company4));
-    assertTrue(tx.getFormerRevisionKeys().containsKey(company4));
-    assertTrue(tx.getDetachedObjects().containsValue(po));
-    assertTrue(tx.getFormerRevisionKeys().containsKey(company4));
-    assertTrue(tx.getDetachedObjects().containsValue(product));
-    assertTrue(tx.getFormerRevisionKeys().containsKey(company4));
-    assertTrue(tx.isDirty());
+    assertEquals(true, tx.getDetachedObjects().containsValue(company4));
+    assertEquals(true, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(true, tx.getDetachedObjects().containsValue(po));
+    assertEquals(true, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(true, tx.getDetachedObjects().containsValue(product));
+    assertEquals(true, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(company4, resource1));
     tx.commit();
 
-    assertFalse(tx.getDetachedObjects().containsValue(company4));
-    assertFalse(tx.getFormerRevisionKeys().containsKey(company4));
-    assertTrue(tx.getDetachedObjects().containsValue(po));
-    assertTrue(tx.getFormerRevisionKeys().containsKey(po));
-    assertTrue(tx.getDetachedObjects().containsValue(product));
-    assertTrue(tx.getFormerRevisionKeys().containsKey(product));
-    assertTrue(tx.isDirty());
+    assertEquals(false, tx.getDetachedObjects().containsValue(company4));
+    assertEquals(false, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(true, tx.getDetachedObjects().containsValue(po));
+    assertEquals(true, tx.getFormerRevisionKeys().containsKey(po));
+    assertEquals(true, tx.getDetachedObjects().containsValue(product));
+    assertEquals(true, tx.getFormerRevisionKeys().containsKey(product));
+    assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(po, company2));
     tx.commit();
 
-    assertFalse(tx.getDetachedObjects().containsValue(company4));
-    assertFalse(tx.getFormerRevisionKeys().containsKey(company4));
-    assertFalse(tx.getDetachedObjects().containsValue(po));
-    assertFalse(tx.getFormerRevisionKeys().containsKey(po));
-    assertTrue(tx.getDetachedObjects().containsValue(product));
-    assertTrue(tx.getFormerRevisionKeys().containsKey(product));
-    assertTrue(tx.isDirty());
+    assertEquals(false, tx.getDetachedObjects().containsValue(company4));
+    assertEquals(false, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(false, tx.getDetachedObjects().containsValue(po));
+    assertEquals(false, tx.getFormerRevisionKeys().containsKey(po));
+    assertEquals(true, tx.getDetachedObjects().containsValue(product));
+    assertEquals(true, tx.getFormerRevisionKeys().containsKey(product));
+    assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(product, cat));
     tx.commit();
 
-    assertFalse(tx.getDetachedObjects().containsValue(company4));
-    assertFalse(tx.getFormerRevisionKeys().containsKey(company4));
-    assertFalse(tx.getDetachedObjects().containsValue(po));
-    assertFalse(tx.getFormerRevisionKeys().containsKey(po));
-    assertFalse(tx.getDetachedObjects().containsValue(product));
-    assertFalse(tx.getFormerRevisionKeys().containsKey(product));
-    assertTrue(tx.isDirty());
+    assertEquals(false, tx.getDetachedObjects().containsValue(company4));
+    assertEquals(false, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(false, tx.getDetachedObjects().containsValue(po));
+    assertEquals(false, tx.getFormerRevisionKeys().containsKey(po));
+    assertEquals(false, tx.getDetachedObjects().containsValue(product));
+    assertEquals(false, tx.getFormerRevisionKeys().containsKey(product));
+    assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(company1));
     tx.commit();
-    assertFalse(tx.isDirty());
+    assertEquals(false, tx.isDirty());
   }
 
   public void testDirty() throws CommitException
@@ -406,8 +406,8 @@ public class PartialCommitTest extends AbstractCDOTest
     assertClean(purchaseOrder, tx);
     assertDirty(supplier1, tx);
 
-    assertFalse(company1.getPurchaseOrders().contains(purchaseOrder));
-    assertTrue(company2.getPurchaseOrders().contains(purchaseOrder));
+    assertEquals(false, company1.getPurchaseOrders().contains(purchaseOrder));
+    assertEquals(true, company2.getPurchaseOrders().contains(purchaseOrder));
     assertEquals("Supplier", supplier1.getName());
     assertSame(company2, purchaseOrder.eContainer());
   }
@@ -702,7 +702,7 @@ public class PartialCommitTest extends AbstractCDOTest
           found = true;
         }
       }
-      assertTrue(found);
+      assertEquals(true, found);
 
       view.close();
       session2.close();
@@ -1152,7 +1152,7 @@ public class PartialCommitTest extends AbstractCDOTest
       try
       {
         check.check();
-        assertTrue("check.getMissingObjects() should have been empty", check.getMissingObjects().isEmpty());
+        assertEquals("check.getMissingObjects() should have been empty", true, check.getMissingObjects().isEmpty());
       }
       catch (CommitIntegrityException e)
       {
@@ -1175,7 +1175,7 @@ public class PartialCommitTest extends AbstractCDOTest
       if (company99 != null)
       {
         assertDirty(company99, tx);
-        assertTrue("Transaction should still have been dirty", tx.isDirty());
+        assertEquals("Transaction should still have been dirty", true, tx.isDirty());
       }
     }
   }
@@ -1277,12 +1277,12 @@ public class PartialCommitTest extends AbstractCDOTest
     {
       // We cannot use == here, because it isn't (always) possible for the logic to
       // find all missing objects
-      assertTrue(missingObjects.size() <= expectedMissingObjects.size());
+      assertEquals(true, missingObjects.size() <= expectedMissingObjects.size());
     }
 
     for (EObject missingObject : missingObjects)
     {
-      assertTrue(expectedMissingObjects.contains(missingObject));
+      assertEquals(true, expectedMissingObjects.contains(missingObject));
     }
   }
 

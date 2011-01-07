@@ -363,49 +363,49 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     tx.commit();
 
     order2.getOrderDetails().remove(detail1);
-    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
+    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
 
     boolean contains;
 
     order1.getOrderDetails().add(detail1);
     contains = order1.getOrderDetails().contains(detail1);
-    assertTrue(contains);
-    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
+    assertEquals(true, contains);
+    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
 
     order1.getOrderDetails().remove(detail1);
-    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
+    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
 
     order2.getOrderDetails().add(detail1);
     contains = order2.getOrderDetails().contains(detail1);
-    assertTrue(contains);
-    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
+    assertEquals(true, contains);
+    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
 
     order2.getOrderDetails().remove(detail1);
-    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
+    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
 
     order1.getOrderDetails().add(detail1);
     contains = order1.getOrderDetails().contains(detail1);
-    assertTrue(contains);
-    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
+    assertEquals(true, contains);
+    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
 
     order1.getOrderDetails().remove(detail1);
-    assertTrue(CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
+    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
 
     tx.commit();
 
     order1.getOrderDetails().add(detail1);
     contains = order1.getOrderDetails().contains(detail1);
-    assertTrue(contains);
+    assertEquals(true, contains);
     order1.getOrderDetails().remove(detail1);
 
     order2.getOrderDetails().add(detail1);
     contains = order2.getOrderDetails().contains(detail1);
-    assertTrue(contains);
+    assertEquals(true, contains);
     order2.getOrderDetails().remove(detail1);
 
     order1.getOrderDetails().add(detail1);
     contains = order1.getOrderDetails().contains(detail1);
-    assertTrue(contains);
+    assertEquals(true, contains);
     order1.getOrderDetails().remove(detail1);
 
     tx.close();

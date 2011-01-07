@@ -73,7 +73,7 @@ public class CDOResourceDefImplTest extends AbstractCDOTest
     }
     catch (WrappedException e)
     {
-      assertTrue(e.getCause().getClass() == InvalidURIException.class);
+      assertEquals(true, e.getCause().getClass() == InvalidURIException.class);
     }
     finally
     {

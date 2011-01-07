@@ -349,7 +349,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     transaction.commit();
     CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
-    assertTrue(id.isExternal());
+    assertEquals(true, id.isExternal());
   }
 
   public void _testDetachXRefExternalReattach() throws Exception
@@ -378,13 +378,13 @@ public class CrossReferenceTest extends AbstractCDOTest
     transaction.commit();
     CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
-    assertTrue(id.isExternal());
+    assertEquals(true, id.isExternal());
 
     company.getCustomers().add(customer);
     transaction.commit();
     data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
-    assertFalse(id.isExternal());
+    assertEquals(false, id.isExternal());
   }
 
   public void testNewMakeExternal() throws Exception
@@ -414,7 +414,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     transaction.commit();
     CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
-    assertTrue(id.isExternal());
+    assertEquals(true, id.isExternal());
   }
 
   public void testExternalMakeNew() throws Exception
@@ -445,7 +445,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     transaction.commit();
     CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
-    assertFalse(id.isExternal());
+    assertEquals(false, id.isExternal());
   }
 
   public void testExternalMakeDangling() throws Exception
@@ -476,7 +476,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     transaction.commit();
     CDORevisionData data = CDOUtil.getCDOObject(salesOrder).cdoRevision().data();
     CDOID id = (CDOID)data.get(getModel1Package().getSalesOrder_Customer(), 0);
-    assertTrue(id.isExternal());
+    assertEquals(true, id.isExternal());
 
     externalResource.getContents().remove(customer);
     transaction.commit(); // Should be dangling reference now, but we can not detect ;-(

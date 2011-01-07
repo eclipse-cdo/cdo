@@ -56,11 +56,11 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
       r1.getContents().add(b);
       a.getElements().add(b);
 
-      assertTrue(a.isSetElements());
+      assertEquals(true, a.isSetElements());
 
       tx.commit();
 
-      assertTrue(a.isSetElements());
+      assertEquals(true, a.isSetElements());
 
       tx.close();
       session.close();
@@ -77,7 +77,7 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
       CDOResource r1 = tx.getResource(RESOURCENAME);
       RefMultiNonContainedUnsettable a = (RefMultiNonContainedUnsettable)r1.getContents().get(0);
 
-      assertTrue(a.isSetElements());
+      assertEquals(true, a.isSetElements());
 
       tx.close();
       session.close();

@@ -31,7 +31,7 @@ public class Bugzilla_280102_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource root = transaction.getRootResource();
-    assertTrue(root.isRoot());
+    assertEquals(true, root.isRoot());
     transaction.commit();
   }
 
@@ -40,6 +40,6 @@ public class Bugzilla_280102_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOView view = session.openView();
     CDOResource root = view.getRootResource();
-    assertTrue(root.isRoot());
+    assertEquals(true, root.isRoot());
   }
 }

@@ -42,21 +42,21 @@ public class TestDefTest extends AbstractOMTest
   {
     Object thisInstance = def.getInstance();
     Object thatInstance = def.getInstance();
-    assertTrue(thisInstance == thatInstance);
+    assertEquals(true, thisInstance == thatInstance);
   }
 
   public void testInstanceCreatedIsActivated()
   {
     Object instance = def.getInstance();
-    assertTrue(LifecycleUtil.isActive(instance));
+    assertEquals(true, LifecycleUtil.isActive(instance));
   }
 
   public void testInstanceDeactivatesIfUnset()
   {
     Object instance = def.getInstance();
     def.unsetInstance();
-    assertTrue(((DefImpl)def).getInternalInstance() == null);
-    assertTrue(!LifecycleUtil.isActive(instance));
+    assertEquals(true, ((DefImpl)def).getInternalInstance() == null);
+    assertEquals(true, !LifecycleUtil.isActive(instance));
   }
 
   public void testNewInstanceIsCreatedIfDefWasTouchedAfterwards() throws Exception
@@ -78,7 +78,7 @@ public class TestDefTest extends AbstractOMTest
 
     Object thisInstance = def.getInstance();
     Object thatInstance = def.getInstance();
-    assertTrue(thatInstance != thisInstance);
+    assertEquals(true, thatInstance != thisInstance);
   }
 
   public void testSameInstanceIfDefWasntTouched() throws Exception
@@ -100,39 +100,39 @@ public class TestDefTest extends AbstractOMTest
 
     Object thisInstance = def.getInstance();
     Object thatInstance = def.getInstance();
-    assertTrue(thatInstance == thisInstance);
+    assertEquals(true, thatInstance == thisInstance);
   }
 
   public void testSetAttributeTouches()
   {
     TestDef def = createTestDef();
-    assertTrue(!def.isTouched());
+    assertEquals(true, !def.isTouched());
     def.setAttribute("aValue"); //$NON-NLS-1$
-    assertTrue(def.isTouched());
+    assertEquals(true, def.isTouched());
     def.getInstance(); // clears touched
-    assertTrue(!def.isTouched());
+    assertEquals(true, !def.isTouched());
   }
 
   public void testAddReferenceTouches()
   {
     TestDef def = createTestDef();
-    assertTrue(!def.isTouched());
+    assertEquals(true, !def.isTouched());
     def.getReferences().add(createTestDef());
-    assertTrue(def.isTouched());
+    assertEquals(true, def.isTouched());
   }
 
   public void testSetInReferencedDefTouchesReferenchingDef()
   {
     TestDef def = createTestDef();
-    assertTrue(!def.isTouched());
+    assertEquals(true, !def.isTouched());
 
     TestDef referencedDef = createTestDef();
     def.getReferences().add(referencedDef);
-    assertTrue(!referencedDef.isTouched());
+    assertEquals(true, !referencedDef.isTouched());
 
     referencedDef.setAttribute("newValue"); //$NON-NLS-1$
-    assertTrue(referencedDef.isTouched());
-    assertTrue(def.isTouched());
+    assertEquals(true, referencedDef.isTouched());
+    assertEquals(true, def.isTouched());
   }
 
   public void testNewInstanceIsCreatedIfCurrentIsDeactivated() throws Exception
@@ -143,7 +143,7 @@ public class TestDefTest extends AbstractOMTest
     // Wait until instance gets deactivated
     thisInstance.waitForDeactivation();
     BlockingToken thatInstance = (BlockingToken)def.getInstance();
-    assertTrue(thatInstance != thisInstance);
+    assertEquals(true, thatInstance != thisInstance);
   }
 
   public void testNewInstanceIsCreatedIfCurrentIsUnset() throws Exception
@@ -154,7 +154,7 @@ public class TestDefTest extends AbstractOMTest
     // Wait until instance gets deactivated
     thisInstance.waitForDeactivation();
     BlockingToken thatInstance = (BlockingToken)def.getInstance();
-    assertTrue(thatInstance != thisInstance);
+    assertEquals(true, thatInstance != thisInstance);
   }
 
   private TestDef createTestDef()

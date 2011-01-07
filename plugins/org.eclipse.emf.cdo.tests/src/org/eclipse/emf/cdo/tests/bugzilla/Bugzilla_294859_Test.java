@@ -70,7 +70,7 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
     // The purchaseOrder was touched in both this and 2nd session;
     // we refresh now go cause a conflict
     session.refresh();
-    assertTrue(cdoPurchaseOrder.cdoState() == CDOState.CONFLICT);
+    assertEquals(true, cdoPurchaseOrder.cdoState() == CDOState.CONFLICT);
 
     // Touch it again
     purchaseOrder.setDate(new Date(3000L));
@@ -80,10 +80,10 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
     CDOSavepointImpl savepoint = (CDOSavepointImpl)((InternalCDOTransaction)tx).getLastSavepoint();
     CDORevisionDelta revDelta = savepoint.getRevisionDeltas().get(cdoPurchaseOrder.cdoID());
     assertNotNull(revDelta);
-    assertTrue(revDelta.getFeatureDeltas().size() == 1);
+    assertEquals(true, revDelta.getFeatureDeltas().size() == 1);
     CDOFeatureDelta featDelta = revDelta.getFeatureDeltas().get(0);
     EAttribute eAttr = getModel1Factory().getModel1Package().getPurchaseOrder_Date();
-    assertTrue(featDelta instanceof CDOSetFeatureDelta);
+    assertEquals(true, featDelta instanceof CDOSetFeatureDelta);
     CDOSetFeatureDelta setFeatDelta = (CDOSetFeatureDelta)featDelta;
     assertSame(eAttr, setFeatDelta.getFeature());
     assertSame(CDOFeatureDelta.Type.SET, setFeatDelta.getType());

@@ -58,20 +58,20 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
       r1.getContents().add(order2);
 
       boolean contains = order1.getOrderDetails().contains(detail1);
-      assertTrue(contains);
+      assertEquals(true, contains);
 
       // Commit so that everything gets a CDOID
       tx.commit();
 
       contains = order1.getOrderDetails().contains(detail1);
-      assertTrue(contains);
+      assertEquals(true, contains);
 
       tx.commit();
 
       order1.getOrderDetails().remove(detail1);
       order2.getOrderDetails().add(detail1);
       contains = order2.getOrderDetails().contains(detail1);
-      assertTrue(contains);
+      assertEquals(true, contains);
 
       tx.commit();
 
@@ -92,8 +92,8 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
 
       boolean contains1 = order1.getOrderDetails().contains(detail1);
       boolean contains2 = order2.getOrderDetails().contains(detail1);
-      assertFalse(contains1);
-      assertTrue(contains2);
+      assertEquals(false, contains1);
+      assertEquals(true, contains2);
 
       tx.close();
       session.close();
@@ -111,25 +111,25 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
       r1.getContents().add(order2);
 
       boolean contains = order1.getOrderDetails().contains(detail1);
-      assertTrue(contains);
+      assertEquals(true, contains);
 
       // Commit so that everything gets a CDOID
       tx.commit();
 
       contains = order1.getOrderDetails().contains(detail1);
-      assertTrue(contains);
+      assertEquals(true, contains);
 
       tx.commit();
 
       order1.getOrderDetails().remove(detail1);
       order2.getOrderDetails().add(detail1);
       contains = order2.getOrderDetails().contains(detail1);
-      assertTrue(contains);
+      assertEquals(true, contains);
 
       order2.getOrderDetails().remove(detail1);
       order1.getOrderDetails().add(detail1);
       contains = order1.getOrderDetails().contains(detail1);
-      assertTrue(contains);
+      assertEquals(true, contains);
 
       tx.commit();
 
@@ -148,8 +148,8 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
 
       boolean contains1 = order1.getOrderDetails().contains(detail1);
       boolean contains2 = order2.getOrderDetails().contains(detail1);
-      assertFalse(contains2);
-      assertTrue(contains1);
+      assertEquals(false, contains2);
+      assertEquals(true, contains1);
 
       tx.close();
       session.close();

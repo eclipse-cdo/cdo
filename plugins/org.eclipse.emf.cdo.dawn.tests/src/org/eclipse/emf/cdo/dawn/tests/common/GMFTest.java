@@ -300,7 +300,7 @@ public class GMFTest extends AbstractCDOTest
         Edge edge = (Edge)o;
         RelativeBendpoints bendpoints = (RelativeBendpoints)edge.getBendpoints();
         assertNotNull(bendpoints);
-        assertTrue(bendpoints.getPoints().size() > 0);
+        assertEquals(true, bendpoints.getPoints().size() > 0);
       }
     }
   }

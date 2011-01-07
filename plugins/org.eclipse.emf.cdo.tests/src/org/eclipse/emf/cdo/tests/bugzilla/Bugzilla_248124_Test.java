@@ -42,7 +42,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     res.delete(null);
     transaction1.commit();
     CDOView view = session.openView();
-    assertFalse(view.hasResource(resourcePath));
+    assertEquals(false, view.hasResource(resourcePath));
   }
 
   public void testBugzilla_248124_getResourceWithCommit() throws Exception
@@ -93,7 +93,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     res.getContents().add(getModel1Factory().createCompany());
 
     res.delete(null);
-    assertFalse(transaction1.hasResource(resourcePath));
+    assertEquals(false, transaction1.hasResource(resourcePath));
   }
 
   public void testBugzilla_248124_getResourceWithoutCommit() throws Exception

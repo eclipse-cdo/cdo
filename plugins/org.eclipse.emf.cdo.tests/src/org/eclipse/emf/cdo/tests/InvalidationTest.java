@@ -288,7 +288,7 @@ public class InvalidationTest extends AbstractCDOTest
     res1.delete(null);
 
     res2.getContents().add(getModel1Factory().createCustomer());
-    assertTrue(res2.isExisting());
+    assertEquals(true, res2.isExisting());
 
     trans1.commit();
 
@@ -303,7 +303,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     trans2.rollback();
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(res2).cdoState());
-    assertFalse(res2.isExisting());
+    assertEquals(false, res2.isExisting());
 
     try
     {

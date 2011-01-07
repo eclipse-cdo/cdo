@@ -55,7 +55,7 @@ public class JVMConnectorDefImplTest extends AbstractOMTest
     jvmConnectorDef.setName(NAME);
     IJVMConnector jvmConnector = (IJVMConnector)jvmConnectorDef.getInstance();
     jvmConnector.connect(500L);
-    assertTrue(jvmConnector.isConnected());
+    assertEquals(true, jvmConnector.isConnected());
 
     LifecycleUtil.deactivate(jvmConnector);
     LifecycleUtil.deactivate(jvmAcceptor);

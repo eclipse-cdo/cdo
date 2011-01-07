@@ -59,12 +59,12 @@ public class JVMAcceptorDefImplTest extends AbstractOMTest
 
     IJVMAcceptor jvmAcceptor = (IJVMAcceptor)jvmAcceptorDef.getInstance();
 
-    assertTrue(LifecycleUtil.isActive(jvmAcceptor));
+    assertEquals(true, LifecycleUtil.isActive(jvmAcceptor));
 
     LifecycleUtil.activate(jvmConnector);
     jvmConnector.waitForConnection(DELAY + TIMEOUT);
 
-    assertTrue(LifecycleUtil.isActive(jvmConnector));
+    assertEquals(true, LifecycleUtil.isActive(jvmConnector));
 
     LifecycleUtil.deactivate(jvmAcceptor);
   }

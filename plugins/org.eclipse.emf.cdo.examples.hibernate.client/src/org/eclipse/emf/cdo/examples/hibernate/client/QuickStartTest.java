@@ -58,7 +58,7 @@ public class QuickStartTest extends BaseTest
       final CDOSession session = openSession();
       final CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/res1"); //$NON-NLS-1$
-      assertTrue(resource.getContents().get(0) instanceof Address);
+      assertEquals(true, resource.getContents().get(0) instanceof Address);
       assertEquals(1, resource.getContents().size());
       final Address address = (Address)resource.getContents().get(0);
       assertEquals(addressName, address.getName());

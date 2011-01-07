@@ -72,7 +72,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
 
     tr1.commit();
-    assertFalse(tr1.isDirty());
+    assertEquals(false, tr1.isDirty());
   }
 
   public void testNotificationBuilderTest() throws Exception
@@ -118,7 +118,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     tr1.commit();
 
     Boolean indexWasCorrect = (Boolean)result.getResult();
-    assertTrue(indexWasCorrect != null && indexWasCorrect.booleanValue());
+    assertEquals(true, indexWasCorrect != null && indexWasCorrect.booleanValue());
   }
 
   /**

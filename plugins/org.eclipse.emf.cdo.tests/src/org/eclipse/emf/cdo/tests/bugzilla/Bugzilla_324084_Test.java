@@ -76,7 +76,7 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
 
     tr1.commit();
-    assertFalse(tr1.isDirty());
+    assertEquals(false, tr1.isDirty());
   }
 
   public void testXRefMergeManyValueTest() throws Exception
@@ -113,6 +113,6 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
 
     tr1.commit();
-    assertFalse(tr1.isDirty());
+    assertEquals(false, tr1.isDirty());
   }
 }

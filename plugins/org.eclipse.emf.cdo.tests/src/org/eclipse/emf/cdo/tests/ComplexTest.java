@@ -1160,15 +1160,15 @@ public class ComplexTest extends AbstractCDOTest
     container2.setElement(element);
     commit();
 
-    assertTrue(element.getParent() == container2);
-    assertTrue(element.eContainer() == container2);
-    assertTrue(CDOUtil.getCDOObject(element).cdoDirectResource() == null);
+    assertEquals(true, element.getParent() == container2);
+    assertEquals(true, element.eContainer() == container2);
+    assertEquals(true, CDOUtil.getCDOObject(element).cdoDirectResource() == null);
 
-    assertTrue(container1.getElement() == null);
-    assertTrue(CDOUtil.getCDOObject(container1).cdoDirectResource() == resource1);
+    assertEquals(true, container1.getElement() == null);
+    assertEquals(true, CDOUtil.getCDOObject(container1).cdoDirectResource() == resource1);
 
-    assertTrue(container2.getElement() == element);
-    assertTrue(CDOUtil.getCDOObject(container2).cdoDirectResource() == resource2);
+    assertEquals(true, container2.getElement() == element);
+    assertEquals(true, CDOUtil.getCDOObject(container2).cdoDirectResource() == resource2);
   }
 
   public void testMigrateContainmentMulti()
@@ -1192,21 +1192,21 @@ public class ComplexTest extends AbstractCDOTest
     container2.getElements().add(container1.getElements().get(0));
     commit();
 
-    assertTrue(elementA.getParent() == container2);
-    assertTrue(elementA.eContainer() == container2);
-    assertTrue(CDOUtil.getCDOObject(elementA).cdoDirectResource() == null);
-    assertTrue(elementA.eResource() == resource2);
+    assertEquals(true, elementA.getParent() == container2);
+    assertEquals(true, elementA.eContainer() == container2);
+    assertEquals(true, CDOUtil.getCDOObject(elementA).cdoDirectResource() == null);
+    assertEquals(true, elementA.eResource() == resource2);
 
-    assertTrue(elementB.getParent() == container1);
-    assertTrue(elementB.eContainer() == container1);
-    assertTrue(CDOUtil.getCDOObject(elementB).cdoDirectResource() == null);
-    assertTrue(elementB.eResource() == resource1);
+    assertEquals(true, elementB.getParent() == container1);
+    assertEquals(true, elementB.eContainer() == container1);
+    assertEquals(true, CDOUtil.getCDOObject(elementB).cdoDirectResource() == null);
+    assertEquals(true, elementB.eResource() == resource1);
 
-    assertTrue(CDOUtil.getCDOObject(container1).cdoDirectResource() == resource1);
+    assertEquals(true, CDOUtil.getCDOObject(container1).cdoDirectResource() == resource1);
     assertEquals(1, container1.getElements().size());
     assertEquals(elementB, container1.getElements().get(0));
 
-    assertTrue(CDOUtil.getCDOObject(container2).cdoDirectResource() == resource2);
+    assertEquals(true, CDOUtil.getCDOObject(container2).cdoDirectResource() == resource2);
     assertEquals(1, container2.getElements().size());
     assertEquals(elementA, container2.getElements().get(0));
   }

@@ -57,7 +57,7 @@ public class CDOAuditDefImplTest extends AbstractCDOTest
 
     CDOView cdoAudit = (CDOView)cdoAuditDef.getInstance();
     EObject object = cdoAudit.getResource(RESOURCE_ID).getContents().get(0);
-    assertTrue(object instanceof Customer && customerName.equals(customer.getName()));
+    assertEquals(true, object instanceof Customer && customerName.equals(customer.getName()));
   }
 
   public void testCreateAuditCreatesOnceAndReusesEvenOnChangedTimestamp()
@@ -77,6 +77,6 @@ public class CDOAuditDefImplTest extends AbstractCDOTest
     calendar.roll(Calendar.SECOND, true);
     cdoAuditDef.setTimeStamp(calendar.getTime());
     CDOView thatCdoAuditReference = (CDOView)cdoAuditDef.getInstance();
-    assertTrue(thisCdoAuditReference == thatCdoAuditReference);
+    assertEquals(true, thisCdoAuditReference == thatCdoAuditReference);
   }
 }

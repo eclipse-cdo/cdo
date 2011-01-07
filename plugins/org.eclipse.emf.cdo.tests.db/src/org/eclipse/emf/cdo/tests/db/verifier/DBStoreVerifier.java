@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests.db.verifier;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -60,7 +59,7 @@ public abstract class DBStoreVerifier
     this.repository = repository;
     if (repository != null)
     {
-      assertTrue(repository.getStore() instanceof IDBStore);
+      assertEquals(true, repository.getStore() instanceof IDBStore);
     }
   }
 
@@ -246,7 +245,7 @@ public abstract class DBStoreVerifier
       super(repo);
 
       // this is a verifier for auditing mode
-      assertTrue(getStore().getMappingStrategy() instanceof HorizontalAuditMappingStrategy);
+      assertEquals(true, getStore().getMappingStrategy() instanceof HorizontalAuditMappingStrategy);
     }
 
     @Override
@@ -282,7 +281,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          assertTrue("Multiple unrevised rows for ID " + resultSet.getLong(1), resultSet.getInt(2) <= 1);
+          assertEquals("Multiple unrevised rows for ID " + resultSet.getLong(1), true, resultSet.getInt(2) <= 1);
         }
       }
       finally
@@ -309,7 +308,7 @@ public abstract class DBStoreVerifier
       {
         while (resultSet.next())
         {
-          assertTrue("Multiple rows for ID " + resultSet.getLong(1) + "v" + resultSet.getInt(2),
+          assertEquals("Multiple rows for ID " + resultSet.getLong(1) + "v" + resultSet.getInt(2), true,
               resultSet.getInt(3) <= 1);
         }
       }
@@ -406,9 +405,9 @@ public abstract class DBStoreVerifier
       super(repo);
 
       // this is a verifier for non-auditing mode
-      assertTrue(getStore().getRevisionTemporality() == IStore.RevisionTemporality.NONE);
+      assertEquals(true, getStore().getRevisionTemporality() == IStore.RevisionTemporality.NONE);
       // ... and for horizontal class mapping
-      assertTrue(getStore().getMappingStrategy() instanceof HorizontalNonAuditMappingStrategy);
+      assertEquals(true, getStore().getMappingStrategy() instanceof HorizontalNonAuditMappingStrategy);
     }
 
     @Override
@@ -440,7 +439,7 @@ public abstract class DBStoreVerifier
       ResultSet resultSet = getStatement().executeQuery(sql);
       try
       {
-        assertTrue(resultSet.next());
+        assertEquals(true, resultSet.next());
         assertEquals("Revised revision in table " + tableName, 0, resultSet.getInt(1));
       }
       finally

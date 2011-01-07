@@ -75,7 +75,7 @@ public class ViewTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOView view = session.openView();
-    assertFalse(view.isObjectRegistered(null));
+    assertEquals(false, view.isObjectRegistered(null));
     session.close();
   }
 
@@ -304,7 +304,7 @@ public class ViewTest extends AbstractCDOTest
     });
 
     view.close();
-    assertTrue(deactivated[0]);
+    assertEquals(true, deactivated[0]);
     session.close();
   }
 }

@@ -238,11 +238,11 @@ public class XRefTest extends AbstractCDOTest
         break;
       default:
         // must not happen!
-        assertTrue(false);
+        assertEquals(true, false);
       }
     }
 
-    assertTrue(found1 && found2 && found3);
+    assertEquals(true, found1 && found2 && found3);
 
     view.close();
     session2.close();
@@ -304,7 +304,7 @@ public class XRefTest extends AbstractCDOTest
     CDOView view = session2.openView();
 
     List<CDOObjectReference> results = view.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(obj2_1)));
-    assertTrue(results.isEmpty());
+    assertEquals(true, results.isEmpty());
 
     results = view.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(obj2_3)));
 
@@ -330,7 +330,7 @@ public class XRefTest extends AbstractCDOTest
 
       CDOObject sourceObject = result.getSourceObject();
       Integer id = (Integer)sourceObject.eGet(sourceObject.eClass().getEStructuralFeature("id"));
-      assertTrue(id == 1 || id == 2);
+      assertEquals(true, id == 1 || id == 2);
       assertEquals(0, result.getSourceIndex());
 
       if (id == 1)
@@ -343,7 +343,7 @@ public class XRefTest extends AbstractCDOTest
       }
     }
 
-    assertTrue(found1 && found2);
+    assertEquals(true, found1 && found2);
 
     view.close();
     session2.close();

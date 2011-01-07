@@ -409,7 +409,7 @@ public class Net4jDBTest extends AbstractCDOTest
   {
     Statement stmt = connection.createStatement();
     ResultSet resultSet = stmt.executeQuery("SELECT * FROM " + tableName);
-    assertTrue(resultSet.next());
+    assertEquals(true, resultSet.next());
 
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     ExtendedDataOutputStream outs = new ExtendedDataOutputStream(output);

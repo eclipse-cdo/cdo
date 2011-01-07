@@ -63,7 +63,7 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
     }
 
     long timeToCommitNoChange = System.currentTimeMillis() - start;
-    assertTrue(timeCommitWithChanges > timeToCommitNoChange * 1.2);
+    assertEquals(true, timeCommitWithChanges > timeToCommitNoChange * 1.2);
   }
 
   public void testBugzilla_259869_XA() throws Exception
@@ -114,6 +114,6 @@ public class Bugzilla_259869_Test extends AbstractCDOTest
     }
 
     long timeToCommitNoChange = System.currentTimeMillis() - start;
-    assertTrue(timeCommitWithChanges > timeToCommitNoChange * 1.2);
+    assertEquals(true, timeCommitWithChanges > timeToCommitNoChange * 1.2);
   }
 }

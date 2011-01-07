@@ -59,11 +59,11 @@ public class TCPAcceptorDefImplTest extends AbstractOMTest
 
     ITCPAcceptor tcpAcceptor = (ITCPAcceptor)tcpAcceptorDef.getInstance();
 
-    assertTrue(LifecycleUtil.isActive(tcpAcceptor));
+    assertEquals(true, LifecycleUtil.isActive(tcpAcceptor));
 
     LifecycleUtil.activate(tcpConnector);
     tcpConnector.waitForConnection(DELAY + TIMEOUT);
-    assertTrue(LifecycleUtil.isActive(tcpConnector));
+    assertEquals(true, LifecycleUtil.isActive(tcpConnector));
 
     LifecycleUtil.deactivate(tcpAcceptor);
   }
@@ -88,7 +88,7 @@ public class TCPAcceptorDefImplTest extends AbstractOMTest
 
     tcpAcceptorDef.setNegotiator(challengeNegotiatorDef);
     ITCPAcceptor tcpAcceptor = (ITCPAcceptor)tcpAcceptorDef.getInstance();
-    assertTrue(LifecycleUtil.isActive(tcpAcceptor));
+    assertEquals(true, LifecycleUtil.isActive(tcpAcceptor));
 
     Util.addNegotiator(USERID, PASSWORD, tcpConnector);
     LifecycleUtil.activate(tcpConnector);

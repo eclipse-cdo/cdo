@@ -124,7 +124,7 @@ public class SQLQueryTest extends AbstractCDOTest
       }
       else
       {
-        assertTrue(result instanceof Long);
+        assertEquals(true, result instanceof Long);
         intResult = ((Long)result).intValue();
       }
 
@@ -182,11 +182,11 @@ public class SQLQueryTest extends AbstractCDOTest
         productQuery.setMaxResults(pageSize);
         productQuery.setParameter(SQLQueryHandler.FIRST_RESULT, page * pageSize);
         final List<Product1> queriedProducts = productQuery.getResult(Product1.class);
-        assertTrue(queriedProducts.size() <= pageSize);
+        assertEquals(true, queriedProducts.size() <= pageSize);
         // a product should not have been read yet
         for (Product1 newProduct : queriedProducts)
         {
-          assertTrue(!allProducts.contains(newProduct));
+          assertEquals(true, !allProducts.contains(newProduct));
         }
 
         allProducts.addAll(queriedProducts);
@@ -218,7 +218,7 @@ public class SQLQueryTest extends AbstractCDOTest
       {
         final Product1 product = iterator.next();
         // meaningless but do something
-        assertTrue(product != null);
+        assertEquals(true, product != null);
         counter++;
         if (counter == NUM_OF_PRODUCTS / 2)
         {
@@ -248,7 +248,7 @@ public class SQLQueryTest extends AbstractCDOTest
       List<String> streets = new ArrayList<String>(cdoQuery.getResult(String.class));
       for (int i = 0; i < 5; i++)
       {
-        assertTrue(streets.contains("Street " + i));
+        assertEquals(true, streets.contains("Street " + i));
       }
     }
   }
@@ -269,10 +269,10 @@ public class SQLQueryTest extends AbstractCDOTest
       cdoQuery.setParameter("cdoObjectQuery", false);
       List<String> cities = new ArrayList<String>(cdoQuery.getResult(String.class));
 
-      assertTrue(cities.contains(null));
+      assertEquals(true, cities.contains(null));
       for (int i = 1; i < 5; i++)
       {
-        assertTrue(cities.contains("City " + i));
+        assertEquals(true, cities.contains("City " + i));
       }
     }
   }

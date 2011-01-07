@@ -139,7 +139,7 @@ public class OCLQueryTest extends AbstractCDOTest
     for (CloseableIterator<Product1> it = query.getResultAsync(Product1.class); it.hasNext();)
     {
       Product1 product = it.next();
-      assertTrue(product != null); // meaningless but do something
+      assertEquals(true, product != null); // meaningless but do something
 
       if (++counter == NUM_OF_PRODUCTS / 2)
       {

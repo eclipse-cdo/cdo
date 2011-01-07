@@ -107,7 +107,7 @@ public class InitialTest extends AbstractCDOTest
     msg("Verifying contents");
     EList<EObject> contents = resource.getContents();
     assertNotNull(contents);
-    assertTrue(contents.isEmpty());
+    assertEquals(true, contents.isEmpty());
     assertEquals(0, contents.size());
     assertTransient(resource);
 
@@ -333,7 +333,7 @@ public class InitialTest extends AbstractCDOTest
     supplier.setName("Eike");
 
     long commitTime2 = transaction.commit().getTimeStamp();
-    assertTrue(commitTime1 < commitTime2);
+    assertEquals(true, commitTime1 < commitTime2);
     assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(supplier).cdoState());
     assertCreatedTime(supplier, commitTime2);

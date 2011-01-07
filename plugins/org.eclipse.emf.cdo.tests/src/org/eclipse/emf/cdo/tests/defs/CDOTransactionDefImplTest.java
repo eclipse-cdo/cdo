@@ -42,7 +42,7 @@ public class CDOTransactionDefImplTest extends AbstractCDOTest
     CDOTransaction thisCdoTransactionReference = (CDOTransaction)transactionDef.getInstance();
     CDOTransaction thatCdoTransactionReference = (CDOTransaction)transactionDef.getInstance();
 
-    assertTrue(thisCdoTransactionReference == thatCdoTransactionReference);
+    assertEquals(true, thisCdoTransactionReference == thatCdoTransactionReference);
 
     thisCdoTransactionReference.getSession().close();
   }
@@ -58,7 +58,7 @@ public class CDOTransactionDefImplTest extends AbstractCDOTest
     transactionInstance.close();
     CDOTransaction newTransactionInstance = (CDOTransaction)cdoTransactionDef.getInstance();
 
-    assertTrue(newTransactionInstance != transactionInstance);
+    assertEquals(true, newTransactionInstance != transactionInstance);
 
     newTransactionInstance.getSession().close();
   }
@@ -81,7 +81,7 @@ public class CDOTransactionDefImplTest extends AbstractCDOTest
     transaction.commit();
 
     CDOResource resourceFetched = transaction.getResource(TEST_RESOURCE);
-    assertTrue(resourceFetched.eContents().contains(customer));
+    assertEquals(true, resourceFetched.eContents().contains(customer));
 
     transaction.getSession().close();
   }

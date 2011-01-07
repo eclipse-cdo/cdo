@@ -315,8 +315,8 @@ public class AllTestsHibernate extends AllConfigs
       }
       catch (Exception e)
       {
-        assertTrue(e instanceof CommitException);
-        assertTrue(e.getMessage().contains("org.hibernate.ObjectNotFoundException"));
+        assertEquals(true, e instanceof CommitException);
+        assertEquals(true, e.getMessage().contains("org.hibernate.ObjectNotFoundException"));
       }
     }
 
@@ -329,8 +329,8 @@ public class AllTestsHibernate extends AllConfigs
       }
       catch (Exception e)
       {
-        assertTrue(e instanceof CommitException);
-        assertTrue(e.getMessage().contains("org.hibernate.ObjectNotFoundException"));
+        assertEquals(true, e instanceof CommitException);
+        assertEquals(true, e.getMessage().contains("org.hibernate.ObjectNotFoundException"));
       }
     }
   }

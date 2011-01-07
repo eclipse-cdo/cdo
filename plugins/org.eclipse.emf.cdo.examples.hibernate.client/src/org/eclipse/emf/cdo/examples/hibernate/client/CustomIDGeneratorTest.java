@@ -28,7 +28,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  * Note this testcase will work with the hibernate mapping created using the latest version of the ecore file. When
  * using the generated hbm file then it does not work (as the generated hbm file does not necessarily contain the
  * required generator definitions).
- * 
+ *
  * @author Martin Taal
  */
 public class CustomIDGeneratorTest extends BaseTest
@@ -83,7 +83,7 @@ public class CustomIDGeneratorTest extends BaseTest
 
       // and the other uuid has been set
       assertNotNull(category2_read.getName());
-      assertFalse(uuid.equals(category2_read.getName()));
+      assertEquals(false, uuid.equals(category2_read.getName()));
       transaction.commit();
       session.close();
     }

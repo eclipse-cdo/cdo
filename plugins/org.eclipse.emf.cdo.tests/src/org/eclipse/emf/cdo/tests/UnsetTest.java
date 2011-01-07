@@ -436,25 +436,25 @@ public class UnsetTest extends AbstractCDOTest
       test4.eUnset(baseElement);
       test4.eUnset(objectElement);
 
-      assertTrue(test1.eIsSet(baseElement));
-      assertTrue(test1.eIsSet(objectElement));
+      assertEquals(true, test1.eIsSet(baseElement));
+      assertEquals(true, test1.eIsSet(objectElement));
       assertEquals(1, test1.eGet(baseElement));
       assertEquals(2, test1.eGet(objectElement));
 
-      assertTrue(test2.eIsSet(baseElement));
-      assertTrue(test2.eIsSet(objectElement));
+      assertEquals(true, test2.eIsSet(baseElement));
+      assertEquals(true, test2.eIsSet(objectElement));
       assertEquals(23, test2.eGet(baseElement));
       assertEquals(42, test2.eGet(objectElement));
 
       // for basetypes, setting value null seems to be equivalent
       // to unset.
-      assertFalse(test3.eIsSet(baseElement));
-      assertTrue(test3.eIsSet(objectElement));
+      assertEquals(false, test3.eIsSet(baseElement));
+      assertEquals(true, test3.eIsSet(objectElement));
       assertEquals(23, test3.eGet(baseElement));
       assertNull(test3.eGet(objectElement));
 
-      assertFalse(test4.eIsSet(baseElement));
-      assertFalse(test4.eIsSet(objectElement));
+      assertEquals(false, test4.eIsSet(baseElement));
+      assertEquals(false, test4.eIsSet(objectElement));
       assertEquals(23, test4.eGet(baseElement));
       assertEquals(42, test4.eGet(objectElement));
 
@@ -487,23 +487,23 @@ public class UnsetTest extends AbstractCDOTest
       EObject test3 = res.getContents().get(2);
       EObject test4 = res.getContents().get(3);
 
-      assertTrue(test1.eIsSet(baseElement));
-      assertTrue(test1.eIsSet(objectElement));
+      assertEquals(true, test1.eIsSet(baseElement));
+      assertEquals(true, test1.eIsSet(objectElement));
       assertEquals(1, test1.eGet(baseElement));
       assertEquals(2, test1.eGet(objectElement));
 
-      assertTrue(test2.eIsSet(baseElement));
-      assertTrue(test2.eIsSet(objectElement));
+      assertEquals(true, test2.eIsSet(baseElement));
+      assertEquals(true, test2.eIsSet(objectElement));
       assertEquals(23, test2.eGet(baseElement));
       assertEquals(42, test2.eGet(objectElement));
 
-      assertFalse(test3.eIsSet(baseElement));
-      assertTrue(test3.eIsSet(objectElement));
+      assertEquals(false, test3.eIsSet(baseElement));
+      assertEquals(true, test3.eIsSet(objectElement));
       assertEquals(23, test3.eGet(baseElement));
       assertNull(test3.eGet(objectElement));
 
-      assertFalse(test4.eIsSet(baseElement));
-      assertFalse(test4.eIsSet(objectElement));
+      assertEquals(false, test4.eIsSet(baseElement));
+      assertEquals(false, test4.eIsSet(objectElement));
       assertEquals(23, test4.eGet(baseElement));
       assertEquals(42, test4.eGet(objectElement));
 

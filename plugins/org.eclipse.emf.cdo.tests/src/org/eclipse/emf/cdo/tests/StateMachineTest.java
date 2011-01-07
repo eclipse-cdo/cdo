@@ -558,7 +558,7 @@ public class StateMachineTest extends AbstractCDOTest
   private static void assertFailure(IllegalStateException ex)
   {
     IOUtil.print(ex);
-    assertTrue("Expected FAIL transition", ex.getMessage().startsWith("Failing event "));
+    assertEquals("Expected FAIL transition", true, ex.getMessage().startsWith("Failing event "));
   }
 
   private static void setState(EObject object, CDOState state)

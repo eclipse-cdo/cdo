@@ -56,7 +56,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
 
     try
     {
-      assertTrue(CDOUtil.isStaleObject(element));
+      assertEquals(true, CDOUtil.isStaleObject(element));
       element.eContainer();
       fail("Should fail");
     }

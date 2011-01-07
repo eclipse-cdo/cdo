@@ -598,8 +598,8 @@ public class ResourceTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    assertFalse(transaction.hasResource("/my/resource"));
-    assertTrue(transaction.hasResource("/renamed"));
+    assertEquals(false, transaction.hasResource("/my/resource"));
+    assertEquals(true, transaction.hasResource("/renamed"));
   }
 
   public void testChangeResourceFolderURI() throws Exception
@@ -623,8 +623,8 @@ public class ResourceTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    assertFalse(transaction.hasResource("/my/resource"));
-    assertTrue(transaction.hasResource("/renamed"));
+    assertEquals(false, transaction.hasResource("/my/resource"));
+    assertEquals(true, transaction.hasResource("/renamed"));
   }
 
   public void testPathNotNull() throws Exception

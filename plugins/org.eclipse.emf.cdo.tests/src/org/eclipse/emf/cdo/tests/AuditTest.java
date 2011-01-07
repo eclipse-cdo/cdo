@@ -384,7 +384,7 @@ public class AuditTest extends AbstractCDOTest
 
       CDOView view = session.openView();
       CDOResource res = view.getResource("/res1");
-      assertTrue(res.getContents().isEmpty());
+      assertEquals(true, res.getContents().isEmpty());
     }
   }
 

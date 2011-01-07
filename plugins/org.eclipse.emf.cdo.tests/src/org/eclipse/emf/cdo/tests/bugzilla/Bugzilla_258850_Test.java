@@ -54,7 +54,7 @@ public class Bugzilla_258850_Test extends AbstractCDOTest
       transaction.options().addListener(listener);
       transaction.options().setInvalidationNotificationEnabled(true);
 
-      assertTrue(listener.getSucess());
+      assertEquals(true, listener.getSucess());
 
       transaction.commit();
       session.close();

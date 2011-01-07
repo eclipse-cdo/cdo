@@ -203,7 +203,7 @@ public class AttributeTest extends AbstractCDOTest
       CDOResource resource = view.getResource("/my/resource");
       EObject genOfByteArray = resource.getContents().get(0);
       byte storeByteArray[] = (byte[])genOfByteArray.eGet(genOfByteArray.eClass().getEStructuralFeature("bytes"));
-      assertTrue(storeByteArray == null || storeByteArray.length == 0);
+      assertEquals(true, storeByteArray == null || storeByteArray.length == 0);
       view.close();
       session.close();
     }

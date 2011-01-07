@@ -38,9 +38,9 @@ public class CDOPackageRegistryDefImplTest extends AbstractCDOTest
 
     EPackage.Registry packageRegistry = (EPackage.Registry)packageRegistryDef.getInstance();
     EPackage ePackage1 = packageRegistry.getEPackage(getModel1Package().getNsURI());
-    assertTrue(ePackage1 instanceof Model1Package);
+    assertEquals(true, ePackage1 instanceof Model1Package);
     EPackage ePackage2 = packageRegistry.getEPackage(getModel2Package().getNsURI());
-    assertTrue(ePackage2 instanceof Model2Package);
+    assertEquals(true, ePackage2 instanceof Model2Package);
   }
 
   private EGlobalPackageDef createEGlobalPackageDef(EPackage ePackage)

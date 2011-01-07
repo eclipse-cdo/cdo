@@ -66,6 +66,6 @@ public class CDOSessionDefImplTest extends AbstractCDOTest
     cdoSessionDef.setRepositoryName(IRepositoryConfig.REPOSITORY_NAME);
     cdoSessionDef.setCdoPackageRegistryDef(CDODefsUtil.createEagerPackageRegistryDef());
     CDOSession cdoSession = (CDOSession)cdoSessionDef.getInstance();
-    assertTrue(LifecycleUtil.isActive(cdoSession));
+    assertEquals(true, LifecycleUtil.isActive(cdoSession));
   }
 }

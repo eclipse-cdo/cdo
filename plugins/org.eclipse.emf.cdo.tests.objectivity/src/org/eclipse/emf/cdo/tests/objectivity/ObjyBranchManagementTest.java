@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests.objectivity;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.cdo.server.internal.objectivity.db.FdManager;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyConnection;
@@ -173,7 +172,7 @@ public class ObjyBranchManagementTest
     dbStore.begin();
     int branchId = dbStore.getBranchManager().nextBranchId();
     dbStore.commit();
-    assertTrue(branchId > 0);
+    assertEquals(true, branchId > 0);
   }
 
   @Test
@@ -195,7 +194,7 @@ public class ObjyBranchManagementTest
     dbStore.begin();
     ObjyBranch objyBranch = dbStore.getBranchManager().getBranch(1);
     dbStore.commit();
-    assertTrue(objyBranch == null);
+    assertEquals(true, objyBranch == null);
   }
 
   @Test
@@ -225,8 +224,8 @@ public class ObjyBranchManagementTest
     dbStore.begin();
     int nextBranchId = dbStore.getBranchManager().nextBranchId();
     dbStore.commit();
-    assertTrue(branchIdA < nextBranchId);
-    assertTrue(branchIdB < nextBranchId);
+    assertEquals(true, branchIdA < nextBranchId);
+    assertEquals(true, branchIdB < nextBranchId);
   }
 
   @Test
@@ -324,7 +323,7 @@ public class ObjyBranchManagementTest
 
     // delete it.
     dbStore.begin();
-    assertTrue(dbStore.getBranchManager().deleteBranch(branchId));
+    assertEquals(true, dbStore.getBranchManager().deleteBranch(branchId));
     dbStore.commit();
   }
 
@@ -484,7 +483,7 @@ public class ObjyBranchManagementTest
       {
         Temp tempObj = (Temp)itr.next();
         assertEquals(tempObj.getBranchId(), branchId);
-        assertTrue(tempObj.getRevision() > 1);
+        assertEquals(true, tempObj.getRevision() > 1);
         actualList.add(tempObj);
       }
       assertEquals(objectList.size(), actualList.size());
@@ -541,7 +540,7 @@ public class ObjyBranchManagementTest
       ObjyBranch objyBranch = dbStore.getBranchManager().getBranch(branchId);
       for (Temp tempObj : objectList)
       {
-        assertTrue(objyBranch.deleteRevision(tempObj));
+        assertEquals(true, objyBranch.deleteRevision(tempObj));
       }
       dbStore.commit();
     }

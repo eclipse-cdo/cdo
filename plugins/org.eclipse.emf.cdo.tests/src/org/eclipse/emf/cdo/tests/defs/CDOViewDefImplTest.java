@@ -66,7 +66,7 @@ public class CDOViewDefImplTest extends AbstractCDOTest
   public void testCreateView()
   {
     CDOView cdoView = (CDOView)cdoViewDef.getInstance();
-    assertTrue(cdoView.isReadOnly());
+    assertEquals(true, cdoView.isReadOnly());
   }
 
   public void testCreateViewCreatesOnceAndReuses()
@@ -74,7 +74,7 @@ public class CDOViewDefImplTest extends AbstractCDOTest
     CDOView thisCdoViewReference = (CDOView)cdoViewDef.getInstance();
     CDOView thatCdoViewReference = (CDOView)cdoViewDef.getInstance();
 
-    assertTrue(thisCdoViewReference == thatCdoViewReference);
+    assertEquals(true, thisCdoViewReference == thatCdoViewReference);
   }
 
   public void testViewCreatedCanRead() throws CommitException
@@ -93,7 +93,7 @@ public class CDOViewDefImplTest extends AbstractCDOTest
   {
     CDOView cdoView = (CDOView)cdoViewDef.getInstance();
     cdoViewDef.unsetInstance(); // deactivates instance
-    assertTrue(((CDOViewDefImpl)cdoViewDef).getInternalInstance() == null);
-    assertTrue(!LifecycleUtil.isActive(cdoView));
+    assertEquals(true, ((CDOViewDefImpl)cdoViewDef).getInternalInstance() == null);
+    assertEquals(true, !LifecycleUtil.isActive(cdoView));
   }
 }

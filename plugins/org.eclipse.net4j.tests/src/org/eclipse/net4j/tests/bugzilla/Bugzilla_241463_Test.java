@@ -20,7 +20,6 @@ import org.eclipse.net4j.internal.tcp.TCPServerConnector;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tests.AbstractTransportTest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.ManagedContainer;
@@ -90,7 +89,7 @@ public class Bugzilla_241463_Test extends AbstractTransportTest
             @Override
             public InternalChannel inverseOpenChannel(short channelIndex, String protocolID)
             {
-              throw new ImplementationError("Simulated problem"); //$NON-NLS-1$
+              throw new RuntimeException("Simulated problem"); //$NON-NLS-1$
             }
           };
         }

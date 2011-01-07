@@ -199,6 +199,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     {
       protocol.setStreamWrapper(streamWrapper);
     }
+
     protocol.open(connector);
     return protocol;
   }

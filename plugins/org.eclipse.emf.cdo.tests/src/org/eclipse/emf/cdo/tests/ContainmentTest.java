@@ -364,7 +364,7 @@ public class ContainmentTest extends AbstractCDOTest
       EClass eClass = (EClass)packageObject.getEClassifier("SchoolBook");
 
       EObject container = packageObject.getEFactoryInstance().create(eClass);
-      Order contained = getModel1Factory().createOrder();
+      Order contained = getModel1Factory().createPurchaseOrder();
 
       resource1.getContents().add(container);
       resource2.getContents().add(contained);
@@ -423,7 +423,7 @@ public class ContainmentTest extends AbstractCDOTest
       EClass eClass = (EClass)packageObject.getEClassifier("SchoolBook");
 
       EObject container = packageObject.getEFactoryInstance().create(eClass);
-      Order contained = getModel1Factory().createOrder();
+      Order contained = getModel1Factory().createPurchaseOrder();
 
       resource1.getContents().add(container);
       resource2.getContents().add(contained);

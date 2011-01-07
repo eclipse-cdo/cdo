@@ -295,6 +295,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   }
 
   @Override
+  protected boolean isMapped(EClass eClass)
+  {
+    return !eClass.isAbstract() && !eClass.isInterface();
+  }
+
+  @Override
   protected Collection<EClass> getClassesWithObjectInfo()
   {
     return getClassMappings().keySet();

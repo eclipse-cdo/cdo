@@ -1562,7 +1562,7 @@ public class ResourceTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(oldPath);
-      Order order = getModel1Factory().createOrder();
+      Order order = getModel1Factory().createPurchaseOrder();
       resource.getContents().add(order);
 
       String path = CDOURIUtil.extractResourcePath(resource.getURI());

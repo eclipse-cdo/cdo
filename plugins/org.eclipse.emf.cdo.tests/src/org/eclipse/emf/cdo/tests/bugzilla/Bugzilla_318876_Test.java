@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -40,11 +39,11 @@ public class Bugzilla_318876_Test extends AbstractCDOTest
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.createResource("/r1"); //$NON-NLS-1$
 
-    PurchaseOrder po1 = Model1Factory.eINSTANCE.createPurchaseOrder();
+    PurchaseOrder po1 = getModel1Factory().createPurchaseOrder();
     po1.setDate(new Date());
     r1.getContents().add(po1);
 
-    Supplier supplier = Model1Factory.eINSTANCE.createSupplier();
+    Supplier supplier = getModel1Factory().createSupplier();
     supplier.getPurchaseOrders().add(po1);
     r1.getContents().add(supplier);
 

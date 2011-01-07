@@ -35,7 +35,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="orderByProduct" upperBound="-1"
         eType="#//ProductToOrder" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Order">
+  <eClassifiers xsi:type="ecore:EClass" name="Order" abstract="true">
     <eAnnotations source="teneo.jpa">
       <details key="value" value="@Entity(name=&quot;BaseOrder&quot;)"/>
     </eAnnotations>

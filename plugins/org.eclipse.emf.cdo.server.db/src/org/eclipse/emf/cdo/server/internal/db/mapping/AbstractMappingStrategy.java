@@ -529,6 +529,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public final IClassMapping getClassMapping(EClass eClass)
   {
+    if (!isMapped(eClass))
+    {
+      throw new IllegalArgumentException("Class is not mapped: " + eClass);
+    }
+
     // Try without synchronization first; this will almost always succeed, so it avoids the
     // performance penalty of syncing in the majority of cases
     IClassMapping result = classMappings.get(eClass);
@@ -586,7 +591,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
           if (eClassifier instanceof EClass)
           {
             EClass eClass = (EClass)eClassifier;
-            if (!eClass.isAbstract() && !eClass.isInterface())
+            if (isMapped(eClass))
             {
               getClassMapping(eClass); // Get or create it
             }
@@ -595,6 +600,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       }
     }
   }
+
+  protected abstract boolean isMapped(EClass eClass);
 
   public ITypeMapping createValueMapping(EStructuralFeature feature)
   {

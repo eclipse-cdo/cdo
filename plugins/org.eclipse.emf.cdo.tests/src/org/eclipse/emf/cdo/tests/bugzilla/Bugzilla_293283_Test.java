@@ -3,7 +3,6 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -14,7 +13,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -42,10 +41,9 @@ public class Bugzilla_293283_Test extends AbstractCDOTest
     CDOResource r1 = tx.getOrCreateResource("/r1"); //$NON-NLS-1$
     r1.getContents().clear();
 
-    Model1Factory factory = Model1Factory.eINSTANCE;
-    order1 = factory.createOrder();
-    OrderDetail detail1 = factory.createOrderDetail();
-    OrderDetail detail2 = factory.createOrderDetail();
+    order1 = getModel1Factory().createPurchaseOrder();
+    OrderDetail detail1 = getModel1Factory().createOrderDetail();
+    OrderDetail detail2 = getModel1Factory().createOrderDetail();
     order1.getOrderDetails().add(detail1);
     order1.getOrderDetails().add(detail2);
     r1.getContents().add(order1);
@@ -99,7 +97,7 @@ public class Bugzilla_293283_Test extends AbstractCDOTest
       {
       case ADD:
       {
-        OrderDetail newDetail = Model1Factory.eINSTANCE.createOrderDetail();
+        OrderDetail newDetail = getModel1Factory().createOrderDetail();
         order1.getOrderDetails().add(3, newDetail);
         break;
       }
@@ -122,7 +120,7 @@ public class Bugzilla_293283_Test extends AbstractCDOTest
 
       case SET:
       {
-        OrderDetail newDetail = Model1Factory.eINSTANCE.createOrderDetail();
+        OrderDetail newDetail = getModel1Factory().createOrderDetail();
         order1.getOrderDetails().set(3, newDetail);
         break;
       }

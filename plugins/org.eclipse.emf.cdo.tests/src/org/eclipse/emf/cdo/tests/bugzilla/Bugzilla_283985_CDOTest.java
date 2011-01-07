@@ -170,10 +170,10 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     r1.getContents().clear();
 
     // Set things up
-    Model1Factory factory = Model1Factory.eINSTANCE;
-    Order order1 = factory.createOrder();
-    Order order2 = factory.createOrder();
-    Order order3 = factory.createOrder();
+    Model1Factory factory = getModel1Factory();
+    Order order1 = factory.createPurchaseOrder();
+    Order order2 = factory.createPurchaseOrder();
+    Order order3 = factory.createPurchaseOrder();
     OrderDetail detail1 = factory.createOrderDetail();
     OrderDetail detail2 = factory.createOrderDetail();
     OrderDetail detail3 = factory.createOrderDetail();
@@ -353,9 +353,9 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     r1.getContents().clear();
 
     // Set things up
-    Model1Factory factory = Model1Factory.eINSTANCE;
-    Order order1 = factory.createOrder();
-    Order order2 = factory.createOrder();
+    Model1Factory factory = getModel1Factory();
+    Order order1 = factory.createPurchaseOrder();
+    Order order2 = factory.createPurchaseOrder();
     OrderDetail detail1 = factory.createOrderDetail();
     r1.getContents().add(order1);
     r1.getContents().add(order2);
@@ -420,9 +420,9 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     r1.getContents().clear();
 
     // Set things up
-    Model1Factory factory = Model1Factory.eINSTANCE;
-    Order order1 = factory.createOrder();
-    Order order2 = factory.createOrder();
+    Model1Factory factory = getModel1Factory();
+    Order order1 = factory.createPurchaseOrder();
+    Order order2 = factory.createPurchaseOrder();
     OrderDetail detail1 = factory.createOrderDetail();
     order1.getOrderDetails().add(detail1);
     r1.getContents().add(order1);
@@ -476,9 +476,9 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     r1.getContents().clear();
 
     // Set things up
-    Model1Factory factory = Model1Factory.eINSTANCE;
-    Order order1 = factory.createOrder();
-    Order order2 = factory.createOrder();
+    Model1Factory factory = getModel1Factory();
+    Order order1 = factory.createPurchaseOrder();
+    Order order2 = factory.createPurchaseOrder();
     OrderDetail detail1 = factory.createOrderDetail();
     r1.getContents().add(order1);
     r1.getContents().add(order2);

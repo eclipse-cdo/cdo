@@ -297,7 +297,7 @@ public class SavePointTest extends AbstractCDOTest
     CDOSession client2 = openSession();
     CDOTransaction transaction2 = client2.openTransaction();
     CDOResource object2Y = transaction2.getResource("/object2");
-    object2Y.getContents().add(getModel1Factory().createOrder());
+    object2Y.getContents().add(getModel1Factory().createPurchaseOrder());
 
     // client2 commits
     transaction2.commit();

@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -34,22 +33,22 @@ public class Bugzilla_302414_Test extends AbstractCDOTest
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.createResource("/r1"); //$NON-NLS-1$
 
-    Company company = Model1Factory.eINSTANCE.createCompany();
+    Company company = getModel1Factory().createCompany();
     r1.getContents().add(company);
     tx.commit();
 
     List<PurchaseOrder> list = company.getPurchaseOrders();
 
-    PurchaseOrder foo = Model1Factory.eINSTANCE.createPurchaseOrder();
+    PurchaseOrder foo = getModel1Factory().createPurchaseOrder();
     list.add(foo);
     list.remove(foo);
 
-    PurchaseOrder bar = Model1Factory.eINSTANCE.createPurchaseOrder();
+    PurchaseOrder bar = getModel1Factory().createPurchaseOrder();
     list.add(bar);
 
     for (int i = 0; i < 10; i++)
     {
-      company.getPurchaseOrders().add(Model1Factory.eINSTANCE.createPurchaseOrder());
+      company.getPurchaseOrders().add(getModel1Factory().createPurchaseOrder());
     }
 
     try
@@ -72,7 +71,7 @@ public class Bugzilla_302414_Test extends AbstractCDOTest
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.createResource("/r1"); //$NON-NLS-1$
 
-    Company company = Model1Factory.eINSTANCE.createCompany();
+    Company company = getModel1Factory().createCompany();
     r1.getContents().add(company);
     tx.commit();
 
@@ -82,8 +81,8 @@ public class Bugzilla_302414_Test extends AbstractCDOTest
     {
       for (int i = 0; i < 20; i++)
       {
-        PurchaseOrder foo1 = Model1Factory.eINSTANCE.createPurchaseOrder();
-        PurchaseOrder foo2 = Model1Factory.eINSTANCE.createPurchaseOrder();
+        PurchaseOrder foo1 = getModel1Factory().createPurchaseOrder();
+        PurchaseOrder foo2 = getModel1Factory().createPurchaseOrder();
         list.add(foo1);
         list.add(foo2);
         list.remove(foo1);

@@ -38,14 +38,12 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ProductToOrderImpl()
@@ -55,7 +53,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -66,7 +63,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -77,7 +73,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Product1 getTypedKey()
@@ -87,7 +82,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTypedKey(Product1 newKey)
@@ -97,7 +91,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public SalesOrder getTypedValue()
@@ -107,7 +100,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTypedValue(SalesOrder newValue)
@@ -117,14 +109,12 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getHash()
@@ -132,14 +122,13 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = theKey == null ? 0 : theKey.hashCode();
+      hash = (theKey == null ? 0 : theKey.hashCode());
     }
     return hash;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setHash(int hash)
@@ -149,7 +138,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Product1 getKey()
@@ -159,7 +147,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setKey(Product1 key)
@@ -169,7 +156,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public SalesOrder getValue()
@@ -179,7 +165,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public SalesOrder setValue(SalesOrder value)
@@ -191,7 +176,6 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

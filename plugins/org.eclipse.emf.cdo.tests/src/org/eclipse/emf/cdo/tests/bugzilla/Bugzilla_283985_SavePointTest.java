@@ -44,10 +44,10 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
   {
     super.setUp();
 
-    Model1Factory factory = Model1Factory.eINSTANCE;
+    Model1Factory factory = getModel1Factory();
 
-    order1 = factory.createOrder();
-    order2 = factory.createOrder();
+    order1 = factory.createPurchaseOrder();
+    order2 = factory.createPurchaseOrder();
     detail1 = factory.createOrderDetail();
     detail2 = factory.createOrderDetail();
     detail3 = factory.createOrderDetail();
@@ -98,13 +98,13 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
     order1.getOrderDetails().remove(detail1);
     assertTransient(detail1);
 
-    assertTrue(sp.getDetachedObjects().containsValue(detail1));
+    assertTrue(sp.getDetachedObjects().containsValue(CDOUtil.getCDOObject(detail1)));
 
     sp = (InternalCDOSavepoint)transaction.setSavepoint();
-    assertTrue(sp.getPreviousSavepoint().getDetachedObjects().containsValue(detail1));
+    assertTrue(sp.getPreviousSavepoint().getDetachedObjects().containsValue(CDOUtil.getCDOObject(detail1)));
 
     order1.getOrderDetails().add(detail1);
-    assertTrue(sp.getReattachedObjects().containsValue(detail1));
+    assertTrue(sp.getReattachedObjects().containsValue(CDOUtil.getCDOObject(detail1)));
     assertDirty(detail1, transaction);
 
     sp.rollback();
@@ -148,16 +148,16 @@ public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
   public void test4()
   {
     CDOID id = CDOUtil.getCDOObject(detail1).cdoID();
-    assertSame(transaction.getObject(id), detail1);
+    assertSame(transaction.getObject(id), CDOUtil.getCDOObject(detail1));
 
     // Detach
     order1.getOrderDetails().remove(detail1);
 
     // And re-attach
     order1.getOrderDetails().add(detail1);
-    assertSame(transaction.getObject(id), detail1);
+    assertSame(transaction.getObject(id), CDOUtil.getCDOObject(detail1));
 
     transaction.rollback();
-    assertSame(transaction.getObject(id), detail1);
+    assertSame(transaction.getObject(id), CDOUtil.getCDOObject(detail1));
   }
 }

@@ -152,7 +152,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
   public void testBugzilla_258278_List() throws Exception
   {
     {
-      Order order = getModel1Factory().createOrder();
+      Order order = getModel1Factory().createPurchaseOrder();
       assertEquals(false, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
       CDOSession session = openSession();

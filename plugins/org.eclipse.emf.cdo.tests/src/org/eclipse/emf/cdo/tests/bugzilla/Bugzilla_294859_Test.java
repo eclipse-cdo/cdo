@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -52,9 +51,9 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
 
     CDOResource r1 = tx.createResource(RESOURCE_NAME);
 
-    Company company1 = Model1Factory.eINSTANCE.createCompany();
-    Company company2 = Model1Factory.eINSTANCE.createCompany();
-    PurchaseOrder purchaseOrder = Model1Factory.eINSTANCE.createPurchaseOrder();
+    Company company1 = getModel1Factory().createCompany();
+    Company company2 = getModel1Factory().createCompany();
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
     company1.getPurchaseOrders().add(purchaseOrder);
     r1.getContents().add(company1);
     r1.getContents().add(company2);
@@ -83,7 +82,7 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
     assertNotNull(revDelta);
     assertTrue(revDelta.getFeatureDeltas().size() == 1);
     CDOFeatureDelta featDelta = revDelta.getFeatureDeltas().get(0);
-    EAttribute eAttr = Model1Factory.eINSTANCE.getModel1Package().getPurchaseOrder_Date();
+    EAttribute eAttr = getModel1Factory().getModel1Package().getPurchaseOrder_Date();
     assertTrue(featDelta instanceof CDOSetFeatureDelta);
     CDOSetFeatureDelta setFeatDelta = (CDOSetFeatureDelta)featDelta;
     assertSame(eAttr, setFeatDelta.getFeature());

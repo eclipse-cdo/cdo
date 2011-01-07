@@ -28,27 +28,26 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderDetailImpl#getOrder <em>Order</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderDetailImpl#getProduct <em>Product</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderDetailImpl#getPrice <em>Price</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderDetailImpl#getOrder <em>Order</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderDetailImpl#getProduct <em>Product</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderDetailImpl#getPrice <em>Price</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The cached value of the '{@link #getProduct() <em>Product</em>}' reference. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getProduct() <em>Product</em>}' reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getProduct()
    * @generated
    * @ordered
@@ -77,7 +76,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected OrderDetailImpl()
@@ -87,7 +85,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -98,21 +95,17 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Order getOrder()
   {
     if (eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER)
-    {
       return null;
-    }
     return (Order)eContainer();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotificationChain basicSetOrder(Order newOrder, NotificationChain msgs)
@@ -123,42 +116,30 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setOrder(Order newOrder)
   {
-    if (newOrder != eInternalContainer() || eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER
-        && newOrder != null)
+    if (newOrder != eInternalContainer()
+        || (eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER && newOrder != null))
     {
       if (EcoreUtil.isAncestor(this, newOrder))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newOrder != null)
-      {
         msgs = ((InternalEObject)newOrder).eInverseAdd(this, Model1Package.ORDER__ORDER_DETAILS, Order.class, msgs);
-      }
       msgs = basicSetOrder(newOrder, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__ORDER, newOrder, newOrder));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Product1 getProduct()
@@ -170,10 +151,8 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
       if (product != oldProduct)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.ORDER_DETAIL__PRODUCT, oldProduct,
               product));
-        }
       }
     }
     return product;
@@ -181,7 +160,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Product1 basicGetProduct()
@@ -191,7 +169,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotificationChain basicSetProduct(Product1 newProduct, NotificationChain msgs)
@@ -203,20 +180,15 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model1Package.ORDER_DETAIL__PRODUCT, oldProduct, newProduct);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setProduct(Product1 newProduct)
@@ -225,30 +197,21 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     {
       NotificationChain msgs = null;
       if (product != null)
-      {
         msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class,
             msgs);
-      }
       if (newProduct != null)
-      {
         msgs = ((InternalEObject)newProduct).eInverseAdd(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class,
             msgs);
-      }
       msgs = basicSetProduct(newProduct, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__PRODUCT, newProduct, newProduct));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public float getPrice()
@@ -258,7 +221,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setPrice(float newPrice)
@@ -266,14 +228,11 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     float oldPrice = price;
     price = newPrice;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__PRICE, oldPrice, price));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -283,16 +242,12 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     {
     case Model1Package.ORDER_DETAIL__ORDER:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetOrder((Order)otherEnd, msgs);
     case Model1Package.ORDER_DETAIL__PRODUCT:
       if (product != null)
-      {
         msgs = ((InternalEObject)product).eInverseRemove(this, Model1Package.PRODUCT1__ORDER_DETAILS, Product1.class,
             msgs);
-      }
       return basicSetProduct((Product1)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -300,7 +255,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -318,7 +272,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -334,7 +287,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -346,9 +298,7 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
       return getOrder();
     case Model1Package.ORDER_DETAIL__PRODUCT:
       if (resolve)
-      {
         return getProduct();
-      }
       return basicGetProduct();
     case Model1Package.ORDER_DETAIL__PRICE:
       return getPrice();
@@ -358,7 +308,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -381,7 +330,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -404,7 +352,6 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -424,16 +371,13 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (price: ");

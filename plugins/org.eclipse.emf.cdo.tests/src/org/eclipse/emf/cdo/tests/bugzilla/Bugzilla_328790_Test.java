@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.legacy.model1.Model1Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
@@ -37,7 +36,7 @@ public class Bugzilla_328790_Test extends AbstractCDOTest
     CDOTransaction tx = session.openTransaction(resourceSet);
 
     Resource resource = resourceSet.createResource(URI.createURI("cdo://myUri"));
-    EObject object = Model1Factory.eINSTANCE.createAddress();
+    EObject object = getModel1Factory().createAddress();
     resource.getContents().add(object);
 
     assertTrue(resource.isLoaded());
@@ -56,7 +55,7 @@ public class Bugzilla_328790_Test extends AbstractCDOTest
     CDOTransaction tx = session.openTransaction();
 
     CDOResource resource = tx.createResource("/myUri");
-    EObject object = Model1Factory.eINSTANCE.createAddress();
+    EObject object = getModel1Factory().createAddress();
     resource.getContents().add(object);
 
     assertTrue(resource.isLoaded());

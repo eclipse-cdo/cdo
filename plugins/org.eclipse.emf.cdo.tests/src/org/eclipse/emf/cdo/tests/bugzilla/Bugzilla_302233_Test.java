@@ -33,7 +33,7 @@ public class Bugzilla_302233_Test extends AbstractCDOTest
 {
   public void testUnset() throws Exception
   {
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     EStructuralFeature feature = getModel1Package().getOrder_OrderDetails();
     assertEquals(false, order.eIsSet(feature));
 

@@ -35,105 +35,90 @@ import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model1PackageImpl extends EPackageImpl implements Model1Package
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass addressEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass companyEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass supplierEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass customerEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass orderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass orderDetailEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass purchaseOrderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass salesOrderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass categoryEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass product1EClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass orderAddressEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass productToOrderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EEnum vatEEnum = null;
@@ -158,7 +143,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
@@ -204,7 +188,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getAddress()
@@ -214,7 +197,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getAddress_Name()
@@ -224,7 +206,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getAddress_Street()
@@ -234,7 +215,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getAddress_City()
@@ -244,7 +224,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCompany()
@@ -254,7 +233,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_Categories()
@@ -264,7 +242,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_Suppliers()
@@ -274,7 +251,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_Customers()
@@ -284,7 +260,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_PurchaseOrders()
@@ -294,7 +269,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_SalesOrders()
@@ -304,7 +278,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getSupplier()
@@ -314,7 +287,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getSupplier_PurchaseOrders()
@@ -324,7 +296,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getSupplier_Preferred()
@@ -334,7 +305,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCustomer()
@@ -344,7 +314,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCustomer_SalesOrders()
@@ -354,7 +323,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCustomer_OrderByProduct()
@@ -364,7 +332,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getOrder()
@@ -374,7 +341,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getOrder_OrderDetails()
@@ -384,7 +350,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getOrderDetail()
@@ -394,7 +359,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getOrderDetail_Order()
@@ -404,7 +368,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getOrderDetail_Product()
@@ -414,7 +377,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getOrderDetail_Price()
@@ -424,7 +386,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getPurchaseOrder()
@@ -434,7 +395,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getPurchaseOrder_Date()
@@ -444,7 +404,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getPurchaseOrder_Supplier()
@@ -454,7 +413,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getSalesOrder()
@@ -464,7 +422,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getSalesOrder_Id()
@@ -474,7 +431,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getSalesOrder_Customer()
@@ -484,7 +440,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCategory()
@@ -494,7 +449,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCategory_Name()
@@ -504,7 +458,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCategory_Categories()
@@ -514,7 +467,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCategory_Products()
@@ -524,7 +476,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getProduct1()
@@ -534,7 +485,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getProduct1_Name()
@@ -544,7 +494,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getProduct1_OrderDetails()
@@ -554,7 +503,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getProduct1_Vat()
@@ -564,7 +512,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getProduct1_Description()
@@ -574,7 +521,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getOrderAddress()
@@ -584,7 +530,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getOrderAddress_TestAttribute()
@@ -594,7 +539,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getProductToOrder()
@@ -604,7 +548,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getProductToOrder_Key()
@@ -614,7 +557,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getProductToOrder_Value()
@@ -624,7 +566,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EEnum getVAT()
@@ -634,7 +575,6 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model1Factory getModel1Factory()
@@ -644,23 +584,20 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -724,23 +661,20 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -753,14 +687,14 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    companyEClass.getESuperTypes().add(getAddress());
-    supplierEClass.getESuperTypes().add(getAddress());
-    customerEClass.getESuperTypes().add(getAddress());
-    purchaseOrderEClass.getESuperTypes().add(getOrder());
-    salesOrderEClass.getESuperTypes().add(getOrder());
-    orderAddressEClass.getESuperTypes().add(getAddress());
-    orderAddressEClass.getESuperTypes().add(getOrder());
-    orderAddressEClass.getESuperTypes().add(getOrderDetail());
+    companyEClass.getESuperTypes().add(this.getAddress());
+    supplierEClass.getESuperTypes().add(this.getAddress());
+    customerEClass.getESuperTypes().add(this.getAddress());
+    purchaseOrderEClass.getESuperTypes().add(this.getOrder());
+    salesOrderEClass.getESuperTypes().add(this.getOrder());
+    orderAddressEClass.getESuperTypes().add(this.getAddress());
+    orderAddressEClass.getESuperTypes().add(this.getOrder());
+    orderAddressEClass.getESuperTypes().add(this.getOrderDetail());
 
     // Initialize classes and features; add operations and parameters
     initEClass(addressEClass, Address.class, "Address", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -772,49 +706,49 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(companyEClass, Company.class, "Company", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCompany_Categories(), getCategory(), null, "categories", null, 0, -1, Company.class,
+    initEReference(getCompany_Categories(), this.getCategory(), null, "categories", null, 0, -1, Company.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getCompany_Suppliers(), getSupplier(), null, "suppliers", null, 0, -1, Company.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getCompany_Customers(), getCustomer(), null, "customers", null, 0, -1, Company.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getCompany_PurchaseOrders(), getPurchaseOrder(), null, "purchaseOrders", null, 0, -1, Company.class,
+    initEReference(getCompany_Suppliers(), this.getSupplier(), null, "suppliers", null, 0, -1, Company.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getCompany_SalesOrders(), getSalesOrder(), null, "salesOrders", null, 0, -1, Company.class,
+    initEReference(getCompany_Customers(), this.getCustomer(), null, "customers", null, 0, -1, Company.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getCompany_PurchaseOrders(), this.getPurchaseOrder(), null, "purchaseOrders", null, 0, -1,
+        Company.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCompany_SalesOrders(), this.getSalesOrder(), null, "salesOrders", null, 0, -1, Company.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     initEClass(supplierEClass, Supplier.class, "Supplier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSupplier_PurchaseOrders(), getPurchaseOrder(), getPurchaseOrder_Supplier(), "purchaseOrders",
-        null, 0, -1, Supplier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSupplier_PurchaseOrders(), this.getPurchaseOrder(), this.getPurchaseOrder_Supplier(),
+        "purchaseOrders", null, 0, -1, Supplier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSupplier_Preferred(), ecorePackage.getEBoolean(), "preferred", "true", 0, 1, Supplier.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(customerEClass, Customer.class, "Customer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCustomer_SalesOrders(), getSalesOrder(), getSalesOrder_Customer(), "salesOrders", null, 0, -1,
-        Customer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCustomer_OrderByProduct(), getProductToOrder(), null, "orderByProduct", null, 0, -1,
+    initEReference(getCustomer_SalesOrders(), this.getSalesOrder(), this.getSalesOrder_Customer(), "salesOrders", null,
+        0, -1, Customer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCustomer_OrderByProduct(), this.getProductToOrder(), null, "orderByProduct", null, 0, -1,
         Customer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(orderEClass, Order.class, "Order", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOrder_OrderDetails(), getOrderDetail(), getOrderDetail_Order(), "orderDetails", null, 0, -1,
-        Order.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(orderEClass, Order.class, "Order", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getOrder_OrderDetails(), this.getOrderDetail(), this.getOrderDetail_Order(), "orderDetails", null,
+        0, -1, Order.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(orderDetailEClass, OrderDetail.class, "OrderDetail", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOrderDetail_Order(), getOrder(), getOrder_OrderDetails(), "order", null, 1, 1, OrderDetail.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getOrderDetail_Product(), getProduct1(), getProduct1_OrderDetails(), "product", null, 0, 1,
-        OrderDetail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getOrderDetail_Order(), this.getOrder(), this.getOrder_OrderDetails(), "order", null, 1, 1,
+        OrderDetail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOrderDetail_Product(), this.getProduct1(), this.getProduct1_OrderDetails(), "product", null, 0,
+        1, OrderDetail.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getOrderDetail_Price(), ecorePackage.getEFloat(), "price", null, 0, 1, OrderDetail.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -823,35 +757,35 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPurchaseOrder_Date(), ecorePackage.getEDate(), "date", null, 0, 1, PurchaseOrder.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPurchaseOrder_Supplier(), getSupplier(), getSupplier_PurchaseOrders(), "supplier", null, 1, 1,
-        PurchaseOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getPurchaseOrder_Supplier(), this.getSupplier(), this.getSupplier_PurchaseOrders(), "supplier",
+        null, 1, 1, PurchaseOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(salesOrderEClass, SalesOrder.class, "SalesOrder", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSalesOrder_Id(), ecorePackage.getEInt(), "id", null, 0, 1, SalesOrder.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSalesOrder_Customer(), getCustomer(), getCustomer_SalesOrders(), "customer", null, 1, 1,
-        SalesOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getSalesOrder_Customer(), this.getCustomer(), this.getCustomer_SalesOrders(), "customer", null, 1,
+        1, SalesOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCategory_Name(), ecorePackage.getEString(), "name", null, 0, 1, Category.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCategory_Categories(), getCategory(), null, "categories", null, 0, -1, Category.class,
+    initEReference(getCategory_Categories(), this.getCategory(), null, "categories", null, 0, -1, Category.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getCategory_Products(), getProduct1(), null, "products", null, 0, -1, Category.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEReference(getCategory_Products(), this.getProduct1(), null, "products", null, 0, -1, Category.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(product1EClass, Product1.class, "Product1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getProduct1_Name(), ecorePackage.getEString(), "name", null, 0, 1, Product1.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProduct1_OrderDetails(), getOrderDetail(), getOrderDetail_Product(), "orderDetails", null, 0, -1,
-        Product1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getProduct1_Vat(), getVAT(), "vat", "vat15", 0, 1, Product1.class, !IS_TRANSIENT, !IS_VOLATILE,
+    initEReference(getProduct1_OrderDetails(), this.getOrderDetail(), this.getOrderDetail_Product(), "orderDetails",
+        null, 0, -1, Product1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getProduct1_Vat(), this.getVAT(), "vat", "vat15", 0, 1, Product1.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProduct1_Description(), ecorePackage.getEString(), "description", null, 0, 1, Product1.class,
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -864,10 +798,10 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
 
     initEClass(productToOrderEClass, Map.Entry.class, "ProductToOrder", !IS_ABSTRACT, !IS_INTERFACE,
         !IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getProductToOrder_Key(), getProduct1(), null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getProductToOrder_Value(), getSalesOrder(), null, "value", null, 0, 1, Map.Entry.class,
+    initEReference(getProductToOrder_Key(), this.getProduct1(), null, "key", null, 0, 1, Map.Entry.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getProductToOrder_Value(), this.getSalesOrder(), null, "value", null, 0, 1, Map.Entry.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -886,13 +820,19 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   }
 
   /**
-   * Initializes the annotations for <b>teneo.jpa</b>. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Initializes the annotations for <b>teneo.jpa</b>.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void createTeneoAnnotations()
   {
     String source = "teneo.jpa";
+    addAnnotation(
+        this,
+        source,
+        new String[] {
+            "value",
+            "@hbGenericGenerators({@GenericGenerator(name=\"system-uuid\", strategy = \"org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOUUIDHexGenerator\")})" });
     addAnnotation(orderEClass, source, new String[] { "value", "@Entity(name=\"BaseOrder\")" });
     addAnnotation(getProduct1_Name(), source, new String[] { "value", "@Id" });
     addAnnotation(orderAddressEClass, source, new String[] { "value",

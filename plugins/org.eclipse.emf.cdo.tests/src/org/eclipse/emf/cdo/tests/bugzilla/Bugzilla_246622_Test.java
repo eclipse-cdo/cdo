@@ -38,7 +38,7 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
 
     CDOTransaction transaction1 = session.openTransaction();
     CDOResource res = transaction1.createResource("/test1");
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
 
     res.getContents().add(order);
@@ -48,7 +48,7 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
 
     assertEquals(CDOUtil.getCDOObject(order), CDOUtil.getCDOObject(orderDetail).cdoRevision().data().getContainerID());
 
-    Order order2 = getModel1Factory().createOrder();
+    Order order2 = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail2 = getModel1Factory().createOrderDetail();
 
     order2.getOrderDetails().add(orderDetail2);
@@ -70,7 +70,7 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
     assertEquals(CDOUtil.getCDOObject(order2).cdoID(), CDOUtil.getCDOObject(orderDetail2).cdoRevision().data()
         .getContainerID());
 
-    Order order3 = getModel1Factory().createOrder();
+    Order order3 = getModel1Factory().createPurchaseOrder();
 
     res.getContents().add(order3);
     order3.getOrderDetails().add(orderDetail2);

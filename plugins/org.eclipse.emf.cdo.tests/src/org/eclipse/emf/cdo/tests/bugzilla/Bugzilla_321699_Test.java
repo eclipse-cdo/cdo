@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Customer;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -42,7 +41,7 @@ public class Bugzilla_321699_Test extends AbstractCDOTest
 
     msg("Post-commit ID of resource = " + resource.cdoID());
 
-    Customer customer = Model1Factory.eINSTANCE.createCustomer();
+    Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
     CDOID customerID = CDOUtil.getCDOObject(customer).cdoID();
     msg("Pre-commit ID of customer = " + customerID);
@@ -51,7 +50,7 @@ public class Bugzilla_321699_Test extends AbstractCDOTest
 
     msg("Object fetched for customerID = " + fetchedObject);
 
-    assertSame(customer, fetchedObject);
+    assertSame(CDOUtil.getEObject(customer), CDOUtil.getEObject(fetchedObject));
 
     tx.close();
     session.close();

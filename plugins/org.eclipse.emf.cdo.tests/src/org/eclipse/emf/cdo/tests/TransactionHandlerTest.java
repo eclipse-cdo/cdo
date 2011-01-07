@@ -51,7 +51,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     assertEquals(true, handler.getListOfAddingObject().contains(resource1));
 
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
@@ -76,7 +76,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
       }
     });
 
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
@@ -100,7 +100,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
@@ -138,7 +138,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     transaction.addTransactionHandler(handler);
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
@@ -170,7 +170,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
       }
     });
 
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
@@ -201,7 +201,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     transaction.addTransactionHandler(handler);
 
     CDOResource resource1 = transaction.getOrCreateResource("/test1");
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
@@ -230,7 +230,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
       }
     });
 
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
@@ -254,7 +254,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     order.getOrderDetails().add(orderDetail);
 
@@ -325,7 +325,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     final Company company = getModel1Factory().createCompany();
 
     final CDOResource resource = transaction.getOrCreateResource("/test1");

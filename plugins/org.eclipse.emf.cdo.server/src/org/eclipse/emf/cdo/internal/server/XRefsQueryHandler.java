@@ -123,11 +123,14 @@ public class XRefsQueryHandler implements IQueryHandler
   public static void collectSourceCandidates(EClass eClass, Collection<EClass> concreteTypes,
       Map<EClass, List<EReference>> sourceCandidates)
   {
-    for (EStructuralFeature eStructuralFeature : eClass.getEAllStructuralFeatures())
+    if (!eClass.isAbstract() && !eClass.isInterface())
     {
-      if (eStructuralFeature instanceof EReference && EMFUtil.isPersistent(eStructuralFeature))
+      for (EStructuralFeature eStructuralFeature : eClass.getEAllStructuralFeatures())
       {
-        collectSourceCandidates(eClass, (EReference)eStructuralFeature, concreteTypes, sourceCandidates);
+        if (eStructuralFeature instanceof EReference && EMFUtil.isPersistent(eStructuralFeature))
+        {
+          collectSourceCandidates(eClass, (EReference)eStructuralFeature, concreteTypes, sourceCandidates);
+        }
       }
     }
   }

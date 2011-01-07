@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -35,14 +34,12 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
   {
     super.setUp();
 
-    Model1Factory factory = Model1Factory.eINSTANCE;
-
-    order1 = factory.createOrder();
-    order2 = factory.createOrder();
-    detail1 = factory.createOrderDetail();
-    detail2 = factory.createOrderDetail();
-    detail3 = factory.createOrderDetail();
-    detail4 = factory.createOrderDetail();
+    order1 = getModel1Factory().createPurchaseOrder();
+    order2 = getModel1Factory().createPurchaseOrder();
+    detail1 = getModel1Factory().createOrderDetail();
+    detail2 = getModel1Factory().createOrderDetail();
+    detail3 = getModel1Factory().createOrderDetail();
+    detail4 = getModel1Factory().createOrderDetail();
 
     order1.getOrderDetails().add(detail1);
     order1.getOrderDetails().add(detail2);
@@ -91,7 +88,7 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
       order2 = (Order)r1.getContents().get(1);
 
       // lookup detail object in new transaction
-      detail1 = (OrderDetail)tx.getObject(CDOUtil.getCDOObject(detail1).cdoID());
+      detail1 = (OrderDetail)CDOUtil.getEObject(tx.getObject(CDOUtil.getCDOObject(detail1).cdoID()));
 
       boolean contains1 = order1.getOrderDetails().contains(detail1);
       boolean contains2 = order2.getOrderDetails().contains(detail1);
@@ -147,7 +144,7 @@ public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
       CDOResource r1 = tx.getResource("/r1");
       order1 = (Order)r1.getContents().get(0);
       order2 = (Order)r1.getContents().get(1);
-      detail1 = (OrderDetail)tx.getObject(CDOUtil.getCDOObject(detail1).cdoID());
+      detail1 = (OrderDetail)CDOUtil.getEObject(tx.getObject(CDOUtil.getCDOObject(detail1).cdoID()));
 
       boolean contains1 = order1.getOrderDetails().contains(detail1);
       boolean contains2 = order2.getOrderDetails().contains(detail1);

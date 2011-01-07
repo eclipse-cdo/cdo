@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
-import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderAddress;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
@@ -36,21 +35,19 @@ import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static Model1Factory init()
@@ -72,8 +69,8 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Model1FactoryImpl()
@@ -83,7 +80,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -99,8 +95,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
       return createSupplier();
     case Model1Package.CUSTOMER:
       return createCustomer();
-    case Model1Package.ORDER:
-      return createOrder();
     case Model1Package.ORDER_DETAIL:
       return createOrderDetail();
     case Model1Package.PURCHASE_ORDER:
@@ -122,7 +116,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -139,7 +132,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -156,7 +148,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Address createAddress()
@@ -167,7 +158,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Supplier createSupplier()
@@ -178,7 +168,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public PurchaseOrder createPurchaseOrder()
@@ -189,7 +178,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public OrderDetail createOrderDetail()
@@ -200,7 +188,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public OrderAddress createOrderAddress()
@@ -211,7 +198,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Map.Entry<Product1, SalesOrder> createProductToOrder()
@@ -222,23 +208,19 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public VAT createVATFromString(EDataType eDataType, String initialValue)
   {
     VAT result = VAT.get(initialValue);
     if (result == null)
-    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
-    }
     return result;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String convertVATToString(EDataType eDataType, Object instanceValue)
@@ -248,7 +230,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Category createCategory()
@@ -259,7 +240,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Product1 createProduct1()
@@ -270,7 +250,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Company createCompany()
@@ -281,7 +260,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Customer createCustomer()
@@ -292,18 +270,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public Order createOrder()
-  {
-    OrderImpl order = new OrderImpl();
-    return order;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public SalesOrder createSalesOrder()
@@ -314,7 +280,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model1Package getModel1Package()
@@ -324,7 +289,6 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

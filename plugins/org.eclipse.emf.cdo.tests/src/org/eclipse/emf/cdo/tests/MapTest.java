@@ -122,9 +122,9 @@ public class MapTest extends AbstractCDOTest
   {
     Map<Order, OrderDetail> objects = new HashMap<Order, OrderDetail>();
 
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
 
     testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectMap(), objects, null);
   }
@@ -133,9 +133,9 @@ public class MapTest extends AbstractCDOTest
   {
     Map<Order, OrderDetail> objects = new HashMap<Order, OrderDetail>();
 
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
 
     testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectKeyContainedMap(),
         objects, null);
@@ -145,9 +145,9 @@ public class MapTest extends AbstractCDOTest
   {
     Map<Order, OrderDetail> objects = new HashMap<Order, OrderDetail>();
 
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
 
     testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectValueContainedMap(),
         objects, null);
@@ -157,9 +157,9 @@ public class MapTest extends AbstractCDOTest
   {
     Map<Order, OrderDetail> objects = new HashMap<Order, OrderDetail>();
 
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
-    objects.put(getModel1Factory().createOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
+    objects.put(getModel1Factory().createPurchaseOrder(), getModel1Factory().createOrderDetail());
 
     testMap(getModel2Factory().createMapHolder(), getModel2Package().getMapHolder_EObjectToEObjectBothContainedMap(),
         objects, null);

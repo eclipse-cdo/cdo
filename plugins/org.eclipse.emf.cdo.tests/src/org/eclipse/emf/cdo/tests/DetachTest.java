@@ -223,7 +223,7 @@ public class DetachTest extends AbstractCDOTest
   private void detachResource(ResourceSet rset, CDOResource resource, boolean commitBeforeDelete) throws Exception
   {
     CDOTransaction transaction = (CDOTransaction)resource.cdoView();
-    Order order = getModel1Factory().createOrder();
+    Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     Product1 product1 = getModel1Factory().createProduct1();
     product1.setName("product1");

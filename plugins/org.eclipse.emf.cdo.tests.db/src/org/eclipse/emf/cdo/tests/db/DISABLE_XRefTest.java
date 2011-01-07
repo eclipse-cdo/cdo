@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -19,23 +19,30 @@ import org.eclipse.emf.cdo.tests.db.AllTestsDBH2.H2;
 public class DISABLE_XRefTest extends XRefTest
 {
   @Override
-  public void testCrossReferenceMultivalueEReferenceQuery() throws Exception
+  protected void doSetUp() throws Exception
   {
+    super.doSetUp();
     skipConfig(H2.ReusableFolder.RANGE_INSTANCE);
-    super.testCrossReferenceMultivalueEReferenceQuery();
   }
 
-  @Override
-  public void testXRefsToMany() throws Exception
-  {
-    skipConfig(H2.ReusableFolder.RANGE_INSTANCE);
-    super.testXRefsToMany();
-  }
-
-  @Override
-  public void testXRefsToOne() throws Exception
-  {
-    skipConfig(H2.ReusableFolder.RANGE_INSTANCE);
-    super.testXRefsToOne();
-  }
+  // @Override
+  // public void testCrossReferenceMultivalueEReferenceQuery() throws Exception
+  // {
+  // skipConfig(H2.ReusableFolder.RANGE_INSTANCE);
+  // super.testCrossReferenceMultivalueEReferenceQuery();
+  // }
+  //
+  // @Override
+  // public void testXRefsToMany() throws Exception
+  // {
+  // skipConfig(H2.ReusableFolder.RANGE_INSTANCE);
+  // super.testXRefsToMany();
+  // }
+  //
+  // @Override
+  // public void testXRefsToOne() throws Exception
+  // {
+  // skipConfig(H2.ReusableFolder.RANGE_INSTANCE);
+  // super.testXRefsToOne();
+  // }
 }

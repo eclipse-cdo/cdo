@@ -37,7 +37,7 @@ public class Bugzilla_251544_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
-    Order order1 = getModel1Factory().createOrder();
+    Order order1 = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     Product1 product = getModel1Factory().createProduct1();
     product.setName("product");
@@ -64,7 +64,7 @@ public class Bugzilla_251544_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
-    Order order1 = getModel1Factory().createOrder();
+    Order order1 = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
     EList<OrderDetail> orderDetails = order1.getOrderDetails();
     order1.getOrderDetails().add(orderDetail);

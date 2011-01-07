@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
 import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
+import org.eclipse.emf.cdo.dawn.ui.composites.CDOResourceNodeChooserComposite.ResourceChooserValidator;
 import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewDiagramResourceWizardPage;
 import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewResourceWizardPage;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
@@ -130,7 +131,7 @@ public class DawnAcoreCreationWizard extends AcoreCreationWizard
     dawnDomainModelFilePage.setDescription(Messages.AcoreCreationWizard_DomainModelFilePageDescription);
 
     // allows to connect to an existing resource
-    dawnDomainModelFilePage.setResourceValidationType(DawnCreateNewResourceWizardPage.VALIDATION_WARN);
+    dawnDomainModelFilePage.setResourceValidationType(ResourceChooserValidator.VALIDATION_WARN);
     addPage(dawnDomainModelFilePage);
   }
 

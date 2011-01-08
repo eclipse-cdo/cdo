@@ -40,6 +40,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,6 +154,15 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         newObjects[i] = (InternalCDORevision)in.readCDORevision();
         monitor.worked();
       }
+
+      // Make the assignment of permanent IDs predictable
+      Arrays.sort(newObjects, new Comparator<InternalCDORevision>()
+      {
+        public int compare(InternalCDORevision r1, InternalCDORevision r2)
+        {
+          return r1.getID().compareTo(r2.getID());
+        }
+      });
 
       // Dirty objects
       if (TRACER.isEnabled())

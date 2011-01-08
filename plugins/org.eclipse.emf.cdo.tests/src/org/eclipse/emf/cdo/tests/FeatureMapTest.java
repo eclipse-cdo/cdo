@@ -181,11 +181,6 @@ public class FeatureMapTest extends AbstractCDOTest
     assertEquals(ref2, fmDb.getEStructuralFeature(7));
   }
 
-  // TODO remove, if at least one testcase is activated again
-  public void testDummy() throws Exception
-  {
-  }
-
   public void testFeatureMaps() throws Exception
   {
     EReference feature = getModel5Package().getTestFeatureMap_Doctors();

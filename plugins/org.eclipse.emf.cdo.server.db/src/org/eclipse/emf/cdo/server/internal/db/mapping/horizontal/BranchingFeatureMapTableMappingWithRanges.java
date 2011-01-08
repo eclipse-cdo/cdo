@@ -237,30 +237,30 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     builder.append(tableName);
     builder.append("("); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
-    builder.append(","); //$NON-NLS-1$
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_BRANCH);
-    builder.append(","); //$NON-NLS-1$
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
-    builder.append(","); //$NON-NLS-1$
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
-    builder.append(","); //$NON-NLS-1$
-
-    for (int i = 0; i < columnNames.size(); i++)
-    {
-      builder.append(columnNames.get(i));
-      builder.append(", "); //$NON-NLS-1$
-    }
-
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_IDX);
     builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_TAG);
-    builder.append(") VALUES (?, ?, ?, ?, "); //$NON-NLS-1$
+
     for (int i = 0; i < columnNames.size(); i++)
     {
-      builder.append("?, "); //$NON-NLS-1$
+      builder.append(", "); //$NON-NLS-1$
+      builder.append(columnNames.get(i));
     }
 
-    builder.append("?, ?)"); //$NON-NLS-1$
+    builder.append(") VALUES (?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
+    for (int i = 0; i < columnNames.size(); i++)
+    {
+      builder.append(", ?"); //$NON-NLS-1$
+    }
+
+    builder.append(")"); //$NON-NLS-1$
     sqlInsert = builder.toString();
 
     // ----------------- remove current entry -----------------
@@ -1220,6 +1220,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       pstmt.setInt(stmtIndex++, branchId);
       pstmt.setInt(stmtIndex++, version);
       pstmt.setNull(stmtIndex++, DBType.INTEGER.getCode()); // versionRemoved
+      pstmt.setInt(stmtIndex++, index);
+      pstmt.setLong(stmtIndex++, tag);
 
       for (int i = 0; i < columnNames.size(); i++)
       {
@@ -1233,8 +1235,6 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
         }
       }
 
-      pstmt.setInt(stmtIndex++, index);
-      pstmt.setLong(stmtIndex++, tag);
       CDODBUtil.sqlUpdate(pstmt, true);
     }
     catch (SQLException e)
@@ -1280,6 +1280,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       pstmt.setInt(stmtIndex++, versionAdded);
       pstmt.setNull(stmtIndex++, versionRemoved);
       pstmt.setInt(stmtIndex++, index);
+      pstmt.setLong(stmtIndex++, tag);
 
       for (int i = 0; i < columnNames.size(); i++)
       {
@@ -1293,8 +1294,6 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
         }
       }
 
-      pstmt.setInt(stmtIndex++, index);
-      pstmt.setLong(stmtIndex++, tag);
       CDODBUtil.sqlUpdate(pstmt, true);
     }
     catch (SQLException e)

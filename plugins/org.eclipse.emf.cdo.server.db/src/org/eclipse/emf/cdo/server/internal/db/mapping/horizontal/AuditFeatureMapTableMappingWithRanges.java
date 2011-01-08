@@ -11,7 +11,7 @@
  *    Christopher Albert - Bug 254455: [DB] Support FeatureMaps bug 254455
  *    Victor Roldan Betancort - Bug 283998: [DB] Chunk reading for multiple chunks fails
  *    Lothar Werzinger - Bug 296440: [DB] Change RDB schema to improve scalability of to-many references in audit mode
- *    Stefan Winkler - cleanup, merge and maintenance 
+ *    Stefan Winkler - cleanup, merge and maintenance
  *    Stefan Winkler - Bug 285426: [DB] Implement user-defined typeMapping support
  *    Stefan Winkler - Bug 329025: [DB] Support branching for range-based mapping strategy
  */
@@ -117,14 +117,15 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    */
   private Map<Long, ITypeMapping> typeMappings;
 
+  private List<DBType> dbTypes;
+
   // --------- SQL strings - see initSQLStrings() -----------------
+
   private String sqlSelectChunksPrefix;
 
   private String sqlOrderByIndex;
 
-  protected String sqlInsert;
-
-  private List<DBType> dbTypes;
+  private String sqlInsert;
 
   private String sqlRemoveEntry;
 
@@ -192,11 +193,6 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     table.addIndex(Type.NON_UNIQUE, tagField);
   }
 
-  public Collection<IDBTable> getDBTables()
-  {
-    return Arrays.asList(table);
-  }
-
   private void initSQLStrings()
   {
     String tableName = getTable().getName();
@@ -237,32 +233,29 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
     builder.append(tableName);
     builder.append("("); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_ID);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_ADDED);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_REVISION_VERSION_REMOVED);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_VALUE);
-
-    for (int i = 0; i < columnNames.size(); i++)
-    {
-      builder.append(columnNames.get(i));
-      builder.append(", "); //$NON-NLS-1$
-    }
-
+    builder.append(CDODBSchema.FEATUREMAP_REVISION_ID);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.FEATUREMAP_VERSION_ADDED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(CDODBSchema.FEATUREMAP_VERSION_REMOVED);
+    builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_IDX);
     builder.append(", "); //$NON-NLS-1$
     builder.append(CDODBSchema.FEATUREMAP_TAG);
-    builder.append(") VALUES (?, ?, ?, ?, ?, "); //$NON-NLS-1$
+
     for (int i = 0; i < columnNames.size(); i++)
     {
-      builder.append("?, "); //$NON-NLS-1$
+      builder.append(", "); //$NON-NLS-1$
+      builder.append(columnNames.get(i));
     }
 
-    builder.append("?, ?)"); //$NON-NLS-1$
+    builder.append(") VALUES (?, ?, ?, ?, ?"); //$NON-NLS-1$
+    for (int i = 0; i < columnNames.size(); i++)
+    {
+      builder.append(", ?"); //$NON-NLS-1$
+    }
+
+    builder.append(")"); //$NON-NLS-1$
     sqlInsert = builder.toString();
 
     // ----------------- remove current entry -----------------
@@ -361,6 +354,11 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
   protected List<DBType> getDBTypes()
   {
     return dbTypes;
+  }
+
+  public Collection<IDBTable> getDBTables()
+  {
+    return Arrays.asList(table);
   }
 
   protected final IDBTable getTable()
@@ -1046,7 +1044,9 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       int stmtIndex = 1;
       pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
       pstmt.setInt(stmtIndex++, version);
+      pstmt.setNull(stmtIndex++, DBType.INTEGER.getCode()); // versionRemoved
       pstmt.setInt(stmtIndex++, index);
+      pstmt.setLong(stmtIndex++, tag);
 
       for (int i = 0; i < columnNames.size(); i++)
       {
@@ -1060,8 +1060,6 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
         }
       }
 
-      pstmt.setInt(stmtIndex++, index);
-      pstmt.setLong(stmtIndex++, tag);
       CDODBUtil.sqlUpdate(pstmt, true);
     }
     catch (SQLException e)

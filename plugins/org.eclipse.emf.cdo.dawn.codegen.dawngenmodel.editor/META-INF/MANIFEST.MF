@@ -35,7 +35,7 @@ Export-Package: org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation;versi
    org.eclipse.swt.widgets,
    org.eclipse.emf.edit.domain,
    org.eclipse.emf.common.ui"
-Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.6.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,

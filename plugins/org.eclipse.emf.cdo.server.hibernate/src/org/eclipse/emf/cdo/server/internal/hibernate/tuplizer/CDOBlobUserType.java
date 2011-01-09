@@ -11,8 +11,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
-import org.eclipse.emf.cdo.common.model.lob.CDOLobUtil;
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOLobUtil;
 
 /**
  * Persists a {@link CDOBlob} in the DB.

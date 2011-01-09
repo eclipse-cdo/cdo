@@ -133,17 +133,34 @@ public interface EtypesPackage extends EPackage
   int ANNOTATION__MODEL_ELEMENT = MODEL_ELEMENT_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Contents</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION__CONTENTS = MODEL_ELEMENT_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>References</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION__REFERENCES = MODEL_ELEMENT_FEATURE_COUNT + 4;
+
+  /**
    * The number of structural features of the '<em>Annotation</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int ANNOTATION_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 3;
+  int ANNOTATION_FEATURE_COUNT = MODEL_ELEMENT_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '<em>Blob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @see org.eclipse.emf.cdo.common.model.lob.CDOBlob
+   * @see org.eclipse.emf.cdo.common.lob.CDOBlob
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
    * @generated
    */
@@ -152,7 +169,7 @@ public interface EtypesPackage extends EPackage
   /**
    * The meta object id for the '<em>Clob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @see org.eclipse.emf.cdo.common.model.lob.CDOClob
+   * @see org.eclipse.emf.cdo.common.lob.CDOClob
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClob()
    * @generated
    */
@@ -224,22 +241,45 @@ public interface EtypesPackage extends EPackage
   EReference getAnnotation_ModelElement();
 
   /**
-   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.model.lob.CDOBlob <em>Blob</em>}'. <!--
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.etypes.Annotation#getContents <em>Contents</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Contents</em>'.
+   * @see org.eclipse.emf.cdo.etypes.Annotation#getContents()
+   * @see #getAnnotation()
+   * @generated
+   */
+  EReference getAnnotation_Contents();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.etypes.Annotation#getReferences
+   * <em>References</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference list '<em>References</em>'.
+   * @see org.eclipse.emf.cdo.etypes.Annotation#getReferences()
+   * @see #getAnnotation()
+   * @generated
+   */
+  EReference getAnnotation_References();
+
+  /**
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.lob.CDOBlob <em>Blob</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for data type '<em>Blob</em>'.
-   * @see org.eclipse.emf.cdo.common.model.lob.CDOBlob
+   * @see org.eclipse.emf.cdo.common.lob.CDOBlob
    * @model instanceClass="org.eclipse.emf.cdo.etypes.CDOBlob"
    * @generated
    */
   EDataType getBlob();
 
   /**
-   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.model.lob.CDOClob <em>Clob</em>}'. <!--
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.lob.CDOClob <em>Clob</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for data type '<em>Clob</em>'.
-   * @see org.eclipse.emf.cdo.common.model.lob.CDOClob
+   * @see org.eclipse.emf.cdo.common.lob.CDOClob
    * @model instanceClass="org.eclipse.emf.cdo.etypes.CDOClob"
    * @generated
    */
@@ -320,9 +360,25 @@ public interface EtypesPackage extends EPackage
     EReference ANNOTATION__MODEL_ELEMENT = eINSTANCE.getAnnotation_ModelElement();
 
     /**
+     * The meta object literal for the '<em><b>Contents</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference ANNOTATION__CONTENTS = eINSTANCE.getAnnotation_Contents();
+
+    /**
+     * The meta object literal for the '<em><b>References</b></em>' reference list feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference ANNOTATION__REFERENCES = eINSTANCE.getAnnotation_References();
+
+    /**
      * The meta object literal for the '<em>Blob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.eclipse.emf.cdo.common.model.lob.CDOBlob
+     * @see org.eclipse.emf.cdo.common.lob.CDOBlob
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
      * @generated
      */
@@ -331,7 +387,7 @@ public interface EtypesPackage extends EPackage
     /**
      * The meta object literal for the '<em>Clob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.eclipse.emf.cdo.common.model.lob.CDOClob
+     * @see org.eclipse.emf.cdo.common.lob.CDOClob
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClob()
      * @generated
      */

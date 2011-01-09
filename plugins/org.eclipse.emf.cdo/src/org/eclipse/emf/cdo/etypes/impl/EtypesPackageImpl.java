@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
-import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
-import org.eclipse.emf.cdo.common.model.lob.CDOClob;
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
@@ -192,6 +192,26 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * 
    * @generated
    */
+  public EReference getAnnotation_Contents()
+  {
+    return (EReference)annotationEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getAnnotation_References()
+  {
+    return (EReference)annotationEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EDataType getBlob()
   {
     return blobEDataType;
@@ -244,6 +264,8 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     createEAttribute(annotationEClass, ANNOTATION__SOURCE);
     createEReference(annotationEClass, ANNOTATION__DETAILS);
     createEReference(annotationEClass, ANNOTATION__MODEL_ELEMENT);
+    createEReference(annotationEClass, ANNOTATION__CONTENTS);
+    createEReference(annotationEClass, ANNOTATION__REFERENCES);
 
     // Create data types
     blobEDataType = createEDataType(BLOB);
@@ -313,6 +335,16 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
         this.getModelElement(),
         this.getModelElement_Annotations(),
         "modelElement", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getAnnotation_Contents(),
+        theEcorePackage.getEObject(),
+        null,
+        "contents", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+    initEReference(
+        getAnnotation_References(),
+        theEcorePackage.getEObject(),
+        null,
+        "references", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     // Initialize data types
     initEDataType(blobEDataType, CDOBlob.class, "Blob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

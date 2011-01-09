@@ -69,6 +69,7 @@ public class AnnotationItemProvider extends ModelElementItemProvider implements 
       super.getPropertyDescriptors(object);
 
       addSourcePropertyDescriptor(object);
+      addReferencesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -84,9 +85,23 @@ public class AnnotationItemProvider extends ModelElementItemProvider implements 
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
         getString("_UI_Annotation_source_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_Annotation_source_feature", "_UI_Annotation_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        getString("_UI_Annotation_source_description"), //$NON-NLS-1$
         EtypesPackage.Literals.ANNOTATION__SOURCE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
         null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the References feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  protected void addReferencesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Annotation_references_feature"), //$NON-NLS-1$
+        getString("_UI_Annotation_references_description"), //$NON-NLS-1$
+        EtypesPackage.Literals.ANNOTATION__REFERENCES, true, false, true, null, null, null));
   }
 
   /**
@@ -104,6 +119,7 @@ public class AnnotationItemProvider extends ModelElementItemProvider implements 
     {
       super.getChildrenFeatures(object);
       childrenFeatures.add(EtypesPackage.Literals.ANNOTATION__DETAILS);
+      childrenFeatures.add(EtypesPackage.Literals.ANNOTATION__CONTENTS);
     }
     return childrenFeatures;
   }
@@ -163,6 +179,7 @@ public class AnnotationItemProvider extends ModelElementItemProvider implements 
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case EtypesPackage.ANNOTATION__DETAILS:
+    case EtypesPackage.ANNOTATION__CONTENTS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }

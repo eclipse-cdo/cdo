@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.etypes;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Annotation</b></em>'.
@@ -22,6 +24,8 @@ import org.eclipse.emf.common.util.EMap;
  *        <li>{@link org.eclipse.emf.cdo.etypes.Annotation#getSource <em>Source</em>}</li>
  *        <li>{@link org.eclipse.emf.cdo.etypes.Annotation#getDetails <em>Details</em>}</li>
  *        <li>{@link org.eclipse.emf.cdo.etypes.Annotation#getModelElement <em>Model Element</em>}</li>
+ *        <li>{@link org.eclipse.emf.cdo.etypes.Annotation#getContents <em>Contents</em>}</li>
+ *        <li>{@link org.eclipse.emf.cdo.etypes.Annotation#getReferences <em>References</em>}</li>
  *        </ul>
  *        </p>
  * @see org.eclipse.emf.cdo.etypes.EtypesPackage#getAnnotation()
@@ -100,5 +104,37 @@ public interface Annotation extends ModelElement
    * @generated
    */
   void setModelElement(ModelElement value);
+
+  /**
+   * Returns the value of the '<em><b>Contents</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.emf.ecore.EObject}. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Contents</em>' containment reference list isn't clear, there really should be more of a
+   * description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Contents</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.etypes.EtypesPackage#getAnnotation_Contents()
+   * @model containment="true"
+   * @generated
+   */
+  EList<EObject> getContents();
+
+  /**
+   * Returns the value of the '<em><b>References</b></em>' reference list. The list contents are of type
+   * {@link org.eclipse.emf.ecore.EObject}. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>References</em>' reference list isn't clear, there really should be more of a
+   * description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>References</em>' reference list.
+   * @see org.eclipse.emf.cdo.etypes.EtypesPackage#getAnnotation_References()
+   * @model
+   * @generated
+   */
+  EList<EObject> getReferences();
 
 } // Annotation

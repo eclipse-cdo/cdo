@@ -184,7 +184,7 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory imple
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -267,9 +267,7 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory imple
   public void dispose()
   {
     if (annotationItemProvider != null)
-    {
       annotationItemProvider.dispose();
-    }
   }
 
 }

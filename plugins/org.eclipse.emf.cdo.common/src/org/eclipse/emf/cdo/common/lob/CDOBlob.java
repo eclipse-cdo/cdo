@@ -8,9 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.model.lob;
+package org.eclipse.emf.cdo.common.lob;
 
-import org.eclipse.emf.cdo.spi.common.model.CDOLobStoreImpl;
+import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 

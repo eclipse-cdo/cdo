@@ -14,8 +14,10 @@ import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.etypes.ModelElement;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Annotation</b></em>'.
@@ -27,6 +29,8 @@ import org.eclipse.emf.ecore.EClass;
  *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getSource <em>Source</em>}</li>
  *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getDetails <em>Details</em>}</li>
  *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getModelElement <em>Model Element</em>}</li>
+ *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getContents <em>Contents</em>}</li>
+ *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getReferences <em>References</em>}</li>
  *        </ul>
  *        </p>
  * @generated
@@ -103,6 +107,28 @@ public class AnnotationImpl extends ModelElementImpl implements Annotation
   public void setModelElement(ModelElement newModelElement)
   {
     eSet(EtypesPackage.Literals.ANNOTATION__MODEL_ELEMENT, newModelElement);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  public EList<EObject> getContents()
+  {
+    return (EList<EObject>)eGet(EtypesPackage.Literals.ANNOTATION__CONTENTS, true);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  public EList<EObject> getReferences()
+  {
+    return (EList<EObject>)eGet(EtypesPackage.Literals.ANNOTATION__REFERENCES, true);
   }
 
 } // AnnotationImpl

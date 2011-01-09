@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.model3;
 
-import org.eclipse.emf.cdo.common.model.lob.CDOClob;
+import org.eclipse.emf.cdo.common.lob.CDOClob;
 
 import org.eclipse.emf.ecore.EObject;
 

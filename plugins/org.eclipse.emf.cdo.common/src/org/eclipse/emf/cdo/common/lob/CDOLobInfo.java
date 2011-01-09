@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.model.lob;
+package org.eclipse.emf.cdo.common.lob;
 
 import org.eclipse.net4j.util.HexUtil;
 

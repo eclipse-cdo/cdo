@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.model3.impl;
 
-import org.eclipse.emf.cdo.common.model.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.tests.legacy.model3.Model3Package;
 import org.eclipse.emf.cdo.tests.model3.Image;
 

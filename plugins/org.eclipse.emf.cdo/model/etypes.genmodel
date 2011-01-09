@@ -23,9 +23,13 @@
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="etypes.ecore#//Annotation">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute etypes.ecore#//Annotation/source"/>
+      <genFeatures createChild="false" propertyDescription="An identifier, typically an absolute URI, that uniquely identifies this kind of annotation"
+          ecoreFeature="ecore:EAttribute etypes.ecore#//Annotation/source"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference etypes.ecore#//Annotation/details"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference etypes.ecore#//Annotation/modelElement"/>
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference etypes.ecore#//Annotation/contents"/>
+      <genFeatures notify="false" createChild="false" propertyDescription="Objects referenced by this annotation"
+          propertySortChoices="true" ecoreFeature="ecore:EReference etypes.ecore#//Annotation/references"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

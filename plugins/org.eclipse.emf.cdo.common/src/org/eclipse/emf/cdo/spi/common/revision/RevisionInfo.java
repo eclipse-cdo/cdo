@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.revision;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -136,13 +137,13 @@ public abstract class RevisionInfo
   public void writeResult(CDODataOutput out, int referenceChunk) throws IOException
   {
     writeRevision(out, referenceChunk);
-    doWriteResult(out, synthetic, referenceChunk);
+    writeResult(out, synthetic, referenceChunk);
   }
 
   public void readResult(CDODataInput in) throws IOException
   {
     readRevision(in);
-    synthetic = (SyntheticCDORevision)doReadResult(in);
+    synthetic = (SyntheticCDORevision)readResult(in, getID(), requestedBranchPoint.getBranch());
   }
 
   public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results,
@@ -192,7 +193,11 @@ public abstract class RevisionInfo
     result = (InternalCDORevision)in.readCDORevision();
   }
 
-  protected void doWriteResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk) throws IOException
+  /**
+   * @since 4.0
+   */
+  public static void writeResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk)
+      throws IOException
   {
     if (revision == null)
     {
@@ -208,7 +213,7 @@ public abstract class RevisionInfo
       CDOBranchVersion target = pointer.getTarget();
       if (target instanceof InternalCDORevision)
       {
-        doWriteResult(out, (InternalCDORevision)target, referenceChunk);
+        writeResult(out, (InternalCDORevision)target, referenceChunk);
       }
       else
       {
@@ -221,6 +226,7 @@ public abstract class RevisionInfo
       out.writeByte(DETACHED_RESULT);
       out.writeCDOClassifierRef(detached.getEClass());
       out.writeLong(detached.getTimeStamp());
+      out.writeLong(detached.getRevised());
       out.writeInt(detached.getVersion());
     }
     else
@@ -230,7 +236,10 @@ public abstract class RevisionInfo
     }
   }
 
-  protected InternalCDORevision doReadResult(CDODataInput in) throws IOException
+  /**
+   * @since 4.0
+   */
+  public static InternalCDORevision readResult(CDODataInput in, CDOID id, CDOBranch branch) throws IOException
   {
     byte type = in.readByte();
     switch (type)
@@ -242,16 +251,17 @@ public abstract class RevisionInfo
     {
       EClassifier classifier = in.readCDOClassifierRefAndResolve();
       long revised = in.readLong();
-      InternalCDORevision target = doReadResult(in);
-      return new PointerCDORevision((EClass)classifier, id, requestedBranchPoint.getBranch(), revised, target);
+      InternalCDORevision target = readResult(in, id, branch);
+      return new PointerCDORevision((EClass)classifier, id, branch, revised, target);
     }
 
     case DETACHED_RESULT:
     {
       EClassifier classifier = in.readCDOClassifierRefAndResolve();
       long timeStamp = in.readLong();
+      long revised = in.readLong();
       int version = in.readInt();
-      return new DetachedCDORevision((EClass)classifier, id, requestedBranchPoint.getBranch(), version, timeStamp);
+      return new DetachedCDORevision((EClass)classifier, id, branch, version, timeStamp, revised);
     }
 
     case NORMAL_RESULT:
@@ -260,6 +270,16 @@ public abstract class RevisionInfo
     default:
       throw new IllegalStateException("Invalid synthetic type: " + type);
     }
+  }
+
+  protected void doWriteResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk) throws IOException
+  {
+    writeResult(out, revision, referenceChunk);
+  }
+
+  protected InternalCDORevision doReadResult(CDODataInput in) throws IOException
+  {
+    return readResult(in, id, requestedBranchPoint.getBranch());
   }
 
   /**

@@ -437,7 +437,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       boolean success = readValuesFromStatement(pstmt, revision, accessor);
 
       // Read multival tables only if revision exists
-      if (success)
+      if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
       {
         readLists(accessor, revision, listChunk);
       }

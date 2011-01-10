@@ -214,7 +214,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       int version = revision.getVersion();
       if (version < CDOBranchVersion.FIRST_VERSION - 1)
       {
-        return new DetachedCDORevision(eClass, id, revision.getBranch(), -version, revision.getTimeStamp());
+        return new DetachedCDORevision(eClass, id, revision.getBranch(), -version, revision.getTimeStamp(),
+            revision.getRevised());
       }
 
       return revision;
@@ -248,6 +249,13 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
       // if audit support is present, just use the audit method
       success = ((IClassMappingAuditSupport)mapping).readRevisionByVersion(this, revision, listChunk);
+      if (success && revision.getVersion() < CDOBranchVersion.FIRST_VERSION - 1)
+      {
+        // it is detached revision
+        revision = new DetachedCDORevision(eClass, id, revision.getBranch(), -revision.getVersion(),
+            revision.getTimeStamp(), revision.getRevised());
+
+      }
     }
     else
     {

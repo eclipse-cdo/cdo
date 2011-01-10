@@ -15,8 +15,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -66,8 +68,8 @@ public class LoadRevisionByVersionIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    CDORevision revision = getRepository().getRevisionManager().getRevisionByVersion(id, branchVersion, referenceChunk,
-        true);
-    out.writeCDORevision(revision, referenceChunk);
+    InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
+    InternalCDORevision revision = revisionManager.getRevisionByVersion(id, branchVersion, referenceChunk, true);
+    RevisionInfo.writeResult(out, revision, referenceChunk);
   }
 }

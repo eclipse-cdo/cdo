@@ -27,11 +27,22 @@ public class DetachedCDORevision extends SyntheticCDORevision
 
   private long timeStamp;
 
+  private long revised;
+
   public DetachedCDORevision(EClass eClass, CDOID id, CDOBranch branch, int version, long timeStamp)
+  {
+    this(eClass, id, branch, version, timeStamp, UNSPECIFIED_DATE);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public DetachedCDORevision(EClass eClass, CDOID id, CDOBranch branch, int version, long timeStamp, long revised)
   {
     super(eClass, id, branch);
     this.version = version;
     this.timeStamp = timeStamp;
+    this.revised = revised;
   }
 
   @Override
@@ -49,7 +60,13 @@ public class DetachedCDORevision extends SyntheticCDORevision
   @Override
   public long getRevised()
   {
-    return UNSPECIFIED_DATE;
+    return revised;
+  }
+
+  @Override
+  public void setRevised(long revised)
+  {
+    this.revised = revised;
   }
 
   @Override

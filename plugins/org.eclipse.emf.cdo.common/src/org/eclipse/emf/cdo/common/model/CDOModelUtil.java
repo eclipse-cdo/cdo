@@ -514,7 +514,10 @@ public final class CDOModelUtil
           String resourceURI = refTarget.eResource().getURI().toString();
           if (!resourceURI.toString().equals(pkg.getNsURI()))
           {
-            String msg = "URI of the resource (%s) does not match the nsURI (%s) of the top-level package";
+            String msg = "URI of the resource (%s) does not match the nsURI (%s) of the top-level package;\n"
+                + "this can be fixed by calling Resource.setURI(URI) after loading the packages,\n"
+                + "or by configuring a URI mapping from nsURI's to location URI's before loading the packages,\n"
+                + "and then loading them with their nsURI's";
             msg = String.format(msg, resourceURI, pkg.getNsURI());
             throw new IllegalStateException(msg);
           }

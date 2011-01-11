@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdoServer>
 
+    <!-- See http://wiki.eclipse.org/CDO/Server_Configuration_Reference -->
+
   <acceptor type="tcp" listenAddr="0.0.0.0" port="2036">
-    <!--
-    <negotiator type="challenge" description="_database/repo1.users"/>
-    -->
   </acceptor>
 
   <!--

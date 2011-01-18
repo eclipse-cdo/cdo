@@ -4,6 +4,7 @@
 
 	<rm:property key="orbit.version" mutable="true" value="S20101204061544" />
 	<rm:property key="cvs.repository" mutable="true" value=":pserver:anonymous@dev.eclipse.org:/cvsroot/modeling" />
+	<rm:property key="svn.repository" mutable="true" value="file:///C:/develop/svn" />
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
 	<rm:property key="resolve.target.platform" mutable="true" value="true" />
 	<rm:property key="build.type" mutable="true" value="N" />
@@ -51,30 +52,30 @@
 	<rm:locator searchPathRef="platform" />
 
 	<rm:searchPath name="releng">
-		<rm:provider componentTypes="buckminster,osgi.bundle" readerType="cvs">
-			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/releng/{1}">
-				<bc:propertyRef key="cvs.repository" />
+		<rm:provider componentTypes="buckminster,osgi.bundle" readerType="svn">
+			<rm:uri format="{0}/trunk/releng/{1}">
+				<bc:propertyRef key="svn.repository" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature" readerType="cvs">
-			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/releng/{1}-feature">
-				<bc:propertyRef key="cvs.repository" />
+		<rm:provider componentTypes="eclipse.feature" readerType="svn">
+			<rm:uri format="{0}/trunk/releng/{1}-feature">
+				<bc:propertyRef key="svn.repository" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
 
 	<rm:searchPath name="sources">
-		<rm:provider componentTypes="osgi.bundle" readerType="cvs">
-			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/plugins/{1}">
-				<bc:propertyRef key="cvs.repository" />
+		<rm:provider componentTypes="osgi.bundle" readerType="svn">
+			<rm:uri format="{0}/trunk/plugins/{1}">
+				<bc:propertyRef key="svn.repository" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature" readerType="cvs">
-			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/features/{1}-feature">
-				<bc:propertyRef key="cvs.repository" />
+		<rm:provider componentTypes="eclipse.feature" readerType="svn">
+			<rm:uri format="{0}/trunk/features/{1}-feature">
+				<bc:propertyRef key="svn.repository" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>

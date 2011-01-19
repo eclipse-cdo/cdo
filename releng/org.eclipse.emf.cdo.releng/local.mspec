@@ -3,7 +3,6 @@
   <mspec:property key="target.os" value="*"/>
   <mspec:property key="target.ws" value="*"/>
   <mspec:property key="target.arch" value="*"/>
-  <mspec:property key="cvs.repository" value=":pserver:anonymous@dev.eclipse.org:/cvsroot/modeling"/>
   <mspec:property key="eclipse.downloads" value="http://download.eclipse.org"/>
   <mspec:property key="resolve.target.platform" value="true"/>
   <mspec:mspecNode namePattern="^org\.eclipse\.emf\.cdo\.server\.product$" materializer="workspace" resourcePath="org.eclipse.emf.cdo.server.product-feature"/>

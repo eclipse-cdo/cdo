@@ -11,14 +11,23 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOPushTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
+import org.eclipse.emf.cdo.transaction.CDOTransactionHandler2;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -75,7 +84,7 @@ public class TransactionTest extends AbstractCDOTest
   public void testCreateManySessions() throws Exception
   {
     {
-      msg("Opening session");
+      IOUtil.OUT().println("Opening session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       transaction.createResource("/test2");
@@ -86,7 +95,7 @@ public class TransactionTest extends AbstractCDOTest
 
     for (int i = 0; i < 100; i++)
     {
-      msg("Session " + i);
+      IOUtil.OUT().println("Session " + i);
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/test2");
@@ -100,7 +109,7 @@ public class TransactionTest extends AbstractCDOTest
 
   public void testCreateManyTransactions() throws Exception
   {
-    msg("Opening session");
+    IOUtil.OUT().println("Opening session");
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/test2");
@@ -110,7 +119,7 @@ public class TransactionTest extends AbstractCDOTest
     long lastDuration = 0;
     for (int i = 0; i < 100; i++)
     {
-      msg("Transaction " + i + "    (" + lastDuration + ")");
+      IOUtil.OUT().println("Transaction " + i + "    (" + lastDuration + ")");
       lastDuration = System.currentTimeMillis();
       transaction = session.openTransaction();
       resource = transaction.getResource("/test2");
@@ -143,18 +152,18 @@ public class TransactionTest extends AbstractCDOTest
         {
           try
           {
-            msg("Thread " + id + ": Started");
+            IOUtil.OUT().println("Thread " + id + ": Started");
             for (int i = 0; i < 100; i++)
             {
               CDOSession session = openSession();
               CDOTransaction transaction = session.openTransaction();
 
-              msg("Thread " + id + ": Session + Transaction " + i);
+              IOUtil.OUT().println("Thread " + id + ": Session + Transaction " + i);
               transaction.close();
               session.close();
             }
 
-            msg("Thread " + id + ": Done");
+            IOUtil.OUT().println("Thread " + id + ": Done");
           }
           catch (Exception ex)
           {
@@ -198,23 +207,23 @@ public class TransactionTest extends AbstractCDOTest
 
   public void testPushModeNewObjects() throws Exception
   {
-    msg("Creating category1");
+    IOUtil.OUT().println("Creating category1");
     Category category1 = getModel1Factory().createCategory();
     category1.setName("category1");
 
-    msg("Creating category2");
+    IOUtil.OUT().println("Creating category2");
     Category category2 = getModel1Factory().createCategory();
     category2.setName("category2");
 
-    msg("Creating category3");
+    IOUtil.OUT().println("Creating category3");
     Category category3 = getModel1Factory().createCategory();
     category3.setName("category3");
 
-    msg("Creating company");
+    IOUtil.OUT().println("Creating company");
     Company company = getModel1Factory().createCompany();
     company.setName("Foundation");
 
-    msg("Adding categories");
+    IOUtil.OUT().println("Adding categories");
     company.getCategories().add(category1);
     category1.getCategories().add(category2);
     category1.getCategories().add(category3);
@@ -248,15 +257,15 @@ public class TransactionTest extends AbstractCDOTest
 
   public void testPushModeDeltas() throws Exception
   {
-    msg("Creating category1");
+    IOUtil.OUT().println("Creating category1");
     Category category1 = getModel1Factory().createCategory();
     category1.setName("category1");
 
-    msg("Creating company");
+    IOUtil.OUT().println("Creating company");
     Company company = getModel1Factory().createCompany();
     company.setName("Foundation");
 
-    msg("Adding categories");
+    IOUtil.OUT().println("Adding categories");
     company.getCategories().add(category1);
 
     CDOSession session = openSession();
@@ -270,12 +279,12 @@ public class TransactionTest extends AbstractCDOTest
 
     pushTransaction.commit();
 
-    msg("Creating category2");
+    IOUtil.OUT().println("Creating category2");
     Category category2 = getModel1Factory().createCategory();
     category2.setName("category2");
     category1.getCategories().add(category2);
 
-    msg("Creating category3");
+    IOUtil.OUT().println("Creating category3");
     Category category3 = getModel1Factory().createCategory();
     category3.setName("category3");
     category1.getCategories().add(category3);
@@ -297,5 +306,107 @@ public class TransactionTest extends AbstractCDOTest
     assertEquals(1, company.getCategories().size());
     assertEquals(2, company.getCategories().get(0).getCategories().size());
     session.close();
+  }
+
+  public void testAutoRollbackOnConflictEvent() throws Exception
+  {
+    final CDOSession session1 = openSession();
+    final CDOTransaction transaction1 = session1.openTransaction();
+
+    CDOResource resource1 = transaction1.createResource("/test");
+    Category category1 = getModel1Factory().createCategory();
+    resource1.getContents().add(category1);
+    transaction1.commit();
+
+    final CDOSession session2 = openSession();
+    final CDOTransaction transaction2 = session2.openTransaction();
+    transaction2.addListener(new IListener()
+    {
+      public void notifyEvent(IEvent event)
+      {
+        if (event instanceof CDOTransactionConflictEvent)
+        {
+          transaction2.rollback();
+        }
+      }
+    });
+
+    final CountDownLatch rollback = new CountDownLatch(1);
+    transaction2.addTransactionHandler(new CDOTransactionHandler2()
+    {
+      public void rolledBackTransaction(CDOTransaction transaction)
+      {
+        IOUtil.OUT().println("rollback");
+        rollback.countDown();
+      }
+
+      public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+      {
+      }
+
+      public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+      {
+      }
+    });
+
+    CDOResource resource2 = transaction2.getResource("/test");
+    Category category2 = (Category)resource2.getContents().get(0);
+    category2.setName("session2");
+
+    category1.setName("session1");
+    transaction1.commit();
+
+    rollback.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+    category2.setName("session2");
+    transaction2.commit();
+  }
+
+  public void testManualRollbackOnConflictException() throws Exception
+  {
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+
+    CDOResource resource1 = transaction1.createResource("/test");
+    Category category1 = getModel1Factory().createCategory();
+    resource1.getContents().add(category1);
+    transaction1.commit();
+
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+
+    CDOResource resource2 = transaction2.getResource("/test");
+    Category category2 = (Category)resource2.getContents().get(0);
+    category2.setName("session2");
+
+    category1.setName("session1");
+    long commitTime = transaction1.commit().getTimeStamp();
+    IOUtil.OUT().println("After transaction1.commit(): " + CDOUtil.getCDOObject(category1).cdoRevision());
+
+    CDOObject cdoCategory2 = CDOUtil.getCDOObject(category2);
+
+    try
+    {
+      IOUtil.OUT().println("Before transaction2.commit(): " + cdoCategory2.cdoRevision());
+      category2.setName("session2");
+
+      transaction2.commit();
+      fail("CommitException expected");
+    }
+    catch (CommitException expected)
+    {
+      IOUtil.OUT().println("Before transaction2.rollback(): " + cdoCategory2.cdoRevision());
+      transaction2.rollback();
+      IOUtil.OUT().println("After transaction2.rollback(): " + cdoCategory2.cdoRevision());
+    }
+
+    transaction2.waitForUpdate(commitTime, DEFAULT_TIMEOUT);
+    category2.setName("session2");
+
+    IOUtil.OUT().println("Before transaction2.commit():");
+    CDOCommitInfoUtil.dump(IOUtil.OUT(), transaction2.getChangeSetData());
+
+    transaction2.commit();
+    IOUtil.OUT().println("After transaction2.commit(): " + cdoCategory2.cdoRevision());
+    assertEquals(3, cdoCategory2.cdoRevision().getVersion());
   }
 }

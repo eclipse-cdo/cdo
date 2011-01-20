@@ -1,8 +1,0 @@
-bin
-doc
-model1X.ecore
-state
-*.log
-mysql-connector-java-3.1.12-bin.jar
-antlr-2.7.6.jar
-_database

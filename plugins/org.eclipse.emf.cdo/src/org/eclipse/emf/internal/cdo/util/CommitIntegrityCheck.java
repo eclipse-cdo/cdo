@@ -97,8 +97,8 @@ public class CommitIntegrityCheck
     // For dirty objects: if any of the deltas for the object, affect containment (i.e. object was moved)
     // or a bi-di reference, ensure that for containment, both the old and new containers are included,
     // (or that the child is included if we are considering the dirty parent),
-    // and that for a bi-di reference, the object holding the other end of the bi-di is included, as
-    // well as possibly the *former* object holding the other end.
+    // and that for a bi-di reference, the object holding the other end of the bi-di is included,
+    // as well as possibly the *former* object holding the other end.
     for (CDOID dirtyID : dirtyIDs)
     {
       CDOObject dirtyObject = transaction.getObject(dirtyID);

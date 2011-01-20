@@ -3,7 +3,11 @@
 	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0"
 	xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
 
-	<rm:property key="build.type" mutable="true" value="N"/>
+	<rm:property key="orbit.version" mutable="true" value="S20101204061544" />
+	<rm:property key="svn.repository" mutable="true" value="svn+ssh://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo" />
+	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
+	<rm:property key="resolve.target.platform" mutable="true" value="true" />
+	<rm:property key="build.type" mutable="true" value="N" />
 
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng" searchPathRef="releng"/>
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.formatchecker" searchPathRef="releng"/>
@@ -17,33 +21,40 @@
 	<rm:locator searchPathRef="platform.binaries"/>
 
 	<rm:searchPath name="releng">
-		<rm:provider componentTypes="buckminster,osgi.bundle" readerType="cvs">
-			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/releng/{1}">
-				<bc:propertyRef key="cvs.repository"/>
-				<bc:propertyRef key="buckminster.component"/>
+		<rm:provider componentTypes="buckminster,osgi.bundle" readerType="svn">
+			<rm:uri format="{0}/branches/R3_0_maintenance/releng/{1}">
+				<bc:propertyRef key="svn.repository" />
+				<bc:propertyRef key="buckminster.component" />
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="eclipse.feature" readerType="svn">
+			<rm:uri format="{0}/branches/R3_0_maintenance/releng/{1}-feature">
+				<bc:propertyRef key="svn.repository" />
+				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
 
 	<rm:searchPath name="sources">
-		<rm:provider componentTypes="osgi.bundle" readerType="cvs">
-			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/plugins/{1}">
-				<bc:propertyRef key="cvs.repository"/>
-				<bc:propertyRef key="buckminster.component"/>
+		<rm:provider componentTypes="osgi.bundle" readerType="svn">
+			<rm:uri format="{0}/branches/R3_0_maintenance/plugins/{1}">
+				<bc:propertyRef key="svn.repository" />
+				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature" readerType="cvs">
-			<rm:uri format="{0},org.eclipse.emf/org.eclipse.emf.cdo/features/{1}-feature">
-				<bc:propertyRef key="cvs.repository"/>
-				<bc:propertyRef key="buckminster.component"/>
+		<rm:provider componentTypes="eclipse.feature" readerType="svn">
+			<rm:uri format="{0}/branches/R3_0_maintenance/features/{1}-feature">
+				<bc:propertyRef key="svn.repository" />
+				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
 
 	<rm:searchPath name="orbit">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="{0}/tools/orbit/downloads/drops/R20100519200754/repository">
+			<rm:uri format="{0}/tools/orbit/downloads/drops/{1}/repository">
 				<bc:propertyRef key="eclipse.downloads"/>
+				<bc:propertyRef key="orbit.version" />
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>

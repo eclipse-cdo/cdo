@@ -4,7 +4,7 @@
 	xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
 
 	<rm:property key="orbit.version" mutable="true" value="S20101204061544" />
-	<rm:property key="svn.repository" mutable="true" value="svn+ssh://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo" />
+	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo" />
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
 	<rm:property key="resolve.target.platform" mutable="true" value="true" />
 	<rm:property key="build.type" mutable="true" value="N" />

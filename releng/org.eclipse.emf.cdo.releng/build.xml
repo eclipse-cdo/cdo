@@ -161,7 +161,7 @@
 				<arg value="-r" />
 				<arg value="${eclipse.downloads}/${bm.headless.path}" />
 				<arg value="-r" />
-				<arg value="http://download.cloudsmith.com/buckminster/external-3.6/" />
+				<arg value="${bm.external.path}" />
 				<arg value="-d" />
 				<arg value="${tools}/buckminster" />
 				<arg value="-p" />

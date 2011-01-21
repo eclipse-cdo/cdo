@@ -41,6 +41,8 @@ public class DawnEcoreTestUtil
 
   public static final String CREATION_WIZARD_NAME_EMF = "Dawn Ecore Model";
 
+  private static String resourceFieldLabel = org.eclipse.emf.cdo.dawn.ui.messages.Messages.DawnCreateNewResourceWizardPage_6;
+
   public static SWTBotGefEditor openNewEcoreGMFEditor(String diagramResourceName, SWTGefBot bot)
   {
     bot.menu("File").menu("New").menu("Other...").click();
@@ -92,7 +94,7 @@ public class DawnEcoreTestUtil
     shell = bot.shell("New");
     shell.activate();
 
-    SWTBotText fileSemanticNameLabel = bot.textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = bot.textWithLabel(resourceFieldLabel);
     fileSemanticNameLabel.setText(resourceName);
 
     bot.button("Next >").click();

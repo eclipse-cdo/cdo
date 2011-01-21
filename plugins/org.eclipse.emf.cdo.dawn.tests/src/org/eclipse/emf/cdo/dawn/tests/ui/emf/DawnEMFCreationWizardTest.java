@@ -39,6 +39,8 @@ import org.junit.runner.RunWith;
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
 {
+  private String resourceFieldLabel = org.eclipse.emf.cdo.dawn.ui.messages.Messages.DawnCreateNewResourceWizardPage_6;
+
   @Test
   public void testCreateNewDawnAcoreEditor() throws Exception
   {
@@ -82,7 +84,7 @@ public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
     shell = getBot().shell("New");
     shell.activate();
 
-    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileSemanticNameLabel.setText("test.acore");
     assertEquals("test.acore", fileSemanticNameLabel.getText());
 
@@ -112,7 +114,7 @@ public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
     shell = getBot().shell("New");
     shell.activate();
 
-    SWTBotText fileSemanticNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
     Keyboard keyboard = KeyboardFactory.getDefaultKeyboard(fileSemanticNameLabel.widget, null);
     fileSemanticNameLabel.setFocus();
@@ -146,7 +148,7 @@ public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
     shell = getBot().shell("New");
     shell.activate();
 
-    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileNameLabel.setText("test.acore");
 
     SWTBotTree tree = getBot().tree(0);
@@ -193,7 +195,7 @@ public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
     shell = getBot().shell("New");
     shell.activate();
 
-    SWTBotText fileNameLabel = getBot().textWithLabel("File name:");
+    SWTBotText fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
     fileNameLabel.setText("test.acore");
 
     SWTBotText folder = getBot().textWithLabel("Enter or select the parent folder: ");

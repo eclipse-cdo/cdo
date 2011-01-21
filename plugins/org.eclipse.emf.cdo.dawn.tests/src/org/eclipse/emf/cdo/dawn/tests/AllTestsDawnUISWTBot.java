@@ -17,10 +17,8 @@ import org.eclipse.emf.cdo.dawn.tests.ui.DawnProjectExplorerTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnEMFCreationWizardTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnEMFHandleEditorTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.emf.EMFEditorRollbackTest;
-import org.eclipse.emf.cdo.dawn.tests.ui.gmf.ConflictTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnCreationWizardSWTBotTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.MultipleResourcesTest;
-import org.eclipse.emf.cdo.dawn.tests.ui.gmf.RollbackTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.SimpleDiagramTest;
 import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
@@ -59,8 +57,8 @@ public class AllTestsDawnUISWTBot extends ConfigTestSuite
     testClasses.add(MultipleResourcesTest.class);
     // MultipleResourcesDeletionTest.class, //excluded because of ui freeze
     testClasses.add(DawnProjectExplorerTest.class);
-    testClasses.add(RollbackTest.class);
-    testClasses.add(ConflictTest.class);
+    // testClasses.add(RollbackTest.class);
+    // testClasses.add(ConflictTest.class);
 
     /******************** EMF **********************/
     testClasses.add(DawnEMFCreationWizardTest.class);

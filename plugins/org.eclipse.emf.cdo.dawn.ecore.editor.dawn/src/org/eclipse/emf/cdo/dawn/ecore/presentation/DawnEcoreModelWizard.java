@@ -10,9 +10,6 @@
  */
 package org.eclipse.emf.cdo.dawn.ecore.presentation;
 
-import java.util.Collections;
-
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewResourceWizardPage;
@@ -21,12 +18,15 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.presentation.EcoreEditorPlugin;
 import org.eclipse.emf.ecore.presentation.EcoreModelWizard;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbenchPage;
@@ -34,100 +34,110 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
-public class DawnEcoreModelWizard extends EcoreModelWizard
-		implements
-			INewWizard {
-	private DawnCreateNewResourceWizardPage newResourceCreationPage;
+import java.util.Collections;
 
-	private CDOView view;
+public class DawnEcoreModelWizard extends EcoreModelWizard implements INewWizard
+{
+  private DawnCreateNewResourceWizardPage newResourceCreationPage;
 
-	private CDOResource resource;
+  private CDOView view;
 
-	public DawnEcoreModelWizard() {
-		super();
-		CDOConnectionUtil.instance.init(
-				PreferenceConstants.getRepositoryName(),
-				PreferenceConstants.getProtocol(),
-				PreferenceConstants.getServerName());
-		CDOSession session = CDOConnectionUtil.instance.openSession();
-		view = CDOConnectionUtil.instance.openView(session);
-	}
+  private CDOResource resource;
 
-	@Override
-	public void addPages() {
-		newResourceCreationPage = new DawnCreateNewResourceWizardPage("ecore",
-				true, view);
-		addPage(newResourceCreationPage);
+  public DawnEcoreModelWizard()
+  {
+    super();
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
+        PreferenceConstants.getServerName());
+    CDOSession session = CDOConnectionUtil.instance.openSession();
+    view = CDOConnectionUtil.instance.openView(session);
+  }
 
-		initialObjectCreationPage = new EcoreModelWizardInitialObjectCreationPage(
-				"Whatever2");
-		initialObjectCreationPage.setTitle(EcoreEditorPlugin.INSTANCE
-				.getString("_UI_EcoreModelWizard_label"));
-		initialObjectCreationPage.setDescription(EcoreEditorPlugin.INSTANCE
-				.getString("_UI_Wizard_initial_object_description"));
-		addPage(initialObjectCreationPage);
-	}
+  @Override
+  public void addPages()
+  {
+    newResourceCreationPage = new DawnCreateNewResourceWizardPage("ecore", true, view);
+    addPage(newResourceCreationPage);
 
-	@Override
-	public boolean performFinish() {
-		try {
-			// Do the work within an operation.
-			//
-			WorkspaceModifyOperation operation = new WorkspaceModifyOperation() {
+    initialObjectCreationPage = new EcoreModelWizardInitialObjectCreationPage("Whatever2");
+    initialObjectCreationPage.setTitle(EcoreEditorPlugin.INSTANCE.getString("_UI_EcoreModelWizard_label"));
+    initialObjectCreationPage.setDescription(EcoreEditorPlugin.INSTANCE
+        .getString("_UI_Wizard_initial_object_description"));
+    addPage(initialObjectCreationPage);
+  }
 
-				@Override
-				protected void execute(IProgressMonitor progressMonitor) {
-					try {
-						ResourceSet resourceSet = new ResourceSetImpl();
+  @Override
+  public boolean performFinish()
+  {
+    try
+    {
+      // Do the work within an operation.
+      //
+      WorkspaceModifyOperation operation = new WorkspaceModifyOperation()
+      {
 
-						URI resourceURI = newResourceCreationPage.getURI();
+        @Override
+        protected void execute(IProgressMonitor progressMonitor)
+        {
+          try
+          {
+            ResourceSet resourceSet = new ResourceSetImpl();
 
-						CDOTransaction transaction = CDOConnectionUtil.instance
-								.openCurrentTransaction(resourceSet,
-										resourceURI.toString());
+            URI resourceURI = newResourceCreationPage.getURI();
 
-						resource = transaction.getOrCreateResource(resourceURI
-								.path());
+            CDOTransaction transaction = CDOConnectionUtil.instance.openCurrentTransaction(resourceSet,
+                resourceURI.toString());
 
-						EObject rootObject = createInitialModel();
-						if (rootObject != null) {
-							resource.getContents().add(rootObject);
-						}
+            resource = transaction.getOrCreateResource(resourceURI.path());
 
-						resource.save(Collections.EMPTY_MAP);
-						transaction.close();
-					} catch (Exception exception) {
-						EcoreEditorPlugin.INSTANCE.log(exception);
-						throw new RuntimeException(exception);
-					} finally {
-						progressMonitor.done();
-					}
-				}
-			};
+            EObject rootObject = createInitialModel();
+            if (rootObject != null)
+            {
+              resource.getContents().add(rootObject);
+            }
 
-			getContainer().run(false, false, operation);
+            resource.save(Collections.EMPTY_MAP);
+            transaction.close();
+          }
+          catch (Exception exception)
+          {
+            EcoreEditorPlugin.INSTANCE.log(exception);
+            throw new RuntimeException(exception);
+          }
+          finally
+          {
+            progressMonitor.done();
+          }
+        }
+      };
 
-			openEditor(newResourceCreationPage.getURI());
+      getContainer().run(false, false, operation);
 
-			return true;
-		} catch (Exception exception) {
-			EcoreEditorPlugin.INSTANCE.log(exception);
-			return false;
-		}
-	}
+      openEditor(newResourceCreationPage.getURI());
 
-	private void openEditor(URI uri) {
-		IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
-		IWorkbenchPage page = workbenchWindow.getActivePage();
-		DawnEditorInput dawnEditorInput = new DawnEditorInput(uri);
-		try {
-			page.openEditor(dawnEditorInput, DawnEcoreEditor.ID);
-		} catch (PartInitException exception) {
-			MessageDialog.openError(workbenchWindow.getShell(),
-					EcoreEditorPlugin.INSTANCE
-							.getString("_UI_OpenEditorError_label"), exception
-							.getMessage());
-			throw new RuntimeException(exception);
-		}
-	}
+      return true;
+    }
+    catch (Exception exception)
+    {
+      EcoreEditorPlugin.INSTANCE.log(exception);
+      return false;
+    }
+  }
+
+  private void openEditor(URI uri)
+  {
+    IWorkbenchWindow workbenchWindow = workbench.getActiveWorkbenchWindow();
+    IWorkbenchPage page = workbenchWindow.getActivePage();
+    DawnEditorInput dawnEditorInput = new DawnEditorInput(uri);
+    try
+    {
+      page.openEditor(dawnEditorInput, DawnEcoreEditor.ID);
+    }
+    catch (PartInitException exception)
+    {
+      MessageDialog.openError(workbenchWindow.getShell(),
+          EcoreEditorPlugin.INSTANCE.getString("_UI_OpenEditorError_label"), exception.getMessage());
+      throw new RuntimeException(exception);
+    }
+  }
 }

@@ -1,7 +1,6 @@
-#Fri Jun 25 13:43:18 CEST 2010
+#Sat Jan 22 20:24:51 CET 2011
 eclipse.preferences.version=1
-encoding//psf/extssh/_bootstrap.psf=UTF-8
-encoding//psf/pserver/_bootstrap.psf=UTF-8
+encoding//psf/bootstrap-3.0.psf=UTF-8
 encoding/baseline.target=UTF-8
 encoding/buckminster.cspec=UTF-8
 encoding/build.cquery=UTF-8

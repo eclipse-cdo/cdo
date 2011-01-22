@@ -218,6 +218,15 @@ public final class CDORevisionUtil
       }
     }
 
+    return createChangeSetData(newObjects, changedObjects, detachedObjects);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDOChangeSetData createChangeSetData(List<CDOIDAndVersion> newObjects,
+      List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
+  {
     return new CDOChangeSetDataImpl(newObjects, changedObjects, detachedObjects);
   }
 

@@ -77,6 +77,7 @@ public class DawnWrapperResourceImpl extends CDOResourceImpl implements DawnWrap
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public Map<EObject, String> getEObjectToIDMap()
   {
     throw new UnsupportedOperationException();
@@ -92,6 +93,7 @@ public class DawnWrapperResourceImpl extends CDOResourceImpl implements DawnWrap
     return getURIFragment(eObject);
   }
 
+  @Deprecated
   public Map<String, EObject> getIDToEObjectMap()
   {
     throw new UnsupportedOperationException();

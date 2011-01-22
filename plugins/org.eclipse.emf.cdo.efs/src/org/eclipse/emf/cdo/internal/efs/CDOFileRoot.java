@@ -131,6 +131,7 @@ public final class CDOFileRoot extends AbstractFileStore
     return info;
   }
 
+  @Deprecated
   @Override
   public IFileStore getChild(IPath path)
   {

@@ -196,7 +196,7 @@ public final class CDORevisionUtil
     {
       CDORevision startRevision = startProvider.getRevision(id);
       CDORevision endRevision = endProvider.getRevision(id);
-  
+
       if (startRevision == null && endRevision != null)
       {
         newObjects.add(endRevision);
@@ -217,7 +217,7 @@ public final class CDORevisionUtil
         }
       }
     }
-  
+
     return new CDOChangeSetDataImpl(newObjects, changedObjects, detachedObjects);
   }
 
@@ -398,6 +398,11 @@ public final class CDORevisionUtil
         protected void dumpBranch(CDOBranch branch)
         {
           PrintStream out = out();
+          if (!branch.isMainBranch())
+          {
+            out.println("<tr><td>&nbsp;</td><td>&nbsp;</td></tr>");
+          }
+
           out.println("<tr>");
           out.println("<td>");
           out.println("<h4>" + branch.getName() + "[" + branch.getID() + "]</h4>");

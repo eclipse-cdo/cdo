@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<psf version="2.0">
-<provider id="org.eclipse.team.svn.core.svnnature">
-<project reference="1.0.1,svn+ssh://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/trunk/releng/org.eclipse.emf.cdo.releng,org.eclipse.emf.cdo.releng,60559131322300101588c60d77c0dcdc;svn+ssh://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo;svn+ssh://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo;branches;tags;trunk;true;d2b83600-2311-11e0-a056-4ff0aab784c1;svn+ssh://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo;;false;svn+ssh://dev.eclipse.org;;0"/>
-</provider>
-</psf>

@@ -27,7 +27,10 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.HexUtil;
@@ -628,6 +631,7 @@ public class CDOServerBrowser extends Worker
           {
             dumpLastRevision();
           }
+
           if (versionsBuilder == null)
           {
             versionsBuilder = new StringBuilder();
@@ -647,7 +651,7 @@ public class CDOServerBrowser extends Worker
             revision[0] = key;
           }
 
-          String version = "v" + rev.getVersion();
+          String version = getVersionPrefix(rev) + rev.getVersion();
           if (key.equals(revision[0]))
           {
             versionsBuilder.append("<b>" + version + "</b>");
@@ -734,14 +738,17 @@ public class CDOServerBrowser extends Worker
       showKeyValue(pout, true, "version", revision.getVersion());
       showKeyValue(pout, true, "created", commitInfo);
       showKeyValue(pout, true, "revised", CDOCommonUtil.formatTimeStamp(revision.getRevised()));
-      showKeyValue(pout, true, "resource", getRevisionValue(revision.getResourceID(), browser, ids, revision));
-      showKeyValue(pout, true, "container", getRevisionValue(revision.getContainerID(), browser, ids, revision));
-      showKeyValue(pout, true, "feature", revision.getContainingFeatureID());
-
-      for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
+      if (!(revision instanceof SyntheticCDORevision))
       {
-        Object value = revision.getValue(feature);
-        showKeyValue(pout, false, feature.getName(), getRevisionValue(value, browser, ids, revision));
+        showKeyValue(pout, true, "resource", getRevisionValue(revision.getResourceID(), browser, ids, revision));
+        showKeyValue(pout, true, "container", getRevisionValue(revision.getContainerID(), browser, ids, revision));
+        showKeyValue(pout, true, "feature", revision.getContainingFeatureID());
+
+        for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
+        {
+          Object value = revision.getValue(feature);
+          showKeyValue(pout, false, feature.getName(), getRevisionValue(value, browser, ids, revision));
+        }
       }
 
       pout.print("</table>\r\n");
@@ -766,7 +773,7 @@ public class CDOServerBrowser extends Worker
             builder.append("&nbsp;&nbsp;");
             for (CDORevision revision : revisions)
             {
-              String label = "v" + revision.getVersion();
+              String label = getVersionPrefix(revision) + revision.getVersion();
               String branchName = revision.getBranch().getName();
               if (!CDOBranch.MAIN_BRANCH_NAME.equals(branchName))
               {
@@ -802,6 +809,21 @@ public class CDOServerBrowser extends Worker
       }
 
       return value;
+    }
+
+    private String getVersionPrefix(CDORevision revision)
+    {
+      if (revision instanceof PointerCDORevision)
+      {
+        return "p";
+      }
+
+      if (revision instanceof DetachedCDORevision)
+      {
+        return "d";
+      }
+
+      return "v";
     }
 
     /**

@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.ecore.EClass;
 
-import java.text.MessageFormat;
-
 /**
  * @author Eike Stepper
  * @since 3.0
@@ -67,11 +65,5 @@ public class DetachedCDORevision extends SyntheticCDORevision
   public void setRevised(long revised)
   {
     this.revised = revised;
-  }
-
-  @Override
-  public String toString()
-  {
-    return MessageFormat.format("DetachedCDORevision[{0}:{1}v{2}]", getID(), getBranch().getID(), version);
   }
 }

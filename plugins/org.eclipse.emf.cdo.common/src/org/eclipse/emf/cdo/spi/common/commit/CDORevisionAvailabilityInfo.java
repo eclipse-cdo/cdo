@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,5 +63,11 @@ public final class CDORevisionAvailabilityInfo implements CDORevisionProvider
   public CDORevision getRevision(CDOID id)
   {
     return (CDORevision)availableRevisions.get(id);
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("CDORevisionAvailabilityInfo[{0} -> {1} ]", branchPoint, availableRevisions.values());
   }
 }

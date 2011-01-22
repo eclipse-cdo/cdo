@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.ecore.EClass;
 
-import java.text.MessageFormat;
-
 /**
  * A {@link SyntheticCDORevision synthetic} revision that represents the initial period of an object in a
  * {@link CDOBranch branch} when the object is still associated with a revision from one of the baseline branches. It
@@ -67,17 +65,5 @@ public class PointerCDORevision extends SyntheticCDORevision
   public CDOBranchVersion getTarget()
   {
     return target;
-  }
-
-  @Override
-  public String toString()
-  {
-    if (target == null)
-    {
-      return MessageFormat.format("PointerCDORevision[{0}:{1}v0 --> null]", getID(), getBranch().getID());
-    }
-
-    return MessageFormat.format("PointerCDORevision[{0}:{1}v0 --> {2}v{3}]", getID(), getBranch().getID(), target
-        .getBranch().getID(), target.getVersion());
   }
 }

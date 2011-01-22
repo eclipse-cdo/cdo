@@ -1111,7 +1111,7 @@ public class CDOServerBrowser extends Worker
       String timeStamp = String.valueOf(commitInfo.getTimeStamp());
       boolean selected = timeStamp.equals(param);
 
-      String formatted = CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp());
+      String formatted = CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp()).replaceAll(" ", "&nbsp;");
       String label = formatted;
       if (!selected && auditing)
       {
@@ -1130,41 +1130,48 @@ public class CDOServerBrowser extends Worker
 
       String userID = commitInfo.getUserID();
       out.print("<td valign=\"top\">\r\n");
-      out.print(StringUtil.isEmpty(userID) ? "&nbsp;" : userID);
+      out.print(StringUtil.isEmpty(userID) ? "&nbsp;" : browser.escape(userID));
       out.print("</td>\r\n");
 
       String comment = commitInfo.getComment();
       out.print("<td valign=\"top\">\r\n");
-      out.print(StringUtil.isEmpty(comment) ? "&nbsp;" : comment);
+      out.print(StringUtil.isEmpty(comment) ? "&nbsp;" : browser.escape(comment));
       out.print("</td>\r\n");
-      out.print("</tr>\r\n");
 
+      out.print("</tr>\r\n");
       return selected;
     }
 
     protected void showCommitData(PrintStream out, CDOCommitInfo commitInfo, CDOServerBrowser browser)
     {
       out.print("<h4>New Objects:</h4>\r\n");
+      out.print("<ul>\r\n");
       for (CDOIDAndVersion key : commitInfo.getNewObjects())
       {
         CDORevision newObject = (CDORevision)key;
-        out.print(browser.href(newObject.toString(), RevisionsPage.FromStore.NAME, "revision",
-            CDORevisionUtil.formatRevisionKey(newObject))
-            + "<br>\r\n");
+        out.print("<li>"
+            + browser.href(newObject.toString(), RevisionsPage.FromStore.NAME, "revision",
+                CDORevisionUtil.formatRevisionKey(newObject)) + "<br>\r\n");
       }
 
+      out.print("</ul>\r\n");
       out.print("<h4>Changed Objects:</h4>\r\n");
+      out.print("<ul>\r\n");
       for (CDORevisionKey key : commitInfo.getChangedObjects())
       {
         CDORevisionDelta changedObject = (CDORevisionDelta)key;
-        out.print(changedObject.toString() + "<br>\r\n");
+        out.print("<li>" + changedObject.toString() + "<br>\r\n");
       }
 
+      out.print("</ul>\r\n");
       out.print("<h4>Detached Objects:</h4>\r\n");
+      out.print("<ul>\r\n");
       for (CDOIDAndVersion key : commitInfo.getDetachedObjects())
       {
-        out.print(key.toString() + "<br>\r\n");
+        out.print("<li>" + key.toString() + "<br>\r\n");
       }
+
+      out.print("</ul>\r\n");
     }
   }
 }

@@ -732,6 +732,7 @@ public class CDOServerBrowser extends Worker
       String commitInfo = browser.href(created, HistoryPage.NAME, "time", String.valueOf(revision.getTimeStamp()));
 
       pout.print("<table border=\"1\" cellpadding=\"2\">\r\n");
+      showKeyValue(pout, true, "type", "<b>" + revision.getClass().getSimpleName() + "</b>");
       showKeyValue(pout, true, "class", className);
       showKeyValue(pout, true, "id", getRevisionValue(revision.getID(), browser, ids, revision));
       showKeyValue(pout, true, "branch", revision.getBranch().getName() + "[" + revision.getBranch().getID() + "]");

@@ -42,7 +42,7 @@ package org.eclipse.net4j.util.concurrent;
  */
 public final class ConcurrentValue<T>
 {
-  private Object notifier = new Object();
+  private Object notifier = new Notifier();
 
   private T value;
 
@@ -99,5 +99,12 @@ public final class ConcurrentValue<T>
         notifier.wait();
       }
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class Notifier extends Object
+  {
   }
 }

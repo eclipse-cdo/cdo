@@ -71,7 +71,10 @@ public class Notifier implements INotifier
 
   public void fireEvent(IEvent event)
   {
-    fireEvent(event, getListeners());
+    if (event != null)
+    {
+      fireEvent(event, getListeners());
+    }
   }
 
   /**
@@ -79,7 +82,7 @@ public class Notifier implements INotifier
    */
   public void fireEvent(final IEvent event, final IListener[] listeners)
   {
-    if (listeners != null)
+    if (event != null && listeners != null)
     {
       ExecutorService notificationService = getNotificationService();
       if (notificationService != null)

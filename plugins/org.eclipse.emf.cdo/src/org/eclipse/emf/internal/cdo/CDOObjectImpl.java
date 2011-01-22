@@ -426,20 +426,26 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         @Override
         protected void didAdd(int index, Adapter newObject)
         {
-          super.didAdd(index, newObject);
-          if (!FSMUtil.isTransient(CDOObjectImpl.this))
+          if (view == null || view.isActive())
           {
-            view.handleAddAdapter(CDOObjectImpl.this, newObject);
+            super.didAdd(index, newObject);
+            if (!FSMUtil.isTransient(CDOObjectImpl.this))
+            {
+              view.handleAddAdapter(CDOObjectImpl.this, newObject);
+            }
           }
         }
 
         @Override
         protected void didRemove(int index, Adapter oldObject)
         {
-          super.didRemove(index, oldObject);
-          if (!FSMUtil.isTransient(CDOObjectImpl.this))
+          if (view == null || view.isActive())
           {
-            view.handleRemoveAdapter(CDOObjectImpl.this, oldObject);
+            super.didRemove(index, oldObject);
+            if (!FSMUtil.isTransient(CDOObjectImpl.this))
+            {
+              view.handleRemoveAdapter(CDOObjectImpl.this, oldObject);
+            }
           }
         }
       };

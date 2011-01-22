@@ -1132,5 +1132,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
       CDOCommitInfo commitInfo = manager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, null);
       handler.handleCommitInfo(commitInfo);
     }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format("CommitInfo[{0}, {1}, {2}, {3}, {4}]", branch, timeStamp, previousTimeStamp, userID,
+          comment);
+    }
   }
 }

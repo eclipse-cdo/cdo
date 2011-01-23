@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.view.CDOStaleObject;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
@@ -43,6 +44,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -187,25 +189,30 @@ public final class CDOUtil
   }
 
   /**
-   * @since 2.0
+   * @since 4.0
    */
-  public static CDOXATransaction createXATransaction(CDOViewSet viewSet)
+  public static CDOXATransaction createXATransaction(Notifier... notifiers)
   {
-    CDOXATransaction xaTransaction = createXATransaction();
-    if (viewSet != null)
+    CDOXATransaction xaTransaction = new CDOXATransactionImpl();
+    for (Notifier notifier : notifiers)
     {
-      xaTransaction.add(viewSet);
+      CDOViewSet viewSet = getViewSet(notifier);
+      if (viewSet == null)
+      {
+        throw new IllegalArgumentException("Notifier is not associated with a CDOViewSet: " + notifier);
+      }
+
+      try
+      {
+        xaTransaction.add(viewSet);
+      }
+      catch (IllegalArgumentException ex)
+      {
+        OM.LOG.warn(ex);
+      }
     }
 
     return xaTransaction;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static CDOXATransaction createXATransaction()
-  {
-    return new CDOXATransactionImpl();
   }
 
   /**
@@ -226,16 +233,59 @@ public final class CDOUtil
   }
 
   /**
-   * @since 2.0
+   * @since 4.0
    */
-  public static CDOViewSet getViewSet(ResourceSet resourceSet)
+  public static CDOViewSet getViewSet(Notifier notifier)
   {
-    EList<Adapter> adapters = resourceSet.eAdapters();
+    if (notifier instanceof CDOViewSet)
+    {
+      return (CDOViewSet)notifier;
+    }
+
+    EList<Adapter> adapters = notifier.eAdapters();
     for (Adapter adapter : adapters)
     {
       if (adapter instanceof CDOViewSet)
       {
         return (CDOViewSet)adapter;
+      }
+    }
+
+    if (notifier instanceof InternalEObject)
+    {
+      InternalEObject object = (InternalEObject)notifier;
+      EObject container = object.eContainer();
+      if (container != null)
+      {
+        CDOViewSet viewSet = getViewSet(container);
+        if (viewSet != null)
+        {
+          return viewSet;
+        }
+      }
+
+      Resource.Internal resource = object.eDirectResource();
+      if (resource != null)
+      {
+        CDOViewSet viewSet = getViewSet(resource);
+        if (viewSet != null)
+        {
+          return viewSet;
+        }
+      }
+    }
+
+    if (notifier instanceof Resource)
+    {
+      Resource resource = (Resource)notifier;
+      ResourceSet resourceSet = resource.getResourceSet();
+      if (resourceSet != null)
+      {
+        CDOViewSet viewSet = getViewSet(resourceSet);
+        if (viewSet != null)
+        {
+          return viewSet;
+        }
       }
     }
 

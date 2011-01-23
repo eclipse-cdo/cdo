@@ -50,15 +50,16 @@ public class Bugzilla_250910_Test extends AbstractCDOTest
       CDOTransaction transaction2 = session2.openTransaction();
       company.setName(String.valueOf(i));
 
-      transaction2.getLock().lock();
+      Company company2;
+      synchronized (transaction2)
+      {
+        transaction1.commit();
 
-      transaction1.commit();
+        transaction2.options().setInvalidationNotificationEnabled(true);
+        company2 = (Company)CDOUtil.getEObject(transaction2.getObject(id, true));
+        company2.eAdapters().add(testAdapter);
+      }
 
-      transaction2.options().setInvalidationNotificationEnabled(true);
-      Company company2 = (Company)CDOUtil.getEObject(transaction2.getObject(id, true));
-      company2.eAdapters().add(testAdapter);
-
-      transaction2.getLock().unlock();
       assertEquals(String.valueOf(i), company2.getName());
       // Need a way to test if an error occured in the invalidation process.
     }

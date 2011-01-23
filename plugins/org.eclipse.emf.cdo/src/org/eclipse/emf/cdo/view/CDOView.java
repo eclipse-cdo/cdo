@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.CDOAdapter;
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
-import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -48,15 +47,17 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * A read-only view to the <em>current</em> (i.e. latest) state of the object graph in the repository of the underlying
- * {@link CDOSession session}.
+ * A read-only view to the state of the object graph in the repository of the underlying {@link CDOSession session} at a
+ * specific {@link #getTimeStamp() time} at a specific {@link #getBranch() branch}.
  * <p>
- * Objects that are accessed through this view are unchangeable for the client. Each attempt to call a mutator on one of
- * these objects or one of their reference collections will result in a {@link ReadOnlyException} being thrown
- * immediately.
+ * If the {@link #getTimeStamp() time} of a view is {@link CDOBranchPoint#UNSPECIFIED_DATE unspecified} the objects
+ * provided and managed by that view always show the latest state the repository graph.
+ * <p>
+ * Objects that are accessed through this view are immutable for the client. Each attempt to call a mutator on one of
+ * these objects or one of their feature lists will result in a {@link ReadOnlyException} being thrown immediately.
+ * Mutable objects can be provided by a {@link CDOTransaction transaction}.
  * <p>
  * A view is opened through API of the underlying session like this:
  * 
@@ -65,15 +66,6 @@ import java.util.concurrent.locks.ReentrantLock;
  *   CDOView view = session.openView();
  *   ...
  * </pre>
- * 
- * CDOView instances <b>must not</b> be accessed through concurrent client threads.
- * <p>
- * Since a CDOObject, in a {@link CDOState#TRANSIENT non-TRANSIENT} state, is only meaningful in combination with its
- * dedicated view they must also not be accessed through concurrent client threads. Please note that at arbitrary times
- * an arbitrary number of framework background threads are allowed to use and modify a CDOview and its CDOObjects.
- * Whenever you are iterating over a number of CDOObjects and need to ensure that they are not modified by the framework
- * at the same time it is strongly recommended to acquire the {@link #getLock() view lock} and protect your code
- * appropriately.
  * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
@@ -145,40 +137,9 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
   public boolean setTimeStamp(long timeStamp);
 
   /**
-   * Returns a reentrant lock that can be used to prevent the framework from writing to any object in this view (as it
-   * is caused, for example, by passive updates).
-   * <p>
-   * Acquiring this lock provides a means to safely iterate over multiple model elements without being affected by
-   * unanticipated remote updates, like in the following example:
-   * 
-   * <pre>
-   *    CDOResource resource = view.getResource(&quot;/orders/order-4711&quot;);
-   *    PurchaseOrder order = (PurchaseOrder)resource.getContents().get(0);
-   *    ReentrantLock lock = view.getLock();
-   *    if (!lock.tryLock(5L, TimeUnit.SECONDS))
-   *    {
-   *      throw new TimeoutException();
-   *    }
-   *    try
-   *    {
-   *      float sum = 0;
-   *      for (OrderDetail detail : order.getOrderDetails())
-   *      {
-   *        sum += detail.getPrice();
-   *      }
-   *      System.out.println(&quot;Sum: &quot; + sum);
-   *    }
-   *    finally
-   *    {
-   *      lock.unlock();
-   *    }
-   *  }
-   * </pre>
-   * 
-   * Note that this method really just returns the lock instance but does <b>not</b> acquire the lock! The above example
-   * acquires the lock with a timeout that expires after five seconds.
+   * @since 4.0
    */
-  public ReentrantLock getLock();
+  public boolean isInvalidationRunnerActive();
 
   /**
    * @since 3.0

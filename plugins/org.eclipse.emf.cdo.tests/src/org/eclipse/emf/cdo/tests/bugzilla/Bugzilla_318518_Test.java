@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +30,12 @@ import java.util.List;
  */
 public class Bugzilla_318518_Test extends AbstractCDOTest
 {
-
   private List<Exception> exceptions = new ArrayList<Exception>();
 
+  /**
+   * @deprecated AbstractObjectConflictResolver is deprecated
+   */
+  @Deprecated
   public void testCorrectNumberOfFeatureDeltas() throws Exception
   {
     // setup transaction.
@@ -57,7 +58,7 @@ public class Bugzilla_318518_Test extends AbstractCDOTest
 
     final CDOTransaction tr2 = session.openTransaction();
 
-    tr2.options().addConflictResolver(new AbstractObjectConflictResolver()
+    tr2.options().addConflictResolver(new org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver()
     {
       @Override
       protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta,

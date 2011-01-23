@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.MergeLocalChangesPerFeature;
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 /**
@@ -26,6 +25,7 @@ import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
  */
 public class ConflictResolverTest extends AbstractCDOTest
 {
+  @SuppressWarnings("deprecation")
   public void testMergeLocalChangesPerFeature_Basic() throws Exception
   {
     msg("Opening session");
@@ -40,7 +40,8 @@ public class ConflictResolverTest extends AbstractCDOTest
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    transaction2.options().addConflictResolver(new MergeLocalChangesPerFeature());
+    transaction2.options().addConflictResolver(
+        new org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.MergeLocalChangesPerFeature());
     Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
 
     address2.setCity("OTTAWA");
@@ -132,6 +133,7 @@ public class ConflictResolverTest extends AbstractCDOTest
     transaction1.commit();
   }
 
+  @SuppressWarnings("deprecation")
   public void testMergeLocalChangesPerFeature_BasicException() throws Exception
   {
     // Does not work in legacy as long as there is not getter interception
@@ -149,33 +151,34 @@ public class ConflictResolverTest extends AbstractCDOTest
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    transaction2.options().addConflictResolver(new MergeLocalChangesPerFeature());
+    transaction2.options().addConflictResolver(
+        new org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.MergeLocalChangesPerFeature());
     final Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
 
     address2.setCity("OTTAWA");
 
     address.setCity("NAME1");
-
     long committed = transaction.commit().getTimeStamp();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return CDOUtil.getCDOObject(address2).cdoConflict();
-      }
-    }.assertNoTimeOut();
+    // new PollingTimeOuter()
+    // {
+    // @Override
+    // protected boolean successful()
+    // {
+    // return CDOUtil.getCDOObject(address2).cdoConflict();
+    // }
+    // }.assertNoTimeOut();
 
-    transaction2.getSession().waitForUpdate(committed, DEFAULT_TIMEOUT);
+    transaction2.waitForUpdate(committed, DEFAULT_TIMEOUT);
     assertEquals(true, transaction2.hasConflict());
+    assertEquals(true, CDOUtil.getCDOObject(address2).cdoConflict());
     assertEquals("OTTAWA", address2.getCity());
   }
 
   /**
    * TODO Why do I fail only on Hudson???
    */
-  public void _testCDOMergingConflictResolver() throws Exception
+  public void testCDOMergingConflictResolver() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

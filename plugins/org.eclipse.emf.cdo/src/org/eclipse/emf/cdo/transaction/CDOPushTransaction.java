@@ -56,7 +56,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Eike Stepper
@@ -405,9 +404,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getLastSavepoint();
   }
 
-  public ReentrantLock getLock()
+  /**
+   * @since 4.0
+   */
+  public boolean isInvalidationRunnerActive()
   {
-    return delegate.getLock();
+    return delegate.isInvalidationRunnerActive();
   }
 
   public Map<CDOID, CDOObject> getNewObjects()

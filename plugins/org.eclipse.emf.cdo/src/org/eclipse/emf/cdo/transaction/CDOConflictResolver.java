@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 
-import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver;
+import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 import java.util.Set;
 
@@ -38,7 +38,7 @@ public interface CDOConflictResolver
   /**
    * Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.
    * <p>
-   * The implementor might want to use/extend {@link AbstractObjectConflictResolver}.
+   * The implementor might want to use/extend {@link CDOMergingConflictResolver}.
    */
   public void resolveConflicts(Set<CDOObject> conflicts);
 }

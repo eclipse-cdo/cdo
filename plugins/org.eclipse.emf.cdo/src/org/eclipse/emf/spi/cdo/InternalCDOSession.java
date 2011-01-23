@@ -149,11 +149,6 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 3.0
    */
-  public Object getInvalidationLock();
-
-  /**
-   * @since 3.0
-   */
   public void handleRepositoryTypeChanged(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType);
 
   /**

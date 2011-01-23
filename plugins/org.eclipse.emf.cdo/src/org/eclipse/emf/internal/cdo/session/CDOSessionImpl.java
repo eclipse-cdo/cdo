@@ -82,7 +82,6 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
@@ -128,7 +127,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Eike Stepper
@@ -194,22 +192,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
    * was committed. (Used only for sticky transactions, see bug 290032 - Sticky views.)
    */
   private Map<CDOID, CDOBranchPoint> committedSinceLastRefresh = new HashMap<CDOID, CDOBranchPoint>();
-
-  /**
-   * Fixes threading problems between a committing thread and the Net4j thread that delivers incoming commit
-   * notifications. The same applies to lock requests and invalidations
-   */
-  @ExcludeFromDump
-  private Object invalidationLock = new Object();
-
-  @ExcludeFromDump
-  private QueueRunner invalidationRunner;
-
-  @ExcludeFromDump
-  private Object invalidationRunnerLock = new Object();
-
-  @ExcludeFromDump
-  private static ThreadLocal<Boolean> invalidationRunnerActive = new InheritableThreadLocal<Boolean>();
 
   @ExcludeFromDump
   private int lastViewID;
@@ -725,7 +707,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private long refresh(boolean enablePassiveUpdates)
   {
-    synchronized (invalidationLock)
+    synchronized (outOfSequenceInvalidations)
     {
       Map<CDOBranch, List<InternalCDOView>> views = new HashMap<CDOBranch, List<InternalCDOView>>();
       Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions = new HashMap<CDOBranch, Map<CDOID, InternalCDORevision>>();
@@ -784,7 +766,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     for (InternalCDOView view : branchViews)
     {
-      view.invalidate(result.getLastUpdateTime(), changedObjects, detachedObjects, oldRevisions);
+      view.invalidate(view.getBranch(), result.getLastUpdateTime(), changedObjects, detachedObjects, oldRevisions,
+          false);
     }
   }
 
@@ -930,7 +913,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   {
     try
     {
-      synchronized (invalidationLock)
+      synchronized (outOfSequenceInvalidations)
       {
         registerPackageUnits(commitInfo.getNewPackageUnits());
         invalidate(commitInfo, null);
@@ -1109,82 +1092,80 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
    */
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
   {
-    long previousTimeStamp = commitInfo.getPreviousTimeStamp();
-    long lastUpdateTime = getLastUpdateTime();
-
-    if (previousTimeStamp < lastUpdateTime)
+    synchronized (outOfSequenceInvalidations)
     {
-      previousTimeStamp = lastUpdateTime;
-    }
+      long previousTimeStamp = commitInfo.getPreviousTimeStamp();
+      long lastUpdateTime = getLastUpdateTime();
 
-    outOfSequenceInvalidations.put(previousTimeStamp, new Pair<CDOCommitInfo, InternalCDOTransaction>(commitInfo,
-        sender));
-
-    long nextPreviousTimeStamp = lastUpdateTime;
-    while (!outOfSequenceInvalidations.isEmpty())
-    {
-      Pair<CDOCommitInfo, InternalCDOTransaction> currentPair = outOfSequenceInvalidations
-          .remove(nextPreviousTimeStamp);
-      if (currentPair == null)
+      if (previousTimeStamp < lastUpdateTime)
       {
-        break;
+        previousTimeStamp = lastUpdateTime;
       }
 
-      CDOCommitInfo currentCommitInfo = currentPair.getElement1();
-      InternalCDOTransaction currentSender = currentPair.getElement2();
-      nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
+      outOfSequenceInvalidations.put(previousTimeStamp, new Pair<CDOCommitInfo, InternalCDOTransaction>(commitInfo,
+          sender));
 
-      CountDownLatch latch = new CountDownLatch(1);
-
-      QueueRunner runner = getInvalidationRunner();
-      runner.addWork(new InvalidationRunnable(currentCommitInfo, currentSender, latch));
-
-      try
+      long nextPreviousTimeStamp = lastUpdateTime;
+      while (!outOfSequenceInvalidations.isEmpty())
       {
-        latch.await();
-      }
-      catch (InterruptedException ex)
-      {
-        throw WrappedException.wrap(ex);
+        Pair<CDOCommitInfo, InternalCDOTransaction> currentPair = outOfSequenceInvalidations
+            .remove(nextPreviousTimeStamp);
+
+        if (currentPair == null)
+        {
+          break;
+        }
+
+        CDOCommitInfo currentCommitInfo = currentPair.getElement1();
+        InternalCDOTransaction currentSender = currentPair.getElement2();
+        nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
+
+        invalidateOrdered(commitInfo, currentSender);
       }
     }
   }
 
-  public Object getInvalidationLock()
+  private void invalidateOrdered(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
   {
-    return invalidationLock;
-  }
-
-  private QueueRunner getInvalidationRunner()
-  {
-    synchronized (invalidationRunnerLock)
+    Map<CDOID, InternalCDORevision> oldRevisions = reviseRevisions(commitInfo);
+    if (options.isPassiveUpdateEnabled())
     {
-      if (invalidationRunner == null)
-      {
-        invalidationRunner = createInvalidationRunner();
-        invalidationRunner.activate();
-      }
+      setLastUpdateTime(commitInfo.getTimeStamp());
     }
 
-    return invalidationRunner;
+    fireInvalidationEvent(sender, commitInfo);
+
+    for (InternalCDOView view : getViews())
+    {
+      if (view != sender)
+      {
+        invalidateView(commitInfo, view, oldRevisions);
+      }
+    }
   }
 
-  protected QueueRunner createInvalidationRunner()
+  private void invalidateView(CDOCommitInfo commitInfo, InternalCDOView view,
+      Map<CDOID, InternalCDORevision> oldRevisions)
   {
-    return new QueueRunner()
+    try
     {
-      @Override
-      protected String getThreadName()
+      CDOBranch branch = commitInfo.getBranch();
+      long lastUpdateTime = commitInfo.getTimeStamp();
+      List<CDORevisionKey> allChangedObjects = commitInfo.getChangedObjects();
+      List<CDOIDAndVersion> allDetachedObjects = commitInfo.getDetachedObjects();
+      view.invalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions, true);
+    }
+    catch (RuntimeException ex)
+    {
+      if (view.isActive())
       {
-        return "InvalidationRunner"; //$NON-NLS-1$
+        OM.LOG.error(ex);
       }
-
-      @Override
-      public String toString()
+      else
       {
-        return getThreadName();
+        OM.LOG.info(Messages.getString("CDOSessionImpl.1")); //$NON-NLS-1$
       }
-    };
+    }
   }
 
   /**
@@ -1391,12 +1372,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     views.clear();
-
-    if (invalidationRunner != null)
-    {
-      LifecycleUtil.deactivate(invalidationRunner, OMLogger.Level.WARN);
-      invalidationRunner = null;
-    }
+    outOfSequenceInvalidations.clear();
 
     unhookSessionProtocol();
 
@@ -1431,11 +1407,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   protected void sessionProtocolDeactivated()
   {
     deactivate();
-  }
-
-  public static boolean isInvalidationRunnerActive()
-  {
-    return invalidationRunnerActive.get();
   }
 
   /**
@@ -1706,76 +1677,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   /**
    * @author Eike Stepper
    */
-  private final class InvalidationRunnable implements Runnable
-  {
-    protected CDOCommitInfo commitInfo;
-
-    private InternalCDOTransaction sender;
-
-    private CountDownLatch latch;
-
-    protected InvalidationRunnable(CDOCommitInfo commitInfo, InternalCDOTransaction sender, CountDownLatch latch)
-    {
-      this.commitInfo = commitInfo;
-      this.sender = sender;
-      this.latch = latch;
-    }
-
-    public void run()
-    {
-      try
-      {
-        invalidationRunnerActive.set(true);
-
-        Map<CDOID, InternalCDORevision> oldRevisions = reviseRevisions(commitInfo);
-        if (options.isPassiveUpdateEnabled())
-        {
-          setLastUpdateTime(commitInfo.getTimeStamp());
-        }
-
-        fireInvalidationEvent(sender, commitInfo);
-
-        for (InternalCDOView view : getViews())
-        {
-          if (view != sender && ObjectUtil.equals(view.getBranch(), commitInfo.getBranch()))
-          {
-            invalidateView(view, oldRevisions);
-          }
-        }
-      }
-      finally
-      {
-        invalidationRunnerActive.set(false);
-        latch.countDown();
-      }
-    }
-
-    private void invalidateView(InternalCDOView view, Map<CDOID, InternalCDORevision> oldRevisions)
-    {
-      try
-      {
-        long lastUpdateTime = commitInfo.getTimeStamp();
-        List<CDORevisionKey> allChangedObjects = commitInfo.getChangedObjects();
-        List<CDOIDAndVersion> allDetachedObjects = commitInfo.getDetachedObjects();
-        view.invalidate(lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions);
-      }
-      catch (RuntimeException ex)
-      {
-        if (view.isActive())
-        {
-          OM.LOG.error(ex);
-        }
-        else
-        {
-          OM.LOG.info(Messages.getString("CDOSessionImpl.1")); //$NON-NLS-1$
-        }
-      }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
   private final class InvalidationEvent extends Event implements CDOSessionInvalidationEvent
   {
     private static final long serialVersionUID = 1L;
@@ -1807,6 +1708,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return sender;
     }
 
+    @Deprecated
     public InternalCDOView getView()
     {
       return sender;

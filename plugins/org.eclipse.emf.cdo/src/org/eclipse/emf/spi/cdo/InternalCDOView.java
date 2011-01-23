@@ -12,6 +12,7 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -29,7 +30,6 @@ import org.eclipse.emf.ecore.EObject;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Eike Stepper
@@ -66,10 +66,10 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void invalidate(long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions);
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async);
 
   /**
    * @since 3.0
@@ -114,29 +114,32 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
   public boolean hasSubscription(CDOID id);
 
-  /**
-   * Each time CDORevision or CDOState of an CDOObject is modified, ensure that no concurrent access is modifying it at
-   * the same time. Uses {@link InternalCDOView#getStateLock()} to be thread safe.
-   * <p>
-   * In the case where {@link CDOObject#cdoRevision()} or {@link CDOObject#cdoState()} is called without using this
-   * lock, it is not guarantee that the state didn't change immediately after.
-   * <p>
-   * <code>
-   * if (cdoObject.cdoState() != CDOState.PROXY)
-   * {
-   *  // At this point could be a proxy!
-   *  cdoObject.cdoRevision();
-   * }
-   * </code>
-   * <p>
-   * The reason were we didn't use {@link CDOView#getLock()} is to not allow the access of that lock to the users since
-   * it is very critical. Instead of giving this API to the end-users, a better API should be given in the CDOObject to
-   * give them want they need.
-   */
-  public ReentrantLock getStateLock();
-
-  /**
-   * @since 4.0
-   */
-  public Object getObjectsLock();
+  // /**
+  // * Each time CDORevision or CDOState of an CDOObject is modified, ensure that no concurrent access is modifying it
+  // at
+  // * the same time. Uses {@link InternalCDOView#getStateLock()} to be thread safe.
+  // * <p>
+  // * In the case where {@link CDOObject#cdoRevision()} or {@link CDOObject#cdoState()} is called without using this
+  // * lock, it is not guarantee that the state didn't change immediately after.
+  // * <p>
+  // * <code>
+  // * if (cdoObject.cdoState() != CDOState.PROXY)
+  // * {
+  // * // At this point could be a proxy!
+  // * cdoObject.cdoRevision();
+  // * }
+  // * </code>
+  // * <p>
+  // * The reason were we didn't use {@link CDOView#getLock()} is to not allow the access of that lock to the users
+  // since
+  // * it is very critical. Instead of giving this API to the end-users, a better API should be given in the CDOObject
+  // to
+  // * give them want they need.
+  // */
+  // public ReentrantLock getStateLock();
+  //
+  // /**
+  // * @since 4.0
+  // */
+  // public Object getObjectsLock();
 }

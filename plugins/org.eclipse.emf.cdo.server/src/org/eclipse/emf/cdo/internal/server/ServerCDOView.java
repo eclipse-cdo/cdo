@@ -121,15 +121,20 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     return this;
   }
 
-  public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
+  public synchronized InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
     return (InternalCDORevision)revisionProvider.getRevision(id);
   }
 
   @Override
-  protected void excludeTempIDs(CDOID id)
+  protected synchronized void excludeTempIDs(CDOID id)
   {
     // Do nothing
+  }
+
+  public boolean isInvalidationRunnerActive()
+  {
+    return false;
   }
 
   public boolean setBranchPoint(CDOBranchPoint branchPoint)
@@ -183,8 +188,8 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
-  public void invalidate(long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions)
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
   {
     throw new UnsupportedOperationException();
   }
@@ -720,11 +725,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     public InternalCDORemoteSessionManager getRemoteSessionManager()
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public Object getInvalidationLock()
     {
       throw new UnsupportedOperationException();
     }

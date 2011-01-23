@@ -58,6 +58,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -97,6 +98,13 @@ import java.util.concurrent.TimeoutException;
 public class CDOXATransactionImpl implements InternalCDOXATransaction
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, CDOXATransactionImpl.class);
+
+  /**
+   * Parallel execution leads to deadlocks because the view lock is being held by the scheduler.
+   * <p>
+   * Contact the authors if you want to have this executed in parallel.
+   */
+  private static final boolean SEQUENTIAL_EXECUTION = true;
 
   private List<InternalCDOTransaction> transactions = new ArrayList<InternalCDOTransaction>();
 
@@ -416,8 +424,43 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return new CDOXASavepointImpl(this, lastSavepoint);
   }
 
-  protected ExecutorService createExecutorService()
+  protected final ExecutorService createExecutorService()
   {
+    if (SEQUENTIAL_EXECUTION)
+    {
+      return new AbstractExecutorService()
+      {
+        public void execute(Runnable command)
+        {
+          command.run();
+        }
+
+        public List<Runnable> shutdownNow()
+        {
+          return null;
+        }
+
+        public void shutdown()
+        {
+        }
+
+        public boolean isTerminated()
+        {
+          return false;
+        }
+
+        public boolean isShutdown()
+        {
+          return false;
+        }
+
+        public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException
+        {
+          return false;
+        }
+      };
+    }
+
     return Executors.newFixedThreadPool(10);
   }
 

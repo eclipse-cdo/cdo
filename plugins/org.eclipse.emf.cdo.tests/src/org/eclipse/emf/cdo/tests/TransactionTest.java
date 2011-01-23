@@ -73,9 +73,9 @@ public class TransactionTest extends AbstractCDOTest
     try
     {
       transaction.commit();
-      fail("IllegalStateException expected");
+      fail("CommitException expected");
     }
-    catch (IllegalStateException success)
+    catch (CommitException expected)
     {
       // SUCCESS
     }

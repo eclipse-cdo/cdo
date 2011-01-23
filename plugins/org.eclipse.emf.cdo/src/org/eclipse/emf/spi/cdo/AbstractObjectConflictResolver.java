@@ -12,11 +12,14 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionMerger;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -30,7 +33,6 @@ import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
@@ -40,12 +42,10 @@ import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -54,7 +54,9 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  * @since 2.0
+ * @deprecated as of 4.0 use CDOMergingConflictResolver
  */
+@Deprecated
 public abstract class AbstractObjectConflictResolver extends AbstractConflictResolver implements CDOConflictResolver2
 {
   public AbstractObjectConflictResolver()
@@ -92,7 +94,15 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
       CDORevision oldRevision = entry.getValue().getElement1();
       CDORevisionDelta remoteDelta = entry.getValue().getElement2();
       CDORevisionDelta localDelta = localDeltas.get(conflict.cdoID());
-      resolveConflict(conflict, oldRevision, localDelta, remoteDelta, allRemoteDeltas);
+
+      try
+      {
+        resolveConflict(conflict, oldRevision, localDelta, remoteDelta, allRemoteDeltas);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
     }
   }
 
@@ -109,9 +119,11 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
     throw new UnsupportedOperationException("Must be overridden");
   }
 
+  @Deprecated
   public static void rollbackObject(CDOObject object)
   {
-    CDOStateMachine.INSTANCE.rollback((InternalCDOObject)object);
+    throw new UnsupportedOperationException("Rolling back single objects is unsafe!");
+    // CDOStateMachine.INSTANCE.rollback((InternalCDOObject)object);
   }
 
   public static void readObject(CDOObject object)
@@ -153,14 +165,30 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
     public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
         List<CDORevisionDelta> allRemoteDeltas)
     {
-      // Do nothing
+      CDOChangeSetData remoteChangeSet = createChangeSet(allRemoteDeltas);
+
+      InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
+      CDOChangeSetData localChangeSet = transaction.getChangeSetData();
+      transaction.rollback();
+
+      transaction.applyChangeSetData(remoteChangeSet, transaction, transaction, transaction);
+      transaction.applyChangeSetData(localChangeSet, transaction, transaction, transaction);
     }
 
-    @Override
-    protected void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta)
+    private CDOChangeSetData createChangeSet(List<CDORevisionDelta> revisionDeltas)
     {
-      rollbackObject(conflict);
-      changeObject(conflict, localDelta);
+      List<CDOIDAndVersion> newObjects = Collections.emptyList();
+      List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
+      List<CDOIDAndVersion> detachedObjects = Collections.emptyList();
+
+      for (CDORevisionDelta delta : revisionDeltas)
+      {
+        changedObjects.add(delta);
+      }
+
+      CDOChangeSetData remoteChangeSet = CDORevisionUtil.createChangeSetData(newObjects, changedObjects,
+          detachedObjects);
+      return remoteChangeSet;
     }
   }
 
@@ -311,57 +339,59 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
    * @author Eike Stepper
    * @since 2.0
    */
-  public static class MergeLocalChangesPerFeature extends ThreeWayMerge
+  public static class MergeLocalChangesPerFeature extends CDOMergingConflictResolver
   {
     public MergeLocalChangesPerFeature()
     {
+      super(new DefaultCDOMerger.PerFeature());
     }
 
-    @Override
-    protected void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas)
-    {
-      if (hasFeatureConflicts(localDelta, remoteDeltas))
-      {
-        // TODO localDelta may be corrupt already and the transaction will not be able to restore it!!!
-        throw new CDOException(Messages.getString("AbstractObjectConflictResolver.0")); //$NON-NLS-1$
-      }
-
-      rollbackObject(conflict);
-
-      // Add remote deltas to local delta
-      for (CDORevisionDelta remoteDelta : remoteDeltas)
-      {
-        for (CDOFeatureDelta remoteFeatureDelta : remoteDelta.getFeatureDeltas())
-        {
-          // TODO Add public API for this:
-          ((InternalCDORevisionDelta)localDelta).addFeatureDelta(remoteFeatureDelta);
-        }
-      }
-
-      changeObject(conflict, localDelta);
-    }
-
-    protected boolean hasFeatureConflicts(CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas)
-    {
-      Set<EStructuralFeature> features = new HashSet<EStructuralFeature>();
-      for (CDOFeatureDelta localFeatureDelta : localDelta.getFeatureDeltas())
-      {
-        features.add(localFeatureDelta.getFeature());
-      }
-
-      for (CDORevisionDelta remoteDelta : remoteDeltas)
-      {
-        for (CDOFeatureDelta remoteFeatureDelta : remoteDelta.getFeatureDeltas())
-        {
-          EStructuralFeature feature = remoteFeatureDelta.getFeature();
-          if (features.contains(feature))
-          {
-            return true;
-          }
-        }
-      }
-
-      return false;
-    }
+    // @Override
+    // protected void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta, List<CDORevisionDelta>
+    // remoteDeltas)
+    // {
+    // if (hasFeatureConflicts(localDelta, remoteDeltas))
+    // {
+    // // TODO localDelta may be corrupt already and the transaction will not be able to restore it!!!
+    //        throw new CDOException(Messages.getString("AbstractObjectConflictResolver.0")); //$NON-NLS-1$
+    // }
+    //
+    // rollbackObject(conflict);
+    //
+    // // Add remote deltas to local delta
+    // for (CDORevisionDelta remoteDelta : remoteDeltas)
+    // {
+    // for (CDOFeatureDelta remoteFeatureDelta : remoteDelta.getFeatureDeltas())
+    // {
+    // // TODO Add public API for this:
+    // ((InternalCDORevisionDelta)localDelta).addFeatureDelta(remoteFeatureDelta);
+    // }
+    // }
+    //
+    // changeObject(conflict, localDelta);
+    // }
+    //
+    // protected boolean hasFeatureConflicts(CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas)
+    // {
+    // Set<EStructuralFeature> features = new HashSet<EStructuralFeature>();
+    // for (CDOFeatureDelta localFeatureDelta : localDelta.getFeatureDeltas())
+    // {
+    // features.add(localFeatureDelta.getFeature());
+    // }
+    //
+    // for (CDORevisionDelta remoteDelta : remoteDeltas)
+    // {
+    // for (CDOFeatureDelta remoteFeatureDelta : remoteDelta.getFeatureDeltas())
+    // {
+    // EStructuralFeature feature = remoteFeatureDelta.getFeature();
+    // if (features.contains(feature))
+    // {
+    // return true;
+    // }
+    // }
+    // }
+    //
+    // return false;
+    // }
   }
 }

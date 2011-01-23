@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 import org.eclipse.net4j.util.collection.Pair;
 
-import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver;
+import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 import java.util.List;
 import java.util.Map;
@@ -34,7 +34,7 @@ public interface CDOConflictResolver2 extends CDOConflictResolver
    * be sent to the adapters in the current transaction. This can be achieved by adjusting the {@link CDORevisionDelta}
    * in <code>deltas</code>.
    * <p>
-   * The implementor might want to use/extend {@link AbstractObjectConflictResolver}.
+   * The implementor might want to use/extend {@link CDOMergingConflictResolver}.
    * 
    * @param conflicts
    *          A map that contains the local objects with conflicts as the keys. Each value in this map is a {@link Pair

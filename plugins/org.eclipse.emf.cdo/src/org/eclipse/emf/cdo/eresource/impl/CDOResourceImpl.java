@@ -785,7 +785,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
         }
         else
         {
-          synchronized (view.getObjectsLock())
+          synchronized (view)
           {
             if (!view.isObjectRegistered(id))
             {

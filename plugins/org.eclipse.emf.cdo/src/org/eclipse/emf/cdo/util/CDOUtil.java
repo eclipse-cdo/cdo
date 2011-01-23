@@ -32,7 +32,6 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
-import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl.CDOXAInternalAdapter;
 import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
@@ -413,10 +412,12 @@ public final class CDOUtil
 
   /**
    * @since 3.0
+   * @deprecated as of 4.0. Use CDOView.isInvalidationRunnerActive()
    */
+  @Deprecated
   public static boolean isInvalidationRunnerActive()
   {
-    return CDOSessionImpl.isInvalidationRunnerActive();
+    throw new UnsupportedOperationException("Use CDOView.isInvalidationRunnerActive()");
   }
 
   /**

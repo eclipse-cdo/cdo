@@ -103,6 +103,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.FastList;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -127,7 +128,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
-import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -148,7 +148,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Eike Stepper
@@ -156,6 +155,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransaction
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, CDOTransactionImpl.class);
+
+  private Object transactionHandlersLock = new Object();
 
   private FastList<CDOTransactionHandler1> transactionHandlers1 = new FastList<CDOTransactionHandler1>()
   {
@@ -187,7 +188,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private AtomicInteger lastTemporaryID = new AtomicInteger();
 
-  private long lastCommitTime = UNSPECIFIED_DATE;
+  private volatile long lastCommitTime = UNSPECIFIED_DATE;
 
   private String commitComment;
 
@@ -244,7 +245,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  public boolean setBranchPoint(CDOBranchPoint branchPoint)
+  public synchronized boolean setBranchPoint(CDOBranchPoint branchPoint)
   {
     if (branchPoint.getTimeStamp() != UNSPECIFIED_DATE)
     {
@@ -261,51 +262,54 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public void addTransactionHandler(CDOTransactionHandlerBase handler)
   {
-    if (handler instanceof CDOTransactionHandler1)
+    synchronized (transactionHandlersLock)
     {
-      transactionHandlers1.add((CDOTransactionHandler1)handler);
-    }
+      if (handler instanceof CDOTransactionHandler1)
+      {
+        transactionHandlers1.add((CDOTransactionHandler1)handler);
+      }
 
-    if (handler instanceof CDOTransactionHandler2)
-    {
-      transactionHandlers2.add((CDOTransactionHandler2)handler);
+      if (handler instanceof CDOTransactionHandler2)
+      {
+        transactionHandlers2.add((CDOTransactionHandler2)handler);
+      }
     }
   }
 
   public void removeTransactionHandler(CDOTransactionHandlerBase handler)
   {
-    if (handler instanceof CDOTransactionHandler1)
+    synchronized (transactionHandlersLock)
     {
-      transactionHandlers1.remove((CDOTransactionHandler1)handler);
-    }
+      if (handler instanceof CDOTransactionHandler1)
+      {
+        transactionHandlers1.remove((CDOTransactionHandler1)handler);
+      }
 
-    if (handler instanceof CDOTransactionHandler2)
-    {
-      transactionHandlers2.remove((CDOTransactionHandler2)handler);
+      if (handler instanceof CDOTransactionHandler2)
+      {
+        transactionHandlers2.remove((CDOTransactionHandler2)handler);
+      }
     }
   }
 
   public CDOTransactionHandler[] getTransactionHandlers()
   {
     Set<CDOTransactionHandler> result = new HashSet<CDOTransactionHandler>();
-    synchronized (transactionHandlers1)
+    synchronized (transactionHandlersLock)
     {
-      synchronized (transactionHandlers2)
+      for (CDOTransactionHandler1 handler : transactionHandlers1.get())
       {
-        for (CDOTransactionHandler1 handler : transactionHandlers1.get())
+        if (handler instanceof CDOTransactionHandler)
         {
-          if (handler instanceof CDOTransactionHandler)
-          {
-            result.add((CDOTransactionHandler)handler);
-          }
+          result.add((CDOTransactionHandler)handler);
         }
+      }
 
-        for (CDOTransactionHandler2 handler : transactionHandlers2.get())
+      for (CDOTransactionHandler2 handler : transactionHandlers2.get())
+      {
+        if (handler instanceof CDOTransactionHandler)
         {
-          if (handler instanceof CDOTransactionHandler)
-          {
-            result.add((CDOTransactionHandler)handler);
-          }
+          result.add((CDOTransactionHandler)handler);
         }
       }
     }
@@ -315,16 +319,22 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public CDOTransactionHandler1[] getTransactionHandlers1()
   {
-    return transactionHandlers1.get();
+    synchronized (transactionHandlersLock)
+    {
+      return transactionHandlers1.get();
+    }
   }
 
   public CDOTransactionHandler2[] getTransactionHandlers2()
   {
-    return transactionHandlers2.get();
+    synchronized (transactionHandlersLock)
+    {
+      return transactionHandlers2.get();
+    }
   }
 
   @Override
-  public boolean isDirty()
+  public synchronized boolean isDirty()
   {
     if (isClosed())
     {
@@ -335,7 +345,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  public boolean hasConflict()
+  public synchronized boolean hasConflict()
   {
     checkActive();
     return conflict != 0;
@@ -343,19 +353,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public void setConflict(InternalCDOObject object)
   {
-    ConflictEvent event = new ConflictEvent(object, conflict == 0);
-    ++conflict;
-    IListener[] listeners = getListeners();
-    if (listeners != null)
+    IEvent event = null;
+    synchronized (this)
     {
-      fireEvent(event, listeners);
+      event = new ConflictEvent(object, conflict == 0);
+      ++conflict;
     }
+
+    fireEvent(event);
   }
 
   /**
    * @since 2.0
    */
-  public Set<CDOObject> getConflicts()
+  public synchronized Set<CDOObject> getConflicts()
   {
     Set<CDOObject> conflicts = new HashSet<CDOObject>();
     for (CDOObject object : getDirtyObjects().values())
@@ -377,80 +388,77 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return conflicts;
   }
 
-  public CDOChangeSetData getChangeSetData()
+  public synchronized CDOChangeSetData getChangeSetData()
   {
     checkActive();
     return lastSavepoint.getAllChangeSetData();
   }
 
-  public CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
+  public synchronized CDOChangeSetData merge(CDOBranchPoint source, CDOMerger merger)
   {
     return merge(source, null, merger);
   }
 
-  public CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOMerger merger)
+  public synchronized CDOChangeSetData merge(CDOBranchPoint source, CDOBranchPoint sourceBase, CDOMerger merger)
   {
-    InternalCDOSession session = getSession();
-    synchronized (session.getInvalidationLock())
+    if (isDirty())
     {
-      if (isDirty())
-      {
-        throw new IllegalStateException("Merging into dirty transactions not yet supported");
-      }
-
-      long now = getLastUpdateTime();
-      CDOBranchPoint target = getBranch().getPoint(now);
-
-      if (source.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
-      {
-        source = source.getBranch().getPoint(now);
-      }
-
-      if (CDOBranchUtil.isContainedBy(source, target))
-      {
-        throw new IllegalArgumentException("Source is already contained in " + target);
-      }
-
-      if (sourceBase != null && CDOBranchUtil.isContainedBy(sourceBase, source))
-      {
-        throw new IllegalArgumentException("Source base is not contained in " + source);
-      }
-
-      CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
-
-      CDORevisionAvailabilityInfo ancestorInfo = session.createRevisionAvailabilityInfo(ancestor);
-      CDORevisionAvailabilityInfo targetInfo = session.createRevisionAvailabilityInfo(target);
-      CDORevisionAvailabilityInfo sourceInfo = session.createRevisionAvailabilityInfo(source);
-      CDORevisionAvailabilityInfo baseInfo = sourceBase != null ? session.createRevisionAvailabilityInfo(sourceBase)
-          : null;
-
-      CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-      Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, ancestorInfo, baseInfo);
-
-      session.cacheRevisions(targetInfo);
-      session.cacheRevisions(sourceInfo);
-      session.cacheRevisions(ancestorInfo);
-
-      if (baseInfo != null)
-      {
-        session.cacheRevisions(baseInfo);
-      }
-      else
-      {
-        baseInfo = ancestorInfo;
-      }
-
-      CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
-      CDOChangeSet sourceChanges = createChangeSet(ids, baseInfo, sourceInfo);
-
-      CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
-      if (result == null)
-      {
-        return null;
-      }
-
-      return applyChangeSetData(result, ancestorInfo, targetInfo, source).getElement1();
+      throw new IllegalStateException("Merging into dirty transactions not yet supported");
     }
+
+    long now = getLastUpdateTime();
+    CDOBranchPoint target = getBranch().getPoint(now);
+
+    if (source.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      source = source.getBranch().getPoint(now);
+    }
+
+    if (CDOBranchUtil.isContainedBy(source, target))
+    {
+      throw new IllegalArgumentException("Source is already contained in " + target);
+    }
+
+    if (sourceBase != null && CDOBranchUtil.isContainedBy(sourceBase, source))
+    {
+      throw new IllegalArgumentException("Source base is not contained in " + source);
+    }
+
+    CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
+
+    InternalCDOSession session = getSession();
+    CDORevisionAvailabilityInfo ancestorInfo = session.createRevisionAvailabilityInfo(ancestor);
+    CDORevisionAvailabilityInfo targetInfo = session.createRevisionAvailabilityInfo(target);
+    CDORevisionAvailabilityInfo sourceInfo = session.createRevisionAvailabilityInfo(source);
+    CDORevisionAvailabilityInfo baseInfo = sourceBase != null ? session.createRevisionAvailabilityInfo(sourceBase)
+        : null;
+
+    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+    Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, ancestorInfo, baseInfo);
+
+    session.cacheRevisions(targetInfo);
+    session.cacheRevisions(sourceInfo);
+    session.cacheRevisions(ancestorInfo);
+
+    if (baseInfo != null)
+    {
+      session.cacheRevisions(baseInfo);
+    }
+    else
+    {
+      baseInfo = ancestorInfo;
+    }
+
+    CDOChangeSet targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
+    CDOChangeSet sourceChanges = createChangeSet(ids, baseInfo, sourceInfo);
+
+    CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
+    if (result == null)
+    {
+      return null;
+    }
+
+    return applyChangeSetData(result, ancestorInfo, targetInfo, source).getElement1();
   }
 
   private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo,
@@ -460,7 +468,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return CDORevisionUtil.createChangeSet(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
   }
 
-  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(
+  public synchronized Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(
       CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider,
       CDOBranchPoint source)
   {
@@ -629,16 +637,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
+  /*
+   * Synchronized through InvalidationRunnable.run()
+   */
   @Override
-  protected void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
+  protected synchronized void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
       List<CDORevisionDelta> deltas)
   {
-    handleConflicts(conflicts, options().getConflictResolvers(), deltas);
-  }
-
-  private void handleConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,
-      CDOConflictResolver[] resolvers, List<CDORevisionDelta> deltas)
-  {
+    CDOConflictResolver[] resolvers = options().getConflictResolvers();
     if (resolvers.length == 0)
     {
       return;
@@ -698,12 +704,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     conflict -= resolved;
   }
 
-  public CDOIDTemp getNextTemporaryID()
+  public synchronized CDOIDTemp getNextTemporaryID()
   {
     return CDOIDUtil.createTempObject(lastTemporaryID.incrementAndGet());
   }
 
-  public CDOResourceFolder createResourceFolder(String path)
+  public synchronized CDOResourceFolder createResourceFolder(String path)
   {
     CDOResourceFolder folder = EresourceFactory.eINSTANCE.createCDOResourceFolder();
     int pos = path.lastIndexOf(CDOURIUtil.SEGMENT_SEPARATOR_CHAR);
@@ -734,14 +740,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return folder;
   }
 
-  public CDOResource createResource(String path)
+  public synchronized CDOResource createResource(String path)
   {
     checkActive();
     URI uri = CDOURIUtil.createResourceURI(this, path);
     return (CDOResource)getResourceSet().createResource(uri);
   }
 
-  public CDOResource getOrCreateResource(String path)
+  public synchronized CDOResource getOrCreateResource(String path)
   {
     checkActive();
 
@@ -765,7 +771,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @since 2.0
    */
   @Override
-  public void attachResource(CDOResourceImpl resource)
+  public synchronized void attachResource(CDOResourceImpl resource)
   {
     if (resource.isExisting())
     {
@@ -788,7 +794,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     attachNewResourceNode(folder, resourceName, resource);
   }
 
-  public CDOResourceFolder getOrCreateResourceFolder(String path)
+  public synchronized CDOResourceFolder getOrCreateResourceFolder(String path)
   {
     checkActive();
 
@@ -802,7 +808,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
     catch (Exception ignore)
     {
-      // Just create the missing resource
+      // Just create the missing folder
     }
 
     return createResourceFolder(path);
@@ -812,7 +818,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @return never <code>null</code>;
    * @since 2.0
    */
-  public CDOResourceFolder getOrCreateResourceFolder(List<String> names)
+  public synchronized CDOResourceFolder getOrCreateResourceFolder(List<String> names)
   {
     CDOResourceFolder folder = null;
     for (String name : names)
@@ -867,7 +873,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public void detach(CDOResourceImpl cdoResource)
+  public synchronized void detach(CDOResourceImpl cdoResource)
   {
     CDOStateMachine.INSTANCE.detach(cdoResource);
   }
@@ -875,7 +881,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public InternalCDOSavepoint getLastSavepoint()
+  public synchronized InternalCDOSavepoint getLastSavepoint()
   {
     checkActive();
     return lastSavepoint;
@@ -884,7 +890,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public CDOTransactionStrategy getTransactionStrategy()
+  public synchronized CDOTransactionStrategy getTransactionStrategy()
   {
     if (transactionStrategy == null)
     {
@@ -898,7 +904,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public void setTransactionStrategy(CDOTransactionStrategy transactionStrategy)
+  public synchronized void setTransactionStrategy(CDOTransactionStrategy transactionStrategy)
   {
     if (this.transactionStrategy != null)
     {
@@ -906,6 +912,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     this.transactionStrategy = transactionStrategy;
+
     if (this.transactionStrategy != null)
     {
       this.transactionStrategy.setTarget(this);
@@ -916,7 +923,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @since 2.0
    */
   @Override
-  protected CDOID getRootOrTopLevelResourceNodeID(String name)
+  protected synchronized CDOID getRootOrTopLevelResourceNodeID(String name)
   {
     if (dirty)
     {
@@ -963,7 +970,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @since 2.0
    */
   @Override
-  public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
+  public synchronized InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
     checkActive();
     if (CDOIDUtil.isNull(id))
@@ -987,7 +994,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public InternalCDOCommitContext createCommitContext()
+  public synchronized InternalCDOCommitContext createCommitContext()
   {
     return new CDOCommitContextImpl(this);
   }
@@ -995,50 +1002,41 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
+  public synchronized CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
   {
-    checkActive();
-    synchronized (getSession().getInvalidationLock())
+    try
     {
-      getLock().lock();
-
-      try
+      checkActive();
+      if (hasConflict())
       {
-        if (hasConflict())
-        {
-          throw new CommitException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
-        }
+        throw new CommitException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
+      }
 
-        if (progressMonitor == null)
-        {
-          progressMonitor = new NullProgressMonitor();
-        }
+      if (progressMonitor == null)
+      {
+        progressMonitor = new NullProgressMonitor();
+      }
 
-        CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
-        CDOCommitInfo info = transactionStrategy.commit(this, progressMonitor);
-        if (info != null)
-        {
-          lastCommitTime = info.getTimeStamp();
-        }
+      CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
+      CDOCommitInfo info = transactionStrategy.commit(this, progressMonitor);
+      if (info != null)
+      {
+        lastCommitTime = info.getTimeStamp();
+      }
 
-        return info;
-      }
-      catch (CommitException ex)
-      {
-        throw ex;
-      }
-      catch (Throwable t)
-      {
-        throw new CommitException(t);
-      }
-      finally
-      {
-        getLock().unlock();
-      }
+      return info;
+    }
+    catch (CommitException ex)
+    {
+      throw ex;
+    }
+    catch (Throwable t)
+    {
+      throw new CommitException(t);
     }
   }
 
-  public CDOCommitInfo commit() throws CommitException
+  public synchronized CDOCommitInfo commit() throws CommitException
   {
     return commit(null);
   }
@@ -1046,10 +1044,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public void rollback()
+  public synchronized void rollback()
   {
     checkActive();
-    rollback(firstSavepoint);
+    getTransactionStrategy().rollback(this, firstSavepoint);
     cleanUp(null);
   }
 
@@ -1235,7 +1233,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public void detachObject(InternalCDOObject object)
+  public synchronized void detachObject(InternalCDOObject object)
   {
     CDOTransactionHandler1[] handlers = getTransactionHandlers1();
     if (handlers != null)
@@ -1299,16 +1297,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public void rollback(CDOUserSavepoint savepoint)
-  {
-    checkActive();
-    getTransactionStrategy().rollback(this, (InternalCDOUserSavepoint)savepoint);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void handleRollback(InternalCDOSavepoint savepoint)
+  public synchronized void handleRollback(InternalCDOSavepoint savepoint)
   {
     if (savepoint == null)
     {
@@ -1332,36 +1321,22 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOTransactionImpl.6"), savepoint)); //$NON-NLS-1$
       }
 
-      // Use the state lock since rollback mechanism is playing with
-      // EObject and CDORevisions. We do not want to
-      // receives notifications during that process! neither the user
-      // should callload any objects.
-      ReentrantLock viewLock = getStateLock();
-      viewLock.lock();
+      // Rollback objects
+      Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint);
 
-      try
+      lastSavepoint = savepoint;
+      // Make savepoint active. Erase savepoint that could have be
+      // after
+      lastSavepoint.setNextSavepoint(null);
+      lastSavepoint.clear();
+
+      // Load from first savepoint up to current savepoint
+      loadSavepoint(lastSavepoint, idsOfNewObjectWithDeltas);
+
+      if (lastSavepoint == firstSavepoint && options().isAutoReleaseLocksEnabled())
       {
-        // Rollback objects
-        Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint);
-
-        lastSavepoint = savepoint;
-        // Make savepoint active. Erase savepoint that could have be
-        // after
-        lastSavepoint.setNextSavepoint(null);
-        lastSavepoint.clear();
-
-        // Load from first savepoint up to current savepoint
-        loadSavepoint(lastSavepoint, idsOfNewObjectWithDeltas);
-
-        if (lastSavepoint == firstSavepoint && options().isAutoReleaseLocksEnabled())
-        {
-          // Unlock all objects
-          unlockObjects(null, null);
-        }
-      }
-      finally
-      {
-        viewLock.unlock();
+        // Unlock all objects
+        unlockObjects(null, null);
       }
 
       Map<CDOID, CDOID> idMappings = Collections.emptyMap();
@@ -1402,14 +1377,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public InternalCDOSavepoint handleSetSavepoint()
+  public synchronized InternalCDOSavepoint handleSetSavepoint()
   {
     addToBase(lastSavepoint.getNewObjects());
     lastSavepoint = createSavepoint(lastSavepoint);
     return lastSavepoint;
   }
 
-  protected CDOSavepointImpl createSavepoint(InternalCDOSavepoint lastSavepoint)
+  private CDOSavepointImpl createSavepoint(InternalCDOSavepoint lastSavepoint)
   {
     return new CDOSavepointImpl(this, lastSavepoint);
   }
@@ -1417,7 +1392,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public InternalCDOSavepoint setSavepoint()
+  public synchronized InternalCDOSavepoint setSavepoint()
   {
     checkActive();
     return (InternalCDOSavepoint)getTransactionStrategy().setSavepoint(this);
@@ -1439,7 +1414,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return "CDOTransaction"; //$NON-NLS-1$
   }
 
-  public void registerNew(InternalCDOObject object)
+  public synchronized void registerNew(InternalCDOObject object)
   {
     if (TRACER.isEnabled())
     {
@@ -1473,7 +1448,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * Receives notification for new and dirty objects
    */
-  public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  public synchronized void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
     CDOID id = object.cdoID();
     boolean needToSaveFeatureDelta = true;
@@ -1516,12 +1491,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  public void registerRevisionDelta(CDORevisionDelta revisionDelta)
+  public synchronized void registerRevisionDelta(CDORevisionDelta revisionDelta)
   {
     lastSavepoint.getRevisionDeltas().putIfAbsent(revisionDelta.getID(), revisionDelta);
   }
 
-  public void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  public synchronized void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
     if (TRACER.isEnabled())
     {
@@ -1559,7 +1534,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  public List<CDOPackageUnit> analyzeNewPackages()
+  public synchronized List<CDOPackageUnit> analyzeNewPackages()
   {
     CDOPackageRegistry packageRegistry = getSession().getPackageRegistry();
     Set<EPackage> usedPackages = new HashSet<EPackage>();
@@ -1684,7 +1659,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  public CDOSavepoint[] exportChanges(OutputStream stream) throws IOException
+  public synchronized CDOSavepoint[] exportChanges(OutputStream stream) throws IOException
   {
     CDODataOutput out = new CDODataOutputImpl(new ExtendedDataOutputStream(stream))
     {
@@ -1735,7 +1710,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return savepoints.toArray(new CDOSavepoint[savepoints.size()]);
   }
 
-  public CDOSavepoint[] importChanges(InputStream stream, boolean reconstructSavepoints) throws IOException
+  public synchronized CDOSavepoint[] importChanges(InputStream stream, boolean reconstructSavepoints)
+      throws IOException
   {
     List<CDOSavepoint> savepoints = new ArrayList<CDOSavepoint>();
     if (stream.available() > 0)
@@ -1874,13 +1850,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return object;
   }
 
-  public Map<CDOID, CDOObject> getDirtyObjects()
+  public synchronized Map<CDOID, CDOObject> getDirtyObjects()
   {
     checkActive();
     return lastSavepoint.getAllDirtyObjects();
   }
 
-  public Map<CDOID, CDOObject> getNewObjects()
+  public synchronized Map<CDOID, CDOObject> getNewObjects()
   {
     checkActive();
     return lastSavepoint.getAllNewObjects();
@@ -1889,13 +1865,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public Map<CDOID, CDORevision> getBaseNewObjects()
+  public synchronized Map<CDOID, CDORevision> getBaseNewObjects()
   {
     checkActive();
     return lastSavepoint.getAllBaseNewObjects();
   }
 
-  public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
+  public synchronized Map<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
     checkActive();
     return lastSavepoint.getAllRevisionDeltas();
@@ -1904,19 +1880,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @since 2.0
    */
-  public Map<CDOID, CDOObject> getDetachedObjects()
+  public synchronized Map<CDOID, CDOObject> getDetachedObjects()
   {
     checkActive();
     return lastSavepoint.getAllDetachedObjects();
   }
 
-  public Map<InternalCDOObject, CDORevisionKey> getFormerRevisionKeys()
+  public synchronized Map<InternalCDOObject, CDORevisionKey> getFormerRevisionKeys()
   {
     return formerRevisionKeys;
   }
 
   @Override
-  protected CDOID getXRefTargetID(CDOObject target)
+  protected synchronized CDOID getXRefTargetID(CDOObject target)
   {
     CDORevisionKey key = formerRevisionKeys.get(target);
     if (key != null)
@@ -1928,7 +1904,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  protected CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
+  protected synchronized CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
   {
     CDOID id = super.getID(object, onlyPersistedID);
 
@@ -1951,7 +1927,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  public CDOID provideCDOID(Object idOrObject)
+  public synchronized CDOID provideCDOID(Object idOrObject)
   {
     try
     {
@@ -1965,17 +1941,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  public CDOQueryImpl createQuery(String language, String queryString, Object context)
+  public synchronized CDOQueryImpl createQuery(String language, String queryString, Object context)
   {
     return createQuery(language, queryString, context, false);
   }
 
-  public CDOQueryImpl createQuery(String language, String queryString, boolean considerDirtyState)
+  public synchronized CDOQueryImpl createQuery(String language, String queryString, boolean considerDirtyState)
   {
     return createQuery(language, queryString, null, considerDirtyState);
   }
 
-  public CDOQueryImpl createQuery(String language, String queryString, Object context, boolean considerDirtyState)
+  public synchronized CDOQueryImpl createQuery(String language, String queryString, Object context,
+      boolean considerDirtyState)
   {
     CDOQueryImpl query = super.createQuery(language, queryString, context);
     if (considerDirtyState && isDirty())
@@ -2004,6 +1981,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * objects.
    * 
    * @since 3.0
+   */
+  /*
+   * Synchronized through InvlidationRunner.run()
    */
   @Override
   protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(long lastUpdateTime,
@@ -2075,32 +2055,32 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  public long getLastCommitTime()
+  public synchronized long getLastCommitTime()
   {
     return lastCommitTime;
   }
 
-  public String getCommitComment()
+  public synchronized String getCommitComment()
   {
     return commitComment;
   }
 
-  public void setCommitComment(String comment)
+  public synchronized void setCommitComment(String comment)
   {
     commitComment = comment;
   }
 
-  public void setCommittables(Set<EObject> committables)
+  public synchronized void setCommittables(Set<EObject> committables)
   {
     this.committables = committables;
   }
 
-  public Set<EObject> getCommittables()
+  public synchronized Set<EObject> getCommittables()
   {
     return committables;
   }
 
-  public Map<InternalCDOObject, InternalCDORevision> getCleanRevisions()
+  public synchronized Map<InternalCDOObject, InternalCDORevision> getCleanRevisions()
   {
     return cleanRevisions;
   }
@@ -2580,7 +2560,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public CDOConflictResolver[] getConflictResolvers()
     {
-      synchronized (conflictResolvers)
+      synchronized (CDOTransactionImpl.this)
       {
         return conflictResolvers.toArray(new CDOConflictResolver[conflictResolvers.size()]);
       }
@@ -2588,7 +2568,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public void setConflictResolvers(CDOConflictResolver[] resolvers)
     {
-      synchronized (conflictResolvers)
+      synchronized (CDOTransactionImpl.this)
       {
         for (CDOConflictResolver resolver : conflictResolvers)
         {
@@ -2596,6 +2576,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         conflictResolvers.clear();
+
         for (CDOConflictResolver resolver : resolvers)
         {
           validateResolver(resolver);
@@ -2603,60 +2584,45 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
 
-      IListener[] listeners = getListeners();
-      if (listeners != null)
-      {
-        fireEvent(new ConflictResolversEventImpl(), listeners);
-      }
+      fireEvent(new ConflictResolversEventImpl());
     }
 
     public void addConflictResolver(CDOConflictResolver resolver)
     {
-      boolean changed = false;
-      synchronized (conflictResolvers)
+      IEvent event = null;
+      synchronized (CDOTransactionImpl.this)
       {
         if (!conflictResolvers.contains(resolver))
         {
           validateResolver(resolver);
           conflictResolvers.add(resolver);
-          changed = true;
+          event = new ConflictResolversEventImpl();
         }
       }
 
-      if (changed)
-      {
-        IListener[] listeners = getListeners();
-        if (listeners != null)
-        {
-          fireEvent(new ConflictResolversEventImpl(), listeners);
-        }
-      }
+      fireEvent(event);
     }
 
     public void removeConflictResolver(CDOConflictResolver resolver)
     {
-      boolean changed = false;
-      synchronized (conflictResolvers)
+      IEvent event = null;
+      synchronized (CDOTransactionImpl.this)
       {
-        changed = conflictResolvers.remove(resolver);
-      }
-
-      if (changed)
-      {
-        resolver.setTransaction(null);
-        IListener[] listeners = getListeners();
-        if (listeners != null)
+        if (conflictResolvers.remove(resolver))
         {
-          fireEvent(new ConflictResolversEventImpl(), listeners);
+          resolver.setTransaction(null);
+          event = new ConflictResolversEventImpl();
         }
       }
+
+      fireEvent(event);
     }
 
     public void disposeConflictResolvers()
     {
       try
       {
-        for (CDOConflictResolver resolver : options().getConflictResolvers())
+        for (CDOConflictResolver resolver : getConflictResolvers())
         {
           try
           {
@@ -2689,15 +2655,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     public void setAutoReleaseLocksEnabled(boolean on)
     {
-      if (autoReleaseLocksEnabled != on)
+      IEvent event = null;
+      synchronized (CDOTransactionImpl.this)
       {
-        autoReleaseLocksEnabled = on;
-        IListener[] listeners = getListeners();
-        if (listeners != null)
+        if (autoReleaseLocksEnabled != on)
         {
-          fireEvent(new AutoReleaseLocksEventImpl(), listeners);
+          autoReleaseLocksEnabled = on;
+          event = new AutoReleaseLocksEventImpl();
         }
       }
+
+      fireEvent(event);
     }
 
     /**

@@ -25,8 +25,10 @@ import org.eclipse.emf.cdo.tests.model2.Task;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
+
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import java.util.Iterator;
 import java.util.List;
@@ -41,6 +43,10 @@ import java.util.List;
  */
 public class Bugzilla_316887_Test extends AbstractCDOTest
 {
+  /**
+   * @deprecated AbstractObjectConflictResolver is deprecated
+   */
+  @Deprecated
   public void testResolveConflictWithAdjustedNotifcations() throws Exception
   {
     // setup transaction.
@@ -65,13 +71,14 @@ public class Bugzilla_316887_Test extends AbstractCDOTest
     final CDOTransaction tr2 = session.openTransaction();
 
     // Adds a conflict resolver.
-    tr2.options().addConflictResolver(new AbstractObjectConflictResolver()
+    tr2.options().addConflictResolver(new org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver()
     {
+      @Deprecated
       @Override
       protected void resolveConflict(CDOObject conflict, CDORevision oldRemoteRevision, CDORevisionDelta localDelta,
           CDORevisionDelta remoteDelta, List<CDORevisionDelta> allRemoteDeltas)
       {
-        rollbackObject(conflict);
+        CDOStateMachine.INSTANCE.rollback((InternalCDOObject)conflict);
 
         // Adjusts the local delta
         CDOListFeatureDelta list = (CDOListFeatureDelta)localDelta.getFeatureDeltas().get(0);

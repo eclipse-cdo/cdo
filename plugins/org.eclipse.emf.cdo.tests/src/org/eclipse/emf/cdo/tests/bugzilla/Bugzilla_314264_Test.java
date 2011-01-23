@@ -66,7 +66,7 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     long committed = tr2.commit().getTimeStamp();
 
     // sleep to have the merger see the changes.
-    tr1.getSession().waitForUpdate(committed, DEFAULT_TIMEOUT);
+    tr1.waitForUpdate(committed, DEFAULT_TIMEOUT);
 
     // merge the other branch to main.
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());

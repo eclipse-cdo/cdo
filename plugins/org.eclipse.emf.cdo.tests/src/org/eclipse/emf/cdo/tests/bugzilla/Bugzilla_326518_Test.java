@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
@@ -98,14 +99,23 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
 
     printChangeSetData(changes);
 
-    transaction1.commit();
-    assertEquals(false, transaction1.isDirty());
-
-    // access the container's elements.
-    for (Object object : container.getElements()) // <-- will cause an ObjectNotFoundException.
+    try
     {
-      System.out.println(object);
+      transaction1.commit();
+      fail("CommitException expected");
     }
+    catch (CommitException expected)
+    {
+      // SUCCESS
+    }
+
+    // assertEquals(false, transaction1.isDirty());
+    //
+    // // access the container's elements.
+    // for (Object object : container.getElements()) // <-- will cause an ObjectNotFoundException.
+    // {
+    // System.out.println(object);
+    // }
   }
 
   public static void printChangeSetData(CDOChangeSetData changes)

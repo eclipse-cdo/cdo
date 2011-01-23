@@ -424,6 +424,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     return new CDOXASavepointImpl(this, lastSavepoint);
   }
 
+  @SuppressWarnings("unused")
   protected final ExecutorService createExecutorService()
   {
     if (SEQUENTIAL_EXECUTION)

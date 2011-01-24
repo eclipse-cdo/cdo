@@ -21,7 +21,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class CDOBranchPointImpl implements CDOBranchPoint
+public class CDOBranchPointImpl implements CDOBranchPoint, Comparable<CDOBranchPoint>
 {
   private CDOBranch branch;
 

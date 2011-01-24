@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
  * @author Eike Stepper
  * @since 3.0
  */
-public interface CDOBranchPoint extends Comparable<CDOBranchPoint>
+public interface CDOBranchPoint
 {
   /**
    * The fixed special time stamp <i>unspecified</i>.

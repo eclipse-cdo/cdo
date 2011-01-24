@@ -60,11 +60,6 @@ public class CDOChangeSetSegment implements CDOBranchPoint
     return endTime == CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
-  public int compareTo(CDOBranchPoint o)
-  {
-    return branchPoint.compareTo(o);
-  }
-
   @Override
   public String toString()
   {

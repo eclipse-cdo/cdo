@@ -301,11 +301,6 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     delegate.close();
   }
 
-  public int compareTo(CDOBranchPoint o)
-  {
-    return delegate.compareTo(o);
-  }
-
   public CDOQuery createQuery(String language, String queryString)
   {
     return createQuery(language, queryString, null, false);

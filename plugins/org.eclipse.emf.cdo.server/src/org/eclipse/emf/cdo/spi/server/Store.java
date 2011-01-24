@@ -512,11 +512,6 @@ public abstract class Store extends Lifecycle implements InternalStore
         this.resourceID = resourceID;
         return false;
       }
-
-      public int compareTo(CDOBranchPoint o)
-      {
-        return branchPoint.compareTo(o);
-      }
     };
   }
 

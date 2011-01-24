@@ -651,14 +651,6 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       return previousTimeStamp;
     }
 
-    /**
-     * @since 3.0
-     */
-    public int compareTo(CDOBranchPoint o)
-    {
-      return branchPoint.compareTo(o);
-    }
-
     public Map<CDOID, CDOID> getIDMappings()
     {
       return idMappings;

@@ -336,11 +336,6 @@ public class XRefsQueryHandler implements IQueryHandler
 
       return context.addResult(new CDOIDReference(targetID, sourceID, sourceReference, sourceIndex));
     }
-
-    public int compareTo(CDOBranchPoint o)
-    {
-      return branchPoint.compareTo(o);
-    }
   }
 
   /**

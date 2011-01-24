@@ -1234,11 +1234,6 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     }
 
-    public int compareTo(CDOBranchPoint o)
-    {
-      throw new UnsupportedOperationException();
-    }
-
     public long getTimeStamp()
     {
       return CDOBranchPoint.UNSPECIFIED_DATE;

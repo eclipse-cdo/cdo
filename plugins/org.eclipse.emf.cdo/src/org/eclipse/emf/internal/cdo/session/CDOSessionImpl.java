@@ -1779,11 +1779,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       return commitInfo.getDetachedObjects();
     }
 
-    public int compareTo(CDOBranchPoint o)
-    {
-      return commitInfo.compareTo(o);
-    }
-
     public CDOChangeKind getChangeKind(CDOID id)
     {
       return commitInfo.getChangeKind(id);

@@ -1240,11 +1240,6 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     return !isActive();
   }
 
-  public synchronized int compareTo(CDOBranchPoint o)
-  {
-    return branchPoint.compareTo(o);
-  }
-
   @Override
   public String toString()
   {

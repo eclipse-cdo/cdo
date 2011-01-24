@@ -198,12 +198,23 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
 
   public void writeCDOCommitInfo(CDOCommitInfo commitInfo) throws IOException
   {
-    writeCDOBranch(commitInfo.getBranch());
     writeLong(commitInfo.getTimeStamp());
     writeLong(commitInfo.getPreviousTimeStamp());
-    writeString(commitInfo.getUserID());
-    writeString(commitInfo.getComment());
-    writeCDOCommitData(commitInfo);
+
+    CDOBranch branch = commitInfo.getBranch();
+    if (branch != null)
+    {
+      writeBoolean(true);
+      writeCDOBranch(branch);
+      writeString(commitInfo.getUserID());
+      writeString(commitInfo.getComment());
+      writeCDOCommitData(commitInfo);
+    }
+    else
+    {
+      // FailureCommitInfo
+      writeBoolean(false);
+    }
   }
 
   public void writeCDOID(CDOID id) throws IOException

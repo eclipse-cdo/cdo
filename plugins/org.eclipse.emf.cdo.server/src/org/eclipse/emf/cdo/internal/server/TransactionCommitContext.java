@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
+import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ContainmentCycleDetectedException;
@@ -495,14 +496,11 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     try
     {
-      if (success)
-      {
-        InternalSession sender = transaction.getSession();
-        CDOCommitInfo commitInfo = createCommitInfo();
+      InternalSession sender = transaction.getSession();
+      CDOCommitInfo commitInfo = success ? createCommitInfo() : createFailureCommitInfo();
 
-        InternalRepository repository = transaction.getRepository();
-        repository.sendCommitNotification(sender, commitInfo);
-      }
+      InternalRepository repository = transaction.getRepository();
+      repository.sendCommitNotification(sender, commitInfo);
     }
     catch (Exception ex)
     {
@@ -530,6 +528,11 @@ public class TransactionCommitContext implements InternalCommitContext
 
     InternalCDOCommitInfoManager commitInfoManager = transaction.getRepository().getCommitInfoManager();
     return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, commitData);
+  }
+
+  public CDOCommitInfo createFailureCommitInfo()
+  {
+    return new FailureCommitInfo(timeStamp, previousTimeStamp);
   }
 
   private CDOCommitData createCommitData()

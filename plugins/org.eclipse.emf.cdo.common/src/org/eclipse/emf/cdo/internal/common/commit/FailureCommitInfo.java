@@ -20,86 +20,91 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public abstract class DelegatingCommitInfo implements CDOCommitInfo
+public class FailureCommitInfo implements CDOCommitInfo
 {
-  public DelegatingCommitInfo()
-  {
-  }
+  private long timeStamp;
 
-  protected abstract CDOCommitInfo getDelegate();
+  private long previousTimeStamp;
 
-  public CDOBranch getBranch()
+  public FailureCommitInfo(long timeStamp, long previousTimeStamp)
   {
-    return getDelegate().getBranch();
-  }
-
-  public CDOCommitInfoManager getCommitInfoManager()
-  {
-    return getDelegate().getCommitInfoManager();
-  }
-
-  public long getPreviousTimeStamp()
-  {
-    return getDelegate().getPreviousTimeStamp();
+    this.timeStamp = timeStamp;
+    this.previousTimeStamp = previousTimeStamp;
   }
 
   public long getTimeStamp()
   {
-    return getDelegate().getTimeStamp();
+    return timeStamp;
+  }
+
+  public long getPreviousTimeStamp()
+  {
+    return previousTimeStamp;
+  }
+
+  public CDOBranch getBranch()
+  {
+    return null;
   }
 
   public String getUserID()
   {
-    return getDelegate().getUserID();
+    return null;
   }
 
   public String getComment()
   {
-    return getDelegate().getComment();
+    return null;
+  }
+
+  public CDOCommitInfoManager getCommitInfoManager()
+  {
+    return null;
   }
 
   public boolean isEmpty()
   {
-    return getDelegate().isEmpty();
+    return true;
   }
 
   public List<CDOPackageUnit> getNewPackageUnits()
   {
-    return getDelegate().getNewPackageUnits();
+    return Collections.emptyList();
   }
 
   public List<CDOIDAndVersion> getNewObjects()
   {
-    return getDelegate().getNewObjects();
+    return Collections.emptyList();
   }
 
   public List<CDORevisionKey> getChangedObjects()
   {
-    return getDelegate().getChangedObjects();
+    return Collections.emptyList();
   }
 
   public List<CDOIDAndVersion> getDetachedObjects()
   {
-    return getDelegate().getDetachedObjects();
+    return Collections.emptyList();
   }
 
   public CDOChangeKind getChangeKind(CDOID id)
   {
-    return getDelegate().getChangeKind(id);
+    return null;
   }
 
   public CDOChangeSetData copy()
   {
-    return getDelegate().copy();
+    return this;
   }
 
   public void merge(CDOChangeSetData changeSetData)
   {
-    getDelegate().merge(changeSetData);
+    throw new UnsupportedOperationException();
   }
 }

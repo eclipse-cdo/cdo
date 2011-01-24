@@ -1127,13 +1127,22 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private void invalidateOrdered(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
   {
-    Map<CDOID, InternalCDORevision> oldRevisions = reviseRevisions(commitInfo);
+    Map<CDOID, InternalCDORevision> oldRevisions = null;
+    boolean success = commitInfo.getBranch() != null;
+    if (success)
+    {
+      oldRevisions = reviseRevisions(commitInfo);
+    }
+
     if (options.isPassiveUpdateEnabled())
     {
       setLastUpdateTime(commitInfo.getTimeStamp());
     }
 
-    fireInvalidationEvent(sender, commitInfo);
+    if (success)
+    {
+      fireInvalidationEvent(sender, commitInfo);
+    }
 
     for (InternalCDOView view : getViews())
     {

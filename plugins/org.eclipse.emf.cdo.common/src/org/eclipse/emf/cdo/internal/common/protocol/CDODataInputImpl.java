@@ -20,8 +20,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOID.Type;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
@@ -46,6 +46,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
+import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
@@ -237,15 +238,21 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDOCommitInfo readCDOCommitInfo() throws IOException
   {
-    CDOBranch branch = readCDOBranch();
     long timeStamp = readLong();
     long previousTimeStamp = readLong();
-    String userID = readString();
-    String comment = readString();
-    CDOCommitData commitData = readCDOCommitData();
 
-    InternalCDOCommitInfoManager commitInfoManager = (InternalCDOCommitInfoManager)getCommitInfoManager();
-    return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, commitData);
+    if (readBoolean())
+    {
+      CDOBranch branch = readCDOBranch();
+      String userID = readString();
+      String comment = readString();
+      CDOCommitData commitData = readCDOCommitData();
+
+      InternalCDOCommitInfoManager commitInfoManager = (InternalCDOCommitInfoManager)getCommitInfoManager();
+      return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, commitData);
+    }
+
+    return new FailureCommitInfo(timeStamp, previousTimeStamp);
   }
 
   public CDOID readCDOID() throws IOException

@@ -1,0 +1,122 @@
+/**
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Egidijus Vaishnora - initial API and implementation
+ *    Caspar De Groot - initial API and implementation
+ */
+package org.eclipse.emf.cdo.tests.bugzilla;
+
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import junit.framework.Assert;
+
+/**
+ * @author Egidijus Vaishnora, Caspar De Groot
+ */
+public class Bugzilla_333950_Test extends AbstractCDOTest
+{
+  public void testOpposites() throws Exception
+  {
+    EPackage pkg1 = null;
+    {
+      // create ECore metamodel. Major aspect is to create two classes, which has linked opposite EReferences and one of
+      // reference is not persistence
+      pkg1 = EcoreFactory.eINSTANCE.createEPackage();
+      pkg1.setNsURI("http://test.com/custom");
+      pkg1.setName("test");
+      pkg1.setNsPrefix("t");
+
+      EClass customClassA = EcoreFactory.eINSTANCE.createEClass();
+      customClassA.setName("A");
+      pkg1.getEClassifiers().add(customClassA);
+
+      EClass customClassB = EcoreFactory.eINSTANCE.createEClass();
+      customClassB.setName("B");
+      pkg1.getEClassifiers().add(customClassB);
+
+      createOpposites(customClassA, customClassB);
+    }
+
+    {
+      // create model and commit it
+      CDOSession openSession = openSession();
+      CDOTransaction openTransaction = openSession.openTransaction();
+      CDOResource createResource = openTransaction.createResource("test");
+
+      EClass classAClass = (EClass)pkg1.getEClassifier("A");
+      EClass classBClass = (EClass)pkg1.getEClassifier("B");
+
+      EObject instanceA = EcoreUtil.create(classAClass);
+      EObject instanceB = EcoreUtil.create(classBClass);
+      EStructuralFeature eStructuralFeatureA = classAClass.getEStructuralFeature("AB");
+      EStructuralFeature eStructuralFeatureB = instanceB.eClass().getEStructuralFeature("_AB");
+
+      instanceA.eSet(eStructuralFeatureA, instanceB);
+
+      Assert.assertEquals(instanceA, instanceB.eGet(eStructuralFeatureB));
+
+      createResource.getContents().add(instanceA);
+      createResource.getContents().add(instanceB);
+
+      openTransaction.commit();
+
+      Assert.assertTrue(eStructuralFeatureB.isTransient());
+      Assert.assertEquals(instanceA, instanceB.eGet(eStructuralFeatureB));
+
+      System.out.println("---> instanceA: " + CDOUtil.getCDOObject(instanceA).cdoID());
+      System.out.println("---> instanceB: " + CDOUtil.getCDOObject(instanceB).cdoID());
+
+      openSession.close();
+    }
+
+    // open committed model and validate if transient opposite reference is available
+    CDOSession openSession2 = openSession();
+    CDOTransaction openTransaction2 = openSession2.openTransaction();
+    CDOResource resource = openTransaction2.getResource("test");
+    EObject eObjectA = resource.getContents().get(0);
+    EObject eObjectB = resource.getContents().get(1);
+
+    EStructuralFeature eStructuralFeatureA = eObjectA.eClass().getEStructuralFeature("AB");
+    Assert.assertFalse(eStructuralFeatureA.isTransient());
+    Assert.assertEquals(eObjectB, eObjectA.eGet(eStructuralFeatureA));
+
+    EStructuralFeature eStructuralFeatureB = eObjectB.eClass().getEStructuralFeature("_AB");
+    Assert.assertTrue(eStructuralFeatureB.isTransient());
+    Assert.assertEquals(eObjectA, eObjectB.eGet(eStructuralFeatureB));
+  }
+
+  private void createOpposites(EClass A, EClass B)
+  {
+    EReference tmpRefA_B = EcoreFactory.eINSTANCE.createEReference();
+    tmpRefA_B.setName(A.getName() + B.getName());
+    A.getEStructuralFeatures().add(tmpRefA_B);
+    tmpRefA_B.setEType(B);
+
+    EReference tmpRefB_A = EcoreFactory.eINSTANCE.createEReference();
+    tmpRefB_A.setTransient(true);
+    tmpRefB_A.setName("_" + tmpRefA_B.getName());
+    B.getEStructuralFeatures().add(tmpRefB_A);
+    tmpRefB_A.setEType(A);
+
+    tmpRefA_B.setEOpposite(tmpRefB_A);
+    tmpRefB_A.setEOpposite(tmpRefA_B);
+    Assert.assertSame(tmpRefA_B, tmpRefB_A.getEOpposite());
+  }
+}

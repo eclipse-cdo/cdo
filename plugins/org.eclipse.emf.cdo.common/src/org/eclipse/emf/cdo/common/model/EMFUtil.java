@@ -211,7 +211,22 @@ public final class EMFUtil
       return "true".equalsIgnoreCase(persistent);
     }
 
-    return !feature.isTransient();
+    if (feature.isTransient())
+    {
+      // Bug 333950: Transient eRefs with a persistent eOpposite, must be considered persistent
+      if (feature instanceof EReference)
+      {
+        EReference eOpposite = ((EReference)feature).getEOpposite();
+        if (eOpposite != null && !eOpposite.isTransient())
+        {
+          return true;
+        }
+      }
+      
+      return false;
+    }
+
+    return true;
   }
 
   public static boolean isDynamicEPackage(Object value)

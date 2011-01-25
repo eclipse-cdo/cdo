@@ -319,7 +319,6 @@ public class ContainmentTest extends AbstractCDOTest
     assertContent(order, address);
   }
 
-  // TODO Re-include TC after fixing detachment
   public void testUnsetSingleContainment() throws Exception
   {
     Address address = getModel1Factory().createAddress();
@@ -342,8 +341,7 @@ public class ContainmentTest extends AbstractCDOTest
 
     assertClean(resource, transaction);
     assertClean(order, transaction);
-    // TODO Uncomment transient check after fixing detachment
-    // assertTransient(address);
+    assertTransient(address);
     assertContent(resource, order);
     assertNull(order.getShippingAddress());
   }

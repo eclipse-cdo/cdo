@@ -284,7 +284,7 @@ public abstract class DBAdapter implements IDBAdapter
     IDBTable table = index.getTable();
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE "); //$NON-NLS-1$
-    if (index.getType() == IDBIndex.Type.UNIQUE)
+    if (index.getType() == IDBIndex.Type.UNIQUE || index.getType() == IDBIndex.Type.PRIMARY_KEY)
     {
       builder.append("UNIQUE "); //$NON-NLS-1$
     }

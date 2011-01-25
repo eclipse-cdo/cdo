@@ -272,6 +272,8 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     if (!success)
     {
       out.writeString(rollbackMessage);
+      out.writeCDOBranchPoint(commitContext.getBranchPoint());
+      out.writeLong(commitContext.getPreviousTimeStamp());
 
       if (xRefs != null)
       {

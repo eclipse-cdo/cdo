@@ -232,6 +232,9 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
       String rollbackMessage = in.readString();
       OM.LOG.error(rollbackMessage);
 
+      CDOBranchPoint branchPoint = in.readCDOBranchPoint();
+      long previousTimeStamp = in.readLong();
+
       List<CDOObjectReference> xRefs = null;
       int size = in.readInt();
       if (size != 0)
@@ -244,7 +247,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
         }
       }
 
-      return new CommitTransactionResult(idProvider, rollbackMessage, xRefs);
+      return new CommitTransactionResult(idProvider, rollbackMessage, branchPoint, previousTimeStamp, xRefs);
     }
 
     return null;

@@ -57,6 +57,7 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
+import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -2297,6 +2298,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         try
         {
+          InternalCDOSession session = getSession();
+          if (result.getRollbackMessage() != null)
+          {
+            CDOCommitInfo commitInfo = new FailureCommitInfo(result.getTimeStamp(), result.getPreviousTimeStamp());
+            session.invalidate(commitInfo, transaction);
+            return;
+          }
+
           CDOBranch branch = result.getBranch();
           boolean branchChanged = !ObjectUtil.equals(branch, getBranch());
           if (branchChanged)
@@ -2323,8 +2332,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           }
 
           CDOCommitInfo commitInfo = makeCommitInfo(result.getTimeStamp(), result.getPreviousTimeStamp());
-
-          InternalCDOSession session = getSession();
           session.invalidate(commitInfo, transaction);
 
           // Bug 290032 - Sticky views

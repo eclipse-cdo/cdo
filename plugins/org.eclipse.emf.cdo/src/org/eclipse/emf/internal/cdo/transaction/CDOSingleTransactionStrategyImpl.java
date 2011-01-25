@@ -82,6 +82,9 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
       String rollbackMessage = result.getRollbackMessage();
       if (rollbackMessage != null)
       {
+        // Needed even for failed commits to retain invalidation order in the session
+        commitContext.postCommit(result);
+
         List<CDOObjectReference> xRefs = result.getXRefs();
         if (xRefs != null)
         {
@@ -90,11 +93,6 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
         throw new CommitException(rollbackMessage);
       }
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("CDOCommitContext.postCommit"); //$NON-NLS-1$
     }
 
     // Needed even for non-dirty transactions to release locks

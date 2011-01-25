@@ -585,10 +585,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     /**
      * @since 4.0
      */
-    public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage, List<CDOObjectReference> xRefs)
+    public CommitTransactionResult(CDOIDProvider idProvider, String rollbackMessage, CDOBranchPoint branchPoint,
+        long previousTimeStamp, List<CDOObjectReference> xRefs)
     {
       this.idProvider = idProvider;
       this.rollbackMessage = rollbackMessage;
+      this.branchPoint = branchPoint;
+      this.previousTimeStamp = previousTimeStamp;
       this.xRefs = xRefs;
     }
 
@@ -623,14 +626,6 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
-     * @since 4.0
-     */
-    public List<CDOObjectReference> getXRefs()
-    {
-      return xRefs;
-    }
-
-    /**
      * @since 3.0
      */
     public CDOBranch getBranch()
@@ -649,6 +644,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public long getPreviousTimeStamp()
     {
       return previousTimeStamp;
+    }
+
+    /**
+     * @since 4.0
+     */
+    public List<CDOObjectReference> getXRefs()
+    {
+      return xRefs;
     }
 
     public Map<CDOID, CDOID> getIDMappings()

@@ -188,23 +188,26 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
   {
     if (result != null)
     {
-      final CDOReferenceAdjuster defaultReferenceAdjuster = result.getReferenceAdjuster();
-      result.setReferenceAdjuster(new CDOReferenceAdjuster()
+      if (result.getRollbackMessage() != null)
       {
-        public Object adjustReference(Object id, EStructuralFeature feature, int index)
+        final CDOReferenceAdjuster defaultReferenceAdjuster = result.getReferenceAdjuster();
+        result.setReferenceAdjuster(new CDOReferenceAdjuster()
         {
-          CDOIDTempObjectExternalImpl externalID = objectToID.get(id);
-          if (externalID != null)
+          public Object adjustReference(Object id, EStructuralFeature feature, int index)
           {
-            id = externalID;
+            CDOIDTempObjectExternalImpl externalID = objectToID.get(id);
+            if (externalID != null)
+            {
+              id = externalID;
+            }
+
+            return defaultReferenceAdjuster.adjustReference(id, feature, index);
           }
+        });
+      }
 
-          return defaultReferenceAdjuster.adjustReference(id, feature, index);
-        }
-      });
+      delegateCommitContext.postCommit(result);
     }
-
-    delegateCommitContext.postCommit(result);
   }
 
   @Override

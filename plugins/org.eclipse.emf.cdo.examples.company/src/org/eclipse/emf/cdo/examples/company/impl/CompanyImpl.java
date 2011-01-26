@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.EClass;
  * 
  * @generated
  */
-public class CompanyImpl extends AddressImpl implements Company
+public class CompanyImpl extends AddressableImpl implements Company
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

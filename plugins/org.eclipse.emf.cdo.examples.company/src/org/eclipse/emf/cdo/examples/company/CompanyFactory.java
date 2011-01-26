@@ -36,14 +36,6 @@ public interface CompanyFactory extends EFactory
   CompanyFactory eINSTANCE = org.eclipse.emf.cdo.examples.company.impl.CompanyFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Address</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return a new object of class '<em>Address</em>'.
-   * @generated
-   */
-  Address createAddress();
-
-  /**
    * Returns a new object of class '<em>Supplier</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return a new object of class '<em>Supplier</em>'.
@@ -66,14 +58,6 @@ public interface CompanyFactory extends EFactory
    * @generated
    */
   OrderDetail createOrderDetail();
-
-  /**
-   * Returns a new object of class '<em>Order Address</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return a new object of class '<em>Order Address</em>'.
-   * @generated
-   */
-  OrderAddress createOrderAddress();
 
   /**
    * Returns a new object of class '<em>Category</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->

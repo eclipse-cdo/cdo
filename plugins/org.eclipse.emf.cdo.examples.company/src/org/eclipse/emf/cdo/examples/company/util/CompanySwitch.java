@@ -10,13 +10,12 @@
  */
 package org.eclipse.emf.cdo.examples.company.util;
 
-import org.eclipse.emf.cdo.examples.company.Address;
+import org.eclipse.emf.cdo.examples.company.Addressable;
 import org.eclipse.emf.cdo.examples.company.Category;
 import org.eclipse.emf.cdo.examples.company.Company;
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.examples.company.Customer;
 import org.eclipse.emf.cdo.examples.company.Order;
-import org.eclipse.emf.cdo.examples.company.OrderAddress;
 import org.eclipse.emf.cdo.examples.company.OrderDetail;
 import org.eclipse.emf.cdo.examples.company.Product;
 import org.eclipse.emf.cdo.examples.company.PurchaseOrder;
@@ -109,14 +108,12 @@ public class CompanySwitch<T>
   {
     switch (classifierID)
     {
-    case CompanyPackage.ADDRESS:
+    case CompanyPackage.ADDRESSABLE:
     {
-      Address address = (Address)theEObject;
-      T result = caseAddress(address);
+      Addressable addressable = (Addressable)theEObject;
+      T result = caseAddressable(addressable);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case CompanyPackage.COMPANY:
@@ -124,13 +121,9 @@ public class CompanySwitch<T>
       Company company = (Company)theEObject;
       T result = caseCompany(company);
       if (result == null)
-      {
-        result = caseAddress(company);
-      }
+        result = caseAddressable(company);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case CompanyPackage.SUPPLIER:
@@ -138,13 +131,9 @@ public class CompanySwitch<T>
       Supplier supplier = (Supplier)theEObject;
       T result = caseSupplier(supplier);
       if (result == null)
-      {
-        result = caseAddress(supplier);
-      }
+        result = caseAddressable(supplier);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case CompanyPackage.CUSTOMER:
@@ -152,13 +141,9 @@ public class CompanySwitch<T>
       Customer customer = (Customer)theEObject;
       T result = caseCustomer(customer);
       if (result == null)
-      {
-        result = caseAddress(customer);
-      }
+        result = caseAddressable(customer);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case CompanyPackage.ORDER:
@@ -166,9 +151,7 @@ public class CompanySwitch<T>
       Order order = (Order)theEObject;
       T result = caseOrder(order);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case CompanyPackage.ORDER_DETAIL:
@@ -176,31 +159,7 @@ public class CompanySwitch<T>
       OrderDetail orderDetail = (OrderDetail)theEObject;
       T result = caseOrderDetail(orderDetail);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case CompanyPackage.ORDER_ADDRESS:
-    {
-      OrderAddress orderAddress = (OrderAddress)theEObject;
-      T result = caseOrderAddress(orderAddress);
-      if (result == null)
-      {
-        result = caseAddress(orderAddress);
-      }
-      if (result == null)
-      {
-        result = caseOrder(orderAddress);
-      }
-      if (result == null)
-      {
-        result = caseOrderDetail(orderAddress);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
       return result;
     }
     case CompanyPackage.PURCHASE_ORDER:
@@ -208,13 +167,9 @@ public class CompanySwitch<T>
       PurchaseOrder purchaseOrder = (PurchaseOrder)theEObject;
       T result = casePurchaseOrder(purchaseOrder);
       if (result == null)
-      {
         result = caseOrder(purchaseOrder);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case CompanyPackage.SALES_ORDER:
@@ -222,13 +177,9 @@ public class CompanySwitch<T>
       SalesOrder salesOrder = (SalesOrder)theEObject;
       T result = caseSalesOrder(salesOrder);
       if (result == null)
-      {
         result = caseOrder(salesOrder);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case CompanyPackage.CATEGORY:
@@ -236,9 +187,7 @@ public class CompanySwitch<T>
       Category category = (Category)theEObject;
       T result = caseCategory(category);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case CompanyPackage.PRODUCT:
@@ -246,9 +195,7 @@ public class CompanySwitch<T>
       Product product = (Product)theEObject;
       T result = caseProduct(product);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     default:
@@ -257,16 +204,17 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Address</em>'. <!-- begin-user-doc --> This
-   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Addressable</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch.
    * 
+   * @since 4.0 <!-- end-user-doc -->
    * @param object
    *          the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Address</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Addressable</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAddress(Address object)
+  public T caseAddressable(Addressable object)
   {
     return null;
   }
@@ -312,21 +260,6 @@ public class CompanySwitch<T>
    * @generated
    */
   public T caseOrderDetail(OrderDetail object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Order Address</em>'. <!-- begin-user-doc -->
-   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Order Address</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseOrderAddress(OrderAddress object)
   {
     return null;
   }

@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EClass;
  * 
  * @generated
  */
-public class CustomerImpl extends AddressImpl implements Customer
+public class CustomerImpl extends AddressableImpl implements Customer
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

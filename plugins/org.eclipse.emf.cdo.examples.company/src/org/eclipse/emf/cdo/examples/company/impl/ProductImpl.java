@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EClass;
  * <li>{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl#getOrderDetails <em>Order Details</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl#getVat <em>Vat</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl#getDescription <em>Description</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl#getPrice <em>Price</em>}</li>
  * </ul>
  * </p>
  * 
@@ -144,6 +145,28 @@ public class ProductImpl extends CDOObjectImpl implements Product
   public void setDescription(String newDescription)
   {
     eSet(CompanyPackage.Literals.PRODUCT__DESCRIPTION, newDescription);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.0 <!-- end-user-doc -->
+   * @generated
+   */
+  public float getPrice()
+  {
+    return (Float)eGet(CompanyPackage.Literals.PRODUCT__PRICE, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.0 <!-- end-user-doc -->
+   * @generated
+   */
+  public void setPrice(float newPrice)
+  {
+    eSet(CompanyPackage.Literals.PRODUCT__PRICE, newPrice);
   }
 
 } // ProductImpl

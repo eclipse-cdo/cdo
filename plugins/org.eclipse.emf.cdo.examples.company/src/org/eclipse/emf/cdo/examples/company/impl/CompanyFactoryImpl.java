@@ -10,14 +10,12 @@
  */
 package org.eclipse.emf.cdo.examples.company.impl;
 
-import org.eclipse.emf.cdo.examples.company.Address;
 import org.eclipse.emf.cdo.examples.company.Category;
 import org.eclipse.emf.cdo.examples.company.Company;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.examples.company.Customer;
 import org.eclipse.emf.cdo.examples.company.Order;
-import org.eclipse.emf.cdo.examples.company.OrderAddress;
 import org.eclipse.emf.cdo.examples.company.OrderDetail;
 import org.eclipse.emf.cdo.examples.company.Product;
 import org.eclipse.emf.cdo.examples.company.PurchaseOrder;
@@ -89,8 +87,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
   {
     switch (eClass.getClassifierID())
     {
-    case CompanyPackage.ADDRESS:
-      return createAddress();
     case CompanyPackage.COMPANY:
       return createCompany();
     case CompanyPackage.SUPPLIER:
@@ -101,8 +97,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
       return createOrder();
     case CompanyPackage.ORDER_DETAIL:
       return createOrderDetail();
-    case CompanyPackage.ORDER_ADDRESS:
-      return createOrderAddress();
     case CompanyPackage.PURCHASE_ORDER:
       return createPurchaseOrder();
     case CompanyPackage.SALES_ORDER:
@@ -155,17 +149,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * 
    * @generated
    */
-  public Address createAddress()
-  {
-    AddressImpl address = new AddressImpl();
-    return address;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   public Supplier createSupplier()
   {
     SupplierImpl supplier = new SupplierImpl();
@@ -199,25 +182,12 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
    * 
    * @generated
    */
-  public OrderAddress createOrderAddress()
-  {
-    OrderAddressImpl orderAddress = new OrderAddressImpl();
-    return orderAddress;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   public VAT createVATFromString(EDataType eDataType, String initialValue)
   {
     VAT result = VAT.get(initialValue);
     if (result == null)
-    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
-    }
     return result;
   }
 

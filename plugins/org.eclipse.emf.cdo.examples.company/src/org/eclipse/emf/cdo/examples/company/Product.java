@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.cdo.examples.company.Product#getOrderDetails <em>Order Details</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.examples.company.Product#getVat <em>Vat</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.examples.company.Product#getDescription <em>Description</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.examples.company.Product#getPrice <em>Price</em>}</li>
  * </ul>
  * </p>
  * 
@@ -137,5 +138,32 @@ public interface Product extends EObject
    * @generated
    */
   void setDescription(String value);
+
+  /**
+   * Returns the value of the '<em><b>Price</b></em>' attribute. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Price</em>' attribute isn't clear, there really should be more of a description here...
+   * </p>
+   * 
+   * @since 4.0 <!-- end-user-doc -->
+   * @return the value of the '<em>Price</em>' attribute.
+   * @see #setPrice(float)
+   * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_Price()
+   * @model
+   * @generated
+   */
+  float getPrice();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Product#getPrice <em>Price</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.0 <!-- end-user-doc -->
+   * @param value
+   *          the new value of the '<em>Price</em>' attribute.
+   * @see #getPrice()
+   * @generated
+   */
+  void setPrice(float value);
 
 } // Product

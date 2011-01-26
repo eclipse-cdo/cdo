@@ -26,7 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Supplier extends Address
+public interface Supplier extends Addressable
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

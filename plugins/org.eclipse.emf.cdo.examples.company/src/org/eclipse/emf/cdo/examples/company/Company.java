@@ -29,7 +29,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Company extends Address
+public interface Company extends Addressable
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

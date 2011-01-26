@@ -111,31 +111,6 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.Address} instances.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  protected AddressItemProvider addressItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Address}. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public Adapter createAddressAdapter()
-  {
-    if (addressItemProvider == null)
-    {
-      addressItemProvider = new AddressItemProvider(this);
-    }
-
-    return addressItemProvider;
-  }
-
-  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.Supplier} instances.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -208,31 +183,6 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
     }
 
     return orderDetailItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.OrderAddress}
-   * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  protected OrderAddressItemProvider orderAddressItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.OrderAddress}. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public Adapter createOrderAddressAdapter()
-  {
-    if (orderAddressItemProvider == null)
-    {
-      orderAddressItemProvider = new OrderAddressItemProvider(this);
-    }
-
-    return orderAddressItemProvider;
   }
 
   /**
@@ -439,7 +389,7 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -521,50 +471,24 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
    */
   public void dispose()
   {
-    if (addressItemProvider != null)
-    {
-      addressItemProvider.dispose();
-    }
     if (companyItemProvider != null)
-    {
       companyItemProvider.dispose();
-    }
     if (supplierItemProvider != null)
-    {
       supplierItemProvider.dispose();
-    }
     if (customerItemProvider != null)
-    {
       customerItemProvider.dispose();
-    }
     if (orderItemProvider != null)
-    {
       orderItemProvider.dispose();
-    }
     if (orderDetailItemProvider != null)
-    {
       orderDetailItemProvider.dispose();
-    }
-    if (orderAddressItemProvider != null)
-    {
-      orderAddressItemProvider.dispose();
-    }
     if (purchaseOrderItemProvider != null)
-    {
       purchaseOrderItemProvider.dispose();
-    }
     if (salesOrderItemProvider != null)
-    {
       salesOrderItemProvider.dispose();
-    }
     if (categoryItemProvider != null)
-    {
       categoryItemProvider.dispose();
-    }
     if (productItemProvider != null)
-    {
       productItemProvider.dispose();
-    }
   }
 
 }

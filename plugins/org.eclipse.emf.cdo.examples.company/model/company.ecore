@@ -6,12 +6,12 @@
   <eAnnotations source="teneo.jpa">
     <details key="value" value="@hbGenericGenerators({@GenericGenerator(name=&quot;system-uuid&quot;, strategy = &quot;org.eclipse.emf.cdo.examples.hibernate.server.CDOExampleUUIDHexGenerator&quot;)})"/>
   </eAnnotations>
-  <eClassifiers xsi:type="ecore:EClass" name="Address">
+  <eClassifiers xsi:type="ecore:EClass" name="Addressable" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="street" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="city" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Company" eSuperTypes="#//Address">
+  <eClassifiers xsi:type="ecore:EClass" name="Company" eSuperTypes="#//Addressable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="categories" upperBound="-1"
         eType="#//Category" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="suppliers" upperBound="-1"
@@ -23,13 +23,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" upperBound="-1"
         eType="#//SalesOrder" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Supplier" eSuperTypes="#//Address">
+  <eClassifiers xsi:type="ecore:EClass" name="Supplier" eSuperTypes="#//Addressable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="purchaseOrders" upperBound="-1"
         eType="#//PurchaseOrder" eOpposite="#//PurchaseOrder/supplier"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="preferred" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Customer" eSuperTypes="#//Address">
+  <eClassifiers xsi:type="ecore:EClass" name="Customer" eSuperTypes="#//Addressable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="salesOrders" upperBound="-1"
         eType="#//SalesOrder" eOpposite="#//SalesOrder/customer"/>
   </eClassifiers>
@@ -46,12 +46,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="product" eType="#//Product"
         eOpposite="#//Product/orderDetails"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="price" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="OrderAddress" eSuperTypes="#//Address #//Order #//OrderDetail">
-    <eAnnotations source="teneo.jpa">
-      <details key="value" value="@AssociationOverride(name=&quot;orderDetails&quot;, joinColumns=@JoinColumn(name=&quot;orderdetails_orderaddressid&quot;))"/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="testAttribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PurchaseOrder" eSuperTypes="#//Order">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
@@ -89,6 +83,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="price" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="VAT">
     <eLiterals name="vat0"/>

@@ -10,13 +10,12 @@
  */
 package org.eclipse.emf.cdo.examples.company.util;
 
-import org.eclipse.emf.cdo.examples.company.Address;
+import org.eclipse.emf.cdo.examples.company.Addressable;
 import org.eclipse.emf.cdo.examples.company.Category;
 import org.eclipse.emf.cdo.examples.company.Company;
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.examples.company.Customer;
 import org.eclipse.emf.cdo.examples.company.Order;
-import org.eclipse.emf.cdo.examples.company.OrderAddress;
 import org.eclipse.emf.cdo.examples.company.OrderDetail;
 import org.eclipse.emf.cdo.examples.company.Product;
 import org.eclipse.emf.cdo.examples.company.PurchaseOrder;
@@ -94,9 +93,9 @@ public class CompanyAdapterFactory extends AdapterFactoryImpl
   protected CompanySwitch<Adapter> modelSwitch = new CompanySwitch<Adapter>()
   {
     @Override
-    public Adapter caseAddress(Address object)
+    public Adapter caseAddressable(Addressable object)
     {
-      return createAddressAdapter();
+      return createAddressableAdapter();
     }
 
     @Override
@@ -127,12 +126,6 @@ public class CompanyAdapterFactory extends AdapterFactoryImpl
     public Adapter caseOrderDetail(OrderDetail object)
     {
       return createOrderDetailAdapter();
-    }
-
-    @Override
-    public Adapter caseOrderAddress(OrderAddress object)
-    {
-      return createOrderAddressAdapter();
     }
 
     @Override
@@ -181,15 +174,16 @@ public class CompanyAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.examples.company.Address <em>Address</em>}
-   * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
-   * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.examples.company.Addressable
+   * <em>Addressable</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
    * 
+   * @since 4.0 <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.examples.company.Address
+   * @see org.eclipse.emf.cdo.examples.company.Addressable
    * @generated
    */
-  public Adapter createAddressAdapter()
+  public Adapter createAddressableAdapter()
   {
     return null;
   }
@@ -232,20 +226,6 @@ public class CompanyAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createOrderDetailAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.examples.company.OrderAddress
-   * <em>Order Address</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
-   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.examples.company.OrderAddress
-   * @generated
-   */
-  public Adapter createOrderAddressAdapter()
   {
     return null;
   }

@@ -39,7 +39,7 @@ import java.util.List;
  * 
  * @generated
  */
-public class CompanyItemProvider extends AddressItemProvider implements IEditingDomainItemProvider,
+public class CompanyItemProvider extends AddressableItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {

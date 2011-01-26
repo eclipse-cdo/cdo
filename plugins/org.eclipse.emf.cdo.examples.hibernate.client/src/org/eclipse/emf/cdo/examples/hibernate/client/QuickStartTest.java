@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.examples.hibernate.client;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.examples.company.Address;
+import org.eclipse.emf.cdo.examples.company.Company;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  * use of the cdo-server.xml config file in the config directory.
  * <p/>
  * The connection logic resides in the {@link BaseTest} parent class.
- * 
+ *
  * @author Martin Taal
  */
 public class QuickStartTest extends BaseTest
@@ -44,7 +44,7 @@ public class QuickStartTest extends BaseTest
       // clear any previous data
       resource.getContents().clear();
 
-      final Address address = CompanyFactory.eINSTANCE.createAddress();
+      final Company address = CompanyFactory.eINSTANCE.createCompany();
       address.setCity("test"); //$NON-NLS-1$
       address.setName(addressName);
       address.setStreet("test"); //$NON-NLS-1$
@@ -58,9 +58,9 @@ public class QuickStartTest extends BaseTest
       final CDOSession session = openSession();
       final CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource("/res1"); //$NON-NLS-1$
-      assertEquals(true, resource.getContents().get(0) instanceof Address);
+      assertEquals(true, resource.getContents().get(0) instanceof Company);
       assertEquals(1, resource.getContents().size());
-      final Address address = (Address)resource.getContents().get(0);
+      final Company address = (Company)resource.getContents().get(0);
       assertEquals(addressName, address.getName());
       transaction.commit();
     }

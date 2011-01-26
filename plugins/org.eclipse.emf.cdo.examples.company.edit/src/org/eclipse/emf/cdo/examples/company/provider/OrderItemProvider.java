@@ -189,9 +189,6 @@ public class OrderItemProvider extends CDOItemProviderAdapter implements IEditin
 
     newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.ORDER__ORDER_DETAILS,
         CompanyFactory.eINSTANCE.createOrderDetail()));
-
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.ORDER__ORDER_DETAILS,
-        CompanyFactory.eINSTANCE.createOrderAddress()));
   }
 
   /**

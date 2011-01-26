@@ -79,6 +79,7 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
       addOrderDetailsPropertyDescriptor(object);
       addVatPropertyDescriptor(object);
       addDescriptionPropertyDescriptor(object);
+      addPricePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -143,6 +144,22 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
+   * This adds a property descriptor for the Price feature. <!-- begin-user-doc -->
+   * 
+   * @since 4.0<!-- end-user-doc -->
+   * @generated
+   */
+  protected void addPricePropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Product_price_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_Product_price_feature", "_UI_Product_type"),
+            CompanyPackage.Literals.PRODUCT__PRICE, true, false, false, ItemPropertyDescriptor.REAL_VALUE_IMAGE, null,
+            null));
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -204,6 +221,7 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
     case CompanyPackage.PRODUCT__NAME:
     case CompanyPackage.PRODUCT__VAT:
     case CompanyPackage.PRODUCT__DESCRIPTION:
+    case CompanyPackage.PRODUCT__PRICE:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

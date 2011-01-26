@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EClass;
  * 
  * @generated
  */
-public class SupplierImpl extends AddressImpl implements Supplier
+public class SupplierImpl extends AddressableImpl implements Supplier
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

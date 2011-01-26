@@ -8,8 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.examples;
 
+import org.eclipse.emf.cdo.examples.company.Category;
+import org.eclipse.emf.cdo.examples.company.CompanyFactory;
+import org.eclipse.emf.cdo.examples.company.Product;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -18,10 +21,6 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.model1.Category;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
-import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
@@ -40,6 +39,7 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
+ * @since 4.0
  */
 public class ImportXML
 {
@@ -65,7 +65,6 @@ public class ImportXML
     // Establish a communications connection and open a session with the repository
     IConnector connector = JVMUtil.getConnector(container, "default"); // Open a JVM connection
     CDOSession session = openSession(connector);// Open a CDO session
-    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);// Not needed after first commit!!!
 
     CDOTransaction transaction = session.openTransaction();// Open a CDO transaction
     Resource resource = transaction.createResource("/my/big/resource");// Create a new EMF resource
@@ -92,18 +91,18 @@ public class ImportXML
 
   private static EObject getInputModel()
   {
-    Category cat1 = Model1Factory.eINSTANCE.createCategory();
+    Category cat1 = CompanyFactory.eINSTANCE.createCategory();
     cat1.setName("CAT1");
-    Category cat2 = Model1Factory.eINSTANCE.createCategory();
+    Category cat2 = CompanyFactory.eINSTANCE.createCategory();
     cat2.setName("CAT2");
     cat1.getCategories().add(cat2);
-    Product1 p1 = Model1Factory.eINSTANCE.createProduct1();
+    Product p1 = CompanyFactory.eINSTANCE.createProduct();
     p1.setName("P1");
     cat1.getProducts().add(p1);
-    Product1 p2 = Model1Factory.eINSTANCE.createProduct1();
+    Product p2 = CompanyFactory.eINSTANCE.createProduct();
     p2.setName("P2");
     cat1.getProducts().add(p2);
-    Product1 p3 = Model1Factory.eINSTANCE.createProduct1();
+    Product p3 = CompanyFactory.eINSTANCE.createProduct();
     p3.setName("P3");
     cat2.getProducts().add(p3);
     return cat1;

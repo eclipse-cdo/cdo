@@ -9,7 +9,7 @@
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
  */
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.util;
 
 import org.eclipse.net4j.util.io.IORuntimeException;
 

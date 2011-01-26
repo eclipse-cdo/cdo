@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests.objectivity;
 
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.AuditTest;
-import org.eclipse.emf.cdo.tests.AuditTestSameSession;
+import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
@@ -48,11 +48,11 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
 
     // non-audit mode - remove audit tests
     testClasses.remove(AuditTest.class);
-    testClasses.remove(AuditTestSameSession.class);
+    testClasses.remove(AuditSameSessionTest.class);
     testClasses.remove(Bugzilla_252214_Test.class);
     // non-branching mode - remove branch tests.
     // testClasses.remove(BranchingTest.class);
-    // testClasses.remove(BranchingTestSameSession.class);
+    // testClasses.remove(BranchingSameSessionTest.class);
 
     // Objy has a deadlock issue which prevent this test from completing.
     // testClasses.remove(ExternalReferenceTest.class);

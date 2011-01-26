@@ -19,7 +19,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 /**
  * @author Eike Stepper
  */
-public class RevisionManagerTestClientSide extends RevisionManagerTest
+public class RevisionManagerClientSideTest extends RevisionManagerTest
 {
   @Override
   protected InternalCDORevisionManager getRevisionManager(InternalRepository repository, InternalCDOSession session)

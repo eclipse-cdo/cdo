@@ -8,13 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.examples;
 
+import org.eclipse.emf.cdo.examples.company.CompanyFactory;
+import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
@@ -30,8 +30,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 /**
  * @author Eike Stepper
+ * @since 4.0
  */
-public class _TransactionMonitoringTest
+public class TransactionMonitoring
 {
   public static void main(String[] args) throws CommitException
   {
@@ -50,11 +51,11 @@ public class _TransactionMonitoringTest
     configuration.setRepositoryName("repo1");
 
     CDOSession session = configuration.openSession();
-    session.getPackageRegistry().putEPackage(Model1Package.eINSTANCE);
+    session.getPackageRegistry().putEPackage(CompanyPackage.eINSTANCE);
 
     CDOTransaction transaction = session.openTransaction();
     Resource resource = transaction.createResource("/my/big/resource");
-    resource.getContents().add(Model1Factory.eINSTANCE.createCompany());
+    resource.getContents().add(CompanyFactory.eINSTANCE.createCompany());
     transaction.commit();
 
     System.out.println();

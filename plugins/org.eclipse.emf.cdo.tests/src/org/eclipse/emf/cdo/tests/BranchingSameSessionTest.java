@@ -10,15 +10,22 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.session.CDOSession;
+
 /**
  * @author Eike Stepper
  */
-public class BranchingTestWithCacheClear extends BranchingTest
+public class BranchingSameSessionTest extends BranchingTest
 {
   @Override
   protected void closeSession1()
   {
-    super.closeSession1();
-    clearCache(getRepository().getRevisionManager());
+    // Do nothing
+  }
+
+  @Override
+  protected CDOSession openSession2()
+  {
+    return session1;
   }
 }

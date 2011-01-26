@@ -44,7 +44,7 @@ public class AllTestsObjyBranching extends ObjyDBConfigs
 
     // // add branching tests for this testsuite
     // testClasses.add(BranchingTest.class);
-    // testClasses.add(BranchingTestSameSession.class);
+    // testClasses.add(BranchingSameSessionTest.class);
     // testClasses.add(MergingTest.class);
   }
 

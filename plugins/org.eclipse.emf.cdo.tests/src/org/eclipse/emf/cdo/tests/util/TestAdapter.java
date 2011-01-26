@@ -1,4 +1,4 @@
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;

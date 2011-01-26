@@ -12,9 +12,9 @@ package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.AuditTest;
-import org.eclipse.emf.cdo.tests.AuditTestSameSession;
+import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
 import org.eclipse.emf.cdo.tests.BranchingTest;
-import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
+import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
 import org.eclipse.emf.cdo.tests.CommitInfoTest;
 import org.eclipse.emf.cdo.tests.ComplexTest;
 import org.eclipse.emf.cdo.tests.ContainmentTest;
@@ -125,7 +125,7 @@ public class AllTestsHibernate extends AllConfigs
     // Branching not supported
     testClasses.remove(BranchingTest.class);
     testClasses.remove(MergingTest.class);
-    testClasses.remove(BranchingTestSameSession.class);
+    testClasses.remove(BranchingSameSessionTest.class);
 
     // Commit info not supported
     testClasses.remove(CommitInfoTest.class);
@@ -140,7 +140,7 @@ public class AllTestsHibernate extends AllConfigs
     // audit support to do
     // bug 244141
     testClasses.remove(AuditTest.class);
-    testClasses.remove(AuditTestSameSession.class);
+    testClasses.remove(AuditSameSessionTest.class);
     testClasses.remove(Bugzilla_252214_Test.class);
 
     // replace a test with our local implementation:

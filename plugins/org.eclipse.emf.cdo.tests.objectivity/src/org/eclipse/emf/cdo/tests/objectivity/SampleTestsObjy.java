@@ -12,9 +12,9 @@ package org.eclipse.emf.cdo.tests.objectivity;
 
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.AuditTest;
-import org.eclipse.emf.cdo.tests.AuditTestSameSession;
+import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
 import org.eclipse.emf.cdo.tests.BranchingTest;
-import org.eclipse.emf.cdo.tests.BranchingTestSameSession;
+import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
 import org.eclipse.emf.cdo.tests.ChunkingTest;
 import org.eclipse.emf.cdo.tests.ChunkingWithMEMTest;
 import org.eclipse.emf.cdo.tests.CommitInfoTest;
@@ -78,12 +78,12 @@ public class SampleTestsObjy extends ObjyDBConfigs
     // testClasses.add(AttributeTest.class);
     testClasses.add(UnsetTest.class);
     testClasses.add(BranchingTest.class);
-    testClasses.add(BranchingTestSameSession.class);
+    testClasses.add(BranchingSameSessionTest.class);
     testClasses.add(MergingTest.class);
     testClasses.add(PushTransactionTest.class);
     testClasses.add(CommitInfoTest.class);
     testClasses.add(AuditTest.class);
-    testClasses.add(AuditTestSameSession.class);
+    testClasses.add(AuditSameSessionTest.class);
     testClasses.add(ResourceTest.class);
     testClasses.add(InvalidationTest.class);
     testClasses.add(ChunkingTest.class);

@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo.util;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -161,7 +162,7 @@ public class CommitIntegrityCheck
       else if (feat instanceof EReference)
       {
         EReference ref = (EReference)feat;
-        if (ref.isContainment() || ref.getEOpposite() != null)
+        if (ref.isContainment() || hasPersistentOpposite(ref))
         {
           // Object is dirty with respect to a containment feature or a feature with an eOpposite
           // We must ensure that any reference targets that were added/removed/set, are also
@@ -314,7 +315,7 @@ public class CommitIntegrityCheck
   {
     for (EReference eRef : referencer.eClass().getEAllReferences())
     {
-      if (eRef.getEOpposite() != null)
+      if (hasPersistentOpposite(eRef))
       {
         if (eRef.isMany())
         {
@@ -347,7 +348,7 @@ public class CommitIntegrityCheck
 
     for (EReference eRef : referencer.eClass().getEAllReferences())
     {
-      if (eRef.getEOpposite() != null)
+      if (hasPersistentOpposite(eRef))
       {
         Object value = cleanRev.get(eRef, EStore.NO_INDEX);
         if (value != null)
@@ -398,6 +399,11 @@ public class CommitIntegrityCheck
 
     CDOID id = getContainerOrResourceID(rev);
     checkIncluded(id, "former container (or resource) of detached", detachedObject);
+  }
+
+  private static boolean hasPersistentOpposite(EReference ref)
+  {
+    return ref.getEOpposite() != null && EMFUtil.isPersistent(ref);
   }
 
   /**

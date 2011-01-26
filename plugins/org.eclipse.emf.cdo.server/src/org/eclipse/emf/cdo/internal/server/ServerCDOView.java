@@ -116,6 +116,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     return getTimeStamp();
   }
 
+  public void setLastUpdateTime(long lastUpdateTime)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public Options options()
   {
     return this;

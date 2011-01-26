@@ -74,6 +74,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   /**
    * @since 3.0
    */
+  public void setLastUpdateTime(long lastUpdateTime);
+
+  /**
+   * @since 3.0
+   */
   public void collectViewedRevisions(Map<CDOID, InternalCDORevision> revisions);
 
   public void remapObject(CDOID oldID);

@@ -1150,6 +1150,10 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       {
         invalidateView(commitInfo, view, oldRevisions);
       }
+      else
+      {
+        view.setLastUpdateTime(commitInfo.getTimeStamp());
+      }
     }
   }
 

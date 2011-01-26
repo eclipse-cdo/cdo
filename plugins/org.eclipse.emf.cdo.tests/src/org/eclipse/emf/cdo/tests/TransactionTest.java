@@ -81,6 +81,21 @@ public class TransactionTest extends AbstractCDOTest
     }
   }
 
+  /**
+   * See bug 335432
+   */
+  public void testLastUpdateTime() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource("/test1");
+    resource.getContents().add(getModel1Factory().createCompany());
+
+    long timeStamp = transaction.commit().getTimeStamp();
+    assertEquals(timeStamp, session.getLastUpdateTime());
+    assertEquals(timeStamp, transaction.getLastUpdateTime());
+  }
+
   public void testCreateManySessions() throws Exception
   {
     {

@@ -23,10 +23,16 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.log.OMLogHandler;
+import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.log.OMLogger.Level;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.UserManager;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.concurrent.CountDownLatch;
@@ -108,6 +114,43 @@ public class SessionTest extends AbstractCDOTest
   {
     InternalCDORevisionCache cache = ((InternalCDOSession)session).getRevisionManager().getCache();
     CDORevisionUtil.dumpAllRevisions(cache.getAllRevisions(), System.out);
+  }
+
+  public void testEContentAdapter() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("ttt");
+    resource.getContents().add(getModel1Factory().createCompany());
+    transaction.commit();
+
+    transaction.getResourceSet().eAdapters().add(new EContentAdapter()
+    {
+      @Override
+      public void notifyChanged(Notification notification)
+      {
+        super.notifyChanged(notification);
+        System.out.println(notification);
+      }
+    });
+
+    OMLogHandler logHandler = new OMLogHandler()
+    {
+      public void logged(OMLogger logger, Level level, String msg, Throwable t)
+      {
+        fail("Detaching the resource set adapter should not log inactive transaction exception");
+      }
+    };
+
+    try
+    {
+      OMPlatform.INSTANCE.addLogHandler(logHandler);
+      session.close();
+    }
+    finally
+    {
+      OMPlatform.INSTANCE.removeLogHandler(logHandler);
+    }
   }
 
   public void testLastUpdateLocal() throws Exception

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -89,7 +90,7 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
     // add a new element on main at index0.
     container.getElements().add(0, getModel4Factory().createContainedElementNoOpposite());
 
-    transaction1.commit();
+    CDOCommitInfo commitInfo = transaction1.commit();
     assertEquals(false, transaction1.isDirty());
 
     // merge the other branch to main.
@@ -102,20 +103,17 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
     try
     {
       transaction1.commit();
-      fail("CommitException expected");
     }
     catch (CommitException expected)
     {
-      // SUCCESS
+      fail("No CommitException expected");
     }
 
-    // assertEquals(false, transaction1.isDirty());
-    //
-    // // access the container's elements.
-    // for (Object object : container.getElements()) // <-- will cause an ObjectNotFoundException.
-    // {
-    // System.out.println(object);
-    // }
+    // access the container's elements.
+    for (Object object : container.getElements()) // <-- will cause an ObjectNotFoundException.
+    {
+      System.out.println(object);
+    }
   }
 
   public static void printChangeSetData(CDOChangeSetData changes)

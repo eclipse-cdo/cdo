@@ -923,11 +923,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       object.cdoInternalSetRevision(revision);
       object.cdoInternalPostLoad();
 
-      if (revision != null && !view.isReadOnly())
+      if (!view.isReadOnly())
       {
         InternalCDOTransaction transaction = view.toTransaction();
-        InternalCDORevision rollbackRevision = transaction.getRollbackRevisions().get(object);
-        if (rollbackRevision != null)
+        InternalCDORevision rollbackRevision = transaction.getRollbackRevisions().remove(object);
+        if (rollbackRevision != null && revision != null)
         {
           InternalCDORevisionDelta rollbackDelta = revision.compare(rollbackRevision);
           Set<CDOObject> detachedObjects = Collections.emptySet();

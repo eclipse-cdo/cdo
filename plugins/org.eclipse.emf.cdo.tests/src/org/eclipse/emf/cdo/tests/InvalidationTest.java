@@ -293,14 +293,8 @@ public class InvalidationTest extends AbstractCDOTest
 
     trans1.commit();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return CDOUtil.getCDOObject(res2).cdoState() == CDOState.INVALID_CONFLICT;
-      }
-    }.assertNoTimeOut();
+    trans2.waitForUpdate(trans1.getLastCommitTime());
+    assertEquals(CDOState.INVALID_CONFLICT, CDOUtil.getCDOObject(res2).cdoState());
 
     trans2.rollback();
     assertEquals(CDOState.INVALID, CDOUtil.getCDOObject(res2).cdoState());

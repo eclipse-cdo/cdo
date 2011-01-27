@@ -845,8 +845,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     CDOResource resource = transaction.createResource("/test1");
     resource.getContents().add(company);
 
-    transaction.commit();
-    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
+    commitAndSync(transaction, view);
 
     company.setName("main-v2");
     transaction.commit();
@@ -857,8 +856,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     company2.eAdapters().add(new AdapterImpl());
 
     company.setName("main-v3");
-    transaction.commit();
-    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
+    commitAndSync(transaction, view);
 
     CDORevision revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
     assertEquals(3, revision2.getVersion());
@@ -866,8 +864,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     assertEquals(transaction.getLastCommitTime(), revision2.getTimeStamp());
 
     company.setName("main-v4");
-    transaction.commit();
-    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
+    commitAndSync(transaction, view);
 
     revision2 = CDOUtil.getCDOObject(company2).cdoRevision();
     assertEquals(4, revision2.getVersion());

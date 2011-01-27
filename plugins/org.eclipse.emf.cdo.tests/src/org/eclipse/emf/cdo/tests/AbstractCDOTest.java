@@ -13,17 +13,22 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUpdatable;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
@@ -176,6 +181,18 @@ public abstract class AbstractCDOTest extends ConfigTest
     catch (Exception ex)
     {
       IOUtil.print(ex);
+    }
+  }
+
+  protected static void commitAndSync(CDOTransaction transaction, CDOUpdatable... updatables) throws CommitException
+  {
+    CDOCommitInfo info = transaction.commit();
+    for (CDOUpdatable updatable : updatables)
+    {
+      if (!updatable.waitForUpdate(info.getTimeStamp(), DEFAULT_TIMEOUT))
+      {
+        throw new TimeoutRuntimeException(updatable.toString() + " did not receive an update of " + info);
+      }
     }
   }
 }

@@ -48,10 +48,8 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     address.setName("NAME1");
 
-    long committed = transaction.commit().getTimeStamp();
-
     // Resolver should be triggered.
-    transaction2.waitForUpdate(committed, DEFAULT_TIMEOUT);
+    commitAndSync(transaction, transaction2);
 
     assertEquals(false, CDOUtil.getCDOObject(address2).cdoConflict());
     assertEquals(false, transaction2.hasConflict());
@@ -82,24 +80,24 @@ public class ConflictResolverTest extends AbstractCDOTest
     contents2.add(getModel1Factory().createAddress());
 
     // Resolver should be triggered.
-    transaction2.waitForUpdate(transaction1.commit().getTimeStamp(), DEFAULT_TIMEOUT);
-    transaction2.commit();
+    commitAndSync(transaction1, transaction2);
+    commitAndSync(transaction2, transaction1);
 
     // ----------------------------
     contents1.add(getModel1Factory().createAddress());
     contents2.add(getModel1Factory().createAddress());
 
     // Resolver should be triggered.
-    transaction2.waitForUpdate(transaction1.commit().getTimeStamp(), DEFAULT_TIMEOUT);
-    transaction2.commit();
+    commitAndSync(transaction1, transaction2);
+    commitAndSync(transaction2, transaction1);
 
     // ----------------------------
     contents1.add(getModel1Factory().createAddress());
     contents2.add(getModel1Factory().createAddress());
 
     // Resolver should be triggered.
-    transaction2.waitForUpdate(transaction1.commit().getTimeStamp(), DEFAULT_TIMEOUT);
-    transaction2.commit();
+    commitAndSync(transaction1, transaction2);
+    commitAndSync(transaction2, transaction1);
   }
 
   public void testMergeLocalChangesPerFeature_Bug2() throws Exception
@@ -122,15 +120,15 @@ public class ConflictResolverTest extends AbstractCDOTest
     contents2.add(getModel1Factory().createAddress());
 
     // Resolver should be triggered.
-    transaction2.waitForUpdate(transaction1.commit().getTimeStamp(), DEFAULT_TIMEOUT);
-    transaction2.commit();
+    commitAndSync(transaction1, transaction2);
+    commitAndSync(transaction2, transaction1);
 
     contents1.add(getModel1Factory().createAddress());
     contents2.add(getModel1Factory().createAddress());
 
     // Resolver should be triggered.
-    transaction1.waitForUpdate(transaction2.commit().getTimeStamp(), DEFAULT_TIMEOUT);
-    transaction1.commit();
+    commitAndSync(transaction2, transaction1);
+    commitAndSync(transaction1, transaction2);
   }
 
   @SuppressWarnings("deprecation")
@@ -158,18 +156,8 @@ public class ConflictResolverTest extends AbstractCDOTest
     address2.setCity("OTTAWA");
 
     address.setCity("NAME1");
-    long committed = transaction.commit().getTimeStamp();
+    commitAndSync(transaction, transaction2);
 
-    // new PollingTimeOuter()
-    // {
-    // @Override
-    // protected boolean successful()
-    // {
-    // return CDOUtil.getCDOObject(address2).cdoConflict();
-    // }
-    // }.assertNoTimeOut();
-
-    transaction2.waitForUpdate(committed, DEFAULT_TIMEOUT);
     assertEquals(true, transaction2.hasConflict());
     assertEquals(true, CDOUtil.getCDOObject(address2).cdoConflict());
     assertEquals("OTTAWA", address2.getCity());
@@ -194,10 +182,9 @@ public class ConflictResolverTest extends AbstractCDOTest
     address2.setCity("OTTAWA");
 
     address.setName("NAME1");
-    long committed = transaction.commit().getTimeStamp();
 
     // Resolver should be triggered.
-    transaction2.waitForUpdate(committed, DEFAULT_TIMEOUT);
+    commitAndSync(transaction, transaction2);
 
     assertEquals(false, CDOUtil.getCDOObject(address2).cdoConflict());
     assertEquals(false, transaction2.hasConflict());

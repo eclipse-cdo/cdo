@@ -975,10 +975,9 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(resource.getURI(), view.getResource("/resource1").getURI());
 
     resource.delete(null);
-    transaction.commit();
+    commitAndSync(transaction, view);
     transaction.close();
 
-    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
     assertEquals(false, view.hasResource("/resource1"));
 
     try
@@ -1039,11 +1038,10 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(resource.getURI(), view.getResource("/resource1").getURI());
 
     resource.delete(null);
-    transaction.commit();
+    commitAndSync(transaction, view);
     transaction.close();
 
     clearCache(getRepository().getRevisionManager());
-    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
     assertEquals(false, view.hasResource("/resource1"));
 
     try
@@ -1285,10 +1283,9 @@ public class ResourceTest extends AbstractCDOTest
     CDOID objectID = object.cdoID();
 
     folder.delete(null);
-    transaction.commit();
+    commitAndSync(transaction, view);
     transaction.close();
 
-    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
     assertEquals(false, view.hasResource("/folder/resource1"));
 
     try
@@ -1369,11 +1366,10 @@ public class ResourceTest extends AbstractCDOTest
     CDOID objectID = object.cdoID();
 
     folder.delete(null);
-    transaction.commit();
+    commitAndSync(transaction, view);
     transaction.close();
 
     clearCache(getRepository().getRevisionManager());
-    view.waitForUpdate(transaction.getLastCommitTime(), DEFAULT_TIMEOUT);
     assertEquals(false, view.hasResource("/folder/resource1"));
 
     try

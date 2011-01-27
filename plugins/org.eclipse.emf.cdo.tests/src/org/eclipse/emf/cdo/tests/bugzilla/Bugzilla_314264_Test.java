@@ -62,11 +62,8 @@ public class Bugzilla_314264_Test extends AbstractCDOTest
     // remove an element on main branch at index 0.
     container.getTasks().remove(0);
 
-    tr1.commit();
-    long committed = tr2.commit().getTimeStamp();
-
-    // sleep to have the merger see the changes.
-    tr1.waitForUpdate(committed, DEFAULT_TIMEOUT);
+    commitAndSync(tr1, tr2);
+    commitAndSync(tr2, tr1);
 
     // merge the other branch to main.
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());

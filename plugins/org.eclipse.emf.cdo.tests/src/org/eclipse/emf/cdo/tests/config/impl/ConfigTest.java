@@ -273,6 +273,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public CDOSession openSession()
   {
+    determineCodeLink();
     return getSessionConfig().openSession();
   }
 
@@ -281,6 +282,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
    */
   public CDOSession openSession(String repositoryName)
   {
+    determineCodeLink();
     return getSessionConfig().openSession(repositoryName);
   }
 

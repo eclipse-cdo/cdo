@@ -55,6 +55,8 @@ public abstract class AbstractOMTest extends TestCase
 
   private static boolean consoleEnabled;
 
+  private transient String codeLink;
+
   static
   {
     try
@@ -76,9 +78,46 @@ public abstract class AbstractOMTest extends TestCase
   {
   }
 
+  public String getCodeLink()
+  {
+    return codeLink;
+  }
+
+  public void determineCodeLink()
+  {
+    if (codeLink == null)
+    {
+      codeLink = determineCodeLink(getName());
+      if (codeLink == null)
+      {
+        codeLink = determineCodeLink("doSetUp");
+        if (codeLink == null)
+        {
+          codeLink = getClass().getName() + "." + getName() + "(" + getClass().getSimpleName() + ".java:1)";
+        }
+      }
+    }
+  }
+
+  protected String determineCodeLink(String methodName)
+  {
+    String className = getClass().getName();
+    StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+    for (StackTraceElement frame : stackTrace)
+    {
+      if (frame.getClassName().equals(className) && frame.getMethodName().equals(methodName))
+      {
+        return frame.toString();
+      }
+    }
+
+    return null;
+  }
+
   @Override
   public void setUp() throws Exception
   {
+    codeLink = null;
     enableConsole();
     if (!SUPPRESS_OUTPUT)
     {

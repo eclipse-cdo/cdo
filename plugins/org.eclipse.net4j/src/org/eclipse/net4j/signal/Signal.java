@@ -148,7 +148,17 @@ public abstract class Signal implements Runnable
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
+      if (getProtocol().isActive())
+      {
+        OM.LOG.error(ex);
+      }
+      else
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Exception while protocol is inactive", ex); //$NON-NLS-1$
+        }
+      }
     }
     finally
     {

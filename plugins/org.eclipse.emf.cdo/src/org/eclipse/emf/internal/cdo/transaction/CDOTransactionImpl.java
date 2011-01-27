@@ -147,6 +147,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -215,6 +216,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * A map to hold a clean (i.e. unmodified) revision for objects that have been modified or detached.
    */
   private Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new HashMap<InternalCDOObject, InternalCDORevision>();
+
+  /**
+   * A map to hold the latest local revision for objects that have been rolled back.
+   */
+  private Map<InternalCDOObject, InternalCDORevision> rollbackRevisions = new WeakHashMap<InternalCDOObject, InternalCDORevision>();
 
   public CDOTransactionImpl(CDOBranch branch)
   {
@@ -1617,6 +1623,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       formerRevisionKeys.clear();
 
       cleanRevisions.clear();
+      rollbackRevisions.clear();
       dirty = false;
       conflict = 0;
       lastTemporaryID.set(0);
@@ -2084,6 +2091,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public synchronized Map<InternalCDOObject, InternalCDORevision> getCleanRevisions()
   {
     return cleanRevisions;
+  }
+
+  public synchronized Map<InternalCDOObject, InternalCDORevision> getRollbackRevisions()
+  {
+    return rollbackRevisions;
   }
 
   /**

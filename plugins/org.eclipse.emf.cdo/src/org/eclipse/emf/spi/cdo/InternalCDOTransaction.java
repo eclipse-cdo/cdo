@@ -107,6 +107,11 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public Map<InternalCDOObject, InternalCDORevision> getCleanRevisions();
 
   /**
+   * @since 4.0
+   */
+  public Map<InternalCDOObject, InternalCDORevision> getRollbackRevisions();
+
+  /**
    * Provides a context for a commit operation.
    * 
    * @author Simon McDuff

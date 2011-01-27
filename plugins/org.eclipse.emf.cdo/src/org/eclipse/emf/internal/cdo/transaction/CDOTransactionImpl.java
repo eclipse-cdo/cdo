@@ -1623,7 +1623,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       formerRevisionKeys.clear();
 
       cleanRevisions.clear();
-      rollbackRevisions.clear();
       dirty = false;
       conflict = 0;
       lastTemporaryID.set(0);
@@ -1977,6 +1976,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected void doDeactivate() throws Exception
   {
+    rollbackRevisions.clear();
     options().disposeConflictResolvers();
     lastSavepoint = null;
     firstSavepoint = null;

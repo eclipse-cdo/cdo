@@ -233,7 +233,7 @@ public final class CDOModelUtil
     return CDOModelUtil.getType(feature.getEType());
   }
 
-  public static CDOType getType(int typeID)
+  public static CDOType getType(byte typeID)
   {
     return CDOTypeImpl.getType(typeID);
   }

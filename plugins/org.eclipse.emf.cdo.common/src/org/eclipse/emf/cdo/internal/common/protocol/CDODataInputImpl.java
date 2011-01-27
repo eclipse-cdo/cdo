@@ -160,8 +160,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDOType readCDOType() throws IOException
   {
-    // TODO Use byte IDs
-    int typeID = readInt();
+    byte typeID = readByte();
     return CDOModelUtil.getType(typeID);
   }
 

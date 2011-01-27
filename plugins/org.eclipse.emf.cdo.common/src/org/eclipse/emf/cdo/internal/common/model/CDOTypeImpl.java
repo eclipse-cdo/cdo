@@ -42,8 +42,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -51,7 +49,7 @@ import java.util.Set;
  */
 public abstract class CDOTypeImpl implements CDOType
 {
-  private static Map<Integer, CDOTypeImpl> ids = new HashMap<Integer, CDOTypeImpl>();
+  private static CDOTypeImpl[] ids = new CDOTypeImpl[Byte.MAX_VALUE - Byte.MIN_VALUE + 1];
 
   private static final byte BOOLEAN_DEFAULT_PRIMITIVE = 0;
 
@@ -438,10 +436,84 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
+  public static final CDOType FEATURE_MAP_ENTRY = new CDOTypeImpl("FEATURE_MAP_ENTRY", EcorePackage.EFEATURE_MAP_ENTRY, //$NON-NLS-1$
+      false)
+  {
+    @Override
+    protected FeatureMap.Entry doCopyValue(Object value)
+    {
+      FeatureMap.Entry entry = (FeatureMap.Entry)value;
+      EStructuralFeature innerFeature = entry.getEStructuralFeature();
+      Object innerValue = entry.getValue();
+      CDOType innerType = CDOModelUtil.getType(innerFeature.getEType());
+
+      Object innerCopy = innerType.copyValue(innerValue);
+      return CDORevisionUtil.createFeatureMapEntry(innerFeature, innerCopy);
+    }
+
+    public void writeValue(CDODataOutput out, Object value) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public FeatureMap.Entry readValue(CDODataInput in) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature, int index)
+    {
+      FeatureMap.Entry entry = (FeatureMap.Entry)value;
+      EStructuralFeature innerFeature = entry.getEStructuralFeature();
+      Object innerValue = entry.getValue();
+      CDOType innerType = CDOModelUtil.getType(innerFeature.getEType());
+
+      Object innerCopy = innerType.adjustReferences(adjuster, innerValue, feature, index);
+      if (innerCopy != innerValue) // Just an optimization for NOOP adjusters
+      {
+        value = CDORevisionUtil.createFeatureMapEntry(innerFeature, innerCopy);
+      }
+
+      return value;
+    }
+  };
+
+  public static final CDOType CUSTOM = new CDOTypeImpl("CUSTOM", 0, true) //$NON-NLS-1$
+  {
+    @Override
+    protected String doCopyValue(Object value)
+    {
+      return (String)value;
+    }
+
+    public void writeValue(CDODataOutput out, Object value) throws IOException
+    {
+      out.writeString((String)value);
+    }
+
+    public String readValue(CDODataInput in) throws IOException
+    {
+      return in.readString();
+    }
+
+    @Override
+    public Object convertToEMF(EClassifier eType, Object value)
+    {
+      return EcoreUtil.createFromString((EDataType)eType, (String)value);
+    }
+
+    @Override
+    public Object convertToCDO(EClassifier eType, Object value)
+    {
+      return EcoreUtil.convertToString((EDataType)eType, value);
+    }
+  };
+
   /**
    * TODO Transfer integers!
    */
-  public static final CDOType ENUM_ORDINAL = new ObjectType("ENUM_ORDINAL", 998) //$NON-NLS-1$
+  public static final CDOType ENUM_ORDINAL = new ObjectType("ENUM_ORDINAL", -1) //$NON-NLS-1$
   {
     @Override
     protected Integer doCopyValue(Object value)
@@ -482,7 +554,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType ENUM_LITERAL = new ObjectType("ENUM_LITERAL", 1001) //$NON-NLS-1$
+  public static final CDOType ENUM_LITERAL = new ObjectType("ENUM_LITERAL", -2) //$NON-NLS-1$
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -571,7 +643,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType BLOB = new CDOTypeImpl("BLOB", 2004, true) //$NON-NLS-1$
+  public static final CDOType BLOB = new CDOTypeImpl("BLOB", -3, true) //$NON-NLS-1$
   {
     public CDOBlob readValue(CDODataInput in) throws IOException
     {
@@ -597,7 +669,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType CLOB = new CDOTypeImpl("CLOB", 2005, true) //$NON-NLS-1$
+  public static final CDOType CLOB = new CDOTypeImpl("CLOB", -4, true) //$NON-NLS-1$
   {
     public CDOClob readValue(CDODataInput in) throws IOException
     {
@@ -623,81 +695,7 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
-  public static final CDOType CUSTOM = new CDOTypeImpl("CUSTOM", 999, true) //$NON-NLS-1$
-  {
-    @Override
-    protected String doCopyValue(Object value)
-    {
-      return (String)value;
-    }
-
-    public void writeValue(CDODataOutput out, Object value) throws IOException
-    {
-      out.writeString((String)value);
-    }
-
-    public String readValue(CDODataInput in) throws IOException
-    {
-      return in.readString();
-    }
-
-    @Override
-    public Object convertToEMF(EClassifier eType, Object value)
-    {
-      return EcoreUtil.createFromString((EDataType)eType, (String)value);
-    }
-
-    @Override
-    public Object convertToCDO(EClassifier eType, Object value)
-    {
-      return EcoreUtil.convertToString((EDataType)eType, value);
-    }
-  };
-
-  public static final CDOType FEATURE_MAP_ENTRY = new CDOTypeImpl("FEATURE_MAP_ENTRY", EcorePackage.EFEATURE_MAP_ENTRY, //$NON-NLS-1$
-      false)
-  {
-    @Override
-    protected FeatureMap.Entry doCopyValue(Object value)
-    {
-      FeatureMap.Entry entry = (FeatureMap.Entry)value;
-      EStructuralFeature innerFeature = entry.getEStructuralFeature();
-      Object innerValue = entry.getValue();
-      CDOType innerType = CDOModelUtil.getType(innerFeature.getEType());
-
-      Object innerCopy = innerType.copyValue(innerValue);
-      return CDORevisionUtil.createFeatureMapEntry(innerFeature, innerCopy);
-    }
-
-    public void writeValue(CDODataOutput out, Object value) throws IOException
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    public FeatureMap.Entry readValue(CDODataInput in) throws IOException
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Object doAdjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature, int index)
-    {
-      FeatureMap.Entry entry = (FeatureMap.Entry)value;
-      EStructuralFeature innerFeature = entry.getEStructuralFeature();
-      Object innerValue = entry.getValue();
-      CDOType innerType = CDOModelUtil.getType(innerFeature.getEType());
-
-      Object innerCopy = innerType.adjustReferences(adjuster, innerValue, feature, index);
-      if (innerCopy != innerValue) // Just an optimization for NOOP adjusters
-      {
-        value = CDORevisionUtil.createFeatureMapEntry(innerFeature, innerCopy);
-      }
-
-      return value;
-    }
-  };
-
-  public static final CDOType OBJECT_ARRAY = new ObjectType("OBJECT_ARRAY", 1000) //$NON-NLS-1$
+  public static final CDOType OBJECT_ARRAY = new ObjectType("OBJECT_ARRAY", -5) //$NON-NLS-1$
   {
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
@@ -780,7 +778,7 @@ public abstract class CDOTypeImpl implements CDOType
           throw new IllegalArgumentException("Object type " + object.getClass().getName() + " is not supported.");
         }
 
-        out.writeInt(cdoType.getTypeID());
+        out.writeByte(cdoType.getTypeID());
         cdoType.writeValue(out, object);
       }
     }
@@ -792,7 +790,7 @@ public abstract class CDOTypeImpl implements CDOType
       final Object[] objects = new Object[size];
       for (int i = 0; i < size; i++)
       {
-        int typeID = in.readInt();
+        byte typeID = in.readByte();
         CDOType cdoType = CDOModelUtil.getType(typeID);
         objects[i] = cdoType.readValue(in);
       }
@@ -825,7 +823,7 @@ public abstract class CDOTypeImpl implements CDOType
 
   private String name;
 
-  private int typeID;
+  private byte typeID;
 
   private boolean canBeNull;
 
@@ -833,11 +831,12 @@ public abstract class CDOTypeImpl implements CDOType
 
   private CDOTypeImpl(String name, int typeID, boolean canBeNull, Object defaultValue)
   {
+    ids[typeID - Byte.MIN_VALUE] = this;
+
     this.name = name;
-    this.typeID = typeID;
+    this.typeID = (byte)typeID;
     this.canBeNull = canBeNull;
     this.defaultValue = defaultValue;
-    ids.put(typeID, this);
   }
 
   private CDOTypeImpl(String name, int typeID, boolean canBeNull)
@@ -850,7 +849,7 @@ public abstract class CDOTypeImpl implements CDOType
     return name;
   }
 
-  public int getTypeID()
+  public byte getTypeID()
   {
     return typeID;
   }
@@ -888,8 +887,7 @@ public abstract class CDOTypeImpl implements CDOType
 
   public void write(CDODataOutput out) throws IOException
   {
-    // TODO Use byte IDs
-    out.writeInt(typeID);
+    out.writeByte(typeID);
   }
 
   final public Object adjustReferences(CDOReferenceAdjuster adjuster, Object value, EStructuralFeature feature,
@@ -920,9 +918,9 @@ public abstract class CDOTypeImpl implements CDOType
     return value;
   }
 
-  public static CDOType getType(int typeID)
+  public static CDOType getType(byte typeID)
   {
-    CDOTypeImpl type = ids.get(typeID);
+    CDOTypeImpl type = ids[typeID - Byte.MIN_VALUE];
     if (type == null)
     {
       throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOModelUtil.6"), typeID));

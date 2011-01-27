@@ -110,7 +110,10 @@ public interface CDOType
 
   public String getName();
 
-  public int getTypeID();
+  /**
+   * @since 4.0
+   */
+  public byte getTypeID();
 
   public boolean canBeNull();
 

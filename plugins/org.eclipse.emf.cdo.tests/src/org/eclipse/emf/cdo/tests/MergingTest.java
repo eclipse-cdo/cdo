@@ -120,10 +120,9 @@ public class MergingTest extends AbstractCDOTest
     EList<EObject> contents1 = res1.getContents();
     addCompany(contents1);
     addCompany(contents1);
-    tx1.commit();
+    commitAndSync(tx1, transaction);
     tx1.close();
 
-    transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     CDOChangeSetData result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(false, result.isEmpty());
     assertEquals(2, result.getNewObjects().size());
@@ -180,10 +179,9 @@ public class MergingTest extends AbstractCDOTest
     EList<EObject> contents1 = res1.getContents();
     addCompany(contents1);
     addCompany(contents1);
-    tx1.commit();
+    commitAndSync(tx1, transaction);
     tx1.close();
 
-    transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
 
@@ -231,9 +229,8 @@ public class MergingTest extends AbstractCDOTest
       EList<EObject> contents1 = res1.getContents();
       addCompany(contents1);
       addCompany(contents1);
-      tx1.commit();
+      commitAndSync(tx1, transaction);
       tx1.close();
-      transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     }
 
     transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
@@ -245,9 +242,8 @@ public class MergingTest extends AbstractCDOTest
       CDOResource res1 = tx1.getResource("/res");
       EList<EObject> contents1 = res1.getContents();
       addCompany(contents1);
-      tx1.commit();
+      commitAndSync(tx1, transaction);
       tx1.close();
-      transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     }
 
     CDOChangeSetData result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
@@ -308,10 +304,9 @@ public class MergingTest extends AbstractCDOTest
     EList<EObject> contents1 = res1.getContents();
     addCompany(contents1);
     addCompany(contents1);
-    tx1.commit();
+    commitAndSync(tx1, transaction);
     tx1.close();
 
-    transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
 
@@ -320,10 +315,9 @@ public class MergingTest extends AbstractCDOTest
     CDOResource res2 = tx2.getResource("/res");
     EList<EObject> contents2 = res2.getContents();
     addCompany(contents2);
-    tx2.commit();
+    commitAndSync(tx2, transaction);
     tx2.close();
 
-    transaction.waitForUpdate(tx2.getLastCommitTime(), DEFAULT_TIMEOUT);
     CDOChangeSetData result = transaction.merge(source2.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(false, result.isEmpty());
     assertEquals(1, result.getNewObjects().size());
@@ -382,10 +376,9 @@ public class MergingTest extends AbstractCDOTest
     EList<EObject> contents1 = res1.getContents();
     addCompany(contents1);
     addCompany(contents1);
-    tx1.commit();
+    commitAndSync(tx1, transaction);
     tx1.close();
 
-    transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
 
@@ -394,10 +387,9 @@ public class MergingTest extends AbstractCDOTest
     CDOResource res2 = tx2.getResource("/res");
     EList<EObject> contents2 = res2.getContents();
     addCompany(contents2);
-    tx2.commit();
+    commitAndSync(tx2, transaction);
     tx2.close();
 
-    transaction.waitForUpdate(tx2.getLastCommitTime(), DEFAULT_TIMEOUT);
     transaction.merge(source2.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
 
@@ -448,10 +440,9 @@ public class MergingTest extends AbstractCDOTest
     ((Company)contents1.get(0)).setName("Company0");
     ((Company)contents1.get(1)).setName("Company1");
     ((Company)contents1.get(2)).setName("Company2");
-    tx1.commit();
+    commitAndSync(tx1, transaction);
     tx1.close();
 
-    transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     CDOChangeSetData result = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(false, result.isEmpty());
     assertEquals(0, result.getNewObjects().size());
@@ -492,12 +483,11 @@ public class MergingTest extends AbstractCDOTest
     ((Company)contents1.get(0)).setName("Company0");
     ((Company)contents1.get(1)).setName("Company1");
     ((Company)contents1.get(2)).setName("Company2");
-    tx1.commit();
+    commitAndSync(tx1, transaction);
     tx1.close();
 
     long updateTime1 = session.getLastUpdateTime();
 
-    transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
     assertEquals(5, contents.size());
@@ -539,12 +529,10 @@ public class MergingTest extends AbstractCDOTest
     contents1.remove(1);
 
     // dumpAllRevisions(getRepository().getStore());
-    tx1.commit();
+    commitAndSync(tx1, transaction);
     dumpAllRevisions(getRepository().getStore());
-
     tx1.close();
 
-    transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     CDOChangeSetData result = transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     assertEquals(false, result.isEmpty());
     assertEquals(0, result.getNewObjects().size());
@@ -589,10 +577,9 @@ public class MergingTest extends AbstractCDOTest
     EList<EObject> contents1 = res1.getContents();
     ((Company)contents1.get(0)).setName("Company0");
     contents1.remove(1);
-    tx1.commit();
+    commitAndSync(tx1, transaction);
     tx1.close();
 
-    transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     transaction.merge(source.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
     transaction.commit();
 
@@ -633,9 +620,8 @@ public class MergingTest extends AbstractCDOTest
       ((Company)contents1.get(2)).setName("C2");
       ((Company)contents1.get(3)).setName("C3");
       ((Company)contents1.get(4)).setName("C4");
-      tx1.commit();
+      commitAndSync(tx1, transaction);
       tx1.close();
-      transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
     }
 
     CDOChangeSetData result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
@@ -683,9 +669,8 @@ public class MergingTest extends AbstractCDOTest
         ((Company)contents1.get(2)).setName("C2");
         ((Company)contents1.get(3)).setName("C3");
         ((Company)contents1.get(4)).setName("C4");
-        tx1.commit();
+        commitAndSync(tx1, transaction);
         tx1.close();
-        transaction.waitForUpdate(tx1.getLastCommitTime(), DEFAULT_TIMEOUT);
       }
 
       CDOChangeSetData result = transaction.merge(source1.getHead(), new DefaultCDOMerger.PerFeature.ManyValued());

@@ -291,9 +291,7 @@ public class InvalidationTest extends AbstractCDOTest
     res2.getContents().add(getModel1Factory().createCustomer());
     assertEquals(true, res2.isExisting());
 
-    trans1.commit();
-
-    trans2.waitForUpdate(trans1.getLastCommitTime());
+    commitAndSync(trans1, trans2);
     assertEquals(CDOState.INVALID_CONFLICT, CDOUtil.getCDOObject(res2).cdoState());
 
     trans2.rollback();

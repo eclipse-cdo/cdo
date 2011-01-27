@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
@@ -25,7 +26,10 @@ import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
@@ -46,16 +50,18 @@ import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IUserManager;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -73,6 +79,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   public static final String PROP_TEST_QUERY_HANDLER_PROVIDER = "test.repository.QueryHandlerProvider";
 
+  private static final boolean LOG_MULTI_VIEW_COMMIT = false;
+
   private static final long serialVersionUID = 1L;
 
   protected transient Map<String, InternalRepository> repositories;
@@ -82,8 +90,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
    * data and should only be used during {@link ConfigTest#restartRepository(String)}.
    */
   private transient boolean restarting;
-
-  private transient IListener repositoryListener;
 
   private transient CDOServerBrowser serverBrowser;
 
@@ -175,9 +181,48 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     props.put(Props.SUPPORTING_BRANCHES, "false");
   }
 
-  public void registerRepository(InternalRepository repository)
+  public void registerRepository(final InternalRepository repository)
   {
-    repository.addListener(repositoryListener);
+    repository.addListener(new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        IRepository repository = (IRepository)lifecycle;
+        synchronized (repositories)
+        {
+          repositories.remove(repository.getName());
+        }
+      }
+    });
+
+    if (LOG_MULTI_VIEW_COMMIT)
+    {
+      repository.addHandler(new IRepository.WriteAccessHandler()
+      {
+        public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
+            OMMonitor monitor) throws RuntimeException
+        {
+          int count = 0;
+          for (ISession session : repository.getSessionManager().getSessions())
+          {
+            CDOCommonView[] views = session.getViews();
+            count += views.length;
+          }
+
+          if (count > 1)
+          {
+            logMultiViewCommit();
+          }
+        }
+
+        public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
+            OMMonitor monitor)
+        {
+        }
+      });
+    }
+
     repositories.put(repository.getName(), repository);
   }
 
@@ -185,19 +230,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public void setUp() throws Exception
   {
     super.setUp();
+
     StoreThreadLocal.release();
     repositories = new HashMap<String, InternalRepository>();
-    repositoryListener = new LifecycleEventAdapter()
-    {
-      @Override
-      protected void onDeactivated(ILifecycle repository)
-      {
-        synchronized (repositories)
-        {
-          repositories.remove(((IRepository)repository).getName());
-        }
-      }
-    };
 
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
     OCLQueryHandler.prepareContainer(serverContainer);
@@ -238,6 +273,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     repositories.clear();
     repositories = null;
+
     StoreThreadLocal.release();
     super.tearDown();
   }
@@ -293,6 +329,47 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected IQueryHandlerProvider getTestQueryHandlerProvider()
   {
     return (IQueryHandlerProvider)getTestProperty(PROP_TEST_QUERY_HANDLER_PROVIDER);
+  }
+
+  static
+  {
+    if (LOG_MULTI_VIEW_COMMIT)
+    {
+      FileOutputStream out = null;
+
+      try
+      {
+        out = new FileOutputStream("multi-view-commit.log", false);
+      }
+      catch (Exception ex)
+      {
+      }
+      finally
+      {
+        IOUtil.close(out);
+      }
+    }
+  }
+
+  private void logMultiViewCommit()
+  {
+    FileOutputStream out = null;
+
+    try
+    {
+      out = new FileOutputStream("multi-view-commit.log", true);
+      PrintStream stream = new PrintStream(out);
+      stream.println(getCurrentTest().getCodeLink());
+      stream.flush();
+    }
+    catch (Exception ex)
+    {
+      ex.printStackTrace();
+    }
+    finally
+    {
+      IOUtil.close(out);
+    }
   }
 
   /**

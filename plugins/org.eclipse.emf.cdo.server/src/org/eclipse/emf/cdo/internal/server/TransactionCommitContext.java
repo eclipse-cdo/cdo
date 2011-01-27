@@ -962,6 +962,10 @@ public class TransactionCommitContext implements InternalCommitContext
       addRevisions(newObjects, monitor.fork());
       addRevisions(dirtyObjects, monitor.fork());
       reviseDetachedObjects(monitor.fork());
+
+      InternalRepository repository = transaction.getRepository();
+      repository.setLastCommitTimeStamp(timeStamp);
+
       unlockObjects();
       monitor.worked();
 
@@ -971,7 +975,6 @@ public class TransactionCommitContext implements InternalCommitContext
       }
 
       monitor.worked();
-      InternalRepository repository = transaction.getRepository();
       repository.notifyWriteAccessHandlers(transaction, this, false, monitor.fork());
     }
     finally

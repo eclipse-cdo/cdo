@@ -113,6 +113,11 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
 
   public void setRootResourceID(CDOID rootResourceID);
 
+  /**
+   * @since 4.0
+   */
+  public void setLastCommitTimeStamp(long commitTimeStamp);
+
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,
       int chunkEnd);
 

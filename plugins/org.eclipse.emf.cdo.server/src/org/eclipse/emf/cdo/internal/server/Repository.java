@@ -764,7 +764,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  protected void setLastCommitTimeStamp(long lastCommitTimeStamp)
+  public void setLastCommitTimeStamp(long lastCommitTimeStamp)
   {
     synchronized (lastCommitTimeStampLock)
     {
@@ -812,7 +812,6 @@ public class Repository extends Container<Object> implements InternalRepository
         }
 
         long previousTimeStamp = lastCommitTimeStamp;
-        lastCommitTimeStamp = now;
         return new long[] { now, previousTimeStamp };
       }
     }

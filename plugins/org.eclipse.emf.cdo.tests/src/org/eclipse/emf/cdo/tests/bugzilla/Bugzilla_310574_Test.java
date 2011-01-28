@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -56,7 +55,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
       InternalCDORevisionDelta[] deltas = commitContext.getDirtyObjectDeltas();
       for (InternalCDORevisionDelta delta : deltas)
       {
-        if (delta.getEClass() == Model1Package.Literals.CUSTOMER)
+        if (delta.getEClass() == getModel1Package().getCustomer())
         {
           System.out.println(delta);
         }

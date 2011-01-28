@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
-import org.eclipse.emf.cdo.tests.config.impl.TestRevisionManager;
+import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
 
 import org.eclipse.net4j.util.ReflectUtil;
 
@@ -44,7 +44,7 @@ public class RevisionManagerTest extends AbstractCDOTest
 {
   private static final CDOID ID = CDOIDUtil.createLong(2);
 
-  private static final EClass CLASS = EcorePackage.Literals.EANNOTATION;
+  private static final EClass CLASS = EcorePackage.eINSTANCE.getEAnnotation();
 
   private static final int DETACH = -1;
 

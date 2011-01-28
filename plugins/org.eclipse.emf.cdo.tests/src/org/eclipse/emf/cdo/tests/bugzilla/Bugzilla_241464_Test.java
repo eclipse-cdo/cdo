@@ -14,8 +14,8 @@ import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.TestRevisionManager;
 import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import java.util.concurrent.TimeoutException;

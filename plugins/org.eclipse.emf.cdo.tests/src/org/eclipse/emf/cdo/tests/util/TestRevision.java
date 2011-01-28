@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -36,29 +35,23 @@ public final class TestRevision extends StubCDORevision
 
   private long revised;
 
-  public TestRevision(long id, int version, long created, long revised)
+  public TestRevision(EClass eClass, long id, int version, long created, long revised)
   {
-    super(Model1Package.Literals.COMPANY);
+    super(eClass);
     this.id = CDOIDUtil.createLong(id);
     branchPoint = new CDOBranchImpl(CDOBranch.MAIN_BRANCH_ID, null).getPoint(created);
     this.version = version;
     this.revised = revised;
   }
 
-  public TestRevision(long id, int version, long created)
+  public TestRevision(EClass eClass, long id, int version, long created)
   {
-    this(id, version, created, CDORevision.UNSPECIFIED_DATE);
+    this(eClass, id, version, created, CDORevision.UNSPECIFIED_DATE);
   }
 
-  public TestRevision(long id)
+  public TestRevision(EClass eClass, long id)
   {
-    this(id, 0, CDORevision.UNSPECIFIED_DATE);
-  }
-
-  @Override
-  public EClass getEClass()
-  {
-    return null;
+    this(eClass, id, 0, CDORevision.UNSPECIFIED_DATE);
   }
 
   @Override
@@ -118,6 +111,6 @@ public final class TestRevision extends StubCDORevision
   @Override
   public InternalCDORevision copy()
   {
-    return new TestRevision(CDOIDUtil.getLong(id), version, branchPoint.getTimeStamp(), revised);
+    return new TestRevision(getEClass(), CDOIDUtil.getLong(id), version, branchPoint.getTimeStamp(), revised);
   }
 }

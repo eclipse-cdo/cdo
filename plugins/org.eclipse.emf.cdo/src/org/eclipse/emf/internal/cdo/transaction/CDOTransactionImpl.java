@@ -143,6 +143,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -2028,6 +2029,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     for (CDOObject referencer : referencers)
     {
+      List<Pair<Setting, EObject>> objectsToBeRemoved = new LinkedList<Pair<Setting, EObject>>();
       EContentsEList.FeatureIterator<EObject> it = (EContentsEList.FeatureIterator<EObject>)referencer
           .eCrossReferences().iterator();
       while (it.hasNext())
@@ -2057,8 +2059,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           }
 
           Setting setting = ((InternalEObject)referencer).eSetting(reference);
-          EcoreUtil.remove(setting, referencedObject);
+          objectsToBeRemoved.add(new Pair<Setting, EObject>(setting, referencedObject));
         }
+      }
+      
+      for (Pair<Setting, EObject> pair : objectsToBeRemoved)
+      {
+        EcoreUtil.remove(pair.getElement1(), pair.getElement2());
       }
     }
   }

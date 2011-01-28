@@ -964,7 +964,6 @@ public class TransactionCommitContext implements InternalCommitContext
       reviseDetachedObjects(monitor.fork());
 
       InternalRepository repository = transaction.getRepository();
-      repository.setLastCommitTimeStamp(timeStamp);
 
       unlockObjects();
       monitor.worked();

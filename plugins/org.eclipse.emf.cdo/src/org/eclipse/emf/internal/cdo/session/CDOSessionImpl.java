@@ -1120,7 +1120,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         InternalCDOTransaction currentSender = currentPair.getElement2();
         nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
 
-        invalidateOrdered(commitInfo, currentSender);
+        invalidateOrdered(currentCommitInfo, currentSender);
       }
     }
   }

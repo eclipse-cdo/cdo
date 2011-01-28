@@ -812,6 +812,7 @@ public class Repository extends Container<Object> implements InternalRepository
         }
 
         long previousTimeStamp = lastCommitTimeStamp;
+        lastCommitTimeStamp = now;
         return new long[] { now, previousTimeStamp };
       }
     }

@@ -226,10 +226,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    */
   public void cdoInternalPostRollback()
   {
-    InternalCDORevision revision = cdoView().getRevision(cdoID(), true);
-    cdoInternalSetRevision(revision);
-    revisionToInstance();
-    state = CDOState.CLEAN;
+    CDOStateMachine.INSTANCE.read(this);
   }
 
   /**

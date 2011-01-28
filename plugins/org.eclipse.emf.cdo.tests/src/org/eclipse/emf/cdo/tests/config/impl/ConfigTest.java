@@ -216,19 +216,19 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     getRepositoryConfig().registerRepository((InternalRepository)repository);
   }
 
-  public void restartRepository()
+  public InternalRepository restartRepository()
   {
-    restartRepository(IRepositoryConfig.REPOSITORY_NAME);
+    return restartRepository(IRepositoryConfig.REPOSITORY_NAME);
   }
 
-  public void restartRepository(String name)
+  public InternalRepository restartRepository(String name)
   {
     try
     {
       getRepositoryConfig().setRestarting(true);
       InternalRepository repo = getRepository(name);
       LifecycleUtil.deactivate(repo);
-      getRepository(name);
+      return getRepository(name);
     }
     finally
     {

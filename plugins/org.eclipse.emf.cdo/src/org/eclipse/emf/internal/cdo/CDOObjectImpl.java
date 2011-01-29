@@ -273,6 +273,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public void cdoInternalPreLoad()
   {
+    // Do nothing
   }
 
   public void cdoInternalPostLoad()
@@ -388,14 +389,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   public void cdoInternalPreCommit()
-  {
-    // Do nothing
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void cdoInternalCleanup()
   {
     // Do nothing
   }

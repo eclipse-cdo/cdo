@@ -32,8 +32,6 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
 
   public InternalCDORevision cdoRevision();
 
-  public void cdoInternalCleanup();
-
   public void cdoInternalPostAttach();
 
   public void cdoInternalPostDetach(boolean remote);

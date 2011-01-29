@@ -293,11 +293,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     cdoInternalSetState(CDOState.CLEAN);
   }
 
-  public void cdoInternalCleanup()
-  {
-    // Do nothing
-  }
-
   @Override
   public boolean equals(Object obj)
   {

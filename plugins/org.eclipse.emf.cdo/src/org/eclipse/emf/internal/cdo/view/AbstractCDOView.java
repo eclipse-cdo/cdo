@@ -807,13 +807,10 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
    */
   protected synchronized void cleanObject(InternalCDOObject object, InternalCDORevision revision)
   {
-    object.cdoInternalCleanup();
-
     object.cdoInternalSetView(this);
     object.cdoInternalSetRevision(revision);
     object.cdoInternalSetID(revision.getID());
     object.cdoInternalSetState(CDOState.CLEAN);
-
     object.cdoInternalPostLoad();
   }
 

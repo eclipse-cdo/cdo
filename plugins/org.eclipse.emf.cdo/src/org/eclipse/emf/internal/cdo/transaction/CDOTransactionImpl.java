@@ -90,6 +90,7 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 import org.eclipse.emf.internal.cdo.object.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
@@ -112,6 +113,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -125,6 +127,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
+import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -148,7 +151,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -217,11 +219,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * A map to hold a clean (i.e. unmodified) revision for objects that have been modified or detached.
    */
   private Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new HashMap<InternalCDOObject, InternalCDORevision>();
-
-  /**
-   * A map to hold the latest local revision for objects that have been rolled back.
-   */
-  private Map<InternalCDOObject, InternalCDORevision> rollbackRevisions = new WeakHashMap<InternalCDOObject, InternalCDORevision>();
 
   public CDOTransactionImpl(CDOBranch branch)
   {
@@ -1317,6 +1314,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOTransactionImpl.4"), savepoint)); //$NON-NLS-1$
     }
 
+    if (!savepoint.isValid())
+    {
+      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOTransactionImpl.6"), savepoint)); //$NON-NLS-1$
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.trace("handleRollback()"); //$NON-NLS-1$
@@ -1324,17 +1326,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     try
     {
-      if (!savepoint.isValid())
+      // Remember current revisions
+      Map<CDOObject, CDORevision> oldRevisions = new HashMap<CDOObject, CDORevision>();
+      for (CDOObject object : getDirtyObjects().values())
       {
-        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOTransactionImpl.6"), savepoint)); //$NON-NLS-1$
+        CDORevision oldRevision = object.cdoRevision();
+        if (oldRevision != null)
+        {
+          oldRevisions.put(object, oldRevision);
+        }
       }
 
       // Rollback objects
       Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint);
 
       lastSavepoint = savepoint;
-      // Make savepoint active. Erase savepoint that could have be
-      // after
       lastSavepoint.setNextSavepoint(null);
       lastSavepoint.clear();
 
@@ -1345,6 +1351,41 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         // Unlock all objects
         unlockObjects(null, null);
+      }
+
+      // Send notifications
+      for (Entry<CDOObject, CDORevision> entry : oldRevisions.entrySet())
+      {
+        InternalCDOObject object = (InternalCDOObject)entry.getKey();
+        if (FSMUtil.isTransient(object))
+        {
+          continue;
+        }
+
+        InternalCDORevision oldRevision = (InternalCDORevision)entry.getValue();
+        InternalCDORevision newRevision = object.cdoRevision();
+        if (newRevision == null)
+        {
+          newRevision = getRevision(oldRevision.getID(), true);
+          object.cdoInternalSetRevision(newRevision);
+          object.cdoInternalSetState(CDOState.CLEAN);
+        }
+
+        if (newRevision != null)
+        {
+          InternalCDORevisionDelta delta = newRevision.compare(oldRevision);
+          if (!delta.isEmpty())
+          {
+            Set<CDOObject> detachedObjects = Collections.emptySet();
+
+            CDONotificationBuilder builder = new CDONotificationBuilder(this);
+            NotificationChain notification = builder.buildNotification(object, oldRevision, delta, detachedObjects);
+            if (notification != null)
+            {
+              notification.dispatch();
+            }
+          }
+        }
       }
 
       Map<CDOID, CDOID> idMappings = Collections.emptyMap();
@@ -1977,7 +2018,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected void doDeactivate() throws Exception
   {
-    rollbackRevisions.clear();
     options().disposeConflictResolvers();
     lastSavepoint = null;
     firstSavepoint = null;
@@ -2062,7 +2102,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           objectsToBeRemoved.add(new Pair<Setting, EObject>(setting, referencedObject));
         }
       }
-      
+
       for (Pair<Setting, EObject> pair : objectsToBeRemoved)
       {
         EcoreUtil.remove(pair.getElement1(), pair.getElement2());
@@ -2098,11 +2138,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public synchronized Map<InternalCDOObject, InternalCDORevision> getCleanRevisions()
   {
     return cleanRevisions;
-  }
-
-  public synchronized Map<InternalCDOObject, InternalCDORevision> getRollbackRevisions()
-  {
-    return rollbackRevisions;
   }
 
   /**

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOPushTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -31,6 +32,8 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
+
+import org.eclipse.emf.common.notify.Notification;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -374,6 +377,36 @@ public class TransactionTest extends AbstractCDOTest
     rollback.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
     category2.setName("session2");
     transaction2.commit();
+  }
+
+  /**
+   * Bug 283131
+   */
+  public void testRollbackWithNotification() throws CommitException
+  {
+    Category category = getModel1Factory().createCategory();
+    category.setName("name1");
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource1 = transaction.createResource("/test");
+
+    resource1.getContents().add(category);
+    transaction.commit();
+
+    category.setName("name2");
+
+    TestAdapter testAdapter = new TestAdapter();
+    category.eAdapters().add(testAdapter);
+
+    transaction.rollback();
+
+    Notification[] notifications = testAdapter.getNotifications();
+    assertEquals(1, notifications.length);
+
+    Notification notification = notifications[0];
+    assertEquals("name2", notification.getOldStringValue());
+    assertEquals("name1", notification.getNewStringValue());
   }
 
   public void testManualRollbackOnConflictException() throws Exception

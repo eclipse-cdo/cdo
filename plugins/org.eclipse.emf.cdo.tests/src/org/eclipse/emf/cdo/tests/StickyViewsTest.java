@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -140,16 +139,16 @@ public class StickyViewsTest extends AbstractCDOTest
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
 
-    CDOTransaction transaction1 = session.openTransaction();
-    CDOResource res = transaction1.createResource("/res1");
+    CDOTransaction tx = session.openTransaction();
+    CDOResource res = tx.createResource("/res1");
     Company company1 = getModel1Factory().createCompany();
     res.getContents().add(company1);
-    transaction1.commit();
+    tx.commit();
 
     // Make dirty, then roll back, so as to force PROXY state
     //
     company1.setName("company1");
-    transaction1.rollback();
+    tx.rollback();
 
     // Clear cache to force loading of revisions from server
     //
@@ -160,20 +159,14 @@ public class StickyViewsTest extends AbstractCDOTest
     IRepository repo = getRepositoryConfig().getRepository(IRepositoryConfig.REPOSITORY_NAME);
     ((InternalCDORevisionManager)repo.getRevisionManager()).getCache().clear();
 
-    // Check if the object really transitioned to PROXY
-    // (Can't do this for legacy objects, as the CDOAdapter will reload the revision during
-    // postRollback, see CDOLegacyWrapper#cdoInternalPostRollback.)
-    if (!getScenario().getModelConfig().getName().equals(ModelConfig.Legacy.NAME))
-    {
-      assertProxy(company1);
-    }
+    assertClean(CDOUtil.getCDOObject(company1), tx);
 
     msg(company1.getName());
 
     CDOID id = CDOUtil.getCDOObject(company1).cdoID();
     company1 = null;
 
-    CDOObject obj = transaction1.getObject(id);
+    CDOObject obj = tx.getObject(id);
     assertNotNull(obj);
 
     session.close();
@@ -215,20 +208,12 @@ public class StickyViewsTest extends AbstractCDOTest
       company1.setName("ccc");
       tx.rollback();
 
-      // Check if the object really transitioned to PROXY
-      // (Can't do this for legacy objects, as the CDOAdapter will reload the revision during
-      // postRollback, see CDOLegacyWrapper#cdoInternalPostRollback.)
-      if (!getScenario().getModelConfig().getName().equals(ModelConfig.Legacy.NAME))
-      {
-        assertProxy(company1);
-      }
+      assertClean(CDOUtil.getCDOObject(company1), tx);
 
       // Clear cache to force loading of revisions from server
-      //
       ((InternalCDORevisionManager)sess.getRevisionManager()).getCache().clear();
 
       // Clear server-side cache to force loading of revisions from IStore
-      //
       IRepository repo = getRepositoryConfig().getRepository(IRepositoryConfig.REPOSITORY_NAME);
       ((InternalCDORevisionManager)repo.getRevisionManager()).getCache().clear();
 
@@ -320,14 +305,7 @@ public class StickyViewsTest extends AbstractCDOTest
 
     doOtherSession(); // Creates a new revision on the server
 
-    // Check if the object really transitioned to PROXY
-    // (Can't do this for legacy objects, as the CDOAdapter will reload the revision during
-    // postRollback, see CDOLegacyWrapper#cdoInternalPostRollback.)
-    if (!getScenario().getModelConfig().getName().equals(ModelConfig.Legacy.NAME))
-    {
-      assertProxy(company1);
-    }
-
+    assertClean(CDOUtil.getCDOObject(company1), tx);
     assertEquals("The company name should not have the value set in the other session", "aaa", company1.getName());
 
     sess.close();
@@ -356,13 +334,7 @@ public class StickyViewsTest extends AbstractCDOTest
 
     doOtherSession(); // Creates a new revision on the server
 
-    // Check if the object really transitioned to PROXY
-    // (Can't do this for legacy objects, as the CDOAdapter will reload the revision during
-    // postRollback, see CDOLegacyWrapper#cdoInternalPostRollback.)
-    if (!getScenario().getModelConfig().getName().equals(ModelConfig.Legacy.NAME))
-    {
-      assertProxy(company1);
-    }
+    assertClean(CDOUtil.getCDOObject(company1), tx);
 
     // Verify that this session still fetches the revision that *this* session just committed,
     // rather than the latest revision, which was committed by the other session

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -165,18 +166,19 @@ public class SavePointTest extends AbstractCDOTest
     CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel1Package());
 
-    CDOTransaction transaction1 = session.openTransaction();
+    CDOTransaction transaction = session.openTransaction();
 
     // Client1
-    CDOResource resource1 = transaction1.createResource("/test1");
+    CDOResource resource1 = transaction.createResource("/test1");
     Category category3, category2, category4;
 
     Company company1 = getModel1Factory().createCompany();
     resource1.getContents().add(company1);
+
     Category category1 = getModel1Factory().createCategory();
     company1.getCategories().add(category1);
 
-    CDOUserSavepoint savePoint1 = transaction1.setSavepoint();
+    CDOUserSavepoint savePoint1 = transaction.setSavepoint();
 
     // Modification for savePoint1
     Company company2 = getModel1Factory().createCompany();
@@ -190,7 +192,7 @@ public class SavePointTest extends AbstractCDOTest
 
     if (commitBegin)
     {
-      transaction1.commit();
+      transaction.commit();
     }
 
     {
@@ -201,7 +203,7 @@ public class SavePointTest extends AbstractCDOTest
       company1.getCategories().add(category2);
     }
 
-    CDOUserSavepoint savePoint2 = transaction1.setSavepoint();
+    CDOUserSavepoint savePoint2 = transaction.setSavepoint();
 
     {
       company1.setCity("CITY2");
@@ -209,7 +211,7 @@ public class SavePointTest extends AbstractCDOTest
       company1.getCategories().add(category3);
     }
 
-    transaction1.setSavepoint();
+    transaction.setSavepoint();
 
     {
       company1.setCity("CITY3");
@@ -219,41 +221,41 @@ public class SavePointTest extends AbstractCDOTest
     }
 
     savePoint2.rollback();
-    assertEquals(true, transaction1.isDirty());
+    assertEquals(true, transaction.isDirty());
 
     // Test NEW TO NEW
     assertEquals(false, FSMUtil.isTransient(CDOUtil.getCDOObject(company1)));
 
     // Test NEW TO TRANSIENT (2 step back)
     assertEquals(true, FSMUtil.isTransient(CDOUtil.getCDOObject(category3)));
-    assertEquals(false, transaction1.getNewObjects().containsKey(CDOUtil.getCDOObject(category3).cdoID()));
+    assertEquals(false, transaction.getNewObjects().containsKey(CDOUtil.getCDOObject(category3).cdoID()));
 
     // Test NEW TO TRANSIENT (1 step back)
     assertEquals(true, FSMUtil.isTransient(CDOUtil.getCDOObject(category4)));
-    assertEquals(false, transaction1.getNewObjects().containsKey(CDOUtil.getCDOObject(category4).cdoID()));
+    assertEquals(false, transaction.getNewObjects().containsKey(CDOUtil.getCDOObject(category4).cdoID()));
 
     // Test NEW TO NEW
     assertEquals(false, FSMUtil.isTransient(CDOUtil.getCDOObject(category2)));
-    assertEquals(true, transaction1.getNewObjects().containsKey(CDOUtil.getCDOObject(category2).cdoID()));
+    assertEquals(true, transaction.getNewObjects().containsKey(CDOUtil.getCDOObject(category2).cdoID()));
 
     // Test rollback NEW
     assertEquals("CITY1", company1.getCity());
     assertEquals(2, company1.getCategories().size());
     if (commitEnd)
     {
-      transaction1.commit();
-      assertClean(company1, transaction1);
-      assertClean(category2, transaction1);
+      transaction.commit();
+      assertClean(company1, transaction);
+      assertClean(category2, transaction);
       assertEquals("CITY1", company1.getCity());
       assertEquals(2, company1.getCategories().size());
-      assertEquals(null, transaction1.getLastSavepoint().getPreviousSavepoint());
+      assertEquals(null, transaction.getLastSavepoint().getPreviousSavepoint());
     }
     else
     {
-      transaction1.rollback();
-      assertEquals(false, transaction1.isDirty());
-      assertEquals(null, transaction1.getLastSavepoint().getNextSavepoint());
-      assertEquals(null, transaction1.getLastSavepoint().getPreviousSavepoint());
+      transaction.rollback();
+      assertEquals(false, transaction.isDirty());
+      assertEquals(null, transaction.getLastSavepoint().getNextSavepoint());
+      assertEquals(null, transaction.getLastSavepoint().getPreviousSavepoint());
       assertEquals(commitBegin, !FSMUtil.isTransient(CDOUtil.getCDOObject(company1)));
       assertEquals(commitBegin, !FSMUtil.isTransient(resource1));
     }
@@ -321,5 +323,31 @@ public class SavePointTest extends AbstractCDOTest
     CDOResource object1Y = transaction2.getResource("/object1");
     assertEquals(object1Test.getContents().size(), object1Y.getContents().size());
     assertEquals(object2Test.getContents().size(), object2Y.getContents().size());
+  }
+
+  /**
+   * Bug 283131
+   */
+  public void testNotification() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/test1");
+
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+
+    company.setCity("CITY1");
+    CDOUserSavepoint savePoint1 = transaction.setSavepoint();
+
+    company.setCity("CITY2");
+
+    TestAdapter adapter = new TestAdapter();
+    company.eAdapters().add(adapter);
+
+    savePoint1.rollback();
+    assertEquals("CITY1", company.getCity());
+    assertEquals(1, adapter.getNotifications().length);
   }
 }

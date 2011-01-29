@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.internal.cdo.view;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -24,7 +23,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
@@ -32,14 +30,12 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -53,11 +49,9 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -734,9 +728,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
     {
-      InternalCDOTransaction transaction = object.cdoView().toTransaction();
-      transaction.getRollbackRevisions().put(object, object.cdoRevision());
-
       object.cdoInternalSetRevision(null);
       changeState(object, CDOState.PROXY);
     }
@@ -922,25 +913,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       changeState(object, CDOState.CLEAN);
       object.cdoInternalSetRevision(revision);
       object.cdoInternalPostLoad();
-
-      if (!view.isReadOnly())
-      {
-        InternalCDOTransaction transaction = view.toTransaction();
-        InternalCDORevision rollbackRevision = transaction.getRollbackRevisions().remove(object);
-        if (rollbackRevision != null && revision != null)
-        {
-          InternalCDORevisionDelta rollbackDelta = revision.compare(rollbackRevision);
-          Set<CDOObject> detachedObjects = Collections.emptySet();
-
-          CDONotificationBuilder builder = new CDONotificationBuilder(transaction);
-          NotificationChain notification = builder.buildNotification(object, rollbackRevision, rollbackDelta,
-              detachedObjects);
-          if (notification != null)
-          {
-            notification.dispatch();
-          }
-        }
-      }
 
       if (forWrite)
       {

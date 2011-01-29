@@ -205,16 +205,14 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     Company company1b = getModel1Factory().createCompany();
     company1b.setName("companyB");
     resource.getContents().add(company1b);
-    transaction1.commit();
+    commitAndSync(transaction1, transaction2, transaction3);
 
     modelInitialized = true;
 
     // do concurrent changes on different objects, same type.
-    transaction2.waitForUpdate(transaction1.getLastCommitTime());
     Company company2a = transaction2.getObject(company1a);
     company2a.setName("companyA2");
 
-    transaction3.waitForUpdate(transaction1.getLastCommitTime());
     Company company3b = transaction3.getObject(company1b);
     company3b.setName("companyB2");
 
@@ -273,10 +271,9 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     CDOTransaction transaction4 = session2.openTransaction();
     Company company4a = transaction4.getObject(company1a);
     company4a.setName("companyA3");
-    transaction4.commit();
+    commitAndSync(transaction4, transaction1);
 
     // check if update arrived.
-    transaction1.waitForUpdate(transaction4.getLastCommitTime(), 2000);
     assertEquals(company4a.getName(), company1a.getName());
   }
 
@@ -301,16 +298,14 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     Category cat1 = getModel1Factory().createCategory();
     cat1.setName("category1");
     company1.getCategories().add(cat1);
-    transaction1.commit();
+    commitAndSync(transaction1, transaction2, transaction3);
 
     modelInitialized = true;
 
     // do concurrent changes on different objects, different type.
-    transaction2.waitForUpdate(transaction1.getLastCommitTime());
     Company company2 = transaction2.getObject(company1);
     company2.setName("company2");
 
-    transaction3.waitForUpdate(transaction1.getLastCommitTime());
     Category cat3 = transaction3.getObject(cat1);
     cat3.setName("category3");
 
@@ -369,10 +364,9 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     CDOTransaction transaction4 = session2.openTransaction();
     Company company4 = transaction4.getObject(company1);
     company4.setName("company3");
-    transaction4.commit();
+    commitAndSync(transaction4, transaction1);
 
     // check if update arrived.
-    transaction1.waitForUpdate(transaction4.getLastCommitTime(), 2000);
     assertEquals(company4.getName(), company1.getName());
   }
 }

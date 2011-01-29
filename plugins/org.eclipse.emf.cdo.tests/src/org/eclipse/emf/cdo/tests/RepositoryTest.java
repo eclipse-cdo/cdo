@@ -13,12 +13,14 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.ObjectWriteAccessHandler;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -96,6 +98,24 @@ public class RepositoryTest extends AbstractCDOTest
     session.close();
     sleep(100);
     assertEquals(0, sessionManager.getSessions().length);
+  }
+
+  /**
+   * See bug 329254
+   */
+  public void testLastCommitTime() throws Exception
+  {
+    skipTest(getRepository().getStore() instanceof IMEMStore);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource("/res1");
+    resource.getContents().add(createCustomer("Eike"));
+    long timeStamp = transaction.commit().getTimeStamp();
+    session.close();
+
+    InternalRepository repository = restartRepository();
+    assertEquals(timeStamp, repository.getLastCommitTimeStamp());
   }
 
   public void testWriteAccessHandlers() throws Exception

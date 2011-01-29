@@ -521,6 +521,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
     ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas();
+    List<CDORevisionDelta> notificationDeltas = new ArrayList<CDORevisionDelta>();
     Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
 
     for (CDORevisionKey key : changeSetData.getChangedObjects())
@@ -551,7 +552,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
       if (!targetGoalDelta.isEmpty())
       {
-        revisionDeltas.put(id, targetGoalDelta);
+        CDORevisionDelta oldDelta = revisionDeltas.get(id);
+        if (oldDelta == null) // != null means there was already a change ==> this is a conflict resolution!
+        {
+          revisionDeltas.put(id, targetGoalDelta);
+        }
+
+        notificationDeltas.add(targetGoalDelta);
         result.getChangedObjects().add(targetGoalDelta);
 
         // handle reattached objects.
@@ -574,10 +581,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>(revisionDeltas.values());
-    if (!deltas.isEmpty() || !detachedObjects.isEmpty())
+    if (!notificationDeltas.isEmpty() || !detachedObjects.isEmpty())
     {
-      sendDeltaNotifications(deltas, detachedObjects, oldRevisions);
+      sendDeltaNotifications(notificationDeltas, detachedObjects, oldRevisions);
     }
 
     return new Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>>(result, mappedLocalIDs);

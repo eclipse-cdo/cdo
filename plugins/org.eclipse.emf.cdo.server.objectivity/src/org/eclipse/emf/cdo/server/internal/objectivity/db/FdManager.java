@@ -49,7 +49,7 @@ public class FdManager
 
   private String fdDirPath = null;
 
-  private String lockServerHost = DEFAULT_VALUE;
+  private String lockserverHost = DEFAULT_VALUE;
 
   private String fdNumber = "12345";
 
@@ -151,7 +151,7 @@ public class FdManager
 
       dumpStream(proc.getInputStream());
       bRet = true;
-      loadSchema();
+      // loadSchema();
 
     }
     catch (IOException e)
@@ -393,13 +393,13 @@ public class FdManager
 
   public String getLockServerHost()
   {
-    if (lockServerHost.equals(DEFAULT_VALUE))
+    if (lockserverHost.equals(DEFAULT_VALUE))
     {
       // get local host
       try
       {
         InetAddress address = InetAddress.getLocalHost();
-        lockServerHost = address.getHostName();
+        lockserverHost = address.getHostName();
       }
       catch (UnknownHostException e)
       {
@@ -408,12 +408,12 @@ public class FdManager
       }
 
     }
-    return lockServerHost;
+    return lockserverHost;
   }
 
   public void setLockServerHost(String lockServerHost)
   {
-    this.lockServerHost = lockServerHost;
+    lockserverHost = lockServerHost;
   }
 
   public String getFdNumber()

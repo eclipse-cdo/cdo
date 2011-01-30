@@ -263,8 +263,8 @@ public class HibernateQueryTest extends BaseTest
         final CDOQuery orderQuery = transaction.createQuery("hql", //$NON-NLS-1$
             "select so from SalesOrder so where so.customer.id=:customerId"); //$NON-NLS-1$
         final CDOObject cdoObject = (CDOObject)customer;
-        final CDOID cdoID = cdoObject.cdoID();
-        orderQuery.setParameter("customerId", getIdValue(cdoID)); //$NON-NLS-1$
+        final CDOID id = cdoObject.cdoID();
+        orderQuery.setParameter("customerId", getIdValue(id)); //$NON-NLS-1$
         final List<SalesOrder> sos = orderQuery.getResult(SalesOrder.class);
         assertEquals(NUM_OF_SALES_ORDERS, sos.size());
         for (SalesOrder so : sos)
@@ -437,19 +437,19 @@ public class HibernateQueryTest extends BaseTest
     return product;
   }
 
-  public Serializable getIdValue(CDOID cdoID)
+  public Serializable getIdValue(CDOID id)
   {
-    if (cdoID instanceof AbstractCDOIDString)
+    if (id instanceof AbstractCDOIDString)
     {
-      return ((AbstractCDOIDString)cdoID).getStringValue();
+      return ((AbstractCDOIDString)id).getStringValue();
     }
 
-    if (cdoID instanceof AbstractCDOIDLong)
+    if (id instanceof AbstractCDOIDLong)
     {
-      return ((AbstractCDOIDLong)cdoID).getLongValue();
+      return ((AbstractCDOIDLong)id).getLongValue();
     }
 
-    throw new IllegalArgumentException("This CDOID type " + cdoID + " is not supported by this store."); //$NON-NLS-1$//$NON-NLS-2$
+    throw new IllegalArgumentException("This CDOID type " + id + " is not supported by this store."); //$NON-NLS-1$//$NON-NLS-2$
   }
 
 }

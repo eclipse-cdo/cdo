@@ -113,7 +113,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   public void closeView(int viewID);
 
-  public void changeSubscription(int viewId, List<CDOID> cdoIDs, boolean subscribeMode, boolean clear);
+  public void changeSubscription(int viewId, List<CDOID> ids, boolean subscribeMode, boolean clear);
 
   /**
    * @since 4.0

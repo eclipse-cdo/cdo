@@ -42,8 +42,8 @@ public class CDOInterceptor extends EmptyInterceptor
     }
 
     final CDORevision revision = (CDORevision)entity;
-    final CDOID cdoID = HibernateUtil.getInstance().getCDOID(revision);
-    if (cdoID.isNull() || cdoID.isTemporary())
+    final CDOID id = HibernateUtil.getInstance().getCDOID(revision);
+    if (id.isNull() || id.isTemporary())
     {
       return true;
     }

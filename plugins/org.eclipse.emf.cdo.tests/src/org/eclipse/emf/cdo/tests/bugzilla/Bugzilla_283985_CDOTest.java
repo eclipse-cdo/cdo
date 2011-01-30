@@ -217,12 +217,12 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
         detail5, detail6, detail7, detail8, detail9, detail10, detail11, detail12, });
 
     // Keep references to the current CDOIDs and versions, to be used in the test
-    CDOID[] cdoIDsBefore = new CDOID[details.size()];
+    CDOID[] idsBefore = new CDOID[details.size()];
     int[] versionsBefore = new int[details.size()];
     int i = 0;
     for (OrderDetail detail : details)
     {
-      cdoIDsBefore[i] = CDOUtil.getCDOObject(detail).cdoID();
+      idsBefore[i] = CDOUtil.getCDOObject(detail).cdoID();
       versionsBefore[i] = CDOUtil.getCDOObject(detail).cdoRevision().getVersion();
       i++;
     }
@@ -243,7 +243,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     for (OrderDetail detail : details)
     {
       CDOID idAfter = CDOUtil.getCDOObject(detail).cdoID();
-      CDOID idBefore = cdoIDsBefore[i];
+      CDOID idBefore = idsBefore[i];
       assertEquals(idBefore, idAfter);
 
       int versionAfter = CDOUtil.getCDOObject(detail).cdoRevision().getVersion();
@@ -261,7 +261,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     for (OrderDetail detail : details)
     {
       CDOID idAfter = CDOUtil.getCDOObject(detail).cdoID();
-      CDOID idBefore = cdoIDsBefore[i];
+      CDOID idBefore = idsBefore[i];
       assertEquals(idBefore, idAfter);
 
       int versionAfter = CDOUtil.getCDOObject(detail).cdoRevision().getVersion();
@@ -279,7 +279,7 @@ public class Bugzilla_283985_CDOTest extends AbstractCDOTest
     for (OrderDetail detail : details)
     {
       CDOID idAfter = CDOUtil.getCDOObject(detail).cdoID();
-      CDOID idBefore = cdoIDsBefore[i];
+      CDOID idBefore = idsBefore[i];
       assertEquals(idBefore, idAfter);
 
       int versionAfter = CDOUtil.getCDOObject(detail).cdoRevision().getVersion();

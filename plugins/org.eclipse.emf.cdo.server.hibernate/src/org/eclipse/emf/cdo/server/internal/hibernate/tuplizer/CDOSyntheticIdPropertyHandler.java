@@ -98,24 +98,24 @@ public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAc
     }
 
     final InternalCDORevision revision = HibernateUtil.getInstance().getCDORevision(target);
-    final CDOID cdoID = HibernateUtil.getInstance().getCDOID(revision);
-    if (cdoID == null || cdoID instanceof CDOIDTemp)
+    final CDOID id = HibernateUtil.getInstance().getCDOID(revision);
+    if (id == null || id instanceof CDOIDTemp)
     {
       final CDOID newCDOID = HibernateUtil.getInstance().createCDOID(new CDOClassifierRef(revision.getEClass()), value);
       revision.setID(newCDOID);
       if (HibernateThreadContext.isCommitContextSet())
       {
         final HibernateCommitContext commitContext = HibernateThreadContext.getCommitContext();
-        commitContext.setNewID(cdoID, newCDOID);
-        if (cdoID instanceof CDOIDTemp)
+        commitContext.setNewID(id, newCDOID);
+        if (id instanceof CDOIDTemp)
         {
-          commitContext.getCommitContext().addIDMapping(cdoID, newCDOID);
+          commitContext.getCommitContext().addIDMapping(id, newCDOID);
         }
       }
     }
     else
     {
-      final Serializable idValue = HibernateUtil.getInstance().getIdValue(cdoID);
+      final Serializable idValue = HibernateUtil.getInstance().getIdValue(id);
       if (!idValue.equals(value))
       {
         throw new IllegalStateException("Current id and new id are different " + value + "/" + idValue); //$NON-NLS-1$ //$NON-NLS-2$

@@ -879,7 +879,7 @@ public class CDOViewImpl extends AbstractCDOView
     {
       boolean policiesPresent = options().hasChangeSubscriptionPolicies();
       subscriptions.clear();
-      List<CDOID> cdoIDs = new ArrayList<CDOID>();
+      List<CDOID> ids = new ArrayList<CDOID>();
       if (policiesPresent)
       {
         for (InternalCDOObject cdoObject : getObjectsArray())
@@ -887,13 +887,13 @@ public class CDOViewImpl extends AbstractCDOView
           int count = getNumberOfValidAdapter(cdoObject);
           if (count > 0)
           {
-            cdoIDs.add(cdoObject.cdoID());
+            ids.add(cdoObject.cdoID());
             addEntry(cdoObject.cdoID(), cdoObject, count);
           }
         }
       }
 
-      request(cdoIDs, true, true);
+      request(ids, true, true);
     }
 
     private void handleDetachedObjects(Collection<CDOObject> detachedObjects)

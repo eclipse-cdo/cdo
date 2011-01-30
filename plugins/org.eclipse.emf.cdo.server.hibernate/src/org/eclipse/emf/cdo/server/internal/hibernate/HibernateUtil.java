@@ -276,19 +276,19 @@ public class HibernateUtil
    * Converts a CDOID to an unique String representations. Null, {@link CDOIDTemp} and null CDOID's are returned as null
    * value. Supports {@link CDOID} and {@link CDOIDExternal}.
    * 
-   * @param cdoID
-   *          the cdoID to convert
+   * @param id
+   *          the id to convert
    * @return a unique String
    */
-  public String convertCDOIDToString(CDOID cdoID)
+  public String convertCDOIDToString(CDOID id)
   {
-    if (cdoID == null || cdoID.isNull() || cdoID.isTemporary())
+    if (id == null || id.isNull() || id.isTemporary())
     {
       return null;
     }
 
     final StringBuilder sb = new StringBuilder();
-    CDOIDUtil.write(sb, cdoID);
+    CDOIDUtil.write(sb, id);
     return sb.toString();
   }
 
@@ -554,70 +554,70 @@ public class HibernateUtil
   }
 
   /**
-   * Checks if the passed cdoID is created/used by this store.
+   * Checks if the passed id is created/used by this store.
    * 
-   * @param cdoID
+   * @param id
    *          the {@link CDOID} to check
    * @return true if this is a CDOID which is used/created by this store.
    */
-  public boolean isStoreCreatedID(CDOID cdoID)
+  public boolean isStoreCreatedID(CDOID id)
   {
     // TODO: not the nicest check but we know that only these are supported
     // by the hibernatestore
-    return cdoID instanceof CDOClassifierRef.Provider || cdoID instanceof CDOIDExternal;
+    return id instanceof CDOClassifierRef.Provider || id instanceof CDOIDExternal;
   }
 
   /**
    * Checks if the passed {@link CDOID} is a type supported by this store.
    * 
-   * @param cdoID
+   * @param id
    *          the CDOID instance to check
    * @throws IllegalArgumentException
    *           if the passed type is not supported.
    */
-  public void checkIsSupportedID(CDOID cdoID)
+  public void checkIsSupportedID(CDOID id)
   {
-    if (!isStoreCreatedID(cdoID))
+    if (!isStoreCreatedID(id))
     {
-      throw new IllegalArgumentException("This CDOID type " + cdoID + " is not supported by this store. " //$NON-NLS-1$ //$NON-NLS-2$
-          + cdoID.getClass().getName());
+      throw new IllegalArgumentException("This CDOID type " + id + " is not supported by this store. " //$NON-NLS-1$ //$NON-NLS-2$
+          + id.getClass().getName());
     }
   }
 
   /**
-   * @param cdoID
+   * @param id
    *          CDOID to get the internal id from
    * @return the id used by Hibernate, the String or Long value in the CDOID object.
    */
-  public Serializable getIdValue(CDOID cdoID)
+  public Serializable getIdValue(CDOID id)
   {
-    if (cdoID instanceof AbstractCDOIDString)
+    if (id instanceof AbstractCDOIDString)
     {
-      return ((AbstractCDOIDString)cdoID).getStringValue();
+      return ((AbstractCDOIDString)id).getStringValue();
     }
 
-    if (cdoID instanceof AbstractCDOIDLong)
+    if (id instanceof AbstractCDOIDLong)
     {
-      return ((AbstractCDOIDLong)cdoID).getLongValue();
+      return ((AbstractCDOIDLong)id).getLongValue();
     }
 
-    throw new IllegalArgumentException("This CDOID type " + cdoID + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
+    throw new IllegalArgumentException("This CDOID type " + id + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**
    * Retrieves the entity name for the EClass present in the CDOID.
    * 
-   * @param cdoID
+   * @param id
    *          the {@link CDOID} to get the EClass from
    * @return the entity name for the EClass of the CDOID.
    * @see HibernateStore#getEntityName(EClass)
    */
-  public String getEntityName(CDOID cdoID)
+  public String getEntityName(CDOID id)
   {
-    final CDOClassifierRef classifierRef = CDOIDUtil.getClassifierRef(cdoID);
+    final CDOClassifierRef classifierRef = CDOIDUtil.getClassifierRef(id);
     if (classifierRef == null)
     {
-      throw new IllegalArgumentException("This CDOID type of " + cdoID + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
+      throw new IllegalArgumentException("This CDOID type of " + id + " is not supported by this store."); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();

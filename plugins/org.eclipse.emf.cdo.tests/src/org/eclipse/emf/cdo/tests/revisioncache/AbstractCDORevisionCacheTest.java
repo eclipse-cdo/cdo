@@ -92,8 +92,8 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     InternalCDORevision cdoRevision = company.cdoRevision();
     addRevision(cdoRevision);
 
-    CDOID cdoID = CDOUtil.getCDOObject(company).cdoID();
-    CDORevision fetchedCDORevision = revisionCache.getRevision(cdoID, BRANCH_POINT);
+    CDOID id = CDOUtil.getCDOObject(company).cdoID();
+    CDORevision fetchedCDORevision = revisionCache.getRevision(id, BRANCH_POINT);
     assertEquals(true, CDOIDUtil.equals(cdoRevision.getID(), fetchedCDORevision.getID()));
   }
 
@@ -124,8 +124,8 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     InternalCDORevision firstRevision = company.cdoRevision();
     addRevision(firstRevision);
 
-    CDOID cdoID = company.cdoID();
-    CDORevision fetchedRevision = revisionCache.getRevision(cdoID, BRANCH_POINT);
+    CDOID id = company.cdoID();
+    CDORevision fetchedRevision = revisionCache.getRevision(id, BRANCH_POINT);
     assertEquals(true, fetchedRevision.getRevised() == 0);
   }
 
@@ -142,8 +142,8 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     addRevision(secondRevision);
 
     // fetch older version and check version and ID equality
-    CDOID cdoID = company.cdoID();
-    CDORevision fetchedRevision = revisionCache.getRevisionByVersion(cdoID,
+    CDOID id = company.cdoID();
+    CDORevision fetchedRevision = revisionCache.getRevisionByVersion(id,
         BRANCH.getVersion(firstRevision.getVersion()));
     assertNotNull(fetchedRevision);
     assertEquals(true, firstRevision.getID().equals(fetchedRevision.getID()));
@@ -153,12 +153,12 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
   public void testAddRevisionUpdatesRevisedTimeStampOfLastRevision() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
-    CDOID cdoID = company.cdoID();
+    CDOID id = company.cdoID();
 
     InternalCDORevision firstVersion = company.cdoRevision();
     addRevision(firstVersion);
 
-    CDORevision fetchedRevision = revisionCache.getRevision(cdoID, BRANCH_POINT);
+    CDORevision fetchedRevision = revisionCache.getRevision(id, BRANCH_POINT);
     assertEquals(true, fetchedRevision.getRevised() == 0);
 
     // add new version
@@ -168,7 +168,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     addRevision(secondVersion);
 
     // fetch older version and check revised timestamp
-    fetchedRevision = revisionCache.getRevisionByVersion(cdoID, BRANCH.getVersion(firstVersion.getVersion()));
+    fetchedRevision = revisionCache.getRevisionByVersion(id, BRANCH.getVersion(firstVersion.getVersion()));
     assertEquals(true, fetchedRevision.getRevised() != 0);
     assertEquals(true, fetchedRevision.getRevised() < secondVersion.getTimeStamp());
     assertEquals(true, fetchedRevision.getRevised() == firstVersion.getRevised());
@@ -177,7 +177,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
   public void testTheFormerRevisionOf2VersionsMayBeFetchedByTimestamp() throws Exception
   {
     CompanyImpl company = (CompanyImpl)createCompanyInResource("Puzzle");
-    CDOID cdoID = CDOUtil.getCDOObject(company).cdoID();
+    CDOID id = CDOUtil.getCDOObject(company).cdoID();
     InternalCDORevision firstRevision = company.cdoRevision();
     addRevision(firstRevision);
 
@@ -194,7 +194,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
     addRevision(thirdRevision);
 
     // fetch version by timstamp check version and ID equality
-    CDORevision fetchedRevision = revisionCache.getRevision(cdoID, BRANCH_POINT);
+    CDORevision fetchedRevision = revisionCache.getRevision(id, BRANCH_POINT);
     assertEquals(true, secondRevision.getID().equals(fetchedRevision.getID()));
     assertEquals(true, secondRevision.getVersion() == fetchedRevision.getVersion());
   }

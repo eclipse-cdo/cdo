@@ -65,9 +65,9 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
     setCDOID(revision, id);
 
     // TODO: does this make sense?
-    // if (cdoID.getId() == null)
+    // if (id.getId() == null)
     // {
-    // cdoID.setId((Serializable)id);
+    // id.setId((Serializable)id);
     // }
     return id;
   }
@@ -75,18 +75,18 @@ public class CDOIDPropertyGetter extends CDOPropertyGetter
   private void setCDOID(CDORevision target, Object value)
   {
     final InternalCDORevision revision = (InternalCDORevision)target;
-    final CDOID cdoID = HibernateUtil.getInstance().getCDOID(revision);
-    if (cdoID == null || cdoID instanceof CDOIDTemp)
+    final CDOID id = HibernateUtil.getInstance().getCDOID(revision);
+    if (id == null || id instanceof CDOIDTemp)
     {
       final CDOID newCDOID = HibernateUtil.getInstance().createCDOID(new CDOClassifierRef(revision.getEClass()), value);
       revision.setID(newCDOID);
       if (HibernateThreadContext.isCommitContextSet())
       {
         final HibernateCommitContext commitContext = HibernateThreadContext.getCommitContext();
-        commitContext.setNewID(cdoID, newCDOID);
-        if (cdoID instanceof CDOIDTemp)
+        commitContext.setNewID(id, newCDOID);
+        if (id instanceof CDOIDTemp)
         {
-          commitContext.getCommitContext().addIDMapping(cdoID, newCDOID);
+          commitContext.getCommitContext().addIDMapping(id, newCDOID);
         }
       }
     }

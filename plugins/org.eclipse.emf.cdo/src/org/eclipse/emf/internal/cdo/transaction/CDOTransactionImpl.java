@@ -1096,10 +1096,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       Set<CDOID> detachedIDs = itrSavepoint.getDetachedObjects().keySet();
       for (CDOObject reattachedObject : itrSavepoint.getReattachedObjects().values())
       {
-        CDOID cdoID = reattachedObject.cdoID();
-        if (!detachedIDs.contains(cdoID))
+        CDOID id = reattachedObject.cdoID();
+        if (!detachedIDs.contains(id))
         {
-          removeObject(cdoID, reattachedObject);
+          removeObject(id, reattachedObject);
         }
       }
 

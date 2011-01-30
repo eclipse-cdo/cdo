@@ -32,7 +32,7 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
 
   private int viewID;
 
-  private List<CDOID> cdoIDs;
+  private List<CDOID> ids;
 
   /**
    * true - it will subscribe id's. <br>
@@ -42,12 +42,12 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
 
   private boolean clear;
 
-  public ChangeSubscriptionRequest(CDOClientProtocol protocol, int viewID, List<CDOID> cdoIDs, boolean subscribeMode,
+  public ChangeSubscriptionRequest(CDOClientProtocol protocol, int viewID, List<CDOID> ids, boolean subscribeMode,
       boolean clear)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION);
     this.viewID = viewID;
-    this.cdoIDs = cdoIDs;
+    this.ids = ids;
     this.subscribeMode = subscribeMode;
     this.clear = clear;
   }
@@ -57,13 +57,13 @@ public class ChangeSubscriptionRequest extends CDOClientRequest<Boolean>
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace("View " + viewID + " subscribing to " + cdoIDs.size()); //$NON-NLS-1$ //$NON-NLS-2$
+      TRACER.trace("View " + viewID + " subscribing to " + ids.size()); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     out.writeInt(viewID);
     out.writeBoolean(clear);
-    out.writeInt(subscribeMode ? cdoIDs.size() : -cdoIDs.size());
-    for (CDOID id : cdoIDs)
+    out.writeInt(subscribeMode ? ids.size() : -ids.size());
+    for (CDOID id : ids)
     {
       out.writeCDOID(id);
     }

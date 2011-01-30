@@ -130,14 +130,14 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public void changeSubscription(int viewID, List<CDOID> cdoIDs, boolean subscribeMode, boolean clear)
+  public void changeSubscription(int viewID, List<CDOID> ids, boolean subscribeMode, boolean clear)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        delegate.changeSubscription(viewID, cdoIDs, subscribeMode, clear);
+        delegate.changeSubscription(viewID, ids, subscribeMode, clear);
         return;
       }
       catch (Exception ex)

@@ -109,9 +109,9 @@ public class HibernateQueryHandler implements IQueryHandler
         final Object param = info.getParameters().get(key);
         if (param instanceof CDOID && HibernateUtil.getInstance().isStoreCreatedID((CDOID)param))
         {
-          final CDOID cdoID = (CDOID)param;
-          final String entityName = HibernateUtil.getInstance().getEntityName(cdoID);
-          final Serializable idValue = HibernateUtil.getInstance().getIdValue(cdoID);
+          final CDOID id = (CDOID)param;
+          final String entityName = HibernateUtil.getInstance().getEntityName(id);
+          final Serializable idValue = HibernateUtil.getInstance().getIdValue(id);
           final CDORevision revision = (CDORevision)session.get(entityName, idValue);
           query.setEntity(key, revision);
           if (cacheResults)

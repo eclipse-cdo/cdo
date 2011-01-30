@@ -922,7 +922,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
    */
   private class CDOIDFilterChangeSubscriptionPolicy implements CDOAdapterPolicy
   {
-    private Set<CDOID> cdoIDs = new HashSet<CDOID>();
+    private Set<CDOID> ids = new HashSet<CDOID>();
 
     public CDOIDFilterChangeSubscriptionPolicy()
     {
@@ -930,12 +930,12 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     public boolean isValid(EObject eObject, Adapter object)
     {
-      return cdoIDs.contains(((InternalCDOObject)eObject).cdoID());
+      return ids.contains(((InternalCDOObject)eObject).cdoID());
     }
 
     public Set<CDOID> getCdoIDs()
     {
-      return cdoIDs;
+      return ids;
     }
   }
 }

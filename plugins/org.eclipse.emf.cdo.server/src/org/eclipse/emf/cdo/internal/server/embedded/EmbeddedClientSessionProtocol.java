@@ -277,7 +277,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
   }
 
-  public void changeSubscription(int viewID, List<CDOID> cdoIDs, boolean subscribeMode, boolean clear)
+  public void changeSubscription(int viewID, List<CDOID> ids, boolean subscribeMode, boolean clear)
   {
     throw new UnsupportedOperationException();
   }

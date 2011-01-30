@@ -41,8 +41,8 @@ public class Bugzilla_243310_Test extends AbstractCDOTest
     boolean loadOnDemand = false;
 
     CDOTransaction transaction2 = session.openTransaction();
-    CDOID cdoID = CDOUtil.getCDOObject(companyTx1).cdoID();
-    Company companyTx2 = (Company)transaction2.getObject(cdoID, loadOnDemand);
+    CDOID id = CDOUtil.getCDOObject(companyTx1).cdoID();
+    Company companyTx2 = (Company)transaction2.getObject(id, loadOnDemand);
     assertNull(companyTx2);
   }
 }

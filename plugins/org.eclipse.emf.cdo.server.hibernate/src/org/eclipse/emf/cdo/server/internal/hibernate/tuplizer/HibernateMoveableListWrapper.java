@@ -130,10 +130,10 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
     return HibernateUtil.getInstance().getCDORevision((CDOID)o);
   }
 
-  protected List<Object> getObjects(List<?> cdoIDs)
+  protected List<Object> getObjects(List<?> ids)
   {
     List<Object> result = new ArrayList<Object>();
-    for (Object o : cdoIDs)
+    for (Object o : ids)
     {
       result.add(getObject(o));
     }

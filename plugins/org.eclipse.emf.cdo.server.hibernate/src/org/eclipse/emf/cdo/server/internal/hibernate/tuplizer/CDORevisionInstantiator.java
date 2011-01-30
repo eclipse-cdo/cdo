@@ -48,12 +48,12 @@ public class CDORevisionInstantiator implements Instantiator
     return instantiate(null);
   }
 
-  public Object instantiate(Serializable id)
+  public Object instantiate(Serializable key)
   {
     final HibernateStoreAccessor storeAccessor = HibernateThreadContext.getCurrentStoreAccessor();
     HibernateStore store = storeAccessor.getStore();
-    final CDOID cdoID = HibernateUtil.getInstance().createCDOID(classifierRef, id);
-    final InternalCDORevision revision = store.createRevision(eClass, cdoID);
+    final CDOID id = HibernateUtil.getInstance().createCDOID(classifierRef, key);
+    final InternalCDORevision revision = store.createRevision(eClass, id);
     revision.setBranchPoint(storeAccessor.getStore().getMainBranchHead());
     return revision;
   }

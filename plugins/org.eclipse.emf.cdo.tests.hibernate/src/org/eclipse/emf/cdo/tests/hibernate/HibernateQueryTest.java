@@ -276,8 +276,8 @@ public class HibernateQueryTest extends AbstractCDOTest
         final CDOQuery orderQuery = transaction.createQuery("hql",
             "select so from SalesOrder so where so.customer.id=:customerId");
         final CDOObject cdoObject = CDOUtil.getCDOObject(customer);
-        final CDOID cdoID = cdoObject.cdoID();
-        orderQuery.setParameter("customerId", HibernateUtil.getInstance().getIdValue(cdoID));
+        final CDOID id = cdoObject.cdoID();
+        orderQuery.setParameter("customerId", HibernateUtil.getInstance().getIdValue(id));
         final List<SalesOrder> sos = orderQuery.getResult(SalesOrder.class);
         assertEquals(NUM_OF_SALES_ORDERS, sos.size());
         for (SalesOrder so : sos)

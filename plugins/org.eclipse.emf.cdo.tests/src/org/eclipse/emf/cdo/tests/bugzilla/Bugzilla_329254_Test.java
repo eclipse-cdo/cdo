@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
@@ -71,7 +73,7 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
             // ignore all calls before model has been initialized.
             if (modelInitialized)
             {
-              System.err.println("AdjustForCommit entered: " + this);
+              IOUtil.OUT().println("AdjustForCommit entered: " + this);
               if (getTransaction().getSession().getSessionID() == sessionId2)
               {
                 // grant the other session access to enter and
@@ -88,7 +90,7 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
               }
 
               super.adjustForCommit();
-              System.err.println("AdjustForCommit left: " + this);
+              IOUtil.OUT().println("AdjustForCommit left: " + this);
             }
             else
             {
@@ -177,10 +179,9 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     CDOTransaction transaction4 = session2.openTransaction();
     Company company4 = transaction4.getObject(company1);
     company4.setName("company2");
-    transaction4.commit();
+    commitAndSync(transaction4, transaction1);
 
     // check if update arrived.
-    transaction1.waitForUpdate(transaction4.getLastCommitTime(), 2000);
     assertEquals(company4.getName(), company1.getName());
   }
 

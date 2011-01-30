@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.IManyTypeMapper;
@@ -485,7 +486,7 @@ public class ObjyObject
               }
 
               // FeatureMapEntry is a presistent class.
-              ObjyFeatureMapEntry featureMapEntry = new ObjyFeatureMapEntry(entryFeature.getName(), oid, objectId);
+              ObjyFeatureMapEntry featureMapEntry = new ObjyFeatureMapEntry(entryFeature.getFeatureID(), oid, objectId);
 
               // this.cluster(featureMapEntry);
               values[i] = featureMapEntry;
@@ -681,15 +682,13 @@ public class ObjyObject
                 }
                 else
                 {
-                  id = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
+                  id = OBJYCDOIDUtil.getCDOID(oid);
                 }
 
-                throw new UnsupportedOperationException("FIXME");
-
-                // FIXME Uncomment the following 3 lines:
-                // FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, id);
-                // list.add(entry);
-                // refClassObject = null;
+                EStructuralFeature entryFeature = eClass.getEStructuralFeature(mapEntry.getTagId());
+                FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, id);
+                list.add(entry);
+                refClassObject = null;
               }
               else
               {
@@ -738,6 +737,7 @@ public class ObjyObject
       int chunkSize)
   {
     List<Object> results = new ArrayList<Object>();
+    EClass eClass = feature.getEContainingClass();
 
     if (TRACER_DEBUG.isEnabled())
     {
@@ -791,14 +791,12 @@ public class ObjyObject
             }
             else
             {
-              id = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
+              id = OBJYCDOIDUtil.getCDOID(oid);
             }
 
-            throw new UnsupportedOperationException("FIXME");
-
-            // FIXME Uncomment the following 2 lines:
-            // FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, id);
-            // results.add(entry);
+            EStructuralFeature entryFeature = eClass.getEStructuralFeature(mapEntry.getTagId());
+            FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, id);
+            results.add(entry);
           }
         }
       }

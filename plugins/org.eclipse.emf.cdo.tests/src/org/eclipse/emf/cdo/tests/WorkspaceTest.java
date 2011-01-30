@@ -1029,6 +1029,7 @@ public class WorkspaceTest extends AbstractCDOTest
 
   public void testUpdateAfterMasterDetach() throws Exception
   {
+    skipConfig(LEGACY);
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
 

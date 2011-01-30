@@ -248,9 +248,9 @@ public abstract class OfflineExample
     return Net4jUtil.getConnector(container, TRANSPORT_TYPE, description);
   }
 
-  protected IRepositorySynchronizer createRepositorySynchronizer(IConnector connector, String repositoryName)
+  protected IRepositorySynchronizer createRepositorySynchronizer(String connectorDescription, String repositoryName)
   {
-    CDOSessionConfigurationFactory factory = createSessionConfigurationFactory(connector, repositoryName);
+    CDOSessionConfigurationFactory factory = createSessionConfigurationFactory(connectorDescription, repositoryName);
 
     IRepositorySynchronizer synchronizer = CDOServerUtil.createRepositorySynchronizer(factory);
     synchronizer.setRetryInterval(2);
@@ -260,13 +260,14 @@ public abstract class OfflineExample
     return synchronizer;
   }
 
-  protected CDOSessionConfigurationFactory createSessionConfigurationFactory(final IConnector connector,
+  protected CDOSessionConfigurationFactory createSessionConfigurationFactory(final String connectorDescription,
       final String repositoryName)
   {
     return new CDOSessionConfigurationFactory()
     {
       public CDOSessionConfiguration createSessionConfiguration()
       {
+        IConnector connector = createConnector("localhost:" + Master.PORT);
         return OfflineExample.this.createSessionConfiguration(connector, repositoryName);
       }
     };
@@ -332,8 +333,7 @@ public abstract class OfflineExample
     @Override
     protected IRepository createRepository(IStore store, Map<String, String> props)
     {
-      IConnector connector = createConnector("localhost:" + Master.PORT);
-      IRepositorySynchronizer synchronizer = createRepositorySynchronizer(connector, Master.NAME);
+      IRepositorySynchronizer synchronizer = createRepositorySynchronizer("localhost:" + Master.PORT, Master.NAME);
       return CDOServerUtil.createOfflineClone(name, store, props, synchronizer);
     }
 

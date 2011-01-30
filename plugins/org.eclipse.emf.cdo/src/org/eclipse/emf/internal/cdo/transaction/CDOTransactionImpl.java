@@ -552,12 +552,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
       if (!targetGoalDelta.isEmpty())
       {
-        CDORevisionDelta oldDelta = revisionDeltas.get(id);
-        if (oldDelta == null) // != null means there was already a change ==> this is a conflict resolution!
-        {
-          revisionDeltas.put(id, targetGoalDelta);
-        }
-
+        revisionDeltas.put(id, targetGoalDelta);
         notificationDeltas.add(targetGoalDelta);
         result.getChangedObjects().add(targetGoalDelta);
 

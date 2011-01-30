@@ -1210,10 +1210,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       cleanObject(internalDirtyObject, getRevision(entryDirtyObject.getKey(), true));
     }
 
+    CDOObjectMerger merger = new CDOObjectMerger();
     for (InternalCDOSavepoint itrSavepoint = firstSavepoint; itrSavepoint != savepoint; itrSavepoint = itrSavepoint
         .getNextSavepoint())
     {
-      CDOObjectMerger merger = new CDOObjectMerger();
       for (CDORevisionDelta delta : itrSavepoint.getRevisionDeltas().values())
       {
         if (delta.getID().isTemporary() && !idsOfNewObjectWithDeltas.contains(delta.getID())

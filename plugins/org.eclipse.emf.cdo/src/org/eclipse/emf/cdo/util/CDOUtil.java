@@ -462,7 +462,7 @@ public final class CDOUtil
 
   /**
    * @since 3.0
-   * @deprecated as of 4.0. Use CDOView.isInvalidationRunnerActive()
+   * @deprecated As of 4.0 use CDOView.isInvalidationRunnerActive()
    */
   @Deprecated
   public static boolean isInvalidationRunnerActive()

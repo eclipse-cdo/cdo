@@ -55,6 +55,14 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+         
+   <includes
+         id="org.eclipse.emf.cdo.dawn.ecore.editor"
+         version="0.0.0"/>
+
+  <!-- <includes
+         id="org.eclipse.emf.cdo.dawn.ecoretools"
+         version="0.0.0"/>-->
 
    <plugin
          id="org.apache.commons.lang.source"

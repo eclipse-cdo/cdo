@@ -15,14 +15,14 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 
 import com.objy.as.app.Class_Object;
 import com.objy.as.app.Proposed_Class;
-import com.objy.as.app.String_Value;
 import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Module;
+import com.objy.as.app.ooBaseType;
 import com.objy.db.app.ooId;
 
 public class ObjyFeatureMapEntry
 {
-  protected String tagName;
+  protected int tagId;
 
   protected ooId object;
 
@@ -30,7 +30,7 @@ public class ObjyFeatureMapEntry
 
   public static final String MapEntryClassName = "ObjyFeatureMapEntry";
 
-  public static final String EntryName = "tagName";
+  public static final String EntryName = "tagId";
 
   public static final String EntryObject = "object";
 
@@ -43,11 +43,11 @@ public class ObjyFeatureMapEntry
       Proposed_Class B = top_mod.propose_new_class(MapEntryClassName);
       B.add_base_class(com.objy.as.app.d_Module.LAST, com.objy.as.app.d_Access_Kind.d_PUBLIC, "ooObj");
 
-      B.add_embedded_class_attribute(com.objy.as.app.d_Module.LAST, // Access kind
+      B.add_basic_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
           ObjyFeatureMapEntry.EntryName, // Attribute name
           1, // # elements in fixed-size array
-          "ooUtf8String"); // type
+          ooBaseType.ooINT32); // type
       B.add_ref_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
           ObjyFeatureMapEntry.EntryObject, // Attribute name
           1, // # elements in fixed-size array
@@ -61,49 +61,35 @@ public class ObjyFeatureMapEntry
   /****
    * Factory.
    * 
-   * @param tagName
+   * @param tagId
    * @param oid
    */
-  public ObjyFeatureMapEntry(String tagName, ooId oid, ooId near)
+  public ObjyFeatureMapEntry(int tagId, ooId oid, ooId near)
   {
-    this.tagName = tagName;
+    this.tagId = tagId;
     object = oid;
 
     classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(MapEntryClassName).getASClass(), near,
         false);
-    String_Value stringValue = classObject.nget_string(EntryName);
-    stringValue.update();
-    String newValue = this.tagName;
-    if (newValue == null)
-    {
-      newValue = "";
-    }
-    stringValue.set(newValue);
 
     classObject.nset_ooId(EntryObject, object);
-
   }
 
   public ObjyFeatureMapEntry(Class_Object classObject)
   {
     this.classObject = classObject;
-
-    String_Value value = classObject.nget_string(EntryName);
-    // for objy10.0 -> this.tagName = (value == null || value.toString() == null || value.toString().isEmpty()) ? null :
-    // value.toString();
-    tagName = value == null || value.toString() == null ? null : value.toString();
-
+    tagId = classObject.nget_numeric(EntryName).intValue();
     object = classObject.nget_ooId(EntryObject);
   }
 
-  public String getTagName()
+  public int getTagId()
   {
-    return tagName;
+    return tagId;
   }
 
-  public void setTagName(String tagName)
+  public void setTagId(int tagId)
   {
-    this.tagName = tagName;
+    this.tagId = tagId;
   }
 
   public ooId getObject()

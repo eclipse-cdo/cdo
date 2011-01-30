@@ -671,23 +671,23 @@ public class ObjyObject
               {
                 ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
                 ooId oid = mapEntry.getObject();
-                CDOID cdoId = null;
+                CDOID id = null;
                 Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
                 if (refClassObject.type_of().name().equals(ObjyProxy.className))
                 {
                   // System.out.println("OBJY: Got proxy: " + refClassObject.objectID().getStoreString());
                   ObjyProxy proxyObject = new ObjyProxy(refClassObject);
-                  cdoId = OBJYCDOIDUtil.createCDIDExternal(proxyObject);
+                  id = OBJYCDOIDUtil.createCDIDExternal(proxyObject);
                 }
                 else
                 {
-                  cdoId = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
+                  id = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
                 }
 
                 throw new UnsupportedOperationException("FIXME");
 
                 // FIXME Uncomment the following 3 lines:
-                // FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
+                // FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, id);
                 // list.add(entry);
                 // refClassObject = null;
               }
@@ -782,22 +782,22 @@ public class ObjyObject
           {
             ObjyFeatureMapEntry mapEntry = (ObjyFeatureMapEntry)objects[i];
             ooId oid = mapEntry.getObject();
-            CDOID cdoId = null;
+            CDOID id = null;
             Class_Object refClassObject = Class_Object.class_object_from_oid(oid);
             if (refClassObject.type_of().name().equals(ObjyProxy.className))
             {
               ObjyProxy proxyObject = new ObjyProxy(refClassObject);
-              cdoId = OBJYCDOIDUtil.createCDIDExternal(proxyObject);
+              id = OBJYCDOIDUtil.createCDIDExternal(proxyObject);
             }
             else
             {
-              cdoId = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
+              id = OBJYCDOIDUtil.getCDOID((ooId)objects[i]);
             }
 
             throw new UnsupportedOperationException("FIXME");
 
             // FIXME Uncomment the following 2 lines:
-            // FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, cdoId);
+            // FeatureMap.Entry entry = CDORevisionUtil.createFeatureMapEntry(entryFeature, id);
             // results.add(entry);
           }
         }

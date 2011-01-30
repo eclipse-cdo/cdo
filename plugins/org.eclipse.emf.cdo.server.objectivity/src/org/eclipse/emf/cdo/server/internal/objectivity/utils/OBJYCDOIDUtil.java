@@ -88,13 +88,13 @@ public class OBJYCDOIDUtil
   }
 
   // 2.0 code
-  public static boolean isValidObjyId(CDOID cdoId)
+  public static boolean isValidObjyId(CDOID id)
   {
-    if (cdoId instanceof CDOIDObject)
+    if (id instanceof CDOIDObject)
     {
       try
       {
-        return CDOIDUtil.getLong(cdoId) > 1717828929;
+        return CDOIDUtil.getLong(id) > 1717828929;
       }
       catch (Exception ignore)
       {
@@ -123,15 +123,15 @@ public class OBJYCDOIDUtil
     return new com.objy.pm.ooId(DB, OC, page, slot, 0);
   }
 
-  public static ooId getooId(CDOID cdoId)
+  public static ooId getooId(CDOID id)
   {
-    long longCdoID = CDOIDUtil.getLong(cdoId);
+    long longCdoID = CDOIDUtil.getLong(id);
     return getooId(longCdoID);
   }
 
-  public static ooId getContainerId(CDOID cdoId)
+  public static ooId getContainerId(CDOID id)
   {
-    long longCdoID = org.eclipse.emf.cdo.common.id.CDOIDUtil.getLong(cdoId);
+    long longCdoID = org.eclipse.emf.cdo.common.id.CDOIDUtil.getLong(id);
     return getContainerId(longCdoID);
   }
 

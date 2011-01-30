@@ -496,9 +496,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   /**
    * return an ObjyObject that represent the CDOID.
    */
-  public ObjyObject getObject(CDOID cdoId)
+  public ObjyObject getObject(CDOID id)
   {
-    return objySession.getObjectManager().getObject(cdoId);
+    return objySession.getObjectManager().getObject(id);
   }
 
   private void lockContainers(Set<ooId> containerToLocks)

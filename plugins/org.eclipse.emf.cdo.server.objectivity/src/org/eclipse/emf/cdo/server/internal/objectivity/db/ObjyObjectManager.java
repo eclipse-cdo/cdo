@@ -139,17 +139,17 @@ public class ObjyObjectManager
   }
 
   /**
-   * return an ObjyObject based on the cdoId passed. usually this is used for existing object when trying to modify
+   * return an ObjyObject based on the id passed. usually this is used for existing object when trying to modify
    * them.
    */
-  public ObjyObject getObject(CDOID cdoId)
+  public ObjyObject getObject(CDOID id)
   {
-    if (cdoId == null)
+    if (id == null)
     {
       return null;
     }
 
-    ooId oid = OBJYCDOIDUtil.getooId(cdoId);
+    ooId oid = OBJYCDOIDUtil.getooId(id);
     return getObject(oid);
   }
 

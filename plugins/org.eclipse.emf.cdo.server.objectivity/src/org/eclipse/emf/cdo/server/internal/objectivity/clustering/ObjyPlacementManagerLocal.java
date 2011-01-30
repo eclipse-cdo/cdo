@@ -182,11 +182,11 @@ public class ObjyPlacementManagerLocal
   {
     ooId nearObject = null;
     // find the new object which is either a container or a resource.
-    Object cdoId = revision.getContainerID();
+    Object id = revision.getContainerID();
 
-    if (cdoId instanceof CDOID && (CDOID)cdoId != CDOID.NULL)
+    if (id instanceof CDOID && (CDOID)id != CDOID.NULL)
     {
-      nearObject = getOidFromCDOID((CDOID)cdoId);
+      nearObject = getOidFromCDOID((CDOID)id);
     }
     else
     {
@@ -197,21 +197,21 @@ public class ObjyPlacementManagerLocal
     return nearObject;
   }
 
-  protected ooId getOidFromCDOID(CDOID cdoId)
+  protected ooId getOidFromCDOID(CDOID id)
   {
     ooId oid = null;
 
-    // if (OBJYCDOIDUtil.isValidObjyId(cdoId))
-    // oid = OBJYCDOIDUtil.getooId(cdoId);
+    // if (OBJYCDOIDUtil.isValidObjyId(id))
+    // oid = OBJYCDOIDUtil.getooId(id);
 
-    if (cdoId instanceof AbstractCDOIDLong)
+    if (id instanceof AbstractCDOIDLong)
     {
-      oid = OBJYCDOIDUtil.getooId(cdoId);
+      oid = OBJYCDOIDUtil.getooId(id);
     }
-    else if (cdoId instanceof CDOIDTemp)
+    else if (id instanceof CDOIDTemp)
     {
       // see if we've seen it before
-      CDOID nearId = idMapper.get(cdoId);
+      CDOID nearId = idMapper.get(id);
       if (nearId != null)
       {
         oid = OBJYCDOIDUtil.getooId(nearId);
@@ -219,7 +219,7 @@ public class ObjyPlacementManagerLocal
       else
       {
         // create that object since it wasn't created and mapped yet.
-        InternalCDORevision containerRevision = newObjectsMap.get(cdoId);
+        InternalCDORevision containerRevision = newObjectsMap.get(id);
         if (containerRevision != null)
         {
           oid = createObjectAndAddToMapping(containerRevision).ooId();

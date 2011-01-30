@@ -128,14 +128,12 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     Company company1 = getModel1Factory().createCompany();
     company1.setName("company1");
     resource.getContents().add(company1);
-    transaction1.commit();
+    commitAndSync(transaction1, transaction2, transaction3);
 
     // do concurrent changes on company to produce an error.
-    transaction2.waitForUpdate(transaction1.getLastCommitTime());
     Company company2 = transaction2.getObject(company1);
     company2.setStreet("street1");
 
-    transaction3.waitForUpdate(transaction1.getLastCommitTime());
     Company company3 = transaction3.getObject(company1);
     company3.setCity("city1");
 
@@ -174,8 +172,11 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     commitThread1.start();
     commitThread2.start();
 
-    // do another commit.
     sleep(2000);
+    commitThread1.join(DEFAULT_TIMEOUT);
+    commitThread2.join(DEFAULT_TIMEOUT);
+
+    // do another commit.
     CDOTransaction transaction4 = session2.openTransaction();
     Company company4 = transaction4.getObject(company1);
     company4.setName("company2");

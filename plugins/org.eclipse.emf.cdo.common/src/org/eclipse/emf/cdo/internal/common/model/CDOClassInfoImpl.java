@@ -16,10 +16,12 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,6 +29,8 @@ import java.util.List;
  */
 public class CDOClassInfoImpl extends AdapterImpl implements CDOClassInfo
 {
+  private static final int NOT_MAPPED = -1;
+
   private EStructuralFeature[] allPersistentFeatures;
 
   private int[] featureIDMappings;
@@ -88,25 +92,31 @@ public class CDOClassInfoImpl extends AdapterImpl implements CDOClassInfo
 
   public int getFeatureIndex(int featureID)
   {
-    return featureIDMappings[featureID];
+    int index = featureIDMappings[featureID];
+    if (index == NOT_MAPPED)
+    {
+      throw new IllegalArgumentException("Feature not mapped: " + getEClass().getEStructuralFeature(featureID)); //$NON-NLS-1$
+    }
+
+    return index;
   }
 
   private void init(EClass eClass)
   {
-    int maxID = 0;
-    List<EStructuralFeature> features = new ArrayList<EStructuralFeature>();
-    for (EStructuralFeature feature : eClass.getEAllStructuralFeatures())
+    List<EStructuralFeature> persistentFeatures = new ArrayList<EStructuralFeature>();
+    EList<EStructuralFeature> allFeatures = eClass.getEAllStructuralFeatures();
+    for (EStructuralFeature feature : allFeatures)
     {
       if (EMFUtil.isPersistent(feature))
       {
-        features.add(feature);
-        int featureID = eClass.getFeatureID(feature);
-        maxID = Math.max(maxID, featureID);
+        persistentFeatures.add(feature);
       }
     }
 
-    allPersistentFeatures = features.toArray(new EStructuralFeature[features.size()]);
-    featureIDMappings = new int[maxID + 1];
+    allPersistentFeatures = persistentFeatures.toArray(new EStructuralFeature[persistentFeatures.size()]);
+    featureIDMappings = new int[allFeatures.size()];
+    Arrays.fill(featureIDMappings, NOT_MAPPED);
+
     for (int i = 0; i < allPersistentFeatures.length; i++)
     {
       EStructuralFeature feature = allPersistentFeatures[i];

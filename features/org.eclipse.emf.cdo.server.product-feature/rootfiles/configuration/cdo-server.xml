@@ -16,6 +16,7 @@
     <property name="supportingAudits" value="true"/>
     <property name="supportingBranches" value="true"/>
     <property name="supportingEcore" value="true"/>
+    <property name="ensureReferentialIntegrity" value="false"/>
 
     <!--
     <userManager type="file" description="_database/repo1.users"/>

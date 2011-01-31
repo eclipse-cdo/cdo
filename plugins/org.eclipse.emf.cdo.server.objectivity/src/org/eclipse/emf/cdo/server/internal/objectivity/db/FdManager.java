@@ -322,6 +322,7 @@ public class FdManager
 
   // This is a temp solution to avoid unloaded schema.
   // We'll explicitly load the schema after creating the FD
+  @SuppressWarnings("unused")
   private boolean loadSchema()
   {
     boolean bRet = false;

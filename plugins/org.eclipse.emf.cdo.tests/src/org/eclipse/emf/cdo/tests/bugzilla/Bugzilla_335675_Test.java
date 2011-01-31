@@ -70,8 +70,8 @@ public class Bugzilla_335675_Test extends AbstractCDOTest
     }
 
     {
-      CDOSession openSession = openSession();
-      CDOTransaction transaction = openSession.openTransaction();
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("test");
 
       classA = (EClass)pkg.getEClassifier("A");
@@ -85,7 +85,7 @@ public class Bugzilla_335675_Test extends AbstractCDOTest
 
       resource.getContents().add(instanceA);
       transaction.commit();
-      openSession.close();
+      session.close();
     }
 
     {
@@ -124,8 +124,8 @@ public class Bugzilla_335675_Test extends AbstractCDOTest
     assertEquals(true, descriptionAttr.isTransient());
 
     {
-      CDOSession openSession = openSession();
-      CDOTransaction transaction = openSession.openTransaction();
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource("test");
 
       Product1 product = Model1Factory.eINSTANCE.createProduct1();
@@ -142,7 +142,7 @@ public class Bugzilla_335675_Test extends AbstractCDOTest
       detail.setProduct(product);
 
       transaction.commit();
-      openSession.close();
+      session.close();
     }
 
     {

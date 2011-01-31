@@ -13,6 +13,7 @@
 	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="sources" />
 	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="sources" />
 
+	<!--
 	<rm:locator pattern="^org\.eclipse\.emf\.(?:compare|transaction|validation|workspace)(?:\..+)?$" searchPathRef="modeling" />
 	<rm:locator pattern="^org\.eclipse\.emf\.mwe2?(?:\..+)?$" searchPathRef="mwe" />
 	<rm:locator pattern="^org\.eclipse\.emf\.teneo(?:\..+)?$" searchPathRef="teneo" />
@@ -42,12 +43,14 @@
 	<rm:locator pattern="^com\.mysql\.jdbc$" searchPathRef="net4j.plus" />
 	<rm:locator pattern="^org\.hsqldb$" searchPathRef="net4j.plus" />
 	<rm:locator pattern="^org\.postgresql\.jdbc3$" searchPathRef="net4j.plus" />
+	-->
 
 	<!-- consuming an older hibernate from an alternative location per Martin Taal's request -->
+	<!--
 	<rm:locator pattern="^org\.hibernate$" searchPathRef="elver.org" />
 	<rm:locator pattern="^javax\.persistence$" searchPathRef="elver.org" />
 	<rm:locator pattern="^org\.dom4j$" searchPathRef="elver.org" />
-
+	-->
 	<rm:locator searchPathRef="platform" />
 
 	<rm:searchPath name="releng">
@@ -80,25 +83,19 @@
 		</rm:provider>
 	</rm:searchPath>
 
-	<rm:searchPath name="modeling">
+	<rm:searchPath name="platform">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="mwe">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emft/mwe/updates">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="teneo">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<!-- rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/milestones" -->
@@ -107,72 +104,48 @@
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="emf">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/emf/updates/2.7milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="gef">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/tools/gef/updates/releases">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="gmf">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/gmp/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="ocl">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/mdt/ocl/updates/milestones/3.1.0">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="qvtoml">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/m2m/qvtoml/updates/releases">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="xpand">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/m2t/xpand/updates">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="swtbot">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/technology/swtbot/helios/dev-build/update-site">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="orbit">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/tools/orbit/downloads/drops/{1}/repository">
@@ -180,9 +153,6 @@
 				<bc:propertyRef key="orbit.version" />
 			</rm:uri>
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="elver.org">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/interim">
@@ -193,16 +163,10 @@
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="http://www.elver.org/eclipse/update_1.1.2" />
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="net4j.plus">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="http://net4j.sourceforge.net/update" />
 		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="platform">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/eclipse/updates/3.7milestones">

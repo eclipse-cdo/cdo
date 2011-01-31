@@ -33,6 +33,10 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
+   <includes
+         id="org.eclipse.emf.cdo.tests.source"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.cdo.tests"
          download-size="0"
@@ -61,13 +65,6 @@
 
    <plugin
          id="org.eclipse.emf.cdo.tests.objectivity"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.dawn.tests"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -128,7 +125,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <includes id="org.eclipse.emf.cdo.tests.source" version="0.0.0"/>
 
 </feature>

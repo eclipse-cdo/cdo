@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.examples.company.Customer;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
@@ -92,10 +93,16 @@ public abstract class OfflineExample
   public static IManagedContainer createContainer()
   {
     IManagedContainer container = ContainerUtil.createContainer();
+
     Net4jUtil.prepareContainer(container); // Register Net4j factories
     TCPUtil.prepareContainer(container); // Register TCP factories
+
     CDONet4jUtil.prepareContainer(container); // Register CDO client factories
     CDONet4jServerUtil.prepareContainer(container); // Register CDO server factories
+
+    container.registerFactory(new CDOServerBrowser.ContainerBased.Factory(container));
+    CDODBUtil.prepareContainer(container); // Register DBBrowserPage.Factory
+
     container.activate();
     return container;
   }
@@ -295,6 +302,8 @@ public abstract class OfflineExample
 
     public Master()
     {
+      container.getElement("org.eclipse.emf.cdo.server.browsers", "default", "7777"); //$NON-NLS-1$ //$NON-NLS-2$
+
       name = NAME;
       port = PORT;
     }
@@ -326,6 +335,8 @@ public abstract class OfflineExample
 
     public Clone()
     {
+      container.getElement("org.eclipse.emf.cdo.server.browsers", "default", "7778"); //$NON-NLS-1$ //$NON-NLS-2$
+
       name = NAME;
       port = PORT;
     }

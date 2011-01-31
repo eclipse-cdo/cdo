@@ -446,14 +446,22 @@ public class CDOServerBrowser extends Worker
 
       public static final String TYPE = "default";
 
+      private IContainer<?> container;
+
       public Factory()
       {
+        this(IPluginContainer.INSTANCE);
+      }
+
+      public Factory(IContainer<?> container)
+      {
         super(PRODUCT_GROUP, TYPE);
+        this.container = container;
       }
 
       public CDOServerBrowser.ContainerBased create(String description) throws ProductCreationException
       {
-        CDOServerBrowser.ContainerBased browser = new CDOServerBrowser.ContainerBased();
+        CDOServerBrowser.ContainerBased browser = new CDOServerBrowser.ContainerBased(container);
 
         try
         {

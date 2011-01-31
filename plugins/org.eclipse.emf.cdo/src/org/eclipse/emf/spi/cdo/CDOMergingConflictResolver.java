@@ -17,16 +17,16 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 
+import org.eclipse.net4j.util.CheckUtil;
+
+import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Eike Stepper
@@ -57,81 +57,44 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     CDOChangeSet source = getRemoteChangeSet();
     CDOChangeSetData result = merger.merge(target, source);
 
-    final InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
-    final InternalCDOSession session = transaction.getSession();
-    final InternalCDORevisionManager revisionManager = session.getRevisionManager();
+    InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
+    InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
+    Map<CDOID, CDORevisionDelta> localDeltas = transaction.getLastSavepoint().getRevisionDeltas();
 
-    final CDORevisionProvider ancestorProvider = new CDORevisionProvider()
+    for (CDORevisionKey key : result.getChangedObjects())
     {
-      public CDORevision getRevision(CDOID id)
-      {
-        CDORevision revision = getCleanRevision(transaction, id);
-        if (revision == null)
-        {
-          revision = revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
-        }
-
-        return revision;
-      }
-
-      private CDORevision getCleanRevision(InternalCDOTransaction transaction, CDOID id)
-      {
-        CDOObject object = transaction.getDirtyObjects().get(id);
-        if (object == null)
-        {
-          object = transaction.getDetachedObjects().get(id);
-        }
-
-        if (object != null)
-        {
-          InternalCDORevision revision = transaction.getCleanRevisions().get(object);
-          if (revision != null)
-          {
-            return revision;
-          }
-        }
-
-        return null;
-      }
-    };
-
-    final CDORevisionProvider targetProvider = new CDORevisionProvider()
-    {
-      public CDORevision getRevision(CDOID id)
-      {
-        CDOObject object = transaction.getObject(id, false);
-        if (object != null)
-        {
-          return object.cdoRevision();
-        }
-
-        return ancestorProvider.getRevision(id);
-      }
-    };
-
-    CDOChangeSetData applied = transaction.applyChangeSetData(result, ancestorProvider, targetProvider, transaction)
-        .getElement1();
-
-    ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = transaction.getLastSavepoint().getRevisionDeltas();
-    for (CDORevisionKey key : applied.getChangedObjects())
-    {
-      CDOID id = key.getID();
+      InternalCDORevisionDelta delta = (InternalCDORevisionDelta)key;
+      CDOID id = delta.getID();
       InternalCDOObject object = (InternalCDOObject)transaction.getObject(id, false);
       if (object != null)
       {
-        object.cdoInternalSetState(CDOState.DIRTY);
-        InternalCDORevision revision = object.cdoRevision();
-        int version = revision.getVersion() + 1;
-        revision.setVersion(version);
-
-        InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(id);
-        if (revisionDelta != null)
+        CDOState state = object.cdoState();
+        if (state == CDOState.CLEAN || state == CDOState.PROXY)
         {
-          revisionDelta.setVersion(version);
-          if (revisionDelta.getTarget() != null)
-          {
-            revisionDelta.setTarget(CDOBranchUtil.copyBranchVersion(revision));
-          }
+          InternalCDORevision revision = revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED,
+              CDORevision.DEPTH_NONE, false);
+          CheckUtil.checkState(revision, "revision");
+
+          object.cdoInternalSetRevision(revision);
+          object.cdoInternalSetState(CDOState.CLEAN);
+        }
+        else if (state == CDOState.CONFLICT)
+        {
+          int newVersion = delta.getVersion() + 1;
+
+          InternalCDORevision revision = transaction.getCleanRevisions().get(object).copy();
+          revision.setVersion(newVersion);
+          delta.apply(revision);
+
+          object.cdoInternalSetRevision(revision);
+          object.cdoInternalSetState(CDOState.DIRTY);
+
+          InternalCDORevisionDelta localDelta = (InternalCDORevisionDelta)localDeltas.get(id);
+          localDelta.setVersion(newVersion);
+        }
+        else
+        {
+          throw new IllegalStateException("Unexpected objects state: " + state);
         }
       }
     }

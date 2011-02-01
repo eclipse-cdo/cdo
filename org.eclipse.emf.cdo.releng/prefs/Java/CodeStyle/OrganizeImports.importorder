@@ -1,0 +1,12 @@
+#Organize Import Order
+#Sun Jan 11 10:46:09 CET 2009
+9=java
+8=javax
+7=org
+6=com
+5=org.eclipse
+4=org.eclipse.emf
+3=org.eclipse.internal.net4j
+2=org.eclipse.net4j
+1=org.eclipse.emf.internal.cdo
+0=org.eclipse.emf.cdo

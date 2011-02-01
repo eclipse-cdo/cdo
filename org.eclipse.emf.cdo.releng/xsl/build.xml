@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<project name="Test" default="default">
+
+	<target name="default" >
+		<xslt style="content2xml.xsl" in="content.xml" out="index.xml" />
+	</target>
+
+</project>

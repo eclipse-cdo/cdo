@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Shell;
 @Deprecated
 public class AuditScale extends Composite
 {
-  private int orientation;
+  private int direction;
 
   private int scaleStyle;
 
@@ -39,12 +39,15 @@ public class AuditScale extends Composite
     setLayout(UIUtil.createGridLayout(1));
 
     this.scaleStyle = scaleStyle;
-    updateOrientation();
+    updateDirection();
   }
 
-  public int getOrientation()
+  /**
+   * @since 4.0
+   */
+  public int getDirection()
   {
-    return orientation;
+    return direction;
   }
 
   public int getScaleStyle()
@@ -66,36 +69,36 @@ public class AuditScale extends Composite
   public void setBounds(int x, int y, int width, int height)
   {
     super.setBounds(x, y, width, height);
-    updateOrientation();
+    updateDirection();
   }
 
-  private void updateOrientation()
+  private void updateDirection()
   {
-    int newOrientation;
+    int newDirection;
     if ((scaleStyle & SWT.HORIZONTAL) != 0)
     {
-      newOrientation = SWT.HORIZONTAL;
+      newDirection = SWT.HORIZONTAL;
     }
     else if ((scaleStyle & SWT.VERTICAL) != 0)
     {
-      newOrientation = SWT.VERTICAL;
+      newDirection = SWT.VERTICAL;
     }
     else
     {
       Rectangle clientArea = getClientArea();
       if (clientArea.height > clientArea.width)
       {
-        newOrientation = SWT.VERTICAL;
+        newDirection = SWT.VERTICAL;
       }
       else
       {
-        newOrientation = SWT.HORIZONTAL;
+        newDirection = SWT.HORIZONTAL;
       }
     }
 
-    if (orientation != newOrientation)
+    if (direction != newDirection)
     {
-      orientation = newOrientation;
+      direction = newDirection;
       if (scale != null)
       {
         scale.dispose();
@@ -105,7 +108,7 @@ public class AuditScale extends Composite
 
     if (scale == null)
     {
-      int style = scaleStyle & ~(SWT.HORIZONTAL | SWT.VERTICAL) | orientation;
+      int style = scaleStyle & ~(SWT.HORIZONTAL | SWT.VERTICAL) | direction;
       scale = createScale(style);
       scale.setLayoutData(UIUtil.createGridData());
     }

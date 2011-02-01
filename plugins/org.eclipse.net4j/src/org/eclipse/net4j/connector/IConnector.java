@@ -55,7 +55,7 @@ public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
   public String getURL();
 
   /**
-   * Returns the current state of this onnector.
+   * Returns the current state of this connector.
    */
   public ConnectorState getState();
 

@@ -9,5 +9,6 @@ Require-Bundle: org.eclipse.emf.cdo.dawn;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.cdo.dawn.ui;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.cdo.dawn.util;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.cdo.ui;bundle-version="[4.0.0,5.0.0)"
-Import-Package: org.eclipse.emf.ecore.presentation
+Import-Package: org.eclipse.emf.ecore.presentation;version="[2.4.0,3.0.0)"
 Bundle-Vendor: %providerName
+Export-Package: org.eclipse.emf.cdo.dawn.ecore.presentation;version="1.0.0";x-internal:=true

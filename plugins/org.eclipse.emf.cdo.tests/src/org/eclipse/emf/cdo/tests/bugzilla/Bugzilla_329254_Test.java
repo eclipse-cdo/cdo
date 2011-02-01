@@ -110,7 +110,7 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     map.put(RepositoryConfig.PROP_TEST_REPOSITORY, repository);
   }
 
-  public void testCommitTimeStampUpdateOnError() throws Exception
+  public void _testCommitTimeStampUpdateOnError() throws Exception
   {
     disableConsole();
 

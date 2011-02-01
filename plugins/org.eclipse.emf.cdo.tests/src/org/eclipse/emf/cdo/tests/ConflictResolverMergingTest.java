@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 /**
  * @author Simon McDuff
@@ -133,9 +132,10 @@ public class ConflictResolverMergingTest extends ConflictResolverTest
     assertEquals(CDOUtil.getCDOObject(s1).cdoID(), CDOUtil.getCDOObject(list.get(1)).cdoID());
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   protected CDOConflictResolver createConflictResolver()
   {
-    return new CDOMergingConflictResolver();
+    return new org.eclipse.emf.spi.cdo.CDOMergingConflictResolver();
   }
 }

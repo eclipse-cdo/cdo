@@ -31,7 +31,9 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  * @since 4.0
+ * @deprecated This conflict resolver is still under development. It's not safe to use it.
  */
+@Deprecated
 public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolver
 {
   private CDOMerger merger;

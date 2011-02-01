@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -36,7 +35,7 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 
 import java.util.Collections;
 
-public class DawnEcoreModelWizard extends EcoreModelWizard implements INewWizard
+public class DawnEcoreModelWizard extends EcoreModelWizard
 {
   private DawnCreateNewResourceWizardPage newResourceCreationPage;
 

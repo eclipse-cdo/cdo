@@ -110,14 +110,16 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     map.put(RepositoryConfig.PROP_TEST_REPOSITORY, repository);
   }
 
-  public void _testCommitTimeStampUpdateOnError() throws Exception
+  public void testCommitTimeStampUpdateOnError() throws Exception
   {
     disableConsole();
 
     CDOSession session1 = openSession(REPOSITORY_NAME);
     CDOSession session2 = openSession(REPOSITORY_NAME);
+
     session1.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
     session2.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
+
     sessionId2 = session2.getSessionID();
 
     CDOTransaction transaction1 = session1.openTransaction();
@@ -173,27 +175,29 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     commitThread1.start();
     commitThread2.start();
 
-    sleep(2000);
+    commitThread1.join();
+    commitThread2.join();
+
+    transaction1.waitForUpdate(transaction3.getLastCommitTime(), DEFAULT_TIMEOUT);
+    transaction1.waitForUpdate(transaction2.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     // do another commit.
     CDOTransaction transaction4 = session2.openTransaction();
     Company company4 = transaction4.getObject(company1);
     company4.setName("company2");
-    transaction4.commit();
+    commitAndSync(transaction4, transaction1);
 
     // check if update arrived.
-    transaction1.waitForUpdate(transaction4.getLastCommitTime(), DEFAULT_TIMEOUT_EXPECTED);
     assertEquals(company4.getName(), company1.getName());
 
     // check committing on the other session too.
     CDOTransaction transaction5 = session1.openTransaction();
     Company company5 = transaction5.getObject(company1);
     company5.setName("company3");
-    transaction5.commit();
+    commitAndSync(transaction5, transaction4);
 
     // check if update arrived.
-    transaction2.waitForUpdate(transaction5.getLastCommitTime(), DEFAULT_TIMEOUT_EXPECTED);
-    assertEquals(company5.getName(), company2.getName());
+    assertEquals(company5.getName(), company4.getName());
 
   }
 
@@ -279,8 +283,13 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     commitThread1.start();
     commitThread2.start();
 
+    commitThread1.join();
+    commitThread2.join();
+
+    transaction1.waitForUpdate(transaction3.getLastCommitTime(), DEFAULT_TIMEOUT);
+    transaction1.waitForUpdate(transaction2.getLastCommitTime(), DEFAULT_TIMEOUT);
+
     // do another commit.
-    sleep(2000);
     CDOTransaction transaction4 = session2.openTransaction();
     Company company4a = transaction4.getObject(company1a);
     company4a.setName("companyA3");
@@ -372,8 +381,13 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     commitThread1.start();
     commitThread2.start();
 
+    commitThread1.join();
+    commitThread2.join();
+
+    transaction1.waitForUpdate(transaction3.getLastCommitTime(), DEFAULT_TIMEOUT);
+    transaction1.waitForUpdate(transaction2.getLastCommitTime(), DEFAULT_TIMEOUT);
+
     // do another commit.
-    sleep(2000);
     CDOTransaction transaction4 = session2.openTransaction();
     Company company4 = transaction4.getObject(company1);
     company4.setName("company3");

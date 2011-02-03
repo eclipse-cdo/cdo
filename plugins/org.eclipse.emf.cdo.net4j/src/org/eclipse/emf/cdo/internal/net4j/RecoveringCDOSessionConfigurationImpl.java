@@ -24,13 +24,13 @@ public abstract class RecoveringCDOSessionConfigurationImpl extends CDONet4jSess
 {
   private IManagedContainer container;
 
-  private boolean heartBeatEnabled;
+  private boolean heartBeatEnabled = false;
 
-  private long heartBeatPeriod;
+  private long heartBeatPeriod = 1000L;
 
-  private long heartBeatTimeout;
+  private long heartBeatTimeout = 5000L;
 
-  private long connectorTimeout;
+  private long connectorTimeout = 10000L;
 
   public RecoveringCDOSessionConfigurationImpl(IManagedContainer container)
   {

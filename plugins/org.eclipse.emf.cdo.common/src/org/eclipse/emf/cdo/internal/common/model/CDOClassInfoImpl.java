@@ -79,15 +79,8 @@ public class CDOClassInfoImpl extends AdapterImpl implements CDOClassInfo
 
   public int getFeatureIndex(EStructuralFeature feature)
   {
-    try
-    {
-      int featureID = getEClass().getFeatureID(feature);
-      return getFeatureIndex(featureID);
-    }
-    catch (ArrayIndexOutOfBoundsException ex)
-    {
-      throw new IllegalStateException("Feature not mapped: " + feature, ex); //$NON-NLS-1$
-    }
+    int featureID = getEClass().getFeatureID(feature);
+    return getFeatureIndex(featureID);
   }
 
   public int getFeatureIndex(int featureID)

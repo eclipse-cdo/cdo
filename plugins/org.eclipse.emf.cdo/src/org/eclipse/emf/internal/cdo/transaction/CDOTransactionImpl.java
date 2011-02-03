@@ -2082,11 +2082,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           EReference reference = (EReference)it.feature();
 
+          // Don't touch derived references -- user app might not like this.
+          // And don't touch unchangeable references either.
+          if (reference.isDerived() || !reference.isChangeable())
+          {
+            continue;
+          }
+
           // In the case of DIRTY, we must investigate further: Is the referencer dirty
           // because a reference to the referencedObject was added? Only in this case
           // should we remove it. If this is not the case (i.e. it is dirty in a different
-          // way, we must ignore it.)
-          if (referencer.cdoState() == CDOState.DIRTY)
+          // way), we skip it. (If the reference is not persistent, then this exception
+          // doesn't apply: it must be removed for sure.)
+          //
+          if (referencer.cdoState() == CDOState.DIRTY && EMFUtil.isPersistent(reference))
           {
             InternalCDORevision cleanRevision = getSession().getRevisionManager().getRevisionByVersion(
                 referencer.cdoID(), referencer.cdoRevision(), CDORevision.UNCHUNKED, true);

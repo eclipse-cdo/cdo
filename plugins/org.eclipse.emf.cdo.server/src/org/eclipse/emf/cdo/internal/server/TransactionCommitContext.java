@@ -63,7 +63,6 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -410,7 +409,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
     finally
     {
-      monitor.done();
+      finishMonitor(monitor);
     }
   }
 
@@ -422,37 +421,57 @@ public class TransactionCommitContext implements InternalCommitContext
       accessor.commit(monitor.fork(100));
       updateInfraStructure(monitor.fork());
     }
-    catch (RuntimeException ex)
-    {
-      handleException(ex);
-    }
-    catch (Error ex)
+    catch (Throwable ex)
     {
       handleException(ex);
     }
     finally
     {
-      monitor.done();
+      finishMonitor(monitor);
     }
   }
 
   private void handleException(Throwable ex)
   {
-    OM.LOG.error(ex);
-    String storeClass = transaction.getRepository().getStore().getClass().getSimpleName();
-    rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex)); //$NON-NLS-1$ //$NON-NLS-2$
-
-    if (ex instanceof Error)
+    try
     {
-      throw (Error)ex;
+      OM.LOG.error(ex);
+      String storeClass = transaction.getRepository().getStore().getClass().getSimpleName();
+      rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex)); //$NON-NLS-1$ //$NON-NLS-2$
     }
-
-    if (ex instanceof RuntimeException)
+    catch (Exception ex1)
     {
-      throw (RuntimeException)ex;
-    }
+      if (rollbackMessage == null)
+      {
+        rollbackMessage = ex1.getMessage();
+      }
 
-    throw WrappedException.wrap((Exception)ex);
+      try
+      {
+        OM.LOG.error(ex1);
+      }
+      catch (Exception ignore)
+      {
+      }
+    }
+  }
+
+  private void finishMonitor(OMMonitor monitor)
+  {
+    try
+    {
+      monitor.done();
+    }
+    catch (Exception ex)
+    {
+      try
+      {
+        OM.LOG.warn(ex);
+      }
+      catch (Exception ignore)
+      {
+      }
+    }
   }
 
   private void setTimeStamp(OMMonitor mmonitor)

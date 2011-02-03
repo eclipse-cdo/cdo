@@ -117,6 +117,7 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     CDOSession session1 = openSession(REPOSITORY_NAME);
     CDOSession session2 = openSession(REPOSITORY_NAME);
     session1.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
+    session2.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
     sessionId2 = session2.getSessionID();
 
     CDOTransaction transaction1 = session1.openTransaction();
@@ -173,17 +174,27 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     commitThread2.start();
 
     sleep(2000);
-    commitThread1.join(DEFAULT_TIMEOUT);
-    commitThread2.join(DEFAULT_TIMEOUT);
 
     // do another commit.
     CDOTransaction transaction4 = session2.openTransaction();
     Company company4 = transaction4.getObject(company1);
     company4.setName("company2");
-    commitAndSync(transaction4, transaction1);
+    transaction4.commit();
 
     // check if update arrived.
+    transaction1.waitForUpdate(transaction4.getLastCommitTime(), DEFAULT_TIMEOUT_EXPECTED);
     assertEquals(company4.getName(), company1.getName());
+
+    // check committing on the other session too.
+    CDOTransaction transaction5 = session1.openTransaction();
+    Company company5 = transaction5.getObject(company1);
+    company5.setName("company3");
+    transaction5.commit();
+
+    // check if update arrived.
+    transaction2.waitForUpdate(transaction5.getLastCommitTime(), DEFAULT_TIMEOUT_EXPECTED);
+    assertEquals(company5.getName(), company2.getName());
+
   }
 
   public void testCommitTimeStampUpdateLongRunningCommitSameType() throws Exception

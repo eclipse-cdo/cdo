@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.net4j.CDOSession;
-import org.eclipse.emf.cdo.server.ContainmentCycleDetectedException;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -103,10 +102,15 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
             {
               super.lockObjects();
             }
-            catch (Exception e)
+            catch (RuntimeException ex)
             {
               latch.countDown();
-              throw new RuntimeException(e);
+              throw ex;
+            }
+            catch (Exception ex)
+            {
+              latch.countDown();
+              throw WrappedException.wrap(ex);
             }
 
             msg("Passed lockObjects() " + getTransaction().getSession());
@@ -462,13 +466,10 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
         {
           try
           {
-            Exception ex1 = (Exception)ex.getCause();
-            Exception ex2 = (Exception)ex1.getCause();
-            Exception ex3 = (Exception)ex2.getCause();
-
-            if (ex3 == null || !(ex3 instanceof ContainmentCycleDetectedException))
+            String message = ex.getMessage();
+            if (message == null || !message.contains("ContainmentCycleDetectedException"))
             {
-              throw new RuntimeException(ex1);
+              throw ex;
             }
 
             msg("Finished (Passed) Thread B " + session);

@@ -195,6 +195,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_333950_Test.class);
     testClasses.add(Bugzilla_334608_Test.class);
     testClasses.add(Bugzilla_335675_Test.class);
+    testClasses.add(Bugzilla_335004_Test.class);
 
     // TODO testClasses.add(NonCDOResourceTest.class);
     // TODO testClasses.add(GeneratedEcoreTest.class);

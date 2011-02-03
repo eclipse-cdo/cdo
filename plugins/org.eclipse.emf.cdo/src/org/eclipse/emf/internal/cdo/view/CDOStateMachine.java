@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -38,6 +39,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
@@ -45,9 +47,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -526,7 +530,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
         // Create new revision
         EClass eClass = object.eClass();
-        CDORevisionFactory factory = transaction.getSession().getRevisionManager().getFactory();
+        InternalCDOSession session = transaction.getSession();
+        checkPackageRegistrationProblems(session, eClass);
+
+        CDORevisionFactory factory = session.getRevisionManager().getFactory();
         InternalCDORevision revision = (InternalCDORevision)factory.createRevision(eClass);
         revision.setID(id);
         revision.setBranchPoint(transaction.getBranch().getHead());
@@ -544,6 +551,27 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         InternalCDOObject content = it.next();
         contents.add(content);
         INSTANCE.process(content, CDOEvent.PREPARE, transactionAndContents);
+      }
+    }
+
+    private void checkPackageRegistrationProblems(InternalCDOSession session, EClass eClass)
+    {
+      if (session.options().isGeneratedPackageEmulationEnabled())
+      {
+        // Check that there are no multiple EPackages with the same URI in system. Bug 335004
+        String packageURI = eClass.getEPackage().getNsURI();
+        Object packageObject = session.getPackageRegistry().get(packageURI);
+        if (packageObject instanceof InternalCDOPackageInfo)
+        {
+          packageObject = ((InternalCDOPackageInfo)packageObject).getEPackage(false);
+        }
+
+        if (packageObject instanceof EPackage && packageObject != eClass.getEPackage())
+        {
+          throw new IllegalStateException(MessageFormat.format(
+              "Global EPackage {0} for EClass {1} is different from EPackage found in CDOPackageRegistry",
+              packageURI, eClass));
+        }
       }
     }
 

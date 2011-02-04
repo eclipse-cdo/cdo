@@ -427,7 +427,7 @@ public class TransactionTest extends AbstractCDOTest
     category2.setName("session2");
 
     category1.setName("session1");
-    long commitTime = transaction1.commit().getTimeStamp();
+    commitAndSync(transaction1, transaction2);
     IOUtil.OUT().println("After transaction1.commit(): " + CDOUtil.getCDOObject(category1).cdoRevision());
 
     CDOObject cdoCategory2 = CDOUtil.getCDOObject(category2);
@@ -447,7 +447,6 @@ public class TransactionTest extends AbstractCDOTest
       IOUtil.OUT().println("After transaction2.rollback(): " + cdoCategory2.cdoRevision());
     }
 
-    transaction2.waitForUpdate(commitTime, DEFAULT_TIMEOUT);
     category2.setName("session2");
 
     IOUtil.OUT().println("Before transaction2.commit():");

@@ -31,7 +31,6 @@
    <url>
       <update label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
-      <discovery label="SWTBot Updates" url="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site"/>
    </url>
 
    <includes

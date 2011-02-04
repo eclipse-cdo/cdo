@@ -334,7 +334,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   private void addChannel(InternalChannel channel)
   {
     short channelID = channel.getID();
-    if (channelID == IBuffer.CONTROL_CHANNEL || channelID == IBuffer.NO_CHANNEL)
+    if (channelID == RESERVED_CHANNEL || channelID == IBuffer.NO_CHANNEL)
     {
       throw new ChannelException("Invalid channel ID: " + channelID); //$NON-NLS-1$
     }

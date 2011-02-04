@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -28,6 +28,7 @@ import org.eclipse.internal.net4j.buffer.BufferUtil;
 
 import org.eclipse.spi.net4j.Channel;
 import org.eclipse.spi.net4j.InternalChannel;
+import org.eclipse.spi.net4j.InternalChannelMultiplexer;
 
 import java.nio.ByteBuffer;
 import java.text.MessageFormat;
@@ -37,7 +38,7 @@ import java.text.MessageFormat;
  */
 public class ControlChannel extends Channel
 {
-  public static final short CONTROL_CHANNEL_INDEX = IBuffer.CONTROL_CHANNEL;
+  public static final short CONTROL_CHANNEL_INDEX = InternalChannelMultiplexer.RESERVED_CHANNEL;
 
   public static final byte OPCODE_NEGOTIATION = 1;
 
@@ -242,9 +243,9 @@ public class ControlChannel extends Channel
 
   private void assertValidChannelID(short channelID)
   {
-    if (channelID <= CONTROL_CHANNEL_INDEX)
+    if (channelID == CONTROL_CHANNEL_INDEX)
     {
-      throw new IllegalArgumentException("channelID <= CONTROL_CHANNEL_ID"); //$NON-NLS-1$
+      throw new IllegalArgumentException("Bad channelID"); //$NON-NLS-1$
     }
   }
 }

@@ -96,11 +96,6 @@ public interface IBuffer
   /**
    * @since 2.0
    */
-  public static final short CONTROL_CHANNEL = 0;
-
-  /**
-   * @since 2.0
-   */
   public static final short MIN_CHANNEL = 1;
 
   /**

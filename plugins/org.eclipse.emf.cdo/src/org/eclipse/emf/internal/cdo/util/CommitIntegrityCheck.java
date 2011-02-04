@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
@@ -249,9 +250,14 @@ public class CommitIntegrityCheck
       CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
       checkIncluded(id, "removed child of", dirtyObject);
     }
+    else if (featureDelta instanceof CDOMoveFeatureDelta)
+    {
+      // Nothing to do: a move doesn't affect the child being moved
+      // so that child does not need to be included
+    }
     else
     {
-      throw new RuntimeException("Unexpected delta type: " + featureDelta.getClass().getSimpleName());
+      throw new IllegalArgumentException("Unexpected delta type: " + featureDelta.getClass().getSimpleName());
     }
   }
 

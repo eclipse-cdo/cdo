@@ -13,10 +13,10 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.AttributeTest;
-import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
-import org.eclipse.emf.cdo.tests.BranchingTest;
+import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
+import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
 import org.eclipse.emf.cdo.tests.FeatureMapTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;

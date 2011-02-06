@@ -13,7 +13,10 @@ package org.eclipse.net4j.util.io;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
@@ -30,6 +33,8 @@ public final class TMPUtil
    */
   public static final String SYSTEM_TEMP_FOLDER = OMPlatform.INSTANCE.getProperty("java.io.tmpdir"); //$NON-NLS-1$
 
+  private static File tempFolder;
+
   private TMPUtil()
   {
   }
@@ -37,15 +42,53 @@ public final class TMPUtil
   /**
    * @since 3.0
    */
-  public static File getTempFolder()
+  public synchronized static File getTempFolder()
   {
-    String tempFolder = OMPlatform.INSTANCE.getProperty(TEMP_FOLDER_PROPERTY);
     if (tempFolder == null)
     {
-      tempFolder = SYSTEM_TEMP_FOLDER;
+      String path = OMPlatform.INSTANCE.getProperty(TEMP_FOLDER_PROPERTY);
+      if (path == null)
+      {
+        path = getPathFromUserHome();
+        if (path == null)
+        {
+          path = SYSTEM_TEMP_FOLDER;
+        }
+      }
+
+      tempFolder = new File(path);
     }
 
-    return new File(tempFolder);
+    return tempFolder;
+  }
+
+  private static String getPathFromUserHome()
+  {
+    File home = new File(OMPlatform.INSTANCE.getProperty("user.home"));
+    File file = new File(home, TEMP_FOLDER_PROPERTY);
+    if (file.exists() && file.isFile())
+    {
+      InputStream in = null;
+
+      try
+      {
+        in = new FileInputStream(file);
+
+        Properties properties = new Properties();
+        properties.load(in);
+
+        return properties.getProperty("path");
+      }
+      catch (Exception ignore)
+      {
+      }
+      finally
+      {
+        IOUtil.closeSilent(in);
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -53,7 +96,7 @@ public final class TMPUtil
    */
   public static void setTempFolder(String tempFolder)
   {
-    System.setProperty(TEMP_FOLDER_PROPERTY, tempFolder);
+    TMPUtil.tempFolder = new File(tempFolder);
   }
 
   public static File createTempFolder() throws IORuntimeException

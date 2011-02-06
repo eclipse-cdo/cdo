@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.io.TMPUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -63,7 +64,7 @@ public abstract class AbstractOMTest extends TestCase
     {
       SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
       String prefix = AbstractOMTest.class.getName() + "-" + formatter.format(new Date()) + "-";
-      File logFile = File.createTempFile(prefix, ".log");
+      File logFile = TMPUtil.createTempFile(prefix, ".log");
       OMPlatform.INSTANCE.addLogHandler(new FileLogHandler(logFile, OMLogger.Level.WARN));
       IOUtil.ERR().println("Logging errors and warnings to " + logFile);
       IOUtil.ERR().println();

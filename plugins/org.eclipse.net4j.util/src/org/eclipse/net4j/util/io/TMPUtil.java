@@ -116,10 +116,6 @@ public final class TMPUtil
 
   public static File createTempFolder(String prefix, String suffix, File directory) throws IORuntimeException
   {
-    // TODO Consider servlets
-    // ServletContext context = session.getServletContext();
-    // File tempDir = (File)context.getAttribute("javax.servlet.context.tempdir");
-
     try
     {
       File tmp = File.createTempFile(prefix, suffix, directory);
@@ -128,6 +124,45 @@ public final class TMPUtil
       tmp = new File(tmpPath);
       tmp.mkdirs();
       return tmp;
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static File createTempFile() throws IORuntimeException
+  {
+    return createTempFile("tmp"); //$NON-NLS-1$
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static File createTempFile(String prefix) throws IORuntimeException
+  {
+    return createTempFile(prefix, ""); //$NON-NLS-1$
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static File createTempFile(String prefix, String suffix) throws IORuntimeException
+  {
+    return createTempFile(prefix, suffix, getTempFolder());
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static File createTempFile(String prefix, String suffix, File directory) throws IORuntimeException
+  {
+    try
+    {
+      return File.createTempFile(prefix, suffix, directory);
     }
     catch (IOException ex)
     {

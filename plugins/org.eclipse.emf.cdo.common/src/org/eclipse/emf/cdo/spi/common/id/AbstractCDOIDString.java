@@ -23,6 +23,11 @@ import java.io.IOException;
  */
 public abstract class AbstractCDOIDString extends AbstractCDOID
 {
+  /**
+   * @since 4.0
+   */
+  public static final String NULL_VALUE = null;
+
   private static final long serialVersionUID = 1L;
 
   private String value;

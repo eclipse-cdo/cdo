@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.internal.common.revision.CDOIDAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString;
 import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -91,6 +92,49 @@ public final class CDOIDUtil
   }
 
   /**
+   * @since 4.0
+   */
+  public static String getString(CDOID id)
+  {
+    if (id == null)
+    {
+      return AbstractCDOIDString.NULL_VALUE;
+    }
+
+    switch (id.getType())
+    {
+    case NULL:
+      return AbstractCDOIDString.NULL_VALUE;
+
+    case OBJECT:
+      if (id instanceof AbstractCDOIDString)
+      {
+        return ((AbstractCDOIDString)id).getStringValue();
+      }
+
+      throw new IllegalArgumentException(MessageFormat.format(
+          Messages.getString("CDOIDUtil.0"), id.getClass().getName())); //$NON-NLS-1$
+
+    case TEMP_OBJECT:
+      throw new IllegalArgumentException(Messages.getString("CDOIDUtil.1")); //$NON-NLS-1$
+
+    case EXTERNAL_OBJECT:
+    case EXTERNAL_TEMP_OBJECT:
+      if (id instanceof CDOIDExternalImpl)
+      {
+        return ((CDOIDExternalImpl)id).getURI();
+      }
+
+      throw new IllegalArgumentException(MessageFormat.format(
+          Messages.getString("CDOIDUtil.0"), id.getClass().getName())); //$NON-NLS-1$
+
+    default:
+      throw new IllegalArgumentException(MessageFormat.format(
+          Messages.getString("CDOIDUtil.3"), id.getClass().getName())); //$NON-NLS-1$
+    }
+  }
+
+  /**
    * @since 3.0
    */
   public static CDOClassifierRef getClassifierRef(CDOID id)
@@ -129,17 +173,25 @@ public final class CDOIDUtil
   /**
    * @since 3.0
    */
-  public static CDOID createStringWithClassifier(CDOClassifierRef classifierRef, String value)
+  public static CDOID createLongWithClassifier(CDOClassifierRef classifierRef, long value)
   {
-    return new CDOIDObjectStringWithClassifierImpl(classifierRef, value);
+    return new CDOIDObjectLongWithClassifierImpl(classifierRef, value);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDOID createString(String value)
+  {
+    return new CDOIDObjectStringImpl(value);
   }
 
   /**
    * @since 3.0
    */
-  public static CDOID createLongWithClassifier(CDOClassifierRef classifierRef, long value)
+  public static CDOID createStringWithClassifier(CDOClassifierRef classifierRef, String value)
   {
-    return new CDOIDObjectLongWithClassifierImpl(classifierRef, value);
+    return new CDOIDObjectStringWithClassifierImpl(classifierRef, value);
   }
 
   /**

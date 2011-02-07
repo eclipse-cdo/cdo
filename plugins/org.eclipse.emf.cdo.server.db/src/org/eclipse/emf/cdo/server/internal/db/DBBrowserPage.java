@@ -148,9 +148,12 @@ public class DBBrowserPage extends AbstractPage
       pout.print("<td>&nbsp;</td>\r\n");
       for (int i = 0; i < columns; i++)
       {
-        String column = metaData.getColumnLabel(1 + i)/* .toLowerCase() */;
+        String column = metaData.getColumnLabel(1 + i);
+        String type = metaData.getColumnTypeName(1 + i).toLowerCase();
+
         String dir = column.equals(order) && "ASC".equals(direction) ? "DESC" : "ASC";
-        pout.print("<td><b>" + browser.href(column, getName(), "order", column, "direction", dir) + "</b></td>\r\n");
+        pout.print("<td align=\"center\"><b>" + browser.href(column, getName(), "order", column, "direction", dir));
+        pout.print("</b><br>" + type + "</td>\r\n");
       }
 
       pout.print("</tr>\r\n");

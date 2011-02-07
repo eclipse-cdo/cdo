@@ -12,9 +12,6 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDExternal;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.DBBrowserPage;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
@@ -144,33 +141,6 @@ public final class CDODBUtil
     }
 
     return null;
-  }
-
-  /**
-   * @since 3.0
-   */
-  public static long convertCDOIDToLong(IExternalReferenceManager manager, IDBStoreAccessor accessor, CDOID id,
-      long commitTime)
-  {
-    if (id.getType() == CDOID.Type.EXTERNAL_OBJECT)
-    {
-      return manager.mapExternalReference(accessor, (CDOIDExternal)id, commitTime);
-    }
-
-    return CDOIDUtil.getLong(id);
-  }
-
-  /**
-   * @since 3.0
-   */
-  public static CDOID convertLongToCDOID(IExternalReferenceManager manager, IDBStoreAccessor accessor, long id)
-  {
-    if (id < DBStore.NULL)
-    {
-      return manager.unmapExternalReference(accessor, id);
-    }
-
-    return CDOIDUtil.createLong(id);
   }
 
   /**

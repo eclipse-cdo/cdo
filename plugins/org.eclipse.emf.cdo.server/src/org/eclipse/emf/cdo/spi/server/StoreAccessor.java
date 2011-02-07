@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -296,7 +297,40 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    * 
    * @since 3.0
    */
-  protected abstract void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor);
+  protected void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
+  {
+    try
+    {
+      CDORevision[] newObjects = commitContext.getNewObjects();
+      monitor.begin(newObjects.length);
+      for (CDORevision revision : newObjects)
+      {
+        CDOID id = revision.getID();
+        if (id instanceof CDOIDTemp)
+        {
+          CDOIDTemp oldID = (CDOIDTemp)id;
+          CDOID newID = getNextCDOID(revision);
+          if (CDOIDUtil.isNull(newID) || newID.isTemporary())
+          {
+            throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$
+          }
+
+          commitContext.addIDMapping(oldID, newID);
+        }
+
+        monitor.worked();
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  /**
+   * @since 4.0
+   */
+  protected abstract CDOID getNextCDOID(CDORevision revision);
 
   /**
    * @since 3.0

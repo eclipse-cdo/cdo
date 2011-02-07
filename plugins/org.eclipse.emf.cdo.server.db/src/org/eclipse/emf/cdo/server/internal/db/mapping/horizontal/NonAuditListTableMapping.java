@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
@@ -28,6 +27,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -58,7 +58,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, NonAuditListTableMapping.class);
 
-  private static final FieldInfo[] KEY_FIELDS = { new FieldInfo(CDODBSchema.LIST_REVISION_ID, DBType.BIGINT) };
+  private FieldInfo[] keyFields;
 
   private static final int UNBOUNDED_SHIFT = -1;
 
@@ -86,7 +86,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   public NonAuditListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
     super(mappingStrategy, eClass, feature);
-
     initSQLStrings();
   }
 
@@ -154,13 +153,19 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   @Override
   protected FieldInfo[] getKeyFields()
   {
-    return KEY_FIELDS;
+    if (keyFields == null)
+    {
+      DBType dbType = getMappingStrategy().getStore().getIDHandler().getDBType();
+      keyFields = new FieldInfo[] { new FieldInfo(CDODBSchema.LIST_REVISION_ID, dbType) };
+    }
+
+    return keyFields;
   }
 
   @Override
   protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    stmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
+    getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, revision.getID());
   }
 
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
@@ -183,7 +188,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     try
     {
       stmt = accessor.getStatementCache().getPreparedStatement(sqlClear, ReuseProbability.HIGH);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
+      getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
       CDODBUtil.sqlUpdate(stmt, false);
     }
     catch (SQLException e)
@@ -259,8 +264,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
    */
   private void writeResultToDatabase(IDBStoreAccessor accessor, CDOID id)
   {
-    long longId = CDOIDUtil.getLong(id);
-
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     PreparedStatement deleteStmt = null;
     PreparedStatement moveStmt = null;
     PreparedStatement setValueStmt = null;
@@ -301,7 +305,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           if (deleteStmt == null)
           {
             deleteStmt = accessor.getStatementCache().getPreparedStatement(sqlDeleteItem, ReuseProbability.HIGH);
-            deleteStmt.setLong(1, longId);
+            idHandler.setCDOID(deleteStmt, 1, id);
           }
 
           deleteStmt.setInt(2, element.sourceIndex);
@@ -323,7 +327,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           if (moveStmt == null)
           {
             moveStmt = accessor.getStatementCache().getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-            moveStmt.setLong(2, longId);
+            idHandler.setCDOID(moveStmt, 2, id);
           }
 
           moveStmt.setInt(3, element.sourceIndex); // from index
@@ -356,7 +360,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           if (moveStmt == null)
           {
             moveStmt = accessor.getStatementCache().getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-            moveStmt.setLong(2, longId);
+            idHandler.setCDOID(moveStmt, 2, id);
           }
 
           moveStmt.setInt(3, element.sourceIndex); // from index
@@ -381,7 +385,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           if (moveStmt == null)
           {
             moveStmt = accessor.getStatementCache().getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-            moveStmt.setLong(2, longId);
+            idHandler.setCDOID(moveStmt, 2, id);
           }
 
           moveStmt.setInt(3, element.sourceIndex); // from index
@@ -423,7 +427,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           if (setValueStmt == null)
           {
             setValueStmt = accessor.getStatementCache().getPreparedStatement(sqlUpdateValue, ReuseProbability.HIGH);
-            setValueStmt.setLong(2, longId);
+            idHandler.setCDOID(setValueStmt, 2, id);
           }
 
           setValueStmt.setInt(3, element.destinationIndex);
@@ -445,7 +449,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           if (insertStmt == null)
           {
             insertStmt = accessor.getStatementCache().getPreparedStatement(sqlInsertValue, ReuseProbability.HIGH);
-            insertStmt.setLong(1, longId);
+            idHandler.setCDOID(insertStmt, 1, id);
           }
 
           insertStmt.setInt(2, element.destinationIndex);

@@ -14,19 +14,30 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,11 +48,21 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author Stefan Winkler
  */
-public class ExternalReferenceManager extends Lifecycle implements IExternalReferenceManager.Internal
+public class ExternalReferenceManager extends Lifecycle
 {
-  private IDBStore store;
+  private static final int NULL = 0;
 
-  private AtomicLong lastMappedID = new AtomicLong(0);
+  private IDBTable table;
+
+  private IDBField idField;
+
+  private IDBField uriField;
+
+  private IDBField timestampField;
+
+  private final IIDHandler idHandler;
+
+  private AtomicLong lastMappedID = new AtomicLong(NULL);
 
   @ExcludeFromDump
   private transient String sqlSelectByLongID;
@@ -52,34 +73,32 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
   @ExcludeFromDump
   private transient String sqlInsert;
 
-  public ExternalReferenceManager()
+  public ExternalReferenceManager(IIDHandler idHandler)
   {
+    this.idHandler = idHandler;
   }
 
-  public IDBStore getStore()
+  public IIDHandler getIDHandler()
   {
-    return store;
+    return idHandler;
   }
 
-  public void setStore(IDBStore store)
+  public long mapExternalReference(CDOIDExternal id, long commitTime)
   {
-    this.store = store;
-  }
-
-  public long mapExternalReference(IDBStoreAccessor accessor, CDOIDExternal id, long commitTime)
-  {
+    IDBStoreAccessor accessor = getAccessor();
     return mapURI(accessor, id.getURI(), commitTime);
   }
 
-  public CDOIDExternal unmapExternalReference(IDBStoreAccessor accessor, long mappedId)
+  public CDOIDExternal unmapExternalReference(long mappedId)
   {
+    IDBStoreAccessor accessor = getAccessor();
     return CDOIDUtil.createExternal(unmapURI(accessor, mappedId));
   }
 
   public long mapURI(IDBStoreAccessor accessor, String uri, long commitTime)
   {
-    long result = lookupByID(accessor, uri);
-    if (result < DBStore.NULL)
+    long result = lookupByURI(accessor, uri);
+    if (result < NULL)
     {
       // mapping found
       return result;
@@ -91,22 +110,21 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
   public String unmapURI(IDBStoreAccessor accessor, long mappedId)
   {
     PreparedStatement stmt = null;
-    ResultSet rs = null;
+    ResultSet resultSet = null;
 
     try
     {
       stmt = accessor.getStatementCache().getPreparedStatement(sqlSelectByLongID, ReuseProbability.HIGH);
       stmt.setLong(1, mappedId);
-      rs = stmt.executeQuery();
+      resultSet = stmt.executeQuery();
 
-      if (!rs.next())
+      if (!resultSet.next())
       {
         OM.LOG.error("External ID " + mappedId + " not found. Database inconsistent!");
         throw new IllegalStateException("External ID " + mappedId + " not found. Database inconsistent!");
       }
 
-      String uri = rs.getString(1);
-      return uri;
+      return resultSet.getString(1);
     }
     catch (SQLException e)
     {
@@ -114,31 +132,48 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
     }
     finally
     {
-      DBUtil.close(rs);
+      DBUtil.close(resultSet);
       accessor.getStatementCache().releasePreparedStatement(stmt);
     }
   }
 
-  @Override
-  protected void doBeforeActivate() throws Exception
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
+      throws IOException
   {
-    super.doBeforeActivate();
-    checkState(store, "Store is not set");
+    String where = " WHERE " + timestampField + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    DBUtil.serializeTable(out, connection, table, null, where);
+  }
+
+  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException
+  {
+    DBUtil.deserializeTable(in, connection, table, monitor.fork());
   }
 
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    IDBStoreAccessor reader = getStore().getReader(null);
+
+    IDBStore store = idHandler.getStore();
+    table = store.getDBSchema().addTable("cdo_external_refs"); //$NON-NLS-1$
+    idField = table.addField("id", idHandler.getDBType()); //$NON-NLS-1$
+    uriField = table.addField("uri", DBType.VARCHAR); //$NON-NLS-1$
+    timestampField = table.addField("committime", DBType.BIGINT); //$NON-NLS-1$
+
+    table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
+    table.addIndex(IDBIndex.Type.NON_UNIQUE, uriField);
+
+    IDBStoreAccessor reader = store.getReader(null);
     Connection connection = reader.getConnection();
     Statement statement = null;
 
     try
     {
-      String sql = "SELECT MIN(" + CDODBSchema.EXTERNAL_ID + ") FROM " + CDODBSchema.EXTERNAL_REFS;
-
       statement = connection.createStatement();
+      store.getDBAdapter().createTable(table, statement);
+
+      String sql = "SELECT MIN(" + idField + ") FROM " + table;
       ResultSet result = statement.executeQuery(sql);
 
       if (result.next())
@@ -161,33 +196,33 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
 
     StringBuilder builder = new StringBuilder();
     builder.append("INSERT INTO ");
-    builder.append(CDODBSchema.EXTERNAL_REFS);
+    builder.append(table);
     builder.append("(");
-    builder.append(CDODBSchema.EXTERNAL_ID);
+    builder.append(idField);
     builder.append(",");
-    builder.append(CDODBSchema.EXTERNAL_URI);
+    builder.append(uriField);
     builder.append(",");
-    builder.append(CDODBSchema.EXTERNAL_TIMESTAMP);
+    builder.append(timestampField);
     builder.append(") VALUES (?, ?, ?)");
     sqlInsert = builder.toString();
 
     builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.EXTERNAL_ID);
+    builder.append(idField);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(CDODBSchema.EXTERNAL_REFS);
+    builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.EXTERNAL_URI);
+    builder.append(uriField);
     builder.append("=?"); //$NON-NLS-1$
     sqlSelectByURI = builder.toString();
 
     builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(CDODBSchema.EXTERNAL_URI);
+    builder.append(uriField);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(CDODBSchema.EXTERNAL_REFS);
+    builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(CDODBSchema.EXTERNAL_ID);
+    builder.append(idField);
     builder.append("=?"); //$NON-NLS-1$
     sqlSelectByLongID = builder.toString();
   }
@@ -217,25 +252,26 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
     }
   }
 
-  private long lookupByID(IDBStoreAccessor accessor, String uri)
+  private long lookupByURI(IDBStoreAccessor accessor, String uri)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
-    ResultSet rs = null;
+    ResultSet resultSet = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlSelectByURI, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlSelectByURI, ReuseProbability.HIGH);
       stmt.setString(1, uri);
 
-      rs = stmt.executeQuery();
+      resultSet = stmt.executeQuery();
 
-      if (rs.next())
+      if (resultSet.next())
       {
-        return rs.getLong(1);
+        return resultSet.getLong(1);
       }
 
       // Not found ...
-      return 0;
+      return NULL;
     }
     catch (SQLException e)
     {
@@ -243,8 +279,19 @@ public class ExternalReferenceManager extends Lifecycle implements IExternalRefe
     }
     finally
     {
-      DBUtil.close(rs);
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      DBUtil.close(resultSet);
+      statementCache.releasePreparedStatement(stmt);
     }
+  }
+
+  private static IDBStoreAccessor getAccessor()
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    if (accessor == null)
+    {
+      throw new IllegalStateException("Can only be called from within a valid IDBStoreAccessor context");
+    }
+
+    return (IDBStoreAccessor)accessor;
   }
 }

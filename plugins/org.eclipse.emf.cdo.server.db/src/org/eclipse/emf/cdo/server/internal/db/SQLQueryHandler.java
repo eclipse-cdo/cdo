@@ -13,10 +13,10 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -90,6 +90,7 @@ public class SQLQueryHandler implements IQueryHandler
       throw new IllegalArgumentException("Unsupported query language: " + language);
     }
 
+    IIDHandler idHandler = storeAccessor.getStore().getIDHandler();
     Connection connection = storeAccessor.getConnection();
     PreparedStatement statement = null;
     ResultSet resultSet = null;
@@ -190,7 +191,7 @@ public class SQLQueryHandler implements IQueryHandler
 
           if (objectQuery)
           {
-            CDOID result = CDOIDUtil.createLong(resultSet.getLong(1));
+            CDOID result = idHandler.getCDOID(resultSet, 1);
             context.addResult(result);
           }
           else

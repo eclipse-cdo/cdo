@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -27,10 +26,9 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
-import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
@@ -111,18 +109,21 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
   private void initTable()
   {
-    String name = getMappingStrategy().getTableName(eClass);
-    table = getMappingStrategy().getStore().getDBSchema().addTable(name);
+    IDBStore store = getMappingStrategy().getStore();
+    DBType idType = store.getIDHandler().getDBType();
 
-    IDBField idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT, true);
+    String name = getMappingStrategy().getTableName(eClass);
+    table = store.getDBSchema().addTable(name);
+
+    IDBField idField = table.addField(CDODBSchema.ATTRIBUTES_ID, idType, true);
     IDBField versionField = table.addField(CDODBSchema.ATTRIBUTES_VERSION, DBType.INTEGER, true);
 
     IDBField branchField = addBranchingField(table);
 
     table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT, true);
     IDBField revisedField = table.addField(CDODBSchema.ATTRIBUTES_REVISED, DBType.BIGINT, true);
-    table.addField(CDODBSchema.ATTRIBUTES_RESOURCE, DBType.BIGINT, true);
-    table.addField(CDODBSchema.ATTRIBUTES_CONTAINER, DBType.BIGINT, true);
+    table.addField(CDODBSchema.ATTRIBUTES_RESOURCE, idType, true);
+    table.addField(CDODBSchema.ATTRIBUTES_CONTAINER, idType, true);
     table.addField(CDODBSchema.ATTRIBUTES_FEATURE, DBType.INTEGER, true);
 
     if (branchField != null)
@@ -263,7 +264,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
    * @return <code>true</code> if the revision has been read successfully.<br>
    *         <code>false</code> if the revision does not exist in the DB.
    */
-  protected final boolean readValuesFromStatement(PreparedStatement pstmt, InternalCDORevision revision,
+  protected final boolean readValuesFromStatement(PreparedStatement stmt, InternalCDORevision revision,
       IDBStoreAccessor accessor)
   {
     ResultSet resultSet = null;
@@ -272,12 +273,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Executing Query: {0}", pstmt.toString()); //$NON-NLS-1$
+        TRACER.format("Executing Query: {0}", stmt.toString()); //$NON-NLS-1$
       }
 
-      pstmt.setMaxRows(1); // Optimization: only 1 row
+      stmt.setMaxRows(1); // Optimization: only 1 row
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
       if (!resultSet.next())
       {
         if (TRACER.isEnabled())
@@ -292,14 +293,13 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
 
       long timeStamp = resultSet.getLong(CDODBSchema.ATTRIBUTES_CREATED);
 
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       CDOBranchPoint branchPoint = revision.getBranch().getPoint(timeStamp);
 
       revision.setBranchPoint(branchPoint);
       revision.setRevised(resultSet.getLong(CDODBSchema.ATTRIBUTES_REVISED));
-      revision.setResourceID(CDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor,
-          resultSet.getLong(CDODBSchema.ATTRIBUTES_RESOURCE)));
-      revision.setContainerID(CDODBUtil.convertLongToCDOID(getExternalReferenceManager(), accessor,
-          resultSet.getLong(CDODBSchema.ATTRIBUTES_CONTAINER)));
+      revision.setResourceID(idHandler.getCDOID(resultSet, CDODBSchema.ATTRIBUTES_RESOURCE));
+      revision.setContainerID(idHandler.getCDOID(resultSet, CDODBSchema.ATTRIBUTES_CONTAINER));
       revision.setContainingFeatureID(resultSet.getInt(CDODBSchema.ATTRIBUTES_FEATURE));
 
       for (ITypeMapping mapping : valueMappings)
@@ -359,16 +359,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     {
       listMapping.readValues(accessor, revision, listChunk);
     }
-  }
-
-  protected final IMetaDataManager getMetaDataManager()
-  {
-    return getMappingStrategy().getStore().getMetaDataManager();
-  }
-
-  protected final IExternalReferenceManager getExternalReferenceManager()
-  {
-    return mappingStrategy.getStore().getExternalReferenceManager();
   }
 
   protected final IMappingStrategy getMappingStrategy()
@@ -564,13 +554,14 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     // see #handleRevisions() implementation in HorizontalBranchingClassMapping
     // for branch handling.
 
-    IPreparedStatementCache statementCache = accessor.getStatementCache();
     IRepository repository = accessor.getStore().getRepository();
     CDORevisionManager revisionManager = repository.getRevisionManager();
     CDOBranchManager branchManager = repository.getBranchManager();
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
-    ResultSet rs = null;
+    ResultSet resultSet = null;
 
     // TODO: test for timeStamp == INVALID_TIME and encode revision.isValid() as WHERE instead of fetching all revisions
     // in order to increase performance
@@ -623,16 +614,16 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         stmt.setLong(i + 1, timeStamp);
       }
 
-      rs = stmt.executeQuery();
-      while (rs.next())
+      resultSet = stmt.executeQuery();
+      while (resultSet.next())
       {
-        long id = rs.getLong(1);
-        int version = rs.getInt(2);
+        CDOID id = idHandler.getCDOID(resultSet, 1);
+        int version = resultSet.getInt(2);
 
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(
-              CDOIDUtil.createLong(id), branchManager.getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchManager
+              .getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
 
           if (!handler.handleRevision(revision))
           {
@@ -647,7 +638,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     }
     finally
     {
-      DBUtil.close(rs);
+      DBUtil.close(resultSet);
       statementCache.releasePreparedStatement(stmt);
     }
   }
@@ -679,27 +670,28 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       builder.append(")"); //$NON-NLS-1$
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
-    ResultSet rs = null;
+    ResultSet resultSet = null;
 
     Set<CDOID> result = new HashSet<CDOID>();
 
     try
     {
       stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
-      int col = 1;
+      int column = 1;
       for (CDOChangeSetSegment segment : segments)
       {
-        stmt.setLong(col++, segment.getTimeStamp());
-        stmt.setLong(col++, segment.getEndTime());
+        stmt.setLong(column++, segment.getTimeStamp());
+        stmt.setLong(column++, segment.getEndTime());
       }
 
-      rs = stmt.executeQuery();
-      while (rs.next())
+      resultSet = stmt.executeQuery();
+      while (resultSet.next())
       {
-        long id = rs.getLong(1);
-        result.add(CDOIDUtil.createLong(id));
+        CDOID id = idHandler.getCDOID(resultSet, 1);
+        result.add(id);
       }
 
       return result;
@@ -710,7 +702,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     }
     finally
     {
-      DBUtil.close(rs);
+      DBUtil.close(resultSet);
       statementCache.releasePreparedStatement(stmt);
     }
   }
@@ -819,6 +811,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       builder.append(idString);
       String sql = builder.toString();
 
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       ResultSet resultSet = null;
       Statement stmt = null;
 
@@ -833,15 +826,13 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         resultSet = stmt.executeQuery(sql);
         while (resultSet.next())
         {
-          long idLong = resultSet.getLong(1);
-          CDOID srcId = CDOIDUtil.createLong(idLong);
-          idLong = resultSet.getLong(2);
-          CDOID targetId = CDOIDUtil.createLong(idLong);
+          CDOID sourceID = idHandler.getCDOID(resultSet, 1);
+          CDOID targetID = idHandler.getCDOID(resultSet, 2);
 
-          boolean more = context.addXRef(targetId, srcId, ref, 0);
+          boolean more = context.addXRef(targetID, sourceID, ref, 0);
           if (TRACER.isEnabled())
           {
-            TRACER.format("  add XRef to context: src={0}, tgt={1}, idx=0", srcId, targetId);
+            TRACER.format("  add XRef to context: src={0}, tgt={1}, idx=0", sourceID, targetID);
           }
 
           if (!more)

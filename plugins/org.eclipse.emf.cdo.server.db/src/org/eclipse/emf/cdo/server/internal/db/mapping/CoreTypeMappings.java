@@ -16,20 +16,13 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLobUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
-import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
-import org.eclipse.emf.cdo.server.db.IDBStore;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping;
 import org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMappingFactory;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
@@ -288,43 +281,25 @@ public class CoreTypeMappings
    */
   public static class TMObject extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Object",
-        EcorePackage.eINSTANCE.getEClass(), DBType.BIGINT));
-
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
-      long id = resultSet.getLong(getField().getName());
-      if (resultSet.wasNull())
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      CDOID id = idHandler.getCDOID(resultSet, getField().getName());
+
+      if (id == null && getFeature().isUnsettable())
       {
-        return getFeature().isUnsettable() ? CDORevisionData.NIL : null;
+        return CDORevisionData.NIL;
       }
 
-      IExternalReferenceManager externalRefs = getMappingStrategy().getStore().getExternalReferenceManager();
-      return CDODBUtil.convertLongToCDOID(externalRefs, getAccessor(), id);
+      return id;
     }
 
     @Override
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
     {
-      IDBStore store = getMappingStrategy().getStore();
-      IExternalReferenceManager externalReferenceManager = store.getExternalReferenceManager();
-      CommitContext commitContext = StoreThreadLocal.getCommitContext();
-      long commitTime = commitContext != null ? commitContext.getBranchPoint().getTimeStamp()
-          : CDOBranchPoint.UNSPECIFIED_DATE; // Happens on rawStore for workspace checkouts
-      long id = CDODBUtil.convertCDOIDToLong(externalReferenceManager, getAccessor(), (CDOID)value, commitTime);
-      super.doSetValue(stmt, index, id);
-    }
-
-    private IDBStoreAccessor getAccessor()
-    {
-      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      if (accessor == null)
-      {
-        throw new IllegalStateException("Can only be called from within a valid IDBStoreAccessor context");
-      }
-
-      return (IDBStoreAccessor)accessor;
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      idHandler.setCDOID(stmt, index, (CDOID)value);
     }
 
     /**

@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -38,6 +37,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
@@ -58,7 +58,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
+import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -101,7 +101,7 @@ import java.util.TimerTask;
 /**
  * @author Eike Stepper
  */
-public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAccessor
+public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
@@ -113,7 +113,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   private Set<CDOID> newObjects = new HashSet<CDOID>();
 
-  private long maxID;
+  private CDOID maxID = CDOID.NULL;
 
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
   {
@@ -310,21 +310,21 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
   public void queryLobs(List<byte[]> ids)
   {
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_QUERY_LOBS, ReuseProbability.MEDIUM);
+      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_QUERY_LOBS, ReuseProbability.MEDIUM);
 
       for (Iterator<byte[]> it = ids.iterator(); it.hasNext();)
       {
         byte[] id = it.next();
-        pstmt.setString(1, HexUtil.bytesToHex(id));
+        stmt.setString(1, HexUtil.bytesToHex(id));
 
         try
         {
-          resultSet = pstmt.executeQuery();
+          resultSet = stmt.executeQuery();
           if (!resultSet.next())
           {
             it.remove();
@@ -342,23 +342,23 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_LOB, ReuseProbability.MEDIUM);
-      pstmt.setString(1, HexUtil.bytesToHex(id));
+      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_LOB, ReuseProbability.MEDIUM);
+      stmt.setString(1, HexUtil.bytesToHex(id));
 
       try
       {
-        resultSet = pstmt.executeQuery();
+        resultSet = stmt.executeQuery();
         resultSet.next();
 
         long size = resultSet.getLong(1);
@@ -386,22 +386,22 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_HANDLE_LOBS, ReuseProbability.LOW);
+      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_HANDLE_LOBS, ReuseProbability.LOW);
 
       try
       {
-        resultSet = pstmt.executeQuery();
+        resultSet = stmt.executeQuery();
         while (resultSet.next())
         {
           byte[] id = HexUtil.hexToBytes(resultSet.getString(1));
@@ -453,7 +453,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -461,6 +461,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   protected void applyIDMappings(InternalCommitContext context, OMMonitor monitor)
   {
     super.applyIDMappings(context, monitor);
+
+    IIDHandler idHandler = getStore().getIDHandler();
 
     // Remember CDOIDs of new objects. They are cleared after writeRevisions()
     for (InternalCDORevision revision : context.getNewObjects())
@@ -471,10 +473,9 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       // Remember maxID because it may have to be adjusted if the repository is BACKUP or CLONE. See bug 325097.
       if (!context.getBranchPoint().getBranch().isLocal())
       {
-        long value = CDOIDUtil.getLong(id);
-        if (value > maxID)
+        if (idHandler.compare(id, maxID) > 0)
         {
-          maxID = value;
+          maxID = id;
         }
       }
     }
@@ -484,18 +485,18 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)
   {
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_CREATE_COMMIT_INFO, ReuseProbability.HIGH);
-      pstmt.setLong(1, timeStamp);
-      pstmt.setLong(2, previousTimeStamp);
-      pstmt.setInt(3, branch.getID());
-      pstmt.setString(4, userID);
-      pstmt.setString(5, comment);
+      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_CREATE_COMMIT_INFO, ReuseProbability.HIGH);
+      stmt.setLong(1, timeStamp);
+      stmt.setLong(2, previousTimeStamp);
+      stmt.setInt(3, branch.getID());
+      stmt.setString(4, userID);
+      stmt.setString(5, comment);
 
-      CDODBUtil.sqlUpdate(pstmt, true);
+      CDODBUtil.sqlUpdate(stmt, true);
     }
     catch (SQLException ex)
     {
@@ -503,7 +504,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -619,18 +620,24 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   }
 
   @Override
+  protected CDOID getNextCDOID(CDORevision revision)
+  {
+    return getStore().getIDHandler().getNextCDOID(revision);
+  }
+
+  @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_WRITE_BLOB, ReuseProbability.MEDIUM);
-      pstmt.setString(1, HexUtil.bytesToHex(id));
-      pstmt.setLong(2, size);
-      pstmt.setBinaryStream(3, inputStream, (int)size);
+      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_WRITE_BLOB, ReuseProbability.MEDIUM);
+      stmt.setString(1, HexUtil.bytesToHex(id));
+      stmt.setLong(2, size);
+      stmt.setBinaryStream(3, inputStream, (int)size);
 
-      CDODBUtil.sqlUpdate(pstmt, true);
+      CDODBUtil.sqlUpdate(stmt, true);
     }
     catch (SQLException ex)
     {
@@ -638,23 +645,23 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_WRITE_CLOB, ReuseProbability.MEDIUM);
-      pstmt.setString(1, HexUtil.bytesToHex(id));
-      pstmt.setLong(2, size);
-      pstmt.setCharacterStream(3, reader, (int)size);
+      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_WRITE_CLOB, ReuseProbability.MEDIUM);
+      stmt.setString(1, HexUtil.bytesToHex(id));
+      stmt.setLong(2, size);
+      stmt.setCharacterStream(3, reader, (int)size);
 
-      CDODBUtil.sqlUpdate(pstmt, true);
+      CDODBUtil.sqlUpdate(stmt, true);
     }
     catch (SQLException ex)
     {
@@ -662,7 +669,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -684,14 +691,14 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
         async = monitor.forkAsync();
         getConnection().commit();
 
-        DBStore store = getStore();
-        if (maxID > store.getLastObjectID())
+        IIDHandler idHandler = getStore().getIDHandler();
+        if (idHandler.compare(maxID, idHandler.getLastObjectID()) > 0)
         {
           // See bug 325097
-          store.setLastObjectID(maxID);
+          idHandler.setLastObjectID(maxID);
         }
 
-        maxID = 0L;
+        maxID = CDOID.NULL;
       }
       finally
       {
@@ -814,17 +821,17 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       branchID = getStore().getNextLocalBranchID();
     }
 
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_CREATE_BRANCH, ReuseProbability.LOW);
-      pstmt.setInt(1, branchID);
-      pstmt.setString(2, branchInfo.getName());
-      pstmt.setInt(3, branchInfo.getBaseBranchID());
-      pstmt.setLong(4, branchInfo.getBaseTimeStamp());
+      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_CREATE_BRANCH, ReuseProbability.LOW);
+      stmt.setInt(1, branchID);
+      stmt.setString(2, branchInfo.getName());
+      stmt.setInt(3, branchInfo.getBaseBranchID());
+      stmt.setLong(4, branchInfo.getBaseTimeStamp());
 
-      CDODBUtil.sqlUpdate(pstmt, true);
+      CDODBUtil.sqlUpdate(stmt, true);
       getConnection().commit();
       return new Pair<Integer, Long>(branchID, branchInfo.getBaseTimeStamp());
     }
@@ -834,22 +841,22 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   public BranchInfo loadBranch(int branchID)
   {
     checkBranchingSupport();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_BRANCH, ReuseProbability.HIGH);
-      pstmt.setInt(1, branchID);
+      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_BRANCH, ReuseProbability.HIGH);
+      stmt.setInt(1, branchID);
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
       if (!resultSet.next())
       {
         throw new DBException("Branch with ID " + branchID + " does not exist");
@@ -867,22 +874,22 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   public SubBranchInfo[] loadSubBranches(int baseID)
   {
     checkBranchingSupport();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_SUB_BRANCHES, ReuseProbability.HIGH);
-      pstmt.setInt(1, baseID);
+      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_SUB_BRANCHES, ReuseProbability.HIGH);
+      stmt.setInt(1, baseID);
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
       List<SubBranchInfo> result = new ArrayList<SubBranchInfo>();
       while (resultSet.next())
       {
@@ -901,7 +908,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -916,7 +923,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
   public int loadBranches(int startID, int endID, CDOBranchHandler handler)
   {
     int count = 0;
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     InternalRepository repository = getSession().getManager().getRepository();
@@ -924,11 +931,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_BRANCHES, ReuseProbability.HIGH);
-      pstmt.setInt(1, startID);
-      pstmt.setInt(2, endID > 0 ? endID : Integer.MAX_VALUE);
+      stmt = statementCache.getPreparedStatement(CDODBSchema.SQL_LOAD_BRANCHES, ReuseProbability.HIGH);
+      stmt.setInt(1, startID);
+      stmt.setInt(2, endID > 0 ? endID : Integer.MAX_VALUE);
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
       while (resultSet.next())
       {
         int branchID = resultSet.getInt(1);
@@ -950,7 +957,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -1006,7 +1013,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
     String sql = builder.toString();
 
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     InternalRepository repository = getStore().getRepository();
@@ -1015,9 +1022,9 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.MEDIUM);
+      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.MEDIUM);
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
       while (resultSet.next())
       {
         long timeStamp = resultSet.getLong(1);
@@ -1043,7 +1050,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -1064,7 +1071,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       throws IOException
   {
     DBStore store = getStore();
-    out.writeLong(store.getLastObjectID()); // See bug 325097
+    out.writeCDOID(store.getIDHandler().getLastObjectID()); // See bug 325097
 
     String where = " WHERE " + CDODBSchema.BRANCHES_ID + " BETWEEN " + fromBranchID + " AND " + toBranchID;
     DBUtil.serializeTable(out, connection, CDODBSchema.BRANCHES, null, where);
@@ -1072,8 +1079,8 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     where = " WHERE " + CDODBSchema.COMMIT_INFOS_TIMESTAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, CDODBSchema.COMMIT_INFOS, null, where);
 
-    where = " WHERE " + CDODBSchema.EXTERNAL_TIMESTAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
-    DBUtil.serializeTable(out, connection, CDODBSchema.EXTERNAL_REFS, null, where);
+    IIDHandler idHandler = store.getIDHandler();
+    idHandler.rawExport(connection, out, fromCommitTime, toCommitTime);
 
     IMetaDataManager metaDataManager = store.getMetaDataManager();
     metaDataManager.rawExport(connection, out, fromCommitTime, toCommitTime);
@@ -1086,7 +1093,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
       OMMonitor monitor) throws IOException
   {
     DBStore store = getStore();
-    store.setLastObjectID(in.readLong()); // See bug 325097
+    store.getIDHandler().setLastObjectID(in.readCDOID()); // See bug 325097
 
     IMappingStrategy mappingStrategy = store.getMappingStrategy();
     int size = mappingStrategy.getClassMappings().size();
@@ -1099,7 +1106,7 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
     {
       DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES, monitor.fork());
       DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS, monitor.fork());
-      DBUtil.deserializeTable(in, connection, CDODBSchema.EXTERNAL_REFS, monitor.fork());
+      store.getIDHandler().rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
       rawImportPackageUnits(in, fromCommitTime, toCommitTime, packageUnits, monitor.fork());
       mappingStrategy.rawImport(this, in, fromCommitTime, toCommitTime, monitor.fork(size));
       rawCommit(commitWork, monitor);
@@ -1202,7 +1209,11 @@ public class DBStoreAccessor extends LongIDStoreAccessor implements IDBStoreAcce
 
     writeRevision(revision, isFirstRevision, false, monitor);
 
-    getStore().ensureLastObjectID(id);
+    IIDHandler idHandler = getStore().getIDHandler();
+    if (idHandler.compare(id, idHandler.getLastObjectID()) > 0)
+    {
+      idHandler.setLastObjectID(id);
+    }
   }
 
   public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException

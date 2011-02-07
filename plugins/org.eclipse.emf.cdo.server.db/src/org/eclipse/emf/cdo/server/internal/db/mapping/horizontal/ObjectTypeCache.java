@@ -10,6 +10,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
+
+import java.sql.Connection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,7 +27,7 @@ public class ObjectTypeCache extends DelegatingObjectTypeMapper
 {
   public static final int DEFAULT_CACHE_CAPACITY = 10000000;
 
-  private Map<Long, Long> memoryCache;
+  private Map<CDOID, CDOID> memoryCache;
 
   private int cacheSize;
 
@@ -32,25 +37,25 @@ public class ObjectTypeCache extends DelegatingObjectTypeMapper
   }
 
   @Override
-  protected Long doGetObjectType(long id)
+  protected CDOID doGetObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     return memoryCache.get(id);
   }
 
   @Override
-  protected void doPutObjectType(long id, long type)
+  protected void doPutObjectType(IDBStoreAccessor accessor, CDOID id, CDOID type)
   {
     memoryCache.put(id, type);
   }
 
   @Override
-  protected void doRemoveObjectType(long id)
+  protected void doRemoveObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     memoryCache.remove(id);
   }
 
   @Override
-  protected Long doGetMaxID()
+  protected CDOID doGetMaxID(Connection connection, IIDHandler idHandler)
   {
     return null;
   }
@@ -72,7 +77,7 @@ public class ObjectTypeCache extends DelegatingObjectTypeMapper
   /**
    * @author Stefan Winkler
    */
-  private static final class MemoryCache extends LinkedHashMap<Long, Long>
+  private static final class MemoryCache extends LinkedHashMap<CDOID, CDOID>
   {
     private static final long serialVersionUID = 1L;
 
@@ -85,7 +90,7 @@ public class ObjectTypeCache extends DelegatingObjectTypeMapper
     }
 
     @Override
-    protected boolean removeEldestEntry(java.util.Map.Entry<Long, Long> eldest)
+    protected boolean removeEldestEntry(java.util.Map.Entry<CDOID, CDOID> eldest)
     {
       return size() > capacity;
     }

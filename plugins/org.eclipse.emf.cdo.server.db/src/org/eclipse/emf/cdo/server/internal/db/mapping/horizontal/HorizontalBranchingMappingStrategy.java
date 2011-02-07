@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
@@ -88,6 +90,7 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
         + CDODBSchema.ATTRIBUTES_VERSION + ">cdo2." + CDODBSchema.ATTRIBUTES_VERSION + ")) AND cdo1."
         + CDODBSchema.ATTRIBUTES_REVISED + "=0";
 
+    IIDHandler idHandler = getStore().getIDHandler();
     PreparedStatement stmtUpdate = null;
     PreparedStatement stmtQuery = null;
     ResultSet resultSet = null;
@@ -107,13 +110,13 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
       monitor.begin(2 * size);
       while (resultSet.next())
       {
-        long id = resultSet.getLong(1);
+        CDOID id = idHandler.getCDOID(resultSet, 1);
         int branch = resultSet.getInt(2);
         int version = resultSet.getInt(3);
         long revised = resultSet.getLong(4) - 1L;
 
         stmtUpdate.setLong(1, revised);
-        stmtUpdate.setLong(2, id);
+        idHandler.setCDOID(stmtUpdate, 2, id);
         stmtUpdate.setInt(3, branch);
         stmtUpdate.setInt(4, version);
         stmtUpdate.addBatch();

@@ -13,7 +13,6 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -36,9 +35,7 @@ import java.sql.SQLException;
  */
 public class BranchingListTableMapping extends AbstractListTableMapping
 {
-  private static final FieldInfo[] KEY_FIELDS = { new FieldInfo(CDODBSchema.LIST_REVISION_ID, DBType.BIGINT),
-      new FieldInfo(CDODBSchema.LIST_REVISION_BRANCH, DBType.INTEGER),
-      new FieldInfo(CDODBSchema.LIST_REVISION_VERSION, DBType.INTEGER) };
+  private FieldInfo[] keyFields;
 
   public BranchingListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -48,13 +45,21 @@ public class BranchingListTableMapping extends AbstractListTableMapping
   @Override
   protected FieldInfo[] getKeyFields()
   {
-    return KEY_FIELDS;
+    if (keyFields == null)
+    {
+      keyFields = new FieldInfo[] {
+          new FieldInfo(CDODBSchema.LIST_REVISION_ID, getMappingStrategy().getStore().getIDHandler().getDBType()),
+          new FieldInfo(CDODBSchema.LIST_REVISION_BRANCH, DBType.INTEGER),
+          new FieldInfo(CDODBSchema.LIST_REVISION_VERSION, DBType.INTEGER) };
+    }
+
+    return keyFields;
   }
 
   @Override
   protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    stmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
+    getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, revision.getID());
     stmt.setInt(2, revision.getBranch().getID());
     stmt.setInt(3, revision.getVersion());
   }

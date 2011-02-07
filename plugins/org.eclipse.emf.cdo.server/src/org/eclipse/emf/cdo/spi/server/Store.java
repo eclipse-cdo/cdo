@@ -50,20 +50,15 @@ public abstract class Store extends Lifecycle implements InternalStore
    */
   public static final long UNSPECIFIED_DATE = CDOBranchPoint.UNSPECIFIED_DATE;
 
-  @ExcludeFromDump
-  private final transient String type;
+  private String type;
 
-  @ExcludeFromDump
-  private final transient Set<ObjectType> objectIDTypes;
+  private Set<ObjectType> objectIDTypes;
 
-  @ExcludeFromDump
-  private final transient Set<ChangeFormat> supportedChangeFormats;
+  private Set<ChangeFormat> supportedChangeFormats;
 
-  @ExcludeFromDump
-  private final transient Set<RevisionTemporality> supportedRevisionTemporalities;
+  private Set<RevisionTemporality> supportedRevisionTemporalities;
 
-  @ExcludeFromDump
-  private final transient Set<RevisionParallelism> supportedRevisionParallelisms;
+  private Set<RevisionParallelism> supportedRevisionParallelisms;
 
   private RevisionTemporality revisionTemporality = RevisionTemporality.NONE;
 
@@ -149,6 +144,14 @@ public abstract class Store extends Lifecycle implements InternalStore
   public Set<CDOID.ObjectType> getObjectIDTypes()
   {
     return objectIDTypes;
+  }
+
+  /**
+   * @since 4.0
+   */
+  protected void setObjectIDTypes(Set<ObjectType> objectIDTypes)
+  {
+    this.objectIDTypes = objectIDTypes;
   }
 
   public Set<ChangeFormat> getSupportedChangeFormats()

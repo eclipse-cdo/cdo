@@ -14,7 +14,6 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
@@ -28,6 +27,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -55,7 +56,7 @@ import java.util.Iterator;
  */
 public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMapping implements IListMappingDeltaSupport
 {
-  private static final FieldInfo[] KEY_FIELDS = { new FieldInfo(CDODBSchema.FEATUREMAP_REVISION_ID, DBType.BIGINT) };
+  private FieldInfo[] keyFields;
 
   private static final int TEMP_INDEX = -1;
 
@@ -80,7 +81,6 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   public NonAuditFeatureMapTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
     super(mappingStrategy, eClass, feature);
-
     initSQLStrings();
   }
 
@@ -193,13 +193,19 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   @Override
   protected FieldInfo[] getKeyFields()
   {
-    return KEY_FIELDS;
+    if (keyFields == null)
+    {
+      DBType dbType = getMappingStrategy().getStore().getIDHandler().getDBType();
+      keyFields = new FieldInfo[] { new FieldInfo(CDODBSchema.FEATUREMAP_REVISION_ID, dbType) };
+    }
+
+    return keyFields;
   }
 
   @Override
   protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    stmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
+    getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, revision.getID());
   }
 
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
@@ -217,12 +223,13 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
    */
   public void clearList(IDBStoreAccessor accessor, CDOID id)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlClear, ReuseProbability.HIGH);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
+      stmt = statementCache.getPreparedStatement(sqlClear, ReuseProbability.HIGH);
+      getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
       CDODBUtil.sqlUpdate(stmt, false);
     }
     catch (SQLException e)
@@ -231,7 +238,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -255,36 +262,38 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
 
   private void insertValue(IDBStoreAccessor accessor, CDOID id, int index, Object value, long timestamp)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
       FeatureMap.Entry entry = (FeatureMap.Entry)value;
       EStructuralFeature entryFeature = entry.getEStructuralFeature();
-      Long tag = getTagByFeature(accessor, entryFeature, timestamp);
-      String column = getColumnName(accessor, tag);
+      CDOID tag = getTagByFeature(accessor, entryFeature, timestamp);
+      String columnName = getColumnName(accessor, tag);
 
       String sql = sqlInsert;
 
-      stmt = accessor.getStatementCache().getPreparedStatement(sql, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
 
-      stmt.setLong(1, CDOIDUtil.getLong(id));
-      int stmtIndex = getKeyFields().length + 1;
+      idHandler.setCDOID(stmt, 1, id);
+      int column = getKeyFields().length + 1;
 
       for (int i = 0; i < getColumnNames().size(); i++)
       {
-        if (getColumnNames().get(i).equals(column))
+        if (getColumnNames().get(i).equals(columnName))
         {
-          getTypeMapping(accessor, tag).setValue(stmt, stmtIndex++, entry.getValue());
+          getTypeMapping(accessor, tag).setValue(stmt, column++, entry.getValue());
         }
         else
         {
-          stmt.setNull(stmtIndex++, getDBTypes().get(i).getCode());
+          stmt.setNull(column++, getDBTypes().get(i).getCode());
         }
       }
 
-      stmt.setInt(stmtIndex++, index);
-      stmt.setLong(stmtIndex++, tag);
+      stmt.setInt(column++, index);
+      idHandler.setCDOID(stmt, column++, tag);
 
       CDODBUtil.sqlUpdate(stmt, true);
     }
@@ -294,7 +303,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -338,13 +347,15 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
 
   private void updateOneIndex(IDBStoreAccessor accessor, CDOID id, int oldIndex, int newIndex)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
       stmt.setInt(1, newIndex);
-      stmt.setLong(2, CDOIDUtil.getLong(id));
+      idHandler.setCDOID(stmt, 2, id);
       stmt.setInt(3, oldIndex);
       CDODBUtil.sqlUpdate(stmt, true);
     }
@@ -354,7 +365,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -380,14 +391,16 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
    */
   private void move1down(IDBStoreAccessor accessor, CDOID id, int index, int upperIndex)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(
-          upperIndex == UNBOUNDED_MOVE ? sqlMoveDown : sqlMoveDownWithLimit, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(upperIndex == UNBOUNDED_MOVE ? sqlMoveDown : sqlMoveDownWithLimit,
+          ReuseProbability.HIGH);
 
-      stmt.setLong(1, CDOIDUtil.getLong(id));
+      idHandler.setCDOID(stmt, 1, id);
       stmt.setInt(2, index);
       if (upperIndex != UNBOUNDED_MOVE)
       {
@@ -402,7 +415,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -412,13 +425,15 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
    */
   private void move1up(IDBStoreAccessor accessor, CDOID id, int index, int upperIndex)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(
-          upperIndex == UNBOUNDED_MOVE ? sqlMoveUp : sqlMoveUpWithLimit, ReuseProbability.HIGH);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
+      stmt = statementCache.getPreparedStatement(upperIndex == UNBOUNDED_MOVE ? sqlMoveUp : sqlMoveUpWithLimit,
+          ReuseProbability.HIGH);
+      idHandler.setCDOID(stmt, 1, id);
       stmt.setInt(2, index);
       if (upperIndex != UNBOUNDED_MOVE)
       {
@@ -433,18 +448,20 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   private void deleteItem(IDBStoreAccessor accessor, CDOID id, int index)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlDeleteItem, ReuseProbability.HIGH);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
+      stmt = statementCache.getPreparedStatement(sqlDeleteItem, ReuseProbability.HIGH);
+      idHandler.setCDOID(stmt, 1, id);
       stmt.setInt(2, index);
       CDODBUtil.sqlUpdate(stmt, true);
     }
@@ -454,7 +471,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -472,36 +489,36 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
    */
   public void setListItem(IDBStoreAccessor accessor, CDOID id, int index, Object value, long timestamp)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     FeatureMap.Entry entry = (FeatureMap.Entry)value;
     EStructuralFeature entryFeature = entry.getEStructuralFeature();
-    Long tag = getTagByFeature(accessor, entryFeature, timestamp);
-    String column = getColumnName(accessor, tag);
+    CDOID tag = getTagByFeature(accessor, entryFeature, timestamp);
+    String columnName = getColumnName(accessor, tag);
     ITypeMapping mapping = getTypeMapping(accessor, tag);
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlUpdateValue, ReuseProbability.HIGH);
-      stmt.setLong(1, tag);
-      int colIndex = 2;
+      stmt = statementCache.getPreparedStatement(sqlUpdateValue, ReuseProbability.HIGH);
+      idHandler.setCDOID(stmt, 1, tag);
+      int column = 2;
 
       for (int i = 0; i < getColumnNames().size(); i++)
       {
-        String columnName = getColumnNames().get(i);
-
-        if (columnName.equals(column))
+        if (getColumnNames().get(i).equals(columnName))
         {
-          mapping.setValue(stmt, colIndex++, entry.getValue());
+          mapping.setValue(stmt, column++, entry.getValue());
         }
         else
         {
-          stmt.setNull(colIndex++, getDBTypes().get(i).getCode());
+          stmt.setNull(column++, getDBTypes().get(i).getCode());
         }
       }
 
-      stmt.setLong(colIndex++, CDOIDUtil.getLong(id));
-      stmt.setInt(colIndex++, index);
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, index);
       CDODBUtil.sqlUpdate(stmt, true);
     }
     catch (SQLException e)
@@ -510,7 +527,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 

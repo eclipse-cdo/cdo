@@ -15,6 +15,8 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -24,12 +26,13 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.messages.Messages;
-import org.eclipse.emf.cdo.spi.server.LongIDStore;
+import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
+import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.db.DBException;
@@ -63,7 +66,7 @@ import java.util.Timer;
 /**
  * @author Eike Stepper
  */
-public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsProvider
+public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 {
   public static final String TYPE = "db"; //$NON-NLS-1$
 
@@ -89,6 +92,11 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
 
   private boolean firstTime;
 
+  // private IIDHandler idHandler = new StringIDHandler(this);
+  private IIDHandler idHandler = new LongIDHandler(this);
+
+  private IMetaDataManager metaDataManager = new MetaDataManager(this);
+
   private IMappingStrategy mappingStrategy;
 
   private IDBSchema dbSchema;
@@ -96,10 +104,6 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   private IDBAdapter dbAdapter;
 
   private IDBConnectionProvider dbConnectionProvider;
-
-  private IMetaDataManager metaDataManager;
-
-  private IExternalReferenceManager.Internal externalReferenceManager;
 
   @ExcludeFromDump
   private transient ProgressDistributor accessorWriteDistributor = new ProgressDistributor.Geometric()
@@ -128,7 +132,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
 
   public DBStore()
   {
-    super(TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA), //
+    super(TYPE, null, set(ChangeFormat.REVISION, ChangeFormat.DELTA), //
         set(RevisionTemporality.AUDITING, RevisionTemporality.NONE), //
         set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
   }
@@ -149,6 +153,11 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   public IDBAdapter getDBAdapter()
   {
     return dbAdapter;
+  }
+
+  public IIDHandler getIDHandler()
+  {
+    return idHandler;
   }
 
   public void setDBAdapter(IDBAdapter dbAdapter)
@@ -189,11 +198,6 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   public IMetaDataManager getMetaDataManager()
   {
     return metaDataManager;
-  }
-
-  public IExternalReferenceManager getExternalReferenceManager()
-  {
-    return externalReferenceManager;
   }
 
   public Timer getConnectionKeepAliveTimer()
@@ -433,6 +437,21 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     return result;
   }
 
+  public CDOID createObjectID(String val)
+  {
+    return idHandler.createCDOID(val);
+  }
+
+  public boolean isLocal(CDOID id)
+  {
+    return idHandler.isLocalCDOID(id);
+  }
+
+  public CDOID getNextCDOID(LongIDStoreAccessor accessor, CDORevision revision)
+  {
+    return idHandler.getNextCDOID(revision);
+  }
+
   public long getCreationTime()
   {
     return creationTime;
@@ -456,6 +475,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    checkNull(idHandler, Messages.getString("DBStore.3")); //$NON-NLS-1$
     checkNull(mappingStrategy, Messages.getString("DBStore.2")); //$NON-NLS-1$
     checkNull(dbAdapter, Messages.getString("DBStore.1")); //$NON-NLS-1$
     checkNull(dbConnectionProvider, Messages.getString("DBStore.0")); //$NON-NLS-1$
@@ -471,6 +491,7 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    setObjectIDTypes(idHandler.getObjectIDTypes());
     connectionKeepAliveTimer = new Timer("Connection-Keep-Alive-" + this); //$NON-NLS-1$
 
     Set<IDBTable> createdTables = null;
@@ -495,13 +516,8 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
 
     dbSchema = createSchema();
 
-    externalReferenceManager = createExternalReferenceManager();
-    externalReferenceManager.setStore(this);
-    LifecycleUtil.activate(externalReferenceManager);
-
-    metaDataManager = new MetaDataManager(this);
+    LifecycleUtil.activate(idHandler);
     LifecycleUtil.activate(metaDataManager);
-
     LifecycleUtil.activate(mappingStrategy);
 
     if (isFirstStart(createdTables))
@@ -517,21 +533,20 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
   @Override
   protected void doDeactivate() throws Exception
   {
-    LifecycleUtil.deactivate(metaDataManager);
-    LifecycleUtil.deactivate(externalReferenceManager);
     LifecycleUtil.deactivate(mappingStrategy);
+    LifecycleUtil.deactivate(metaDataManager);
+    LifecycleUtil.deactivate(idHandler);
 
     Map<String, String> map = new HashMap<String, String>();
     map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
     map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
-    map.put(PROP_NEXT_LOCAL_CDOID, Long.toString(getNextLocalObjectID()));
-    map.put(PROP_LAST_CDOID, Long.toString(getLastObjectID()));
+    map.put(PROP_NEXT_LOCAL_CDOID, idToString(idHandler.getNextLocalObjectID()));
+    map.put(PROP_LAST_CDOID, idToString(idHandler.getLastObjectID()));
     map.put(PROP_LAST_BRANCHID, Integer.toString(getLastBranchID()));
     map.put(PROP_LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
     map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
     map.put(PROP_LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
     setPropertyValues(map);
-
     readerPool.dispose();
     writerPool.dispose();
 
@@ -583,8 +598,8 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
       names.add(PROP_LAST_NONLOCAL_COMMITTIME);
       map = getPropertyValues(names);
 
-      setNextLocalObjectID(Long.valueOf(map.get(PROP_NEXT_LOCAL_CDOID)));
-      setLastObjectID(Long.valueOf(map.get(PROP_LAST_CDOID)));
+      idHandler.setNextLocalObjectID(stringToID(map.get(PROP_NEXT_LOCAL_CDOID)));
+      idHandler.setLastObjectID(stringToID(map.get(PROP_LAST_CDOID)));
       setLastBranchID(Integer.valueOf(map.get(PROP_LAST_BRANCHID)));
       setLastLocalBranchID(Integer.valueOf(map.get(PROP_LAST_LOCAL_BRANCHID)));
       setLastCommitTime(Long.valueOf(map.get(PROP_LAST_COMMITTIME)));
@@ -592,57 +607,69 @@ public class DBStore extends LongIDStore implements IDBStore, CDOAllRevisionsPro
     }
     else
     {
-      Connection connection = getConnection();
-
-      try
-      {
-        connection.setAutoCommit(false);
-        connection.setReadOnly(true);
-        OM.LOG.info(Messages.getString("DBStore.9")); //$NON-NLS-1$
-
-        long[] result = mappingStrategy.repairAfterCrash(dbAdapter, connection);
-        setNextLocalObjectID(result[0]);
-        setLastObjectID(result[1]);
-
-        int branchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
-        setLastBranchID(branchID > 0 ? branchID : 0);
-
-        int localBranchID = DBUtil.selectMinimumInt(connection, CDODBSchema.BRANCHES_ID);
-        setLastLocalBranchID(localBranchID < 0 ? localBranchID : 0);
-
-        long lastCommitTime = DBUtil.selectMaximumLong(connection, CDODBSchema.COMMIT_INFOS_TIMESTAMP);
-        setLastCommitTime(lastCommitTime);
-
-        long lastNonLocalCommitTime = DBUtil.selectMaximumLong(connection, CDODBSchema.COMMIT_INFOS_TIMESTAMP,
-            CDOBranch.MAIN_BRANCH_ID + "<=" + CDODBSchema.COMMIT_INFOS_BRANCH);
-        setLastNonLocalCommitTime(lastNonLocalCommitTime);
-
-        OM.LOG
-            .info(MessageFormat.format(
-                Messages.getString("DBStore.10"), getLastObjectID(), getNextLocalObjectID(), getLastBranchID(), getLastCommitTime(), getLastNonLocalCommitTime())); //$NON-NLS-1$
-      }
-      catch (SQLException e)
-      {
-        OM.LOG.error(Messages.getString("DBStore.12"), e); //$NON-NLS-1$
-        throw new DBException(e);
-      }
-      finally
-      {
-        DBUtil.close(connection);
-      }
+      repairAfterCrash();
     }
 
     removePropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
   }
 
-  protected IExternalReferenceManager.Internal createExternalReferenceManager()
+  protected void repairAfterCrash()
   {
-    return new ExternalReferenceManager();
+    Connection connection = getConnection();
+
+    try
+    {
+      connection.setAutoCommit(false);
+      connection.setReadOnly(true);
+      OM.LOG.info(Messages.getString("DBStore.9")); //$NON-NLS-1$
+
+      mappingStrategy.repairAfterCrash(dbAdapter, connection); // Must update the idHandler
+      CDOID lastObjectID = idHandler.getLastObjectID();
+      CDOID nextLocalObjectID = idHandler.getNextLocalObjectID();
+
+      int branchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
+      setLastBranchID(branchID > 0 ? branchID : 0);
+
+      int localBranchID = DBUtil.selectMinimumInt(connection, CDODBSchema.BRANCHES_ID);
+      setLastLocalBranchID(localBranchID < 0 ? localBranchID : 0);
+
+      long lastCommitTime = DBUtil.selectMaximumLong(connection, CDODBSchema.COMMIT_INFOS_TIMESTAMP);
+      setLastCommitTime(lastCommitTime);
+
+      long lastNonLocalCommitTime = DBUtil.selectMaximumLong(connection, CDODBSchema.COMMIT_INFOS_TIMESTAMP,
+          CDOBranch.MAIN_BRANCH_ID + "<=" + CDODBSchema.COMMIT_INFOS_BRANCH);
+      setLastNonLocalCommitTime(lastNonLocalCommitTime);
+
+      OM.LOG
+          .info(MessageFormat.format(
+              Messages.getString("DBStore.10"), lastObjectID, nextLocalObjectID, getLastBranchID(), getLastCommitTime(), getLastNonLocalCommitTime())); //$NON-NLS-1$
+    }
+    catch (SQLException e)
+    {
+      OM.LOG.error(Messages.getString("DBStore.12"), e); //$NON-NLS-1$
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
   }
 
   protected IDBSchema createSchema()
   {
     String name = getRepository().getName();
     return new DBSchema(name);
+  }
+
+  private String idToString(CDOID id)
+  {
+    StringBuilder builder = new StringBuilder();
+    CDOIDUtil.write(builder, id);
+    return builder.toString();
+  }
+
+  private CDOID stringToID(String string)
+  {
+    return CDOIDUtil.read(string);
   }
 }

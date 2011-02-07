@@ -19,7 +19,6 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -39,6 +38,7 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
@@ -105,7 +105,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
   /**
    * The tags mapped to column names
    */
-  private HashMap<Long, String> tagMap;
+  private HashMap<CDOID, String> tagMap;
 
   /**
    * Column name Set
@@ -115,7 +115,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
   /**
    * The type mappings for the value fields.
    */
-  private Map<Long, ITypeMapping> typeMappings;
+  private Map<CDOID, ITypeMapping> typeMappings;
 
   private List<DBType> dbTypes;
 
@@ -173,8 +173,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     // add field for FeatureMap tag (MetaID for Feature in CDO registry)
     IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, DBType.INTEGER);
 
-    tagMap = new HashMap<Long, String>();
-    typeMappings = new HashMap<Long, ITypeMapping>();
+    tagMap = new HashMap<CDOID, String>();
+    typeMappings = new HashMap<CDOID, ITypeMapping>();
     columnNames = new ArrayList<String>();
 
     // create columns for all DBTypes
@@ -371,12 +371,12 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     return columnNames;
   }
 
-  protected final Map<Long, ITypeMapping> getTypeMappings()
+  protected final Map<CDOID, ITypeMapping> getTypeMappings()
   {
     return typeMappings;
   }
 
-  protected final Map<Long, String> getTagMap()
+  protected final Map<CDOID, String> getTagMap()
   {
     return tagMap;
   }
@@ -397,31 +397,32 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
           .getName(), revision.getID(), revision.getVersion());
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
       String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
 
-      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
 
-      pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-      pstmt.setInt(2, revision.getVersion());
-      pstmt.setInt(3, revision.getVersion());
+      idHandler.setCDOID(stmt, 1, revision.getID());
+      stmt.setInt(2, revision.getVersion());
+      stmt.setInt(3, revision.getVersion());
 
       if (listChunk != CDORevision.UNCHUNKED)
       {
-        pstmt.setMaxRows(listChunk); // optimization - don't read unneeded rows.
+        stmt.setMaxRows(listChunk); // optimization - don't read unneeded rows.
       }
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
 
       int currentIndex = 0;
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
-        Long tag = resultSet.getLong(1);
+        CDOID tag = idHandler.getCDOID(resultSet, 1);
         Object value = getTypeMapping(accessor, tag).readValue(resultSet);
 
         if (TRACER.isEnabled())
@@ -439,7 +440,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
 
     if (TRACER.isEnabled())
@@ -449,7 +450,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     }
   }
 
-  private void addFeature(IDBStoreAccessor accessor, Long tag)
+  private void addFeature(IDBStoreAccessor accessor, CDOID tag)
   {
     EStructuralFeature modelFeature = getFeatureByTag(accessor, tag);
 
@@ -469,8 +470,9 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
           getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = chunkReader.getAccessor().getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
@@ -485,12 +487,12 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       builder.append(sqlOrderByIndex);
 
       String sql = builder.toString();
-      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
-      pstmt.setLong(1, CDOIDUtil.getLong(chunkReader.getRevision().getID()));
-      pstmt.setInt(2, chunkReader.getRevision().getVersion());
-      pstmt.setInt(3, chunkReader.getRevision().getVersion());
+      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
+      idHandler.setCDOID(stmt, 1, chunkReader.getRevision().getID());
+      stmt.setInt(2, chunkReader.getRevision().getVersion());
+      stmt.setInt(3, chunkReader.getRevision().getVersion());
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
 
       Chunk chunk = null;
       int chunkSize = 0;
@@ -499,7 +501,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
 
       while (resultSet.next())
       {
-        Long tag = resultSet.getLong(1);
+        CDOID tag = idHandler.getCDOID(resultSet, 1);
         Object value = getTypeMapping(chunkReader.getAccessor(), tag).readValue(resultSet);
 
         if (chunk == null)
@@ -546,7 +548,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -585,7 +587,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    *          The feature's MetaID in CDO
    * @return the column name where the values are stored
    */
-  protected String getColumnName(IDBStoreAccessor accessor, Long tag)
+  protected String getColumnName(IDBStoreAccessor accessor, CDOID tag)
   {
     String column = tagMap.get(tag);
     if (column == null)
@@ -604,7 +606,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    *          The feature's MetaID in CDO
    * @return the corresponding type mapping
    */
-  protected ITypeMapping getTypeMapping(IDBStoreAccessor accessor, Long tag)
+  protected ITypeMapping getTypeMapping(IDBStoreAccessor accessor, CDOID tag)
   {
     ITypeMapping typeMapping = typeMappings.get(tag);
     if (typeMapping == null)
@@ -620,7 +622,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    * @param metaID
    * @return the column name where the values are stored
    */
-  private EStructuralFeature getFeatureByTag(IDBStoreAccessor accessor, Long tag)
+  private EStructuralFeature getFeatureByTag(IDBStoreAccessor accessor, CDOID tag)
   {
     return (EStructuralFeature)getMappingStrategy().getStore().getMetaDataManager().getMetaInstance(accessor, tag);
   }
@@ -630,7 +632,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    *          The EStructuralFeature
    * @return The feature's MetaID in CDO
    */
-  protected Long getTagByFeature(IDBStoreAccessor accessor, EStructuralFeature feature, long timestamp)
+  protected CDOID getTagByFeature(IDBStoreAccessor accessor, EStructuralFeature feature, long timestamp)
   {
     return getMappingStrategy().getStore().getMetaDataManager().getMetaID(accessor, feature, timestamp);
   }
@@ -645,29 +647,30 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
    */
   public void clearList(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmtDeleteTemp = null;
-    PreparedStatement pstmtClear = null;
+    PreparedStatement stmtDeleteTemp = null;
+    PreparedStatement stmtClear = null;
 
     try
     {
       // delete temporary entries
-      pstmtDeleteTemp = statementCache.getPreparedStatement(sqlDeleteList, ReuseProbability.HIGH);
-      pstmtDeleteTemp.setLong(1, CDOIDUtil.getLong(id));
-      pstmtDeleteTemp.setInt(2, newVersion);
+      stmtDeleteTemp = statementCache.getPreparedStatement(sqlDeleteList, ReuseProbability.HIGH);
+      idHandler.setCDOID(stmtDeleteTemp, 1, id);
+      stmtDeleteTemp.setInt(2, newVersion);
 
-      int result = CDODBUtil.sqlUpdate(pstmtDeleteTemp, false);
+      int result = CDODBUtil.sqlUpdate(stmtDeleteTemp, false);
       if (TRACER.isEnabled())
       {
         TRACER.format("DeleteList result: {0}", result); //$NON-NLS-1$
       }
 
       // clear rest of the list
-      pstmtClear = statementCache.getPreparedStatement(sqlClearList, ReuseProbability.HIGH);
-      pstmtClear.setInt(1, newVersion);
-      pstmtClear.setLong(2, CDOIDUtil.getLong(id));
+      stmtClear = statementCache.getPreparedStatement(sqlClearList, ReuseProbability.HIGH);
+      stmtClear.setInt(1, newVersion);
+      idHandler.setCDOID(stmtClear, 2, id);
 
-      result = CDODBUtil.sqlUpdate(pstmtClear, false);
+      result = CDODBUtil.sqlUpdate(stmtClear, false);
       if (TRACER.isEnabled())
       {
         TRACER.format("ClearList result: {0}", result); //$NON-NLS-1$
@@ -679,8 +682,8 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmtDeleteTemp);
-      statementCache.releasePreparedStatement(pstmtClear);
+      statementCache.releasePreparedStatement(stmtDeleteTemp);
+      statementCache.releasePreparedStatement(stmtClear);
     }
   }
 
@@ -884,12 +887,13 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex,
         int endIndex)
     {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       IPreparedStatementCache statementCache = accessor.getStatementCache();
-      PreparedStatement pstmt = null;
+      PreparedStatement stmt = null;
 
       try
       {
-        pstmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+        stmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
         for (int index = startIndex; index <= endIndex; ++index)
         {
@@ -898,13 +902,13 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
             TRACER.format("moveOneUp moving: {0} -> {1}", index, index - 1); //$NON-NLS-1$
           }
 
-          int stmtIndex = 1;
-          pstmt.setInt(stmtIndex++, index - 1);
-          pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-          pstmt.setInt(stmtIndex++, newVersion);
-          pstmt.setInt(stmtIndex++, index);
+          int column = 1;
+          stmt.setInt(column++, index - 1);
+          idHandler.setCDOID(stmt, column++, id);
+          stmt.setInt(column++, newVersion);
+          stmt.setInt(column++, index);
 
-          int result = CDODBUtil.sqlUpdate(pstmt, false);
+          int result = CDODBUtil.sqlUpdate(stmt, false);
           switch (result)
           {
           case 0:
@@ -947,19 +951,20 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       }
       finally
       {
-        statementCache.releasePreparedStatement(pstmt);
+        statementCache.releasePreparedStatement(stmt);
       }
     }
 
     private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex,
         int endIndex)
     {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       IPreparedStatementCache statementCache = accessor.getStatementCache();
-      PreparedStatement pstmt = null;
+      PreparedStatement stmt = null;
 
       try
       {
-        pstmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+        stmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
         for (int index = endIndex; index >= startIndex; --index)
         {
           if (TRACER.isEnabled())
@@ -967,13 +972,13 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
             TRACER.format("moveOneDown moving: {0} -> {1}", index, index + 1); //$NON-NLS-1$
           }
 
-          int stmtIndex = 1;
-          pstmt.setInt(stmtIndex++, index + 1);
-          pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-          pstmt.setInt(stmtIndex++, newVersion);
-          pstmt.setInt(stmtIndex++, index);
+          int column = 1;
+          stmt.setInt(column++, index + 1);
+          idHandler.setCDOID(stmt, column++, id);
+          stmt.setInt(column++, newVersion);
+          stmt.setInt(column++, index);
 
-          int result = CDODBUtil.sqlUpdate(pstmt, false);
+          int result = CDODBUtil.sqlUpdate(stmt, false);
           switch (result)
           {
           case 0:
@@ -1016,15 +1021,16 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       }
       finally
       {
-        statementCache.releasePreparedStatement(pstmt);
+        statementCache.releasePreparedStatement(stmt);
       }
     }
   }
 
   private void addEntry(IDBStoreAccessor accessor, CDOID id, int version, int index, Object value, long timestamp)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     if (TRACER.isEnabled())
     {
@@ -1036,31 +1042,31 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     {
       FeatureMap.Entry entry = (FeatureMap.Entry)value;
       EStructuralFeature entryFeature = entry.getEStructuralFeature();
-      Long tag = getTagByFeature(accessor, entryFeature, timestamp);
-      String column = getColumnName(accessor, tag);
+      CDOID tag = getTagByFeature(accessor, entryFeature, timestamp);
+      String columnName = getColumnName(accessor, tag);
 
-      pstmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.HIGH);
 
-      int stmtIndex = 1;
-      pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-      pstmt.setInt(stmtIndex++, version);
-      pstmt.setNull(stmtIndex++, DBType.INTEGER.getCode()); // versionRemoved
-      pstmt.setInt(stmtIndex++, index);
-      pstmt.setLong(stmtIndex++, tag);
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, version);
+      stmt.setNull(column++, DBType.INTEGER.getCode()); // versionRemoved
+      stmt.setInt(column++, index);
+      idHandler.setCDOID(stmt, column++, tag);
 
       for (int i = 0; i < columnNames.size(); i++)
       {
-        if (columnNames.get(i).equals(column))
+        if (columnNames.get(i).equals(columnName))
         {
-          getTypeMapping(accessor, tag).setValue(pstmt, stmtIndex++, entry.getValue());
+          getTypeMapping(accessor, tag).setValue(stmt, column++, entry.getValue());
         }
         else
         {
-          pstmt.setNull(stmtIndex++, getDBTypes().get(i).getCode());
+          stmt.setNull(column++, getDBTypes().get(i).getCode());
         }
       }
 
-      CDODBUtil.sqlUpdate(pstmt, true);
+      CDODBUtil.sqlUpdate(stmt, true);
     }
     catch (SQLException e)
     {
@@ -1072,14 +1078,15 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   private void removeEntry(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int index)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     if (TRACER.isEnabled())
     {
@@ -1090,14 +1097,14 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     try
     {
       // try to delete a temporary entry first
-      pstmt = statementCache.getPreparedStatement(sqlDeleteEntry, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlDeleteEntry, ReuseProbability.HIGH);
 
-      int stmtIndex = 1;
-      pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-      pstmt.setInt(stmtIndex++, index);
-      pstmt.setInt(stmtIndex++, newVersion);
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, index);
+      stmt.setInt(column++, newVersion);
 
-      int result = CDODBUtil.sqlUpdate(pstmt, false);
+      int result = CDODBUtil.sqlUpdate(stmt, false);
       if (result == 1)
       {
         if (TRACER.isEnabled())
@@ -1117,14 +1124,14 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       else
       {
         // no temporary entry found, so mark the entry as removed
-        statementCache.releasePreparedStatement(pstmt);
-        pstmt = statementCache.getPreparedStatement(sqlRemoveEntry, ReuseProbability.HIGH);
+        statementCache.releasePreparedStatement(stmt);
+        stmt = statementCache.getPreparedStatement(sqlRemoveEntry, ReuseProbability.HIGH);
 
-        stmtIndex = 1;
-        pstmt.setInt(stmtIndex++, newVersion);
-        pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-        pstmt.setInt(stmtIndex++, index);
-        CDODBUtil.sqlUpdate(pstmt, true);
+        column = 1;
+        stmt.setInt(column++, newVersion);
+        idHandler.setCDOID(stmt, column++, id);
+        stmt.setInt(column++, index);
+        CDODBUtil.sqlUpdate(stmt, true);
       }
     }
     catch (SQLException e)
@@ -1149,31 +1156,32 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   private FeatureMap.Entry getValue(IDBStoreAccessor accessor, CDOID id, int index)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     FeatureMap.Entry result = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(sqlGetValue, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlGetValue, ReuseProbability.HIGH);
 
-      int stmtIndex = 1;
-      pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-      pstmt.setInt(stmtIndex++, index);
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, index);
 
-      ResultSet resultSet = pstmt.executeQuery();
+      ResultSet resultSet = stmt.executeQuery();
       if (!resultSet.next())
       {
         throw new DBException("getValue expects exactly one result");
       }
 
-      Long tag = resultSet.getLong(1);
+      CDOID tag = idHandler.getCDOID(resultSet, 1);
       Object value = getTypeMapping(accessor, tag).readValue(resultSet);
       result = CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(accessor, tag), value);
 
@@ -1188,7 +1196,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
 
     return result;

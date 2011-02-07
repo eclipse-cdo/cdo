@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 
@@ -138,7 +140,6 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     container.registerFactory(CoreTypeMappings.TMInteger.FACTORY_OBJECT);
     container.registerFactory(CoreTypeMappings.TMLong.FACTORY);
     container.registerFactory(CoreTypeMappings.TMLong.FACTORY_OBJECT);
-    container.registerFactory(CoreTypeMappings.TMObject.FACTORY);
     container.registerFactory(CoreTypeMappings.TMShort.FACTORY);
     container.registerFactory(CoreTypeMappings.TMShort.FACTORY_OBJECT);
     container.registerFactory(CoreTypeMappings.TMString.FACTORY_VARCHAR);
@@ -149,7 +150,6 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     container.registerFactory(CoreTypeMappings.TMClob.FACTORY_VARCHAR);
     container.registerFactory(CoreTypeMappings.TMClob.FACTORY_LONG_VARCHAR);
 
-    classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEClass(), DBType.BIGINT);
     classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEDataType(), DBType.VARCHAR);
 
     classifierDefaultMapping.put(EcorePackage.eINSTANCE.getEBigDecimal(), DBType.VARCHAR);
@@ -223,45 +223,55 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
   public ITypeMapping createTypeMapping(IMappingStrategy mappingStrategy, EStructuralFeature feature)
   {
-    IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();
-    DBType dbType = getDBType(feature, dbAdapter);
-
-    ITypeMapping.Descriptor descriptor = null;
-
-    String typeMappingID = DBAnnotation.TYPE_MAPPING.getValue(feature);
-    if (typeMappingID != null)
+    ITypeMapping typeMapping = null;
+    if (feature instanceof EReference)
     {
-      // lookup annotated mapping
-      descriptor = typeMappingsById.get(typeMappingID);
+      IIDHandler idHandler = mappingStrategy.getStore().getIDHandler();
+      typeMapping = idHandler.getObjectTypeMapping();
+      typeMapping.setDBType(idHandler.getDBType());
+    }
+    else
+    {
+      IDBAdapter dbAdapter = mappingStrategy.getStore().getDBAdapter();
+      DBType dbType = getDBType(feature, dbAdapter);
+
+      ITypeMapping.Descriptor descriptor = null;
+
+      String typeMappingID = DBAnnotation.TYPE_MAPPING.getValue(feature);
+      if (typeMappingID != null)
+      {
+        // lookup annotated mapping
+        descriptor = typeMappingsById.get(typeMappingID);
+
+        if (descriptor == null)
+        {
+          OM.LOG.warn(MessageFormat.format(Messages.getString("TypeMappingRegistry.2"), //
+              typeMappingID, feature.toString()));
+        }
+      }
 
       if (descriptor == null)
       {
-        OM.LOG.warn(MessageFormat.format(Messages.getString("TypeMappingRegistry.2"), //
-            typeMappingID, feature.toString()));
+        // try to find suitable mapping by type
+        descriptor = getMappingByType(feature, dbType);
       }
+
+      if (descriptor == null)
+      {
+        EClassifier type = getEType(feature);
+        throw new IllegalStateException(MessageFormat.format(Messages.getString("TypeMappingRegistry.1"), feature
+            .getEContainingClass().getName() + "." + feature.getName(),
+            type.getEPackage().getName() + "." + type.getName(), dbType.getKeyword()));
+      }
+
+      IFactory factory = getManagedContainer().getFactory(ITypeMapping.Factory.PRODUCT_GROUP,
+          descriptor.getFactoryType());
+      typeMapping = (ITypeMapping)factory.create(null);
+      typeMapping.setDBType(dbType);
     }
 
-    if (descriptor == null)
-    {
-      // try to find suitable mapping by type
-      descriptor = getMappingByType(feature, dbType);
-    }
-
-    if (descriptor == null)
-    {
-      EClassifier type = getEType(feature);
-      throw new IllegalStateException(MessageFormat.format(Messages.getString("TypeMappingRegistry.1"), feature
-          .getEContainingClass().getName() + "." + feature.getName(),
-          type.getEPackage().getName() + "." + type.getName(), dbType.getKeyword()));
-    }
-
-    IFactory factory = getManagedContainer()
-        .getFactory(ITypeMapping.Factory.PRODUCT_GROUP, descriptor.getFactoryType());
-
-    ITypeMapping typeMapping = (ITypeMapping)factory.create(null);
     typeMapping.setMappingStrategy(mappingStrategy);
     typeMapping.setFeature(feature);
-    typeMapping.setDBType(dbType);
     return typeMapping;
   }
 

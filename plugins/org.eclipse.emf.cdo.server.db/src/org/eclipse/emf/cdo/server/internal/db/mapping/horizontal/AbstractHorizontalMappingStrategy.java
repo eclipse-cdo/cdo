@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -22,6 +21,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IObjectTypeMapper;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
@@ -78,13 +78,15 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     objectTypeMapper.putObjectType(accessor, timeStamp, id, type);
   }
 
-  public long[] repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
+  public void repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
   {
-    long minLocalID = getMinLocalID(connection);
-    long maxID = objectTypeMapper.getMaxID(connection);
+    IIDHandler idHandler = getStore().getIDHandler();
 
-    long[] result = { minLocalID, maxID };
-    return result;
+    CDOID minLocalID = getMinLocalID(connection);
+    idHandler.setNextLocalObjectID(minLocalID);
+
+    CDOID maxID = objectTypeMapper.getMaxID(connection, idHandler);
+    idHandler.setLastObjectID(maxID);
   }
 
   public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context)
@@ -98,17 +100,20 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;
 
     // first query folders
-    boolean shallContinue = queryResources(accessor, getClassMapping(resourcesPackage.getCDOResourceFolder()), context);
+    IClassMapping resourceFolder = getClassMapping(resourcesPackage.getCDOResourceFolder());
+    boolean shallContinue = queryResources(accessor, resourceFolder, context);
 
     // not enough results? -> query resources
     if (shallContinue)
     {
-      queryResources(accessor, getClassMapping(resourcesPackage.getCDOResource()), context);
+      IClassMapping resource = getClassMapping(resourcesPackage.getCDOResource());
+      queryResources(accessor, resource, context);
     }
   }
 
   public void queryXRefs(IDBStoreAccessor accessor, QueryXRefsContext context)
   {
+    IIDHandler idHandler = getStore().getIDHandler();
     StringBuilder builder = null;
 
     // create a string containing "(id1,id2,...)"
@@ -126,8 +131,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
         builder.append(",");
       }
 
-      long id = CDOIDUtil.getLong(targetID);
-      builder.append(id);
+      idHandler.appendCDOID(builder, targetID);
     }
 
     builder.append(")");
@@ -378,8 +382,9 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
    */
   private boolean queryResources(IDBStoreAccessor accessor, IClassMapping classMapping, QueryResourcesContext context)
   {
+    IIDHandler idHandler = getStore().getIDHandler();
     PreparedStatement stmt = null;
-    ResultSet rset = null;
+    ResultSet resultSet = null;
 
     CDOID folderID = context.getFolderID();
     String name = context.getName();
@@ -388,17 +393,16 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     try
     {
       stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, context);
-      rset = stmt.executeQuery();
+      resultSet = stmt.executeQuery();
 
-      while (rset.next())
+      while (resultSet.next())
       {
-        long longID = rset.getLong(1);
+        CDOID id = idHandler.getCDOID(resultSet, 1);
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Resource query returned ID " + longID); //$NON-NLS-1$
+          TRACER.trace("Resource query returned ID " + id); //$NON-NLS-1$
         }
 
-        CDOID id = CDOIDUtil.createLong(longID);
         if (!context.addResource(id))
         {
           // No more results allowed
@@ -414,14 +418,15 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     }
     finally
     {
-      DBUtil.close(rset);
+      DBUtil.close(resultSet);
       accessor.getStatementCache().releasePreparedStatement(stmt);
     }
   }
 
-  private long getMinLocalID(Connection connection)
+  private CDOID getMinLocalID(Connection connection)
   {
-    long min = Long.MAX_VALUE;
+    IIDHandler idHandler = getStore().getIDHandler();
+    CDOID min = idHandler.getMaxCDOID();
 
     // Do not call getClassMappings() at this point, as the package registry is not yet initialized!
     String dbName = getStore().getRepository().getName();
@@ -446,14 +451,10 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
         if (resultSet.next())
         {
-          Object result = resultSet.getObject(1);
-          if (result instanceof Long)
+          CDOID id = idHandler.getCDOID(resultSet, 1);
+          if (idHandler.compare(id, min) < 0)
           {
-            long id = ((Long)result).longValue();
-            if (id < min)
-            {
-              min = id;
-            }
+            min = id;
           }
         }
       }

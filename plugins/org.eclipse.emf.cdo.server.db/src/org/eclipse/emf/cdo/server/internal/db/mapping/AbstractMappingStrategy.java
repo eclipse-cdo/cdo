@@ -18,6 +18,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -96,7 +97,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
    */
   protected static final String CDO_SET_PREFIX = "cdo_set_"; //$NON-NLS-1$
 
-  protected static final String FEATEURE_TABLE_SUFFIX = "_list"; //$NON-NLS-1$
+  protected static final String FEATURE_TABLE_SUFFIX = "_list"; //$NON-NLS-1$
 
   private IDBStore store;
 
@@ -246,16 +247,16 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
           IClassMapping mapping = getClassMapping(eClass);
           currentStatement = mapping.createObjectIDStatement(getAccessor());
 
-          ResultSet rset = null;
+          ResultSet resultSet = null;
 
           try
           {
-            rset = currentStatement.executeQuery();
-            return rset;
+            resultSet = currentStatement.executeQuery();
+            return resultSet;
           }
           catch (Exception ex)
           {
-            DBUtil.close(rset); // only on error
+            DBUtil.close(resultSet); // only on error
             releaseCurrentStatement();
             throw new DBException(ex);
           }
@@ -331,7 +332,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
     name += NAME_SEPARATOR;
     name += feature.getName();
-    name += FEATEURE_TABLE_SUFFIX;
+    name += FEATURE_TABLE_SUFFIX;
 
     String prefix = getTableNamePrefix();
     if (prefix.length() != 0 && !prefix.endsWith(NAME_SEPARATOR))
@@ -388,7 +389,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return name;
   }
 
-  private long getUniqueID(ENamedElement element)
+  private String getUniqueID(ENamedElement element)
   {
     // TODO: replace with a better logic. For now, we fall back to the
     // element IDs...
@@ -397,9 +398,12 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
     try
     {
-      long result = getMetaDataManager().getMetaID(accessor, element, System.currentTimeMillis());
+      CDOID result = getMetaDataManager().getMetaID(accessor, element, getStore().getRepository().getTimeStamp());
       accessor.commit(new Monitor());
-      return Math.abs(result);
+
+      StringBuilder builder = new StringBuilder();
+      CDOIDUtil.write(builder, result);
+      return builder.toString();
     }
     catch (Throwable t)
     {

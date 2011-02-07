@@ -278,10 +278,9 @@ public interface IMappingStrategy
    *          the dbAdapter to use to access the database
    * @param connection
    *          the connection to use to access the database
-   * @return the maximum object id and the last commit time used in the store.
-   * @since 3.0
+   * @since 4.0
    */
-  public long[] repairAfterCrash(IDBAdapter dbAdapter, Connection connection);
+  public void repairAfterCrash(IDBAdapter dbAdapter, Connection connection);
 
   /**
    * Set configuration properties for this mapping strategy. Should only be called by the factory creating the mapping

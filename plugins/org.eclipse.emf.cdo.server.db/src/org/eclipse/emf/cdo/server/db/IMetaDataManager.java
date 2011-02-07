@@ -13,6 +13,7 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -41,7 +42,7 @@ public interface IMetaDataManager
    * @return the corresponding ID
    * @since 4.0
    */
-  public long getMetaID(IDBStoreAccessor accessor, EModelElement modelElement, long commitTime);
+  public CDOID getMetaID(IDBStoreAccessor accessor, EModelElement modelElement, long commitTime);
 
   /**
    * Returns the {@link EModelElement} referred to by the given ID. <code> getMetaInstance(getMetaID(m))</code> yields
@@ -49,7 +50,7 @@ public interface IMetaDataManager
    * 
    * @since 4.0
    */
-  public EModelElement getMetaInstance(IDBStoreAccessor accessor, long id);
+  public EModelElement getMetaInstance(IDBStoreAccessor accessor, CDOID id);
 
   /**
    * Loads a package unit from the database.

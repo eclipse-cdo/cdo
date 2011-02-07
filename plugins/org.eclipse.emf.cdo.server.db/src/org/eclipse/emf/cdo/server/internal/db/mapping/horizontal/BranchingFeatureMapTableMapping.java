@@ -14,7 +14,6 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -37,9 +36,7 @@ import java.sql.SQLException;
  */
 public class BranchingFeatureMapTableMapping extends AbstractFeatureMapTableMapping
 {
-  private static final FieldInfo[] KEY_FIELDS = { new FieldInfo(CDODBSchema.FEATUREMAP_REVISION_ID, DBType.BIGINT),
-      new FieldInfo(CDODBSchema.FEATUREMAP_BRANCH, DBType.INTEGER),
-      new FieldInfo(CDODBSchema.FEATUREMAP_VERSION, DBType.INTEGER) };
+  private FieldInfo[] keyFields;
 
   public BranchingFeatureMapTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -49,13 +46,21 @@ public class BranchingFeatureMapTableMapping extends AbstractFeatureMapTableMapp
   @Override
   protected FieldInfo[] getKeyFields()
   {
-    return KEY_FIELDS;
+    if (keyFields == null)
+    {
+      keyFields = new FieldInfo[] {
+          new FieldInfo(CDODBSchema.FEATUREMAP_REVISION_ID, getMappingStrategy().getStore().getIDHandler().getDBType()),
+          new FieldInfo(CDODBSchema.FEATUREMAP_BRANCH, DBType.INTEGER),
+          new FieldInfo(CDODBSchema.FEATUREMAP_VERSION, DBType.INTEGER) };
+    }
+
+    return keyFields;
   }
 
   @Override
   protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    stmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
+    getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, revision.getID());
     stmt.setInt(2, revision.getBranch().getID());
     stmt.setInt(3, revision.getVersion());
   }

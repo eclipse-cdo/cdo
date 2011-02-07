@@ -12,8 +12,8 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
@@ -31,6 +31,8 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
 {
   private IMappingStrategy mappingStrategy;
 
+  private IIDHandler idHandler;
+
   private IDBStoreAccessor accessor;
 
   private ResultSet currentResultSet;
@@ -47,6 +49,8 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
   {
     this.mappingStrategy = mappingStrategy;
     this.accessor = accessor;
+    idHandler = getMappingStrategy().getStore().getIDHandler();
+
   }
 
   public void close()
@@ -94,8 +98,7 @@ public abstract class ObjectIDIterator implements CloseableIterator<CDOID>
       {
         if (currentResultSet.next())
         {
-          long id = currentResultSet.getLong(1);
-          nextID = CDOIDUtil.createLong(id);
+          nextID = idHandler.getCDOID(currentResultSet, 1);
           return true;
         }
 

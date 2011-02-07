@@ -16,7 +16,6 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
@@ -33,6 +32,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
@@ -253,25 +253,23 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   @Override
   protected void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
-    long commitTime = revision.getTimeStamp();
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      int col = 1;
+      int column = 1;
       stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
-      stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
-      stmt.setInt(col++, revision.getVersion());
-      stmt.setLong(col++, commitTime);
-      stmt.setLong(col++, revision.getRevised());
-      stmt.setLong(col++,
-          CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision.getResourceID(), commitTime));
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor,
-          (CDOID)revision.getContainerID(), commitTime));
-      stmt.setInt(col++, revision.getContainingFeatureID());
+      idHandler.setCDOID(stmt, column++, revision.getID());
+      stmt.setInt(column++, revision.getVersion());
+      stmt.setLong(column++, revision.getTimeStamp());
+      stmt.setLong(column++, revision.getRevised());
+      idHandler.setCDOID(stmt, column++, revision.getResourceID());
+      idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
+      stmt.setInt(column++, revision.getContainingFeatureID());
 
-      int isSetCol = col + getValueMappings().size();
+      int isSetCol = column + getValueMappings().size();
 
       for (ITypeMapping mapping : getValueMappings())
       {
@@ -283,26 +281,26 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
             stmt.setBoolean(isSetCol++, false);
 
             // also set value column to default value
-            mapping.setDefaultValue(stmt, col++);
+            mapping.setDefaultValue(stmt, column++);
             continue;
           }
 
           stmt.setBoolean(isSetCol++, true);
         }
 
-        mapping.setValueFromRevision(stmt, col++, revision);
+        mapping.setValueFromRevision(stmt, column++, revision);
       }
 
       Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
       if (listSizeFields != null)
       {
         // isSetCol now points to the first listTableSize-column
-        col = isSetCol;
+        column = isSetCol;
 
         for (EStructuralFeature feature : listSizeFields.keySet())
         {
           CDOList list = revision.getList(feature);
-          stmt.setInt(col++, list.size());
+          stmt.setInt(column++, list.size());
         }
       }
 
@@ -366,32 +364,33 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       builder.append(exactMatch ? "=? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     try
     {
-      int idx = 1;
+      int column = 1;
 
-      pstmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
-      pstmt.setLong(idx++, CDOIDUtil.getLong(folderId));
+      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
+      idHandler.setCDOID(stmt, column++, folderId);
 
       if (name != null)
       {
         String queryName = exactMatch ? name : name + "%"; //$NON-NLS-1$
-        nameValueMapping.setValue(pstmt, idx++, queryName);
+        nameValueMapping.setValue(stmt, column++, queryName);
       }
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Created Resource Query: {0}", pstmt.toString()); //$NON-NLS-1$
+        TRACER.format("Created Resource Query: {0}", stmt.toString()); //$NON-NLS-1$
       }
 
-      return pstmt;
+      return stmt;
     }
     catch (SQLException ex)
     {
-      statementCache.releasePreparedStatement(pstmt); // only release on error
+      statementCache.releasePreparedStatement(stmt); // only release on error
       throw new DBException(ex);
     }
   }
@@ -404,16 +403,17 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       throw new UnsupportedOperationException("Mapping strategy does not support audits"); //$NON-NLS-1$
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
-      pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
+      stmt = statementCache.getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
+      idHandler.setCDOID(stmt, 1, revision.getID());
 
       // Read singleval-attribute table always (even without modeled attributes!)
-      boolean success = readValuesFromStatement(pstmt, revision, accessor);
+      boolean success = readValuesFromStatement(stmt, revision, accessor);
 
       // Read multival tables only if revision exists
       if (success)
@@ -429,7 +429,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -437,6 +437,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
       OMMonitor mon)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
@@ -445,7 +446,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       stmt = statementCache.getPreparedStatement(sqlUpdatePrefix + sqlUpdateAffix, ReuseProbability.HIGH);
       stmt.setInt(1, -version);
       stmt.setLong(2, timeStamp);
-      stmt.setLong(3, CDOIDUtil.getLong(id));
+      idHandler.setCDOID(stmt, 3, id);
 
       CDODBUtil.sqlUpdate(stmt, true);
     }
@@ -626,29 +627,28 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     private void updateAttributes()
     {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       IPreparedStatementCache statementCache = accessor.getStatementCache();
       PreparedStatement stmt = null;
 
       try
       {
-        int col = 1;
+        int column = 1;
 
         stmt = statementCache.getPreparedStatement(buildUpdateStatement(), ReuseProbability.MEDIUM);
-        stmt.setInt(col++, newVersion);
-        stmt.setLong(col++, created);
+        stmt.setInt(column++, newVersion);
+        stmt.setLong(column++, created);
         if (updateContainer)
         {
-          stmt.setLong(col++,
-              CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newResourceID, created));
-          stmt.setLong(col++,
-              CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, newContainerID, created));
-          stmt.setInt(col++, newContainingFeatureID);
+          idHandler.setCDOID(stmt, column++, newResourceID, created);
+          idHandler.setCDOID(stmt, column++, newContainerID, created);
+          stmt.setInt(column++, newContainingFeatureID);
         }
 
-        col = setUpdateAttributeValues(attributeChanges, stmt, col);
-        col = setUpdateListSizeChanges(listSizeChanges, stmt, col);
+        column = setUpdateAttributeValues(attributeChanges, stmt, column);
+        column = setUpdateListSizeChanges(listSizeChanges, stmt, column);
 
-        stmt.setLong(col++, CDOIDUtil.getLong(id));
+        idHandler.setCDOID(stmt, column++, id);
 
         CDODBUtil.sqlUpdate(stmt, true);
       }

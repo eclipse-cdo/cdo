@@ -31,9 +31,14 @@ public interface IDBStore extends IStore, IDBConnectionProvider
    */
   public IMappingStrategy getMappingStrategy();
 
-  public IDBSchema getDBSchema();
+  /**
+   * @since 4.0
+   */
+  public IIDHandler getIDHandler();
 
   public IDBAdapter getDBAdapter();
+
+  public IDBSchema getDBSchema();
 
   /**
    * Get the meta data manager associated with this DBStore.
@@ -41,13 +46,6 @@ public interface IDBStore extends IStore, IDBConnectionProvider
    * @since 2.0
    */
   public IMetaDataManager getMetaDataManager();
-
-  /**
-   * Get the manager for external references.
-   * 
-   * @since 3.0
-   */
-  public IExternalReferenceManager getExternalReferenceManager();
 
   /**
    * @since 2.0

@@ -14,11 +14,12 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
@@ -71,13 +72,14 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
 
   public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
       stmt = statementCache.getPreparedStatement(sqlSelect, ReuseProbability.MAX);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
+      idHandler.setCDOID(stmt, 1, id);
       DBUtil.trace(stmt.toString());
       ResultSet resultSet = stmt.executeQuery();
 
@@ -87,7 +89,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
         return null;
       }
 
-      long classID = resultSet.getLong(1);
+      CDOID classID = idHandler.getCDOID(resultSet, 1);
       EClass eClass = (EClass)getMetaDataManager().getMetaInstance(accessor, classID);
       return new CDOClassifierRef(eClass);
     }
@@ -103,13 +105,15 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
 
   public final void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlInsert, ReuseProbability.MAX);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
-      stmt.setLong(2, getMetaDataManager().getMetaID(accessor, type, timeStamp));
+      stmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.MAX);
+      idHandler.setCDOID(stmt, 1, id);
+      idHandler.setCDOID(stmt, 2, getMetaDataManager().getMetaID(accessor, type, timeStamp));
       stmt.setLong(3, timeStamp);
       DBUtil.trace(stmt.toString());
       int result = stmt.executeUpdate();
@@ -129,18 +133,20 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   public final void removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlDelete, ReuseProbability.MAX);
-      stmt.setLong(1, CDOIDUtil.getLong(id));
+      stmt = statementCache.getPreparedStatement(sqlDelete, ReuseProbability.MAX);
+      idHandler.setCDOID(stmt, 1, id);
       DBUtil.trace(stmt.toString());
       int result = stmt.executeUpdate();
 
@@ -155,13 +161,36 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
-  public long getMaxID(Connection connection)
+  public CDOID getMaxID(Connection connection, IIDHandler idHandler)
   {
-    return DBUtil.selectMaximumLong(connection, idField);
+    Statement stmt = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      stmt = connection.createStatement();
+      resultSet = stmt.executeQuery("SELECT MAX(" + idField + ") FROM " + table);
+
+      if (resultSet.next())
+      {
+        return idHandler.getCDOID(resultSet, 1);
+      }
+
+      return null;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(stmt);
+    }
   }
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
@@ -181,18 +210,21 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
   {
     super.doActivate();
 
-    IDBSchema schema = getMappingStrategy().getStore().getDBSchema();
+    IDBStore store = getMappingStrategy().getStore();
+    IDBSchema schema = store.getDBSchema();
+    DBType dbType = store.getIDHandler().getDBType();
+
     table = schema.addTable(CDODBSchema.CDO_OBJECTS);
-    idField = table.addField(CDODBSchema.ATTRIBUTES_ID, DBType.BIGINT);
-    typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, DBType.BIGINT);
+    idField = table.addField(CDODBSchema.ATTRIBUTES_ID, dbType);
+    typeField = table.addField(CDODBSchema.ATTRIBUTES_CLASS, dbType);
     timeField = table.addField(CDODBSchema.ATTRIBUTES_CREATED, DBType.BIGINT);
     table.addIndex(IDBIndex.Type.UNIQUE, idField);
 
-    IDBStoreAccessor writer = getMappingStrategy().getStore().getWriter(null);
+    IDBAdapter dbAdapter = store.getDBAdapter();
+    IDBStoreAccessor writer = store.getWriter(null);
     Connection connection = writer.getConnection();
-    IDBAdapter dbAdapter = getMappingStrategy().getStore().getDBAdapter();
-
     Statement statement = null;
+
     try
     {
       statement = connection.createStatement();

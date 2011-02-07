@@ -799,6 +799,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
+  protected CDOID getNextCDOID(CDORevision revision)
+  {
+    // Never called
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
   protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
       OMMonitor monitor)
   {

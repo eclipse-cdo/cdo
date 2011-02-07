@@ -17,7 +17,6 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
@@ -34,8 +33,10 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
@@ -125,12 +126,13 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
   private void initTable()
   {
+    IDBStore store = getMappingStrategy().getStore();
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    table = getMappingStrategy().getStore().getDBSchema().addTable(tableName);
+    table = store.getDBSchema().addTable(tableName);
 
     IDBField[] dbFields = new IDBField[4];
 
-    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, DBType.BIGINT);
+    dbFields[0] = table.addField(CDODBSchema.LIST_REVISION_ID, store.getIDHandler().getDBType());
     dbFields[1] = table.addField(CDODBSchema.LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
     dbFields[2] = table.addField(CDODBSchema.LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
     dbFields[3] = table.addField(CDODBSchema.LIST_IDX, DBType.INTEGER);
@@ -294,24 +296,25 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
           getFeature().getName(), revision.getID(), revision.getVersion());
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
       String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
-      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
-      pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-      pstmt.setInt(2, revision.getVersion());
-      pstmt.setInt(3, revision.getVersion());
+      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
+      idHandler.setCDOID(stmt, 1, revision.getID());
+      stmt.setInt(2, revision.getVersion());
+      stmt.setInt(3, revision.getVersion());
 
       if (listChunk != CDORevision.UNCHUNKED)
       {
-        pstmt.setMaxRows(listChunk); // optimization - don't read unneeded rows.
+        stmt.setMaxRows(listChunk); // optimization - don't read unneeded rows.
       }
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
 
       int currentIndex = 0;
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
@@ -332,7 +335,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
 
     if (TRACER.isEnabled())
@@ -350,8 +353,9 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
           getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = chunkReader.getAccessor().getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
@@ -366,12 +370,12 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
       builder.append(sqlOrderByIndex);
 
       String sql = builder.toString();
-      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
-      pstmt.setLong(1, CDOIDUtil.getLong(chunkReader.getRevision().getID()));
-      pstmt.setInt(2, chunkReader.getRevision().getVersion());
-      pstmt.setInt(3, chunkReader.getRevision().getVersion());
+      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
+      idHandler.setCDOID(stmt, 1, chunkReader.getRevision().getID());
+      stmt.setInt(2, chunkReader.getRevision().getVersion());
+      stmt.setInt(3, chunkReader.getRevision().getVersion());
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
 
       Chunk chunk = null;
       int chunkSize = 0;
@@ -426,7 +430,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -470,29 +474,30 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
    */
   public void clearList(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmtDeleteTemp = null;
-    PreparedStatement pstmtClear = null;
+    PreparedStatement stmtDeleteTemp = null;
+    PreparedStatement stmtClear = null;
 
     try
     {
       // delete temporary entries
-      pstmtDeleteTemp = statementCache.getPreparedStatement(sqlDeleteList, ReuseProbability.HIGH);
-      pstmtDeleteTemp.setLong(1, CDOIDUtil.getLong(id));
-      pstmtDeleteTemp.setInt(2, newVersion);
+      stmtDeleteTemp = statementCache.getPreparedStatement(sqlDeleteList, ReuseProbability.HIGH);
+      idHandler.setCDOID(stmtDeleteTemp, 1, id);
+      stmtDeleteTemp.setInt(2, newVersion);
 
-      int result = CDODBUtil.sqlUpdate(pstmtDeleteTemp, false);
+      int result = CDODBUtil.sqlUpdate(stmtDeleteTemp, false);
       if (TRACER.isEnabled())
       {
         TRACER.format("DeleteList result: {0}", result); //$NON-NLS-1$
       }
 
       // clear rest of the list
-      pstmtClear = statementCache.getPreparedStatement(sqlClearList, ReuseProbability.HIGH);
-      pstmtClear.setInt(1, newVersion);
-      pstmtClear.setLong(2, CDOIDUtil.getLong(id));
+      stmtClear = statementCache.getPreparedStatement(sqlClearList, ReuseProbability.HIGH);
+      stmtClear.setInt(1, newVersion);
+      idHandler.setCDOID(stmtClear, 2, id);
 
-      result = CDODBUtil.sqlUpdate(pstmtClear, false);
+      result = CDODBUtil.sqlUpdate(stmtClear, false);
       if (TRACER.isEnabled())
       {
         TRACER.format("ClearList result: {0}", result); //$NON-NLS-1$
@@ -504,8 +509,8 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmtDeleteTemp);
-      statementCache.releasePreparedStatement(pstmtClear);
+      statementCache.releasePreparedStatement(stmtDeleteTemp);
+      statementCache.releasePreparedStatement(stmtClear);
     }
   }
 
@@ -706,12 +711,13 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex,
         int endIndex)
     {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       IPreparedStatementCache statementCache = accessor.getStatementCache();
-      PreparedStatement pstmt = null;
+      PreparedStatement stmt = null;
 
       try
       {
-        pstmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+        stmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
         for (int index = startIndex; index <= endIndex; ++index)
         {
@@ -720,13 +726,13 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
             TRACER.format("moveOneUp moving: {0} -> {1}", index, index - 1); //$NON-NLS-1$
           }
 
-          int stmtIndex = 1;
-          pstmt.setInt(stmtIndex++, index - 1);
-          pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-          pstmt.setInt(stmtIndex++, newVersion);
-          pstmt.setInt(stmtIndex++, index);
+          int column = 1;
+          stmt.setInt(column++, index - 1);
+          idHandler.setCDOID(stmt, column++, id);
+          stmt.setInt(column++, newVersion);
+          stmt.setInt(column++, index);
 
-          int result = CDODBUtil.sqlUpdate(pstmt, false);
+          int result = CDODBUtil.sqlUpdate(stmt, false);
           switch (result)
           {
           case 0:
@@ -769,19 +775,20 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
       }
       finally
       {
-        statementCache.releasePreparedStatement(pstmt);
+        statementCache.releasePreparedStatement(stmt);
       }
     }
 
     private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex,
         int endIndex)
     {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       IPreparedStatementCache statementCache = accessor.getStatementCache();
-      PreparedStatement pstmt = null;
+      PreparedStatement stmt = null;
 
       try
       {
-        pstmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+        stmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
         for (int index = endIndex; index >= startIndex; --index)
         {
@@ -790,13 +797,13 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
             TRACER.format("moveOneDown moving: {0} -> {1}", index, index + 1); //$NON-NLS-1$
           }
 
-          int stmtIndex = 1;
-          pstmt.setInt(stmtIndex++, index + 1);
-          pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-          pstmt.setInt(stmtIndex++, newVersion);
-          pstmt.setInt(stmtIndex++, index);
+          int column = 1;
+          stmt.setInt(column++, index + 1);
+          idHandler.setCDOID(stmt, column++, id);
+          stmt.setInt(column++, newVersion);
+          stmt.setInt(column++, index);
 
-          int result = CDODBUtil.sqlUpdate(pstmt, false);
+          int result = CDODBUtil.sqlUpdate(stmt, false);
           switch (result)
           {
           case 0:
@@ -839,15 +846,16 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
       }
       finally
       {
-        statementCache.releasePreparedStatement(pstmt);
+        statementCache.releasePreparedStatement(stmt);
       }
     }
   }
 
   private void addEntry(IDBStoreAccessor accessor, CDOID id, int version, int index, Object value)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     if (TRACER.isEnabled())
     {
@@ -857,15 +865,15 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(sqlInsertEntry, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlInsertEntry, ReuseProbability.HIGH);
 
-      int stmtIndex = 1;
-      pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-      pstmt.setInt(stmtIndex++, version);
-      pstmt.setInt(stmtIndex++, index);
-      typeMapping.setValue(pstmt, stmtIndex++, value);
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, version);
+      stmt.setInt(column++, index);
+      typeMapping.setValue(stmt, column++, value);
 
-      CDODBUtil.sqlUpdate(pstmt, true);
+      CDODBUtil.sqlUpdate(stmt, true);
     }
     catch (SQLException e)
     {
@@ -877,14 +885,15 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   private void removeEntry(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int index)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     if (TRACER.isEnabled())
     {
@@ -895,14 +904,14 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     try
     {
       // try to delete a temporary entry first
-      pstmt = statementCache.getPreparedStatement(sqlDeleteEntry, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlDeleteEntry, ReuseProbability.HIGH);
 
-      int stmtIndex = 1;
-      pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-      pstmt.setInt(stmtIndex++, index);
-      pstmt.setInt(stmtIndex++, newVersion);
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, index);
+      stmt.setInt(column++, newVersion);
 
-      int result = CDODBUtil.sqlUpdate(pstmt, false);
+      int result = CDODBUtil.sqlUpdate(stmt, false);
       if (result == 1)
       {
         if (TRACER.isEnabled())
@@ -922,15 +931,15 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
       else
       {
         // no temporary entry found, so mark the entry as removed
-        statementCache.releasePreparedStatement(pstmt);
-        pstmt = statementCache.getPreparedStatement(sqlRemoveEntry, ReuseProbability.HIGH);
+        statementCache.releasePreparedStatement(stmt);
+        stmt = statementCache.getPreparedStatement(sqlRemoveEntry, ReuseProbability.HIGH);
 
-        stmtIndex = 1;
-        pstmt.setInt(stmtIndex++, newVersion);
-        pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-        pstmt.setInt(stmtIndex++, index);
+        column = 1;
+        stmt.setInt(column++, newVersion);
+        idHandler.setCDOID(stmt, column++, id);
+        stmt.setInt(column++, index);
 
-        CDODBUtil.sqlUpdate(pstmt, true);
+        CDODBUtil.sqlUpdate(stmt, true);
       }
     }
     catch (SQLException e)
@@ -955,25 +964,26 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   private Object getValue(IDBStoreAccessor accessor, CDOID id, int index)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     Object result = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(sqlGetValue, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlGetValue, ReuseProbability.HIGH);
 
-      int stmtIndex = 1;
-      pstmt.setLong(stmtIndex++, CDOIDUtil.getLong(id));
-      pstmt.setInt(stmtIndex++, index);
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, index);
 
-      ResultSet resultSet = pstmt.executeQuery();
+      ResultSet resultSet = stmt.executeQuery();
       if (!resultSet.next())
       {
         throw new DBException("getValue() expects exactly one result");
@@ -991,7 +1001,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
 
     return result;
@@ -1024,6 +1034,7 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
     builder.append(idString);
     String sql = builder.toString();
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     ResultSet resultSet = null;
     Statement stmt = null;
 
@@ -1038,16 +1049,14 @@ public class AuditListTableMappingWithRanges extends BasicAbstractListTableMappi
       resultSet = stmt.executeQuery(sql);
       while (resultSet.next())
       {
-        long idLong = resultSet.getLong(1);
-        CDOID srcId = CDOIDUtil.createLong(idLong);
-        idLong = resultSet.getLong(2);
-        CDOID targetId = CDOIDUtil.createLong(idLong);
+        CDOID sourceID = idHandler.getCDOID(resultSet, 1);
+        CDOID targetID = idHandler.getCDOID(resultSet, 2);
         int idx = resultSet.getInt(3);
 
-        boolean more = context.addXRef(targetId, srcId, (EReference)getFeature(), idx);
+        boolean more = context.addXRef(targetID, sourceID, (EReference)getFeature(), idx);
         if (TRACER.isEnabled())
         {
-          TRACER.format("  add XRef to context: src={0}, tgt={1}, idx={2}", srcId, targetId, idx);
+          TRACER.format("  add XRef to context: src={0}, tgt={1}, idx={2}", sourceID, targetID, idx);
         }
 
         if (!more)

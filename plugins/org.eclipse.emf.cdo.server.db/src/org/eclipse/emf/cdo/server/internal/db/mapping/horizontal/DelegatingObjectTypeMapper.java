@@ -11,11 +11,11 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IObjectTypeMapper;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -52,12 +52,10 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
 
   public CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    long longId = CDOIDUtil.getLong(id);
-    Long type = doGetObjectType(longId);
+    CDOID type = doGetObjectType(accessor, id);
     if (type != null)
     {
-      long classID = type;
-      EClass eClass = (EClass)getMetaDataManager().getMetaInstance(accessor, classID);
+      EClass eClass = (EClass)getMetaDataManager().getMetaInstance(accessor, type);
       return new CDOClassifierRef(eClass);
     }
 
@@ -66,30 +64,27 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
 
   public void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
-    long longId = CDOIDUtil.getLong(id);
-    long classID = getMetaDataManager().getMetaID(accessor, type, timeStamp);
-    doPutObjectType(longId, classID);
+    CDOID classID = getMetaDataManager().getMetaID(accessor, type, timeStamp);
+    doPutObjectType(accessor, id, classID);
 
     delegate.putObjectType(accessor, timeStamp, id, type);
   }
 
   public void removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    long longId = CDOIDUtil.getLong(id);
-    doRemoveObjectType(longId);
-
+    doRemoveObjectType(accessor, id);
     delegate.removeObjectType(accessor, id);
   }
 
-  public long getMaxID(Connection connection)
+  public CDOID getMaxID(Connection connection, IIDHandler idHandler)
   {
-    Long maxID = doGetMaxID();
+    CDOID maxID = doGetMaxID(connection, idHandler);
     if (maxID != null)
     {
       return maxID;
     }
 
-    return delegate.getMaxID(connection);
+    return delegate.getMaxID(connection, idHandler);
   }
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
@@ -124,11 +119,11 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
     super.doDeactivate();
   }
 
-  protected abstract Long doGetObjectType(long id);
+  protected abstract CDOID doGetObjectType(IDBStoreAccessor accessor, CDOID id);
 
-  protected abstract void doPutObjectType(long id, long type);
+  protected abstract void doPutObjectType(IDBStoreAccessor accessor, CDOID id, CDOID type);
 
-  protected abstract void doRemoveObjectType(long id);
+  protected abstract void doRemoveObjectType(IDBStoreAccessor accessor, CDOID id);
 
-  protected abstract Long doGetMaxID();
+  protected abstract CDOID doGetMaxID(Connection connection, IIDHandler idHandler);
 }

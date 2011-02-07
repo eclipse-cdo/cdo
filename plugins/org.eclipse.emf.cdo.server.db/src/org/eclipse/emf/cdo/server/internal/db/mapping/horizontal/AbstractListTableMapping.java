@@ -14,7 +14,6 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
@@ -22,6 +21,7 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -203,26 +203,26 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     }
 
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
       String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
-      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
-      setKeyFields(pstmt, revision);
+      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.HIGH);
+      setKeyFields(stmt, revision);
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace(pstmt.toString());
+        TRACER.trace(stmt.toString());
       }
 
       if (listChunk != CDORevision.UNCHUNKED)
       {
-        pstmt.setMaxRows(listChunk); // optimization - don't read unneeded rows.
+        stmt.setMaxRows(listChunk); // optimization - don't read unneeded rows.
       }
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
 
       int currentIndex = 0;
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
@@ -243,7 +243,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
 
     if (TRACER.isEnabled())
@@ -262,7 +262,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     }
 
     IPreparedStatementCache statementCache = chunkReader.getAccessor().getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
@@ -277,10 +277,10 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       builder.append(sqlOrderByIndex);
 
       String sql = builder.toString();
-      pstmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
-      setKeyFields(pstmt, chunkReader.getRevision());
+      stmt = statementCache.getPreparedStatement(sql, ReuseProbability.LOW);
+      setKeyFields(stmt, chunkReader.getRevision());
 
-      resultSet = pstmt.executeQuery();
+      resultSet = stmt.executeQuery();
 
       Chunk chunk = null;
       int chunkSize = 0;
@@ -334,7 +334,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     finally
     {
       DBUtil.close(resultSet);
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -365,9 +365,9 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       stmt = statementCache.getPreparedStatement(sqlInsertEntry, ReuseProbability.HIGH);
 
       setKeyFields(stmt, revision);
-      int stmtIndex = getKeyFields().length + 1;
-      stmt.setInt(stmtIndex++, idx);
-      typeMapping.setValue(stmt, stmtIndex++, value);
+      int column = getKeyFields().length + 1;
+      stmt.setInt(column++, idx);
+      typeMapping.setValue(stmt, column++, value);
 
       CDODBUtil.sqlUpdate(stmt, true);
     }
@@ -407,6 +407,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
     builder.append(idString);
     String sql = builder.toString();
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     ResultSet resultSet = null;
     Statement stmt = null;
 
@@ -421,10 +422,8 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       resultSet = stmt.executeQuery(sql);
       while (resultSet.next())
       {
-        long idLong = resultSet.getLong(1);
-        CDOID srcId = CDOIDUtil.createLong(idLong);
-        idLong = resultSet.getLong(2);
-        CDOID targetId = CDOIDUtil.createLong(idLong);
+        CDOID srcId = idHandler.getCDOID(resultSet, 1);
+        CDOID targetId = idHandler.getCDOID(resultSet, 2);
         int idx = resultSet.getInt(3);
 
         boolean more = context.addXRef(targetId, srcId, (EReference)getFeature(), idx);

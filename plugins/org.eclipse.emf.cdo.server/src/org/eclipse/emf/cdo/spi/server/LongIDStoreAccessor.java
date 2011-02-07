@@ -13,13 +13,9 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
-
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 /**
  * @since 2.0
@@ -38,37 +34,17 @@ public abstract class LongIDStoreAccessor extends StoreAccessor
   }
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
   @Override
-  protected void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
+  public LongIDStore getStore()
   {
-    try
-    {
-      LongIDStore longIDStore = (LongIDStore)getStore();
-      CDORevision[] newObjects = commitContext.getNewObjects();
-      monitor.begin(newObjects.length);
-      for (CDORevision revision : newObjects)
-      {
-        CDOID id = revision.getID();
-        if (id instanceof CDOIDTemp)
-        {
-          CDOIDTemp oldID = (CDOIDTemp)id;
-          CDOID newID = longIDStore.getNextCDOID(this, revision);
-          if (CDOIDUtil.isNull(newID) || newID.isTemporary())
-          {
-            throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$
-          }
+    return (LongIDStore)super.getStore();
+  }
 
-          commitContext.addIDMapping(oldID, newID);
-        }
-
-        monitor.worked();
-      }
-    }
-    finally
-    {
-      monitor.done();
-    }
+  @Override
+  protected CDOID getNextCDOID(CDORevision revision)
+  {
+    return getStore().getNextCDOID(this, revision);
   }
 }

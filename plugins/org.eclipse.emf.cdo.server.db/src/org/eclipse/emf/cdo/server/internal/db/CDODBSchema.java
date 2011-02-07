@@ -162,26 +162,6 @@ public class CDODBSchema extends DBSchema
       + "VALUES (?, ?, ?, ?, ?)"; //$NON-NLS-1$
 
   /**
-   * DBTable cdo_external_refs
-   */
-  public static final IDBTable EXTERNAL_REFS = INSTANCE.addTable("cdo_external_refs"); //$NON-NLS-1$
-
-  public static final IDBField EXTERNAL_ID = //
-  EXTERNAL_REFS.addField("id", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBField EXTERNAL_URI = //
-  EXTERNAL_REFS.addField("uri", DBType.VARCHAR); //$NON-NLS-1$
-
-  public static final IDBField EXTERNAL_TIMESTAMP = //
-  EXTERNAL_REFS.addField("committime", DBType.BIGINT); //$NON-NLS-1$
-
-  public static final IDBIndex INDEX_EXTERNAL_REFS_ID = //
-  EXTERNAL_REFS.addIndex(IDBIndex.Type.PRIMARY_KEY, EXTERNAL_ID);
-
-  public static final IDBIndex INDEX_EXTERNAL_REFS_HASH = //
-  EXTERNAL_REFS.addIndex(IDBIndex.Type.NON_UNIQUE, EXTERNAL_URI);
-
-  /**
    * DBTable cdo_lobs
    */
   public static final IDBTable LOBS = INSTANCE.addTable("cdo_lobs"); //$NON-NLS-1$

@@ -42,7 +42,7 @@ public interface IObjectTypeMapper
    *          the DB connection to use.
    * @return the maximum object ID.
    */
-  public long getMaxID(Connection connection);
+  public CDOID getMaxID(Connection connection, IIDHandler idHandler);
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
       throws IOException;

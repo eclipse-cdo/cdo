@@ -13,6 +13,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -20,8 +21,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IExternalReferenceManager;
-import org.eclipse.emf.cdo.server.db.IExternalReferenceManager.Internal;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -66,33 +65,31 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   private IDBStore store;
 
-  private Map<EModelElement, Long> modelElementToMetaID = new HashMap<EModelElement, Long>();
+  private Map<EModelElement, CDOID> modelElementToMetaID = new HashMap<EModelElement, CDOID>();
 
-  private Map<Long, EModelElement> metaIDToModelElement = new HashMap<Long, EModelElement>();
+  private Map<CDOID, EModelElement> metaIDToModelElement = new HashMap<CDOID, EModelElement>();
 
   public MetaDataManager(IDBStore store)
   {
     this.store = store;
   }
 
-  public synchronized long getMetaID(IDBStoreAccessor accessor, EModelElement modelElement, long commitTime)
+  public synchronized CDOID getMetaID(IDBStoreAccessor accessor, EModelElement modelElement, long commitTime)
   {
-    Long metaID = modelElementToMetaID.get(modelElement);
+    CDOID metaID = modelElementToMetaID.get(modelElement);
     if (metaID != null)
     {
       return metaID;
     }
 
-    IExternalReferenceManager.Internal manager = (Internal)getStore().getExternalReferenceManager();
     String uri = EcoreUtil.getURI(modelElement).toString();
-
-    metaID = manager.mapURI(accessor, uri, commitTime);
+    metaID = store.getIDHandler().mapURI(accessor, uri, commitTime);
     cacheMetaIDMapping(modelElement, metaID);
 
     return metaID;
   }
 
-  public synchronized EModelElement getMetaInstance(IDBStoreAccessor accessor, long id)
+  public synchronized EModelElement getMetaInstance(IDBStoreAccessor accessor, CDOID id)
   {
     EModelElement modelElement = metaIDToModelElement.get(id);
     if (modelElement != null)
@@ -100,8 +97,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       return modelElement;
     }
 
-    IExternalReferenceManager.Internal externalManager = (Internal)getStore().getExternalReferenceManager();
-    String uri = externalManager.unmapURI(accessor, id);
+    String uri = store.getIDHandler().unmapURI(accessor, id);
 
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.setPackageRegistry(getStore().getRepository().getPackageRegistry());
@@ -235,23 +231,23 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     {
       String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " VALUES (?, ?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
       DBUtil.trace(sql);
-      PreparedStatement pstmt = null;
+      PreparedStatement stmt = null;
 
       try
       {
         async = monitor.forkAsync();
-        pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1, packageUnit.getID());
-        pstmt.setInt(2, packageUnit.getOriginalType().ordinal());
-        pstmt.setLong(3, packageUnit.getTimeStamp());
-        pstmt.setBytes(4, getEPackageBytes(packageUnit));
+        stmt = connection.prepareStatement(sql);
+        stmt.setString(1, packageUnit.getID());
+        stmt.setInt(2, packageUnit.getOriginalType().ordinal());
+        stmt.setLong(3, packageUnit.getTimeStamp());
+        stmt.setBytes(4, getEPackageBytes(packageUnit));
 
-        if (pstmt.execute())
+        if (stmt.execute())
         {
           throw new DBException("No result set expected"); //$NON-NLS-1$
         }
 
-        if (pstmt.getUpdateCount() == 0)
+        if (stmt.getUpdateCount() == 0)
         {
           throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_UNITS); //$NON-NLS-1$
         }
@@ -262,7 +258,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       }
       finally
       {
-        DBUtil.close(pstmt);
+        DBUtil.close(stmt);
         if (async != null)
         {
           async.stop();
@@ -309,22 +305,22 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
     String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " VALUES (?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
     DBUtil.trace(sql);
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
     Async async = monitor.forkAsync();
 
     try
     {
-      pstmt = connection.prepareStatement(sql);
-      pstmt.setString(1, packageURI);
-      pstmt.setString(2, parentURI);
-      pstmt.setString(3, unitID);
+      stmt = connection.prepareStatement(sql);
+      stmt.setString(1, packageURI);
+      stmt.setString(2, parentURI);
+      stmt.setString(3, unitID);
 
-      if (pstmt.execute())
+      if (stmt.execute())
       {
         throw new DBException("No result set expected"); //$NON-NLS-1$
       }
 
-      if (pstmt.getUpdateCount() == 0)
+      if (stmt.getUpdateCount() == 0)
       {
         throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_INFOS); //$NON-NLS-1$
       }
@@ -335,7 +331,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     }
     finally
     {
-      DBUtil.close(pstmt);
+      DBUtil.close(stmt);
       if (async != null)
       {
         async.stop();
@@ -420,7 +416,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     return packageUnits.values();
   }
 
-  private void cacheMetaIDMapping(EModelElement modelElement, Long metaID)
+  private void cacheMetaIDMapping(EModelElement modelElement, CDOID metaID)
   {
     modelElementToMetaID.put(modelElement, metaID);
     metaIDToModelElement.put(metaID, modelElement);

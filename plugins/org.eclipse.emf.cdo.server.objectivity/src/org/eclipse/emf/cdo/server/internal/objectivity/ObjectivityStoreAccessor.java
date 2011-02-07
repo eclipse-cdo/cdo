@@ -1011,6 +1011,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       {
         TRACER_DEBUG.trace("creating " + commitContext.getNewObjects().length + " new objects and assigning new IDs");
       }
+
       InternalCDORevision[] newObjects = commitContext.getNewObjects();
       monitor.begin(newObjects.length);
 
@@ -1026,6 +1027,13 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       TRACER_DEBUG.trace("addIDMappings time: " + (System.currentTimeMillis() - start));
     }
+  }
+
+  @Override
+  protected CDOID getNextCDOID(CDORevision revision)
+  {
+    // Never called
+    throw new UnsupportedOperationException();
   }
 
   /***************************

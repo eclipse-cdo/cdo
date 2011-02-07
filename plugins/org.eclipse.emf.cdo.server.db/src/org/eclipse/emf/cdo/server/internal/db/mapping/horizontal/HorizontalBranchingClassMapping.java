@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -39,6 +38,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
@@ -410,8 +410,9 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     long timeStamp = revision.getTimeStamp();
     int branchID = revision.getBranch().getID();
@@ -420,21 +421,21 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       if (timeStamp != DBStore.UNSPECIFIED_DATE)
       {
-        pstmt = statementCache.getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
-        pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-        pstmt.setLong(2, branchID);
-        pstmt.setLong(3, timeStamp);
-        pstmt.setLong(4, timeStamp);
+        stmt = statementCache.getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
+        idHandler.setCDOID(stmt, 1, revision.getID());
+        stmt.setInt(2, branchID);
+        stmt.setLong(3, timeStamp);
+        stmt.setLong(4, timeStamp);
       }
       else
       {
-        pstmt = statementCache.getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
-        pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-        pstmt.setLong(2, branchID);
+        stmt = statementCache.getPreparedStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
+        idHandler.setCDOID(stmt, 1, revision.getID());
+        stmt.setInt(2, branchID);
       }
 
       // Read singleval-attribute table always (even without modeled attributes!)
-      boolean success = readValuesFromStatement(pstmt, revision, accessor);
+      boolean success = readValuesFromStatement(stmt, revision, accessor);
 
       // Read multival tables only if revision exists
       if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
@@ -450,24 +451,25 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     try
     {
-      pstmt = statementCache.getPreparedStatement(sqlSelectAttributesByVersion, ReuseProbability.HIGH);
-      pstmt.setLong(1, CDOIDUtil.getLong(revision.getID()));
-      pstmt.setInt(2, revision.getBranch().getID());
-      pstmt.setInt(3, revision.getVersion());
+      stmt = statementCache.getPreparedStatement(sqlSelectAttributesByVersion, ReuseProbability.HIGH);
+      idHandler.setCDOID(stmt, 1, revision.getID());
+      stmt.setInt(2, revision.getBranch().getID());
+      stmt.setInt(3, revision.getVersion());
 
       // Read singleval-attribute table always (even without modeled attributes!)
-      boolean success = readValuesFromStatement(pstmt, revision, accessor);
+      boolean success = readValuesFromStatement(stmt, revision, accessor);
 
       // Read multival tables only if revision exists
       if (success)
@@ -483,7 +485,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      statementCache.releasePreparedStatement(pstmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -540,39 +542,40 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       builder.append(">=?))"); //$NON-NLS-1$
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
-    PreparedStatement pstmt = null;
+    PreparedStatement stmt = null;
 
     try
     {
-      int idx = 1;
+      int column = 1;
 
-      pstmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
-      pstmt.setInt(idx++, branchID);
-      pstmt.setLong(idx++, CDOIDUtil.getLong(folderId));
+      stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.MEDIUM);
+      stmt.setInt(column++, branchID);
+      idHandler.setCDOID(stmt, column++, folderId);
 
       if (name != null)
       {
         String queryName = exactMatch ? name : name + "%"; //$NON-NLS-1$
-        nameValueMapping.setValue(pstmt, idx++, queryName);
+        nameValueMapping.setValue(stmt, column++, queryName);
       }
 
       if (timeStamp != CDORevision.UNSPECIFIED_DATE)
       {
-        pstmt.setLong(idx++, timeStamp);
-        pstmt.setLong(idx++, timeStamp);
+        stmt.setLong(column++, timeStamp);
+        stmt.setLong(column++, timeStamp);
       }
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Created Resource Query: {0}", pstmt.toString()); //$NON-NLS-1$
+        TRACER.format("Created Resource Query: {0}", stmt.toString()); //$NON-NLS-1$
       }
 
-      return pstmt;
+      return stmt;
     }
     catch (SQLException ex)
     {
-      statementCache.releasePreparedStatement(pstmt); // only release on error
+      statementCache.releasePreparedStatement(stmt); // only release on error
       throw new DBException(ex);
     }
   }
@@ -591,26 +594,24 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   protected final void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
-    long commitTime = revision.getTimeStamp();
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      int col = 1;
+      int column = 1;
       stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
-      stmt.setLong(col++, CDOIDUtil.getLong(revision.getID()));
-      stmt.setInt(col++, revision.getVersion());
-      stmt.setInt(col++, revision.getBranch().getID());
-      stmt.setLong(col++, commitTime);
-      stmt.setLong(col++, revision.getRevised());
-      stmt.setLong(col++,
-          CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor, revision.getResourceID(), commitTime));
-      stmt.setLong(col++, CDODBUtil.convertCDOIDToLong(getExternalReferenceManager(), accessor,
-          (CDOID)revision.getContainerID(), commitTime));
-      stmt.setInt(col++, revision.getContainingFeatureID());
+      idHandler.setCDOID(stmt, column++, revision.getID());
+      stmt.setInt(column++, revision.getVersion());
+      stmt.setInt(column++, revision.getBranch().getID());
+      stmt.setLong(column++, revision.getTimeStamp());
+      stmt.setLong(column++, revision.getRevised());
+      idHandler.setCDOID(stmt, column++, revision.getResourceID());
+      idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
+      stmt.setInt(column++, revision.getContainingFeatureID());
 
-      int isSetCol = col + getValueMappings().size();
+      int isSetCol = column + getValueMappings().size();
 
       for (ITypeMapping mapping : getValueMappings())
       {
@@ -622,26 +623,26 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
             stmt.setBoolean(isSetCol++, false);
 
             // also set value column to default value
-            mapping.setDefaultValue(stmt, col++);
+            mapping.setDefaultValue(stmt, column++);
             continue;
           }
 
           stmt.setBoolean(isSetCol++, true);
         }
 
-        mapping.setValueFromRevision(stmt, col++, revision);
+        mapping.setValueFromRevision(stmt, column++, revision);
       }
 
       Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
       if (listSizeFields != null)
       {
         // isSetCol now points to the first listTableSize-column
-        col = isSetCol;
+        column = isSetCol;
 
         for (EStructuralFeature feature : listSizeFields.keySet())
         {
           CDOList list = revision.getList(feature);
-          stmt.setInt(col++, list.size());
+          stmt.setInt(column++, list.size());
         }
       }
 
@@ -661,6 +662,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
       OMMonitor mon)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
@@ -668,17 +670,17 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       stmt = statementCache.getPreparedStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
-      int col = 1;
-      stmt.setLong(col++, CDOIDUtil.getLong(id));
-      stmt.setInt(col++, -version); // cdo_version
-      stmt.setInt(col++, branch.getID());
-      stmt.setLong(col++, timeStamp); // cdo_created
-      stmt.setLong(col++, DBStore.UNSPECIFIED_DATE); // cdo_revised
-      stmt.setLong(col++, DBStore.NULL); // resource
-      stmt.setLong(col++, DBStore.NULL); // container
-      stmt.setInt(col++, 0); // containing feature ID
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, -version); // cdo_version
+      stmt.setInt(column++, branch.getID());
+      stmt.setLong(column++, timeStamp); // cdo_created
+      stmt.setLong(column++, DBStore.UNSPECIFIED_DATE); // cdo_revised
+      idHandler.setCDOID(stmt, column++, CDOID.NULL); // resource
+      idHandler.setCDOID(stmt, column++, CDOID.NULL); // container
+      stmt.setInt(column++, 0); // containing feature ID
 
-      int isSetCol = col + getValueMappings().size();
+      int isSetCol = column + getValueMappings().size();
 
       for (ITypeMapping mapping : getValueMappings())
       {
@@ -688,18 +690,18 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
           stmt.setBoolean(isSetCol++, false);
         }
 
-        mapping.setDefaultValue(stmt, col++);
+        mapping.setDefaultValue(stmt, column++);
       }
 
       Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
       if (listSizeFields != null)
       {
         // list size columns begin after isSet-columns
-        col = isSetCol;
+        column = isSetCol;
 
         for (int i = 0; i < listSizeFields.size(); i++)
         {
-          stmt.setInt(col++, 0);
+          stmt.setInt(column++, 0);
         }
       }
 
@@ -718,6 +720,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long revised)
   {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
@@ -726,7 +729,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       stmt = statementCache.getPreparedStatement(sqlReviseAttributes, ReuseProbability.HIGH);
 
       stmt.setLong(1, revised);
-      stmt.setLong(2, CDOIDUtil.getLong(id));
+      idHandler.setCDOID(stmt, 2, id);
       stmt.setInt(3, branch.getID());
 
       CDODBUtil.sqlUpdate(stmt, false); // No row affected if old revision from other branch!
@@ -892,37 +895,38 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     CDORevisionManager revisionManager = repository.getRevisionManager();
     CDOBranchManager branchManager = repository.getBranchManager();
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
-    ResultSet rs = null;
+    ResultSet resultSet = null;
 
     try
     {
       stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
 
-      int col = 1;
+      int column = 1;
       if (branch != null)
       {
-        stmt.setInt(col++, branch.getID());
+        stmt.setInt(column++, branch.getID());
       }
 
       for (int i = 0; i < timeParameters; i++)
       {
-        stmt.setLong(col++, timeStamp);
+        stmt.setLong(column++, timeStamp);
       }
 
-      rs = stmt.executeQuery();
-      while (rs.next())
+      resultSet = stmt.executeQuery();
+      while (resultSet.next())
       {
-        long id = rs.getLong(1);
-        int version = rs.getInt(2);
-        int branchID = rs.getInt(3);
+        CDOID id = idHandler.getCDOID(resultSet, 1);
+        int version = resultSet.getInt(2);
+        int branchID = resultSet.getInt(3);
 
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
           CDOBranchVersion branchVersion = branchManager.getBranch(branchID).getVersion(Math.abs(version));
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(
-              CDOIDUtil.createLong(id), branchVersion, CDORevision.UNCHUNKED, true);
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion,
+              CDORevision.UNCHUNKED, true);
 
           if (!handler.handleRevision(revision))
           {
@@ -937,7 +941,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      DBUtil.close(rs);
+      DBUtil.close(resultSet);
       statementCache.releasePreparedStatement(stmt);
     }
   }
@@ -973,28 +977,29 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       builder.append(")"); //$NON-NLS-1$
     }
 
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
-    ResultSet rs = null;
+    ResultSet resultSet = null;
 
     Set<CDOID> result = new HashSet<CDOID>();
 
     try
     {
       stmt = statementCache.getPreparedStatement(builder.toString(), ReuseProbability.LOW);
-      int col = 1;
+      int column = 1;
       for (CDOChangeSetSegment segment : segments)
       {
-        stmt.setInt(col++, segment.getBranch().getID());
-        stmt.setLong(col++, segment.getTimeStamp());
-        stmt.setLong(col++, segment.getEndTime());
+        stmt.setInt(column++, segment.getBranch().getID());
+        stmt.setLong(column++, segment.getTimeStamp());
+        stmt.setLong(column++, segment.getEndTime());
       }
 
-      rs = stmt.executeQuery();
-      while (rs.next())
+      resultSet = stmt.executeQuery();
+      while (resultSet.next())
       {
-        long id = rs.getLong(1);
-        result.add(CDOIDUtil.createLong(id));
+        CDOID id = idHandler.getCDOID(resultSet, 1);
+        result.add(id);
       }
 
       return result;
@@ -1005,7 +1010,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     finally
     {
-      DBUtil.close(rs);
+      DBUtil.close(resultSet);
       statementCache.releasePreparedStatement(stmt);
     }
   }

@@ -45,7 +45,6 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.io.TMPUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EObject;
@@ -1203,7 +1202,7 @@ public class WorkspaceTest extends AbstractCDOTest
     disableConsole();
     CDOSessionConfigurationFactory remote = new RemoteSessionConfigurationFactory();
 
-    File folder = TMPUtil.createTempFolder("cdo-");
+    File folder = createTempFolder("cdo-");
     CDOWorkspaceBase base = CDOWorkspaceUtil.createFolderWorkspaceBase(folder);
     IOUtil.ERR().println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
 

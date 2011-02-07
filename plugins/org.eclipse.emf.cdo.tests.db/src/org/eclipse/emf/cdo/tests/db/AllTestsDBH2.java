@@ -47,7 +47,7 @@ public class AllTestsDBH2 extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // addScenario(parent, COMBINED, AllTestsDBH2.H2.ReusableFolder.AUDIT_INSTANCE, JVM, NATIVE);
+    addScenario(parent, COMBINED, AllTestsDBH2.H2.ReusableFolder.AUDIT_INSTANCE, JVM, NATIVE);
     addScenario(parent, COMBINED, AllTestsDBH2.H2.ReusableFolder.RANGE_INSTANCE, JVM, NATIVE);
   }
 

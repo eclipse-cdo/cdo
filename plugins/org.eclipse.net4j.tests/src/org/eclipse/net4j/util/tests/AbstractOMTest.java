@@ -14,6 +14,7 @@ import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -28,8 +29,10 @@ import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -52,9 +55,13 @@ public abstract class AbstractOMTest extends TestCase
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractOMTest.class);
 
+  public static boolean EXTERNAL_LOG;
+
   public static boolean SUPPRESS_OUTPUT;
 
   private static boolean consoleEnabled;
+
+  private transient List<File> filesToDelete = new ArrayList<File>();
 
   private transient String codeLink;
 
@@ -62,12 +69,15 @@ public abstract class AbstractOMTest extends TestCase
   {
     try
     {
-      SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-      String prefix = AbstractOMTest.class.getName() + "-" + formatter.format(new Date()) + "-";
-      File logFile = TMPUtil.createTempFile(prefix, ".log");
-      OMPlatform.INSTANCE.addLogHandler(new FileLogHandler(logFile, OMLogger.Level.WARN));
-      IOUtil.ERR().println("Logging errors and warnings to " + logFile);
-      IOUtil.ERR().println();
+      if (EXTERNAL_LOG)
+      {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String prefix = AbstractOMTest.class.getName() + "-" + formatter.format(new Date()) + "-";
+        File logFile = TMPUtil.createTempFile(prefix, ".log");
+        OMPlatform.INSTANCE.addLogHandler(new FileLogHandler(logFile, OMLogger.Level.WARN));
+        IOUtil.ERR().println("Logging errors and warnings to " + logFile);
+        IOUtil.ERR().println();
+      }
     }
     catch (Throwable ex)
     {
@@ -288,6 +298,78 @@ public abstract class AbstractOMTest extends TestCase
 
   protected void doTearDown() throws Exception
   {
+    deleteFiles();
+  }
+
+  public void deleteFiles()
+  {
+    for (File file : filesToDelete)
+    {
+      IOUtil.delete(file);
+    }
+
+    filesToDelete.clear();
+  }
+
+  public void addFileToDelete(File file)
+  {
+    filesToDelete.add(file);
+  }
+
+  public File createTempFolder() throws IORuntimeException
+  {
+    File folder = TMPUtil.createTempFolder();
+    addFileToDelete(folder);
+    return folder;
+  }
+
+  public File createTempFolder(String prefix) throws IORuntimeException
+  {
+    File folder = TMPUtil.createTempFolder(prefix);
+    addFileToDelete(folder);
+    return folder;
+  }
+
+  public File createTempFolder(String prefix, String suffix) throws IORuntimeException
+  {
+    File folder = TMPUtil.createTempFolder(prefix, suffix);
+    addFileToDelete(folder);
+    return folder;
+  }
+
+  public File createTempFolder(String prefix, String suffix, File directory) throws IORuntimeException
+  {
+    File folder = TMPUtil.createTempFile(prefix, suffix, directory);
+    addFileToDelete(folder);
+    return folder;
+  }
+
+  public File createTempFile() throws IORuntimeException
+  {
+    File file = TMPUtil.createTempFile();
+    addFileToDelete(file);
+    return file;
+  }
+
+  public File createTempFile(String prefix) throws IORuntimeException
+  {
+    File file = TMPUtil.createTempFile(prefix);
+    addFileToDelete(file);
+    return file;
+  }
+
+  public File createTempFile(String prefix, String suffix) throws IORuntimeException
+  {
+    File file = TMPUtil.createTempFile(prefix, suffix);
+    addFileToDelete(file);
+    return file;
+  }
+
+  public File createTempFile(String prefix, String suffix, File directory) throws IORuntimeException
+  {
+    File file = TMPUtil.createTempFile(prefix, suffix, directory);
+    addFileToDelete(file);
+    return file;
   }
 
   @Deprecated

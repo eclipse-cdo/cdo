@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.tests.revisioncache;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.h2.H2Adapter;
-import org.eclipse.net4j.util.io.TMPUtil;
 
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -27,8 +26,6 @@ import java.sql.Connection;
  */
 public class H2DBRevisionCacheTest extends AbstractDBRevisionCacheTest
 {
-  private static final String DB_NAME = TMPUtil.createTempFolder("h2db").getAbsolutePath();
-
   /**
    * Drop all table on a given h2 database.
    */
@@ -48,7 +45,7 @@ public class H2DBRevisionCacheTest extends AbstractDBRevisionCacheTest
   protected DataSource createDataSource()
   {
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL("jdbc:h2:" + DB_NAME);
+    dataSource.setURL("jdbc:h2:" + createTempFolder("h2db").getAbsolutePath());
     return dataSource;
   }
 }

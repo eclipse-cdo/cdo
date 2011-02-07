@@ -32,7 +32,6 @@ import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.io.TMPUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -157,7 +156,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   protected void configureSession(CDOSession session)
   {
-    final File lobCache = TMPUtil.createTempFolder("tmp_" + new Date().getTime());
+    final File lobCache = getCurrentTest().createTempFolder("tmp_" + new Date().getTime());
     session.options().setLobCache(new CDOLobStoreImpl(lobCache));
     session.addListener(new LifecycleEventAdapter()
     {

@@ -132,9 +132,17 @@ public abstract class DBStoreVerifier
   {
     try
     {
-      TRACER.format("Starting {0} ...", getClass().getSimpleName());
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Starting {0}...", getClass().getSimpleName());
+      }
+
       doVerify();
-      TRACER.format("{0} completed without complaints ...", getClass().getSimpleName());
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("{0} Completed without complaints...", getClass().getSimpleName());
+      }
     }
     catch (Exception e)
     {
@@ -149,6 +157,7 @@ public abstract class DBStoreVerifier
   protected void sqlDump(String sql)
   {
     ResultSet rs = null;
+
     try
     {
       TRACER.format("Dumping output of {0}", sql);

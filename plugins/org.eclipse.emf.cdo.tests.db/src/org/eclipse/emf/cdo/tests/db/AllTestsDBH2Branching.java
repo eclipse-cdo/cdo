@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
+import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 

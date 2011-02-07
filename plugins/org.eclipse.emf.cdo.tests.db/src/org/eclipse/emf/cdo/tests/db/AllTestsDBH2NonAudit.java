@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
+import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 

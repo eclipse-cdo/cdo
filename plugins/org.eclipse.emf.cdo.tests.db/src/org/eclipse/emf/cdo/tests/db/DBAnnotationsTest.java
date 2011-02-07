@@ -37,6 +37,8 @@ import java.sql.ResultSet;
  */
 public class DBAnnotationsTest extends AbstractCDOTest
 {
+  private static int modelCounter;
+
   public void testLengthAnnotationPositive() throws Exception
   {
     msg("Opening session");
@@ -378,7 +380,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   private EPackage createModel()
   {
     EPackage ePackage = EcoreUtil.copy(getModel1Package());
-    ePackage.setNsURI(ePackage.getNsURI() + "-dynamic");
+    ePackage.setNsURI(ePackage.getNsURI() + "-dynamic" + modelCounter++);
     return ePackage;
   }
 

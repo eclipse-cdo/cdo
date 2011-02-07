@@ -141,7 +141,7 @@ public abstract class DBStoreVerifier
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("{0} Completed without complaints...", getClass().getSimpleName());
+        TRACER.format("{0} completed without complaints...", getClass().getSimpleName());
       }
     }
     catch (Exception e)

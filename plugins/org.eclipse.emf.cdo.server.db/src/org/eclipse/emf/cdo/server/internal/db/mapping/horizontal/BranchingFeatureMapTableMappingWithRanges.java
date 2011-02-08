@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
@@ -149,8 +150,9 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
 
   private void initTable()
   {
+    IDBStore store = getMappingStrategy().getStore();
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    table = getMappingStrategy().getStore().getDBSchema().addTable(tableName);
+    table = store.getDBSchema().addTable(tableName);
 
     // add fields for CDOID
     IDBField idField = table.addField(CDODBSchema.FEATUREMAP_REVISION_ID, DBType.INTEGER);
@@ -165,7 +167,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     IDBField idxField = table.addField(CDODBSchema.FEATUREMAP_IDX, DBType.INTEGER);
 
     // add field for FeatureMap tag (MetaID for Feature in CDO registry)
-    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, DBType.INTEGER);
+    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, store.getIDHandler().getDBType());
 
     tagMap = new HashMap<CDOID, String>();
     typeMappings = new HashMap<CDOID, ITypeMapping>();

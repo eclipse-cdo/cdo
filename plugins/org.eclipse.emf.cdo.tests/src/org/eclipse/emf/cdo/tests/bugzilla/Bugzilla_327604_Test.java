@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
@@ -49,6 +50,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * See bug 327604.
+ * 
  * @author Martin Fluegge
  */
 public class Bugzilla_327604_Test extends AbstractCDOTest
@@ -86,6 +89,8 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
   {
     disableConsole();
     super.doSetUp();
+    skipUnlessAuditing();
+    skipTest(!getRepository().getStore().getObjectIDTypes().equals(MEMStore.OBJECT_ID_TYPES));
 
     CDOSession session = openSession();
     transaction = session.openTransaction();

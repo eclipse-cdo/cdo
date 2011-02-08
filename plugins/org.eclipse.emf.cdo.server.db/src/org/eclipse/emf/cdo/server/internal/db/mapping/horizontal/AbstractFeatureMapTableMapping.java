@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
@@ -119,8 +120,9 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
   private void initTable()
   {
+    IDBStore store = getMappingStrategy().getStore();
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    table = getMappingStrategy().getStore().getDBSchema().addTable(tableName);
+    table = store.getDBSchema().addTable(tableName);
 
     // add fields for keys (cdo_id, version, feature_id)
     FieldInfo[] fields = getKeyFields();
@@ -135,7 +137,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     IDBField idxField = table.addField(CDODBSchema.FEATUREMAP_IDX, DBType.INTEGER);
 
     // add field for FeatureMap tag (MetaID for Feature in CDO registry)
-    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, DBType.INTEGER);
+    IDBField tagField = table.addField(CDODBSchema.FEATUREMAP_TAG, store.getIDHandler().getDBType());
 
     tagMap = new HashMap<CDOID, String>();
     typeMappings = new HashMap<CDOID, ITypeMapping>();

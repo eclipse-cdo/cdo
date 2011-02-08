@@ -929,7 +929,7 @@ public class Repository extends Container<Object> implements InternalRepository
   public Object[] getElements()
   {
     final Object[] elements = { packageRegistry, branchManager, revisionManager, sessionManager, queryManager,
-        commitManager, commitInfoManager, lockManager, store };
+        queryHandlerProvider, commitManager, commitInfoManager, lockManager, store };
     return elements;
   }
 

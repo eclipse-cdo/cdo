@@ -547,10 +547,10 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     Repository repository = new Repository.Default()
     {
       @Override
-      public void initMainBranch(InternalCDOBranchManager branchManager, long lastCommitTimeStamp)
+      public void initMainBranch(InternalCDOBranchManager branchManager, long timeStamp)
       {
         // Mark the main branch local so that new objects get local IDs
-        branchManager.initMainBranch(true, lastCommitTimeStamp);
+        branchManager.initMainBranch(true, timeStamp);
       }
 
       @Override

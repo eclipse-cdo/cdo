@@ -47,7 +47,9 @@ public abstract class Store extends Lifecycle implements InternalStore
 {
   /**
    * @since 3.0
+   * @deprecated Use CDOBranchPoint.UNSPECIFIED_DATE
    */
+  @Deprecated
   public static final long UNSPECIFIED_DATE = CDOBranchPoint.UNSPECIFIED_DATE;
 
   private String type;
@@ -465,6 +467,11 @@ public abstract class Store extends Lifecycle implements InternalStore
    */
   protected abstract IStoreAccessor createWriter(ITransaction transaction);
 
+  protected static <T> Set<T> set(T... elements)
+  {
+    return Collections.unmodifiableSet(new HashSet<T>(Arrays.asList(elements)));
+  }
+
   /**
    * @since 3.0
    */
@@ -516,10 +523,5 @@ public abstract class Store extends Lifecycle implements InternalStore
         return false;
       }
     };
-  }
-
-  protected static <T> Set<T> set(T... elements)
-  {
-    return Collections.unmodifiableSet(new HashSet<T>(Arrays.asList(elements)));
   }
 }

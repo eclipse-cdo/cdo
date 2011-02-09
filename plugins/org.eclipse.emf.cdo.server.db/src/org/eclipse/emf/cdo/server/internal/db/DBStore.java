@@ -15,6 +15,7 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
@@ -412,7 +413,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
     try
     {
-      accessor.handleRevisions(null, null, DBStore.UNSPECIFIED_DATE, true, new CDORevisionHandler()
+      accessor.handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, true, new CDORevisionHandler()
       {
         public boolean handleRevision(CDORevision revision)
         {

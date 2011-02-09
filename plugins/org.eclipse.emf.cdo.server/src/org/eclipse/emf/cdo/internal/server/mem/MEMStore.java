@@ -220,12 +220,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     for (int i = 0; i < commitInfos.size(); i++)
     {
       CommitInfo info = commitInfos.get(i);
-      if (startTime != UNSPECIFIED_DATE && info.getTimeStamp() < startTime)
+      if (startTime != CDOBranchPoint.UNSPECIFIED_DATE && info.getTimeStamp() < startTime)
       {
         continue;
       }
 
-      if (endTime != UNSPECIFIED_DATE && info.getTimeStamp() > endTime)
+      if (endTime != CDOBranchPoint.UNSPECIFIED_DATE && info.getTimeStamp() > endTime)
       {
         continue;
       }

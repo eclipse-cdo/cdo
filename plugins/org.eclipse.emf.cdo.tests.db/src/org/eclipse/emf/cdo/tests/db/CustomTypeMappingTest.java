@@ -51,84 +51,81 @@ public class CustomTypeMappingTest extends AbstractCDOTest
   public void testCustomTypeMapping() throws CommitException
   {
     // manually register type mapping
-    IPluginContainer.INSTANCE.registerFactory(new MyIntToVarcharTypeMapping.Factory());
+    MyIntToVarcharTypeMapping.Factory factory = new MyIntToVarcharTypeMapping.Factory();
+    IPluginContainer.INSTANCE.registerFactory(factory);
 
-    EPackage pkg = EMFUtil.createEPackage("underscoreTest", "uct", "http://cdo.eclipse.org/tests/underscoreTest.ecore");
-    EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
-    EAttribute att = EMFUtil.createEAttribute(cls, "bar", EcorePackage.eINSTANCE.getEInt());
-
-    // annotate type mapping and column type
-    EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-    annotation.setSource("http://www.eclipse.org/CDO/DBStore");
-    annotation.getDetails().put("typeMapping", "org.eclipse.emf.cdo.tests.db.EIntToVarchar");
-    annotation.getDetails().put("columnType", DBType.VARCHAR.getKeyword());
-    att.getEAnnotations().add(annotation);
-
-    if (!isConfig(LEGACY))
+    try
     {
-      CDOUtil.prepareDynamicEPackage(pkg);
-    }
+      EPackage pkg = EMFUtil.createEPackage("underscoreTest", "uct",
+          "http://cdo.eclipse.org/tests/underscoreTest.ecore");
+      EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
+      EAttribute att = EMFUtil.createEAttribute(cls, "bar", EcorePackage.eINSTANCE.getEInt());
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test");
+      // annotate type mapping and column type
+      EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
+      annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+      annotation.getDetails().put("typeMapping", "org.eclipse.emf.cdo.tests.db.EIntToVarchar");
+      annotation.getDetails().put("columnType", DBType.VARCHAR.getKeyword());
+      att.getEAnnotations().add(annotation);
 
-    EObject obj = EcoreUtil.create(cls);
-    obj.eSet(att, 42);
-
-    resource.getContents().add(obj);
-    transaction.commit();
-    transaction.close();
-    session.close();
-
-    msg("Check if type was mapped to string...");
-    new DBStoreVerifier(getRepository())
-    {
-      @Override
-      protected void doVerify() throws Exception
+      if (!isConfig(LEGACY))
       {
-        Statement stmt = null;
-        ResultSet rset = null;
-        try
-        {
-          stmt = getStatement();
-          rset = stmt.executeQuery("SELECT bar FROM foo");
-          assertEquals("java.lang.String", rset.getMetaData().getColumnClassName(1));
-
-          rset.next();
-          assertEquals("2a", rset.getString(1));
-        }
-        finally
-        {
-          DBUtil.close(rset);
-          DBUtil.close(stmt);
-        }
+        CDOUtil.prepareDynamicEPackage(pkg);
       }
-    }.verify();
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource("/test");
+
+      EObject obj = EcoreUtil.create(cls);
+      obj.eSet(att, 42);
+
+      resource.getContents().add(obj);
+      transaction.commit();
+      transaction.close();
+      session.close();
+
+      msg("Check if type was mapped to string...");
+      new DBStoreVerifier(getRepository())
+      {
+        @Override
+        protected void doVerify() throws Exception
+        {
+          Statement stmt = null;
+          ResultSet rset = null;
+          try
+          {
+            stmt = getStatement();
+            rset = stmt.executeQuery("SELECT bar FROM foo");
+            assertEquals("java.lang.String", rset.getMetaData().getColumnClassName(1));
+
+            rset.next();
+            assertEquals("2a", rset.getString(1));
+          }
+          finally
+          {
+            DBUtil.close(rset);
+            DBUtil.close(stmt);
+          }
+        }
+      }.verify();
+    }
+    finally
+    {
+      IPluginContainer.INSTANCE.getFactoryRegistry().remove(factory.getKey());
+    }
   }
 
+  /**
+   * @author Stefan Winkler
+   */
   public static class MyIntToVarcharTypeMapping extends AbstractTypeMapping
   {
     public static final ITypeMapping.Descriptor DESCRIPTOR = TypeMappingUtil.createDescriptor(
         "org.eclipse.emf.cdo.tests.db.EIntToVarchar", EcorePackage.eINSTANCE.getEInt(), DBType.VARCHAR);
 
-    public static class Factory extends AbstractTypeMappingFactory
-    {
-      public Factory()
-      {
-        super(DESCRIPTOR);
-      }
-
-      @Override
-      public ITypeMapping create(String description)
-      {
-        return new MyIntToVarcharTypeMapping();
-      }
-    }
-
     public MyIntToVarcharTypeMapping()
     {
-      super();
     }
 
     @Override
@@ -143,6 +140,23 @@ public class CustomTypeMappingTest extends AbstractCDOTest
     {
       String stringVal = resultSet.getString(getField().getName());
       return Integer.parseInt(stringVal, 16);
+    }
+
+    /**
+     * @author Stefan Winkler
+     */
+    public static class Factory extends AbstractTypeMappingFactory
+    {
+      public Factory()
+      {
+        super(DESCRIPTOR);
+      }
+
+      @Override
+      public ITypeMapping create(String description)
+      {
+        return new MyIntToVarcharTypeMapping();
+      }
     }
   }
 }

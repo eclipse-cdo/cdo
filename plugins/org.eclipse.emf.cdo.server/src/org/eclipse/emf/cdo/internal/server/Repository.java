@@ -1428,7 +1428,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  protected void loadRootResource()
+  protected void readRootResource()
   {
     IStoreAccessor reader = store.getReader(null);
     StoreThreadLocal.setAccessor(reader);
@@ -1469,6 +1469,7 @@ public class Repository extends Container<Object> implements InternalRepository
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+    checkState(store, "store"); //$NON-NLS-1$
     checkState(!StringUtil.isEmpty(name), "name is empty"); //$NON-NLS-1$
     checkState(packageRegistry, "packageRegistry"); //$NON-NLS-1$
     checkState(sessionManager, "sessionManager"); //$NON-NLS-1$
@@ -1482,16 +1483,21 @@ public class Repository extends Container<Object> implements InternalRepository
     packageRegistry.setReplacingDescriptors(true);
     packageRegistry.setPackageProcessor(this);
     packageRegistry.setPackageLoader(this);
+
     branchManager.setBranchLoader(this);
     branchManager.setTimeProvider(this);
-    revisionManager.setRevisionLoader(this);
-    sessionManager.setRepository(this);
-    queryManager.setRepository(this);
-    commitInfoManager.setCommitInfoLoader(this);
-    commitManager.setRepository(this);
-    lockManager.setRepository(this);
 
-    checkState(store, "store"); //$NON-NLS-1$
+    revisionManager.setRevisionLoader(this);
+
+    sessionManager.setRepository(this);
+
+    queryManager.setRepository(this);
+
+    commitInfoManager.setCommitInfoLoader(this);
+
+    commitManager.setRepository(this);
+
+    lockManager.setRepository(this);
 
     {
       String value = getProperties().get(Props.SUPPORTING_AUDITS);
@@ -1544,10 +1550,12 @@ public class Repository extends Container<Object> implements InternalRepository
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    LifecycleUtil.activate(packageRegistry);
+
     LifecycleUtil.activate(store);
+    LifecycleUtil.activate(packageRegistry);
     LifecycleUtil.activate(sessionManager);
     LifecycleUtil.activate(revisionManager);
+    LifecycleUtil.activate(branchManager);
     LifecycleUtil.activate(queryManager);
     LifecycleUtil.activate(commitInfoManager);
     LifecycleUtil.activate(commitManager);
@@ -1556,9 +1564,9 @@ public class Repository extends Container<Object> implements InternalRepository
 
     if (!skipInitialization)
     {
-      lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
-      initMainBranch(branchManager, lastCommitTimeStamp);
-      LifecycleUtil.activate(branchManager);
+      lastCommitTimeStamp = store.getLastCommitTime();
+      long creationTime = store.getCreationTime();
+      initMainBranch(branchManager, creationTime);
 
       if (store.isFirstTime())
       {
@@ -1568,7 +1576,7 @@ public class Repository extends Container<Object> implements InternalRepository
       else
       {
         readPackageUnits();
-        loadRootResource();
+        readRootResource();
       }
     }
   }

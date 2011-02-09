@@ -66,10 +66,9 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
     this.timeProvider = timeProvider;
   }
 
-  public void initMainBranch(boolean local, long repositoryCreationTime)
+  public void initMainBranch(boolean local, long timeStamp)
   {
-    checkInactive();
-    mainBranch = new CDOBranchImpl.Main(this, local, repositoryCreationTime);
+    mainBranch = new CDOBranchImpl.Main(this, local, timeStamp);
   }
 
   public void handleBranchCreated(InternalCDOBranch branch)
@@ -214,9 +213,8 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkNull(branchLoader, "branchLoader"); //$NON-NLS-1$
-    checkNull(timeProvider, "timeProvider"); //$NON-NLS-1$
-    checkNull(mainBranch, "mainBranch"); //$NON-NLS-1$
+    checkState(branchLoader, "branchLoader"); //$NON-NLS-1$
+    checkState(timeProvider, "timeProvider"); //$NON-NLS-1$
   }
 
   /**

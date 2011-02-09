@@ -36,7 +36,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
@@ -573,7 +572,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
     {
       if (exactTime)
       {
-        if (timeStamp != DBStore.UNSPECIFIED_DATE)
+        if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           builder.append(" WHERE "); //$NON-NLS-1$
           builder.append(CDODBSchema.ATTRIBUTES_CREATED);
@@ -584,7 +583,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       else
       {
         builder.append(" WHERE "); //$NON-NLS-1$
-        if (timeStamp != DBStore.UNSPECIFIED_DATE)
+        if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           builder.append(CDODBSchema.ATTRIBUTES_CREATED);
           builder.append(">=?"); //$NON-NLS-1$
@@ -593,7 +592,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
           builder.append("<=? OR "); //$NON-NLS-1$
           builder.append(CDODBSchema.ATTRIBUTES_REVISED);
           builder.append("="); //$NON-NLS-1$
-          builder.append(DBStore.UNSPECIFIED_DATE);
+          builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
           builder.append(")"); //$NON-NLS-1$
           timeParameters = 2;
         }
@@ -601,7 +600,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
         {
           builder.append(CDODBSchema.ATTRIBUTES_REVISED);
           builder.append("="); //$NON-NLS-1$
-          builder.append(DBStore.UNSPECIFIED_DATE);
+          builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
         }
       }
     }
@@ -666,7 +665,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping
       builder.append("<=? OR "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
       builder.append("="); //$NON-NLS-1$
-      builder.append(DBStore.UNSPECIFIED_DATE);
+      builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
       builder.append(")"); //$NON-NLS-1$
     }
 

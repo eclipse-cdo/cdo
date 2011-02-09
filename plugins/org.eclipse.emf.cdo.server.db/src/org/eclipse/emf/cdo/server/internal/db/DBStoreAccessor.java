@@ -991,7 +991,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
       where = true;
     }
 
-    if (startTime != DBStore.UNSPECIFIED_DATE)
+    if (startTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
       builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);
@@ -1000,7 +1000,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
       where = true;
     }
 
-    if (endTime != DBStore.UNSPECIFIED_DATE)
+    if (endTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
       builder.append(CDODBSchema.COMMIT_INFOS_TIMESTAMP);

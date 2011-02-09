@@ -47,7 +47,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -419,7 +418,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     try
     {
-      if (timeStamp != DBStore.UNSPECIFIED_DATE)
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
         stmt = statementCache.getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
         idHandler.setCDOID(stmt, 1, revision.getID());
@@ -675,7 +674,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       stmt.setInt(column++, -version); // cdo_version
       stmt.setInt(column++, branch.getID());
       stmt.setLong(column++, timeStamp); // cdo_created
-      stmt.setLong(column++, DBStore.UNSPECIFIED_DATE); // cdo_revised
+      stmt.setLong(column++, CDOBranchPoint.UNSPECIFIED_DATE); // cdo_revised
       idHandler.setCDOID(stmt, column++, CDOID.NULL); // resource
       idHandler.setCDOID(stmt, column++, CDOID.NULL); // container
       stmt.setInt(column++, 0); // containing feature ID
@@ -858,7 +857,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       if (exactTime)
       {
-        if (timeStamp != DBStore.UNSPECIFIED_DATE)
+        if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
           builder.append(CDODBSchema.ATTRIBUTES_CREATED);
@@ -869,7 +868,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       else
       {
         builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-        if (timeStamp != DBStore.UNSPECIFIED_DATE)
+        if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           builder.append(CDODBSchema.ATTRIBUTES_CREATED);
           builder.append(">=?"); //$NON-NLS-1$
@@ -878,7 +877,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
           builder.append("<=? OR "); //$NON-NLS-1$
           builder.append(CDODBSchema.ATTRIBUTES_REVISED);
           builder.append("="); //$NON-NLS-1$
-          builder.append(DBStore.UNSPECIFIED_DATE);
+          builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
           builder.append(")"); //$NON-NLS-1$
           timeParameters = 2;
         }
@@ -886,7 +885,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         {
           builder.append(CDODBSchema.ATTRIBUTES_REVISED);
           builder.append("="); //$NON-NLS-1$
-          builder.append(DBStore.UNSPECIFIED_DATE);
+          builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
         }
       }
     }
@@ -973,7 +972,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       builder.append("<=? OR "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
       builder.append("="); //$NON-NLS-1$
-      builder.append(DBStore.UNSPECIFIED_DATE);
+      builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
       builder.append(")"); //$NON-NLS-1$
     }
 

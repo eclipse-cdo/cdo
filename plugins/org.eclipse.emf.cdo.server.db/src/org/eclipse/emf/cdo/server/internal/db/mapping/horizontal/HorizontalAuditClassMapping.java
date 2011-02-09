@@ -41,7 +41,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -275,7 +274,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     try
     {
       long timeStamp = revision.getTimeStamp();
-      if (timeStamp != DBStore.UNSPECIFIED_DATE)
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
         stmt = statementCache.getPreparedStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
         idHandler.setCDOID(stmt, 1, revision.getID());
@@ -523,7 +522,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, -version); // cdo_version
       stmt.setLong(column++, timeStamp); // cdo_created
-      stmt.setLong(column++, DBStore.UNSPECIFIED_DATE); // cdo_revised
+      stmt.setLong(column++, CDOBranchPoint.UNSPECIFIED_DATE); // cdo_revised
       idHandler.setCDOID(stmt, column++, CDOID.NULL); // resource
       idHandler.setCDOID(stmt, column++, CDOID.NULL); // container
       stmt.setInt(column++, 0); // containing feature ID

@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -38,6 +40,7 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
   {
     CDODBUtil.prepareContainer(IPluginContainer.INSTANCE);
     super.setUp();
+    ((TypeMappingRegistry)ITypeMapping.Registry.INSTANCE).init();
   }
 
   @Override

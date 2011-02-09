@@ -39,7 +39,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -398,7 +397,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     long timeStamp = revision.getTimeStamp();
-    if (timeStamp != DBStore.UNSPECIFIED_DATE)
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       throw new UnsupportedOperationException("Mapping strategy does not support audits"); //$NON-NLS-1$
     }

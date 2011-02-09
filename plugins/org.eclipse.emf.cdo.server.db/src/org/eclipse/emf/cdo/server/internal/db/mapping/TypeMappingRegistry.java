@@ -94,16 +94,21 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
   public TypeMappingRegistry()
   {
+    init();
+
+    // connect to extension registry
+    populator = new RegistryPopulator();
+    populator.connect();
+  }
+
+  public void init()
+  {
     defaultFeatureMapDBTypes = new HashSet<DBType>();
     typeMappingsById = new HashMap<String, ITypeMapping.Descriptor>();
     typeMappingByTypes = new HashMap<Pair<EClassifier, DBType>, ITypeMapping.Descriptor>();
     classifierDefaultMapping = new HashMap<EClassifier, DBType>();
 
     registerCoreTypeMappings();
-
-    // connect to extension registry
-    populator = new RegistryPopulator();
-    populator.connect();
   }
 
   /**
@@ -179,7 +184,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     classifierDefaultMapping.put(EtypesPackage.eINSTANCE.getClob(), DBType.VARCHAR); // TODO Should be DBType.CLOB?
   }
 
-  protected IPluginContainer getContainer()
+  protected IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
   }
@@ -264,7 +269,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
             type.getEPackage().getName() + "." + type.getName(), dbType.getKeyword()));
       }
 
-      IFactory factory = getManagedContainer().getFactory(ITypeMapping.Factory.PRODUCT_GROUP,
+      IFactory factory = getContainer().getFactory(ITypeMapping.Factory.PRODUCT_GROUP,
           descriptor.getFactoryType());
       typeMapping = (ITypeMapping)factory.create(null);
       typeMapping.setDBType(dbType);
@@ -273,11 +278,6 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     typeMapping.setMappingStrategy(mappingStrategy);
     typeMapping.setFeature(feature);
     return typeMapping;
-  }
-
-  private IManagedContainer getManagedContainer()
-  {
-    return getContainer();
   }
 
   private EClassifier getEType(EStructuralFeature feature)
@@ -382,7 +382,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
      */
     public void connect()
     {
-      container = getManagedContainer();
+      container = getContainer();
       populateTypeMappingRegistry();
       container.getFactoryRegistry().addListener(this);
     }

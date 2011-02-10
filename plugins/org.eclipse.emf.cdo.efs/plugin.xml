@@ -25,7 +25,7 @@
          point="org.eclipse.ui.actionSets">
       <actionSet
             id="org.eclipse.emf.cdo.efs.actionSet"
-            label="Sample Action Set"
+            label="EFS Test Action Set"
             visible="true">
          <menu
                id="sampleMenu"

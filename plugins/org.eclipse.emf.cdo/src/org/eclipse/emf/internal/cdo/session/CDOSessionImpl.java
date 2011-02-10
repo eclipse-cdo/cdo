@@ -40,10 +40,12 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSingleValueFeatureDeltaImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -1011,6 +1013,23 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
             {
               Object oldValue = workList.remove(delta.getIndex());
               ((CDOSingleValueFeatureDeltaImpl)delta).setValue(oldValue);
+            }
+
+            @Override
+            public void visit(CDOSetFeatureDelta delta)
+            {
+              EStructuralFeature feature = delta.getFeature();
+              Object value = null;
+              if (feature.isMany())
+              {
+                value = workList.set(delta.getIndex(), delta.getValue());
+              }
+              else
+              {
+                value = ((InternalCDORevision)oldRevision).getValue(feature);
+              }
+              
+              ((CDOSetFeatureDeltaImpl)delta).setOldValue(value);
             }
           };
 

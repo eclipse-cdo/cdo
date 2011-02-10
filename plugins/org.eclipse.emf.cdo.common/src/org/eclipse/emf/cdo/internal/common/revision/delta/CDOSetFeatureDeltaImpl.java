@@ -74,6 +74,11 @@ public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl imple
     return oldValue;
   }
 
+  public void setOldValue(Object oldValue)
+  {
+    this.oldValue = oldValue;
+  }
+
   @Override
   protected String toStringAdditional()
   {

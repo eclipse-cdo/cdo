@@ -381,11 +381,14 @@ public final class CDOStoreImpl implements CDOStore
 
       value = convertToCDO(cdoObject, feature, value);
 
-      CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(feature, index, value);
-      InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
+      InternalCDORevision oldRevision = getRevision(cdoObject);
+      Object oldValue = oldRevision.get(feature, index);
+      oldValue = convertToEMF(eObject, oldRevision, feature, index, oldValue);
 
-      Object oldValue = revision.set(feature, index, value);
-      oldValue = convertToEMF(eObject, revision, feature, index, oldValue);
+      CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(feature, index, value, oldValue);
+      InternalCDORevision revision = getRevisionForWriting(cdoObject, delta);
+      revision.set(feature, index, value);
+
       return oldValue;
     }
   }

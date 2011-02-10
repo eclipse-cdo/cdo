@@ -772,7 +772,27 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
   private CDOResource newResourceInstance(InternalCDORevision revision)
   {
     String path = getResourcePath(revision);
-    return getResource(path, true);
+    URI uri = CDOURIUtil.createResourceURI(this, path);
+
+    // Bug 334995: Check if locally there is already a resource with the same URI
+    CDOResource resource1 = (CDOResource)getResourceSet().getResource(uri, false);
+    String oldName = null;
+    if (resource1 != null)
+    {
+      // We have no other option than to change the name of the local resource
+      oldName = resource1.getName();
+      resource1.setName(oldName + ".renamed");
+    }
+
+    CDOResource resource2 = getResource(path, true);
+
+    if (resource1 != null)
+    {
+      OM.LOG.warn("URI clash: resource being instantiated had same URI as a resource already present "
+          + "locally; local resource was renamed from " + oldName + " to " + resource1.getName());
+    }
+
+    return resource2;
   }
 
   private String getResourcePath(InternalCDORevision revision)

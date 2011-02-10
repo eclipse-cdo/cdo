@@ -1353,7 +1353,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
     finally
     {
-      LifecycleUtil.deactivate(writer); // Don't let the null-context accessor go to the pool!
+      // LifecycleUtil.deactivate(writer); // Don't let the null-context accessor go to the pool!
       StoreThreadLocal.release();
     }
   }

@@ -34,7 +34,6 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
@@ -164,21 +163,23 @@ public class ExternalReferenceManager extends Lifecycle
     table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);
     table.addIndex(IDBIndex.Type.NON_UNIQUE, uriField);
 
-    IDBStoreAccessor reader = store.getReader(null);
-    Connection connection = reader.getConnection();
+    IDBStoreAccessor writer = store.getWriter(null);
+    Connection connection = writer.getConnection();
     Statement statement = null;
+    ResultSet resultSet = null;
 
     try
     {
       statement = connection.createStatement();
       store.getDBAdapter().createTable(table, statement);
+      connection.commit();
 
       String sql = "SELECT MIN(" + idField + ") FROM " + table;
-      ResultSet result = statement.executeQuery(sql);
+      resultSet = statement.executeQuery(sql);
 
-      if (result.next())
+      if (resultSet.next())
       {
-        lastMappedID.set(result.getLong(1));
+        lastMappedID.set(resultSet.getLong(1));
       }
 
       // else: resultSet is empty => table is empty
@@ -190,8 +191,9 @@ public class ExternalReferenceManager extends Lifecycle
     }
     finally
     {
+      DBUtil.close(resultSet);
       DBUtil.close(statement);
-      LifecycleUtil.deactivate(reader); // Don't let the null-context accessor go to the pool!
+      writer.release();
     }
 
     StringBuilder builder = new StringBuilder();

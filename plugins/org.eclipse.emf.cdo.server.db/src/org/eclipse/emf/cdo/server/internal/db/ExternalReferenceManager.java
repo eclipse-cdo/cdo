@@ -147,7 +147,7 @@ public class ExternalReferenceManager extends Lifecycle
   public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException
   {
-    DBUtil.deserializeTable(in, connection, table, monitor.fork());
+    DBUtil.deserializeTable(in, connection, table, monitor);
   }
 
   @Override

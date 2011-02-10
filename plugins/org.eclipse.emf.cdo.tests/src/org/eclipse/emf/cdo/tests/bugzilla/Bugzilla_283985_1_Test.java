@@ -52,7 +52,7 @@ import java.util.List;
 /**
  * @author Caspar De Groot
  */
-public class Bugzilla_283985_CDOTest extends AbstractCDOTest
+public class Bugzilla_283985_1_Test extends AbstractCDOTest
 {
   public void testBugzilla283985_PlainSingle() throws CommitException
   {

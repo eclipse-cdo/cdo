@@ -27,7 +27,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 /**
  * @author Caspar De Groot
  */
-public class Bugzilla_283985_SavePointTest extends AbstractCDOTest
+public class Bugzilla_283985_3_Test extends AbstractCDOTest
 {
   private Order order1, order2;
 

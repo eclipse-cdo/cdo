@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 /**
  * @author Caspar De Groot
  */
-public class Bugzilla_283985_CDOTest2 extends AbstractCDOTest
+public class Bugzilla_283985_2_Test extends AbstractCDOTest
 {
   private Order order1, order2;
 

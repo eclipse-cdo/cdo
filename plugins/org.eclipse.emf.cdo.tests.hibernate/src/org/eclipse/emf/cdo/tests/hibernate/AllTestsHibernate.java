@@ -37,8 +37,8 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_273565_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_279982_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_CDOTest;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_CDOTest2;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_1_Test;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_283985_2_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_308895_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_316444_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_319836_Test;
@@ -115,8 +115,8 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.remove(Bugzilla_308895_Test.class);
 
     // contains a lot of containment move, which is not supported by Hibernate
-    testClasses.remove(Bugzilla_283985_CDOTest.class);
-    testClasses.remove(Bugzilla_283985_CDOTest2.class);
+    testClasses.remove(Bugzilla_283985_1_Test.class);
+    testClasses.remove(Bugzilla_283985_2_Test.class);
     testClasses.remove(Bugzilla_319836_Test.class);
 
     // OCL querying not supported

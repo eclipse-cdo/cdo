@@ -93,6 +93,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     // testClasses.add(Bugzilla_259869_Test.class); // This is no real test, but relies on timing and fails often
     // testClasses.add(Bugzilla_313326_Test.class);
     // testClasses.add(Bugzilla_316887_Test.class); // The test logic is buggy
+
     testClasses.add(Bugzilla_241464_Test.class);
     testClasses.add(Bugzilla_243310_Test.class);
     testClasses.add(Bugzilla_246442_Test.class);
@@ -136,9 +137,9 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_279982_Test.class);
     testClasses.add(Bugzilla_280102_Test.class);
     testClasses.add(Bugzilla_283131_Test.class);
-    testClasses.add(Bugzilla_283985_CDOTest.class);
-    testClasses.add(Bugzilla_283985_CDOTest2.class);
-    testClasses.add(Bugzilla_283985_SavePointTest.class);
+    testClasses.add(Bugzilla_283985_1_Test.class);
+    testClasses.add(Bugzilla_283985_2_Test.class);
+    testClasses.add(Bugzilla_283985_3_Test.class);
     testClasses.add(Bugzilla_285008_Test.class);
     testClasses.add(Bugzilla_289932_Test.class);
     testClasses.add(Bugzilla_293283_Test.class);

@@ -34,7 +34,6 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(UnsetTest.class);
     testClasses.add(StateMachineTest.class);
     testClasses.add(SessionTest.class);
-    // TODO Fix testClasses.add(RemoteSessionManagerTest.class);
     testClasses.add(RevisionManagerTest.class);
     testClasses.add(RevisionManagerClientSideTest.class);
     testClasses.add(BranchingTest.class);
@@ -76,7 +75,6 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(FeatureMapTest.class);
     testClasses.add(AdapterManagerTest.class);
     testClasses.add(ConflictResolverTest.class);
-    // TODO Fix: testClasses.add(ConflictResolverMergingTest.class);
     testClasses.add(DynamicXSDTest.class);
     testClasses.add(SetFeatureTest.class);
     testClasses.add(DynamicPackageTest.class);
@@ -89,10 +87,12 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(WorkspaceTest.class);
     testClasses.add(BackupTest.class);
 
+    // TODO testClasses.add(RemoteSessionManagerTest.class);
+    // TODO testClasses.add(ConflictResolverMergingTest.class);
+    // TODO testClasses.add(NonCDOResourceTest.class);
+    // TODO testClasses.add(GeneratedEcoreTest.class);
+
     // Bugzilla verifications
-    // testClasses.add(Bugzilla_259869_Test.class); // This is no real test, but relies on timing and fails often
-    // testClasses.add(Bugzilla_313326_Test.class);
-    // testClasses.add(Bugzilla_316887_Test.class); // The test logic is buggy
 
     testClasses.add(Bugzilla_241464_Test.class);
     testClasses.add(Bugzilla_243310_Test.class);
@@ -212,8 +212,5 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_335772_Test.class);
     testClasses.add(Bugzilla_336314_Test.class);
     testClasses.add(Bugzilla_336590_Test.class);
-
-    // TODO testClasses.add(NonCDOResourceTest.class);
-    // TODO testClasses.add(GeneratedEcoreTest.class);
   }
 }

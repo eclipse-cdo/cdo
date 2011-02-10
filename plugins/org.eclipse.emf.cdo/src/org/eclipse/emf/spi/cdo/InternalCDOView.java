@@ -52,6 +52,13 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer);
 
   /**
+   * Returns an unmodifiable map of the objects managed by this view.
+   * 
+   * @since 4.0
+   */
+  public Map<CDOID, InternalCDOObject> getObjects();
+
+  /**
    * @since 4.0
    */
   public CDOStore getStore();

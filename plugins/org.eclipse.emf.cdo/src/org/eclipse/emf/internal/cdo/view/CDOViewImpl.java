@@ -502,7 +502,7 @@ public class CDOViewImpl extends AbstractCDOView
     if (deltas != null)
     {
       CDONotificationBuilder builder = new CDONotificationBuilder(this);
-      Map<CDOID, InternalCDOObject> objects = getObjects();
+      Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
       for (CDORevisionDelta delta : deltas)
       {
         CDOID id = delta.getID();
@@ -1380,7 +1380,7 @@ public class CDOViewImpl extends AbstractCDOView
     {
       synchronized (CDOViewImpl.this)
       {
-        Map<CDOID, InternalCDOObject> objects = getObjects();
+        Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
         if (objects instanceof ReferenceValueMap.Strong<?, ?>)
         {
           return ReferenceType.STRONG;
@@ -1409,7 +1409,7 @@ public class CDOViewImpl extends AbstractCDOView
 
       synchronized (CDOViewImpl.this)
       {
-        Map<CDOID, InternalCDOObject> objects = getObjects();
+        Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
         ReferenceValueMap<CDOID, InternalCDOObject> newObjects;
 
         switch (referenceType)

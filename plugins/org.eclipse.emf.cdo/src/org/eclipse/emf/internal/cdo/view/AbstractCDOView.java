@@ -145,9 +145,14 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     return legacyModeEnabled;
   }
 
-  protected synchronized final Map<CDOID, InternalCDOObject> getObjects()
+  protected synchronized final Map<CDOID, InternalCDOObject> getModifiableObjects()
   {
     return objects;
+  }
+
+  public synchronized Map<CDOID, InternalCDOObject> getObjects()
+  {
+    return Collections.unmodifiableMap(objects);
   }
 
   protected synchronized final void setObjects(Map<CDOID, InternalCDOObject> objects)

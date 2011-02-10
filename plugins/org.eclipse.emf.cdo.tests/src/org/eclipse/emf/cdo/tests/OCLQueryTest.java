@@ -55,6 +55,8 @@ public class OCLQueryTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
+    skipConfig(LEGACY);
+
     CDOSession session = openSession();
     transaction = session.openTransaction();
     resource = createTestSet(transaction);

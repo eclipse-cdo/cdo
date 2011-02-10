@@ -117,6 +117,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_258850_Test.class);
     testClasses.add(Bugzilla_258933_Test.class);
     testClasses.add(Bugzilla_259695_Test.class);
+    testClasses.add(Bugzilla_259869_Test.class);
     testClasses.add(Bugzilla_259949_Test.class);
     testClasses.add(Bugzilla_260756_Test.class);
     testClasses.add(Bugzilla_260764_Test.class);
@@ -156,6 +157,9 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_306998_Test.class);
     testClasses.add(Bugzilla_308895_Test.class);
     testClasses.add(Bugzilla_310574_Test.class);
+    testClasses.add(Bugzilla_312879_Test.class);
+    testClasses.add(Bugzilla_313326_Test.class);
+    testClasses.add(Bugzilla_313913_Test.class);
     testClasses.add(Bugzilla_314186_Test.class);
     testClasses.add(Bugzilla_314264_Test.class);
     testClasses.add(Bugzilla_315043_Test.class);
@@ -163,11 +167,13 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_316273_Test.class);
     testClasses.add(Bugzilla_316434_Test.class);
     testClasses.add(Bugzilla_316444_Test.class);
+    testClasses.add(Bugzilla_316887_Test.class);
     testClasses.add(Bugzilla_318518_Test.class);
     testClasses.add(Bugzilla_318844_Test.class);
     testClasses.add(Bugzilla_318876_Test.class);
     testClasses.add(Bugzilla_318919_Test.class);
     testClasses.add(Bugzilla_318998_Test.class);
+    testClasses.add(Bugzilla_319552_Test.class);
     testClasses.add(Bugzilla_319836_Test.class);
     testClasses.add(Bugzilla_320690_Test.class);
     testClasses.add(Bugzilla_320837_Test.class);
@@ -180,12 +186,16 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_324585_Test.class);
     testClasses.add(Bugzilla_324635_Test.class);
     testClasses.add(Bugzilla_324756_Test.class);
+    testClasses.add(Bugzilla_325097_Test.class);
     testClasses.add(Bugzilla_325603_Test.class);
     testClasses.add(Bugzilla_325866_Test.class);
+    testClasses.add(Bugzilla_326047_Test.class);
     testClasses.add(Bugzilla_326518_Test.class);
     testClasses.add(Bugzilla_326743_Test.class);
     testClasses.add(Bugzilla_327604_Test.class);
+    testClasses.add(Bugzilla_328352_Test.class);
     testClasses.add(Bugzilla_328790_Test.class);
+    testClasses.add(Bugzilla_329014_Test.class);
     testClasses.add(Bugzilla_329254_Test.class);
     testClasses.add(Bugzilla_329752_Test.class);
     testClasses.add(Bugzilla_329753_Test.class);
@@ -196,12 +206,12 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_333299_Test.class);
     testClasses.add(Bugzilla_333950_Test.class);
     testClasses.add(Bugzilla_334608_Test.class);
-    testClasses.add(Bugzilla_335675_Test.class);
+    testClasses.add(Bugzilla_334995_Test.class);
     testClasses.add(Bugzilla_335004_Test.class);
+    testClasses.add(Bugzilla_335675_Test.class);
+    testClasses.add(Bugzilla_335772_Test.class);
     testClasses.add(Bugzilla_336314_Test.class);
     testClasses.add(Bugzilla_336590_Test.class);
-    testClasses.add(Bugzilla_334995_Test.class);
-    testClasses.add(Bugzilla_335772_Test.class);
 
     // TODO testClasses.add(NonCDOResourceTest.class);
     // TODO testClasses.add(GeneratedEcoreTest.class);

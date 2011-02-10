@@ -184,11 +184,7 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(ex);
-        }
-
+        OM.LOG.error(ex);
         return ex;
       }
     }
@@ -206,11 +202,7 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(ex);
-        }
-
+        OM.LOG.error(ex);
         return ex;
       }
     }
@@ -240,11 +232,7 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(ex);
-        }
-
+        OM.LOG.error(ex);
         return ex;
       }
     }

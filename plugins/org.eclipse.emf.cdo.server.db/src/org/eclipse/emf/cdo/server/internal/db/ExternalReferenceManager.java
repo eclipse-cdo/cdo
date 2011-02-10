@@ -187,6 +187,7 @@ public class ExternalReferenceManager extends Lifecycle
     }
     catch (SQLException ex)
     {
+      connection.rollback();
       throw new DBException(ex);
     }
     finally

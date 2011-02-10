@@ -304,14 +304,14 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
       while ((listChunk == CDORevision.UNCHUNKED || --listChunk >= 0) && resultSet.next())
       {
         CDOID tag = idHandler.getCDOID(resultSet, 1);
-        Object value = getTypeMapping(accessor, tag).readValue(resultSet);
+        Object value = getTypeMapping(tag).readValue(resultSet);
 
         if (TRACER.isEnabled())
         {
           TRACER.format("Read value for index {0} from result set: {1}", list.size(), value);
         }
 
-        list.set(currentIndex++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(accessor, tag), value));
+        list.set(currentIndex++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
       }
     }
     catch (SQLException ex)
@@ -331,9 +331,9 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     }
   }
 
-  private void addFeature(IDBStoreAccessor accessor, CDOID tag)
+  private void addFeature(CDOID tag)
   {
-    EStructuralFeature modelFeature = getFeatureByTag(accessor, tag);
+    EStructuralFeature modelFeature = getFeatureByTag(tag);
 
     ITypeMapping typeMapping = getMappingStrategy().createValueMapping(modelFeature);
     String column = CDODBSchema.FEATUREMAP_VALUE + "_" + typeMapping.getDBType();
@@ -381,7 +381,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
       while (resultSet.next())
       {
         CDOID tag = idHandler.getCDOID(resultSet, 1);
-        Object value = getTypeMapping(chunkReader.getAccessor(), tag).readValue(resultSet);
+        Object value = getTypeMapping(tag).readValue(resultSet);
 
         if (chunk == null)
         {
@@ -400,8 +400,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
           TRACER.format("Read value for chunk index {0} from result set: {1}", indexInChunk, value);
         }
 
-        chunk.add(indexInChunk++,
-            CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(chunkReader.getAccessor(), tag), value));
+        chunk.add(indexInChunk++, CDORevisionUtil.createFeatureMapEntry(getFeatureByTag(tag), value));
         if (indexInChunk == chunkSize)
         {
           if (TRACER.isEnabled())
@@ -459,8 +458,8 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
     {
       FeatureMap.Entry entry = (FeatureMap.Entry)value;
       EStructuralFeature entryFeature = entry.getEStructuralFeature();
-      CDOID tag = getTagByFeature(accessor, entryFeature, revision.getTimeStamp());
-      String columnName = getColumnName(accessor, tag);
+      CDOID tag = getTagByFeature(entryFeature, revision.getTimeStamp());
+      String columnName = getColumnName(tag);
 
       stmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.HIGH);
       setKeyFields(stmt, revision);
@@ -470,7 +469,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
       {
         if (columnNames.get(i).equals(columnName))
         {
-          getTypeMapping(accessor, tag).setValue(stmt, column++, entry.getValue());
+          getTypeMapping(tag).setValue(stmt, column++, entry.getValue());
         }
         else
         {
@@ -499,12 +498,12 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
    *          The feature's MetaID in CDO
    * @return the column name where the values are stored
    */
-  protected String getColumnName(IDBStoreAccessor accessor, CDOID tag)
+  protected String getColumnName(CDOID tag)
   {
     String column = tagMap.get(tag);
     if (column == null)
     {
-      addFeature(accessor, tag);
+      addFeature(tag);
       column = tagMap.get(tag);
     }
 
@@ -518,12 +517,12 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
    *          The feature's MetaID in CDO
    * @return the corresponding type mapping
    */
-  protected ITypeMapping getTypeMapping(IDBStoreAccessor accessor, CDOID tag)
+  protected ITypeMapping getTypeMapping(CDOID tag)
   {
     ITypeMapping typeMapping = typeMappings.get(tag);
     if (typeMapping == null)
     {
-      addFeature(accessor, tag);
+      addFeature(tag);
       typeMapping = typeMappings.get(tag);
     }
 
@@ -534,9 +533,9 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
    * @param metaID
    * @return the column name where the values are stored
    */
-  private EStructuralFeature getFeatureByTag(IDBStoreAccessor accessor, CDOID tag)
+  private EStructuralFeature getFeatureByTag(CDOID tag)
   {
-    return (EStructuralFeature)getMappingStrategy().getStore().getMetaDataManager().getMetaInstance(accessor, tag);
+    return (EStructuralFeature)getMappingStrategy().getStore().getMetaDataManager().getMetaInstance(tag);
   }
 
   /**
@@ -544,9 +543,9 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
    *          The EStructuralFeature
    * @return The feature's MetaID in CDO
    */
-  protected CDOID getTagByFeature(IDBStoreAccessor accessor, EStructuralFeature feature, long timeStamp)
+  protected CDOID getTagByFeature(EStructuralFeature feature, long timeStamp)
   {
-    return getMappingStrategy().getStore().getMetaDataManager().getMetaID(accessor, feature, timeStamp);
+    return getMappingStrategy().getStore().getMetaDataManager().getMetaID(feature, timeStamp);
   }
 
   /**

@@ -270,8 +270,8 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     {
       FeatureMap.Entry entry = (FeatureMap.Entry)value;
       EStructuralFeature entryFeature = entry.getEStructuralFeature();
-      CDOID tag = getTagByFeature(accessor, entryFeature, timestamp);
-      String columnName = getColumnName(accessor, tag);
+      CDOID tag = getTagByFeature(entryFeature, timestamp);
+      String columnName = getColumnName(tag);
 
       String sql = sqlInsert;
 
@@ -284,7 +284,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
       {
         if (getColumnNames().get(i).equals(columnName))
         {
-          getTypeMapping(accessor, tag).setValue(stmt, column++, entry.getValue());
+          getTypeMapping(tag).setValue(stmt, column++, entry.getValue());
         }
         else
         {
@@ -495,9 +495,9 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
 
     FeatureMap.Entry entry = (FeatureMap.Entry)value;
     EStructuralFeature entryFeature = entry.getEStructuralFeature();
-    CDOID tag = getTagByFeature(accessor, entryFeature, timestamp);
-    String columnName = getColumnName(accessor, tag);
-    ITypeMapping mapping = getTypeMapping(accessor, tag);
+    CDOID tag = getTagByFeature(entryFeature, timestamp);
+    String columnName = getColumnName(tag);
+    ITypeMapping mapping = getTypeMapping(tag);
 
     try
     {

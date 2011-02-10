@@ -46,8 +46,6 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
@@ -391,29 +389,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   private String getUniqueID(ENamedElement element)
   {
-    // TODO: replace with a better logic. For now, we fall back to the
-    // element IDs...
+    CDOID result = getMetaDataManager().getMetaID(element, getStore().getRepository().getTimeStamp());
 
-    IDBStoreAccessor accessor = getStore().getWriter(null);
-
-    try
-    {
-      CDOID result = getMetaDataManager().getMetaID(accessor, element, getStore().getRepository().getTimeStamp());
-      accessor.commit(new Monitor());
-
-      StringBuilder builder = new StringBuilder();
-      CDOIDUtil.write(builder, result);
-      return builder.toString();
-    }
-    catch (Throwable t)
-    {
-      accessor.rollback();
-      throw new DBException(t);
-    }
-    finally
-    {
-      LifecycleUtil.deactivate(accessor); // do not let the null-accessor go into the pool!
-    }
+    StringBuilder builder = new StringBuilder();
+    CDOIDUtil.write(builder, result);
+    return builder.toString();
   }
 
   // -- factories for mapping of classes, values, lists ------------------

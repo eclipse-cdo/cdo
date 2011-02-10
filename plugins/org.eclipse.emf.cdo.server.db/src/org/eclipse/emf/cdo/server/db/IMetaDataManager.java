@@ -42,7 +42,7 @@ public interface IMetaDataManager
    * @return the corresponding ID
    * @since 4.0
    */
-  public CDOID getMetaID(IDBStoreAccessor accessor, EModelElement modelElement, long commitTime);
+  public CDOID getMetaID(EModelElement modelElement, long commitTime);
 
   /**
    * Returns the {@link EModelElement} referred to by the given ID. <code> getMetaInstance(getMetaID(m))</code> yields
@@ -50,7 +50,7 @@ public interface IMetaDataManager
    * 
    * @since 4.0
    */
-  public EModelElement getMetaInstance(IDBStoreAccessor accessor, CDOID id);
+  public EModelElement getMetaInstance(CDOID id);
 
   /**
    * Loads a package unit from the database.

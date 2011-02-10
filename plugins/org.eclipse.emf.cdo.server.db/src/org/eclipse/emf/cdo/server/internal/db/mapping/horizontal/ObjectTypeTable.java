@@ -32,7 +32,6 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -90,7 +89,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
       }
 
       CDOID classID = idHandler.getCDOID(resultSet, 1);
-      EClass eClass = (EClass)getMetaDataManager().getMetaInstance(accessor, classID);
+      EClass eClass = (EClass)getMetaDataManager().getMetaInstance(classID);
       return new CDOClassifierRef(eClass);
     }
     catch (SQLException ex)
@@ -113,7 +112,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     {
       stmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.MAX);
       idHandler.setCDOID(stmt, 1, id);
-      idHandler.setCDOID(stmt, 2, getMetaDataManager().getMetaID(accessor, type, timeStamp));
+      idHandler.setCDOID(stmt, 2, getMetaDataManager().getMetaID(type, timeStamp));
       stmt.setLong(3, timeStamp);
       DBUtil.trace(stmt.toString());
       int result = stmt.executeUpdate();
@@ -239,7 +238,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     finally
     {
       DBUtil.close(statement);
-      LifecycleUtil.deactivate(writer); // Don't let the null-context accessor go to the pool!
+      writer.release();
     }
 
     sqlSelect = "SELECT " + typeField + " FROM " + table + " WHERE " + idField + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$

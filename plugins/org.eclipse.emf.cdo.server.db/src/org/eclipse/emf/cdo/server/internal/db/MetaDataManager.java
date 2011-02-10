@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
@@ -75,7 +76,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     this.store = store;
   }
 
-  public synchronized CDOID getMetaID(IDBStoreAccessor accessor, EModelElement modelElement, long commitTime)
+  public synchronized CDOID getMetaID(EModelElement modelElement, long commitTime)
   {
     CDOID metaID = modelElementToMetaID.get(modelElement);
     if (metaID != null)
@@ -83,6 +84,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       return metaID;
     }
 
+    IDBStoreAccessor accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
     String uri = EcoreUtil.getURI(modelElement).toString();
     metaID = store.getIDHandler().mapURI(accessor, uri, commitTime);
     cacheMetaIDMapping(modelElement, metaID);
@@ -90,7 +92,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     return metaID;
   }
 
-  public synchronized EModelElement getMetaInstance(IDBStoreAccessor accessor, CDOID id)
+  public synchronized EModelElement getMetaInstance(CDOID id)
   {
     EModelElement modelElement = metaIDToModelElement.get(id);
     if (modelElement != null)
@@ -98,6 +100,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       return modelElement;
     }
 
+    IDBStoreAccessor accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
     String uri = store.getIDHandler().unmapURI(accessor, id);
 
     ResourceSet resourceSet = new ResourceSetImpl();

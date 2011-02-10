@@ -850,6 +850,13 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
             private static final long serialVersionUID = 1L;
 
             @Override
+            public void unset()
+            {
+              super.unset();
+              doClear();
+            }
+
+            @Override
             protected void didAdd(int index, BasicEMap.Entry<Object, Object> newObject)
             {
               EStoreEcoreEMap.this.doPut(newObject);

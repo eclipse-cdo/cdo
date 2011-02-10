@@ -2150,6 +2150,24 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return cleanRevisions;
   }
 
+  @Override
+  protected InternalCDORevision getViewedRevision(InternalCDOObject object)
+  {
+    InternalCDORevision rev = super.getViewedRevision(object);
+
+    // Bug 336590: If we have a clean revision for this object, return that instead
+    if (rev != null)
+    {
+      InternalCDORevision cleanRev = cleanRevisions.get(object);
+      if (cleanRev != null)
+      {
+        return cleanRev;
+      }
+    }
+
+    return rev;
+  }
+
   /**
    * @author Simon McDuff
    */

@@ -1276,7 +1276,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
         continue;
       }
 
-      InternalCDORevision revision = CDOStateMachine.INSTANCE.readNoLoad(object);
+      InternalCDORevision revision = getViewedRevision(object);
       if (revision == null)
       {
         continue;
@@ -1284,6 +1284,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
       revisions.put(id, revision);
     }
+  }
+
+  protected InternalCDORevision getViewedRevision(InternalCDOObject object)
+  {
+    return CDOStateMachine.INSTANCE.readNoLoad(object);
   }
 
   public synchronized CDOChangeSetData compareRevisions(CDOBranchPoint source)

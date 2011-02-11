@@ -1561,9 +1561,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
     if (!skipInitialization)
     {
-      lastCommitTimeStamp = store.getLastCommitTime();
-      long creationTime = store.getCreationTime();
-      initMainBranch(branchManager, creationTime);
+      lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
+      initMainBranch(branchManager, lastCommitTimeStamp);
 
       if (store.isFirstTime())
       {

@@ -18,9 +18,11 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOModificationTrackingAdapter;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
@@ -32,6 +34,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
@@ -445,13 +448,51 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.0 <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTrackingModificationGen(boolean newTrackingModification)
+  {
+    eSet(EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, newTrackingModification);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public void setTrackingModification(boolean newTrackingModification)
   {
-    eSet(EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, newTrackingModification);
+    if (cdoView().isReadOnly())
+    {
+      throw new ReadOnlyException("Underlying view is read-only");
+    }
+
+    if (newTrackingModification == isTrackingModification())
+    {
+      return;
+    }
+
+    EList<Adapter> adapters = eAdapters();
+    if (newTrackingModification)
+    {
+      adapters.add(new CDOModificationTrackingAdapter(this));
+    }
+    else
+    {
+      for (Adapter adapter : adapters)
+      {
+        if (adapter instanceof CDOModificationTrackingAdapter)
+        {
+          adapters.remove(adapter);
+          break;
+        }
+      }
+    }
+
+    setTrackingModificationGen(newTrackingModification);
   }
 
   /**

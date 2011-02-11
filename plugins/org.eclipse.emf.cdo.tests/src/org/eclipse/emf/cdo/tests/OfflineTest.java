@@ -77,7 +77,7 @@ public class OfflineTest extends AbstractSyncingTest
     session.close();
   }
 
-  public void testMasterCommits_NotificationsFromClone() throws Exception
+  protected void masterCommits_NotificationsFromClone() throws Exception
   {
     CDOSession masterSession = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = masterSession.openTransaction();

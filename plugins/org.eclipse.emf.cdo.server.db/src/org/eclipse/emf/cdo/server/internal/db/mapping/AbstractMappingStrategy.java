@@ -17,11 +17,14 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
@@ -389,7 +392,22 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   private String getUniqueID(ENamedElement element)
   {
-    CDOID result = getMetaDataManager().getMetaID(element, getStore().getRepository().getTimeStamp());
+    long timeStamp;
+    CommitContext commitContext = StoreThreadLocal.getCommitContext();
+    if (commitContext != null)
+    {
+      timeStamp = commitContext.getBranchPoint().getTimeStamp();
+    }
+    else
+    {
+      // This happens outside a commit, i.e. at system init time.
+      // Ensure that resulting ext refs are not replicated!
+      timeStamp = CDOBranchPoint.INVALID_DATE;
+
+      // timeStamp = getStore().getRepository().getTimeStamp();
+    }
+
+    CDOID result = getMetaDataManager().getMetaID(element, timeStamp);
 
     StringBuilder builder = new StringBuilder();
     CDOIDUtil.write(builder, result);

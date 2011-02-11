@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.IEvent;
 
 import org.eclipse.emf.ecore.EObject;
@@ -45,6 +46,8 @@ import java.util.Map;
 public abstract class AbstractSyncingTest extends AbstractCDOTest
 {
   protected static final long SLEEP_MILLIS = 100;
+
+  private static final boolean VERBOSE_WAIT = false;
 
   public OfflineConfig getOfflineConfig()
   {
@@ -177,8 +180,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   {
     while (repository.getState() != CDOCommonRepository.State.ONLINE)
     {
-      System.out.println("Waiting for ONLINE...");
-      sleep(SLEEP_MILLIS);
+      waitFor("ONLINE");
     }
   }
 
@@ -186,8 +188,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   {
     while (repository.getState() == CDOCommonRepository.State.ONLINE)
     {
-      System.out.println("Waiting for OFFLINE...");
-      sleep(SLEEP_MILLIS);
+      waitFor("OFFLINE");
     }
   }
 
@@ -199,8 +200,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
       long timeStamp = commitInfo.getTimeStamp();
       while (receiver.getLastUpdateTime() < timeStamp)
       {
-        System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
-        sleep(SLEEP_MILLIS);
+        waitFor("arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
       }
 
       return commitInfo;
@@ -219,8 +219,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
       long timeStamp = commitInfo.getTimeStamp();
       while (receiver.getLastCommitTimeStamp() < timeStamp)
       {
-        System.out.println("Waiting for arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
-        sleep(SLEEP_MILLIS);
+        waitFor("arrival of commit " + CDOCommonUtil.formatTimeStamp(timeStamp));
       }
 
       return commitInfo;
@@ -228,6 +227,19 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
     catch (CommitException ex)
     {
       throw WrappedException.wrap(ex);
+    }
+  }
+
+  private static void waitFor(String what)
+  {
+    if (VERBOSE_WAIT)
+    {
+      System.out.println("Waiting for " + what + "...");
+      sleep(SLEEP_MILLIS);
+    }
+    else
+    {
+      ConcurrencyUtil.sleep(SLEEP_MILLIS);
     }
   }
 }

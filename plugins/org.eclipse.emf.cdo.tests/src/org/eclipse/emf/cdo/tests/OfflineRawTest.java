@@ -36,6 +36,11 @@ public class OfflineRawTest extends OfflineTest
     return true;
   }
 
+  public void testMasterCommits_NotificationsFromClone() throws Exception
+  {
+    masterCommits_NotificationsFromClone();
+  }
+
   /**
    * @since 4.0
    */

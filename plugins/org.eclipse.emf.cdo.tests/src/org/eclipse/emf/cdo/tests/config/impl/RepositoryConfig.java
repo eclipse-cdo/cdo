@@ -245,11 +245,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
     });
 
-    // Start default repository
-    getRepository(REPOSITORY_NAME);
-
     serverBrowser = new CDOServerBrowser(repositories);
     serverBrowser.activate();
+
+    // Start default repository
+    getRepository(REPOSITORY_NAME);
   }
 
   @Override

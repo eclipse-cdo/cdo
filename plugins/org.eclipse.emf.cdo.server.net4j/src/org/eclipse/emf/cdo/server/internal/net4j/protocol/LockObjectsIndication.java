@@ -26,9 +26,11 @@ import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -37,6 +39,10 @@ import java.util.List;
 public class LockObjectsIndication extends CDOReadIndication
 {
   private List<Object> objectsToBeLocked = new ArrayList<Object>();
+
+  private List<CDORevisionKey> staleRevisions = new LinkedList<CDORevisionKey>();
+
+  private boolean timedOut;
 
   public LockObjectsIndication(CDOServerProtocol protocol)
   {
@@ -59,11 +65,21 @@ public class LockObjectsIndication extends CDOReadIndication
       handleViewedRevision(viewedBranch, revKeys[i]);
     }
 
+    if (staleRevisions.size() > 0)
+    {
+      // If we have 1 or more stale revisions, we should not lock
+      return;
+    }
+
     IView view = getSession().getView(viewID);
     InternalLockManager lockManager = getRepository().getLockManager();
     try
     {
       lockManager.lock(lockType, view, objectsToBeLocked, timeout);
+    }
+    catch (TimeoutRuntimeException ex)
+    {
+      timedOut = true;
     }
     catch (InterruptedException ex)
     {
@@ -73,23 +89,23 @@ public class LockObjectsIndication extends CDOReadIndication
 
   private void handleViewedRevision(CDOBranch viewedBranch, CDORevisionKey revKey)
   {
-    // TODO (CD) I'm using IllegalArgExceptions here because that's how it worked before. But
-    // personally I don't think it makes a lot of sense to throw exceptions from #indicating or
-    // #responding when *expected* problems are detected, especially because they trigger
-    // a separate signal. Why not just report problems through the response stream?
-
     CDOID id = revKey.getID();
     InternalCDORevision rev = getRepository().getRevisionManager().getRevision(id, viewedBranch.getHead(),
         CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+
     if (rev == null)
     {
       throw new IllegalArgumentException(String.format("Object %s not found in branch %s (possibly detached)", id,
           viewedBranch));
     }
+
     if (!revKey.equals(rev))
     {
-      throw new IllegalArgumentException(String.format(
-          "Client's revision of object %s is not the latest version in branch %s", id, viewedBranch));
+      staleRevisions.add(revKey);
+
+      // If we have 1 or more stale revisions, the locking won't proceed for sure,
+      // so we can return early
+      return;
     }
 
     if (getRepository().isSupportingBranches())
@@ -105,6 +121,20 @@ public class LockObjectsIndication extends CDOReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeBoolean(true);
+    boolean success = !timedOut && staleRevisions.size() == 0;
+    out.writeBoolean(success);
+
+    if (!success)
+    {
+      out.writeBoolean(timedOut);
+      if (!timedOut)
+      {
+        out.writeInt(staleRevisions.size());
+        for (CDORevisionKey staleRevision : staleRevisions)
+        {
+          out.writeCDORevisionKey(staleRevision);
+        }
+      }
+    }
   }
 }

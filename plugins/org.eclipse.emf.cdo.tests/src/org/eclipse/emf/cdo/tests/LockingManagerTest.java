@@ -21,10 +21,11 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.StaleRevisionLockException;
+import org.eclipse.emf.cdo.util.LockTimeoutException;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
-import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.Collections;
@@ -259,9 +260,9 @@ public class LockingManagerTest extends AbstractCDOTest
     try
     {
       transaction2.lockObjects(Collections.singletonList(cdoCompany2), LockType.WRITE, 1000);
-      fail("Should have an exception");
+      fail("Should have thrown an exception");
     }
-    catch (TimeoutRuntimeException ex)
+    catch (LockTimeoutException ex)
     {
     }
 
@@ -333,7 +334,7 @@ public class LockingManagerTest extends AbstractCDOTest
       transaction2.lockObjects(Collections.singletonList(cdoCompany2), LockType.WRITE, 1000);
       fail("Should have an exception");
     }
-    catch (TimeoutRuntimeException ex)
+    catch (LockTimeoutException ex)
     {
     }
   }
@@ -741,7 +742,7 @@ public class LockingManagerTest extends AbstractCDOTest
       }
       fail("Should have thrown IllegalArgumentException");
     }
-    catch (IllegalArgumentException e)
+    catch (StaleRevisionLockException e)
     {
     }
 

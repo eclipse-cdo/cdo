@@ -248,7 +248,11 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    sessionProtocol.lockObjects(revisions, viewID, getBranch(), lockType, timeout);
+    CDOException exception = sessionProtocol.lockObjects(revisions, viewID, getBranch(), lockType, timeout);
+    if (exception != null)
+    {
+      throw exception;
+    }
   }
 
   /**

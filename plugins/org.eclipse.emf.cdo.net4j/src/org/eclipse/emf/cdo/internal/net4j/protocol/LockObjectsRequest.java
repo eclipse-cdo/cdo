@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - maintenance
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
@@ -15,7 +16,11 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.util.LockTimeoutException;
+import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -24,9 +29,9 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Eike Stepper
+ * @author Eike Stepper, Caspar De Groot
  */
-public class LockObjectsRequest extends CDOClientRequest<Boolean>
+public class LockObjectsRequest extends CDOClientRequest<CDOException>
 {
   private int viewID;
 
@@ -69,8 +74,27 @@ public class LockObjectsRequest extends CDOClientRequest<Boolean>
   }
 
   @Override
-  protected Boolean confirming(CDODataInput in) throws IOException
+  protected CDOException confirming(CDODataInput in) throws IOException
   {
-    return in.readBoolean();
+    boolean success = in.readBoolean();
+    if (success)
+    {
+      return null;
+    }
+
+    boolean timedOut = in.readBoolean();
+    if (timedOut)
+    {
+      return new LockTimeoutException();
+    }
+
+    int nStaleRevisions = in.readInt();
+    CDORevisionKey[] staleRevisions = new CDORevisionKey[nStaleRevisions];
+    for (int i = 0; i < nStaleRevisions; i++)
+    {
+      staleRevisions[i] = in.readCDORevisionKey();
+    }
+
+    return new StaleRevisionLockException(staleRevisions);
   }
 }

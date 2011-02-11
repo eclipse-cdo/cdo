@@ -12,10 +12,10 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOLock;
+import org.eclipse.emf.cdo.util.LockTimeoutException;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
@@ -115,7 +115,7 @@ public class CDOLockImpl implements CDOLock
       object.cdoView().lockObjects(Collections.singletonList(object), type, CDOLock.NO_WAIT);
       return true;
     }
-    catch (TimeoutRuntimeException ex)
+    catch (LockTimeoutException ex)
     {
       return false;
     }
@@ -132,7 +132,7 @@ public class CDOLockImpl implements CDOLock
       object.cdoView().lockObjects(Collections.singletonList(object), type, unit.toMillis(time));
       return true;
     }
-    catch (TimeoutRuntimeException ex)
+    catch (LockTimeoutException ex)
     {
       return false;
     }

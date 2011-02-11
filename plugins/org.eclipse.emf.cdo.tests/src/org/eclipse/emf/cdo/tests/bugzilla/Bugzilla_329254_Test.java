@@ -125,6 +125,8 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     CDOTransaction transaction1 = session1.openTransaction();
     final CDOTransaction transaction2 = session2.openTransaction();
     final CDOTransaction transaction3 = session1.openTransaction();
+    CDOTransaction transaction4 = session2.openTransaction();
+    CDOTransaction transaction5 = session1.openTransaction();
 
     // create initial model.
     CDOResource resource = transaction1.createResource("/test");
@@ -178,20 +180,18 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     commitThread1.join();
     commitThread2.join();
 
-    transaction1.waitForUpdate(transaction3.getLastCommitTime(), DEFAULT_TIMEOUT);
-    transaction1.waitForUpdate(transaction2.getLastCommitTime(), DEFAULT_TIMEOUT);
+    transaction4.waitForUpdate(transaction3.getLastCommitTime(), DEFAULT_TIMEOUT);
+    transaction4.waitForUpdate(transaction2.getLastCommitTime(), DEFAULT_TIMEOUT);
 
     // do another commit.
-    CDOTransaction transaction4 = session2.openTransaction();
     Company company4 = transaction4.getObject(company1);
     company4.setName("company2");
-    commitAndSync(transaction4, transaction1);
+    commitAndSync(transaction4, transaction1, transaction5);
 
     // check if update arrived.
     assertEquals(company4.getName(), company1.getName());
 
     // check committing on the other session too.
-    CDOTransaction transaction5 = session1.openTransaction();
     Company company5 = transaction5.getObject(company1);
     company5.setName("company3");
     commitAndSync(transaction5, transaction4);

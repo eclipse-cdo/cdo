@@ -29,6 +29,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
 
@@ -145,6 +146,13 @@ public class AllTestsDBH2Offline extends DBConfigs
       JdbcDataSource dataSource = new JdbcDataSource();
       dataSource.setURL("jdbc:h2:" + dbFolder.getAbsolutePath() + "/h2test;SCHEMA=" + repoName);
       return dataSource;
+    }
+
+    @Override
+    public void setUp() throws Exception
+    {
+      CDODBUtil.prepareContainer(IPluginContainer.INSTANCE);
+      super.setUp();
     }
 
     protected void tearDownClean()

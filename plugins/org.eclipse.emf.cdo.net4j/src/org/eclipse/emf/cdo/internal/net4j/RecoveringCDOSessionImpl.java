@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionEvent;
@@ -250,7 +251,10 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
   {
     public void handleException(CDOSession session, int attempt, Exception exception) throws Exception
     {
-      recover();
+      if (exception instanceof TransportException)
+      {
+        recover();
+      }
     }
   }
 

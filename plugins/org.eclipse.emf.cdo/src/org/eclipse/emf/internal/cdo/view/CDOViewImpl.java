@@ -190,11 +190,22 @@ public class CDOViewImpl extends AbstractCDOView
       TRACER.format("Changing view target to {0}", branchPoint); //$NON-NLS-1$
     }
 
-    List<InternalCDOObject> invalidObjects = getInvalidObjects(timeStamp);
+    List<InternalCDOObject> invalidObjects;
+    if (branchPoint.getBranch().equals(getBranch()))
+    {
+      invalidObjects = getInvalidObjects(timeStamp);
+    }
+    else
+    {
+      invalidObjects = new ArrayList<InternalCDOObject>(getModifiableObjects().values());
+    }
+
     CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
     OMMonitor monitor = new EclipseMonitor(new NullProgressMonitor());
     boolean[] existanceFlags = sessionProtocol.changeView(viewID, branchPoint, invalidObjects, monitor);
+
     basicSetBranchPoint(branchPoint);
+
     int i = 0;
     for (InternalCDOObject invalidObject : invalidObjects)
     {
@@ -220,6 +231,26 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     return true;
+  }
+
+  private List<InternalCDOObject> getInvalidObjects(long timeStamp)
+  {
+    List<InternalCDOObject> result = new ArrayList<InternalCDOObject>();
+    for (InternalCDOObject object : getModifiableObjects().values())
+    {
+      CDORevision revision = object.cdoRevision();
+      if (revision == null)
+      {
+        revision = getRevision(object.cdoID(), false);
+      }
+
+      if (revision == null || !revision.isValid(timeStamp))
+      {
+        result.add(object);
+      }
+    }
+
+    return result;
   }
 
   /**

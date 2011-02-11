@@ -251,26 +251,6 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     waitForUpdate(updateTime, NO_TIMEOUT);
   }
 
-  protected synchronized List<InternalCDOObject> getInvalidObjects(long timeStamp)
-  {
-    List<InternalCDOObject> result = new ArrayList<InternalCDOObject>();
-    for (InternalCDOObject object : objects.values())
-    {
-      CDORevision revision = object.cdoRevision();
-      if (revision == null)
-      {
-        revision = getRevision(object.cdoID(), false);
-      }
-
-      if (revision == null || !revision.isValid(timeStamp))
-      {
-        result.add(object);
-      }
-    }
-
-    return result;
-  }
-
   public synchronized CDOBranch getBranch()
   {
     return branchPoint.getBranch();

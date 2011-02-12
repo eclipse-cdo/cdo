@@ -66,7 +66,7 @@ public class ResourceManager extends SWTResourceManager
   {
     try
     {
-      return ImageDescriptor.createFromURL(new File(path).toURL());
+      return ImageDescriptor.createFromURL(new File(path).toURI().toURL());
     }
     catch (MalformedURLException e)
     {

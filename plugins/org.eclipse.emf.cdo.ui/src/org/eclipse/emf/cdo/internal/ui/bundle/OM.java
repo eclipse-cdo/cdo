@@ -60,6 +60,9 @@ public abstract class OM
   public static final OMPreference<Boolean> PREF_EDITOR_AUTO_RELOAD = //
   PREFS.init("PREF_EDITOR_AUTO_RELOAD", true); //$NON-NLS-1$
 
+  public static final OMPreference<String[]> PREF_HISTORY_BRANCHES = //
+  PREFS.initArray("PREF_HISTORY_BRANCHES"); //$NON-NLS-1$
+
   /**
    * @author Eike Stepper
    */

@@ -74,6 +74,10 @@ public class SharedIcons
 
   public static final String OBJ_ECLASS = OBJ + "EClass" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
+  public static final String OBJ_REPO = OBJ + "repo.gif"; //$NON-NLS-1$
+
+  public static final String OBJ_BRANCH = OBJ + "branch.png"; //$NON-NLS-1$
+
   public static final String VIEW_SESSIONS = VIEW + "cdo_sessions" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String WIZBAN_PACKAGE_MANAGER = WIZBAN + "PackageManager" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
@@ -87,10 +91,6 @@ public class SharedIcons
   public static final String ETOOL_TIME_PICK_BUTTON_ICON = ETOOL + "clock" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
 
   public static final String ETOOL_SLIDER_ICON = ETOOL + "slider" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
-
-  public static final String REPO = OBJ + "repo.gif"; //$NON-NLS-1$
-
-  public static final String BRANCH = OBJ + "branch.png"; //$NON-NLS-1$
 
   public static Image getImage(String key)
   {

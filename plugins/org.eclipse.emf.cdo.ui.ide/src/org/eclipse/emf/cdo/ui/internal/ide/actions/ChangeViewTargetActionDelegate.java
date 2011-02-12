@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.cdo.ui.internal.ide.actions;
 
-import org.eclipse.emf.cdo.internal.ui.actions.ChangeViewTargetAction;
+import org.eclipse.emf.cdo.internal.ui.actions.SwitchTargetAction;
 
 import org.eclipse.jface.action.IAction;
 
@@ -31,7 +31,7 @@ public class ChangeViewTargetActionDelegate extends ViewAwareActionDelegate
   {
     if (action == null)
     {
-      action = new ChangeViewTargetAction(getPage(), getView());
+      action = new SwitchTargetAction(getPage(), getView());
     }
     action.run();
   }

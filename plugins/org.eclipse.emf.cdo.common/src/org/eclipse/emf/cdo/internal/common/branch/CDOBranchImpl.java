@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoad
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.SubBranchInfo;
 
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.container.ISlow;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBranch
+public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBranch, ISlow
 {
   public static final int ILLEGAL_BRANCH_ID = Integer.MIN_VALUE;
 

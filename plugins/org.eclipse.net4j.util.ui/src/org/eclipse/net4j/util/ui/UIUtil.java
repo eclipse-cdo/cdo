@@ -256,7 +256,7 @@ public final class UIUtil
 
   public static GridData createGridData()
   {
-    return new GridData(SWT.FILL, SWT.FILL, true, true);
+    return createGridData(true, true);
   }
 
   public static GridData createGridData(boolean grabHorizontal, boolean grabVertical)

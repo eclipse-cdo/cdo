@@ -43,12 +43,12 @@ public class RepositoryLocationItemProvider extends ContainerItemProvider<IConta
   {
     if (obj instanceof IRepositoryLocation)
     {
-      return SharedIcons.getImage(SharedIcons.REPO);
+      return SharedIcons.getImage(SharedIcons.OBJ_REPO);
     }
 
     if (obj instanceof BranchCheckoutSource)
     {
-      return SharedIcons.getImage(SharedIcons.BRANCH);
+      return SharedIcons.getImage(SharedIcons.OBJ_BRANCH);
     }
 
     return super.getImage(obj);

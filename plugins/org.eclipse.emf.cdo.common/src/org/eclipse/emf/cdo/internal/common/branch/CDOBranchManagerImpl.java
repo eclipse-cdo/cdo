@@ -21,8 +21,8 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 import org.eclipse.net4j.util.ref.ReferenceValueMap.Soft;
 
@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranchManager
+public class CDOBranchManagerImpl extends Container<CDOBranch> implements InternalCDOBranchManager
 {
   private BranchLoader branchLoader;
 
@@ -78,6 +78,11 @@ public class CDOBranchManagerImpl extends Lifecycle implements InternalCDOBranch
     baseBranch.addChild(branch);
 
     fireEvent(new BranchCreatedEvent(branch));
+  }
+
+  public CDOBranch[] getElements()
+  {
+    return new CDOBranch[] { getMainBranch() };
   }
 
   public InternalCDOBranch getMainBranch()

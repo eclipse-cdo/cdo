@@ -12,13 +12,14 @@
 package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.internal.ui.actions.ChangeViewTargetAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CommitTransactionAction;
@@ -37,6 +38,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ReloadViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
+import org.eclipse.emf.cdo.internal.ui.actions.SwitchTargetAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ToggleLegacyModeDefaultAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -91,6 +93,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   public Object[] getChildren(Object element)
   {
+    if (element instanceof CDOBranchManager)
+    {
+      return new Object[] { ((CDOBranchManager)element).getMainBranch() };
+    }
+
     if (element instanceof CDOView)
     {
       return ((CDOView)element).getRootResource().getContents().toArray();
@@ -107,6 +114,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   public boolean hasChildren(Object element)
   {
+    if (element instanceof CDOBranchManager)
+    {
+      return true; // Main branch always exists
+    }
+
     if (element instanceof CDOView)
     {
       return ((CDOView)element).getRootResource().getContents().size() > 0;
@@ -123,6 +135,17 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   public Object getParent(Object element)
   {
+    if (element instanceof CDOBranch)
+    {
+      CDOBranch branch = (CDOBranch)element;
+      if (branch.isMainBranch())
+      {
+        return branch.getBranchManager();
+      }
+
+      return branch.getBase().getBranch();
+    }
+
     if (element instanceof CDOResourceNode)
     {
       CDOResourceNode node = (CDOResourceNode)element;
@@ -141,6 +164,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   public String getText(Object obj)
   {
+    if (obj instanceof CDOBranch)
+    {
+      return ((CDOBranch)obj).getName();
+    }
+
     if (obj instanceof CDOResourceNode)
     {
       return ((CDOResourceNode)obj).getName();
@@ -181,6 +209,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     {
       CDOView view = (CDOView)obj;
       return getViewImage(view);
+    }
+
+    if (obj instanceof CDOBranch)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_BRANCH);
     }
 
     if (obj instanceof CDOResourceFolder)
@@ -292,6 +325,13 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     a2.setText(a2.getText() + SafeAction.INTERACTIVE);
     manager.add(a2);
 
+    // if (session.getRepositoryInfo().isSupportingBranches())
+    // {
+    // manager.add(new Separator());
+    // manager.add(new CreateBranchAction(page, session));
+    // }
+
+    manager.add(new Separator());
     manager.add(new ToggleLegacyModeDefaultAction(session));
     manager.add(new Separator());
     manager.add(new CloseSessionAction(page, session));
@@ -346,7 +386,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     manager.add(new OpenViewEditorAction(page, view));
     manager.add(new LoadResourceAction(page, view));
     manager.add(new ExportResourceAction(page, view));
-    manager.add(new ChangeViewTargetAction(page, view));
+    manager.add(new SwitchTargetAction(page, view));
     manager.add(new Separator());
     if (!view.isReadOnly())
     {

@@ -27,15 +27,19 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class ComposeBranchPointComposite extends Composite
 {
+  private CDOSession session;
+
   private CDOBranchPoint branchPoint;
 
   private SelectBranchComposite selectBranchComposite;
 
   private SelectTimeStampComposite selectTimeStampComposite;
 
-  public ComposeBranchPointComposite(Composite parent, int style, CDOSession session, CDOBranchPoint branchPoint)
+  public ComposeBranchPointComposite(Composite parent, int style, CDOSession session, CDOBranchPoint branchPoint,
+      boolean allowTimeStamp)
   {
     super(parent, style);
+    this.session = session;
     this.branchPoint = branchPoint;
 
     GridLayout gridLayout = UIUtil.createGridLayout(1);
@@ -43,31 +47,46 @@ public class ComposeBranchPointComposite extends Composite
 
     setLayout(gridLayout);
 
-    CDOBranch branch = branchPoint == null ? null : branchPoint.getBranch();
-    selectBranchComposite = new SelectBranchComposite(this, SWT.NONE, session, branch)
+    CDOBranch branch = branchPoint == null ? session.getBranchManager().getMainBranch() : branchPoint.getBranch();
+    if (session.getRepositoryInfo().isSupportingBranches())
     {
-      @Override
-      protected void branchChanged(CDOBranch newBranch)
+      selectBranchComposite = new SelectBranchComposite(this, SWT.NONE, session, branch)
       {
-        selectTimeStampComposite.setBranch(newBranch);
-        composeBranchPoint();
-      }
-    };
+        @Override
+        protected void branchChanged(CDOBranch newBranch)
+        {
+          if (selectTimeStampComposite != null)
+          {
+            selectTimeStampComposite.setBranch(newBranch);
+          }
 
-    selectBranchComposite.setLayoutData(UIUtil.createGridData());
-    selectBranchComposite.getBranchViewer().expandAll();
+          composeBranchPoint();
+        }
+      };
 
-    long timeStamp = branchPoint == null ? CDOBranchPoint.UNSPECIFIED_DATE : branchPoint.getTimeStamp();
-    selectTimeStampComposite = new SelectTimeStampComposite(this, SWT.NONE, branch, timeStamp)
+      selectBranchComposite.setLayoutData(UIUtil.createGridData());
+      selectBranchComposite.getBranchViewer().expandAll();
+    }
+
+    if (allowTimeStamp)
     {
-      @Override
-      protected void timeStampChanged(long timeStamp)
+      long timeStamp = branchPoint == null ? CDOBranchPoint.UNSPECIFIED_DATE : branchPoint.getTimeStamp();
+      selectTimeStampComposite = new SelectTimeStampComposite(this, SWT.NONE, branch, timeStamp)
       {
-        composeBranchPoint();
-      }
-    };
+        @Override
+        protected void timeStampChanged(long timeStamp)
+        {
+          composeBranchPoint();
+        }
+      };
 
-    selectTimeStampComposite.setLayoutData(UIUtil.createGridData(true, false));
+      selectTimeStampComposite.setLayoutData(UIUtil.createGridData(true, false));
+    }
+  }
+
+  public CDOSession getSession()
+  {
+    return session;
   }
 
   public CDOBranchPoint getBranchPoint()
@@ -92,8 +111,20 @@ public class ComposeBranchPointComposite extends Composite
   private void composeBranchPoint()
   {
     CDOBranchPoint oldBranchPoint = branchPoint;
-    CDOBranch branch = selectBranchComposite.getBranch();
-    branchPoint = branch == null ? null : branch.getPoint(selectTimeStampComposite.getTimeStamp());
+
+    CDOBranch branch = session.getBranchManager().getMainBranch();
+    if (selectBranchComposite != null)
+    {
+      branch = selectBranchComposite.getBranch();
+    }
+
+    long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
+    if (selectTimeStampComposite != null)
+    {
+      timeStamp = selectTimeStampComposite.getTimeStamp();
+    }
+
+    branchPoint = branch == null ? null : branch.getPoint(timeStamp);
     if (!ObjectUtil.equals(branchPoint, oldBranchPoint))
     {
       branchPointChanged(branchPoint);

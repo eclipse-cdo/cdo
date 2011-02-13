@@ -45,7 +45,7 @@ public class SwitchTargetAction extends ViewAction
   protected void preRun() throws Exception
   {
     CDOView view = getView();
-    SelectBranchPointDialog dialog = new SelectBranchPointDialog(getPage(), view.getSession(), view)
+    SelectBranchPointDialog dialog = new SelectBranchPointDialog(getPage(), view.getSession(), view, view.isReadOnly())
     {
       @Override
       protected Control createDialogArea(Composite parent)
@@ -53,8 +53,14 @@ public class SwitchTargetAction extends ViewAction
         getShell().setText(TITLE);
         setTitle(TITLE);
         setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_TARGET_SELECTION));
-        setMessage("Compose a valid target or select one from commits, tags or views.");
+        setMessage("Compose a valid target point or select one from commits, tags or views.");
         return super.createDialogArea(parent);
+      }
+
+      @Override
+      protected String getComposeTabTitle()
+      {
+        return "Target Point";
       }
     };
 

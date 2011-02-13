@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.internal.ui.actions.RollbackTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.SwitchTargetAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ToggleLegacyModeDefaultAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -460,22 +461,25 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     manager.add(new OpenViewEditorAction(page, view));
     manager.add(new LoadResourceAction(page, view));
     manager.add(new ExportResourceAction(page, view));
-    manager.add(new SwitchTargetAction(page, view));
     manager.add(new Separator());
     if (!view.isReadOnly())
     {
-      {
-        CDOResource rootResource = view.getRootResource();
-        manager.add(new CreateResourceNodeAction(this, page, view, rootResource, false));
-        manager.add(new CreateResourceNodeAction(this, page, view, rootResource, true));
-      }
-
+      CDOResource rootResource = view.getRootResource();
+      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, false));
+      manager.add(new CreateResourceNodeAction(this, page, view, rootResource, true));
       manager.add(new ImportResourceAction(page, view));
       manager.add(new CommitTransactionAction(page, view));
       manager.add(new RollbackTransactionAction(page, view));
     }
 
     manager.add(new Separator());
+
+    CDORepositoryInfo repositoryInfo = view.getSession().getRepositoryInfo();
+    if (view.isReadOnly() && repositoryInfo.isSupportingAudits() || repositoryInfo.isSupportingBranches())
+    {
+      manager.add(new SwitchTargetAction(page, view));
+    }
+
     manager.add(new ReloadViewAction(page, view));
     manager.add(new Separator());
     manager.add(new CloseViewAction(page, view));

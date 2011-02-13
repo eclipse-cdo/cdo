@@ -75,11 +75,35 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
 
     headRadio = new Button(pointGroup, SWT.RADIO);
     headRadio.setText(Messages.getString("BranchSelectionDialog.1")); //$NON-NLS-1$
+    headRadio.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        if (headRadio.getSelection())
+        {
+          setTimeStamp(CDOBranchPoint.UNSPECIFIED_DATE);
+        }
+      }
+    });
+
     new Label(pointGroup, SWT.NONE);
     new Label(pointGroup, SWT.NONE);
 
     baseRadio = new Button(pointGroup, SWT.RADIO);
     baseRadio.setText(Messages.getString("BranchSelectionDialog.2")); //$NON-NLS-1$
+    baseRadio.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        if (baseRadio.getSelection())
+        {
+          setTimeStamp(SelectTimeStampComposite.this.branch.getBase().getTimeStamp());
+        }
+      }
+    });
+
     baseText = new Text(pointGroup, SWT.BORDER);
     baseText.setLayoutData(createTimeGridData());
     baseText.setEnabled(false);
@@ -87,6 +111,18 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
 
     timeRadio = new Button(pointGroup, SWT.RADIO);
     timeRadio.setText(Messages.getString("BranchSelectionDialog.3")); //$NON-NLS-1$
+    timeRadio.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        if (timeRadio.getSelection())
+        {
+          parseTime();
+        }
+      }
+    });
+
     timeText = new Text(pointGroup, SWT.BORDER);
     timeText.setLayoutData(createTimeGridData());
     timeText.setText(CDOCommonUtil.formatTimeStamp());
@@ -94,21 +130,7 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
     {
       public void modifyText(ModifyEvent e)
       {
-        try
-        {
-          setTimeStamp(CDOCommonUtil.parseTimeStamp(timeText.getText()));
-          if (validationContext != null)
-          {
-            validationContext.setValidationError(timeText, null);
-          }
-        }
-        catch (ParseException ex)
-        {
-          if (validationContext != null)
-          {
-            validationContext.setValidationError(timeText, "Invalid time stamp.");
-          }
-        }
+        parseTime();
       }
     });
 
@@ -238,6 +260,25 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
     GridData gd2 = UIUtil.createGridData(false, false);
     gd2.widthHint = 160;
     return gd2;
+  }
+
+  private void parseTime()
+  {
+    try
+    {
+      setTimeStamp(CDOCommonUtil.parseTimeStamp(timeText.getText()));
+      if (validationContext != null)
+      {
+        validationContext.setValidationError(timeText, null);
+      }
+    }
+    catch (ParseException ex)
+    {
+      if (validationContext != null)
+      {
+        validationContext.setValidationError(timeText, "Invalid time stamp.");
+      }
+    }
   }
 
   private void selectRadio(Button button)

@@ -45,6 +45,8 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
 
   private CDOBranchPoint branchPoint;
 
+  private boolean allowTimeStamp;
+
   private CTabItem composeTab;
 
   private CTabItem commitsTab;
@@ -53,12 +55,15 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
 
   private CTabItem viewsTab;
 
-  public SelectBranchPointDialog(IWorkbenchPage page, CDOSession session, CDOBranchPoint branchPoint)
+  public SelectBranchPointDialog(IWorkbenchPage page, CDOSession session, CDOBranchPoint branchPoint,
+      boolean allowTimeStamp)
   {
     super(page.getWorkbenchWindow().getShell());
+    setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
+
     this.session = session;
     this.branchPoint = branchPoint;
-    setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
+    this.allowTimeStamp = allowTimeStamp;
   }
 
   public CDOBranchPoint getBranchPoint()
@@ -137,7 +142,7 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
 
   protected void createComposeTab(Composite parent)
   {
-    Control control = new ComposeBranchPointComposite(parent, SWT.NONE, session, null)
+    Control control = new ComposeBranchPointComposite(parent, SWT.NONE, session, null, allowTimeStamp)
     {
       @Override
       protected void branchPointChanged(CDOBranchPoint newBranchPoint)
@@ -179,9 +184,10 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
 
     private Text nameText;
 
-    public WithName(IWorkbenchPage page, CDOSession session, CDOBranchPoint branchPoint, String name)
+    public WithName(IWorkbenchPage page, CDOSession session, CDOBranchPoint branchPoint, boolean allowTimeStamp,
+        String name)
     {
-      super(page, session, branchPoint);
+      super(page, session, branchPoint, allowTimeStamp);
       this.name = StringUtil.safe(name);
     }
 

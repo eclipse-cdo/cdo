@@ -39,7 +39,7 @@ public final class TestRevision extends StubCDORevision
   {
     super(eClass);
     this.id = CDOIDUtil.createLong(id);
-    branchPoint = new CDOBranchImpl(CDOBranch.MAIN_BRANCH_ID, null).getPoint(created);
+    branchPoint = new CDOBranchImpl(null, CDOBranch.MAIN_BRANCH_ID, CDOBranch.MAIN_BRANCH_NAME, null).getPoint(created);
     this.version = version;
     this.revised = revised;
   }

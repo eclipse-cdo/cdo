@@ -11,15 +11,22 @@
 package org.eclipse.emf.cdo.ui.widgets;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 
 import org.eclipse.net4j.util.collection.IHistory;
 import org.eclipse.net4j.util.collection.PreferenceHistory;
+import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.ValidationContext;
+import org.eclipse.net4j.util.ui.ValidationParticipant;
 import org.eclipse.net4j.util.ui.widgets.HistoryText;
 
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -33,25 +40,41 @@ import org.eclipse.swt.widgets.Listener;
  * @author Eike Stepper
  * @since 4.0
  */
-public class SelectBranchComposite extends Composite
+public class SelectBranchComposite extends Composite implements ValidationParticipant
 {
-  private IHistory<String> branchHistory = new PreferenceHistory(OM.PREF_HISTORY_BRANCHES);
+  private ValidationContext validationContext;
+
+  private CDOSession session;
+
+  private CDOBranch branch;
+
+  private IHistory<String> branchHistory;
 
   private HistoryText branchText;
 
   private TreeViewer branchViewer;
 
-  private CDOBranch branch;
-
-  private CDOBranchManager branchManager;
-
-  public SelectBranchComposite(Composite parent, int style, CDOBranchManager branchManager)
+  public SelectBranchComposite(Composite parent, int style, CDOSession session, CDOBranch branch)
   {
     super(parent, style);
-    this.branchManager = branchManager;
+    this.session = session;
+    this.branch = branch;
 
-    // setLayoutData(UIUtil.createGridData());
-    setLayout(new GridLayout(1, false));
+    GridLayout gridLayout = UIUtil.createGridLayout(1);
+    gridLayout.marginHeight = 5;
+    gridLayout.horizontalSpacing = 5;
+    gridLayout.verticalSpacing = 5;
+
+    setLayout(gridLayout);
+
+    String prefName = "PREF_HISTORY_BRANCHES-" + session.getRepositoryInfo().getUUID(); //$NON-NLS-1$
+    OMPreference<String[]> pref = OM.PREFS.getArray(prefName);
+    if (pref == null)
+    {
+      pref = OM.PREFS.initArray(prefName);
+    }
+
+    branchHistory = new PreferenceHistory(pref);
 
     branchText = new HistoryText(this, SWT.BORDER | SWT.SINGLE, branchHistory);
     branchText.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
@@ -68,15 +91,37 @@ public class SelectBranchComposite extends Composite
     branchViewer.getTree().setLayoutData(UIUtil.createGridData());
     branchViewer.setLabelProvider(itemProvider);
     branchViewer.setContentProvider(itemProvider);
-    branchViewer.setInput(branchManager);
+    branchViewer.setInput(session.getBranchManager());
+    branchViewer.addSelectionChangedListener(new ISelectionChangedListener()
+    {
+      public void selectionChanged(SelectionChangedEvent event)
+      {
+        setBranchFromViewer();
+      }
+    });
 
     branchText.setFocus();
     setBranchFromPath();
   }
 
-  public IHistory<String> getBranchHistory()
+  public ValidationContext getValidationContext()
   {
-    return branchHistory;
+    return validationContext;
+  }
+
+  public void setValidationContext(ValidationContext validationContext)
+  {
+    this.validationContext = validationContext;
+  }
+
+  public CDOSession getSession()
+  {
+    return session;
+  }
+
+  public CDOBranch getBranch()
+  {
+    return branch;
   }
 
   public HistoryText getBranchText()
@@ -87,16 +132,6 @@ public class SelectBranchComposite extends Composite
   public TreeViewer getBranchViewer()
   {
     return branchViewer;
-  }
-
-  public CDOBranch getBranch()
-  {
-    return branch;
-  }
-
-  public boolean isBranchValid()
-  {
-    return branch != null;
   }
 
   public void rememberSettings()
@@ -120,9 +155,52 @@ public class SelectBranchComposite extends Composite
     branchViewer.getTree().removeListener(eventType, listener);
   }
 
+  protected void branchChanged(CDOBranch newBranch)
+  {
+  }
+
   private void setBranchFromPath()
   {
     String branchPath = branchText.getText();
-    branch = SelectBranchComposite.this.branchManager.getBranch(branchPath);
+    CDOBranch newBranch = session.getBranchManager().getBranch(branchPath);
+    if (newBranch != branch)
+    {
+      branch = newBranch;
+      if (newBranch != null)
+      {
+        branchViewer.reveal(branch);
+        branchViewer.setSelection(new StructuredSelection(branch));
+      }
+      else
+      {
+        branchViewer.setSelection(StructuredSelection.EMPTY);
+      }
+
+      branchChanged(newBranch);
+    }
+
+    validate();
+  }
+
+  private void setBranchFromViewer()
+  {
+    IStructuredSelection selection = (IStructuredSelection)branchViewer.getSelection();
+    CDOBranch newBranch = (CDOBranch)selection.getFirstElement();
+    if (newBranch != branch)
+    {
+      branch = newBranch;
+      branchText.setText(branch.getPathName());
+      branchChanged(newBranch);
+    }
+
+    validate();
+  }
+
+  private void validate()
+  {
+    if (validationContext != null)
+    {
+      validationContext.setValidationError(branchText.getCombo(), branch != null ? null : "Branch does not exist.");
+    }
   }
 }

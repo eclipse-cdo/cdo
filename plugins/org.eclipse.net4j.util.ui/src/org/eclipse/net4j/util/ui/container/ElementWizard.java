@@ -12,12 +12,11 @@ package org.eclipse.net4j.util.ui.container;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.container.IElementWizard.ValidationContext;
+import org.eclipse.net4j.util.ui.ValidationContext;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
@@ -90,19 +89,11 @@ public abstract class ElementWizard implements IElementWizard, ValidationContext
     this.resultDescription = resultDescription;
   }
 
-  public void setValidationOK()
+  public void setValidationError(Object source, String message)
   {
     if (context != null)
     {
-      context.setValidationOK();
-    }
-  }
-
-  public void setValidationError(Control control, String message)
-  {
-    if (context != null)
-    {
-      context.setValidationError(control, message);
+      context.setValidationError(source, message);
     }
   }
 

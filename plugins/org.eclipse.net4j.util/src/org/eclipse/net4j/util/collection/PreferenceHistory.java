@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.collection;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.pref.OMPreference;
 
 /**
@@ -21,6 +22,7 @@ public class PreferenceHistory extends History<String>
 
   public PreferenceHistory(OMPreference<String[]> preference)
   {
+    CheckUtil.checkArg(preference, "preference");
     this.preference = preference;
   }
 
@@ -33,10 +35,13 @@ public class PreferenceHistory extends History<String>
   protected void load()
   {
     String[] value = preference.getValue();
-    for (String data : value)
+    if (value != null)
     {
-      IHistoryElement<String> element = createElement(data);
-      elements.add(element);
+      for (String data : value)
+      {
+        IHistoryElement<String> element = createElement(data);
+        elements.add(element);
+      }
     }
   }
 

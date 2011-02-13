@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.ui.dialogs.SelectBranchPointDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
@@ -57,8 +58,39 @@ public class CreateBranchAction extends SessionAction
         getShell().setText(TITLE);
         setTitle(TITLE);
         setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_TARGET_SELECTION));
-        setMessage("Enter the name of the new branch and compose a valid base point or select one from commits, tags or views.");
+        setMessage("Enter the name of the new branch and compose a valid base point.\nYou may also choose a base point from existing commits, tags or views.");
         return super.createDialogArea(parent);
+      }
+
+      @Override
+      protected String getComposeTabTitle()
+      {
+        return "Base Point";
+      }
+
+      @Override
+      protected void validate()
+      {
+        super.validate();
+        String name = getName();
+        if (StringUtil.isEmpty(name))
+        {
+          aggregator.setValidationError(getNameText(), "Branch name is empty.");
+          return;
+        }
+
+        CDOBranchPoint branchPoint = getBranchPoint();
+        if (branchPoint != null)
+        {
+          CDOBranch branch = branchPoint.getBranch().getBranch(name);
+          if (branch != null)
+          {
+            aggregator.setValidationError(getNameText(), "Branch " + branch.getPathName() + " does already exist.");
+            return;
+          }
+        }
+
+        aggregator.setValidationError(getNameText(), null);
       }
     };
 
@@ -82,6 +114,12 @@ public class CreateBranchAction extends SessionAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
+    long timeStamp = base.getTimeStamp();
+    if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE || timeStamp == CDOBranchPoint.INVALID_DATE)
+    {
+      timeStamp = getSession().getRepositoryInfo().getTimeStamp();
+    }
 
+    base.getBranch().createBranch(name, timeStamp);
   }
 }

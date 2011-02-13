@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoad
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.SubBranchInfo;
 
 import org.eclipse.net4j.util.container.Container;
-import org.eclipse.net4j.util.container.ISlow;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -29,31 +28,29 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBranch, ISlow
+public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBranch
 {
   public static final int ILLEGAL_BRANCH_ID = Integer.MIN_VALUE;
+
+  private InternalCDOBranchManager branchManager;
 
   private int id;
 
   private String name;
 
-  private Object baseOrBranchManager;
+  private CDOBranchPoint base;
 
   private CDOBranchPoint head = getPoint(CDOBranchPoint.UNSPECIFIED_DATE);
 
   private InternalCDOBranch[] branches;
 
-  public CDOBranchImpl(int id, String name, CDOBranchPoint base)
+  public CDOBranchImpl(InternalCDOBranchManager branchManager, int id, String name, CDOBranchPoint base)
   {
+    this.branchManager = branchManager;
     this.id = id;
     this.name = name;
-    baseOrBranchManager = base;
-  }
-
-  public CDOBranchImpl(int id, InternalCDOBranchManager branchManager)
-  {
-    this.id = id;
-    baseOrBranchManager = branchManager;
+    this.base = base;
+    activate();
   }
 
   public boolean isMainBranch()
@@ -68,13 +65,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
   public InternalCDOBranchManager getBranchManager()
   {
-    if (isProxy())
-    {
-      return (InternalCDOBranchManager)baseOrBranchManager;
-    }
-
-    CDOBranchPoint base = (CDOBranchPoint)baseOrBranchManager;
-    return (InternalCDOBranchManager)base.getBranch().getBranchManager();
+    return branchManager;
   }
 
   public int getID()
@@ -82,15 +73,19 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return id;
   }
 
-  public String getName()
+  public synchronized String getName()
   {
-    loadIfNeeded();
+    if (name == null)
+    {
+      load();
+    }
+
     return name;
   }
 
   public boolean isProxy()
   {
-    return name == null;
+    return name == null || base == null;
   }
 
   public String getPathName()
@@ -132,10 +127,14 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     path.add(base);
   }
 
-  public CDOBranchPoint getBase()
+  public synchronized CDOBranchPoint getBase()
   {
-    loadIfNeeded();
-    return (CDOBranchPoint)baseOrBranchManager;
+    if (base == null)
+    {
+      load();
+    }
+
+    return base;
   }
 
   public CDOBranchPoint getHead()
@@ -163,14 +162,13 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return createBranch(name, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
-  public CDOBranch[] getElements()
+  public InternalCDOBranch[] getElements()
   {
     return getBranches();
   }
 
   public synchronized InternalCDOBranch[] getBranches()
   {
-    loadIfNeeded();
     if (branches == null)
     {
       InternalCDOBranchManager branchManager = getBranchManager();
@@ -239,7 +237,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   public void setBranchInfo(String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
     this.name = name;
-    baseOrBranchManager = baseBranch.getPoint(baseTimeStamp);
+    base = baseBranch.getPoint(baseTimeStamp);
   }
 
   public void addChild(InternalCDOBranch branch)
@@ -302,17 +300,13 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return MessageFormat.format("Branch[id={0}, name={1}]", id, name); //$NON-NLS-1$
   }
 
-  private synchronized void loadIfNeeded()
+  private synchronized void load()
   {
-    if (isProxy())
-    {
-      InternalCDOBranchManager branchManager = (InternalCDOBranchManager)baseOrBranchManager;
-      BranchInfo branchInfo = branchManager.getBranchLoader().loadBranch(id);
+    BranchInfo branchInfo = branchManager.getBranchLoader().loadBranch(id);
+    CDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
 
-      CDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
-      name = branchInfo.getName();
-      baseOrBranchManager = baseBranch.getPoint(branchInfo.getBaseTimeStamp());
-    }
+    name = branchInfo.getName();
+    base = baseBranch.getPoint(branchInfo.getBaseTimeStamp());
   }
 
   /**
@@ -322,13 +316,10 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   {
     private boolean local;
 
-    private InternalCDOBranchManager branchManager;
-
     public Main(InternalCDOBranchManager branchManager, boolean local, long timeStamp)
     {
-      super(MAIN_BRANCH_ID, MAIN_BRANCH_NAME, new CDOBranchPointImpl(null, timeStamp));
+      super(branchManager, MAIN_BRANCH_ID, MAIN_BRANCH_NAME, new CDOBranchPointImpl(null, timeStamp));
       this.local = local;
-      this.branchManager = branchManager;
     }
 
     @Override
@@ -341,12 +332,6 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     public boolean isLocal()
     {
       return local;
-    }
-
-    @Override
-    public InternalCDOBranchManager getBranchManager()
-    {
-      return branchManager;
     }
   }
 }

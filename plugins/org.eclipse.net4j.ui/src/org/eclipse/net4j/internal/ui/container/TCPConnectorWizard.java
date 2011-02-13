@@ -62,7 +62,7 @@ public class TCPConnectorWizard extends ElementWizard implements ModifyListener
     }
 
     setResultDescription(host);
-    setValidationOK();
+    setValidationError(hostText, null);
   }
 
   /**

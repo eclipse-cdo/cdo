@@ -105,7 +105,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
       branch = branches.get(branchID);
       if (branch == null)
       {
-        branch = new CDOBranchImpl(branchID, this);
+        branch = new CDOBranchImpl(this, branchID, null, null);
         putBranch(branch);
       }
     }
@@ -120,7 +120,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
       InternalCDOBranch branch = branches.get(id);
       if (branch == null)
       {
-        branch = new CDOBranchImpl(id, name, baseBranch.getPoint(baseTimeStamp));
+        branch = new CDOBranchImpl(this, id, name, baseBranch.getPoint(baseTimeStamp));
         putBranch(branch);
       }
       else if (branch.isProxy())
@@ -184,7 +184,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     baseTimeStamp = result.getElement2();
 
     CDOBranchPoint base = baseBranch.getPoint(baseTimeStamp);
-    InternalCDOBranch branch = new CDOBranchImpl(branchID, name, base);
+    InternalCDOBranch branch = new CDOBranchImpl(this, branchID, name, base);
     synchronized (branches)
     {
       putBranch(branch);

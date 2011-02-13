@@ -1028,7 +1028,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
               {
                 value = ((InternalCDORevision)oldRevision).getValue(feature);
               }
-              
+
               ((CDOSetFeatureDeltaImpl)delta).setOldValue(value);
             }
           };

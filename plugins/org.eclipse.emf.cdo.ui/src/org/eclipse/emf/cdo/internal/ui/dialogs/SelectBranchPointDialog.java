@@ -11,51 +11,47 @@
 package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.ui.shared.SharedIcons;
-import org.eclipse.emf.cdo.ui.widgets.SelectBranchComposite;
+import org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.ValidationContext;
 
-import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPage;
-
-import java.util.Date;
 
 /**
  * @author Eike Stepper
  */
-public class SelectBranchPointDialog extends TitleAreaDialog
+public class SelectBranchPointDialog extends TitleAreaDialog implements ValidationContext
 {
+  protected final ValidationContext aggregator = new ValidationContext.Aggregator(this);
+
   private CDOSession session;
 
   private CDOBranchPoint branchPoint;
 
-  private SelectBranchComposite selectBranchComposite;
+  private CTabItem composeTab;
 
-  private Button headRadio;
+  private CTabItem commitsTab;
 
-  private Button baseRadio;
+  private CTabItem tagsTab;
 
-  private Button timeRadio;
-
-  private Text timeText;
-
-  private Button browseTimeButton;
+  private CTabItem viewsTab;
 
   public SelectBranchPointDialog(IWorkbenchPage page, CDOSession session, CDOBranchPoint branchPoint)
   {
@@ -70,6 +66,24 @@ public class SelectBranchPointDialog extends TitleAreaDialog
     return branchPoint;
   }
 
+  public void setBranchPoint(CDOBranchPoint branchPoint)
+  {
+    this.branchPoint = branchPoint;
+    validate();
+  }
+
+  public void setValidationError(Object source, String message)
+  {
+    setMessage(message, IMessageProvider.ERROR);
+  }
+
+  @Override
+  protected void configureShell(Shell newShell)
+  {
+    super.configureShell(newShell);
+    newShell.setSize(500, 500);
+  }
+
   @Override
   protected Control createDialogArea(Composite parent)
   {
@@ -78,70 +92,82 @@ public class SelectBranchPointDialog extends TitleAreaDialog
     composite.setLayout(new GridLayout(1, false));
 
     createBranchPointArea(composite);
+    UIUtil.setValidationContext(composite, aggregator);
 
     return composite;
   }
 
   protected void createBranchPointArea(Composite parent)
   {
-    selectBranchComposite = new SelectBranchComposite(parent, SWT.NONE, session.getBranchManager());
-    selectBranchComposite.setLayoutData(UIUtil.createGridData());
+    CTabFolder tabFolder = new CTabFolder(parent, SWT.BORDER);
+    tabFolder.setSimple(false);
+    tabFolder.setLayoutData(UIUtil.createGridData());
+    tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 
-    Group pointGroup = new Group(parent, SWT.NONE);
-    pointGroup.setText(Messages.getString("BranchSelectionDialog.0")); //$NON-NLS-1$
-    pointGroup.setLayout(new GridLayout(3, false));
-    pointGroup.setLayoutData(UIUtil.createGridData());
+    composeTab = new CTabItem(tabFolder, SWT.NONE);
+    composeTab.setText(getComposeTabTitle());
+    Composite composite_0 = new Composite(tabFolder, SWT.NONE);
+    composite_0.setLayout(new GridLayout(1, false));
+    createComposeTab(composite_0);
+    composeTab.setControl(composite_0);
 
-    headRadio = new Button(pointGroup, SWT.RADIO);
-    headRadio.setText(Messages.getString("BranchSelectionDialog.1")); //$NON-NLS-1$
-    new Label(pointGroup, SWT.NONE);
-    new Label(pointGroup, SWT.NONE);
+    commitsTab = new CTabItem(tabFolder, SWT.NONE);
+    commitsTab.setText("Commits");
+    Composite composite_1 = new Composite(tabFolder, SWT.NONE);
+    composite_1.setLayout(new GridLayout(1, false));
+    createCommitsTab(composite_1);
+    commitsTab.setControl(composite_1);
 
-    baseRadio = new Button(pointGroup, SWT.RADIO);
-    baseRadio.setText(Messages.getString("BranchSelectionDialog.2")); //$NON-NLS-1$
-    new Label(pointGroup, SWT.NONE);
-    new Label(pointGroup, SWT.NONE);
+    tagsTab = new CTabItem(tabFolder, SWT.NONE);
+    tagsTab.setText("Tags");
+    Composite composite_2 = new Composite(tabFolder, SWT.NONE);
+    composite_2.setLayout(new GridLayout(1, false));
+    createTagsTab(composite_2);
+    tagsTab.setControl(composite_2);
 
-    timeRadio = new Button(pointGroup, SWT.RADIO);
-    timeRadio.setText(Messages.getString("BranchSelectionDialog.3")); //$NON-NLS-1$
-    timeText = new Text(pointGroup, SWT.BORDER);
-    timeText.setText(new Date(session.getRepositoryInfo().getCreationTime()).toString());
-    timeText.setEditable(false);
+    viewsTab = new CTabItem(tabFolder, SWT.NONE);
+    viewsTab.setText("Views");
+    Composite composite_3 = new Composite(tabFolder, SWT.NONE);
+    composite_3.setLayout(new GridLayout(1, false));
+    createViewsTab(composite_3);
+    viewsTab.setControl(composite_3);
 
-    browseTimeButton = new Button(pointGroup, SWT.NONE);
-    browseTimeButton.setImage(SharedIcons.getImage(SharedIcons.ETOOL_TIME_PICK_BUTTON_ICON));
+    tabFolder.setSelection(composeTab);
+  }
 
-    timeText.addModifyListener(new ModifyListener()
+  protected void createComposeTab(Composite parent)
+  {
+    Control control = new ComposeBranchPointComposite(parent, SWT.NONE, session, null)
     {
-      public void modifyText(ModifyEvent e)
+      @Override
+      protected void branchPointChanged(CDOBranchPoint newBranchPoint)
       {
-        if (timeRadio.getSelection())
-        {
-          // updateSelectedPoint();
-        }
+        setBranchPoint(newBranchPoint);
       }
-    });
+    };
 
-    // head as default selection
-    headRadio.setSelection(true);
+    control.setLayoutData(UIUtil.createGridData());
+  }
 
-    browseTimeButton.addSelectionListener(new SelectionListener()
-    {
-      public void widgetSelected(SelectionEvent e)
-      {
-        OpenAuditDialog dialog = new OpenAuditDialog(UIUtil.getActiveWorkbenchPage());
-        if (dialog.open() == IDialogConstants.OK_ID)
-        {
-          timeText.setText(new Date(dialog.getTimeStamp()).toString());
-        }
-      }
+  protected void createCommitsTab(Composite parent)
+  {
+  }
 
-      public void widgetDefaultSelected(SelectionEvent e)
-      {
-      }
-    });
+  protected void createTagsTab(Composite parent)
+  {
+  }
 
-    selectBranchComposite.getBranchViewer().expandAll();
+  protected void createViewsTab(Composite parent)
+  {
+  }
+
+  protected String getComposeTabTitle()
+  {
+    return "Compose";
+  }
+
+  protected void validate()
+  {
   }
 
   /**
@@ -156,7 +182,7 @@ public class SelectBranchPointDialog extends TitleAreaDialog
     public WithName(IWorkbenchPage page, CDOSession session, CDOBranchPoint branchPoint, String name)
     {
       super(page, session, branchPoint);
-      this.name = name;
+      this.name = StringUtil.safe(name);
     }
 
     public String getName()
@@ -164,12 +190,27 @@ public class SelectBranchPointDialog extends TitleAreaDialog
       return name;
     }
 
+    public void setName(String name)
+    {
+      this.name = name;
+      validate();
+    }
+
+    public Text getNameText()
+    {
+      return nameText;
+    }
+
     @Override
     protected void createBranchPointArea(Composite parent)
     {
+      GridLayout gridLayout = UIUtil.createGridLayout(2);
+      gridLayout.marginHeight = 5;
+      gridLayout.horizontalSpacing = 5;
+
       Composite composite = new Composite(parent, SWT.NONE);
       composite.setLayoutData(UIUtil.createGridData(true, false));
-      composite.setLayout(new GridLayout(2, false));
+      composite.setLayout(gridLayout);
 
       Label label = new Label(composite, SWT.NONE);
       label.setLayoutData(UIUtil.createGridData(false, false));
@@ -177,6 +218,14 @@ public class SelectBranchPointDialog extends TitleAreaDialog
 
       nameText = new Text(composite, SWT.BORDER);
       nameText.setLayoutData(UIUtil.createGridData(true, false));
+      nameText.setText(name);
+      nameText.addModifyListener(new ModifyListener()
+      {
+        public void modifyText(ModifyEvent e)
+        {
+          setName(nameText.getText());
+        }
+      });
 
       super.createBranchPointArea(parent);
     }

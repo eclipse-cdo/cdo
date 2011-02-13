@@ -51,7 +51,7 @@ public class JVMConnectorWizard extends ElementWizard implements ModifyListener
     }
 
     setResultDescription(acceptorName);
-    setValidationOK();
+    setValidationError(acceptorNameText, null);
   }
 
   /**

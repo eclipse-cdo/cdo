@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.ui.efs.wizards;
 
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.ValidationContext;
 import org.eclipse.net4j.util.ui.container.ElementWizardComposite;
-import org.eclipse.net4j.util.ui.container.IElementWizard.ValidationContext;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -28,7 +28,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -132,12 +131,7 @@ public class CDOProjectImportWizard extends Wizard implements IImportWizard
       repositoryText.setLayoutData(UIUtil.createGridData(true, false));
     }
 
-    public void setValidationOK()
-    {
-      setMessage(null);
-    }
-
-    public void setValidationError(Control control, String message)
+    public void setValidationError(Object source, String message)
     {
       setMessage(message, IMessageProvider.ERROR);
     }

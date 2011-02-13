@@ -82,6 +82,7 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
       cloneSession.close();
       cloneSession = null;
     }
+
     if (masterSession != null)
     {
       masterSession.close();

@@ -219,16 +219,46 @@ public final class UIUtil
   /**
    * @since 2.0
    */
-  @SuppressWarnings("unchecked")
   public static <T> List<T> getElements(ISelection selection, Class<T> type)
   {
     if (selection instanceof IStructuredSelection)
     {
       IStructuredSelection ssel = (IStructuredSelection)selection;
-      return ssel.toList();
+
+      @SuppressWarnings("unchecked")
+      List<T> result = ssel.toList();
+      return result;
     }
 
     return null;
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static int setValidationContext(Control control, ValidationContext context)
+  {
+    int count = 0;
+    if (control instanceof ValidationParticipant)
+    {
+      ValidationParticipant participant = (ValidationParticipant)control;
+      if (participant.getValidationContext() == null)
+      {
+        participant.setValidationContext(context);
+        ++count;
+      }
+    }
+
+    if (control instanceof Composite)
+    {
+      Composite composite = (Composite)control;
+      for (Control child : composite.getChildren())
+      {
+        count += setValidationContext(child, context);
+      }
+    }
+
+    return count;
   }
 
   public static IPasswordCredentialsProvider createInteractiveCredentialsProvider()

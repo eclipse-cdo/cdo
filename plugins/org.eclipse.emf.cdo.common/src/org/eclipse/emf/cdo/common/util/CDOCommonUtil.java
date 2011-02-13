@@ -28,7 +28,9 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
-import java.text.MessageFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author Eike Stepper
@@ -36,6 +38,11 @@ import java.text.MessageFormat;
  */
 public final class CDOCommonUtil
 {
+  /**
+   * @since 4.0
+   */
+  public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss'.'SSS");
+
   private CDOCommonUtil()
   {
   }
@@ -147,6 +154,19 @@ public final class CDOCommonUtil
       return "*";
     }
 
-    return MessageFormat.format("{0,date} {0,time,HH:mm:ss:SSS}", timeStamp);
+    return DATE_FORMAT.format(new Date(timeStamp));
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static long parseTimeStamp(String timeStamp) throws ParseException
+  {
+    if ("*".equals(timeStamp))
+    {
+      return CDORevision.UNSPECIFIED_DATE;
+    }
+
+    return DATE_FORMAT.parse(timeStamp).getTime();
   }
 }

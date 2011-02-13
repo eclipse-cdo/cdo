@@ -17,12 +17,14 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CommitTransactionAction;
+import org.eclipse.emf.cdo.internal.ui.actions.CreateBranchAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceNodeAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportResourceAction;
@@ -51,6 +53,7 @@ import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
@@ -63,6 +66,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -79,6 +83,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
   private IWorkbenchPage page;
 
+  private Font bold;
+
   public CDOItemProvider(IWorkbenchPage page, IElementFilter rootElementFilter)
   {
     super(rootElementFilter);
@@ -91,11 +97,30 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   }
 
   @Override
+  protected void connectInput(IContainer<Object> input)
+  {
+    super.connectInput(input);
+    bold = UIUtil.getBoldFont(getViewer().getControl());
+  }
+
+  @Override
+  protected void disconnectInput(IContainer<Object> input)
+  {
+    bold.dispose();
+    super.disconnectInput(input);
+  }
+
+  @Override
   public Object[] getChildren(Object element)
   {
     if (element instanceof CDOBranchManager)
     {
       return new Object[] { ((CDOBranchManager)element).getMainBranch() };
+    }
+
+    if (element instanceof CDOBranch)
+    {
+      return ((CDOBranch)element).getBranches();
     }
 
     if (element instanceof CDOView)
@@ -117,6 +142,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (element instanceof CDOBranchManager)
     {
       return true; // Main branch always exists
+    }
+
+    if (element instanceof CDOBranch)
+    {
+      return !((CDOBranch)element).isEmpty();
     }
 
     if (element instanceof CDOView)
@@ -229,13 +259,28 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     return super.getImage(obj);
   }
 
+  @Override
+  public Font getFont(Object obj)
+  {
+    if (obj instanceof CDOTransaction)
+    {
+      CDOTransaction transaction = (CDOTransaction)obj;
+      if (transaction.isDirty())
+      {
+        return bold;
+      }
+    }
+
+    return super.getFont(obj);
+  }
+
   /**
    * @since 2.0
    */
   public static String getSessionLabel(CDOSession session)
   {
     return MessageFormat.format(
-        Messages.getString("CDOItemProvider.0"), session.getRepositoryInfo().getName(), session.getSessionID()); //$NON-NLS-1$
+        Messages.getString("CDOItemProvider.0"), session.getSessionID(), session.getRepositoryInfo().getName()); //$NON-NLS-1$
   }
 
   /**
@@ -243,20 +288,49 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   public static String getViewLabel(CDOView view)
   {
-    if (view instanceof CDOTransaction)
+    StringBuilder builder = new StringBuilder();
+    if (view.isReadOnly())
     {
-      CDOTransaction transaction = (CDOTransaction)view;
-      return MessageFormat.format(
-          Messages.getString("CDOItemProvider.3"), transaction.isDirty() ? "*" : "", transaction.getViewID()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      builder.append(Messages.getString("CDOItemProvider.7")); //$NON-NLS-1$ 
+    }
+    else
+    {
+      builder.append(Messages.getString("CDOItemProvider.3")); //$NON-NLS-1$ 
+    }
+
+    builder.append(" "); //$NON-NLS-1$ 
+    builder.append(view.getViewID());
+
+    boolean brackets = false;
+    if (view.getSession().getRepositoryInfo().isSupportingBranches())
+    {
+      brackets = true;
+      builder.append(" ["); //$NON-NLS-1$ 
+      builder.append(view.getBranch().getName());
     }
 
     long timeStamp = view.getTimeStamp();
     if (timeStamp != CDOView.UNSPECIFIED_DATE)
     {
-      return MessageFormat.format(Messages.getString("CDOItemProvider.6"), timeStamp); //$NON-NLS-1$
+      if (brackets)
+      {
+        builder.append(", "); //$NON-NLS-1$ 
+      }
+      else
+      {
+        builder.append(" ["); //$NON-NLS-1$ 
+        brackets = true;
+      }
+
+      builder.append(CDOCommonUtil.formatTimeStamp(timeStamp));
     }
 
-    return MessageFormat.format(Messages.getString("CDOItemProvider.7"), view.getViewID()); //$NON-NLS-1$
+    if (brackets)
+    {
+      builder.append("]"); //$NON-NLS-1$ 
+    }
+
+    return builder.toString();
   }
 
   @Override
@@ -325,11 +399,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     a2.setText(a2.getText() + SafeAction.INTERACTIVE);
     manager.add(a2);
 
-    // if (session.getRepositoryInfo().isSupportingBranches())
-    // {
-    // manager.add(new Separator());
-    // manager.add(new CreateBranchAction(page, session));
-    // }
+    if (session.getRepositoryInfo().isSupportingBranches())
+    {
+      manager.add(new Separator());
+      manager.add(new CreateBranchAction(page, session));
+    }
 
     manager.add(new Separator());
     manager.add(new ToggleLegacyModeDefaultAction(session));

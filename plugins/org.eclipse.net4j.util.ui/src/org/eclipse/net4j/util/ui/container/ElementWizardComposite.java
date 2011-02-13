@@ -14,7 +14,7 @@ import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.container.IElementWizard.ValidationContext;
+import org.eclipse.net4j.util.ui.ValidationContext;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;

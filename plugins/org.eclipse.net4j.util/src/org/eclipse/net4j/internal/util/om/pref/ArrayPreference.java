@@ -34,7 +34,7 @@ public final class ArrayPreference extends Preference<String[]>
   protected String getString()
   {
     String[] array = getValue();
-    if (array.length == 0)
+    if (array == null || array.length == 0)
     {
       return null;
     }
@@ -67,7 +67,7 @@ public final class ArrayPreference extends Preference<String[]>
   protected String[] convert(String value)
   {
     String[] array = value.split(SEPARATOR);
-    if (array.length == 0)
+    if (array == null || array.length == 0)
     {
       return Preferences.DEFAULT_ARRAY;
     }

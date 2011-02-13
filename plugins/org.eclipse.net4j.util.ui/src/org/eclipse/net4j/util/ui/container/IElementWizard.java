@@ -11,9 +11,9 @@
 package org.eclipse.net4j.util.ui.container;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.ui.ValidationContext;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 /**
  * @author Eike Stepper
@@ -27,14 +27,4 @@ public interface IElementWizard
   public String getResultDescription();
 
   public Object getResultElement();
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface ValidationContext
-  {
-    public void setValidationOK();
-
-    public void setValidationError(Control control, String message);
-  }
 }

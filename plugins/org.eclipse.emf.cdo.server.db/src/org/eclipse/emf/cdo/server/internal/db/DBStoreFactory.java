@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -45,16 +46,23 @@ public class DBStoreFactory implements IStoreFactory
     return DBStore.TYPE;
   }
 
-  public IStore createStore(Element storeConfig)
+  public IStore createStore(InternalRepository repository, Element storeConfig)
   {
-    IMappingStrategy mappingStrategy = getMappingStrategy(storeConfig);
+    IMappingStrategy mappingStrategy = getMappingStrategy(repository, storeConfig);
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
     DataSource dataSource = getDataSource(storeConfig);
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
-    return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
+
+    DBStore store = new DBStore();
+    store.setRepository(repository);
+    mappingStrategy.setStore(store);
+    store.setMappingStrategy(mappingStrategy);
+    store.setDBAdapter(dbAdapter);
+    store.setDbConnectionProvider(connectionProvider);
+    return store;
   }
 
-  private IMappingStrategy getMappingStrategy(Element storeConfig)
+  private IMappingStrategy getMappingStrategy(InternalRepository repository, Element storeConfig)
   {
     NodeList mappingStrategyConfigs = storeConfig.getElementsByTagName("mappingStrategy"); //$NON-NLS-1$
     if (mappingStrategyConfigs.getLength() != 1)

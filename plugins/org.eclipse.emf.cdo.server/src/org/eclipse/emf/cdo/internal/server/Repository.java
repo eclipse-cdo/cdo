@@ -279,6 +279,38 @@ public class Repository extends Container<Object> implements InternalRepository
   public synchronized void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
+
+    String valueAudits = properties.get(Props.SUPPORTING_AUDITS);
+    if (valueAudits != null)
+    {
+      supportingAudits = Boolean.valueOf(valueAudits);
+    }
+    else
+    {
+      supportingAudits = store.getRevisionTemporality() == IStore.RevisionTemporality.AUDITING;
+    }
+
+    String valueBranches = properties.get(Props.SUPPORTING_BRANCHES);
+    if (valueBranches != null)
+    {
+      supportingBranches = Boolean.valueOf(valueBranches);
+    }
+    else
+    {
+      supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
+    }
+
+    String valueEcore = properties.get(Props.SUPPORTING_ECORE);
+    if (valueEcore != null)
+    {
+      supportingEcore = Boolean.valueOf(valueEcore);
+    }
+
+    String valueIntegrity = properties.get(Props.ENSURE_REFERENTIAL_INTEGRITY);
+    if (valueIntegrity != null)
+    {
+      ensuringReferentialIntegrity = Boolean.valueOf(valueIntegrity);
+    }
   }
 
   public boolean isSupportingAudits()
@@ -1496,50 +1528,10 @@ public class Repository extends Container<Object> implements InternalRepository
 
     lockManager.setRepository(this);
 
-    {
-      String value = getProperties().get(Props.SUPPORTING_AUDITS);
-      if (value != null)
-      {
-        supportingAudits = Boolean.valueOf(value);
-        store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
-            : IStore.RevisionTemporality.NONE);
-      }
-      else
-      {
-        supportingAudits = store.getRevisionTemporality() == IStore.RevisionTemporality.AUDITING;
-      }
-    }
-
-    {
-      String value = getProperties().get(Props.SUPPORTING_BRANCHES);
-      if (value != null)
-      {
-        supportingBranches = Boolean.valueOf(value);
-        store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING
-            : IStore.RevisionParallelism.NONE);
-      }
-      else
-      {
-        supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
-      }
-    }
-
-    {
-      String value = getProperties().get(Props.SUPPORTING_ECORE);
-      if (value != null)
-      {
-        supportingEcore = Boolean.valueOf(value);
-      }
-    }
-
-    {
-      String value = getProperties().get(Props.ENSURE_REFERENTIAL_INTEGRITY);
-      if (value != null)
-      {
-        ensuringReferentialIntegrity = Boolean.valueOf(value);
-      }
-    }
-
+    store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
+        : IStore.RevisionTemporality.NONE);
+    store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING
+        : IStore.RevisionParallelism.NONE);
     revisionManager.setSupportingBranches(supportingBranches);
   }
 

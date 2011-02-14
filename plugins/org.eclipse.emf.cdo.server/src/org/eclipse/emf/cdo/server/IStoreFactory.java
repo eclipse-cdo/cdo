@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+
 import org.w3c.dom.Element;
 
 /**
@@ -19,5 +21,8 @@ public interface IStoreFactory
 {
   public String getStoreType();
 
-  public IStore createStore(Element storeConfig);
+  /**
+   * @since 4.0
+   */
+  public IStore createStore(InternalRepository repository, Element storeConfig);
 }

@@ -138,8 +138,11 @@ public class RepositoryConfigurator
       TRACER.format("Configuring repository {0} (type={1})", repositoryName, repositoryType); //$NON-NLS-1$
     }
 
+    Map<String, String> properties = getProperties(repositoryConfig, 1);
+
     InternalRepository repository = (InternalRepository)getRepository(repositoryType);
     repository.setName(repositoryName);
+    repository.setProperties(properties);
 
     Element userManagerConfig = getUserManagerConfig(repositoryConfig);
     if (userManagerConfig != null)
@@ -159,11 +162,7 @@ public class RepositoryConfigurator
     }
 
     Element storeConfig = getStoreConfig(repositoryConfig);
-    InternalStore store = (InternalStore)getStore(storeConfig);
-    repository.setStore(store);
-
-    Map<String, String> properties = getProperties(repositoryConfig, 1);
-    repository.setProperties(properties);
+    createStore(repository, storeConfig);
 
     return repository;
   }
@@ -228,11 +227,12 @@ public class RepositoryConfigurator
     return factory;
   }
 
-  protected IStore getStore(Element storeConfig) throws CoreException
+  protected void createStore(InternalRepository repository, Element storeConfig) throws CoreException
   {
     String type = storeConfig.getAttribute("type"); //$NON-NLS-1$
     IStoreFactory storeFactory = getStoreFactory(type);
-    return storeFactory.createStore(storeConfig);
+    IStore store = storeFactory.createStore(repository, storeConfig);
+    repository.setStore((InternalStore)store);
   }
 
   public static Map<String, String> getProperties(Element element, int levels)

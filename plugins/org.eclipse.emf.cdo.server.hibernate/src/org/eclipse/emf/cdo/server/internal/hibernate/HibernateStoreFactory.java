@@ -10,9 +10,10 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
-import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -43,7 +44,7 @@ public class HibernateStoreFactory implements IStoreFactory
     return HibernateStore.TYPE;
   }
 
-  public IHibernateStore createStore(Element storeConfig)
+  public IStore createStore(InternalRepository repository, Element storeConfig)
   {
     final IHibernateMappingProvider mappingProvider = getMappingProvider(storeConfig);
 

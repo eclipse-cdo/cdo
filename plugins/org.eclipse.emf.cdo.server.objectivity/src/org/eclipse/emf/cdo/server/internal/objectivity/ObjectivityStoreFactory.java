@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity;
 
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.w3c.dom.Element;
 
@@ -23,7 +24,7 @@ public class ObjectivityStoreFactory implements IStoreFactory
   {
   }
 
-  public IStore createStore(Element storeConfig)
+  public IStore createStore(InternalRepository repository, Element storeConfig)
   {
     // System.out.println(">>> OSF.createStore()");
     // TODO - we might want to initialize Objy with the

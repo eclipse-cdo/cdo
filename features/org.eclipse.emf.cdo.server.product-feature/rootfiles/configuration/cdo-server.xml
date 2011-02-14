@@ -24,7 +24,7 @@
 
     <store type="db">
 
-      <mappingStrategy type="horizontalBranching">
+      <mappingStrategy type="horizontal">
         <property name="qualifiedNames" value="false"/>
         <property name="toManyReferences" value="ONE_TABLE_PER_REFERENCE"/>
         <property name="toOneReferences" value="LIKE_ATTRIBUTES"/>

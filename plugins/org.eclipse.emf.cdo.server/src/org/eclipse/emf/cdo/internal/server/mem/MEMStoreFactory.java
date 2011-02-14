@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.server.mem;
 
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.w3c.dom.Element;
 
@@ -30,7 +31,7 @@ public class MEMStoreFactory implements IStoreFactory
     return MEMStore.TYPE;
   }
 
-  public IStore createStore(Element storeConfig)
+  public IStore createStore(InternalRepository repository, Element storeConfig)
   {
     return new MEMStore();
   }

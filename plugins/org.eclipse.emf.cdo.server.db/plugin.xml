@@ -35,25 +35,23 @@
    <extension
          point="org.eclipse.emf.cdo.server.db.mappingStrategies">
       <mappingStrategy
-            class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy"
-            type="horizontal">
-      </mappingStrategy>
+            class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalMappingStrategy"
+            type="horizontal"/>
       <mappingStrategy
             class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy"
-            type="horizontalNonAudit">
-      </mappingStrategy>
+            type="horizontalNonAuditing"/>
+      <mappingStrategy
+            class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy"
+            type="horizontalAuditing"/>
       <mappingStrategy
             class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategy"
-            type="horizontalBranching">
-      </mappingStrategy>
+            type="horizontalBranching"/>
       <mappingStrategy
             class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategyWithRanges"
-            type="horizontalAuditWithRanges">
-      </mappingStrategy>
+            type="horizontalAuditingWithRanges"/>
       <mappingStrategy
             class="org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategyWithRanges"
-            type="horizontalBranchingWithRanges">
-      </mappingStrategy>
+            type="horizontalBranchingWithRanges"/>
    </extension>
    
 </plugin>

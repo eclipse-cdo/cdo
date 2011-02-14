@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -122,6 +123,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   public InternalCDORevision cdoRevision()
   {
     return revision;
+  }
+
+  @Override
+  public CDOResourceImpl cdoResource()
+  {
+    revisionToInstanceResource();
+    return super.cdoResource();
   }
 
   public void cdoReload()
@@ -442,12 +450,15 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    */
   protected void revisionToInstanceResource()
   {
-    CDOID resourceID = revision.getResourceID();
-    InternalEObject resource = getEObjectFromPotentialID(view, null, resourceID);
-    setInstanceResource((Resource.Internal)resource);
-    if (resource != null)
+    if (revision != null)
     {
-      view.registerObject((InternalCDOObject)resource);
+      CDOID resourceID = revision.getResourceID();
+      InternalEObject resource = getEObjectFromPotentialID(view, null, resourceID);
+      setInstanceResource((Resource.Internal)resource);
+      if (resource != null)
+      {
+        view.registerObject((InternalCDOObject)resource);
+      }
     }
   }
 

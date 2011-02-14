@@ -66,6 +66,36 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
     this.allowTimeStamp = allowTimeStamp;
   }
 
+  public CDOSession getSession()
+  {
+    return session;
+  }
+
+  public boolean isAllowTimeStamp()
+  {
+    return allowTimeStamp;
+  }
+
+  public CTabItem getComposeTab()
+  {
+    return composeTab;
+  }
+
+  public CTabItem getCommitsTab()
+  {
+    return commitsTab;
+  }
+
+  public CTabItem getTagsTab()
+  {
+    return tagsTab;
+  }
+
+  public CTabItem getViewsTab()
+  {
+    return viewsTab;
+  }
+
   public CDOBranchPoint getBranchPoint()
   {
     return branchPoint;

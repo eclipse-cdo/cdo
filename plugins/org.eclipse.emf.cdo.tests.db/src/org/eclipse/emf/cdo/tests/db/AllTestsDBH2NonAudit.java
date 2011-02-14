@@ -13,10 +13,6 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
-import org.eclipse.emf.cdo.tests.AuditTest;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -33,7 +29,6 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
@@ -65,17 +60,6 @@ public class AllTestsDBH2NonAudit extends DBConfigs
   protected boolean hasBranchingSupport()
   {
     return false;
-  }
-
-  @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
-  {
-    super.initTestClasses(testClasses);
-
-    // non-audit mode - remove audit tests
-    testClasses.remove(AuditTest.class);
-    testClasses.remove(AuditSameSessionTest.class);
-    testClasses.remove(Bugzilla_252214_Test.class);
   }
 
   /**

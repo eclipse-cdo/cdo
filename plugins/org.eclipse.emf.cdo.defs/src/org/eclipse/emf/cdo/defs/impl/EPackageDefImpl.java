@@ -98,7 +98,9 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
     String oldNsURI = nsURI;
     nsURI = newNsURI;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.EPACKAGE_DEF__NS_URI, oldNsURI, nsURI));
+    }
   }
 
   /**
@@ -176,7 +178,9 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (nsURI: ");
@@ -192,7 +196,7 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
   protected void validateDefinition()
   {
     CheckUtil.checkState(eIsSet(CDODefsPackage.EPACKAGE_DEF__NS_URI) //
-        && URI.create(getNsURI()) != null, "nsURI not set or not valid!");
+        && URI.create(getNsURI()) != null, "nsURI not set or invalid!");
   }
 
 } // EPackageDefImpl

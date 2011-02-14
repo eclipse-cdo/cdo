@@ -12,10 +12,6 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
-import org.eclipse.emf.cdo.tests.BranchingTest;
-import org.eclipse.emf.cdo.tests.MergingTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -33,7 +29,6 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
@@ -67,17 +62,6 @@ public class AllTestsDBH2Branching extends DBConfigs
   protected boolean hasBranchingSupport()
   {
     return true;
-  }
-
-  @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
-  {
-    // add branching tests for this testsuite
-    testClasses.add(BranchingTest.class);
-    testClasses.add(BranchingSameSessionTest.class);
-    testClasses.add(MergingTest.class);
-
-    super.initTestClasses(testClasses);
   }
 
   /**

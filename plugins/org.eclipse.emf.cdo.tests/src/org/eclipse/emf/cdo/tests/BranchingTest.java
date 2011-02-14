@@ -881,6 +881,43 @@ public class BranchingTest extends AbstractCDOTest
     assertNotNull(product.getName());
   }
 
+  public void testSwitchTransactionTarget() throws CommitException
+  {
+    CDOSession session = openSession1();
+    CDOBranchManager branchManager = session.getBranchManager();
+
+    CDOBranch mainBranch = branchManager.getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+
+    Product1 product = getModel1Factory().createProduct1();
+    product.setName("CDO");
+
+    CDOResource resource = transaction.createResource("/res");
+    resource.getContents().add(product);
+
+    // Commit to main branch
+    long commitTime1 = transaction.commit().getTimeStamp();
+
+    // Create sub branch
+    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+
+    // Switch to sub branch
+    transaction.setBranch(subBranch);
+    assertEquals("CDO", product.getName());
+
+    // Commit to sub branch
+    product.setName("EMF");
+    transaction.commit();
+
+    // Switch to main branch
+    transaction.setBranch(mainBranch);
+    assertEquals("CDO", product.getName());
+
+    // Commit to main branch
+    product.setName("EMF");
+    transaction.commit();
+  }
+
   private void check(CDOSession session, CDOBranch branch, long timeStamp, String name)
   {
     CDOView view = session.openView(branch, timeStamp);

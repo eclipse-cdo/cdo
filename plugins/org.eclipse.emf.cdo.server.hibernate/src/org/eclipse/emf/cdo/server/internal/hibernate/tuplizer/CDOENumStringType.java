@@ -151,7 +151,7 @@ public class CDOENumStringType implements UserType, ParameterizedType
     enumValue = getEEnum().getEEnumLiteralByLiteral(literal.trim());
     if (enumValue == null)
     {
-      throw new IllegalStateException("The enum value " + literal + " is not valid for enumerator: " //$NON-NLS-1$ //$NON-NLS-2$
+      throw new IllegalStateException("The enum value " + literal + " is invalid for enumerator: " //$NON-NLS-1$ //$NON-NLS-2$
           + getEEnum().getName());
     }
 

@@ -47,8 +47,6 @@ public abstract class DBConfigs extends AllConfigs
     super.initTestClasses(testClasses);
     testClasses.remove(MEMStoreQueryTest.class);
 
-    // remove BranchingTests because most mappings do not support it
-    // Subclasses should add Banching tests if supported
     if (!hasBranchingSupport())
     {
       testClasses.remove(BranchingTest.class);

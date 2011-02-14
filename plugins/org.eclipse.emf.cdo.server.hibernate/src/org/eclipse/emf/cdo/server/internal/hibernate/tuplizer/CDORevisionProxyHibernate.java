@@ -30,6 +30,7 @@ public class CDORevisionProxyHibernate extends DelegatingCDORevision implements 
     this.li = li;
   }
 
+  @Override
   public InternalCDORevision copy()
   {
     return new CDORevisionProxyHibernate(li);

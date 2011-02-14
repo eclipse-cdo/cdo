@@ -161,68 +161,6 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     return map;
   }
 
-  public void testLockParentWithEAttributeChange() throws Exception
-  {
-    String resourcePath = RESOURCE_PATH + "1";
-    {
-      CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
-      idInitSession = session.getSessionID();
-      CDOTransaction transaction = session.openTransaction();
-
-      Resource resource = transaction.createResource(resourcePath);
-
-      // -------------- create graph begin ------------------------
-      NodeB root = createSimpleNode("root");
-
-      NodeB A = createSimpleNode("A");
-      NodeB B = createSimpleNode("B");
-      NodeB C = createSimpleNode("C");
-      NodeB D = createSimpleNode("D");
-      NodeB E = createSimpleNode("E");
-
-      root.getChildren().add(A);
-      root.getChildren().add(D);
-
-      A.getChildren().add(B);
-      B.getChildren().add(C);
-
-      D.getChildren().add(E);
-
-      resource.getContents().add(root);
-      transaction.commit();
-
-      // -------- check for consistency -----------
-
-      checkInitialGraph(root, A, B, C, D, E);
-
-      transaction.close();
-      session.close();
-    }
-
-    // restartRepository();
-
-    {
-      CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
-      idInitSession = session.getSessionID();
-
-      // ----- start threads -----
-      ThreadX threadX = new ThreadX(resourcePath);
-      ThreadA threadA = new ThreadA(resourcePath);
-
-      threadA.start();
-      sleepIfNeeded();
-      threadX.start();
-
-      threadX.join(DEFAULT_TIMEOUT);
-      threadA.join(DEFAULT_TIMEOUT);
-
-      if (exceptions.size() > 0)
-      {
-        throw exceptions.get(0);
-      }
-    }
-  }
-
   public void testMovingSubtree() throws Exception
   {
     exceptions.clear();
@@ -305,8 +243,10 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       sleepIfNeeded();
       threadB.start();
 
-      threadA.join(DEFAULT_TIMEOUT);
-      threadB.join(DEFAULT_TIMEOUT);
+      threadA.done.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      threadB.done.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      // threadA.join(DEFAULT_TIMEOUT);
+      // threadB.join(DEFAULT_TIMEOUT);
 
       if (exceptions.size() > 0)
       {
@@ -323,6 +263,70 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
 
       session.close();
       msg("finished");
+    }
+  }
+
+  public void testLockParentWithEAttributeChange() throws Exception
+  {
+    String resourcePath = RESOURCE_PATH + "1";
+    {
+      CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
+      idInitSession = session.getSessionID();
+      CDOTransaction transaction = session.openTransaction();
+
+      Resource resource = transaction.createResource(resourcePath);
+
+      // -------------- create graph begin ------------------------
+      NodeB root = createSimpleNode("root");
+
+      NodeB A = createSimpleNode("A");
+      NodeB B = createSimpleNode("B");
+      NodeB C = createSimpleNode("C");
+      NodeB D = createSimpleNode("D");
+      NodeB E = createSimpleNode("E");
+
+      root.getChildren().add(A);
+      root.getChildren().add(D);
+
+      A.getChildren().add(B);
+      B.getChildren().add(C);
+
+      D.getChildren().add(E);
+
+      resource.getContents().add(root);
+      transaction.commit();
+
+      // -------- check for consistency -----------
+
+      checkInitialGraph(root, A, B, C, D, E);
+
+      transaction.close();
+      session.close();
+    }
+
+    // restartRepository();
+
+    {
+      CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
+      idInitSession = session.getSessionID();
+
+      // ----- start threads -----
+      ThreadX threadX = new ThreadX(resourcePath);
+      ThreadA threadA = new ThreadA(resourcePath);
+
+      threadA.start();
+      sleepIfNeeded();
+      threadX.start();
+
+      threadA.done.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      threadX.done.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      // threadX.join(DEFAULT_TIMEOUT);
+      // threadA.join(DEFAULT_TIMEOUT);
+
+      if (exceptions.size() > 0)
+      {
+        throw exceptions.get(0);
+      }
     }
   }
 
@@ -361,12 +365,29 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
 
   private abstract class AbstactTestThread extends Thread
   {
+    public CountDownLatch done = new CountDownLatch(1);
+
     protected final String resourcePath;
 
     public AbstactTestThread(String resourcePath)
     {
       this.resourcePath = resourcePath;
     }
+
+    @Override
+    public final void run()
+    {
+      try
+      {
+        doRun();
+      }
+      finally
+      {
+        done.countDown();
+      }
+    }
+
+    protected abstract void doRun();
   }
 
   /**
@@ -379,13 +400,15 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     public ThreadA(String resourcePath)
     {
       super(resourcePath);
+      setName("ThreadA");
+
       msg("Starting Thread A");
       session = (CDOSession)openSession(REPOSITORY_NAME);
       idSessionA = session.getSessionID();
     }
 
     @Override
-    public void run()
+    protected void doRun()
     {
       try
       {
@@ -433,13 +456,15 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     public ThreadB(String resourcePath)
     {
       super(resourcePath);
+      setName("ThreadB");
+
       msg("Starting Thread B");
       session = (CDOSession)openSession(REPOSITORY_NAME);
       idSessionB = session.getSessionID();
     }
 
     @Override
-    public void run()
+    protected void doRun()
     {
       try
       {
@@ -502,13 +527,15 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     public ThreadX(String resourcePath)
     {
       super(resourcePath);
+      setName("ThreadX");
+
       msg("Starting Thread X");
       session = (CDOSession)openSession(REPOSITORY_NAME);
       idSessionB = session.getSessionID();
     }
 
     @Override
-    public void run()
+    protected void doRun()
     {
       try
       {

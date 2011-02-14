@@ -14,6 +14,7 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -109,6 +110,14 @@ public abstract class AbstractCDORevision implements InternalCDORevision
     long startTime = getTimeStamp();
     long endTime = getRevised();
     return CDOCommonUtil.isValidTimeStamp(timeStamp, startTime, endTime);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public boolean isValid(CDOBranchPoint branchPoint)
+  {
+    return getBranch() == branchPoint.getBranch() && isValid(branchPoint.getTimeStamp());
   }
 
   /**

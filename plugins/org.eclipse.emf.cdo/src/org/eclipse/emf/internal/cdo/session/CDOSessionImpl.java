@@ -166,11 +166,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private long lastUpdateTime;
 
   @ExcludeFromDump
-  private Object lastUpdateTimeLock = new Object();
+  private LastUpdateTimeLock lastUpdateTimeLock = new LastUpdateTimeLock();
 
   private CDOSession.Options options = createOptions();
 
-  private Map<Long, Pair<CDOCommitInfo, InternalCDOTransaction>> outOfSequenceInvalidations = new HashMap<Long, Pair<CDOCommitInfo, InternalCDOTransaction>>();
+  private OutOfSequenceInvalidations outOfSequenceInvalidations = new OutOfSequenceInvalidations();
 
   private CDORepositoryInfo repositoryInfo;
 
@@ -1212,7 +1212,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public String toString()
   {
     String name = repositoryInfo == null ? "?" : repositoryInfo.getName(); //$NON-NLS-1$
-    return MessageFormat.format("CDOSession[{0}, {1}]", name, sessionID); //$NON-NLS-1$
+    return MessageFormat.format("Session{0} [{1}]", sessionID, name); //$NON-NLS-1$
   }
 
   public CDOBranchPoint getCommittedSinceLastRefresh(CDOID id)
@@ -1439,6 +1439,22 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   protected void sessionProtocolDeactivated()
   {
     deactivate();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LastUpdateTimeLock
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class OutOfSequenceInvalidations extends
+      HashMap<Long, Pair<CDOCommitInfo, InternalCDOTransaction>>
+  {
+    private static final long serialVersionUID = 1L;
   }
 
   /**

@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOFeatureMapEntryImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisableImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionCacheImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionKeyImpl;
@@ -86,11 +87,19 @@ public final class CDORevisionUtil
   }
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public static CDORevisionKey createRevisionKey(CDOID id, CDOBranch branch, int version)
+  public static CDORevisable copyRevisable(CDORevisable source)
   {
-    return new CDORevisionKeyImpl(id, branch, version);
+    return new CDORevisableImpl(source);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDORevisable createRevisable(CDOBranch branch, int version, long timeStamp, long revised)
+  {
+    return new CDORevisableImpl(branch, version, timeStamp, revised);
   }
 
   /**
@@ -99,6 +108,14 @@ public final class CDORevisionUtil
   public static CDORevisionKey copyRevisionKey(CDORevisionKey source)
   {
     return new CDORevisionKeyImpl(source.getID(), source.getBranch(), source.getVersion());
+  }
+
+  /**
+   * @since 3.0
+   */
+  public static CDORevisionKey createRevisionKey(CDOID id, CDOBranch branch, int version)
+  {
+    return new CDORevisionKeyImpl(id, branch, version);
   }
 
   /**

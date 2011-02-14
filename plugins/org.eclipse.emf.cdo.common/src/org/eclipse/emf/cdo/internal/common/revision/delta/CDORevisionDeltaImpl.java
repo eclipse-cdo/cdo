@@ -13,22 +13,22 @@
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
-import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -63,7 +63,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
   private int version;
 
-  private CDOBranchVersion target;
+  private CDORevisable target;
 
   private Map<EStructuralFeature, CDOFeatureDelta> featureDeltas = new HashMap<EStructuralFeature, CDOFeatureDelta>();
 
@@ -102,7 +102,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     id = sourceRevision.getID();
     branch = sourceRevision.getBranch();
     version = sourceRevision.getVersion();
-    target = CDOBranchUtil.copyBranchVersion(targetRevision);
+    target = CDORevisionUtil.copyRevisable(targetRevision);
 
     compare(sourceRevision, targetRevision);
 
@@ -126,7 +126,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     if (version < 0)
     {
       version = -version;
-      target = in.readCDOBranchVersion();
+      target = in.readCDORevisable();
     }
 
     int size = in.readInt();
@@ -149,7 +149,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     else
     {
       out.writeInt(-version);
-      out.writeCDOBranchVersion(target);
+      out.writeCDORevisable(target);
     }
 
     out.writeInt(featureDeltas.size());
@@ -189,12 +189,12 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     this.version = version;
   }
 
-  public CDOBranchVersion getTarget()
+  public CDORevisable getTarget()
   {
     return target;
   }
 
-  public void setTarget(CDOBranchVersion target)
+  public void setTarget(CDORevisable target)
   {
     this.target = target;
   }

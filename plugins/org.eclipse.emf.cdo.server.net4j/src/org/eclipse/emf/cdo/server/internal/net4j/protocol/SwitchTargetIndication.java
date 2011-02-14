@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -27,13 +28,15 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class ChangeViewIndication extends CDOServerReadIndicationWithMonitoring
+public class SwitchTargetIndication extends CDOServerReadIndicationWithMonitoring
 {
-  private boolean[] existanceFlags;
+  private List<CDORevisionDelta> allChangedObjects = new ArrayList<CDORevisionDelta>();
 
-  public ChangeViewIndication(CDOServerProtocol protocol)
+  private List<CDOID> allDetachedObjects = new ArrayList<CDOID>();
+
+  public SwitchTargetIndication(CDOServerProtocol protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_CHANGE_VIEW);
+    super(protocol, CDOProtocolConstants.SIGNAL_SWITCH_TARGET);
   }
 
   @Override
@@ -58,7 +61,7 @@ public class ChangeViewIndication extends CDOServerReadIndicationWithMonitoring
         }
 
         InternalView view = getSession().getView(viewID);
-        existanceFlags = view.changeTarget(branchPoint, invalidObjects);
+        view.changeTarget(branchPoint, invalidObjects, allChangedObjects, allDetachedObjects);
       }
       finally
       {
@@ -75,10 +78,16 @@ public class ChangeViewIndication extends CDOServerReadIndicationWithMonitoring
   @Override
   protected void responding(CDODataOutput out, OMMonitor monitor) throws IOException
   {
-    out.writeInt(existanceFlags.length);
-    for (int i = 0; i < existanceFlags.length; i++)
+    out.writeInt(allChangedObjects.size());
+    for (CDORevisionDelta delta : allChangedObjects)
     {
-      out.writeBoolean(existanceFlags[i]);
+      out.writeCDORevisionDelta(delta);
+    }
+
+    out.writeInt(allDetachedObjects.size());
+    for (CDOID id : allDetachedObjects)
+    {
+      out.writeCDOID(id);
     }
   }
 }

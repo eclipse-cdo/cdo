@@ -11,9 +11,14 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -25,7 +30,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class ChangeViewRequest extends CDOClientRequestWithMonitoring<boolean[]>
+public class SwitchTargetRequest extends CDOClientRequestWithMonitoring<Object>
 {
   private int viewID;
 
@@ -33,13 +38,20 @@ public class ChangeViewRequest extends CDOClientRequestWithMonitoring<boolean[]>
 
   private List<InternalCDOObject> invalidObjects;
 
-  public ChangeViewRequest(CDOClientProtocol protocol, int viewID, CDOBranchPoint branchPoint,
-      List<InternalCDOObject> invalidObjects)
+  private List<CDORevisionKey> allChangedObjects;
+
+  private List<CDOIDAndVersion> allDetachedObjects;
+
+  public SwitchTargetRequest(CDOClientProtocol protocol, int viewID, CDOBranchPoint branchPoint,
+      List<InternalCDOObject> invalidObjects, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_CHANGE_VIEW);
+    super(protocol, CDOProtocolConstants.SIGNAL_SWITCH_TARGET);
     this.viewID = viewID;
     this.branchPoint = branchPoint;
     this.invalidObjects = invalidObjects;
+    this.allChangedObjects = allChangedObjects;
+    this.allDetachedObjects = allDetachedObjects;
   }
 
   @Override
@@ -59,13 +71,18 @@ public class ChangeViewRequest extends CDOClientRequestWithMonitoring<boolean[]>
   protected boolean[] confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     int size = in.readInt();
-    boolean[] existanceFlags = new boolean[size];
     for (int i = 0; i < size; i++)
     {
-      boolean existanceFlag = in.readBoolean();
-      existanceFlags[i] = existanceFlag;
+      allChangedObjects.add(in.readCDORevisionDelta());
     }
 
-    return existanceFlags;
+    size = in.readInt();
+    for (int i = 0; i < size; i++)
+    {
+      CDOID id = in.readCDOID();
+      allDetachedObjects.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+    }
+
+    return null;
   }
 }

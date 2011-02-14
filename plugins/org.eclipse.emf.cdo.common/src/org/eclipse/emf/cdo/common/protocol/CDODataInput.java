@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -103,6 +104,11 @@ public interface CDODataInput extends ExtendedDataInput
   public CDORevisionKey readCDORevisionKey() throws IOException;
 
   public CDORevision readCDORevision() throws IOException;
+
+  /**
+   * @since 4.0
+   */
+  public CDORevisable readCDORevisable() throws IOException;
 
   public CDOList readCDOList(EClass owner, EStructuralFeature feature) throws IOException;
 

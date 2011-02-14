@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -373,6 +374,15 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     return null;
+  }
+
+  public CDORevisable readCDORevisable() throws IOException
+  {
+    CDOBranch branch = readCDOBranch();
+    int version = readInt();
+    long timeStamp = readLong();
+    long revised = readLong();
+    return CDORevisionUtil.createRevisable(branch, version, timeStamp, revised);
   }
 
   public CDOList readCDOList(EClass owner, EStructuralFeature feature) throws IOException

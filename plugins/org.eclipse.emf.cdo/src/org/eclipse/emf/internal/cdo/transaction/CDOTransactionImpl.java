@@ -478,113 +478,35 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOBranchPoint source)
   {
     CDOChangeSetData result = new CDOChangeSetDataImpl();
-    Pair<Map<CDOID, CDOID>, List<CDOID>> mappedLocalIDs = null;
 
+    // Merges from local offline branches may require additional ID mappings: localID -> tempID
+    Pair<Map<CDOID, CDOID>, List<CDOID>> mappedLocalIDs = null;
     if (source != null && source.getBranch().isLocal())
     {
-      mappedLocalIDs = mapLocalIDs(changeSetData);
+      mappedLocalIDs = applyLocalIDMapping(changeSetData);
     }
 
-    for (CDOIDAndVersion key : changeSetData.getNewObjects())
+    // New objects
+    applyNewObjects(changeSetData.getNewObjects(), result.getNewObjects());
+
+    // Detached objects
+    Set<CDOObject> detachedSet = applyDetachedObjects(changeSetData.getDetachedObjects(), result.getDetachedObjects());
+
+    // Changed objects
+    Map<CDOID, InternalCDORevision> oldRevisions = applyChangedObjects(changeSetData.getChangedObjects(),
+        ancestorProvider, targetProvider, result.getChangedObjects());
+
+    // Delta notifications
+    Collection<CDORevisionDelta> notificationDeltas = lastSavepoint.getRevisionDeltas().values();
+    if (!notificationDeltas.isEmpty() || !detachedSet.isEmpty())
     {
-      InternalCDORevision revision = (InternalCDORevision)key;
-      CDOID id = revision.getID();
-      if (getObjectIfExists(id) == null)
-      {
-        InternalCDOObject object = newInstance(revision.getEClass());
-        object.cdoInternalSetView(this);
-        object.cdoInternalSetRevision(revision);
-        object.cdoInternalSetID(id);
-        object.cdoInternalSetState(CDOState.NEW);
-        object.cdoInternalPostLoad();
-
-        registerObject(object);
-        registerNew(object);
-        result.getNewObjects().add(revision);
-        dirty = true;
-      }
-    }
-
-    Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
-    for (CDOIDAndVersion key : changeSetData.getDetachedObjects())
-    {
-      CDOID id = key.getID();
-      InternalCDOObject object = getObjectIfExists(id);
-      if (object != null)
-      {
-        result.getDetachedObjects().add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
-        CDOStateMachine.INSTANCE.detach(object);
-        detachedObjects.add(object);
-        dirty = true;
-      }
-    }
-
-    Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
-    ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas();
-    List<CDORevisionDelta> notificationDeltas = new ArrayList<CDORevisionDelta>();
-    Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
-
-    for (CDORevisionKey key : changeSetData.getChangedObjects())
-    {
-      InternalCDORevisionDelta ancestorGoalDelta = (InternalCDORevisionDelta)key;
-      CDOID id = ancestorGoalDelta.getID();
-      InternalCDORevision ancestorRevision = (InternalCDORevision)ancestorProvider.getRevision(id);
-
-      InternalCDOObject object = getObject(id);
-      boolean revisionChanged = false;
-
-      InternalCDORevision targetRevision = object.cdoRevision();
-      if (targetRevision == null)
-      {
-        targetRevision = (InternalCDORevision)targetProvider.getRevision(id);
-        object.cdoInternalSetRevision(targetRevision);
-        revisionChanged = true;
-      }
-
-      oldRevisions.put(id, targetRevision);
-
-      InternalCDORevision goalRevision = ancestorRevision.copy();
-      goalRevision.setBranchPoint(this);
-      goalRevision.setVersion(targetRevision.getVersion());
-      goalRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
-      ancestorGoalDelta.apply(goalRevision);
-
-      CDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
-      if (!targetGoalDelta.isEmpty())
-      {
-        revisionDeltas.put(id, targetGoalDelta);
-        notificationDeltas.add(targetGoalDelta);
-        result.getChangedObjects().add(targetGoalDelta);
-
-        // handle reattached objects.
-        if (lastSavepoint.getDetachedObjects().containsKey(id))
-        {
-          CDOStateMachine.INSTANCE.attach(object, this);
-        }
-
-        object.cdoInternalSetState(CDOState.DIRTY);
-        object.cdoInternalSetRevision(goalRevision);
-        revisionChanged = true;
-
-        dirtyObjects.put(id, object);
-        dirty = true;
-      }
-
-      if (revisionChanged)
-      {
-        object.cdoInternalPostLoad();
-      }
-    }
-
-    if (!notificationDeltas.isEmpty() || !detachedObjects.isEmpty())
-    {
-      sendDeltaNotifications(notificationDeltas, detachedObjects, oldRevisions);
+      sendDeltaNotifications(notificationDeltas, detachedSet, oldRevisions);
     }
 
     return new Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>>(result, mappedLocalIDs);
   }
 
-  private Pair<Map<CDOID, CDOID>, List<CDOID>> mapLocalIDs(CDOChangeSetData changeSetData)
+  private Pair<Map<CDOID, CDOID>, List<CDOID>> applyLocalIDMapping(CDOChangeSetData changeSetData)
   {
     // Collect needed ID mappings
     Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
@@ -629,6 +551,113 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return null;
+  }
+
+  private void applyNewObjects(List<CDOIDAndVersion> newObjects, List<CDOIDAndVersion> result)
+  {
+    for (CDOIDAndVersion key : newObjects)
+    {
+      InternalCDORevision revision = (InternalCDORevision)key;
+      CDOID id = revision.getID();
+      if (getObjectIfExists(id) == null)
+      {
+        InternalCDOObject object = newInstance(revision.getEClass());
+        object.cdoInternalSetView(this);
+        object.cdoInternalSetRevision(revision);
+        object.cdoInternalSetID(id);
+        object.cdoInternalSetState(CDOState.NEW);
+        object.cdoInternalPostLoad();
+
+        registerObject(object);
+        registerNew(object);
+        result.add(revision);
+        dirty = true;
+      }
+    }
+  }
+
+  private Set<CDOObject> applyDetachedObjects(List<CDOIDAndVersion> detachedObjects, List<CDOIDAndVersion> result)
+  {
+    Set<CDOObject> detachedSet = new HashSet<CDOObject>();
+    for (CDOIDAndVersion key : detachedObjects)
+    {
+      CDOID id = key.getID();
+      InternalCDOObject object = getObjectIfExists(id);
+      if (object != null)
+      {
+        result.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+        CDOStateMachine.INSTANCE.detach(object);
+        detachedSet.add(object);
+        dirty = true;
+      }
+    }
+
+    return detachedSet;
+  }
+
+  private Map<CDOID, InternalCDORevision> applyChangedObjects(List<CDORevisionKey> changedObjects,
+      CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider, List<CDORevisionKey> result)
+  {
+    Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
+
+    Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
+    ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas();
+
+    for (CDORevisionKey key : changedObjects)
+    {
+      InternalCDORevisionDelta ancestorGoalDelta = (InternalCDORevisionDelta)key;
+      ancestorGoalDelta.setTarget(null);
+      CDOID id = ancestorGoalDelta.getID();
+      InternalCDORevision ancestorRevision = (InternalCDORevision)ancestorProvider.getRevision(id);
+
+      InternalCDOObject object = getObject(id);
+      boolean revisionChanged = false;
+
+      InternalCDORevision targetRevision = object.cdoRevision();
+      if (targetRevision == null)
+      {
+        targetRevision = (InternalCDORevision)targetProvider.getRevision(id);
+        object.cdoInternalSetRevision(targetRevision);
+        revisionChanged = true;
+      }
+
+      oldRevisions.put(id, targetRevision);
+
+      InternalCDORevision goalRevision = ancestorRevision.copy();
+      goalRevision.setBranchPoint(this);
+      goalRevision.setVersion(targetRevision.getVersion());
+      goalRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
+      ancestorGoalDelta.apply(goalRevision);
+
+      InternalCDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
+      targetGoalDelta.setTarget(null);
+
+      if (!targetGoalDelta.isEmpty())
+      {
+        revisionDeltas.put(id, targetGoalDelta);
+        result.add(targetGoalDelta);
+
+        // handle reattached objects.
+        if (lastSavepoint.getDetachedObjects().containsKey(id))
+        {
+          CDOStateMachine.INSTANCE.attach(object, this);
+        }
+
+        object.cdoInternalSetState(CDOState.DIRTY);
+        object.cdoInternalSetRevision(goalRevision);
+        revisionChanged = true;
+
+        dirtyObjects.put(id, object);
+        dirty = true;
+      }
+
+      if (revisionChanged)
+      {
+        object.cdoInternalPostLoad();
+      }
+    }
+
+    return oldRevisions;
   }
 
   private InternalCDOObject getObjectIfExists(CDOID id)

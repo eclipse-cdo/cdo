@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 /**
  * @author Eike Stepper
  */
-public interface CDORevision extends CDORevisionKey, CDOBranchPoint
+public interface CDORevision extends CDORevisionKey, CDORevisable
 {
   /**
    * @since 3.0
@@ -50,10 +50,6 @@ public interface CDORevision extends CDORevisionKey, CDOBranchPoint
    */
   public EClass getEClass();
 
-  public int getVersion();
-
-  public long getRevised();
-
   /**
    * Returns <code>true</code> exactly if {@link #getTimeStamp()} does not return {@link #UNSPECIFIED_DATE},
    * <code>false</code> otherwise.
@@ -63,6 +59,11 @@ public interface CDORevision extends CDORevisionKey, CDOBranchPoint
   public boolean isHistorical();
 
   public boolean isValid(long timeStamp);
+
+  /**
+   * @since 4.0
+   */
+  public boolean isValid(CDOBranchPoint branchPoint);
 
   /**
    * @since 2.0

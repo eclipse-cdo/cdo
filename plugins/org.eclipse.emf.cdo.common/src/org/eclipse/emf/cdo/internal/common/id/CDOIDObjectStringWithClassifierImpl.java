@@ -68,7 +68,7 @@ public class CDOIDObjectStringWithClassifierImpl extends CDOIDObjectStringImpl i
     int index2 = fragmentPart.indexOf(CDOClassifierRef.URI_SEPARATOR, index1 + 1);
     if (index1 == -1 || index2 == -1)
     {
-      throw new IllegalArgumentException("The fragment " + fragmentPart + " is not valid");
+      throw new IllegalArgumentException("The fragment " + fragmentPart + " is invalid");
     }
 
     classifierRef = new CDOClassifierRef(fragmentPart.substring(0, index1), fragmentPart.substring(index1 + 1, index2));

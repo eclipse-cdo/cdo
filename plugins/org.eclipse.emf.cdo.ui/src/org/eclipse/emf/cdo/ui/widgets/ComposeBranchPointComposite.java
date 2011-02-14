@@ -50,20 +50,7 @@ public class ComposeBranchPointComposite extends Composite
     CDOBranch branch = branchPoint == null ? session.getBranchManager().getMainBranch() : branchPoint.getBranch();
     if (session.getRepositoryInfo().isSupportingBranches())
     {
-      selectBranchComposite = new SelectBranchComposite(this, SWT.NONE, session, branch)
-      {
-        @Override
-        protected void branchChanged(CDOBranch newBranch)
-        {
-          if (selectTimeStampComposite != null)
-          {
-            selectTimeStampComposite.setBranch(newBranch);
-          }
-
-          composeBranchPoint();
-        }
-      };
-
+      selectBranchComposite = createSelectBranchComposite(session, branch);
       selectBranchComposite.setLayoutData(UIUtil.createGridData());
       selectBranchComposite.getBranchViewer().expandAll();
     }
@@ -71,15 +58,7 @@ public class ComposeBranchPointComposite extends Composite
     if (allowTimeStamp)
     {
       long timeStamp = branchPoint == null ? CDOBranchPoint.UNSPECIFIED_DATE : branchPoint.getTimeStamp();
-      selectTimeStampComposite = new SelectTimeStampComposite(this, SWT.NONE, branch, timeStamp)
-      {
-        @Override
-        protected void timeStampChanged(long timeStamp)
-        {
-          composeBranchPoint();
-        }
-      };
-
+      selectTimeStampComposite = createSelectTimeStampComposite(branch, timeStamp);
       selectTimeStampComposite.setLayoutData(UIUtil.createGridData(true, false));
     }
   }
@@ -102,6 +81,35 @@ public class ComposeBranchPointComposite extends Composite
   public SelectTimeStampComposite getSelectTimeComposite()
   {
     return selectTimeStampComposite;
+  }
+
+  protected SelectTimeStampComposite createSelectTimeStampComposite(CDOBranch branch, long timeStamp)
+  {
+    return new SelectTimeStampComposite(this, SWT.NONE, branch, timeStamp)
+    {
+      @Override
+      protected void timeStampChanged(long timeStamp)
+      {
+        composeBranchPoint();
+      }
+    };
+  }
+
+  protected SelectBranchComposite createSelectBranchComposite(CDOSession session, CDOBranch branch)
+  {
+    return new SelectBranchComposite(this, SWT.NONE, session, branch)
+    {
+      @Override
+      protected void branchChanged(CDOBranch newBranch)
+      {
+        if (selectTimeStampComposite != null)
+        {
+          selectTimeStampComposite.setBranch(newBranch);
+        }
+  
+        composeBranchPoint();
+      }
+    };
   }
 
   protected void branchPointChanged(CDOBranchPoint newBranchPoint)

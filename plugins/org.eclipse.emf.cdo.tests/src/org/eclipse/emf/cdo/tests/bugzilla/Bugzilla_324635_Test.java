@@ -52,7 +52,7 @@ public class Bugzilla_324635_Test extends AbstractCDOTest
     MultiContainedElement element2 = getModel4Factory().createMultiContainedElement();
     container.getElements().add(element2);
 
-    s1Tr1.commit();
+    commitAndSync(s1Tr1, s1Tr2);
 
     // access container on transaction 2 to have it updated with a RevisionDelta.
     RefMultiContained container2 = s1Tr2.getObject(container);
@@ -73,20 +73,18 @@ public class Bugzilla_324635_Test extends AbstractCDOTest
     // merge the other branch to main (this creates the targetGoalDelta for the RevisionDelta).
     s1Tr1.merge(s1Tr3.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
 
-    s1Tr1.commit();
-    assertEquals(false, s1Tr1.isDirty());
+    commitAndSync(s1Tr1, s1Tr2);
 
     // check the change on tr2 and do another change.
-    s1Tr2.waitForUpdate(s1Tr1.getLastCommitTime());
+    assertEquals(false, s1Tr1.isDirty());
     container2.getElements().remove(0);
 
-    s1Tr2.commit(); // <--- this commit will throw the following exception:
+    commitAndSync(s1Tr2, s1Tr1); // <--- this commit will throw the following exception:
     // java.util.ConcurrentModificationException:
     // Attempt by Transaction[2:2] to modify historical revision: RefMultiContained@OID4:0v1
     assertEquals(false, s1Tr1.isDirty());
 
     // check revision versions.
-    s1Tr1.waitForUpdate(s1Tr2.getLastCommitTime());
     assertEquals(CDOUtil.getCDOObject(container).cdoRevision().getVersion(), CDOUtil.getCDOObject(container2)
         .cdoRevision().getVersion());
   }

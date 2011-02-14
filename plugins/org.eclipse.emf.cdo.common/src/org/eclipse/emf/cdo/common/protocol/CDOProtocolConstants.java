@@ -35,9 +35,9 @@ public interface CDOProtocolConstants
   public static final short SIGNAL_OPEN_VIEW = 3;
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public static final short SIGNAL_CHANGE_VIEW = 4;
+  public static final short SIGNAL_SWITCH_TARGET = 4;
 
   /**
    * @since 3.0

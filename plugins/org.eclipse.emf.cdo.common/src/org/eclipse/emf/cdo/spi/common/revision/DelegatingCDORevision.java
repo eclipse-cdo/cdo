@@ -123,6 +123,22 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
     return getDelegate().isValid(timeStamp);
   }
 
+  /**
+   * @since 4.0
+   */
+  public boolean isValid(CDOBranchPoint branchPoint)
+  {
+    return getDelegate().isValid(branchPoint);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public InternalCDORevision copy()
+  {
+    return null;
+  }
+
   public CDOClassInfo getClassInfo()
   {
     return getDelegate().getClassInfo();

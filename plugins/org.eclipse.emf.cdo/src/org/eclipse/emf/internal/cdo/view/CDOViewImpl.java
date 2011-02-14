@@ -190,38 +190,27 @@ public class CDOViewImpl extends AbstractCDOView
       TRACER.format("Changing view target to {0}", branchPoint); //$NON-NLS-1$
     }
 
-    List<InternalCDOObject> invalidObjects;
-    if (branchPoint.getBranch().equals(getBranch()))
+    Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
+    List<CDORevisionKey> allChangedObjects = new ArrayList<CDORevisionKey>();
+    List<CDOIDAndVersion> allDetachedObjects = new ArrayList<CDOIDAndVersion>();
+
+    List<InternalCDOObject> invalidObjects = getInvalidObjects(branchPoint);
+    for (InternalCDOObject object : invalidObjects)
     {
-      invalidObjects = getInvalidObjects(timeStamp);
-    }
-    else
-    {
-      invalidObjects = new ArrayList<InternalCDOObject>(getModifiableObjects().values());
+      InternalCDORevision revision = object.cdoRevision();
+      if (revision != null)
+      {
+        oldRevisions.put(object.cdoID(), revision);
+      }
     }
 
     CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
     OMMonitor monitor = new EclipseMonitor(new NullProgressMonitor());
-    boolean[] existanceFlags = sessionProtocol.changeView(viewID, branchPoint, invalidObjects, monitor);
+    sessionProtocol.switchTarget(viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects, monitor);
 
     basicSetBranchPoint(branchPoint);
-
-    int i = 0;
-    for (InternalCDOObject invalidObject : invalidObjects)
-    {
-      boolean existanceFlag = existanceFlags[i++];
-      if (existanceFlag)
-      {
-        // --> PROXY
-        CDOStateMachine.INSTANCE.invalidate(invalidObject, null, CDOBranchPoint.UNSPECIFIED_DATE);
-      }
-      else
-      {
-        // --> DETACHED
-        CDOStateMachine.INSTANCE.detachRemote(invalidObject);
-      }
-    }
-
+    doInvalidate(branchPoint.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, allChangedObjects, allDetachedObjects,
+        oldRevisions);
     clearRootResource();
 
     IListener[] listeners = getListeners();
@@ -233,18 +222,13 @@ public class CDOViewImpl extends AbstractCDOView
     return true;
   }
 
-  private List<InternalCDOObject> getInvalidObjects(long timeStamp)
+  private List<InternalCDOObject> getInvalidObjects(CDOBranchPoint branchPoint)
   {
     List<InternalCDOObject> result = new ArrayList<InternalCDOObject>();
     for (InternalCDOObject object : getModifiableObjects().values())
     {
       CDORevision revision = object.cdoRevision();
-      if (revision == null)
-      {
-        revision = getRevision(object.cdoID(), false);
-      }
-
-      if (revision == null || !revision.isValid(timeStamp))
+      if (revision == null || !revision.isValid(branchPoint))
       {
         result.add(object);
       }
@@ -531,7 +515,7 @@ public class CDOViewImpl extends AbstractCDOView
   /**
    * @since 2.0
    */
-  public synchronized void sendDeltaNotifications(List<CDORevisionDelta> deltas, Set<CDOObject> detachedObjects,
+  public synchronized void sendDeltaNotifications(Collection<CDORevisionDelta> deltas, Set<CDOObject> detachedObjects,
       Map<CDOID, InternalCDORevision> oldRevisions)
   {
     if (deltas != null)

@@ -170,8 +170,8 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_OPEN_VIEW:
       return new OpenViewIndication(this);
 
-    case CDOProtocolConstants.SIGNAL_CHANGE_VIEW:
-      return new ChangeViewIndication(this);
+    case CDOProtocolConstants.SIGNAL_SWITCH_TARGET:
+      return new SwitchTargetIndication(this);
 
     case CDOProtocolConstants.SIGNAL_CLOSE_VIEW:
       return new CloseViewIndication(this);

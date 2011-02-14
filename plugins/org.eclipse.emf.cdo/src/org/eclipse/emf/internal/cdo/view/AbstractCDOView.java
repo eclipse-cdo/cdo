@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -80,7 +81,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
@@ -1241,9 +1241,49 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
   @Override
   public String toString()
   {
-    InternalCDOSession session = getSession();
-    int sessionID = session == null ? 0 : session.getSessionID();
-    return MessageFormat.format("{0}[{1}:{2}]", getClassName(), sessionID, getViewID()); //$NON-NLS-1$
+    StringBuilder builder = new StringBuilder();
+    if (isReadOnly())
+    {
+      builder.append("View");
+    }
+    else
+    {
+      builder.append("Transaction");
+    }
+
+    builder.append(" "); //$NON-NLS-1$ 
+    builder.append(getViewID());
+
+    boolean brackets = false;
+    if (getSession().getRepositoryInfo().isSupportingBranches())
+    {
+      brackets = true;
+      builder.append(" ["); //$NON-NLS-1$ 
+      builder.append(branchPoint.getBranch().getPathName()); // Do not synchronize on this view!
+    }
+
+    long timeStamp = branchPoint.getTimeStamp(); // Do not synchronize on this view!
+    if (timeStamp != CDOView.UNSPECIFIED_DATE)
+    {
+      if (brackets)
+      {
+        builder.append(", "); //$NON-NLS-1$ 
+      }
+      else
+      {
+        builder.append(" ["); //$NON-NLS-1$ 
+        brackets = true;
+      }
+
+      builder.append(CDOCommonUtil.formatTimeStamp(timeStamp));
+    }
+
+    if (brackets)
+    {
+      builder.append("]"); //$NON-NLS-1$ 
+    }
+
+    return builder.toString();
   }
 
   protected String getClassName()

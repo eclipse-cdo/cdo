@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -48,7 +49,7 @@ public interface CDORevisionDelta extends CDORevisionKey
   /**
    * @since 4.0
    */
-  public CDOBranchVersion getTarget();
+  public CDORevisable getTarget();
 
   /**
    * @since 3.0

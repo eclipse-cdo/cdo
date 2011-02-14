@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.internal.ui.actions.RegisterGeneratedPackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterWorkspacePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -95,7 +94,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
   protected Control createDialogArea(Composite parent)
   {
     Composite composite = (Composite)super.createDialogArea(parent);
-    setTitle(CDOItemProvider.getSessionLabel(session));
+    setTitle(session.toString());
     setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
 
     viewer = new TableViewer(composite, SWT.NONE);

@@ -12,11 +12,10 @@
 package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -569,8 +568,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         if (packageObject instanceof EPackage && packageObject != eClass.getEPackage())
         {
           throw new IllegalStateException(MessageFormat.format(
-              "Global EPackage {0} for EClass {1} is different from EPackage found in CDOPackageRegistry",
-              packageURI, eClass));
+              "Global EPackage {0} for EClass {1} is different from EPackage found in CDOPackageRegistry", packageURI,
+              eClass));
         }
       }
     }
@@ -841,19 +840,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           CDORevisionDelta delta = (CDORevisionDelta)key;
           InternalCDORevision newRevision = oldRevision.copy();
 
-          CDOBranchVersion target = delta.getTarget();
+          CDORevisable target = delta.getTarget();
           if (target != null)
           {
-            CDOBranchPoint branchPoint = target.getBranch().getPoint(lastUpdateTime);
-            int version = target.getVersion();
-            if (version == key.getVersion())
-            {
-              ++version;
-            }
-
-            newRevision.setBranchPoint(branchPoint);
-            newRevision.setVersion(version);
-            newRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
+            newRevision.setBranchPoint(target);
+            newRevision.setVersion(target.getVersion());
+            newRevision.setRevised(target.getRevised());
           }
           else
           {

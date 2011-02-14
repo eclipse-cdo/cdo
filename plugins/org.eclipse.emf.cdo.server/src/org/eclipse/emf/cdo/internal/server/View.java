@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -25,6 +26,7 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -96,18 +98,33 @@ public class View extends Lifecycle implements InternalView
         true);
   }
 
-  public boolean[] changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects)
+  public void changeTarget(CDOBranchPoint branchPoint, List<CDOID> invalidObjects,
+      List<CDORevisionDelta> allChangedObjects, List<CDOID> allDetachedObjects)
   {
+    List<CDORevision> oldRevisions = getRevisions(invalidObjects);
     setBranchPoint(branchPoint);
-    List<CDORevision> revisions = repository.getRevisionManager().getRevisions(invalidObjects, branchPoint, 0,
-        CDORevision.DEPTH_NONE, true);
-    boolean[] existanceFlags = new boolean[revisions.size()];
-    for (int i = 0; i < existanceFlags.length; i++)
-    {
-      existanceFlags[i] = revisions.get(i) != null;
-    }
+    List<CDORevision> newRevisions = getRevisions(invalidObjects);
 
-    return existanceFlags;
+    Iterator<CDORevision> it = newRevisions.iterator();
+    for (CDORevision oldRevision : oldRevisions)
+    {
+      CDORevision newRevision = it.next();
+      if (newRevision == null)
+      {
+        allDetachedObjects.add(oldRevision.getID());
+      }
+      else if (newRevision != oldRevision)
+      {
+        CDORevisionDelta delta = newRevision.compare(oldRevision);
+        allChangedObjects.add(delta);
+      }
+    }
+  }
+
+  private List<CDORevision> getRevisions(List<CDOID> ids)
+  {
+    return repository.getRevisionManager().getRevisions(ids, branchPoint, CDORevision.UNCHUNKED,
+        CDORevision.DEPTH_NONE, true);
   }
 
   public void setBranchPoint(CDOBranchPoint branchPoint)

@@ -55,7 +55,6 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -233,40 +232,41 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
   }
 
-  public boolean[] changeView(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
-      OMMonitor monitor)
+  public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
+      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects, OMMonitor monitor)
   {
-    try
-    {
-      monitor.begin();
-      Async async = monitor.forkAsync();
+    // TODO: implement EmbeddedClientSessionProtocol.changeView(viewID, branchPoint, invalidObjects, allChangedObjects,
+    // allDetachedObjects, monitor)
+    throw new UnsupportedOperationException();
 
-      try
-      {
-        InternalView view = serverSessionProtocol.getSession().getView(viewID);
-        if (view != null)
-        {
-          List<CDOID> ids = new ArrayList<CDOID>(invalidObjects.size());
-          for (InternalCDOObject object : invalidObjects)
-          {
-            ids.add(object.cdoID());
-          }
-
-          return view.changeTarget(branchPoint, ids);
-        }
-
-      }
-      finally
-      {
-        async.stop();
-      }
-    }
-    finally
-    {
-      monitor.done();
-    }
-
-    return null;
+    // try
+    // {
+    // monitor.begin();
+    // Async async = monitor.forkAsync();
+    //
+    // try
+    // {
+    // InternalView view = serverSessionProtocol.getSession().getView(viewID);
+    // if (view != null)
+    // {
+    // List<CDOID> ids = new ArrayList<CDOID>(invalidObjects.size());
+    // for (InternalCDOObject object : invalidObjects)
+    // {
+    // ids.add(object.cdoID());
+    // }
+    //
+    // view.changeTarget(branchPoint, ids, allChangedObjects, allDetachedObjects);
+    // }
+    // }
+    // finally
+    // {
+    // async.stop();
+    // }
+    // }
+    // finally
+    // {
+    // monitor.done();
+    // }
   }
 
   public void closeView(int viewID)

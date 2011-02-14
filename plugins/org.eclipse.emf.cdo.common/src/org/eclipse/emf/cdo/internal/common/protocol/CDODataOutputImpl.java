@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -287,6 +288,14 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     {
       writeBoolean(false);
     }
+  }
+
+  public void writeCDORevisable(CDORevisable revisable) throws IOException
+  {
+    writeCDOBranch(revisable.getBranch());
+    writeInt(revisable.getVersion());
+    writeLong(revisable.getTimeStamp());
+    writeLong(revisable.getRevised());
   }
 
   public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk)

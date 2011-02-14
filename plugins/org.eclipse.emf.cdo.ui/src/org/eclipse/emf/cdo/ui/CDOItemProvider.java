@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
-import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
@@ -71,7 +70,6 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IWorkbenchPage;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -205,16 +203,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       return ((CDOResourceNode)obj).getName();
     }
 
-    if (obj instanceof CDOSession)
-    {
-      return getSessionLabel((CDOSession)obj);
-    }
-
-    if (obj instanceof CDOView)
-    {
-      return getViewLabel((CDOView)obj);
-    }
-
     return super.getText(obj);
   }
 
@@ -273,65 +261,6 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     }
 
     return super.getFont(obj);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static String getSessionLabel(CDOSession session)
-  {
-    return MessageFormat.format(
-        Messages.getString("CDOItemProvider.0"), session.getSessionID(), session.getRepositoryInfo().getName()); //$NON-NLS-1$
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static String getViewLabel(CDOView view)
-  {
-    StringBuilder builder = new StringBuilder();
-    if (view.isReadOnly())
-    {
-      builder.append(Messages.getString("CDOItemProvider.7")); //$NON-NLS-1$ 
-    }
-    else
-    {
-      builder.append(Messages.getString("CDOItemProvider.3")); //$NON-NLS-1$ 
-    }
-
-    builder.append(" "); //$NON-NLS-1$ 
-    builder.append(view.getViewID());
-
-    boolean brackets = false;
-    if (view.getSession().getRepositoryInfo().isSupportingBranches())
-    {
-      brackets = true;
-      builder.append(" ["); //$NON-NLS-1$ 
-      builder.append(view.getBranch().getName());
-    }
-
-    long timeStamp = view.getTimeStamp();
-    if (timeStamp != CDOView.UNSPECIFIED_DATE)
-    {
-      if (brackets)
-      {
-        builder.append(", "); //$NON-NLS-1$ 
-      }
-      else
-      {
-        builder.append(" ["); //$NON-NLS-1$ 
-        brackets = true;
-      }
-
-      builder.append(CDOCommonUtil.formatTimeStamp(timeStamp));
-    }
-
-    if (brackets)
-    {
-      builder.append("]"); //$NON-NLS-1$ 
-    }
-
-    return builder.toString();
   }
 
   @Override

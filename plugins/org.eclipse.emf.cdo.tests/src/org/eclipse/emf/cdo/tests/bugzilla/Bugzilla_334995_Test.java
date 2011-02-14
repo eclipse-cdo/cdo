@@ -29,15 +29,7 @@ public class Bugzilla_334995_Test extends AbstractCDOTest
 {
   public void test() throws CommitException
   {
-    CDOID resourceID;
-    {
-      CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
-      transaction.commit();
-      resourceID = resource.cdoID();
-      session.close();
-    }
+    CDOID[] resourceIDs = persistResources("/res1");
 
     {
       CDOSession session = openSession();
@@ -54,7 +46,7 @@ public class Bugzilla_334995_Test extends AbstractCDOTest
       }
 
       // Fetch the persisted resource that has the same URI
-      CDOResource resource1 = (CDOResource)transaction.getObject(resourceID);
+      CDOResource resource1 = (CDOResource)transaction.getObject(resourceIDs[0]);
       msg("Persisted resource: " + resource1);
 
       msg("newObjects:");
@@ -66,5 +58,48 @@ public class Bugzilla_334995_Test extends AbstractCDOTest
 
       transaction.commit();
     }
+  }
+
+  public void testRename() throws CommitException
+  {
+    CDOID[] resourceIDs = persistResources("/res1", "/res2");
+
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+
+      CDOResource resource1 = transaction.getResource("/res1");
+      resource1.setPath("/res2");
+
+      CDOResource resource2 = (CDOResource)transaction.getObject(resourceIDs[1]);
+
+      resource1.getContents().add(getModel1Factory().createAddress());
+      resource2.getContents().add(getModel1Factory().createAddress());
+      transaction.commit();
+
+      session.close();
+    }
+  }
+
+  private CDOID[] persistResources(String... resourceNames) throws CommitException
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    int i = 0;
+    CDOResource[] resources = new CDOResource[resourceNames.length];
+    for (String resourceName : resourceNames)
+    {
+      resources[i++] = transaction.createResource(resourceName);
+    }
+    transaction.commit();
+
+    CDOID[] resourceIDs = new CDOID[resourceNames.length];
+    for (i = 0; i < resources.length; i++)
+    {
+      resourceIDs[i] = resources[i].cdoID();
+    }
+
+    session.close();
+    return resourceIDs;
   }
 }

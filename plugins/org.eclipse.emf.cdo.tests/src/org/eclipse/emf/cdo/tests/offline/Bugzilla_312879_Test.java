@@ -8,7 +8,7 @@
  * Contributors:
  *    Martin Flügge - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.bugzilla;
+package org.eclipse.emf.cdo.tests.offline;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;

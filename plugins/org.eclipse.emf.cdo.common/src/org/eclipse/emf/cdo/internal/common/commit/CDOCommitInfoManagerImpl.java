@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.internal.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
@@ -49,11 +48,11 @@ public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCo
     return new CDOCommitInfoImpl(this, branch, timeStamp, previousTimeStamp, userID, comment, commitData);
   }
 
-  public CDOCommitInfo getCommitInfo(CDOBranch branch, long timeStamp)
+  public CDOCommitInfo getCommitInfo(long timeStamp)
   {
     checkActive();
     final CDOCommitInfo[] result = { null };
-    getCommitInfos(branch, timeStamp, timeStamp, new CDOCommitInfoHandler()
+    getCommitInfos(null, timeStamp, timeStamp, new CDOCommitInfoHandler()
     {
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
@@ -70,14 +69,13 @@ public class CDOCommitInfoManagerImpl extends Lifecycle implements InternalCDOCo
     commitInfoLoader.loadCommitInfos(branch, startTime, endTime, handler);
   }
 
-  public void getCommitInfos(CDOBranch branch, CDOCommitInfoHandler handler)
+  public void getCommitInfos(CDOBranch branch, long startTime, String userID, String comment, int count,
+      CDOCommitInfoHandler handler)
   {
-    getCommitInfos(branch, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, handler);
-  }
+    checkActive();
 
-  public void getCommitInfos(long startTime, long endTime, CDOCommitInfoHandler handler)
-  {
-    getCommitInfos(null, startTime, endTime, handler);
+    // TODO: implement CDOCommitInfoManagerImpl.getCommitInfos(branch, startTime, userID, comment, count, handler)
+    throw new UnsupportedOperationException();
   }
 
   @Override

@@ -233,7 +233,7 @@ public abstract class CDOServerExporter<OUT>
   protected void exportCommits(final OUT out) throws Exception
   {
     InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
-    commitInfoManager.getCommitInfos(0, 0, new CDOCommitInfoHandler()
+    commitInfoManager.getCommitInfos(null, 0L, 0L, new CDOCommitInfoHandler()
     {
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {

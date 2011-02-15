@@ -1169,7 +1169,7 @@ public class Repository extends Container<Object> implements InternalRepository
     branchManager.getBranches(startID, 0, context);
 
     long startTime = context.getLastReplicatedCommitTime();
-    commitInfoManager.getCommitInfos(startTime + 1L, CDOBranchPoint.UNSPECIFIED_DATE, context);
+    commitInfoManager.getCommitInfos(null, startTime + 1L, CDOBranchPoint.UNSPECIFIED_DATE, context);
   }
 
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint)

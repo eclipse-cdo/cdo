@@ -384,7 +384,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     final List<CDOCommitInfo> result = new ArrayList<CDOCommitInfo>();
     CDOSession session = openSession();
-    session.getCommitInfoManager().getCommitInfos(null, new CDOCommitInfoHandler()
+    session.getCommitInfoManager().getCommitInfos(null, 0L, 0L, new CDOCommitInfoHandler()
     {
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {

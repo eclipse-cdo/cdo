@@ -13,18 +13,21 @@ package org.eclipse.emf.cdo.common.commit;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 
 /**
- * The returned <code>CommitInfo</code> should be ordered by TimeStamp, earlier first.
- * 
  * @author Andre Dietisheim
  * @since 3.0
  */
 public interface CDOCommitInfoManager
 {
-  public CDOCommitInfo getCommitInfo(CDOBranch branch, long timeStamp);
+  /**
+   * @since 4.0
+   */
+  public CDOCommitInfo getCommitInfo(long timeStamp);
 
   public void getCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler);
 
-  public void getCommitInfos(CDOBranch branch, CDOCommitInfoHandler handler);
-
-  public void getCommitInfos(long startTime, long endTime, CDOCommitInfoHandler handler);
+  /**
+   * @since 4.0
+   */
+  public void getCommitInfos(CDOBranch branch, long startTime, String userID, String comment, int count,
+      CDOCommitInfoHandler handler);
 }

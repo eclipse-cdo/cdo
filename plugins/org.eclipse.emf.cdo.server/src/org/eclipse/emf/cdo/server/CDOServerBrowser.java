@@ -1096,7 +1096,7 @@ public class CDOServerBrowser extends Worker
       try
       {
         final boolean auditing = repository.isSupportingAudits();
-        repository.getCommitInfoManager().getCommitInfos(0, 0, new CDOCommitInfoHandler()
+        repository.getCommitInfoManager().getCommitInfos(null, 0L, 0L, new CDOCommitInfoHandler()
         {
           public void handleCommitInfo(CDOCommitInfo commitInfo)
           {

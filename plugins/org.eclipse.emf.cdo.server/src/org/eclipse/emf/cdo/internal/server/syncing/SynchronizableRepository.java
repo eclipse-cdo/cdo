@@ -312,7 +312,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       }
     };
 
-    getCommitInfoManager().getCommitInfos(fromCommitTime, toCommitTime, handler);
+    getCommitInfoManager().getCommitInfos(null, fromCommitTime, toCommitTime, handler);
     return branches;
   }
 

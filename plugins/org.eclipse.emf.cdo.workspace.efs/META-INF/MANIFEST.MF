@@ -14,8 +14,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j.db.h2;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.location;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.workspace;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Import-Package: org.h2;version="[1.1.0,1.2.0)",
- org.h2.jdbcx;version="[1.1.0,1.2.0)"
+Import-Package: org.h2;version="[1.0.0,2.0.0)",
+ org.h2.jdbcx;version="[1.0.0,2.0.0)"
 Export-Package: org.eclipse.emf.cdo.workspace.efs;version="4.0.0",
  org.eclipse.emf.cdo.workspace.internal.efs;version="4.0.0";x-friends:="org.eclipse.emf.cdo.ui.workspace",
  org.eclipse.emf.cdo.workspace.internal.efs.bundle;version="4.0.0";x-internal:=true

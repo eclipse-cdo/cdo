@@ -30,7 +30,7 @@ Require-Bundle: org.eclipse.net4j.tests;bundle-version="[3.0.0,4.0.0)";visibilit
  org.eclipse.emf.cdo.tests.model5;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.defs;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
 Import-Package: org.apache.derby.jdbc;version="[10.0.0,11.0.0)",
- org.h2.jdbcx;version="[1.1.0,1.2.0)"
+ org.h2.jdbcx;version="[1.0.0,2.0.0)"
 Export-Package: base;version="3.0.1",
  base.impl;version="3.0.1",
  base.util;version="3.0.1",

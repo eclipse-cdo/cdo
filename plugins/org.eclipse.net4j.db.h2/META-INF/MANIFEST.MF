@@ -14,5 +14,5 @@ Export-Package: org.eclipse.net4j.db.h2;version="3.0.0",
 Eclipse-RegisterBuddy: org.eclipse.net4j.db
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.net4j.db.internal.h2.bundle.OM$Activator
-Import-Package: org.h2;version="[1.1.0,1.2.0)",
- org.h2.jdbcx;version="[1.1.0,1.2.0)"
+Import-Package: org.h2;version="[1.1.0,2.0.0)",
+ org.h2.jdbcx;version="[1.0.0,2.0.0)"

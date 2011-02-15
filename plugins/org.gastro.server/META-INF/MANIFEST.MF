@@ -11,11 +11,11 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.net4j.db.h2;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.net4j.tcp;bundle-version="[2.0.0,4.0.0)"
 Bundle-Activator: org.gastro.internal.server.OM$Activator
-Import-Package: org.h2;version="[1.1.0,1.2.0)",
- org.h2.api;version="[1.1.0,1.2.0)",
- org.h2.jdbcx;version="[1.1.0,1.2.0)",
- org.h2.tools;version="[1.1.0,1.2.0)",
- org.h2.util;version="[1.1.0,1.2.0)"
+Import-Package: org.h2;version="[1.1.0,2.0.0)",
+ org.h2.api;version="[1.1.0,2.0.0)",
+ org.h2.jdbcx;version="[1.0.0,2.0.0)",
+ org.h2.tools;version="[1.1.0,2.0.0)",
+ org.h2.util;version="[1.1.0,2.0.0)"
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.gastro.internal.server;version="3.0.1";x-internal:=true,
  org.gastro.server;version="3.0.1"

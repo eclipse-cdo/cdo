@@ -496,7 +496,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
       stmt.setString(4, userID);
       stmt.setString(5, comment);
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException ex)
     {
@@ -637,7 +637,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
       stmt.setLong(2, size);
       stmt.setBinaryStream(3, inputStream, (int)size);
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException ex)
     {
@@ -661,7 +661,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
       stmt.setLong(2, size);
       stmt.setCharacterStream(3, reader, (int)size);
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException ex)
     {
@@ -831,7 +831,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
       stmt.setInt(3, branchInfo.getBaseBranchID());
       stmt.setLong(4, branchInfo.getBaseTimeStamp());
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
       getConnection().commit();
       return new Pair<Integer, Long>(branchID, branchInfo.getBaseTimeStamp());
     }

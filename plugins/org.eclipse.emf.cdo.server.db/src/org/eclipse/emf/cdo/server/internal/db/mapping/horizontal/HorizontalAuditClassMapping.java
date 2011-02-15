@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
@@ -46,6 +45,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -493,7 +493,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
         }
       }
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -540,7 +540,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
         mapping.setDefaultValue(stmt, column++);
       }
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -566,7 +566,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
       stmt.setLong(1, revised);
       idHandler.setCDOID(stmt, 2, id);
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {

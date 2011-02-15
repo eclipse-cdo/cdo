@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -479,7 +478,7 @@ public abstract class AbstractFeatureMapTableMapping extends BasicAbstractListTa
 
       stmt.setInt(column++, idx);
       idHandler.setCDOID(stmt, column++, tag);
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {

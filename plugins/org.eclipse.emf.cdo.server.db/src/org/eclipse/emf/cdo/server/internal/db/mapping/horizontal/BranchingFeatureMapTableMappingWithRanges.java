@@ -29,7 +29,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -807,7 +806,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       idHandler.setCDOID(stmtClear, 2, id);
       stmtClear.setInt(3, branchId);
 
-      int result = CDODBUtil.sqlUpdate(stmtClear, false);
+      int result = DBUtil.update(stmtClear, false);
       if (TRACER.isEnabled())
       {
         TRACER.format("ClearList result: {0}", result); //$NON-NLS-1$
@@ -1064,7 +1063,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
           stmt.setInt(column++, newVersion);
           stmt.setInt(column++, index);
 
-          int result = CDODBUtil.sqlUpdate(stmt, false);
+          int result = DBUtil.update(stmt, false);
           switch (result)
           {
           case 1:
@@ -1149,7 +1148,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
           stmt.setInt(column++, newVersion);
           stmt.setInt(column++, index);
 
-          int result = CDODBUtil.sqlUpdate(stmt, false);
+          int result = DBUtil.update(stmt, false);
           switch (result)
           {
           case 1:
@@ -1247,7 +1246,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
         }
       }
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -1307,7 +1306,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
         }
       }
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -1347,7 +1346,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
       stmt.setInt(column++, index);
       stmt.setInt(column++, newVersion);
 
-      int result = CDODBUtil.sqlUpdate(stmt, false);
+      int result = DBUtil.update(stmt, false);
       if (result == 1)
       {
         if (TRACER.isEnabled())
@@ -1375,7 +1374,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
         idHandler.setCDOID(stmt, column++, id);
         stmt.setInt(column++, branchId);
         stmt.setInt(column++, index);
-        result = CDODBUtil.sqlUpdate(stmt, false);
+        result = DBUtil.update(stmt, false);
 
         if (result == 0)
         {

@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAudit
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy;
 
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -33,9 +32,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * @author Eike Stepper
@@ -141,41 +137,6 @@ public final class CDODBUtil
     }
 
     return null;
-  }
-
-  /**
-   * Execute update on the given prepared statement and handle common cases of return values.
-   * 
-   * @param stmt
-   *          the prepared statement
-   * @param exactlyOne
-   *          if <code>true</code>, the update count is checked to be <code>1</code>. Else the update result is only
-   *          checked so that the update was successful (i.e. result code != Statement.EXECUTE_FAILED).
-   * @return the update count / execution result as returned by {@link PreparedStatement#executeUpdate()}. Can be used
-   *         by the caller to perform more advanced checks.
-   * @throws SQLException
-   *           if {@link PreparedStatement#executeUpdate()} throws it.
-   * @throws IllegalStateException
-   *           if the check indicated by <code>excatlyOne</code> indicates an error.
-   * @since 2.0
-   */
-  public static int sqlUpdate(PreparedStatement stmt, boolean exactlyOne) throws SQLException
-  {
-    DBUtil.trace(stmt.toString());
-    int result = stmt.executeUpdate();
-
-    // basic check of update result
-    if (exactlyOne && result != 1)
-    {
-      throw new IllegalStateException(stmt.toString() + " returned Update count " + result + " (expected: 1)"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
-    if (result == Statement.EXECUTE_FAILED)
-    {
-      throw new IllegalStateException(stmt.toString() + " returned EXECUTE_FAILED"); //$NON-NLS-1$
-    }
-
-    return result;
   }
 
   /**

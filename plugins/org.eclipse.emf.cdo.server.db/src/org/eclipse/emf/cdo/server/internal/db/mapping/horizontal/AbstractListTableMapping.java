@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
@@ -369,7 +368,7 @@ public abstract class AbstractListTableMapping extends BasicAbstractListTableMap
       stmt.setInt(column++, idx);
       typeMapping.setValue(stmt, column++, value);
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {

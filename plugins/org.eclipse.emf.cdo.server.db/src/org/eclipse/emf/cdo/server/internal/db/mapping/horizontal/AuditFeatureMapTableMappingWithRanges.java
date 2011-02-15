@@ -35,7 +35,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -660,7 +659,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       idHandler.setCDOID(stmtDeleteTemp, 1, id);
       stmtDeleteTemp.setInt(2, newVersion);
 
-      int result = CDODBUtil.sqlUpdate(stmtDeleteTemp, false);
+      int result = DBUtil.update(stmtDeleteTemp, false);
       if (TRACER.isEnabled())
       {
         TRACER.format("DeleteList result: {0}", result); //$NON-NLS-1$
@@ -671,7 +670,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       stmtClear.setInt(1, newVersion);
       idHandler.setCDOID(stmtClear, 2, id);
 
-      result = CDODBUtil.sqlUpdate(stmtClear, false);
+      result = DBUtil.update(stmtClear, false);
       if (TRACER.isEnabled())
       {
         TRACER.format("ClearList result: {0}", result); //$NON-NLS-1$
@@ -909,7 +908,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
           stmt.setInt(column++, newVersion);
           stmt.setInt(column++, index);
 
-          int result = CDODBUtil.sqlUpdate(stmt, false);
+          int result = DBUtil.update(stmt, false);
           switch (result)
           {
           case 0:
@@ -979,7 +978,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
           stmt.setInt(column++, newVersion);
           stmt.setInt(column++, index);
 
-          int result = CDODBUtil.sqlUpdate(stmt, false);
+          int result = DBUtil.update(stmt, false);
           switch (result)
           {
           case 0:
@@ -1067,7 +1066,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
         }
       }
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -1105,7 +1104,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
       stmt.setInt(column++, index);
       stmt.setInt(column++, newVersion);
 
-      int result = CDODBUtil.sqlUpdate(stmt, false);
+      int result = DBUtil.update(stmt, false);
       if (result == 1)
       {
         if (TRACER.isEnabled())
@@ -1132,7 +1131,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
         stmt.setInt(column++, newVersion);
         idHandler.setCDOID(stmt, column++, id);
         stmt.setInt(column++, index);
-        CDODBUtil.sqlUpdate(stmt, true);
+        DBUtil.update(stmt, true);
       }
     }
     catch (SQLException e)

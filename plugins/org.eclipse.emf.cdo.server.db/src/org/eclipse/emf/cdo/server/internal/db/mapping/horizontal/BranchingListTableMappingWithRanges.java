@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -657,7 +656,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 2, id);
       stmt.setInt(3, branchId);
 
-      int result = CDODBUtil.sqlUpdate(stmt, false);
+      int result = DBUtil.update(stmt, false);
       if (TRACER.isEnabled())
       {
         TRACER.format("ClearList result: {0}", result); //$NON-NLS-1$
@@ -908,7 +907,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
           stmt.setInt(column++, newVersion);
           stmt.setInt(column++, index);
 
-          int result = CDODBUtil.sqlUpdate(stmt, false);
+          int result = DBUtil.update(stmt, false);
           switch (result)
           {
           case 1:
@@ -995,7 +994,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
           stmt.setInt(column++, newVersion);
           stmt.setInt(column++, index);
 
-          int result = CDODBUtil.sqlUpdate(stmt, false);
+          int result = DBUtil.update(stmt, false);
           switch (result)
           {
           case 1:
@@ -1082,7 +1081,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       stmt.setInt(column++, index);
       typeMapping.setValue(stmt, column++, value);
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -1125,7 +1124,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       stmt.setInt(column++, index);
       typeMapping.setValue(stmt, column++, value);
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -1164,7 +1163,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       stmt.setInt(column++, index);
       stmt.setInt(column++, newVersion);
 
-      int result = CDODBUtil.sqlUpdate(stmt, false);
+      int result = DBUtil.update(stmt, false);
       if (result == 1)
       {
         if (TRACER.isEnabled())
@@ -1193,7 +1192,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
         stmt.setInt(column++, branchId);
         stmt.setInt(column++, index);
 
-        result = CDODBUtil.sqlUpdate(stmt, false);
+        result = DBUtil.update(stmt, false);
 
         if (result == 0)
         {

@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
@@ -37,6 +36,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -189,7 +189,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       stmt = accessor.getStatementCache().getPreparedStatement(sqlClear, ReuseProbability.HIGH);
       getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
-      CDODBUtil.sqlUpdate(stmt, false);
+      DBUtil.update(stmt, false);
     }
     catch (SQLException e)
     {

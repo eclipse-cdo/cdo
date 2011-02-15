@@ -36,7 +36,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
@@ -645,7 +644,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         }
       }
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -704,7 +703,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         }
       }
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -731,7 +730,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       idHandler.setCDOID(stmt, 2, id);
       stmt.setInt(3, branch.getID());
 
-      CDODBUtil.sqlUpdate(stmt, false); // No row affected if old revision from other branch!
+      DBUtil.update(stmt, false); // No row affected if old revision from other branch!
     }
     catch (SQLException e)
     {

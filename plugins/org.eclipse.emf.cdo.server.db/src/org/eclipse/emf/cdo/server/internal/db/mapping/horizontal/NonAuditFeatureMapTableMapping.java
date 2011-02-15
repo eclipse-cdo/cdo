@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
@@ -37,6 +36,7 @@ import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.ImplementationError;
 
 import org.eclipse.emf.ecore.EClass;
@@ -230,7 +230,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
     {
       stmt = statementCache.getPreparedStatement(sqlClear, ReuseProbability.HIGH);
       getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
-      CDODBUtil.sqlUpdate(stmt, false);
+      DBUtil.update(stmt, false);
     }
     catch (SQLException e)
     {
@@ -295,7 +295,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
       stmt.setInt(column++, index);
       idHandler.setCDOID(stmt, column++, tag);
 
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -357,7 +357,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
       stmt.setInt(1, newIndex);
       idHandler.setCDOID(stmt, 2, id);
       stmt.setInt(3, oldIndex);
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -407,7 +407,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
         stmt.setInt(3, upperIndex);
       }
 
-      CDODBUtil.sqlUpdate(stmt, false);
+      DBUtil.update(stmt, false);
     }
     catch (SQLException e)
     {
@@ -440,7 +440,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
         stmt.setInt(3, upperIndex);
       }
 
-      CDODBUtil.sqlUpdate(stmt, false);
+      DBUtil.update(stmt, false);
     }
     catch (SQLException e)
     {
@@ -463,7 +463,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
       stmt = statementCache.getPreparedStatement(sqlDeleteItem, ReuseProbability.HIGH);
       idHandler.setCDOID(stmt, 1, id);
       stmt.setInt(2, index);
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {
@@ -519,7 +519,7 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
 
       idHandler.setCDOID(stmt, column++, id);
       stmt.setInt(column++, index);
-      CDODBUtil.sqlUpdate(stmt, true);
+      DBUtil.update(stmt, true);
     }
     catch (SQLException e)
     {

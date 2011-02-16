@@ -12,9 +12,12 @@
  */
 package org.eclipse.emf.cdo.server.mongodbdb;
 
+import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBBrowserPage;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+
+import com.mongodb.MongoURI;
 
 /**
  * @author Eike Stepper
@@ -27,10 +30,14 @@ public final class CDOMongoDBUtil
 
   public static void prepareContainer(IManagedContainer container)
   {
+    container.registerFactory(new MongoDBBrowserPage.Factory());
   }
 
-  public static IMongoDBStore createStore()
+  public static IMongoDBStore createStore(MongoURI mongoURI, String dbName)
   {
-    return new MongoDBStore();
+    MongoDBStore store = new MongoDBStore();
+    store.setMongoURI(mongoURI);
+    store.setDBName(dbName);
+    return store;
   }
 }

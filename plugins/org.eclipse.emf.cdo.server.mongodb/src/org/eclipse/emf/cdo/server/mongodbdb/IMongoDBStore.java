@@ -17,19 +17,24 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.ITransaction;
 
 import com.mongodb.DB;
+import com.mongodb.MongoURI;
 
 /**
  * @author Eike Stepper
  */
 public interface IMongoDBStore extends IStore
 {
+  public MongoURI getMongoURI();
+
+  public String getDBName();
+
+  public DB getDB();
+
   public IsolationLevel getIsolationLevel();
 
   public EmbeddingStrategy getEmbeddingStrategy();
 
   public IDHandler getIDHandler();
-
-  public DB getDB();
 
   public IMongoDBStoreAccessor getReader(ISession session);
 

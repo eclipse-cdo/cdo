@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import com.mongodb.DB;
 import com.mongodb.Mongo;
+import com.mongodb.MongoURI;
 
 import java.util.Map;
 import java.util.Set;
@@ -33,19 +34,51 @@ public class MongoDBStore extends Store implements IMongoDBStore
 {
   public static final String TYPE = "mongodb"; //$NON-NLS-1$
 
+  private MongoURI mongoURI;
+
+  private String dbName;
+
+  private DB db;
+
   private IsolationLevel isolationLevel;
 
   private EmbeddingStrategy embeddingStrategy;
 
   private IDHandler idHandler;
 
-  private DB db;
-
   public MongoDBStore()
   {
     super(TYPE, null, set(ChangeFormat.DELTA), //
         set(RevisionTemporality.AUDITING, RevisionTemporality.NONE), //
         set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
+  }
+
+  public MongoURI getMongoURI()
+  {
+    return mongoURI;
+  }
+
+  public void setMongoURI(MongoURI mongoURI)
+  {
+    checkInactive();
+    this.mongoURI = mongoURI;
+  }
+
+  public String getDBName()
+  {
+    return dbName;
+  }
+
+  public void setDBName(String dbName)
+  {
+    checkInactive();
+    this.dbName = dbName;
+  }
+
+  public DB getDB()
+  {
+    checkActive();
+    return db;
   }
 
   public IsolationLevel getIsolationLevel()
@@ -79,17 +112,6 @@ public class MongoDBStore extends Store implements IMongoDBStore
   {
     checkInactive();
     this.idHandler = idHandler;
-  }
-
-  public DB getDB()
-  {
-    return db;
-  }
-
-  public void setDB(DB db)
-  {
-    checkInactive();
-    this.db = db;
   }
 
   public Map<String, String> getPropertyValues(Set<String> names)
@@ -169,7 +191,8 @@ public class MongoDBStore extends Store implements IMongoDBStore
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(db, "db");
+    checkState(mongoURI, "mongoURI");
+    checkState(dbName, "dbName");
   }
 
   @Override
@@ -177,14 +200,19 @@ public class MongoDBStore extends Store implements IMongoDBStore
   {
     super.doActivate();
 
+    Mongo mongo = new Mongo(mongoURI);
+    db = mongo.getDB(dbName);
   }
 
-  public static void main(String[] args) throws Exception
+  @Override
+  protected void doDeactivate() throws Exception
   {
-    Mongo mongo = new Mongo("localhost", 27017);
-    DB db = mongo.getDB("mydb");
+    if (db != null)
+    {
+      db.getMongo().close();
+      db = null;
+    }
 
-    MongoDBStore store = new MongoDBStore();
-    store.setDB(db);
+    super.doDeactivate();
   }
 }

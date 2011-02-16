@@ -11,15 +11,12 @@
 package org.eclipse.emf.cdo.tests.mongodb;
 
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
 import org.eclipse.emf.cdo.server.mongodbdb.CDOMongoDBUtil;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
-import com.mongodb.DB;
-import com.mongodb.Mongo;
+import com.mongodb.MongoURI;
 
 /**
  * @author Eike Stepper
@@ -45,19 +42,6 @@ public class MongoDBStoreRepositoryConfig extends RepositoryConfig
   @Override
   public IStore createStore(String repoName)
   {
-    try
-    {
-      Mongo mongo = new Mongo("localhost", 27017);
-      DB db = mongo.getDB("cdotests");
-
-      MongoDBStore store = new MongoDBStore();
-      store.setDB(db);
-
-      return store;
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex);
-    }
+    return CDOMongoDBUtil.createStore(new MongoURI("mongodb://localhost"), repoName);
   }
 }

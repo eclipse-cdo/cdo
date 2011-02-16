@@ -114,7 +114,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = createModel();
+    final EPackage model1 = createModel();
     addLengthAnnotation(model1, "8");
 
     CDOSession session = openSession();
@@ -141,7 +141,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        ResultSet rset = getMetaData().getColumns(null, null, "PRODUCT1", "NAME");
+        String tableName = model1.getName().toUpperCase() + "_PRODUCT1";
+        ResultSet rset = getMetaData().getColumns(null, null, tableName, "NAME");
         rset.next();
         assertEquals("8", rset.getString(7));
       }
@@ -158,7 +159,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = createModel();
+    final EPackage model1 = createModel();
     addTypeAnnotation(model1, "CLOB");
 
     CDOSession session = openSession();
@@ -168,7 +169,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Commit a category.");
     EClass eClass = (EClass)model1.getEClassifier("Category");
@@ -185,7 +186,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        ResultSet rset = getMetaData().getColumns(null, null, "CATEGORY", "NAME");
+        String tableName = model1.getName().toUpperCase() + "_CATEGORY";
+        ResultSet rset = getMetaData().getColumns(null, null, tableName, "NAME");
         rset.next();
         assertEquals("CLOB", rset.getString(6));
       }
@@ -238,7 +240,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = createModel();
+    final EPackage model1 = createModel();
     addColumnNameAnnotation(model1, "TOPIC");
 
     CDOSession session = openSession();
@@ -265,7 +267,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        ResultSet rset = getMetaData().getColumns(null, null, "CATEGORY", "TOPIC");
+        String tableName = model1.getName().toUpperCase() + "_CATEGORY";
+        ResultSet rset = getMetaData().getColumns(null, null, tableName, "TOPIC");
         rset.next();
         assertEquals("TOPIC", rset.getString(4));
       }
@@ -282,7 +285,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     skipConfig(AllTestsDBPsql.Psql.INSTANCE);
 
     msg("Opening session");
-    EPackage model1 = createModel();
+    final EPackage model1 = createModel();
     addColumnNameAndTypeAnnoation(model1, "TOPIC", "CLOB");
 
     CDOSession session = openSession();
@@ -309,7 +312,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        ResultSet rset = getMetaData().getColumns(null, null, "CATEGORY", "TOPIC");
+        String tableName = model1.getName().toUpperCase() + "_CATEGORY";
+        ResultSet rset = getMetaData().getColumns(null, null, tableName, "TOPIC");
         rset.next();
         assertEquals("TOPIC", rset.getString(4));
         assertEquals("CLOB", rset.getString(6));
@@ -320,7 +324,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testTableMappingAnnotationByMetaData() throws CommitException
   {
     msg("Opening session");
-    EPackage model1 = createModel();
+    final EPackage model1 = createModel();
     addTableMappingAnnotation(model1, "OrderDetail", "Company");
 
     CDOSession session = openSession();
@@ -353,18 +357,19 @@ public class DBAnnotationsTest extends AbstractCDOTest
         boolean companyTableCreated = false;
         boolean categoryTableCreated = false;
 
+        String prefix = model1.getName().toUpperCase() + '_';
         while (rset.next())
         {
           String tableName = rset.getString(3);
-          if ("ORDERDETAIL".equalsIgnoreCase(tableName))
+          if ((prefix + "ORDERDETAIL").equalsIgnoreCase(tableName))
           {
             orderDetailTableCreated = true;
           }
-          else if ("COMPANY".equalsIgnoreCase(tableName))
+          else if ((prefix + "COMPANY").equalsIgnoreCase(tableName))
           {
             companyTableCreated = true;
           }
-          else if ("CATEGORY".equalsIgnoreCase(tableName))
+          else if ((prefix + "CATEGORY").equalsIgnoreCase(tableName))
           {
             categoryTableCreated = true;
           }
@@ -380,7 +385,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
   private EPackage createModel()
   {
     EPackage ePackage = EcoreUtil.copy(getModel1Package());
-    ePackage.setNsURI(ePackage.getNsURI() + "-dynamic" + modelCounter++);
+    String suffix = "_dynamic" + modelCounter++;
+    ePackage.setNsURI(ePackage.getNsURI() + suffix);
+    ePackage.setName(ePackage.getName() + suffix);
     return ePackage;
   }
 

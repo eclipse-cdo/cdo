@@ -23,6 +23,9 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 
 import javax.sql.DataSource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Eike Stepper
  */
@@ -47,9 +50,17 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
   public IStore createStore(String repoName)
   {
     IMappingStrategy mappingStrategy = createMappingStrategy();
+    mappingStrategy.setProperties(createMappingStrategyProperties());
     IDBAdapter dbAdapter = createDBAdapter();
     DataSource dataSource = createDataSource(repoName);
     return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource));
+  }
+
+  protected Map<String, String> createMappingStrategyProperties()
+  {
+    Map<String, String> props = new HashMap<String, String>();
+    props.put(IMappingStrategy.PROP_QUALIFIED_NAMES, "true");
+    return props;
   }
 
   protected abstract IMappingStrategy createMappingStrategy();

@@ -67,7 +67,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for products with a specific name");
-      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM PRODUCT1 WHERE name=:name");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1 WHERE name=:name");
       cdoQuery.setParameter("name", "" + 1);
       final List<Product1> products = cdoQuery.getResult(Product1.class);
       assertEquals(1, products.size());
@@ -75,14 +75,14 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for Customers");
-      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM CUSTOMER");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_CUSTOMER");
       final List<Customer> customers = cdoQuery.getResult(Customer.class);
       assertEquals(NUM_OF_CUSTOMERS, customers.size());
     }
 
     {
       msg("Query for products with VAT15");
-      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM PRODUCT1 WHERE VAT =:vat");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1 WHERE VAT =:vat");
       cdoQuery.setParameter("vat", VAT.VAT15.getValue());
       final List<Product1> products = cdoQuery.getResult(Product1.class);
       assertEquals(10, products.size());
@@ -108,7 +108,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Count products");
-      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT COUNT(*) from PRODUCT1");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT COUNT(*) from MODEL1_PRODUCT1");
       cdoQuery.setParameter(SQLQueryHandler.CDO_OBJECT_QUERY, false);
 
       // we need to handle objects, because different DBs produce either
@@ -147,12 +147,12 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for customers");
-      CDOQuery customerQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM CUSTOMER ORDER BY NAME");
+      CDOQuery customerQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_CUSTOMER ORDER BY NAME");
       final List<Customer> customers = customerQuery.getResult(Customer.class);
       assertEquals(NUM_OF_CUSTOMERS, customers.size());
 
       msg("Query for products");
-      CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM PRODUCT1");
+      CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
       final List<Product1> products = productQuery.getResult(Product1.class);
       assertEquals(NUM_OF_PRODUCTS, products.size());
     }
@@ -178,7 +178,7 @@ public class SQLQueryTest extends AbstractCDOTest
       final List<Product1> allProducts = new ArrayList<Product1>();
       for (int page = 0; page < numOfPages; page++)
       {
-        CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM PRODUCT1");
+        CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
         productQuery.setMaxResults(pageSize);
         productQuery.setParameter(SQLQueryHandler.FIRST_RESULT, page * pageSize);
         final List<Product1> queriedProducts = productQuery.getResult(Product1.class);
@@ -211,7 +211,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for products");
-      CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM PRODUCT1");
+      CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
       final CloseableIterator<Product1> iterator = productQuery.getResultAsync(Product1.class);
       int counter = 0;
       while (iterator.hasNext())
@@ -243,7 +243,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for customer street strings.");
-      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT STREET FROM CUSTOMER");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT STREET FROM MODEL1_CUSTOMER");
       cdoQuery.setParameter("cdoObjectQuery", false);
       List<String> streets = new ArrayList<String>(cdoQuery.getResult(String.class));
       for (int i = 0; i < 5; i++)
@@ -265,7 +265,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for customer city strings.");
-      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CITY FROM CUSTOMER");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT CITY FROM MODEL1_CUSTOMER");
       cdoQuery.setParameter("cdoObjectQuery", false);
       List<String> cities = new ArrayList<String>(cdoQuery.getResult(String.class));
 

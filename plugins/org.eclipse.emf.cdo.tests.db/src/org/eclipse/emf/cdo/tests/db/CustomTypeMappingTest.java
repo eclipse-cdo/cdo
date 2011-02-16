@@ -96,7 +96,7 @@ public class CustomTypeMappingTest extends AbstractCDOTest
           try
           {
             stmt = getStatement();
-            rset = stmt.executeQuery("SELECT bar FROM foo");
+            rset = stmt.executeQuery("SELECT bar FROM underscoreTest_foo");
             assertEquals("java.lang.String", rset.getMetaData().getColumnClassName(1));
 
             rset.next();

@@ -52,6 +52,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
     CDOResource resource = transaction.getResource("/test1");
 
     LifecycleUtil.deactivate(getRepository());
+    sleep(1000);
 
     try
     {

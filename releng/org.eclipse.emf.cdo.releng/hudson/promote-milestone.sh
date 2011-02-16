@@ -1,8 +1,10 @@
 #!/bin/sh
 
-stream=3.0
-milestone=SR2-RC4
 buildID=125
+milestone=SR2-RC4
+
+stream=3.0
+branch=R3_0_maintenance
 
 mkdir promote.tmp
 pushd promote.tmp
@@ -39,4 +41,8 @@ rm -rf promote.tmp
 
 echo ""
 echo "After testing http://download.eclipse.org/modeling/emf/cdo/updates/$stream/$stream-$milestone-$label execute:"
+echo ""
 echo "pushd /home/data/httpd/download.eclipse.org/modeling/emf/cdo/updates/$stream; cp -R $stream-$milestone-$label staging.tmp; mv staging staging.old; mv staging.tmp staging; rm -rf staging.old; popd"
+echo ""
+echo "svn cp  -m "Tagging $branch as $stream-$milestone" https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/branches/$branch https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/tags/$stream-$milestone"
+svn cp  -m "Tagging $branch as $stream-$milestone" https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/branches/$branch https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/tags/$stream-$milestone

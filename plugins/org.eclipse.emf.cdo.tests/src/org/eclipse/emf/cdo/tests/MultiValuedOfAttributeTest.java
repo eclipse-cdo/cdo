@@ -130,7 +130,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
       EObject eGenObject = EcoreUtil.create(containerClass);
 
@@ -150,7 +150,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/res1");
+      CDOResource resource = transaction.getResource(getResourcePath("/res1"));
 
       EObject eGenObject = resource.getContents().get(0);
 
@@ -172,7 +172,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
       CDOSession session = openSession();
       session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(0, 100));
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/res1");
+      CDOResource resource = transaction.getResource(getResourcePath("/res1"));
 
       EObject eGenObject = resource.getContents().get(0);
 

@@ -31,7 +31,7 @@ public class Bugzilla_302414_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.createResource("/r1"); //$NON-NLS-1$
+    CDOResource r1 = tx.createResource(getResourcePath("/r1")); //$NON-NLS-1$
 
     Company company = getModel1Factory().createCompany();
     r1.getContents().add(company);
@@ -69,7 +69,7 @@ public class Bugzilla_302414_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.createResource("/r1"); //$NON-NLS-1$
+    CDOResource r1 = tx.createResource(getResourcePath("/r1")); //$NON-NLS-1$
 
     Company company = getModel1Factory().createCompany();
     r1.getContents().add(company);

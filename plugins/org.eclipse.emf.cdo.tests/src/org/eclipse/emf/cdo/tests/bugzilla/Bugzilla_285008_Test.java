@@ -49,7 +49,7 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
       }
 
       CDOTransaction tx = session.openTransaction();
-      CDOResource r1 = tx.createResource(RESOURCENAME);
+      CDOResource r1 = tx.createResource(getResourcePath(RESOURCENAME));
       RefMultiNonContainedUnsettable a = f.createRefMultiNonContainedUnsettable();
       MultiNonContainedUnsettableElement b = f.createMultiNonContainedUnsettableElement();
       r1.getContents().add(a);
@@ -74,7 +74,7 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
       session.options().setPassiveUpdateEnabled(false);
       CDOTransaction tx = session.openTransaction();
 
-      CDOResource r1 = tx.getResource(RESOURCENAME);
+      CDOResource r1 = tx.getResource(getResourcePath(RESOURCENAME));
       RefMultiNonContainedUnsettable a = (RefMultiNonContainedUnsettable)r1.getContents().get(0);
 
       assertEquals(true, a.isSetElements());
@@ -106,7 +106,7 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
       }
 
       CDOTransaction tx = session.openTransaction();
-      CDOResource r1 = tx.createResource(RESOURCENAME);
+      CDOResource r1 = tx.createResource(getResourcePath(RESOURCENAME));
       RefMultiNonContainedUnsettable a = f.createRefMultiNonContainedUnsettable();
       MultiNonContainedUnsettableElement b = f.createMultiNonContainedUnsettableElement();
       r1.getContents().add(a);
@@ -132,7 +132,7 @@ public class Bugzilla_285008_Test extends AbstractCDOTest
       session.options().setPassiveUpdateEnabled(false);
       CDOTransaction tx = session.openTransaction();
 
-      CDOResource r1 = tx.getResource(RESOURCENAME);
+      CDOResource r1 = tx.getResource(getResourcePath(RESOURCENAME));
       RefMultiNonContainedUnsettable a = (RefMultiNonContainedUnsettable)r1.getContents().get(0);
       MultiNonContainedUnsettableElement b = (MultiNonContainedUnsettableElement)r1.getContents().get(1);
 

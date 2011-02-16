@@ -62,7 +62,7 @@ public class ContentAdapterTest extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
-      CDOResource resource = transaction.createResource("/test2");
+      CDOResource resource = transaction.createResource(getResourcePath("/test2"));
       // resource.eAdapters().add(contentAdapter);
 
       Supplier supplier = getModel1Factory().createSupplier();
@@ -87,7 +87,7 @@ public class ContentAdapterTest extends AbstractCDOTest
       session.setFetchRuleManager(info);
 
       InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
-      CDOResource resource = transaction.getResource("/test2");
+      CDOResource resource = transaction.getResource(getResourcePath("/test2"));
 
       // I don't want to fetch my objects!!
       EList<Adapter> adapters = resource.eAdapters();

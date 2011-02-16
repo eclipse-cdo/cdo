@@ -51,7 +51,7 @@ public class Bugzilla_302233_Test extends AbstractCDOTest
     session.getPackageRegistry().putEPackage(getModel1Package());
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(order);
 
     for (int i = 0; i < 10; i++)
@@ -75,7 +75,7 @@ public class Bugzilla_302233_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(company);
     transaction.commit();
 
@@ -95,7 +95,7 @@ public class Bugzilla_302233_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(getModel1Factory().createCompany());
     resource.getContents().add(getModel1Factory().createCompany());
     resource.getContents().add(getModel1Factory().createCompany());

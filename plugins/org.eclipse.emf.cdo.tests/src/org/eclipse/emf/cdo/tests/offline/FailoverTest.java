@@ -71,7 +71,7 @@ public class FailoverTest extends AbstractSyncingTest
   {
     CDOSession session = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
@@ -114,7 +114,7 @@ public class FailoverTest extends AbstractSyncingTest
   {
     CDOSession masterSession = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = masterSession.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     TestListener listener = new TestListener();
     CDOSession backupSession = openSession();
@@ -172,7 +172,7 @@ public class FailoverTest extends AbstractSyncingTest
     waitForOnline(backupSession.getRepositoryInfo());
 
     CDOTransaction transaction = backupSession.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     resource.getContents().add(company);
 
@@ -191,7 +191,7 @@ public class FailoverTest extends AbstractSyncingTest
   {
     CDOSession session = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
@@ -231,7 +231,7 @@ public class FailoverTest extends AbstractSyncingTest
   {
     CDOSession session = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
@@ -278,7 +278,7 @@ public class FailoverTest extends AbstractSyncingTest
       session.close();
       session = openSession();
       transaction = session.openTransaction();
-      resource = transaction.getResource("/my/resource");
+      resource = transaction.getResource(getResourcePath("/my/resource"));
       company = (Company)resource.getContents().get(0);
       company.setName("Commit should NOT fail");
       transaction.commit();
@@ -294,7 +294,7 @@ public class FailoverTest extends AbstractSyncingTest
   {
     CDOSession session = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
@@ -321,7 +321,7 @@ public class FailoverTest extends AbstractSyncingTest
       session = openSession();
       transaction = session.openTransaction();
 
-      resource = transaction.getResource("/my/resource");
+      resource = transaction.getResource(getResourcePath("/my/resource"));
       company = (Company)resource.getContents().get(0);
 
       for (int i = 0; i < 10; i++)

@@ -34,7 +34,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     res.getContents().add(getModel1Factory().createCompany());
 
     transaction1.commit();
@@ -68,7 +68,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
 
     assertTransient(purchaseOrder2);
 
-    CDOResource resB = transaction1.createResource("testB");
+    CDOResource resB = transaction1.createResource(getResourcePath("testB"));
     resB.getContents().add(purchaseOrder2);
 
     assertEquals(1, CDOUtil.getCDOObject(purchaseOrder2).cdoRevision().getVersion());
@@ -81,7 +81,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     res.getContents().add(getModel1Factory().createCompany());
     transaction1.commit();
 
@@ -108,7 +108,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     {
     }
 
-    CDOResource resB = transaction1.createResource("testB");
+    CDOResource resB = transaction1.createResource(getResourcePath("testB"));
     resB.getContents().add(supplier2);
     transaction1.commit();
   }
@@ -118,7 +118,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     res.getContents().add(getModel1Factory().createCompany());
     transaction1.commit();
 
@@ -142,7 +142,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     {
     }
 
-    CDOResource resB = transaction1.createResource("testB");
+    CDOResource resB = transaction1.createResource(getResourcePath("testB"));
     resB.getContents().add(supplier2);
     transaction1.commit();
   }
@@ -152,7 +152,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     res.getContents().add(getModel1Factory().createCompany());
     transaction1.commit();
 
@@ -180,7 +180,7 @@ public class Bugzilla_251263_Test extends AbstractCDOTest
     {
     }
 
-    CDOResource resB = transaction1.createResource("testB");
+    CDOResource resB = transaction1.createResource(getResourcePath("testB"));
     resB.getContents().add(purchaseOrder2);
     transaction1.commit();
   }

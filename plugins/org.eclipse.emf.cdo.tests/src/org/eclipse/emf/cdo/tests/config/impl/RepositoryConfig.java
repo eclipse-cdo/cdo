@@ -282,8 +282,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected InternalRepository createRepository(String name)
   {
     IStore store = createStore(name);
-    Map<String, String> props = getRepositoryProperties();
-    InternalRepository repository = (InternalRepository)CDOServerUtil.createRepository(name, store, props);
+
+    Map<String, String> repoProps = getRepositoryProperties();
+    InternalRepository repository = (InternalRepository)CDOServerUtil.createRepository(name, store, repoProps);
 
     InternalCDORevisionManager revisionManager = getTestRevisionManager();
     if (revisionManager == null)

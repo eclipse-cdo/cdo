@@ -62,14 +62,14 @@ public class SessionTest extends AbstractCDOTest
     CDOSession session1 = openSession();
     session1.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction = session1.openTransaction();
-    CDOResource resource1 = transaction.createResource("ttt");
+    CDOResource resource1 = transaction.createResource(getResourcePath("ttt"));
     resource1.getContents().add(getModel1Factory().createCategory());
     transaction.commit();
 
     CDOSession session2 = openSession();
     session2.options().setPassiveUpdateEnabled(false);
     CDOView view = session2.openView();
-    CDOResource resource2 = view.getResource("ttt");
+    CDOResource resource2 = view.getResource(getResourcePath("ttt"));
     assertEquals(1, resource2.getContents().size());
 
     resource1.getContents().add(getModel1Factory().createCategory());
@@ -89,13 +89,13 @@ public class SessionTest extends AbstractCDOTest
     CDOSession session1 = openSession();
     session1.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction = session1.openTransaction();
-    CDOResource resource1 = transaction.createResource("ttt");
+    CDOResource resource1 = transaction.createResource(getResourcePath("ttt"));
     transaction.commit();
 
     CDOSession session2 = openSession();
     session2.options().setPassiveUpdateEnabled(false);
     CDOView view = session2.openView();
-    CDOResource resource2 = view.getResource("ttt");
+    CDOResource resource2 = view.getResource(getResourcePath("ttt"));
     assertEquals(0, resource2.getContents().size());
 
     resource1.getContents().add(getModel1Factory().createCategory());
@@ -120,7 +120,7 @@ public class SessionTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("ttt");
+    CDOResource resource = transaction.createResource(getResourcePath("ttt"));
     resource.getContents().add(getModel1Factory().createCompany());
     transaction.commit();
 
@@ -157,7 +157,7 @@ public class SessionTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    transaction.createResource("ttt");
+    transaction.createResource(getResourcePath("ttt"));
     long commitTime = transaction.commit().getTimeStamp();
 
     waitForUpdate(commitTime, session);
@@ -168,13 +168,13 @@ public class SessionTest extends AbstractCDOTest
   {
     CDOSession session1 = openSession();
     final CDOTransaction transaction = session1.openTransaction();
-    transaction.createResource("ttt");
+    transaction.createResource(getResourcePath("ttt"));
     long commitTime1 = transaction.commit().getTimeStamp();
 
     final CDOSession session2 = openSession();
     waitForUpdate(commitTime1, session2);
 
-    transaction.createResource("xxx");
+    transaction.createResource(getResourcePath("xxx"));
     long commitTime2 = transaction.commit().getTimeStamp();
     waitForUpdate(commitTime2, session2);
 
@@ -198,7 +198,7 @@ public class SessionTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    transaction.createResource("ttt");
+    transaction.createResource(getResourcePath("ttt"));
     long commitTime = transaction.commit().getTimeStamp();
 
     assertEquals(true, session.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
@@ -208,7 +208,7 @@ public class SessionTest extends AbstractCDOTest
   public void testWaitForUpdateRemote() throws Exception
   {
     final CDOTransaction transaction = openSession().openTransaction();
-    transaction.createResource("ttt");
+    transaction.createResource(getResourcePath("ttt"));
 
     final CountDownLatch startLatch = new CountDownLatch(1);
     final CountDownLatch stopLatch = new CountDownLatch(1);

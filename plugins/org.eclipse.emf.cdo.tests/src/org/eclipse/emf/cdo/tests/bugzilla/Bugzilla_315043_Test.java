@@ -53,7 +53,7 @@ public class Bugzilla_315043_Test extends AbstractCDOTest
     {
       // create model history
       CDOTransaction openTransaction = initialSession.openTransaction();
-      CDOResource resource = openTransaction.getOrCreateResource(RESOURCE_NAME);
+      CDOResource resource = openTransaction.getOrCreateResource(getResourcePath(RESOURCE_NAME));
 
       // creating initial commit
       Company createdCompany = getModel1Factory().createCompany();

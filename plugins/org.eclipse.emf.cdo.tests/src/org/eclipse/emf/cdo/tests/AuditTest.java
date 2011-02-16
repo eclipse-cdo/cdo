@@ -62,7 +62,7 @@ public class AuditTest extends AbstractCDOTest
   {
     CDOSession session = openSession1();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("ESC");
@@ -87,12 +87,12 @@ public class AuditTest extends AbstractCDOTest
     session = openSession2();
 
     CDOView audit = session.openView(commitTime1);
-    CDOResource auditResource = audit.getResource("/res1");
+    CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
     Company auditCompany = (Company)auditResource.getContents().get(0);
     assertEquals("ESC", auditCompany.getName());
 
     CDOView audit2 = session.openView(commitTime2);
-    CDOResource auditResource2 = audit2.getResource("/res1");
+    CDOResource auditResource2 = audit2.getResource(getResourcePath("/res1"));
     Company auditCompany2 = (Company)auditResource2.getContents().get(0);
     assertEquals("Sympedia", auditCompany2.getName());
     session.close();
@@ -102,7 +102,7 @@ public class AuditTest extends AbstractCDOTest
   {
     CDOSession session = openSession1();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("ESC");
@@ -128,21 +128,21 @@ public class AuditTest extends AbstractCDOTest
 
     CDOView audit = session.openView(commitTime1);
     {
-      CDOResource auditResource = audit.getResource("/res1");
+      CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
       Company auditCompany = (Company)auditResource.getContents().get(0);
       assertEquals("ESC", auditCompany.getName());
     }
 
     audit.setTimeStamp(commitTime2);
     {
-      CDOResource auditResource = audit.getResource("/res1");
+      CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
       Company auditCompany = (Company)auditResource.getContents().get(0);
       assertEquals("Sympedia", auditCompany.getName());
     }
 
     audit.setTimeStamp(commitTime3);
     {
-      CDOResource auditResource = audit.getResource("/res1");
+      CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
       Company auditCompany = (Company)auditResource.getContents().get(0);
       assertEquals("Eclipse", auditCompany.getName());
     }
@@ -154,7 +154,7 @@ public class AuditTest extends AbstractCDOTest
   {
     CDOSession session = openSession1();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("ESC");
@@ -179,7 +179,7 @@ public class AuditTest extends AbstractCDOTest
     session = openSession2();
 
     CDOView audit = session.openView(commitTime1);
-    CDOResource auditResource = audit.getResource("/res1");
+    CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
     Company auditCompany = (Company)auditResource.getContents().get(0);
     assertEquals("ESC", auditCompany.getName());
 
@@ -195,7 +195,7 @@ public class AuditTest extends AbstractCDOTest
   {
     CDOSession session = openSession1();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
     resource.getContents().add(getModel1Factory().createCompany());
     long commitTime1 = transaction.commit().getTimeStamp();
@@ -210,7 +210,7 @@ public class AuditTest extends AbstractCDOTest
     session = openSession2();
 
     CDOView audit = session.openView(commitTime1);
-    CDOResource auditResource = audit.getResource("/res1");
+    CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
     assertEquals(1, auditResource.getContents().size());
 
     audit.setTimeStamp(commitTime2);
@@ -225,7 +225,7 @@ public class AuditTest extends AbstractCDOTest
   {
     CDOSession session = openSession1();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
     resource.getContents().add(getModel1Factory().createCompany());
     resource.getContents().add(getModel1Factory().createCompany());
@@ -244,7 +244,7 @@ public class AuditTest extends AbstractCDOTest
     session = openSession2();
 
     CDOView audit = session.openView(commitTime1);
-    CDOResource auditResource = audit.getResource("/res1");
+    CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
     assertEquals(5, auditResource.getContents().size());
 
     audit.setTimeStamp(commitTime2);
@@ -259,7 +259,7 @@ public class AuditTest extends AbstractCDOTest
   {
     CDOSession session = openSession1();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("ESC");
@@ -278,7 +278,7 @@ public class AuditTest extends AbstractCDOTest
     session = openSession2();
 
     CDOView audit = session.openView(commitTime1);
-    CDOResource auditResource = audit.getResource("/res1");
+    CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
     assertEquals(5, auditResource.getContents().size());
 
     Company auditCompany = (Company)auditResource.getContents().get(2);
@@ -305,7 +305,7 @@ public class AuditTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
       GenListOfInt persistentList = Model5Factory.eINSTANCE.createGenListOfInt();
       resource.getContents().add(persistentList);
@@ -375,7 +375,7 @@ public class AuditTest extends AbstractCDOTest
       {
         msg("Checking timestamp " + i + " of " + timestamps.size() + ": " + timestamps.get(i));
         CDOView audit = session.openView(timestamps.get(i));
-        CDOResource res = audit.getResource("/res1");
+        CDOResource res = audit.getResource(getResourcePath("/res1"));
         GenListOfInt persistentList = (GenListOfInt)res.getContents().get(0);
 
         assertEquals(joinList(history.get(i)), joinList(persistentList.getElements()));
@@ -383,7 +383,7 @@ public class AuditTest extends AbstractCDOTest
       }
 
       CDOView view = session.openView();
-      CDOResource res = view.getResource("/res1");
+      CDOResource res = view.getResource(getResourcePath("/res1"));
       assertEquals(true, res.getContents().isEmpty());
     }
   }
@@ -403,7 +403,7 @@ public class AuditTest extends AbstractCDOTest
   {
     CDOSession session = openSession1();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);
     transaction.commit();
@@ -427,7 +427,7 @@ public class AuditTest extends AbstractCDOTest
     try
     {
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       Company company = getModel1Factory().createCompany();
       resource.getContents().add(company);
       transaction.commit();
@@ -460,7 +460,7 @@ public class AuditTest extends AbstractCDOTest
     try
     {
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       Company company = getModel1Factory().createCompany();
       resource.getContents().add(company);
       long commitTime1 = transaction.commit().getTimeStamp();
@@ -489,22 +489,22 @@ public class AuditTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       commitTime1 = transaction.commit().getTimeStamp();
 
-      resource.setPath("/renamed");
+      resource.setPath(getResourcePath("/renamed"));
       commitTime2 = transaction.commit().getTimeStamp();
       session.close();
     }
 
     CDOSession session = openSession();
     CDOView audit1 = session.openView(commitTime1);
-    assertEquals(true, audit1.hasResource("/my/resource"));
-    assertEquals(false, audit1.hasResource("/renamed"));
+    assertEquals(true, audit1.hasResource(getResourcePath("/my/resource")));
+    assertEquals(false, audit1.hasResource(getResourcePath("/renamed")));
 
     CDOView audit2 = session.openView(commitTime2);
-    assertEquals(false, audit2.hasResource("/my/resource"));
-    assertEquals(true, audit2.hasResource("/renamed"));
+    assertEquals(false, audit2.hasResource(getResourcePath("/my/resource")));
+    assertEquals(true, audit2.hasResource(getResourcePath("/renamed")));
     session.close();
   }
 
@@ -516,11 +516,11 @@ public class AuditTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       commitTime1 = transaction.commit().getTimeStamp();
 
-      URI uri = URI.createURI("cdo://repo1/renamed");
-      assertEquals(CDOURIUtil.createResourceURI(session, "/renamed"), uri);
+      URI uri = URI.createURI("cdo://repo1" + getResourcePath("/renamed"));
+      assertEquals(CDOURIUtil.createResourceURI(session, getResourcePath("/renamed")), uri);
       resource.setURI(uri);
 
       commitTime2 = transaction.commit().getTimeStamp();
@@ -529,12 +529,12 @@ public class AuditTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView audit1 = session.openView(commitTime1);
-    assertEquals(true, audit1.hasResource("/my/resource"));
-    assertEquals(false, audit1.hasResource("/renamed"));
+    assertEquals(true, audit1.hasResource(getResourcePath("/my/resource")));
+    assertEquals(false, audit1.hasResource(getResourcePath("/renamed")));
 
     CDOView audit2 = session.openView(commitTime2);
-    assertEquals(false, audit2.hasResource("/my/resource"));
-    assertEquals(true, audit2.hasResource("/renamed"));
+    assertEquals(false, audit2.hasResource(getResourcePath("/my/resource")));
+    assertEquals(true, audit2.hasResource(getResourcePath("/renamed")));
     session.close();
   }
 }

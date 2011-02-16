@@ -36,13 +36,13 @@ public class Bugzilla_329752_Test extends AbstractCDOTest
     enumList.add(VAT.VAT15);
 
     String path = "/test";
-    Resource resource = transaction.createResource(path);
+    Resource resource = transaction.createResource(getResourcePath(path));
     resource.getContents().add(enumListHolder);
 
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    CDOResource resource2 = transaction2.getResource(path);
+    CDOResource resource2 = transaction2.getResource(getResourcePath(path));
 
     EnumListHolder enumListHolder2 = (EnumListHolder)resource2.getContents().get(0);
 

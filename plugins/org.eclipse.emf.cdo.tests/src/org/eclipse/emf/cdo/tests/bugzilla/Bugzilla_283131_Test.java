@@ -36,7 +36,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     // create initial model.
-    CDOResource resource = transaction.getOrCreateResource("/test1");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
     Company company = getModel1Factory().createCompany();
     company.setName("company1");
     resource.getContents().add(company);
@@ -74,7 +74,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     // create initial model.
-    CDOResource resource = transaction.getOrCreateResource("/test1");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
     Company company = getModel1Factory().createCompany();
     company.getCustomers().add(getModel1Factory().createCustomer());
     resource.getContents().add(company);
@@ -113,7 +113,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     // create initial model.
-    CDOResource resource = transaction.getOrCreateResource("/test1");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
     Company company = getModel1Factory().createCompany();
     company.getCustomers().add(getModel1Factory().createCustomer());
     resource.getContents().add(company);
@@ -152,7 +152,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     // create initial model.
-    CDOResource resource = transaction.getOrCreateResource("/test1");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
     Company company = getModel1Factory().createCompany();
     company.setName("company1");
     company.setStreet("street1");
@@ -206,7 +206,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     // create initial model.
-    CDOResource resource = transaction.getOrCreateResource("/test1");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
     Company company = getModel1Factory().createCompany();
     company.setName("company1");
     resource.getContents().add(company);
@@ -250,7 +250,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     // create initial model.
-    CDOResource resource = transaction.getOrCreateResource("/test1");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
     Company company = getModel1Factory().createCompany();
     company.setName("company1");
     company.setCity("city1");

@@ -62,7 +62,7 @@ public class XRefTest extends AbstractCDOTest
     CDOSession session1 = openSession();
     CDOTransaction transaction = session1.openTransaction();
 
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(supplier);
     resource.getContents().add(purchaseOrder1);
     resource.getContents().add(purchaseOrder2);
@@ -102,7 +102,7 @@ public class XRefTest extends AbstractCDOTest
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
 
-    CDOResource resource = transaction1.createResource("/test1");
+    CDOResource resource = transaction1.createResource(getResourcePath("/test1"));
     resource.getContents().add(supplier);
     resource.getContents().add(purchaseOrder1);
     resource.getContents().add(purchaseOrder2);
@@ -115,7 +115,7 @@ public class XRefTest extends AbstractCDOTest
 
     CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
-    supplier = (Supplier)transaction2.getResource("/test1").getContents().remove(0);
+    supplier = (Supplier)transaction2.getResource(getResourcePath("/test1")).getContents().remove(0);
 
     List<CDOObjectReference> results = transaction2.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(supplier)));
     assertEquals(4, results.size());
@@ -177,7 +177,7 @@ public class XRefTest extends AbstractCDOTest
     // store objects
     CDOSession session1 = openSession();
     CDOTransaction transaction = session1.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().addAll(Arrays.asList(obj1_1, obj1_2, obj1_3, obj1_4, obj2_1, obj2_2, obj2_3, obj2_4));
     transaction.commit();
     transaction.close();
@@ -293,7 +293,7 @@ public class XRefTest extends AbstractCDOTest
     // store objects
     CDOSession session1 = openSession();
     CDOTransaction transaction = session1.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().addAll(Arrays.asList(obj1_1, obj1_2, obj1_3, obj1_4, obj2_1, obj2_2, obj2_3, obj2_4));
     transaction.commit();
     transaction.close();
@@ -387,7 +387,7 @@ public class XRefTest extends AbstractCDOTest
     session.getPackageRegistry().putEPackage(xref);
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     EObject a1 = addObject(resource, a);
     EObject a2 = addObject(resource, a);
@@ -465,7 +465,7 @@ public class XRefTest extends AbstractCDOTest
     session.getPackageRegistry().putEPackage(xref);
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     EObject a1 = addObject(resource, a);
     EObject a2 = addObject(resource, a);
@@ -538,7 +538,7 @@ public class XRefTest extends AbstractCDOTest
     session.getPackageRegistry().putEPackage(xref);
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     EObject a1 = addObject(resource, a);
     EObject a2 = addObject(resource, a);

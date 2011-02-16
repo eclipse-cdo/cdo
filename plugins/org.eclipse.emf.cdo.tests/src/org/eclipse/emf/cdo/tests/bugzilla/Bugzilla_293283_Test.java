@@ -38,7 +38,7 @@ public class Bugzilla_293283_Test extends AbstractCDOTest
 
     session = openSession();
     tx = session.openTransaction();
-    CDOResource r1 = tx.getOrCreateResource("/r1"); //$NON-NLS-1$
+    CDOResource r1 = tx.getOrCreateResource(getResourcePath("/r1")); //$NON-NLS-1$
     r1.getContents().clear();
 
     order1 = getModel1Factory().createPurchaseOrder();

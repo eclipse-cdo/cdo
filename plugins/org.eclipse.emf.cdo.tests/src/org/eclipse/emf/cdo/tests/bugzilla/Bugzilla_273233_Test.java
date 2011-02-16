@@ -29,7 +29,7 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     session.options().setPassiveUpdateEnabled(false);
 
     CDOTransaction trans = session.openTransaction();
-    CDOResource res = trans.createResource("/test/1");
+    CDOResource res = trans.createResource(getResourcePath("/test/1"));
 
     trans.commit();
     Company company = getModel1Factory().createCompany();
@@ -46,14 +46,14 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     session.options().setPassiveUpdateEnabled(false);
 
     CDOTransaction trans = session.openTransaction();
-    CDOResource res = trans.createResource("/test/1");
+    CDOResource res = trans.createResource(getResourcePath("/test/1"));
 
     trans.commit();
 
     CDOSession session2 = openSession();
     session2.options().setPassiveUpdateEnabled(false);
     CDOTransaction trans2 = session2.openTransaction();
-    CDOResource res2 = trans2.getResource("/test/1");
+    CDOResource res2 = trans2.getResource(getResourcePath("/test/1"));
 
     // Add company in sess/tx #1
     Company company = getModel1Factory().createCompany();
@@ -91,14 +91,14 @@ public class Bugzilla_273233_Test extends AbstractCDOTest
     session.options().setPassiveUpdateEnabled(false);
 
     CDOTransaction trans = session.openTransaction();
-    CDOResource res = trans.createResource("/test/1");
+    CDOResource res = trans.createResource(getResourcePath("/test/1"));
 
     trans.commit();
 
     CDOSession session2 = openSession();
     session2.options().setPassiveUpdateEnabled(false);
     CDOTransaction trans2 = session2.openTransaction();
-    CDOResource res2 = trans2.getResource("/test/1");
+    CDOResource res2 = trans2.getResource(getResourcePath("/test/1"));
 
     // Add company in sess/tx #1
     Company company = getModel1Factory().createCompany();

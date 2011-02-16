@@ -40,7 +40,7 @@ public class DynamicPackageTest extends AbstractCDOTest
     EPackage dynamicMapEPackge = createPackage();
     EFactory dynamicMapEFactoryInstance = dynamicMapEPackge.getEFactoryInstance();
 
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     EObject mapContainer = dynamicMapEFactoryInstance.create((EClass)dynamicMapEPackge.getEClassifier("MapContainer"));
 
     resource.getContents().add(mapContainer);

@@ -40,7 +40,7 @@ public class Bugzilla_259695_Test extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource1 = transaction.createResource("test1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("test1"));
 
     GenRefMapNonContained elementA = getModel4Factory().createGenRefMapNonContained();
     resource1.getContents().add(elementA);

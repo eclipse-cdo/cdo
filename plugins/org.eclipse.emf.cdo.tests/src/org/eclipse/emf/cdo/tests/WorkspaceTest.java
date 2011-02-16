@@ -146,7 +146,7 @@ public class WorkspaceTest extends AbstractCDOTest
   public void testCheckout() throws Exception
   {
     checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
-    assertEquals(1 + totalObjects, dumpLocalStore(null)); // Root resource + totalObjects
+    assertEquals(2 + totalObjects, dumpLocalStore(null)); // Root resource + test folder + totalObjects
   }
 
   public void testReadObjects() throws Exception
@@ -154,7 +154,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOView view = workspace.openView();
-    CDOResource resource = view.getResource(RESOURCE);
+    CDOResource resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects, dumpObjects(null, resource));
   }
 
@@ -163,7 +163,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof Product1)
@@ -183,7 +183,7 @@ public class WorkspaceTest extends AbstractCDOTest
     clearCache(transaction.getSession().getRevisionManager());
 
     CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
+    resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects, dumpObjects(null, resource));
     for (EObject object : resource.getContents())
     {
@@ -200,7 +200,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
@@ -218,7 +218,7 @@ public class WorkspaceTest extends AbstractCDOTest
     clearCache(transaction.getSession().getRevisionManager());
 
     CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
+    resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects + PRODUCTS, dumpObjects("--> ", resource));
   }
 
@@ -227,7 +227,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof SalesOrder)
@@ -253,7 +253,7 @@ public class WorkspaceTest extends AbstractCDOTest
     clearCache(transaction.getSession().getRevisionManager());
 
     CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
+    resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects - ORDER_DETAILS, dumpObjects(null, resource));
     for (EObject object : resource.getContents())
     {
@@ -272,7 +272,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof Product1)
@@ -308,7 +308,7 @@ public class WorkspaceTest extends AbstractCDOTest
     clearCache(transaction.getSession().getRevisionManager());
 
     CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
+    resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects, dumpObjects(null, resource));
     for (EObject object : resource.getContents())
     {
@@ -325,7 +325,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
@@ -357,7 +357,7 @@ public class WorkspaceTest extends AbstractCDOTest
     clearCache(transaction.getSession().getRevisionManager());
 
     CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
+    resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects + 2 * PRODUCTS, dumpObjects("--> ", resource));
   }
 
@@ -366,7 +366,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof SalesOrder)
@@ -415,7 +415,7 @@ public class WorkspaceTest extends AbstractCDOTest
     clearCache(transaction.getSession().getRevisionManager());
 
     CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
+    resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects - ORDER_DETAILS - SALES_ORDERS, dumpObjects(null, resource));
     for (EObject object : resource.getContents())
     {
@@ -442,7 +442,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof Product1)
@@ -465,7 +465,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
@@ -484,7 +484,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof SalesOrder)
@@ -511,7 +511,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof Product1)
@@ -545,7 +545,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
@@ -571,7 +571,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof SalesOrder)
@@ -614,7 +614,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof Product1)
@@ -643,7 +643,7 @@ public class WorkspaceTest extends AbstractCDOTest
     IOUtil.ERR().println("Checkout done");
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
@@ -667,7 +667,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof SalesOrder)
@@ -699,7 +699,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof Product1)
@@ -738,7 +738,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
@@ -769,7 +769,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof SalesOrder)
@@ -817,7 +817,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof Product1)
@@ -840,7 +840,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
 
     transaction = workspace.openTransaction();
-    resource = transaction.getResource(RESOURCE);
+    resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof Product1)
@@ -868,7 +868,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
@@ -887,7 +887,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
 
     transaction = workspace.openTransaction();
-    resource = transaction.getResource(RESOURCE);
+    resource = transaction.getResource(getResourcePath(RESOURCE));
     for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
@@ -911,7 +911,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof SalesOrder)
@@ -938,7 +938,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
 
     transaction = workspace.openTransaction();
-    resource = transaction.getResource(RESOURCE);
+    resource = transaction.getResource(getResourcePath(RESOURCE));
     for (Iterator<EObject> it = resource.getContents().iterator(); it.hasNext();)
     {
       EObject object = it.next();
@@ -971,7 +971,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
 
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof Product1)
@@ -997,7 +997,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, workspace.getBase().getIDs().size());
 
     CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
+    resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects, dumpObjects(null, resource));
   }
 
@@ -1006,7 +1006,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
 
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     resource.getContents().add(createProduct(9999));
     transaction.commit();
 
@@ -1024,7 +1024,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, workspace.getBase().getIDs().size());
 
     CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
+    resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects + 1, dumpObjects(null, resource));
   }
 
@@ -1033,7 +1033,7 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
 
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     for (EObject object : resource.getContents())
     {
       if (object instanceof SalesOrder)
@@ -1062,7 +1062,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, workspace.getBase().getIDs().size());
 
     CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
+    resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects - ORDER_DETAILS, dumpObjects(null, resource));
   }
 
@@ -1101,12 +1101,12 @@ public class WorkspaceTest extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
 
-    CDOResource resource = transaction.getResource(RESOURCE);
+    CDOResource resource = transaction.getResource(getResourcePath(RESOURCE));
     resource.getContents().add(createProduct(9999));
     transaction.commit();
 
     CDOTransaction local = workspace.openTransaction();
-    resource = local.getResource(RESOURCE);
+    resource = local.getResource(getResourcePath(RESOURCE));
     for (int i = 0; i < PRODUCTS; i++)
     {
       resource.getContents().add(createProduct(i));
@@ -1129,7 +1129,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, workspace.getBase().getIDs().size());
 
     CDOView view = workspace.openView();
-    resource = view.getResource(RESOURCE);
+    resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects + 1 + PRODUCTS, dumpObjects(null, resource));
   }
 
@@ -1256,7 +1256,7 @@ public class WorkspaceTest extends AbstractCDOTest
   private CDOResource createTestSet(CDOTransaction transaction) throws CommitException
   {
     disableConsole();
-    CDOResource resource = transaction.createResource(RESOURCE);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE));
     fillResource(resource);
 
     totalObjects = 1;
@@ -1344,7 +1344,7 @@ public class WorkspaceTest extends AbstractCDOTest
   private int modifyProduct(CDOTransaction transaction, int i, String prefix)
   {
     int count = 0;
-    for (EObject object : transaction.getResource(RESOURCE).getContents())
+    for (EObject object : transaction.getResource(getResourcePath(RESOURCE)).getContents())
     {
       if (object instanceof Product1)
       {
@@ -1364,7 +1364,7 @@ public class WorkspaceTest extends AbstractCDOTest
   private int countModifiedProduct(CDOView view)
   {
     int count = 0;
-    for (EObject object : view.getResource(RESOURCE).getContents())
+    for (EObject object : view.getResource(getResourcePath(RESOURCE)).getContents())
     {
       if (object instanceof Product1)
       {

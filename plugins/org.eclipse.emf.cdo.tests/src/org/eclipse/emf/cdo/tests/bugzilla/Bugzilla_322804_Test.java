@@ -27,7 +27,7 @@ public class Bugzilla_322804_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/r1");
+    CDOResource resource = transaction.createResource(getResourcePath("/r1"));
 
     msg("Fill and commit a resource");
     GenListOfIntArray object = getModel5Factory().createGenListOfIntArray();

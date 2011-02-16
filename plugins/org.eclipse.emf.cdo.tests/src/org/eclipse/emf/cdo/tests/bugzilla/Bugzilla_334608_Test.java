@@ -61,7 +61,7 @@ public class Bugzilla_334608_Test extends AbstractCDOTest
       // create model and commit it
       CDOSession openSession = openSession();
       CDOTransaction transaction = openSession.openTransaction();
-      CDOResource resource = transaction.createResource("test");
+      CDOResource resource = transaction.createResource(getResourcePath("test"));
 
       EClass classAClass = (EClass)pkg1.getEClassifier("A");
       EClass classBClass = (EClass)pkg1.getEClassifier("B");

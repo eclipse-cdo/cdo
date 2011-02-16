@@ -39,7 +39,7 @@ public class Bugzilla_329753_Test extends AbstractCDOTest
     orderDetail.setProduct(product1);
 
     String path = "/test";
-    Resource resource = transaction.createResource(path);
+    Resource resource = transaction.createResource(getResourcePath(path));
     resource.getContents().add(orderDetail);
     resource.getContents().add(product1);
 

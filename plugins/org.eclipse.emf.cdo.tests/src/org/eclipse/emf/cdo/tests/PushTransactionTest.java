@@ -70,7 +70,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Make a diff in existing element");
       Supplier supplier = (Supplier)resource.getContents().get(0);
       supplier.setName(newName);
@@ -94,7 +94,7 @@ public class PushTransactionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource(resourcePath);
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
     assertEquals(2, resource.getContents().size());
     Supplier supplier = (Supplier)resource.getContents().get(0);
     assertNotNull(supplier);
@@ -109,7 +109,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Remove an existing element");
       Supplier supplier = (Supplier)resource.getContents().get(0);
       resource.getContents().remove(supplier);
@@ -133,7 +133,7 @@ public class PushTransactionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource(resourcePath);
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
     assertEquals(1, resource.getContents().size());
   }
 
@@ -145,7 +145,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new element");
       Supplier supplier = getModel1Factory().createSupplier();
       supplier.setName("supplier" + System.currentTimeMillis());
@@ -172,7 +172,7 @@ public class PushTransactionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource(resourcePath);
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
     assertEquals(3, resource.getContents().size());
   }
 
@@ -184,7 +184,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new element");
       Category category = getModel1Factory().createCategory();
       Company company = (Company)resource.getContents().get(1);
@@ -211,7 +211,7 @@ public class PushTransactionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource(resourcePath);
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
     assertEquals(2, resource.getContents().size());
   }
 
@@ -225,7 +225,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new resource");
       CDOResource resource2 = transaction.createResource(resourcePath2);
       resource.getContents().add(resource2);
@@ -240,7 +240,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       CDOResource resource2 = (CDOResource)resource.getContents().get(2);
       assertNotNull(resource2);
       msg("Publish previous modifications");
@@ -251,7 +251,7 @@ public class PushTransactionTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOView view = session.openView();
     assertEquals(1, view.getRootResource().getContents().size());
-    CDOResource resource = view.getResource(resourcePath);
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
     CDOResource resource2 = (CDOResource)resource.getContents().get(2);
     assertNotNull(resource2);
   }
@@ -268,7 +268,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new element");
       Supplier supplier = getModel1Factory().createSupplier();
       supplier.setName(currentSupplierName);
@@ -293,7 +293,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       assertEquals(4, resource.getContents().size());
       msg("Publish previous modifications");
       pushTransaction.push();
@@ -303,7 +303,7 @@ public class PushTransactionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource(resourcePath);
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
     assertEquals(4, resource.getContents().size());
     Supplier supplier = (Supplier)resource.getContents().get(2);
     assertEquals(currentSupplierName, supplier.getName());
@@ -325,7 +325,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new elements");
       Supplier supplier2 = getModel1Factory().createSupplier();
       supplier2.setName("supplier" + System.currentTimeMillis());
@@ -345,7 +345,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       assertEquals(supplierName, ((Supplier)resource.getContents().get(1)).getName());
       msg("Publish previous modifications");
       pushTransaction.push();
@@ -355,7 +355,7 @@ public class PushTransactionTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOView view = session.openView();
     assertEquals(1, view.getRootResource().getContents().size());
-    CDOResource resource = view.getResource(resourcePath);
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
     assertEquals(supplierName, ((Supplier)resource.getContents().get(1)).getName());
   }
 
@@ -367,7 +367,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new elements");
       Supplier supplier2 = getModel1Factory().createSupplier();
       supplier2.setName("supplier" + System.currentTimeMillis());
@@ -385,7 +385,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       assertEquals(0, resource.getContents().size());
       msg("Publish previous modifications");
       pushTransaction.push();
@@ -394,7 +394,7 @@ public class PushTransactionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource(resourcePath);
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
     assertEquals(0, resource.getContents().size());
   }
 
@@ -406,7 +406,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       Supplier supplier = (Supplier)resource.getContents().get(0);
       supplier.setName(null);
       msg("Commit");
@@ -420,7 +420,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       Supplier supplier = (Supplier)resource.getContents().get(0);
       assertNull(supplier.getName());
       msg("Publish previous modifications");
@@ -430,7 +430,7 @@ public class PushTransactionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource(resourcePath);
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
     Supplier supplier = (Supplier)resource.getContents().get(0);
     assertNull(supplier.getName());
   }
@@ -443,7 +443,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Make a diff in existing element");
       Supplier supplier = (Supplier)resource.getContents().get(0);
       supplier.setName(null);
@@ -456,7 +456,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open transaction & commit changes to repo");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       resource.getContents().remove(0);
       transaction.commit();
       session.close();
@@ -485,7 +485,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
       file = pushTransaction.getFile();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Make a diff in existing element");
       Supplier supplier = (Supplier)resource.getContents().get(0);
       supplier.setName("" + System.currentTimeMillis());
@@ -498,7 +498,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open transaction & commit changes to repo");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getOrCreateResource(resourcePath);
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       Supplier supplier = (Supplier)resource.getContents().get(0);
       supplier.setName("" + System.currentTimeMillis());
       transaction.commit();
@@ -528,7 +528,7 @@ public class PushTransactionTest extends AbstractCDOTest
     msg("Create resource");
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(resourcePath);
+    CDOResource resource = transaction.createResource(getResourcePath(resourcePath));
 
     msg("Populate resource");
     Supplier supplier0 = getModel1Factory().createSupplier();

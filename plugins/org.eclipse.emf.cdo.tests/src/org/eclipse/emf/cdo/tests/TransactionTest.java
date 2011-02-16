@@ -105,7 +105,7 @@ public class TransactionTest extends AbstractCDOTest
       IOUtil.OUT().println("Opening session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      transaction.createResource("/test2");
+      transaction.createResource(getResourcePath("/test2"));
       transaction.commit();
       transaction.close();
       session.close();
@@ -116,7 +116,7 @@ public class TransactionTest extends AbstractCDOTest
       IOUtil.OUT().println("Session " + i);
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test2");
+      CDOResource resource = transaction.getResource(getResourcePath("/test2"));
       Category category = getModel1Factory().createCategory();
       resource.getContents().add(category);
       transaction.commit();
@@ -130,7 +130,7 @@ public class TransactionTest extends AbstractCDOTest
     IOUtil.OUT().println("Opening session");
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test2");
+    CDOResource resource = transaction.createResource(getResourcePath("/test2"));
     transaction.commit();
     transaction.close();
 
@@ -140,7 +140,7 @@ public class TransactionTest extends AbstractCDOTest
       IOUtil.OUT().println("Transaction " + i + "    (" + lastDuration + ")");
       lastDuration = System.currentTimeMillis();
       transaction = session.openTransaction();
-      resource = transaction.getResource("/test2");
+      resource = transaction.getResource(getResourcePath("/test2"));
 
       Category category = getModel1Factory().createCategory();
       resource.getContents().add(category);
@@ -252,7 +252,7 @@ public class TransactionTest extends AbstractCDOTest
     CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
     File file = pushTransaction.getFile();
 
-    CDOResource resource = pushTransaction.getOrCreateResource("/test1");
+    CDOResource resource = pushTransaction.getOrCreateResource(getResourcePath("/test1"));
     resource.getContents().add(company);
 
     pushTransaction.commit();
@@ -265,7 +265,7 @@ public class TransactionTest extends AbstractCDOTest
     session = openSession();
 
     CDOView view = session.openView();
-    resource = view.getResource("/test1");
+    resource = view.getResource(getResourcePath("/test1"));
     company = (Company)resource.getContents().get(0);
     assertEquals("Foundation", company.getName());
     assertEquals(1, company.getCategories().size());
@@ -292,7 +292,7 @@ public class TransactionTest extends AbstractCDOTest
     CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
     File file = pushTransaction.getFile();
 
-    CDOResource resource = pushTransaction.getOrCreateResource("/test1");
+    CDOResource resource = pushTransaction.getOrCreateResource(getResourcePath("/test1"));
     resource.getContents().add(company);
 
     pushTransaction.commit();
@@ -318,7 +318,7 @@ public class TransactionTest extends AbstractCDOTest
     session = openSession();
 
     CDOView view = session.openView();
-    resource = view.getResource("/test1");
+    resource = view.getResource(getResourcePath("/test1"));
     company = (Company)resource.getContents().get(0);
     assertEquals("Foundation", company.getName());
     assertEquals(1, company.getCategories().size());
@@ -331,7 +331,7 @@ public class TransactionTest extends AbstractCDOTest
     final CDOSession session1 = openSession();
     final CDOTransaction transaction1 = session1.openTransaction();
 
-    CDOResource resource1 = transaction1.createResource("/test");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test"));
     Category category1 = getModel1Factory().createCategory();
     resource1.getContents().add(category1);
     transaction1.commit();
@@ -367,7 +367,7 @@ public class TransactionTest extends AbstractCDOTest
       }
     });
 
-    CDOResource resource2 = transaction2.getResource("/test");
+    CDOResource resource2 = transaction2.getResource(getResourcePath("/test"));
     Category category2 = (Category)resource2.getContents().get(0);
     category2.setName("session2");
 
@@ -389,7 +389,7 @@ public class TransactionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/test");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/test"));
 
     resource1.getContents().add(category);
     transaction.commit();
@@ -414,7 +414,7 @@ public class TransactionTest extends AbstractCDOTest
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
 
-    CDOResource resource1 = transaction1.createResource("/test");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test"));
     Category category1 = getModel1Factory().createCategory();
     resource1.getContents().add(category1);
     transaction1.commit();
@@ -422,7 +422,7 @@ public class TransactionTest extends AbstractCDOTest
     CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
 
-    CDOResource resource2 = transaction2.getResource("/test");
+    CDOResource resource2 = transaction2.getResource(getResourcePath("/test"));
     Category category2 = (Category)resource2.getContents().get(0);
     category2.setName("session2");
 

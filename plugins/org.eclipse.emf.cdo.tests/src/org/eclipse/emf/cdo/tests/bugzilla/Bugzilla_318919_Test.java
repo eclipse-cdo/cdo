@@ -81,7 +81,7 @@ public class Bugzilla_318919_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       Category tree = createCategoryTree(3);
       expected = countObjects(tree);
       resource.getContents().add(tree);
@@ -94,7 +94,7 @@ public class Bugzilla_318919_Test extends AbstractCDOTest
     TestRevisionManager revisionManager = (TestRevisionManager)session.getRevisionManager();
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/res1");
+    CDOResource resource = transaction.getResource(getResourcePath("/res1"));
     assertProxy(resource);
 
     revisionManager.resetAdditionalCounter();
@@ -110,7 +110,7 @@ public class Bugzilla_318919_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       Category tree = createCategoryTree(3);
       expected = countObjects(tree);
       resource.getContents().add(tree);
@@ -123,7 +123,7 @@ public class Bugzilla_318919_Test extends AbstractCDOTest
     TestRevisionManager revisionManager = (TestRevisionManager)session.getRevisionManager();
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/res1");
+    CDOResource resource = transaction.getResource(getResourcePath("/res1"));
     resource.getContents().get(0);
     assertClean(resource, transaction);
 
@@ -140,7 +140,7 @@ public class Bugzilla_318919_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       Category tree = createCategoryTree(3);
       expected = countObjects(tree);
       resource.getContents().add(tree);
@@ -153,7 +153,7 @@ public class Bugzilla_318919_Test extends AbstractCDOTest
     TestRevisionManager revisionManager = (TestRevisionManager)session.getRevisionManager();
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/res1");
+    CDOResource resource = transaction.getResource(getResourcePath("/res1"));
     Category category = (Category)resource.getContents().get(0);
     category.getName(); // Not really needed
     --expected; // Tree root is not "additional"

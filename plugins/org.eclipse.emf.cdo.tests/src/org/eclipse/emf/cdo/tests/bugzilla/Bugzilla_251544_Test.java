@@ -23,7 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * Resources fetched using CDOViewImpl.getResource(CDOID) not added to ResourceSet
+ * Resources fetched using CDOViewImpl.getResource(getResourcePath(CDOID)) not added to ResourceSet
  * <p>
  * See bug 251544
  * 
@@ -35,7 +35,7 @@ public class Bugzilla_251544_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Order order1 = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
@@ -62,7 +62,7 @@ public class Bugzilla_251544_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Order order1 = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();

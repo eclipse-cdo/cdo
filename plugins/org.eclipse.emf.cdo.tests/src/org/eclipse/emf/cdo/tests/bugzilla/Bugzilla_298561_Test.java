@@ -41,7 +41,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.getPackageRegistry().putEPackage(getModel4Package());
 
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.createResource(RESOURCENAME);
+    CDOResource r1 = tx.createResource(getResourcePath(RESOURCENAME));
 
     // Create referencee and store it
     ContainedElementNoOpposite referencee = getModel4Factory().createContainedElementNoOpposite();
@@ -86,7 +86,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.getPackageRegistry().putEPackage(getModel4Package());
 
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.createResource(RESOURCENAME);
+    CDOResource r1 = tx.createResource(getResourcePath(RESOURCENAME));
 
     // Create referencee and referencer (but no reference yet), and store them
     ContainedElementNoOpposite referencee = getModel4Factory().createContainedElementNoOpposite();
@@ -129,7 +129,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.getPackageRegistry().putEPackage(getModel4Package());
 
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.createResource(RESOURCENAME);
+    CDOResource r1 = tx.createResource(getResourcePath(RESOURCENAME));
 
     // Create referencee and store it
     ContainedElementNoOpposite referencee = getModel4Factory().createContainedElementNoOpposite();
@@ -173,7 +173,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
     session.getPackageRegistry().putEPackage(getModel4Package());
 
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.createResource(RESOURCENAME);
+    CDOResource r1 = tx.createResource(getResourcePath(RESOURCENAME));
 
     // Create referencee and referencer (but no reference yet), and store them
     ContainedElementNoOpposite referencee = getModel4Factory().createContainedElementNoOpposite();
@@ -214,7 +214,7 @@ public class Bugzilla_298561_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.getResource(RESOURCENAME);
+    CDOResource r1 = tx.getResource(getResourcePath(RESOURCENAME));
     ContainedElementNoOpposite referencee = (ContainedElementNoOpposite)r1.getContents().get(0);
     EcoreUtil.delete(referencee);
     tx.commit();

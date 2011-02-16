@@ -54,7 +54,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
       CDOBranch mainBranch = session.getBranchManager().getMainBranch();
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       addCompaniesToList(resource.getContents(), 0, 10);
       addCompaniesToList(referenceMain, 0, 10);
@@ -84,7 +84,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
       CDOBranch mainBranch = session.getBranchManager().getMainBranch();
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       addCompaniesToList(resource.getContents(), 10, 15);
       addCompaniesToList(referenceMain, 10, 15);
@@ -113,7 +113,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
       subBranchID = subBranch.getID();
 
       CDOTransaction transaction = session.openTransaction(subBranch);
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       addCompaniesToList(resource.getContents(), 10, 15);
       addCompaniesToList(referenceSub, 10, 15);
@@ -139,7 +139,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
       CDOSession session = openSession();
       CDOBranch subBranch = session.getBranchManager().getBranch(subBranchID);
       CDOTransaction transaction = session.openTransaction(subBranch);
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       addCompaniesToList(resource.getContents(), 15, 20);
       addCompaniesToList(referenceSub, 15, 20);
@@ -166,7 +166,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
       subsubBranchID = subsubBranch.getID();
 
       CDOTransaction transaction = session.openTransaction(subsubBranch);
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       addCompaniesToList(resource.getContents(), 15, 20);
       addCompaniesToList(referenceSubSub, 15, 20);
@@ -192,7 +192,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
       CDOSession session = openSession();
       CDOBranch subBranch = session.getBranchManager().getBranch(subBranchID);
       CDOTransaction transaction = session.openTransaction(subBranch);
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       manipulator.doManipulations(resource.getContents());
       manipulator.doManipulations(referenceSub);
@@ -217,7 +217,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
       CDOSession session = openSession();
       CDOBranch subsubBranch = session.getBranchManager().getBranch(subsubBranchID);
       CDOTransaction transaction = session.openTransaction(subsubBranch);
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       manipulator.doManipulations(resource.getContents());
       manipulator.doManipulations(referenceSubSub);
@@ -241,7 +241,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
       CDOSession session = openSession();
       CDOBranch subsubBranch = session.getBranchManager().getBranch(subsubBranchID);
       CDOView view = session.openView(subsubBranch);
-      CDOResource resource = view.getResource("/test1");
+      CDOResource resource = view.getResource(getResourcePath("/test1"));
 
       assertEquals(referenceSubSub.size(), resource.getContents().size());
 
@@ -260,7 +260,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
       CDOSession session = openSession();
       CDOBranch subBranch = session.getBranchManager().getBranch(subBranchID);
       CDOView view = session.openView(subBranch);
-      CDOResource resource = view.getResource("/test1");
+      CDOResource resource = view.getResource(getResourcePath("/test1"));
 
       assertEquals(referenceSub.size(), resource.getContents().size());
 
@@ -278,7 +278,7 @@ public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
     {
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/test1");
+      CDOResource resource = view.getResource(getResourcePath("/test1"));
 
       assertEquals(referenceMain.size(), resource.getContents().size());
 

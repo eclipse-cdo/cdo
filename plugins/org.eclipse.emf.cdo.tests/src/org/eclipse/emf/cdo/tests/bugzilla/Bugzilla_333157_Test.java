@@ -24,20 +24,20 @@ public class Bugzilla_333157_Test extends AbstractCDOTest
 {
   public void testResourceFolderUpdate() throws CommitException
   {
-    createResource("/testFolder/t1");
+    createResource(getResourcePath("/testFolder/t1"));
 
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
     CDOView view = session.openView();
 
     // Testing if resource was created
-    assertNotNull(view.getResource("/testFolder/t1"));
+    assertNotNull(view.getResource(getResourcePath("/testFolder/t1")));
 
-    createResource("/testFolder/t2");
+    createResource(getResourcePath("/testFolder/t2"));
     session.refresh();
 
     // Getting created resource - "testFolder" is retrieved from local cache
-    CDOResource t2 = view.getResource("/testFolder/t2");
+    CDOResource t2 = view.getResource(getResourcePath("/testFolder/t2"));
     assertNotNull(t2);
   }
 

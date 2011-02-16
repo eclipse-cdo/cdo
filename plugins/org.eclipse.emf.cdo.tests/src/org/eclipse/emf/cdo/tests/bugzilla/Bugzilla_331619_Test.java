@@ -59,8 +59,8 @@ public class Bugzilla_331619_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction tx = session.openTransaction();
-      CDOResource refres = tx.createResource("/test/referenced");
-      CDOResource conres = tx.createResource("/test/concrete");
+      CDOResource refres = tx.createResource(getResourcePath("/test/referenced"));
+      CDOResource conres = tx.createResource(getResourcePath("/test/concrete"));
 
       EObject[] oRef = new EObject[6];
       for (int i = 0; i < 6; i++)
@@ -91,7 +91,7 @@ public class Bugzilla_331619_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource res = view.getResource("/test/referenced");
+      CDOResource res = view.getResource(getResourcePath("/test/referenced"));
 
       EObject oRef = res.getContents().get(0);
       refName = (EAttribute)oRef.eClass().getEStructuralFeature("refname");

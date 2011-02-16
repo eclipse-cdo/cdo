@@ -187,7 +187,7 @@ public class FeatureMapTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
     TestFeatureMap featureMap = getModel5Factory().createTestFeatureMap();
     FeatureMap people = featureMap.getPeople();
@@ -214,7 +214,7 @@ public class FeatureMapTest extends AbstractCDOTest
 
     session = openSession();
     transaction = session.openTransaction();
-    resource = transaction.getResource("/res1");
+    resource = transaction.getResource(getResourcePath("/res1"));
 
     featureMap = (TestFeatureMap)resource.getContents().get(featureMapIndex);
     doctors = (List<?>)featureMap.getPeople().get(feature, true);
@@ -240,6 +240,6 @@ public class FeatureMapTest extends AbstractCDOTest
 
     tx = session.openTransaction();
 
-    resource = tx.getResource(path);
+    resource = tx.getResource(getResourcePath(path));
   }
 }

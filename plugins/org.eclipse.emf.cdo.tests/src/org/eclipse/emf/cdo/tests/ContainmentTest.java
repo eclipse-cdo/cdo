@@ -87,7 +87,7 @@ public class ContainmentTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
     resource.getContents().add(company);
@@ -131,7 +131,7 @@ public class ContainmentTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
     resource.getContents().add(company);
@@ -180,7 +180,7 @@ public class ContainmentTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Adding company");
       resource.getContents().add(company);
@@ -195,7 +195,7 @@ public class ContainmentTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Loading resource");
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
     assertProxy(resource);
 
     EList<EObject> contents = resource.getContents();
@@ -251,7 +251,7 @@ public class ContainmentTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Adding company");
       resource.getContents().add(company);
@@ -269,7 +269,7 @@ public class ContainmentTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Loading resource");
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
     assertProxy(resource);
 
     EList<EObject> contents = resource.getContents();
@@ -307,7 +307,7 @@ public class ContainmentTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     resource.getContents().add(order);
     transaction.commit();
@@ -331,7 +331,7 @@ public class ContainmentTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     resource.getContents().add(order);
     transaction.commit();
@@ -356,7 +356,7 @@ public class ContainmentTest extends AbstractCDOTest
 
       CDOTransaction transaction = session.openTransaction(resourceSet);
       Resource resource1 = resourceSet.createResource(URI.createURI("test://1"));
-      Resource resource2 = transaction.createResource("test");
+      Resource resource2 = transaction.createResource(getResourcePath("test"));
 
       EPackage packageObject = createDynamicEPackage();
       EClass eClass = (EClass)packageObject.getEClassifier("SchoolBook");
@@ -393,7 +393,7 @@ public class ContainmentTest extends AbstractCDOTest
 
     Resource resource1 = resourceSet.createResource(URI.createURI("test://1"));
     resource1.load(new ByteArrayInputStream(data), null);
-    Resource resource2 = transaction.getResource("test");
+    Resource resource2 = transaction.getResource(getResourcePath("test"));
 
     EObject container = resource1.getContents().get(0);
     Order order = (Order)resource2.getContents().get(0);
@@ -413,8 +413,8 @@ public class ContainmentTest extends AbstractCDOTest
       ResourceSet resourceSet = new ResourceSetImpl();
 
       CDOTransaction transaction = session.openTransaction(resourceSet);
-      Resource resource1 = transaction.createResource("testA");
-      Resource resource2 = transaction.createResource("testB");
+      Resource resource1 = transaction.createResource(getResourcePath("testA"));
+      Resource resource2 = transaction.createResource(getResourcePath("testB"));
 
       EPackage packageObject = createDynamicEPackage();
       session.getPackageRegistry().putEPackage(packageObject);
@@ -442,8 +442,8 @@ public class ContainmentTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction(resourceSet);
-    Resource resource1 = transaction.getResource("testA");
-    Resource resource2 = transaction.getResource("testB");
+    Resource resource1 = transaction.getResource(getResourcePath("testA"));
+    Resource resource2 = transaction.getResource(getResourcePath("testB"));
 
     EObject container = resource1.getContents().get(0);
     Order order = (Order)resource2.getContents().get(0);
@@ -495,7 +495,7 @@ public class ContainmentTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/resource1");
+    CDOResource resource = transaction.createResource(getResourcePath("/resource1"));
     resource.getContents().add(taskContainer);
 
     transaction.commit();
@@ -508,7 +508,7 @@ public class ContainmentTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/resource1");
+    CDOResource resource = transaction.createResource(getResourcePath("/resource1"));
 
     PersistentContainment parent1 = createPersistentContainment();
     parent1.getChildren().add(createTransientContainer());
@@ -535,7 +535,7 @@ public class ContainmentTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/resource1");
+    CDOResource resource = transaction.createResource(getResourcePath("/resource1"));
 
     PersistentContainment parent1 = createPersistentContainment();
     parent1.getChildren().add(createTransientContainer());
@@ -547,7 +547,7 @@ public class ContainmentTest extends AbstractCDOTest
     session.close();
     session = openSession();
     transaction = session.openTransaction();
-    resource = transaction.getResource("/resource1");
+    resource = transaction.getResource(getResourcePath("/resource1"));
     parent1 = (PersistentContainment)resource.getContents().get(0);
 
     // Move child

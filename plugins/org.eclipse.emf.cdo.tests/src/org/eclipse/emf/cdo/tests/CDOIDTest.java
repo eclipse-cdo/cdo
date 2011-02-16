@@ -86,7 +86,7 @@ public class CDOIDTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");

@@ -53,9 +53,10 @@ public class StateMachineTest extends AbstractCDOTest
     // Attach resource
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     assertNew(resource, transaction);
-    assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1"), resource.getURI());
+    assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
+        resource.getURI());
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
 
     // Attach single object
@@ -301,7 +302,7 @@ public class StateMachineTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     assertNew(resource, transaction);
 
     Supplier supplier = getModel1Factory().createSupplier();
@@ -315,7 +316,7 @@ public class StateMachineTest extends AbstractCDOTest
     // Detach single object
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     assertNew(resource, transaction);
 
     Supplier supplier = getModel1Factory().createSupplier();
@@ -363,7 +364,7 @@ public class StateMachineTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     Category cat1 = getModel1Factory().createCategory();
     cat1.setName("CAT1");

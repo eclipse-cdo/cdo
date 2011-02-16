@@ -42,7 +42,7 @@ public class Bugzilla_318998_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating test data");
-    CDOResource resource = transaction.createResource("/test");
+    CDOResource resource = transaction.createResource(getResourcePath("/test"));
     RefSingleContainedNPL container = getModel4Factory().createRefSingleContainedNPL();
     RefSingleNonContainedNPL nonContainer = getModel4Factory().createRefSingleNonContainedNPL();
     ContainedElementNoOpposite contained = getModel4Factory().createContainedElementNoOpposite();
@@ -73,7 +73,7 @@ public class Bugzilla_318998_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating test data");
-    CDOResource resource = transaction.createResource("/test");
+    CDOResource resource = transaction.createResource(getResourcePath("/test"));
     RefMultiContainedNPL container = getModel4Factory().createRefMultiContainedNPL();
     RefMultiNonContainedNPL nonContainer = getModel4Factory().createRefMultiNonContainedNPL();
     ContainedElementNoOpposite contained = getModel4Factory().createContainedElementNoOpposite();

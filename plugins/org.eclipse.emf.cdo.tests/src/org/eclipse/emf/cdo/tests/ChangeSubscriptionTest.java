@@ -58,7 +58,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     final CDOTransaction transaction = session.openTransaction();
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
     resourceA.getContents().add(companyA);
 
     transaction.commit();
@@ -122,7 +122,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     final CDOTransaction transaction = session.openTransaction();
 
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
     resourceA.getContents().add(companyA);
 
     transaction.commit();
@@ -184,7 +184,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    CDOResource resourceA = transaction.createResource("/test1");
+    CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
     resourceA.getContents().add(companyA);
     transaction.commit();
 
@@ -246,7 +246,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resourceA = transaction.createResource("/test1");
+    CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
     resourceA.getContents().add(companyA);
     transaction.commit();
 
@@ -318,7 +318,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     final CDOTransaction transaction = session.openTransaction();
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     msg("Creating resource");
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
     resourceA.getContents().add(companyA);
@@ -384,7 +384,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     transaction.options().addChangeSubscriptionPolicy(customPolicy);
 
     msg("Creating resource");
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
     resourceA.getContents().add(companyA);
@@ -477,7 +477,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     msg("Creating resource");
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
     resourceA.getContents().add(companyA);
@@ -574,7 +574,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(company);
     transaction.commit();
 
@@ -582,7 +582,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     CDOView view = session2.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    CDOResource resource2 = view.getResource("/test1");
+    CDOResource resource2 = view.getResource(getResourcePath("/test1"));
     Company company2 = (Company)resource2.getContents().get(0);
 
     Object[] strongRefs = company2.getCategories().toArray(); // Keep those in memory
@@ -636,7 +636,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(company);
     transaction.commit();
 
@@ -644,7 +644,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     CDOView view = session2.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    CDOResource resource2 = view.getResource("/test1");
+    CDOResource resource2 = view.getResource(getResourcePath("/test1"));
     Company company2 = (Company)resource2.getContents().get(0);
 
     Object[] strongRefs = company2.getCategories().toArray(); // Keep those in memory
@@ -703,7 +703,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(product);
     resource.getContents().addAll(details);
     transaction.commit();
@@ -712,7 +712,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     CDOView view = session2.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    CDOResource resource2 = view.getResource("/test1");
+    CDOResource resource2 = view.getResource(getResourcePath("/test1"));
     Product1 product2 = (Product1)resource2.getContents().get(0);
 
     Object[] strongRefs = product2.getOrderDetails().toArray(); // Keep those in memory
@@ -773,7 +773,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(product);
     resource.getContents().addAll(details);
     transaction.commit();
@@ -782,7 +782,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     CDOView view = session2.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    CDOResource resource2 = view.getResource("/test1");
+    CDOResource resource2 = view.getResource(getResourcePath("/test1"));
     Product1 product2 = (Product1)resource2.getContents().get(0);
 
     Object[] strongRefs = product2.getOrderDetails().toArray(); // Keep those in memory
@@ -842,7 +842,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
     company.setName("main-v1");
 
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(company);
 
     commitAndSync(transaction, view);
@@ -884,7 +884,7 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
     company.setName("main-v1");
 
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(company);
 
     transaction.commit();

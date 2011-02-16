@@ -44,7 +44,7 @@ public class OldValueNotificationTest extends AbstractCDOTest
     order.setDate(new Date());
     order.setShippingAddress(address1);
 
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
     resourceA.getContents().add(order);
     transaction.commit();
 

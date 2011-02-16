@@ -45,7 +45,7 @@ public class DetachTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company c1 = getModel1Factory().createCompany();
     c1.setName("Test");
@@ -68,7 +68,7 @@ public class DetachTest extends AbstractCDOTest
     // ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setCommitTimeout(1000);
     // ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().setProgressInterval(100);
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company c1 = getModel1Factory().createCompany();
     c1.setName("Test");
@@ -106,7 +106,7 @@ public class DetachTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company c1 = getModel1Factory().createCompany();
     c1.setName("Test");
@@ -119,7 +119,7 @@ public class DetachTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company c1 = getModel1Factory().createCompany();
     c1.setName("Test");
@@ -197,7 +197,7 @@ public class DetachTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
       Company c1 = getModel1Factory().createCompany();
       c1.setName("Test");
@@ -208,7 +208,7 @@ public class DetachTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getOrCreateResource("/my/resource");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/my/resource"));
 
     Company c1 = (Company)resource.getContents().get(0); // remove object by index
     assertEquals("Test", c1.getName());
@@ -274,7 +274,7 @@ public class DetachTest extends AbstractCDOTest
     ResourceSet rset = transaction.getResourceSet();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     detachResource(rset, resource, false);
 
     transaction.commit();
@@ -291,7 +291,7 @@ public class DetachTest extends AbstractCDOTest
     ResourceSet rset = transaction.getResourceSet();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     transaction.commit();
     CDOID resourceID = resource.cdoID();
@@ -312,7 +312,7 @@ public class DetachTest extends AbstractCDOTest
     ResourceSet rset = transaction.getResourceSet();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     transaction.commit();
     CDOID resourceID = resource.cdoID();
@@ -331,7 +331,7 @@ public class DetachTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Deleting resource");
     resource.delete(null);
@@ -343,7 +343,7 @@ public class DetachTest extends AbstractCDOTest
     CDOSession session = openSession();
 
     CDOTransaction transaction1 = session.openTransaction();
-    String resourcePath = "/test1";
+    String resourcePath = getResourcePath("/test1");
     CDOResource res = transaction1.createResource(resourcePath);
     res.getContents().add(getModel1Factory().createCompany());
     res.getContents().add(getModel1Factory().createCompany());
@@ -384,7 +384,7 @@ public class DetachTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      transaction.createResource("/test1");
+      transaction.createResource(getResourcePath("/test1"));
       transaction.commit();
     }
 
@@ -395,7 +395,7 @@ public class DetachTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     msg("Deleting resource");
     resource.delete(null);

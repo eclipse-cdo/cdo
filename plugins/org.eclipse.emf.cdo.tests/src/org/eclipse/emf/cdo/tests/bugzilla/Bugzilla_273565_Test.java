@@ -54,7 +54,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
 
     final CDOSession session = openSession();
     final CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(orderDetail);
     transaction.commit();
 
@@ -182,7 +182,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(orderDetail);
     transaction.commit();
 
@@ -266,7 +266,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(orderDetail);
     transaction.commit();
 

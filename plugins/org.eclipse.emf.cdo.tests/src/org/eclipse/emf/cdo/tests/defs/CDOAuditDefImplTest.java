@@ -56,7 +56,7 @@ public class CDOAuditDefImplTest extends AbstractCDOTest
     cdoAuditDef.setTimeStamp(new Date());
 
     CDOView cdoAudit = (CDOView)cdoAuditDef.getInstance();
-    EObject object = cdoAudit.getResource(RESOURCE_ID).getContents().get(0);
+    EObject object = cdoAudit.getResource(getResourcePath(RESOURCE_ID)).getContents().get(0);
     assertEquals(true, object instanceof Customer && customerName.equals(customer.getName()));
   }
 

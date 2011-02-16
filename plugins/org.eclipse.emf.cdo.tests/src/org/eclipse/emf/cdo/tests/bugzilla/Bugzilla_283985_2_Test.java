@@ -52,7 +52,7 @@ public class Bugzilla_283985_2_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction tx = session.openTransaction();
-      CDOResource r1 = tx.getOrCreateResource("/r1");
+      CDOResource r1 = tx.getOrCreateResource(getResourcePath("/r1"));
       r1.getContents().clear();
       r1.getContents().add(order1);
       r1.getContents().add(order2);
@@ -83,7 +83,7 @@ public class Bugzilla_283985_2_Test extends AbstractCDOTest
       // Check if all OK if we reload in a new session
       CDOSession session = openSession();
       CDOTransaction tx = session.openTransaction();
-      CDOResource r1 = tx.getResource("/r1");
+      CDOResource r1 = tx.getResource(getResourcePath("/r1"));
       order1 = (Order)r1.getContents().get(0);
       order2 = (Order)r1.getContents().get(1);
 
@@ -105,7 +105,7 @@ public class Bugzilla_283985_2_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction tx = session.openTransaction();
-      CDOResource r1 = tx.getOrCreateResource("/r1");
+      CDOResource r1 = tx.getOrCreateResource(getResourcePath("/r1"));
       r1.getContents().clear();
       r1.getContents().add(order1);
       r1.getContents().add(order2);
@@ -141,7 +141,7 @@ public class Bugzilla_283985_2_Test extends AbstractCDOTest
       // Check if all OK if we reload in a new session
       CDOSession session = openSession();
       CDOTransaction tx = session.openTransaction();
-      CDOResource r1 = tx.getResource("/r1");
+      CDOResource r1 = tx.getResource(getResourcePath("/r1"));
       order1 = (Order)r1.getContents().get(0);
       order2 = (Order)r1.getContents().get(1);
       detail1 = (OrderDetail)CDOUtil.getEObject(tx.getObject(CDOUtil.getCDOObject(detail1).cdoID()));

@@ -58,7 +58,7 @@ public class Bugzilla_333950_Test extends AbstractCDOTest
       // create model and commit it
       CDOSession openSession = openSession();
       CDOTransaction openTransaction = openSession.openTransaction();
-      CDOResource createResource = openTransaction.createResource("test");
+      CDOResource createResource = openTransaction.createResource(getResourcePath("test"));
 
       EClass classAClass = (EClass)pkg1.getEClassifier("A");
       EClass classBClass = (EClass)pkg1.getEClassifier("B");
@@ -89,7 +89,7 @@ public class Bugzilla_333950_Test extends AbstractCDOTest
     // open committed model and validate if transient opposite reference is available
     CDOSession openSession2 = openSession();
     CDOTransaction openTransaction2 = openSession2.openTransaction();
-    CDOResource resource = openTransaction2.getResource("test");
+    CDOResource resource = openTransaction2.getResource(getResourcePath("test"));
     EObject eObjectA = resource.getContents().get(0);
     EObject eObjectB = resource.getContents().get(1);
 

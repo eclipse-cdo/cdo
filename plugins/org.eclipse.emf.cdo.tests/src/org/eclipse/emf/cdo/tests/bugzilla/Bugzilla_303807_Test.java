@@ -39,7 +39,7 @@ public class Bugzilla_303807_Test extends AbstractCDOTest
     // Commit to main branch a new resource
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
-    transaction.createResource("/test1");
+    transaction.createResource(getResourcePath("/test1"));
     transaction.commit();
 
     // Switch transaction to a new branch

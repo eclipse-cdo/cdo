@@ -52,7 +52,7 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test2");
+      CDOResource resource = transaction.createResource(getResourcePath("/test2"));
 
       msg("Creating supplier");
       for (int i = 0; i < 10; i++)

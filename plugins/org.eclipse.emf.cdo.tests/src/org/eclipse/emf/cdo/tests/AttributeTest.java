@@ -52,7 +52,7 @@ public class AttributeTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(supplier);
       assertEquals(true, supplier.isPreferred());
       transaction.commit();
@@ -63,7 +63,7 @@ public class AttributeTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/my/resource");
+      CDOResource resource = view.getResource(getResourcePath("/my/resource"));
       Supplier supplier = (Supplier)resource.getContents().get(0);
       assertEquals(true, supplier.isPreferred());
       view.close();
@@ -80,7 +80,7 @@ public class AttributeTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(product);
       assertEquals(VAT.VAT15, product.getVat());
       transaction.commit();
@@ -91,7 +91,7 @@ public class AttributeTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/my/resource");
+      CDOResource resource = view.getResource(getResourcePath("/my/resource"));
       Product1 product = (Product1)resource.getContents().get(0);
       assertEquals(VAT.VAT15, product.getVat());
       view.close();
@@ -113,7 +113,7 @@ public class AttributeTest extends AbstractCDOTest
       EObject genOfByteArray = packageBytes.getEFactoryInstance().create(eClass);
       genOfByteArray.eSet(genOfByteArray.eClass().getEStructuralFeature("bytes"), saveByteArray);
 
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(genOfByteArray);
 
       transaction.commit();
@@ -125,7 +125,7 @@ public class AttributeTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/my/resource");
+      CDOResource resource = view.getResource(getResourcePath("/my/resource"));
       EObject genOfByteArray = resource.getContents().get(0);
       byte storeByteArray[] = (byte[])genOfByteArray.eGet(genOfByteArray.eClass().getEStructuralFeature("bytes"));
       assertEquals(storeByteArray.length, saveByteArray.length);
@@ -153,7 +153,7 @@ public class AttributeTest extends AbstractCDOTest
       EObject genOfByteArray = packageBytes.getEFactoryInstance().create(eClass);
       genOfByteArray.eSet(genOfByteArray.eClass().getEStructuralFeature("bytes"), saveByteArray);
 
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(genOfByteArray);
 
       transaction.commit();
@@ -165,7 +165,7 @@ public class AttributeTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/my/resource");
+      CDOResource resource = view.getResource(getResourcePath("/my/resource"));
       EObject genOfByteArray = resource.getContents().get(0);
       byte storeByteArray[] = (byte[])genOfByteArray.eGet(genOfByteArray.eClass().getEStructuralFeature("bytes"));
       assertEquals(0, storeByteArray.length);
@@ -188,7 +188,7 @@ public class AttributeTest extends AbstractCDOTest
       EObject genOfByteArray = packageBytes.getEFactoryInstance().create(eClass);
       genOfByteArray.eSet(genOfByteArray.eClass().getEStructuralFeature("bytes"), saveByteArray);
 
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(genOfByteArray);
 
       transaction.commit();
@@ -200,7 +200,7 @@ public class AttributeTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/my/resource");
+      CDOResource resource = view.getResource(getResourcePath("/my/resource"));
       EObject genOfByteArray = resource.getContents().get(0);
       byte storeByteArray[] = (byte[])genOfByteArray.eGet(genOfByteArray.eClass().getEStructuralFeature("bytes"));
       assertEquals(true, storeByteArray == null || storeByteArray.length == 0);
@@ -228,7 +228,7 @@ public class AttributeTest extends AbstractCDOTest
       gen.eSet(bigDecimalFeature, bigDecimal);
       gen.eSet(bigIntegerFeature, bigInteger);
 
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(gen);
 
       CDORevisionData data = CDOUtil.getCDOObject(gen).cdoRevision().data();
@@ -244,7 +244,7 @@ public class AttributeTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/my/resource");
+      CDOResource resource = view.getResource(getResourcePath("/my/resource"));
       EObject gen = resource.getContents().get(0);
       BigDecimal bigDecimalStore = (BigDecimal)gen.eGet(gen.eClass().getEStructuralFeature("bigDecimal"));
       BigInteger bigIntegerStore = (BigInteger)gen.eGet(gen.eClass().getEStructuralFeature("bigInteger"));
@@ -275,7 +275,7 @@ public class AttributeTest extends AbstractCDOTest
       gen.eSet(bigDecimalFeature, bigDecimal);
       gen.eSet(bigIntegerFeature, bigInteger);
 
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(gen);
 
       transaction.commit();
@@ -287,7 +287,7 @@ public class AttributeTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/my/resource");
+      CDOResource resource = view.getResource(getResourcePath("/my/resource"));
       EObject gen = resource.getContents().get(0);
       BigDecimal bigDecimalStore = (BigDecimal)gen.eGet(gen.eClass().getEStructuralFeature("bigDecimal"));
       BigInteger bigIntegerStore = (BigInteger)gen.eGet(gen.eClass().getEStructuralFeature("bigInteger"));
@@ -378,7 +378,7 @@ public class AttributeTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
     resource.getContents().add(polygon);
 
     points = polygon.getPoints();
@@ -422,7 +422,7 @@ public class AttributeTest extends AbstractCDOTest
     session.close();
     session = openSession();
     transaction = session.openTransaction();
-    resource = transaction.getResource("/my/resource");
+    resource = transaction.getResource(getResourcePath("/my/resource"));
     polygon = (Polygon)resource.getContents().get(0);
 
     points = polygon.getPoints();
@@ -468,7 +468,7 @@ public class AttributeTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
     resource.getContents().add(polygon);
 
     points = polygon.getPoints();
@@ -502,7 +502,7 @@ public class AttributeTest extends AbstractCDOTest
     session.close();
     session = openSession();
     transaction = session.openTransaction();
-    resource = transaction.getResource("/my/resource");
+    resource = transaction.getResource(getResourcePath("/my/resource"));
     polygon = (Polygon)resource.getContents().get(0);
 
     points = polygon.getPoints();
@@ -551,7 +551,7 @@ public class AttributeTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
     resource.getContents().add(polygon);
 
     points = polygon.getPoints();
@@ -601,7 +601,7 @@ public class AttributeTest extends AbstractCDOTest
     session.close();
     session = openSession();
     transaction = session.openTransaction();
-    resource = transaction.getResource("/my/resource");
+    resource = transaction.getResource(getResourcePath("/my/resource"));
     polygon = (Polygon)resource.getContents().get(0);
 
     points = polygon.getPoints();
@@ -655,7 +655,7 @@ public class AttributeTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
     resource.getContents().add(polygon);
 
     points = polygon.getPoints();
@@ -689,7 +689,7 @@ public class AttributeTest extends AbstractCDOTest
     session.close();
     session = openSession();
     transaction = session.openTransaction();
-    resource = transaction.getResource("/my/resource");
+    resource = transaction.getResource(getResourcePath("/my/resource"));
     polygon = (PolygonWithDuplicates)resource.getContents().get(0);
 
     points = polygon.getPoints();
@@ -735,7 +735,7 @@ public class AttributeTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
     resource.getContents().add(polygon);
 
     points = polygon.getPoints();
@@ -769,7 +769,7 @@ public class AttributeTest extends AbstractCDOTest
     session.close();
     session = openSession();
     transaction = session.openTransaction();
-    resource = transaction.getResource("/my/resource");
+    resource = transaction.getResource(getResourcePath("/my/resource"));
     polygon = (PolygonWithDuplicates)resource.getContents().get(0);
 
     points = polygon.getPoints();
@@ -796,14 +796,14 @@ public class AttributeTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
     resource.getContents().add(polygon);
     transaction.commit();
     session.close();
 
     session = openSession();
     transaction = session.openTransaction();
-    resource = transaction.getResource("/my/resource");
+    resource = transaction.getResource(getResourcePath("/my/resource"));
     EList<EObject> contents = resource.getContents();
 
     // java.lang.ClassCastException: org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl

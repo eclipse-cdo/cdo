@@ -40,7 +40,7 @@ public class Bugzilla_299190_Test extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    String path1 = "/resources/folder1/" + uniqueCounter;
+    String path1 = getResourcePath("/resources/folder1/" + uniqueCounter);
     ++uniqueCounter;
 
     init(path1);

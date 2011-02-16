@@ -34,7 +34,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     CDOTransaction transaction1 = session.openTransaction();
 
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     res.getContents().add(getModel1Factory().createCompany());
     res.getContents().add(getModel1Factory().createCompany());
     res.getContents().add(getModel1Factory().createCompany());
@@ -51,7 +51,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     CDOTransaction transaction1 = session.openTransaction();
 
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     res.getContents().add(getModel1Factory().createCompany());
     res.getContents().add(getModel1Factory().createCompany());
     res.getContents().add(getModel1Factory().createCompany());
@@ -87,7 +87,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     CDOTransaction transaction1 = session.openTransaction();
 
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     res.getContents().add(getModel1Factory().createCompany());
     res.getContents().add(getModel1Factory().createCompany());
     res.getContents().add(getModel1Factory().createCompany());
@@ -102,7 +102,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     CDOTransaction transaction1 = session.openTransaction();
 
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     res.getContents().add(getModel1Factory().createCompany());
     res.getContents().add(getModel1Factory().createCompany());
     res.getContents().add(getModel1Factory().createCompany());

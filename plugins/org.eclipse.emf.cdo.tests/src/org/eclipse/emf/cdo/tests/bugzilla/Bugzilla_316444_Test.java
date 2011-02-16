@@ -170,7 +170,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       idInitSession = session.getSessionID();
       CDOTransaction transaction = session.openTransaction();
 
-      Resource resource = transaction.createResource(RESOURCE_PATH);
+      Resource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
 
       // -------------- create graph begin ------------------------
       NodeB root = createSimpleNode("root");
@@ -211,7 +211,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
       CDOTransaction transaction = session.openTransaction();
-      Resource resource = transaction.getResource(RESOURCE_PATH, true);
+      Resource resource = transaction.getResource(getResourcePath(RESOURCE_PATH), true);
 
       NodeB root = (NodeB)resource.getContents().get(0);
       assertEquals("root", root.getName());
@@ -274,7 +274,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       idInitSession = session.getSessionID();
       CDOTransaction transaction = session.openTransaction();
 
-      Resource resource = transaction.createResource(resourcePath);
+      Resource resource = transaction.createResource(getResourcePath(resourcePath));
 
       // -------------- create graph begin ------------------------
       NodeB root = createSimpleNode("root");
@@ -414,7 +414,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       {
         msg("Started Thread A " + session);
         CDOTransaction transaction = session.openTransaction();
-        Resource resource = transaction.getResource(resourcePath, true);
+        Resource resource = transaction.getResource(getResourcePath(resourcePath), true);
 
         NodeB root = (NodeB)resource.getContents().get(0);
         assertEquals("root", root.getName());
@@ -471,7 +471,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
         msg("Started Thread B " + session);
         CDOTransaction transaction = session.openTransaction();
 
-        Resource resource = transaction.getResource(resourcePath, true);
+        Resource resource = transaction.getResource(getResourcePath(resourcePath), true);
 
         NodeB root = (NodeB)resource.getContents().get(0);
         assertEquals("root", root.getName());
@@ -541,7 +541,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       {
         msg("Started Thread X" + session);
         CDOTransaction transaction = session.openTransaction();
-        Resource resource = transaction.getResource(resourcePath, true);
+        Resource resource = transaction.getResource(getResourcePath(resourcePath), true);
 
         NodeB root = (NodeB)resource.getContents().get(0);
         assertEquals("root", root.getName());

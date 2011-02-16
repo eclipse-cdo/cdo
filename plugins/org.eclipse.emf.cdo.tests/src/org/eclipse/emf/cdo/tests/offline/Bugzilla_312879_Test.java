@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Martin Flügge - initial API and implementation
+ *    Martin Flï¿½gge - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.offline;
 
@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 
 /**
- * @author Martin Flügge
+ * @author Martin Flï¿½gge
  */
 public class Bugzilla_312879_Test extends AbstractSyncingTest
 {
@@ -80,7 +80,7 @@ public class Bugzilla_312879_Test extends AbstractSyncingTest
 
     CDOSession session = openSession(master.getName());
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
@@ -122,7 +122,7 @@ public class Bugzilla_312879_Test extends AbstractSyncingTest
     assertEquals(CDOCommonRepository.Type.MASTER, session.getRepositoryInfo().getType());
     transaction = session.openTransaction();
 
-    resource = transaction.getResource("/my/resource");
+    resource = transaction.getResource(getResourcePath("/my/resource"));
     company = (Company)resource.getContents().get(0);
 
     checkData(company, categoryCount, "cat", "Test");
@@ -165,7 +165,7 @@ public class Bugzilla_312879_Test extends AbstractSyncingTest
     assertEquals(CDOCommonRepository.Type.MASTER, session.getRepositoryInfo().getType());
     transaction = session.openTransaction();
 
-    resource = transaction.getResource("/my/resource");
+    resource = transaction.getResource(getResourcePath("/my/resource"));
     company = (Company)resource.getContents().get(0);
 
     checkData(company, categoryCount, "CHANGED", "AfterFailover-" + (i - 1));

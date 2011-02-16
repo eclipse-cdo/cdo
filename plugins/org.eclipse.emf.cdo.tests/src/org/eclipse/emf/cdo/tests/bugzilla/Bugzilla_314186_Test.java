@@ -34,7 +34,7 @@ public class Bugzilla_314186_Test extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
 
     CDOTransaction transaction = session.openTransaction(resourceSet);
-    CDOResource resource = transaction.createResource("/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/resource"));
 
     resource.eAdapters().add(new AdapterImpl()
     {

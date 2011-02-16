@@ -37,7 +37,7 @@ public class Bugzilla_318876_Test extends AbstractCDOTest
     final CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.createResource("/r1"); //$NON-NLS-1$
+    CDOResource r1 = tx.createResource(getResourcePath("/r1")); //$NON-NLS-1$
 
     PurchaseOrder po1 = getModel1Factory().createPurchaseOrder();
     po1.setDate(new Date());
@@ -70,7 +70,7 @@ public class Bugzilla_318876_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.getResource("/r1"); //$NON-NLS-1$
+    CDOResource r1 = tx.getResource(getResourcePath("/r1")); //$NON-NLS-1$
 
     // Detach the po
     PurchaseOrder po = (PurchaseOrder)r1.getContents().get(0);

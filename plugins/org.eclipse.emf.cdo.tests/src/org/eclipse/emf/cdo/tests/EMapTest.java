@@ -45,7 +45,7 @@ public class EMapTest extends AbstractCDOTest
     msg("Opening transaction for querying");
     CDOTransaction transaction = session.openTransaction();
 
-    Resource res = transaction.getResource("/test1");
+    Resource res = transaction.getResource(getResourcePath("/test1"));
     for (EObject eObject : res.getContents())
     {
       if (eObject instanceof Customer)
@@ -73,7 +73,7 @@ public class EMapTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     fillResource(resource);
 

@@ -44,7 +44,7 @@ public class Bugzilla_296561_Test extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
 
       transaction.commit();
@@ -55,7 +55,7 @@ public class Bugzilla_296561_Test extends AbstractCDOTest
       CDOSession session = openSession();
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/test1");
+      CDOResource res = transaction.getResource(getResourcePath("/test1"));
       Customer customer = (Customer)res.getContents().get(0);
       customer.setName("modified");
 
@@ -96,7 +96,7 @@ public class Bugzilla_296561_Test extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
 
       transaction.commit();
@@ -107,7 +107,7 @@ public class Bugzilla_296561_Test extends AbstractCDOTest
       CDOSession session = openSession();
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/test1");
+      CDOResource res = transaction.getResource(getResourcePath("/test1"));
       Customer customer = (Customer)res.getContents().get(0);
       customer.setName("modified");
 
@@ -125,7 +125,7 @@ public class Bugzilla_296561_Test extends AbstractCDOTest
       CDOSession session = openSession();
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/test1");
+      CDOResource res = transaction.getResource(getResourcePath("/test1"));
       Customer customer = (Customer)res.getContents().get(0);
       customer.setName("modified");
 

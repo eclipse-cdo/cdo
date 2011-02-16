@@ -53,7 +53,7 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       Company company = getModel1Factory().createCompany();
       resource.getContents().add(company);
       transaction.commit();
@@ -74,7 +74,7 @@ public class Bugzilla_265114_Test extends AbstractCDOTest
     {
       TransactionEditingDomainSimulatedAdapter adapter = new TransactionEditingDomainSimulatedAdapter();
       rset.eAdapters().add(adapter);
-      URI uriResource1 = CDOURIUtil.createResourceURI(session, "res1");
+      URI uriResource1 = CDOURIUtil.createResourceURI(session, getResourcePath("res1"));
       Resource resource1 = rset.getResource(uriResource1, true);
 
       CDOObject cdoResource = CDOUtil.getCDOObject((CDOResource)resource1);

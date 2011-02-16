@@ -31,7 +31,7 @@ public class EnumTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(product);
       transaction.commit();
       session.close();
@@ -40,7 +40,7 @@ public class EnumTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/my/resource");
+      CDOResource resource = transaction.getResource(getResourcePath("/my/resource"));
       Product1 product = (Product1)resource.getContents().get(0);
       assertEquals(VAT.VAT7, product.getVat());
 
@@ -52,7 +52,7 @@ public class EnumTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/my/resource");
+      CDOResource resource = transaction.getResource(getResourcePath("/my/resource"));
       Product1 product = (Product1)resource.getContents().get(0);
       assertEquals(VAT.VAT15, product.getVat());
       session.close();
@@ -68,7 +68,7 @@ public class EnumTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(product);
       transaction.commit();
       session.close();
@@ -79,7 +79,7 @@ public class EnumTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/my/resource");
+      CDOResource resource = transaction.getResource(getResourcePath("/my/resource"));
       Product1 product = (Product1)resource.getContents().get(0);
       assertEquals(VAT.VAT7, product.getVat());
 
@@ -93,7 +93,7 @@ public class EnumTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/my/resource");
+      CDOResource resource = transaction.getResource(getResourcePath("/my/resource"));
       Product1 product = (Product1)resource.getContents().get(0);
       assertEquals(VAT.VAT15, product.getVat());
       session.close();
@@ -106,7 +106,7 @@ public class EnumTest extends AbstractCDOTest
       Category category = getModel1Factory().createCategory();
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(category);
 
       Product1 product = getModel1Factory().createProduct1();
@@ -121,7 +121,7 @@ public class EnumTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/my/resource");
+      CDOResource resource = transaction.getResource(getResourcePath("/my/resource"));
       Category category = (Category)resource.getContents().get(0);
       Product1 product = category.getProducts().get(0);
       assertEquals(VAT.VAT7, product.getVat());
@@ -134,7 +134,7 @@ public class EnumTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/my/resource");
+      CDOResource resource = transaction.getResource(getResourcePath("/my/resource"));
       Category category = (Category)resource.getContents().get(0);
       Product1 product = category.getProducts().get(0);
       assertEquals(VAT.VAT15, product.getVat());
@@ -148,7 +148,7 @@ public class EnumTest extends AbstractCDOTest
       Category category = getModel1Factory().createCategory();
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/my/resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
       resource.getContents().add(category);
 
       Product1 product = getModel1Factory().createProduct1();
@@ -165,7 +165,7 @@ public class EnumTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/my/resource");
+      CDOResource resource = transaction.getResource(getResourcePath("/my/resource"));
       Category category = (Category)resource.getContents().get(0);
       Product1 product = category.getProducts().get(0);
       assertEquals(VAT.VAT7, product.getVat());
@@ -180,7 +180,7 @@ public class EnumTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/my/resource");
+      CDOResource resource = transaction.getResource(getResourcePath("/my/resource"));
       Category category = (Category)resource.getContents().get(0);
       Product1 product = category.getProducts().get(0);
       assertEquals(VAT.VAT15, product.getVat());

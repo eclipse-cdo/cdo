@@ -96,7 +96,7 @@ public class StickyViewsTest extends AbstractCDOTest
     // Persist it
     CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
-    CDOResource res = transaction1.createResource("/res1");
+    CDOResource res = transaction1.createResource(getResourcePath("/res1"));
     res.getContents().add(company1);
     transaction1.commit();
 
@@ -106,7 +106,7 @@ public class StickyViewsTest extends AbstractCDOTest
     CDOSession session2 = openSession();
     session2.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction2 = session2.openTransaction();
-    CDOResource res2 = transaction2.getResource("/res1");
+    CDOResource res2 = transaction2.getResource(getResourcePath("/res1"));
     Company company2 = (Company)res2.getContents().get(0);
 
     // In the 1st session, manipulate the categories
@@ -184,7 +184,7 @@ public class StickyViewsTest extends AbstractCDOTest
     {
       CDOSession sess = openSession();
       CDOTransaction tx = sess.openTransaction();
-      CDOResource res = tx.createResource("/res1");
+      CDOResource res = tx.createResource(getResourcePath("/res1"));
       Company company1 = getModel1Factory().createCompany();
       company1.setName("aaa");
       res.getContents().add(company1);
@@ -197,7 +197,7 @@ public class StickyViewsTest extends AbstractCDOTest
       CDOSession sess = openSession();
       CDOTransaction tx = sess.openTransaction();
       sess.options().setPassiveUpdateEnabled(false);
-      CDOResource res = tx.getResource("/res1");
+      CDOResource res = tx.getResource(getResourcePath("/res1"));
 
       // Save with a new name
       Company company1 = (Company)res.getContents().get(0);
@@ -235,7 +235,7 @@ public class StickyViewsTest extends AbstractCDOTest
     {
       CDOSession sess = openSession();
       CDOTransaction tx = sess.openTransaction();
-      CDOResource res = tx.createResource("/res1");
+      CDOResource res = tx.createResource(getResourcePath("/res1"));
       Company company1 = getModel1Factory().createCompany();
       company1.setName("aaa");
       res.getContents().add(company1);
@@ -248,7 +248,7 @@ public class StickyViewsTest extends AbstractCDOTest
       CDOSession sess = openSession();
       CDOTransaction tx = sess.openTransaction();
       sess.options().setPassiveUpdateEnabled(false);
-      CDOResource res = tx.getResource("/res1");
+      CDOResource res = tx.getResource(getResourcePath("/res1"));
 
       // Remove it
       Company company1 = (Company)res.getContents().get(0);
@@ -287,7 +287,7 @@ public class StickyViewsTest extends AbstractCDOTest
     CDOTransaction tx = sess.openTransaction();
     sess.options().setPassiveUpdateEnabled(false);
 
-    CDOResource res = tx.createResource("/res1");
+    CDOResource res = tx.createResource(getResourcePath("/res1"));
     Company company1 = getModel1Factory().createCompany();
     company1.setName("aaa");
     res.getContents().add(company1);
@@ -319,7 +319,7 @@ public class StickyViewsTest extends AbstractCDOTest
     CDOTransaction tx = sess.openTransaction();
     sess.options().setPassiveUpdateEnabled(false);
 
-    CDOResource res = tx.createResource("/res1");
+    CDOResource res = tx.createResource(getResourcePath("/res1"));
     Company company1 = getModel1Factory().createCompany();
     company1.setName("aaa");
     res.getContents().add(company1);
@@ -347,7 +347,7 @@ public class StickyViewsTest extends AbstractCDOTest
   {
     CDOSession sess = openSession();
     CDOTransaction tx = sess.openTransaction();
-    CDOResource res = tx.getResource("/res1");
+    CDOResource res = tx.getResource(getResourcePath("/res1"));
     Company company1 = (Company)res.getContents().get(0);
     company1.setName("ccc");
     tx.commit();

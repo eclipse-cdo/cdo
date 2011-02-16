@@ -60,7 +60,7 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
 
     session = openSession();
     transaction = session.openTransaction();
-    resource = transaction.getOrCreateResource("/r1");
+    resource = transaction.getOrCreateResource(getResourcePath("/r1"));
     resource.getContents().clear();
     resource.getContents().add(order1);
     resource.getContents().add(order2);

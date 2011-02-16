@@ -139,7 +139,7 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOView view = workspace.openView();
-    CDOResource resource = view.getResource(RESOURCE);
+    CDOResource resource = view.getResource(getResourcePath(RESOURCE));
     assertEquals(totalObjects, dumpObjects(null, resource));
   }
 
@@ -188,7 +188,7 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
   private CDOResource createTestSet(CDOTransaction transaction) throws CommitException
   {
     disableConsole();
-    CDOResource resource = transaction.createResource(RESOURCE);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE));
     fillResource(resource);
 
     totalObjects = 1;

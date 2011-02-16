@@ -54,7 +54,7 @@ public class Bugzilla_328790_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
 
-    CDOResource resource = tx.createResource("/myUri");
+    CDOResource resource = tx.createResource(getResourcePath("/myUri"));
     EObject object = getModel1Factory().createAddress();
     resource.getContents().add(object);
 
@@ -73,7 +73,7 @@ public class Bugzilla_328790_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
 
-    CDOResource resource = tx.createResource("/myUri");
+    CDOResource resource = tx.createResource(getResourcePath("/myUri"));
     resource.getContents().clear();
 
     assertEquals(true, resource.isLoaded());

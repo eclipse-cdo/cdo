@@ -72,7 +72,7 @@ public class Bugzilla_335675_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("test");
+      CDOResource resource = transaction.createResource(getResourcePath("test"));
 
       classA = (EClass)pkg.getEClassifier("A");
       EObject instanceA = EcoreUtil.create(classA);
@@ -91,7 +91,7 @@ public class Bugzilla_335675_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("test");
+      CDOResource resource = transaction.getResource(getResourcePath("test"));
       CDOObject cdoObject = CDOUtil.getCDOObject(resource.getContents().get(0));
       classA = cdoObject.eClass();
       attr1 = (EAttribute)classA.getEStructuralFeature("attr1");
@@ -126,7 +126,7 @@ public class Bugzilla_335675_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("test");
+      CDOResource resource = transaction.createResource(getResourcePath("test"));
 
       Product1 product = Model1Factory.eINSTANCE.createProduct1();
       product.setName("name");
@@ -148,7 +148,7 @@ public class Bugzilla_335675_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("test");
+      CDOResource resource = transaction.getResource(getResourcePath("test"));
       CDOObject cdoObject = CDOUtil.getCDOObject(resource.getContents().get(0));
 
       BaseCDORevision rev = (BaseCDORevision)cdoObject.cdoRevision();

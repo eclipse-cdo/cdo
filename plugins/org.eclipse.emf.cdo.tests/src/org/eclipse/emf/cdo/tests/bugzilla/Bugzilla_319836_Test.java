@@ -49,7 +49,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
       // Setup an initial session and a transaction.
       CDOSession session = openSession();
       CDOTransaction tr1 = session.openTransaction();
-      CDOResource resource = tr1.createResource("/test1");
+      CDOResource resource = tr1.createResource(getResourcePath("/test1"));
 
       NodeA n1 = getModel3Factory().createNodeA();
       NodeA n2 = getModel3Factory().createNodeA();
@@ -115,7 +115,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
       // Setup a new session. The bug only does not seem to occur if we use the same session.
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/test1");
+      CDOResource resource = view.getResource(getResourcePath("/test1"));
 
       NodeA n1 = (NodeA)resource.getContents().get(0);
 
@@ -135,7 +135,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
       // Setup an initial session and a transaction.
       CDOSession session = openSession();
       CDOTransaction tr1 = session.openTransaction();
-      CDOResource resource = tr1.createResource("/test1");
+      CDOResource resource = tr1.createResource(getResourcePath("/test1"));
 
       NodeA n1 = getModel3Factory().createNodeA();
       NodeA n2 = getModel3Factory().createNodeA();
@@ -202,7 +202,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
       // Setup a new session. The bug only does not seem to occur if we use the same session.
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/test1");
+      CDOResource resource = view.getResource(getResourcePath("/test1"));
 
       NodeA n1 = (NodeA)resource.getContents().get(0);
 
@@ -224,7 +224,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
       // Setup an initial session and a transaction.
       CDOSession session = openSession();
       CDOTransaction tr1 = session.openTransaction();
-      CDOResource resource = tr1.createResource("/test1");
+      CDOResource resource = tr1.createResource(getResourcePath("/test1"));
 
       NodeA n1 = getModel3Factory().createNodeA();
       NodeA n2 = getModel3Factory().createNodeA();
@@ -294,7 +294,7 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
       // Setup a new session. The bug only does not seem to occur if we use the same session.
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/test1");
+      CDOResource resource = view.getResource(getResourcePath("/test1"));
 
       NodeA n1 = (NodeA)resource.getContents().get(0);
 

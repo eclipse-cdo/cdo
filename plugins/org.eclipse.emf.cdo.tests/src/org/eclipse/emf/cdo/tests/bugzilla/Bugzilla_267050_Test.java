@@ -54,7 +54,7 @@ public class Bugzilla_267050_Test extends AbstractCDOTest
 
     session.getPackageRegistry().putEPackage(getModel1Package());
 
-    CDOResource res = transaction.createResource("/res");
+    CDOResource res = transaction.createResource(getResourcePath("/res"));
     Company specialPurchaseOrder = getModel1Factory().createCompany();
     res.getContents().add(specialPurchaseOrder);
     transaction.commit();

@@ -49,7 +49,7 @@ public class LobTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("res");
+      CDOResource resource = transaction.createResource(getResourcePath("res"));
       resource.getContents().add(image);
 
       transaction.commit();
@@ -67,7 +67,7 @@ public class LobTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource("res");
+    CDOResource resource = view.getResource(getResourcePath("res"));
 
     Image image = (Image)resource.getContents().get(0);
     assertEquals(320, image.getWidth());
@@ -101,7 +101,7 @@ public class LobTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("res");
+      CDOResource resource = transaction.createResource(getResourcePath("res"));
       resource.getContents().add(file);
 
       transaction.commit();
@@ -119,7 +119,7 @@ public class LobTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource("res");
+    CDOResource resource = view.getResource(getResourcePath("res"));
 
     File file = (File)resource.getContents().get(0);
     assertEquals("copyright.txt", file.getName());

@@ -29,7 +29,7 @@ public class Bugzilla_329869_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
-      Resource resource = transaction.createResource("/test");
+      Resource resource = transaction.createResource(getResourcePath("/test"));
 
       RefMultiNonContainedUnsettable parent = getModel4Factory().createRefMultiNonContainedUnsettable();
       MultiNonContainedUnsettableElement child = getModel4Factory().createMultiNonContainedUnsettableElement();
@@ -45,7 +45,7 @@ public class Bugzilla_329869_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction2 = session.openTransaction();
-      Resource resource2 = transaction2.getResource("/test");
+      Resource resource2 = transaction2.getResource(getResourcePath("/test"));
 
       RefMultiNonContainedUnsettable parent = (RefMultiNonContainedUnsettable)resource2.getContents().get(0);
       MultiNonContainedUnsettableElement element = getModel4Factory().createMultiNonContainedUnsettableElement();

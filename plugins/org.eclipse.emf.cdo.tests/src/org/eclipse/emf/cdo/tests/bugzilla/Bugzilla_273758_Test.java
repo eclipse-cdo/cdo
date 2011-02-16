@@ -54,7 +54,7 @@ public class Bugzilla_273758_Test extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       resource.getContents().add(product);
       resource.getContents().add(detail1);
@@ -67,7 +67,7 @@ public class Bugzilla_273758_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Product1 product2 = (Product1)resource.getContents().get(0);
       // Check in memory Product1 EObject reference integrity

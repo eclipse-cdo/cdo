@@ -102,7 +102,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       resource.getContents().add(company);
 
@@ -138,7 +138,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -166,7 +166,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     // setup connection1.
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     // add initial model.
     Company company = getModel1Factory().createCompany();
@@ -211,7 +211,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     // setup connection1.
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/test1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/test1"));
 
     // add initial model.
     Company company = getModel1Factory().createCompany();
@@ -254,7 +254,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     // setup connection1.
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     // add initial model.
     Company company = getModel1Factory().createCompany();
@@ -298,7 +298,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     res.getContents().add(getModel1Factory().createCompany());
     transaction1.commit();
 
@@ -329,7 +329,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -368,7 +368,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -396,7 +396,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -432,7 +432,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -460,7 +460,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -495,7 +495,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -523,7 +523,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -555,7 +555,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -583,7 +583,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -614,7 +614,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -642,7 +642,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -675,7 +675,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -703,7 +703,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -735,7 +735,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -763,7 +763,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -796,7 +796,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -824,7 +824,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -864,7 +864,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -893,7 +893,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -922,7 +922,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -952,7 +952,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -980,7 +980,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -1010,7 +1010,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -1032,7 +1032,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -1062,7 +1062,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -1082,7 +1082,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -1106,7 +1106,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -1131,7 +1131,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -1155,7 +1155,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -1187,7 +1187,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();
@@ -1234,7 +1234,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
       transaction.commit();
 
@@ -1342,7 +1342,7 @@ public class Bugzilla_310574_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       Customer testCustomer = (Customer)resource.getContents().get(0);
       EList<SalesOrder> orders = testCustomer.getSalesOrders();

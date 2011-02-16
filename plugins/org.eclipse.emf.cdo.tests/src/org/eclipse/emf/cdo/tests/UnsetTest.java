@@ -80,7 +80,7 @@ public class UnsetTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
@@ -91,7 +91,7 @@ public class UnsetTest extends AbstractCDOTest
 
     session = openSession();
     CDOView view = session.openView();
-    resource = view.getResource("/test1");
+    resource = view.getResource(getResourcePath("/test1"));
     supplier = (Supplier)resource.getContents().get(0);
     assertEquals(true, supplier.isPreferred());
   }
@@ -100,7 +100,7 @@ public class UnsetTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
@@ -112,7 +112,7 @@ public class UnsetTest extends AbstractCDOTest
 
     session = openSession();
     CDOView view = session.openView();
-    resource = view.getResource("/test1");
+    resource = view.getResource(getResourcePath("/test1"));
     supplier = (Supplier)resource.getContents().get(0);
     assertEquals(true, supplier.isPreferred());
   }
@@ -121,7 +121,7 @@ public class UnsetTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
@@ -133,7 +133,7 @@ public class UnsetTest extends AbstractCDOTest
 
     session = openSession();
     CDOView view = session.openView();
-    resource = view.getResource("/test1");
+    resource = view.getResource(getResourcePath("/test1"));
     supplier = (Supplier)resource.getContents().get(0);
     assertEquals(false, supplier.isPreferred());
   }
@@ -461,7 +461,7 @@ public class UnsetTest extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/test1");
+      CDOResource res = transaction.createResource(getResourcePath("/test1"));
 
       res.getContents().add(test1);
       res.getContents().add(test2);
@@ -479,7 +479,7 @@ public class UnsetTest extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOView view = session.openTransaction();
-      CDOResource res = view.getResource("/test1");
+      CDOResource res = view.getResource(getResourcePath("/test1"));
 
       assertEquals(4, res.getContents().size());
       EObject test1 = res.getContents().get(0);
@@ -516,7 +516,7 @@ public class UnsetTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     resource.getContents().add(object);
     transaction.commit();
@@ -526,7 +526,7 @@ public class UnsetTest extends AbstractCDOTest
 
     session = openSession();
     CDOView view = session.openView();
-    resource = view.getResource("/test1");
+    resource = view.getResource(getResourcePath("/test1"));
 
     @SuppressWarnings("unchecked")
     T result = (T)resource.getContents().get(0);
@@ -540,7 +540,7 @@ public class UnsetTest extends AbstractCDOTest
       commitAndLoadSession = openSession();
       commitAndLoadTransaction = commitAndLoadSession.openTransaction();
 
-      CDOResource resource = commitAndLoadTransaction.createResource("/test1");
+      CDOResource resource = commitAndLoadTransaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(object);
     }
 
@@ -552,7 +552,7 @@ public class UnsetTest extends AbstractCDOTest
 
     commitAndLoadSession = openSession();
     commitAndLoadTransaction = commitAndLoadSession.openTransaction();
-    CDOResource resource = commitAndLoadTransaction.getResource("/test1");
+    CDOResource resource = commitAndLoadTransaction.getResource(getResourcePath("/test1"));
 
     @SuppressWarnings("unchecked")
     T result = (T)resource.getContents().get(0);

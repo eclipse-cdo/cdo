@@ -52,7 +52,7 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOObject instance = CDOUtil.getCDOObject(EcoreUtil.create(class1Class));
 
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(instance);
       transaction.commit();
 

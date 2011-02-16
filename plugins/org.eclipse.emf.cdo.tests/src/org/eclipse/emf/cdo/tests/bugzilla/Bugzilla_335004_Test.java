@@ -30,7 +30,7 @@ public class Bugzilla_335004_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("test");
+      CDOResource resource = transaction.createResource(getResourcePath("test"));
       resource.getContents().add(getModel1Factory().createAddress());
       transaction.commit();
       session.close();
@@ -47,7 +47,7 @@ public class Bugzilla_335004_Test extends AbstractCDOTest
       session.options().setGeneratedPackageEmulationEnabled(true);
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("test"); // We are loading nsURI from the server
+      CDOResource resource = transaction.getResource(getResourcePath("test")); // We are loading nsURI from the server
 
       EObject remoteObject = resource.getContents().get(0);
       EObject localObject = getModel1Factory().createAddress();

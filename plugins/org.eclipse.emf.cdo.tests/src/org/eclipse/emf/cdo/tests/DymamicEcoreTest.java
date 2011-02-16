@@ -40,7 +40,7 @@ public class DymamicEcoreTest extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(ecore);
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       EObject root = loadModel("model1.ecore", session.getPackageRegistry());
       res.getContents().add(root);
@@ -51,7 +51,7 @@ public class DymamicEcoreTest extends AbstractCDOTest
     // Load resource in session 2
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     EObject root = res.getContents().get(0);
     saveModel("model1X.ecore", root);

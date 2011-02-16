@@ -39,7 +39,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
       }
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
@@ -51,7 +51,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
     revisionManager.setGetRevisionsDelay(10000L); // Make the protocol time out

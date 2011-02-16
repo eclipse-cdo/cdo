@@ -169,7 +169,7 @@ public class SavePointTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     // Client1
-    CDOResource resource1 = transaction.createResource("/test1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/test1"));
     Category category3, category2, category4;
 
     Company company1 = getModel1Factory().createCompany();
@@ -298,7 +298,7 @@ public class SavePointTest extends AbstractCDOTest
     // client2 modifies object2
     CDOSession client2 = openSession();
     CDOTransaction transaction2 = client2.openTransaction();
-    CDOResource object2Y = transaction2.getResource("/object2");
+    CDOResource object2Y = transaction2.getResource(getResourcePath("/object2"));
     object2Y.getContents().add(getModel1Factory().createPurchaseOrder());
 
     // client2 commits
@@ -310,9 +310,9 @@ public class SavePointTest extends AbstractCDOTest
     // CDORepositoryInfo: object1 not modified, object2 is modified
     CDOSession client3 = openSession();
     CDOView view = client3.openView();
-    CDOResource object1Test = view.getResource("/object1");
+    CDOResource object1Test = view.getResource(getResourcePath("/object1"));
     assertEquals(0, object1Test.getContents().size());
-    CDOResource object2Test = view.getResource("/object2");
+    CDOResource object2Test = view.getResource(getResourcePath("/object2"));
     assertEquals(1, object2Test.getContents().size());
 
     // client1: same as repository
@@ -320,7 +320,7 @@ public class SavePointTest extends AbstractCDOTest
     assertEquals(object2Test.getContents().size(), object2X.getContents().size());
 
     // client2: same as repository
-    CDOResource object1Y = transaction2.getResource("/object1");
+    CDOResource object1Y = transaction2.getResource(getResourcePath("/object1"));
     assertEquals(object1Test.getContents().size(), object1Y.getContents().size());
     assertEquals(object2Test.getContents().size(), object2Y.getContents().size());
   }
@@ -332,7 +332,7 @@ public class SavePointTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);

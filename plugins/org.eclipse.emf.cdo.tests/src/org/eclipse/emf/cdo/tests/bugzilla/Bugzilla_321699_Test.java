@@ -31,7 +31,7 @@ public class Bugzilla_321699_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource resource = tx.createResource("/r1");
+    CDOResource resource = tx.createResource(getResourcePath("/r1"));
     msg("Pre-commit ID of resource = " + resource.cdoID());
 
     CDOObject fetchedObject = tx.getObject(resource.cdoID());

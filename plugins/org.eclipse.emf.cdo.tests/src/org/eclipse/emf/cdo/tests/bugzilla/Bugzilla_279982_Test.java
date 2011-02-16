@@ -37,7 +37,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     skipConfig(LEGACY);
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource res = tx.getOrCreateResource("/resource1");
+    CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
     tx.options().setStaleReferenceBehaviour(CDOStaleReferencePolicy.PROXY);
     GenRefSingleContained container = getModel4Factory().createGenRefSingleContained();
     GenRefSingleNonContained reference = getModel4Factory().createGenRefSingleNonContained();
@@ -93,7 +93,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
 
     // Verification that the commit is good
     tx = session.openTransaction();
-    res = tx.getOrCreateResource("/resource1");
+    res = tx.getOrCreateResource(getResourcePath("/resource1"));
     reference = (GenRefSingleNonContained)res.getContents().get(1);
     assertNull(reference.getElement());
   }
@@ -103,7 +103,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     skipConfig(LEGACY);
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource res = tx.getOrCreateResource("/resource1");
+    CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
     tx.options().setStaleReferenceBehaviour(CDOStaleReferencePolicy.PROXY);
     GenRefSingleContained container = getModel4Factory().createGenRefSingleContained();
     GenRefMultiNonContained reference = getModel4Factory().createGenRefMultiNonContained();
@@ -143,7 +143,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
 
     // Verification that the commit is good
     tx = session.openTransaction();
-    res = tx.getOrCreateResource("/resource1");
+    res = tx.getOrCreateResource(getResourcePath("/resource1"));
     reference = (GenRefMultiNonContained)res.getContents().get(1);
     assertEquals(0, reference.getElements().size());
   }
@@ -154,7 +154,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     CDOSession session = openSession();
     {
       CDOTransaction tx = session.openTransaction();
-      CDOResource res = tx.getOrCreateResource("/resource1");
+      CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
       // tx.options().setUnresolveableObjectToNullEnabled(true);
       GenRefSingleContained container = getModel4Factory().createGenRefSingleContained();
       GenRefMultiNonContained reference = getModel4Factory().createGenRefMultiNonContained();
@@ -174,7 +174,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     clearCache(session.getRevisionManager());
 
     CDOTransaction tx = session.openTransaction();
-    CDOResource res = tx.getOrCreateResource("/resource1");
+    CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
 
     tx.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(100));
     GenRefMultiNonContained reference = (GenRefMultiNonContained)res.getContents().get(1);
@@ -203,7 +203,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
 
     // Verification that the commit is good
     tx = session.openTransaction();
-    res = tx.getOrCreateResource("/resource1");
+    res = tx.getOrCreateResource(getResourcePath("/resource1"));
     reference = (GenRefMultiNonContained)res.getContents().get(1);
     assertEquals(1, reference.getElements().size());
   }

@@ -51,7 +51,7 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     final CDOTransaction tr1 = session.openTransaction();
     tr1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    final CDOResource resource = tr1.createResource("/test1");
+    final CDOResource resource = tr1.createResource(getResourcePath("/test1"));
     RefSingleContained container = getModel4Factory().createRefSingleContained();
     resource.getContents().add(container);
 
@@ -88,7 +88,7 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     final CDOTransaction tr1 = session.openTransaction();
     tr1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
-    final CDOResource resource = tr1.createResource("/test1");
+    final CDOResource resource = tr1.createResource(getResourcePath("/test1"));
     RefMultiContained container = getModel4Factory().createRefMultiContained();
     resource.getContents().add(container);
 

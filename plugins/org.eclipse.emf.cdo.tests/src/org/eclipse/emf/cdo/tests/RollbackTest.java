@@ -51,7 +51,7 @@ public class RollbackTest extends AbstractCDOTest
   protected void flow1(CDOTransaction transaction1, CDOTransaction transaction2) throws CommitException
   {
     // Client1
-    CDOResource resource1 = transaction1.createResource("/test1");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
     Company company1 = getModel1Factory().createCompany();
     resource1.getContents().add(company1);
     Category category1 = getModel1Factory().createCategory();
@@ -60,7 +60,7 @@ public class RollbackTest extends AbstractCDOTest
 
     // Client2
     transaction2.waitForUpdate(commitTime, DEFAULT_TIMEOUT);
-    CDOResource resource2 = transaction2.getResource("/test1");
+    CDOResource resource2 = transaction2.getResource(getResourcePath("/test1"));
     Company company2 = (Company)resource2.getContents().get(0); // Infrequent exceptions in legacy mode
     Category category2 = company2.getCategories().get(0);
     category2.setName("client2");
@@ -138,7 +138,7 @@ public class RollbackTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res");
+      CDOResource resource = transaction.createResource(getResourcePath("/res"));
       resource.getContents().add(getModel1Factory().createCompany());
       transaction.commit();
       session.close();
@@ -146,7 +146,7 @@ public class RollbackTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/res");
+    CDOResource resource = transaction.getResource(getResourcePath("/res"));
 
     Company company = (Company)resource.getContents().get(0);
     company.setName("MyCompany");

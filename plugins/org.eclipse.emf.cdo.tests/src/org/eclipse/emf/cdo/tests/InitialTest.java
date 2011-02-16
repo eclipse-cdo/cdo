@@ -153,9 +153,10 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     assertNew(resource, transaction);
-    assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1"), resource.getURI());
+    assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
+        resource.getURI());
     ResourceSet expected = transaction.getResourceSet();
     ResourceSet actual = resource.getResourceSet();
     assertEquals(expected, actual);
@@ -176,7 +177,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Getting contents");
     EList<EObject> contents = resource.getContents();
@@ -200,7 +201,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
@@ -229,7 +230,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
@@ -260,7 +261,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
@@ -291,7 +292,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();
@@ -319,7 +320,7 @@ public class InitialTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
@@ -350,7 +351,7 @@ public class InitialTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Creating supplier");
       Supplier supplier = getModel1Factory().createSupplier();
@@ -371,9 +372,10 @@ public class InitialTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Getting resource");
-      CDOResource resource = transaction.getResource("/test1", true);
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"), true);
       assertNotNull(resource);
-      assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1"), resource.getURI());
+      assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
+          resource.getURI());
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
       assertEquals(1, transaction.getResourceSet().getResources().size());
       assertEquals(CDOState.CLEAN, resource.cdoState());
@@ -387,9 +389,10 @@ public class InitialTest extends AbstractCDOTest
 
       msg("Getting resource");
       CDOResource resource = (CDOResource)transaction.getResourceSet().getResource(
-          CDOURIUtil.createResourceURI(transaction, "/test1"), true);
+          CDOURIUtil.createResourceURI(transaction, getResourcePath("/test1")), true);
       assertNotNull(resource);
-      assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1"), resource.getURI());
+      assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
+          resource.getURI());
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
       assertEquals(1, transaction.getResourceSet().getResources().size());
       assertEquals(CDOState.CLEAN, resource.cdoState());
@@ -409,7 +412,7 @@ public class InitialTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Creating supplier");
       Supplier supplier = getModel1Factory().createSupplier();
@@ -429,7 +432,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Getting resource");
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     msg("Getting contents");
     EList<EObject> contents = resource.getContents();
@@ -447,7 +450,7 @@ public class InitialTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Creating supplier");
       Supplier supplier = getModel1Factory().createSupplier();
@@ -467,7 +470,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Getting resource");
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     msg("Getting contents");
     EList<EObject> contents = resource.getContents();
@@ -491,7 +494,7 @@ public class InitialTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Creating supplier");
       Product1 product = getModel1Factory().createProduct1();
@@ -514,7 +517,7 @@ public class InitialTest extends AbstractCDOTest
     CDOView view = session.openView();
 
     msg("Getting resource");
-    CDOResource resource = view.getResource("/test1");
+    CDOResource resource = view.getResource(getResourcePath("/test1"));
 
     msg("Getting contents");
     EList<EObject> contents = resource.getContents();
@@ -544,7 +547,7 @@ public class InitialTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Creating supplier");
       Supplier supplier = getModel1Factory().createSupplier();
@@ -568,10 +571,10 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Getting resource");
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
     assertNotNull(resource);
 
-    URI uri = URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1");
+    URI uri = URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1"));
     URI resourceURI = resource.getURI();
     assertEquals(uri, resourceURI);
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
@@ -591,7 +594,7 @@ public class InitialTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Creating supplier");
       Supplier supplier = getModel1Factory().createSupplier();
@@ -615,7 +618,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Getting resource");
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     msg("Getting contents");
     EList<EObject> contents = resource.getContents();
@@ -635,7 +638,7 @@ public class InitialTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     OrderAddress orderAddress = getModel1Factory().createOrderAddress();
     resource.getContents().add(orderAddress);
 
@@ -698,7 +701,7 @@ public class InitialTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Creating orderDetail");
       OrderDetail orderDetail = getModel1Factory().createOrderDetail();
@@ -721,7 +724,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Getting resource");
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     msg("Getting contents");
     EList<EObject> contents = resource.getContents();
@@ -787,7 +790,7 @@ public class InitialTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Creating supplier");
     Supplier supplier = getModel1Factory().createSupplier();

@@ -30,7 +30,7 @@ public class Bugzilla_322754_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/r1");
+    CDOResource resource = transaction.createResource(getResourcePath("/r1"));
 
     msg("Fill and commit a resource");
     resource.getContents().add(getModel1Factory().createCompany());
@@ -64,10 +64,10 @@ public class Bugzilla_322754_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource1 = transaction.createResource("/r1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/r1"));
     resource1.getContents().add(product);
 
-    CDOResource resource2 = transaction.createResource("/r2");
+    CDOResource resource2 = transaction.createResource(getResourcePath("/r2"));
     resource2.getContents().add(orderDetail);
 
     transaction.commit();

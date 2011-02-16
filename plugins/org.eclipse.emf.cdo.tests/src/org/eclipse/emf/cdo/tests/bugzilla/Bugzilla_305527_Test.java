@@ -42,7 +42,7 @@ public class Bugzilla_305527_Test extends AbstractCDOTest
       mangoValue.setName("1");
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1"); //$NON-NLS-1$
+      CDOResource resource = transaction.createResource(getResourcePath("/res1")); //$NON-NLS-1$
       resource.getContents().add(mangoValue);
       commitTime = transaction.commit().getTimeStamp();
 
@@ -52,7 +52,7 @@ public class Bugzilla_305527_Test extends AbstractCDOTest
     }
 
     CDOView audit = session.openView(commitTime);
-    CDOResource auditResource = audit.getResource("/res1");
+    CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
     MangoValue mangoValue = (MangoValue)auditResource.getContents().get(0);
     assertEquals("1", mangoValue.getName());
 
@@ -60,7 +60,7 @@ public class Bugzilla_305527_Test extends AbstractCDOTest
     mangoList.getValues().add(mangoValue);
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/res1"); //$NON-NLS-1$
+    CDOResource resource = transaction.getResource(getResourcePath("/res1")); //$NON-NLS-1$
 
     try
     {
@@ -80,7 +80,7 @@ public class Bugzilla_305527_Test extends AbstractCDOTest
   {
     CDOSession openSession = openSession();
     CDOTransaction transaction1 = openSession.openTransaction();
-    CDOResource resource1 = transaction1.createResource("test");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("test"));
 
     Customer customer1 = getModel1Factory().createCustomer();
     Customer customer2 = getModel1Factory().createCustomer();
@@ -98,7 +98,7 @@ public class Bugzilla_305527_Test extends AbstractCDOTest
     transaction1.commit();
 
     CDOTransaction transaction2 = openSession.openTransaction();
-    CDOResource resource2 = transaction2.getResource("test");
+    CDOResource resource2 = transaction2.getResource(getResourcePath("test"));
 
     SalesOrder salesOrderFound = (SalesOrder)resource2.getContents().get(2);
     resource2.getContents().add(salesOrderFound);

@@ -38,7 +38,7 @@ public class ChunkingTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
@@ -63,7 +63,7 @@ public class ChunkingTest extends AbstractCDOTest
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     Customer customer = (Customer)resource.getContents().get(0);
     EList<SalesOrder> salesOrders = customer.getSalesOrders();
@@ -81,7 +81,7 @@ public class ChunkingTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
@@ -106,7 +106,7 @@ public class ChunkingTest extends AbstractCDOTest
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     Customer customer = (Customer)resource.getContents().get(0);
     EList<SalesOrder> salesOrders = customer.getSalesOrders();
@@ -126,7 +126,7 @@ public class ChunkingTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
@@ -142,7 +142,7 @@ public class ChunkingTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     transaction.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     Customer customer = getModel1Factory().createCustomer();
     customer.setName("customer");
@@ -160,7 +160,7 @@ public class ChunkingTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       for (int i = 0; i < 100; i++)
       {
@@ -180,7 +180,7 @@ public class ChunkingTest extends AbstractCDOTest
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     for (int i = 50; i < 70; i++)
     {
@@ -203,7 +203,7 @@ public class ChunkingTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       for (int i = 0; i < 100; i++)
       {
@@ -224,7 +224,7 @@ public class ChunkingTest extends AbstractCDOTest
 
     msg("Creating resource");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     for (int i = 50; i < 70; i++)
     {
@@ -251,7 +251,7 @@ public class ChunkingTest extends AbstractCDOTest
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
     CDOTransaction tx = session.openTransaction();
-    CDOResource resource = tx.getResource(RESOURCE_PATH);
+    CDOResource resource = tx.getResource(getResourcePath(RESOURCE_PATH));
 
     GenListOfInt list = (GenListOfInt)resource.getContents().get(0);
     list.getElements().add(9);
@@ -271,7 +271,7 @@ public class ChunkingTest extends AbstractCDOTest
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
     CDOTransaction tx = session.openTransaction();
-    CDOResource resource = tx.getResource(RESOURCE_PATH);
+    CDOResource resource = tx.getResource(getResourcePath(RESOURCE_PATH));
 
     GenListOfInt list = (GenListOfInt)resource.getContents().get(0);
     list.getElements().add(5, 9);
@@ -291,7 +291,7 @@ public class ChunkingTest extends AbstractCDOTest
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
     CDOTransaction tx = session.openTransaction();
-    CDOResource resource = tx.getResource(RESOURCE_PATH);
+    CDOResource resource = tx.getResource(getResourcePath(RESOURCE_PATH));
 
     GenListOfInt list = (GenListOfInt)resource.getContents().get(0);
     list.getElements().set(5, 9);
@@ -311,7 +311,7 @@ public class ChunkingTest extends AbstractCDOTest
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 1));
     CDOTransaction tx = session.openTransaction();
-    CDOResource resource = tx.getResource(RESOURCE_PATH);
+    CDOResource resource = tx.getResource(getResourcePath(RESOURCE_PATH));
 
     GenListOfInt list = (GenListOfInt)resource.getContents().get(0);
     list.getElements().remove(5);
@@ -328,7 +328,7 @@ public class ChunkingTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource resource = tx.createResource(RESOURCE_PATH);
+    CDOResource resource = tx.createResource(getResourcePath(RESOURCE_PATH));
 
     GenListOfInt list = Model5Factory.eINSTANCE.createGenListOfInt();
 
@@ -349,7 +349,7 @@ public class ChunkingTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource(RESOURCE_PATH);
+    CDOResource resource = view.getResource(getResourcePath(RESOURCE_PATH));
 
     EList<Integer> actualList = ((GenListOfInt)resource.getContents().get(0)).getElements();
 

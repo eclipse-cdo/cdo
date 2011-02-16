@@ -88,7 +88,7 @@ public class RepositoryTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     resource.getContents().add(createCustomer("Eike"));
     transaction.commit(); // Ensure that model1 is committed to the repository
 
@@ -109,7 +109,7 @@ public class RepositoryTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     resource.getContents().add(createCustomer("Eike"));
     long timeStamp = transaction.commit().getTimeStamp();
     session.close();
@@ -122,7 +122,7 @@ public class RepositoryTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     resource.getContents().add(createCustomer("Eike"));
     transaction.commit(); // Ensure that model1 is committed to the repository
 
@@ -181,7 +181,7 @@ public class RepositoryTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     resource.getContents().add(createCustomer("Eike"));
     transaction.commit(); // Ensure that model1 is committed to the repository
 
@@ -241,7 +241,7 @@ public class RepositoryTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     resource.getContents().add(createCustomer("Eike"));
     transaction.commit(); // Ensure that model1 is committed to the repository
 
@@ -292,7 +292,7 @@ public class RepositoryTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       resource.getContents().add(createCustomer("Eike"));
       resource.getContents().add(createCustomer("Simon"));
       resource.getContents().add(createCustomer("Admin"));
@@ -333,7 +333,7 @@ public class RepositoryTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    CDOResource resource = view.getResource("/res1");
+    CDOResource resource = view.getResource(getResourcePath("/res1"));
     int read = 0;
 
     try

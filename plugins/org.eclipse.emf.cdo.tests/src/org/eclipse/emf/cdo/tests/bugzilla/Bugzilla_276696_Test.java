@@ -30,7 +30,7 @@ public class Bugzilla_276696_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.setModified(true);
 
     EAttribute attrib = (EAttribute)resource.eClass().getEStructuralFeature("modified");

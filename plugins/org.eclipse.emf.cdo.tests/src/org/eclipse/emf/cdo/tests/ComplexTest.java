@@ -1036,12 +1036,12 @@ public class ComplexTest extends AbstractCDOTest
   public void testMultipleTransactions3() throws CommitException
   {
     CDOTransaction transaction1 = session.openTransaction();
-    String resource1path = "/resources/3/" + uniqueCounter;
+    String resource1path = getResourcePath("/resources/3/" + uniqueCounter);
     CDOResource resource1 = transaction1.createResource(resource1path);
     transaction1.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    String resource2path = "/resources/4/" + uniqueCounter++;
+    String resource2path = getResourcePath("/resources/4/" + uniqueCounter++);
     CDOResource resource2 = transaction2.createResource(resource2path);
     transaction2.commit();
 
@@ -1090,12 +1090,12 @@ public class ComplexTest extends AbstractCDOTest
   public void testMultipleTransactions2() throws CommitException
   {
     CDOTransaction transaction1 = session.openTransaction();
-    String resource1path = "/resources/3/" + uniqueCounter;
+    String resource1path = getResourcePath("/resources/3/" + uniqueCounter);
     CDOResource resource1 = transaction1.createResource(resource1path);
     transaction1.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    String resource2path = "/resources/4/" + uniqueCounter++;
+    String resource2path = getResourcePath("/resources/4/" + uniqueCounter++);
     CDOResource resource2 = transaction2.createResource(resource2path);
     transaction2.commit();
 

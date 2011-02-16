@@ -49,7 +49,7 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
 
     // Do NOT use a conflict resolver
 
-    CDOResource r1 = tx.createResource(RESOURCE_NAME);
+    CDOResource r1 = tx.createResource(getResourcePath(RESOURCE_NAME));
 
     Company company1 = getModel1Factory().createCompany();
     Company company2 = getModel1Factory().createCompany();
@@ -107,7 +107,7 @@ public class Bugzilla_294859_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.getResource(RESOURCE_NAME);
+    CDOResource r1 = tx.getResource(getResourcePath(RESOURCE_NAME));
     Company c = (Company)r1.getContents().get(0);
 
     // Touch the purchaseOrder

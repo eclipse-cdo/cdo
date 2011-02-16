@@ -33,7 +33,7 @@ public class LegacyTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOUtil.setLegacyModeDefault(false);
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     try
     {

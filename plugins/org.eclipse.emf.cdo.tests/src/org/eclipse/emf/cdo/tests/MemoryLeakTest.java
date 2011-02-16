@@ -45,7 +45,7 @@ public class MemoryLeakTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    Resource resource = transaction.createResource("res1");
+    Resource resource = transaction.createResource(getResourcePath("res1"));
 
     company = getModel1Factory().createCompany();
     resource.getContents().add(company);

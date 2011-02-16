@@ -35,7 +35,7 @@ public class Bugzilla_334995_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       msg("New resource: " + resource);
       msg("newObjects:");
 
@@ -68,7 +68,7 @@ public class Bugzilla_334995_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
-      CDOResource resource1 = transaction.getResource("/res1");
+      CDOResource resource1 = transaction.getResource(getResourcePath("/res1"));
       resource1.setPath("/res2");
 
       CDOResource resource2 = (CDOResource)transaction.getObject(resourceIDs[1]);
@@ -89,7 +89,7 @@ public class Bugzilla_334995_Test extends AbstractCDOTest
     CDOResource[] resources = new CDOResource[resourceNames.length];
     for (String resourceName : resourceNames)
     {
-      resources[i++] = transaction.createResource(resourceName);
+      resources[i++] = transaction.createResource(getResourcePath(resourceName));
     }
     transaction.commit();
 

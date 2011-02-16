@@ -34,7 +34,7 @@ public class Bugzilla_261218_Test extends AbstractCDOTest
     msg("Opening session");
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    Resource resource = transaction.getOrCreateResource("res1");
+    Resource resource = transaction.getOrCreateResource(getResourcePath("res1"));
 
     Category folder = getModel1Factory().createCategory();
     resource.getContents().add(folder);

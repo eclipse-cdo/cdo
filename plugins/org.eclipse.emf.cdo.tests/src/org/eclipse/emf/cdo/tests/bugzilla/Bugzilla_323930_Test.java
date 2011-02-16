@@ -48,7 +48,7 @@ public class Bugzilla_323930_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test");
+    CDOResource resource = transaction.createResource(getResourcePath("/test"));
 
     resource.getContents().add(a);
     resource.getContents().add(b);
@@ -84,7 +84,7 @@ public class Bugzilla_323930_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test");
+    CDOResource resource = transaction.createResource(getResourcePath("/test"));
 
     resource.getContents().add(a);
     resource.getContents().add(b);
@@ -120,7 +120,7 @@ public class Bugzilla_323930_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test");
+    CDOResource resource = transaction.createResource(getResourcePath("/test"));
 
     resource.getContents().add(a);
     resource.getContents().add(b);
@@ -154,7 +154,7 @@ public class Bugzilla_323930_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test");
+    CDOResource resource = transaction.createResource(getResourcePath("/test"));
 
     resource.getContents().add(a);
     resource.getContents().add(b);
@@ -189,7 +189,7 @@ public class Bugzilla_323930_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test");
+    CDOResource resource = transaction.createResource(getResourcePath("/test"));
 
     resource.getContents().add(a);
     resource.getContents().add(b);
@@ -230,7 +230,7 @@ public class Bugzilla_323930_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test");
+    CDOResource resource = transaction.createResource(getResourcePath("/test"));
 
     resource.getContents().add(a);
     resource.getContents().add(b);

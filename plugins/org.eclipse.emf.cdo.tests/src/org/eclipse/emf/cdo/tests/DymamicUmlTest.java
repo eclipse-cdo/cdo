@@ -41,7 +41,7 @@ public class DymamicUmlTest extends AbstractCDOTest
       // Create resource in session 1
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       Company company = getModel1Factory().createCompany();
       company.setName("Eike");
@@ -53,7 +53,7 @@ public class DymamicUmlTest extends AbstractCDOTest
       // Load resource in session 2
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+      CDOResource res = transaction.getResource(getResourcePath("/res"));
 
       Company company = (Company)res.getContents().get(0);
       assertEquals("Eike", company.getName());
@@ -71,7 +71,7 @@ public class DymamicUmlTest extends AbstractCDOTest
       // Create resource in session 1
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       EObject company = EcoreUtil.create(companyClass);
       company.eSet(nameAttribute, "Eike");
@@ -83,7 +83,7 @@ public class DymamicUmlTest extends AbstractCDOTest
       // Load resource in session 2
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+      CDOResource res = transaction.getResource(getResourcePath("/res"));
 
       CDOObject company = CDOUtil.getCDOObject(res.getContents().get(0));
       EClass companyClass = company.eClass();

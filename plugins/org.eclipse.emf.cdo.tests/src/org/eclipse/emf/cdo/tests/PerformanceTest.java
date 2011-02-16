@@ -74,7 +74,7 @@ public class PerformanceTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     getModel1Factory().createCustomer();
     for (int i = 0; i < 500; i++)
     {
@@ -109,7 +109,7 @@ public class PerformanceTest extends AbstractCDOTest
   // EPackage dynamicMapEPackge = createPackage();
   // EFactory dynamicMapEFactoryInstance = dynamicMapEPackge.getEFactoryInstance();
   //
-  // CDOResource resource = transaction.createResource("/test1");
+  // CDOResource resource = transaction.createResource(getResourcePath("/test1"));
   // for (int i = 0; i < 5000; i++)
   // {
   //
@@ -131,7 +131,7 @@ public class PerformanceTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       getModel1Factory().createCustomer();
       for (int i = 0; i < 500; i++)
       {
@@ -158,7 +158,7 @@ public class PerformanceTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       int i = 0;
       for (EObject o : resource.getContents())
@@ -196,7 +196,7 @@ public class PerformanceTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       getModel1Factory().createCustomer();
       for (int i = 0; i < 500; i++)
       {
@@ -222,7 +222,7 @@ public class PerformanceTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       int i = 0;
       for (EObject o : resource.getContents())
@@ -259,7 +259,7 @@ public class PerformanceTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     for (int i = 0; i < 100; i++)
     {
       Customer customer = getModel1Factory().createCustomer();

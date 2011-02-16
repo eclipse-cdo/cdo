@@ -35,7 +35,7 @@ public class Bugzilla_270429_Test extends AbstractCDOTest
       session.getPackageRegistry().putEPackage(model4interfacesPackage.eINSTANCE);
 
       CDOTransaction tx = session.openTransaction();
-      CDOResource res = tx.createResource("/test/1");
+      CDOResource res = tx.createResource(getResourcePath("/test/1"));
 
       RefMultiContained parent = model4Factory.eINSTANCE.createRefMultiContained();
 
@@ -62,7 +62,7 @@ public class Bugzilla_270429_Test extends AbstractCDOTest
       session.getPackageRegistry().putEPackage(model4interfacesPackage.eINSTANCE);
 
       CDOTransaction tx = session.openTransaction();
-      CDOResource res = tx.getResource("/test/1");
+      CDOResource res = tx.getResource(getResourcePath("/test/1"));
 
       RefMultiContained parent = (RefMultiContained)res.getContents().get(0);
       MultiContainedElement child1 = parent.getElements().get(0);
@@ -86,7 +86,7 @@ public class Bugzilla_270429_Test extends AbstractCDOTest
       session.getPackageRegistry().putEPackage(model4interfacesPackage.eINSTANCE);
 
       CDOView tx = session.openView();
-      CDOResource res = tx.getResource("/test/1");
+      CDOResource res = tx.getResource(getResourcePath("/test/1"));
 
       RefMultiContained parent = (RefMultiContained)res.getContents().get(0);
       assertEquals(0, parent.getElements().size());

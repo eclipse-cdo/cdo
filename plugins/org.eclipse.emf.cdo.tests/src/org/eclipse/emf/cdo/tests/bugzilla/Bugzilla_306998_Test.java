@@ -45,7 +45,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOTransaction tx = session.openTransaction();
-      CDOResource res = tx.createResource("/test");
+      CDOResource res = tx.createResource(getResourcePath("/test"));
 
       EObject obj = EcoreUtil.create(cls);
 
@@ -59,7 +59,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOView view = session.openView();
-      CDOResource res = view.getResource("/test");
+      CDOResource res = view.getResource(getResourcePath("/test"));
 
       EObject obj = res.getContents().get(0);
       assertEquals(7, ((VAT)obj.eGet(att)).getValue());
@@ -89,7 +89,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOTransaction tx = session.openTransaction();
-      CDOResource res = tx.createResource("/test");
+      CDOResource res = tx.createResource(getResourcePath("/test"));
 
       EObject obj = EcoreUtil.create(cls);
 
@@ -105,7 +105,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOView view = session.openView();
-      CDOResource res = view.getResource("/test");
+      CDOResource res = view.getResource(getResourcePath("/test"));
 
       EObject obj = res.getContents().get(0);
       assertEquals(0, ((VAT)obj.eGet(att)).getValue());

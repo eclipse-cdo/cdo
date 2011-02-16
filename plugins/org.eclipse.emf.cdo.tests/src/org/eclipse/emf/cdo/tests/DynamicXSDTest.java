@@ -43,7 +43,7 @@ public class DynamicXSDTest extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(ecore);
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       EObject company = EcoreUtil.create(companyClass);
       company.eSet(nameAttribute, "Eike");
@@ -55,7 +55,7 @@ public class DynamicXSDTest extends AbstractCDOTest
       // Load resource in session 2
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+      CDOResource res = transaction.getResource(getResourcePath("/res"));
 
       CDOObject company = CDOUtil.getCDOObject(res.getContents().get(0));
       EClass companyClass = company.eClass();

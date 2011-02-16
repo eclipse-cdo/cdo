@@ -40,7 +40,7 @@ public class Bugzilla_330052_Test extends AbstractCDOTest
     CDOTransaction tx = session.openTransaction();
     CDOView view = session.openView();
 
-    CDOResource resource = tx.createResource("test");
+    CDOResource resource = tx.createResource(getResourcePath("test"));
     Address address = getModel1Factory().createAddress();
     resource.getContents().add(address);
     tx.commit();
@@ -59,7 +59,7 @@ public class Bugzilla_330052_Test extends AbstractCDOTest
     session.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource = transaction.createResource("test");
+    CDOResource resource = transaction.createResource(getResourcePath("test"));
     Address address = getModel1Factory().createAddress();
     final String testName1 = "name1";
     address.setName(testName1);

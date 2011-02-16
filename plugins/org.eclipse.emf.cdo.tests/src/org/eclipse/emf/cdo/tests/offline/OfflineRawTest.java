@@ -51,7 +51,7 @@ public class OfflineRawTest extends OfflineTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     resource.getContents().add(getModel1Factory().createCompany());
     transaction.setCommitComment("resource with one company created on clone");
@@ -69,7 +69,7 @@ public class OfflineRawTest extends OfflineTest
     {
       CDOSession masterSession = openSession(clone.getName() + "_master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
-      CDOResource masterResource = masterTransaction.getResource("/my/resource");
+      CDOResource masterResource = masterTransaction.getResource(getResourcePath("/my/resource"));
 
       masterResource.getContents().add(getModel1Factory().createCompany());
       masterTransaction.setCommitComment("one company added on master");
@@ -118,7 +118,7 @@ public class OfflineRawTest extends OfflineTest
     CDOSession session = openSession();
     session.options().setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     resource.getContents().add(getModel1Factory().createCompany());
     transaction.setCommitComment("resource with one company created on clone");
@@ -136,7 +136,7 @@ public class OfflineRawTest extends OfflineTest
     {
       CDOSession masterSession = openSession(clone.getName() + "_master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
-      CDOResource masterResource = masterTransaction.getResource("/my/resource");
+      CDOResource masterResource = masterTransaction.getResource(getResourcePath("/my/resource"));
 
       masterResource.getContents().add(getModel1Factory().createCompany());
       masterTransaction.setCommitComment("one company added on master");
@@ -186,7 +186,7 @@ public class OfflineRawTest extends OfflineTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     resource.getContents().add(getModel1Factory().createCompany());
     transaction.setCommitComment("resource with one company created on clone");
@@ -198,7 +198,7 @@ public class OfflineRawTest extends OfflineTest
     {
       CDOSession masterSession = openSession(clone.getName() + "_master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
-      CDOResource masterResource = masterTransaction.getResource("/my/resource");
+      CDOResource masterResource = masterTransaction.getResource(getResourcePath("/my/resource"));
 
       for (int i = 0; i < 100; i++)
       {

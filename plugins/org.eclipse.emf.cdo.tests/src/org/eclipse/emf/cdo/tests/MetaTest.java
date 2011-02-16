@@ -27,7 +27,7 @@ public class MetaTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       MetaRef metaRef = getModel3Factory().createMetaRef();
       metaRef.setEPackageRef(getModel3Package());
@@ -38,7 +38,7 @@ public class MetaTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     MetaRef metaRef = (MetaRef)res.getContents().get(0);
     assertEquals(getModel3Package(), metaRef.getEPackageRef());
@@ -49,7 +49,7 @@ public class MetaTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       MetaRef metaRef = getModel3Factory().createMetaRef();
       res.getContents().add(metaRef);
@@ -60,7 +60,7 @@ public class MetaTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     MetaRef metaRef = (MetaRef)res.getContents().get(0);
     assertEquals(getModel3Package(), metaRef.getEPackageRef());
@@ -76,7 +76,7 @@ public class MetaTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(metaRef);
 
       transaction.commit();
@@ -91,7 +91,7 @@ public class MetaTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     MetaRef metaRef = (MetaRef)resource.getContents().get(0);
     assertEquals(targetRef, metaRef.getEReferenceRef());

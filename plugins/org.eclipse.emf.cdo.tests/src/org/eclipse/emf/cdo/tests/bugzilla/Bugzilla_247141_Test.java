@@ -41,14 +41,14 @@ public class Bugzilla_247141_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource1 = transaction.createResource("/test1");
+      CDOResource resource1 = transaction.createResource(getResourcePath("/test1"));
 
       Customer customer1 = getModel1Factory().createCustomer();
       Customer customer2 = getModel1Factory().createCustomer();
       resource1.getContents().add(customer1);
       resource1.getContents().add(customer2);
 
-      CDOResource resource2 = transaction.createResource("/test2");
+      CDOResource resource2 = transaction.createResource(getResourcePath("/test2"));
 
       Customer customer3 = getModel1Factory().createCustomer();
       Customer customer4 = getModel1Factory().createCustomer();
@@ -68,7 +68,7 @@ public class Bugzilla_247141_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.getResource("/test1");
+    CDOResource resource1 = transaction.getResource(getResourcePath("/test1"));
     EContentAdapter adapter = new CDOLazyContentAdapter();
     resource1.eAdapters().add(adapter);
 
@@ -82,7 +82,7 @@ public class Bugzilla_247141_Test extends AbstractCDOTest
     assertEquals(true, object2.eAdapters().contains(adapter));
 
     // res2 should NOT be adapted, as its not in the content tree of res1
-    CDOResource resource2 = transaction.getResource("/test2");
+    CDOResource resource2 = transaction.getResource(getResourcePath("/test2"));
     // neither should its children
     CDOObject object3 = view.getObject(id3);
     CDOObject object4 = view.getObject(id4);
@@ -103,7 +103,7 @@ public class Bugzilla_247141_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/test1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/test1"));
 
     Customer customer1 = getModel1Factory().createCustomer();
     Customer customer2 = getModel1Factory().createCustomer();

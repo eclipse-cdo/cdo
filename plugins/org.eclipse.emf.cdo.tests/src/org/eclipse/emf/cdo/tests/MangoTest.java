@@ -27,7 +27,7 @@ public class MangoTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     MangoValue v1 = getMangoFactory().createMangoValue();
     v1.setName("v1");

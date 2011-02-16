@@ -38,7 +38,7 @@ public class Bugzilla_260764_Test extends AbstractCDOTest
     // ************************************************************* //
     msg("Opening transaction");
     final CDOTransaction transaction = session.openTransaction();
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
 
     final OrderAddress orderAddress = getModel1Factory().createOrderAddress();
     resourceA.getContents().add(orderAddress);

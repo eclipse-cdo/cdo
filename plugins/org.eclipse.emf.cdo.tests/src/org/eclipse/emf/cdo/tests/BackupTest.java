@@ -64,7 +64,7 @@ public class BackupTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     resource.getContents().add(createCustomer("Eike"));
     transaction.commit();
     session.close();
@@ -81,7 +81,7 @@ public class BackupTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
     purchaseOrder.setDate(new Date(1234567));
     resource.getContents().add(purchaseOrder);
@@ -112,7 +112,7 @@ public class BackupTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       resource.getContents().add(image);
       transaction.commit();
     }
@@ -144,7 +144,7 @@ public class BackupTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       resource.getContents().add(file);
       transaction.commit();
     }
@@ -165,7 +165,7 @@ public class BackupTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     resource.getContents().add(createPoligon(new Point(1, 2), new Point(3, 1), new Point(4, 5)));
     transaction.commit();
     session.close();
@@ -182,7 +182,7 @@ public class BackupTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
     addFeatureMap(resource);
 
@@ -208,7 +208,7 @@ public class BackupTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     Customer eike = createCustomer("Eike");
     resource.getContents().add(eike);
     resource.getContents().add(createCustomer("Jos"));
@@ -260,7 +260,7 @@ public class BackupTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
     purchaseOrder.setDate(new Date(1234567));
     resource.getContents().add(purchaseOrder);
@@ -297,7 +297,7 @@ public class BackupTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       resource.getContents().add(image);
       transaction.commit();
     }
@@ -335,7 +335,7 @@ public class BackupTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       resource.getContents().add(file);
       transaction.commit();
     }
@@ -362,7 +362,7 @@ public class BackupTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
     resource.getContents().add(createPoligon(new Point(1, 2), new Point(3, 1), new Point(4, 5)));
     transaction.commit();
     session.close();
@@ -385,7 +385,7 @@ public class BackupTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/res1");
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
     addFeatureMap(resource);
 

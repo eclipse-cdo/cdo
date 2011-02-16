@@ -47,7 +47,7 @@ public class Bugzilla_279565_Test extends AbstractCDOTest
 
     try
     {
-      tx.getOrCreateResource("/test");
+      tx.getOrCreateResource(getResourcePath("/test"));
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException sucess)
@@ -81,7 +81,7 @@ public class Bugzilla_279565_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    tx.getOrCreateResource("/test");
+    tx.getOrCreateResource(getResourcePath("/test"));
     tx.close();
 
     new PollingTimeOuter()
@@ -107,7 +107,7 @@ public class Bugzilla_279565_Test extends AbstractCDOTest
       }
     });
 
-    tx.getOrCreateResource("/test");
+    tx.getOrCreateResource(getResourcePath("/test"));
     tx.close();
 
     new PollingTimeOuter()
@@ -136,7 +136,7 @@ public class Bugzilla_279565_Test extends AbstractCDOTest
 
     CDOSession session2 = openSession();
     CDOTransaction tx2 = session2.openTransaction();
-    tx2.getOrCreateResource("/test");
+    tx2.getOrCreateResource(getResourcePath("/test"));
     session2.close();
 
     new PollingTimeOuter()

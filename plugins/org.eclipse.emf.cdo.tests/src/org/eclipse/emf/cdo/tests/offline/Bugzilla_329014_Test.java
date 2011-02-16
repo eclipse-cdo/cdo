@@ -64,7 +64,7 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
 
     // initial model.
     CDOTransaction transaction = masterSession.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_NAME);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_NAME));
     Company company = getModel1Factory().createCompany();
     company.setName("Company1");
     resource.getContents().add(company);

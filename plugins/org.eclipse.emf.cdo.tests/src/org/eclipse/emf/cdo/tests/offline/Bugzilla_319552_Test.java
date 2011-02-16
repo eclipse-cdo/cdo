@@ -49,7 +49,7 @@ public class Bugzilla_319552_Test extends AbstractSyncingTest
     session.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);

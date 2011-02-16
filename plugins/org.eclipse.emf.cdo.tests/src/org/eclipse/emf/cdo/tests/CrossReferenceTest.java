@@ -64,7 +64,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resourceA = transaction.createResource("/test1");
+    CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
     resourceA.getContents().add(companyA);
@@ -80,7 +80,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     CDOView viewB = session.openTransaction();
 
     msg("Loading resource");
-    CDOResource resourceB = viewB.getResource("/test1");
+    CDOResource resourceB = viewB.getResource(getResourcePath("/test1"));
     assertProxy(resourceB);
 
     EList<EObject> contents = resourceB.getContents();
@@ -139,7 +139,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resourceA = transaction.createResource("/test1");
+    CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
     resourceA.getContents().add(companyA);
@@ -155,7 +155,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     CDOView viewB = session.openTransaction();
 
     msg("Loading resource");
-    CDOResource resourceB = viewB.getResource("/test1");
+    CDOResource resourceB = viewB.getResource(getResourcePath("/test1"));
     assertProxy(resourceB);
 
     EList<EObject> contents = resourceB.getContents();
@@ -200,7 +200,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     company1A.getCustomers().add(customerA);
 
     msg("Creating resource1");
-    CDOResource resource1A = transaction.createResource("/test1");
+    CDOResource resource1A = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company1");
     resource1A.getContents().add(company1A);
@@ -227,7 +227,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     company2A.getSalesOrders().add(salesOrder2A);
 
     msg("Creating resource2");
-    CDOResource resource2A = transaction.createResource("/test2");
+    CDOResource resource2A = transaction.createResource(getResourcePath("/test2"));
 
     msg("Adding company");
     resource2A.getContents().add(company2A);
@@ -245,7 +245,7 @@ public class CrossReferenceTest extends AbstractCDOTest
     CDOView viewB = session.openTransaction();
 
     msg("Loading resource1");
-    CDOResource resource1B = viewB.getResource("/test1");
+    CDOResource resource1B = viewB.getResource(getResourcePath("/test1"));
     assertProxy(resource1B);
 
     EList<EObject> contents = resource1B.getContents();
@@ -281,7 +281,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/company/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/company/resource"));
     resource.getContents().add(company);
     transaction.commit();
 
@@ -312,7 +312,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/company/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/company/resource"));
     resource.getContents().add(company);
     transaction.commit();
 
@@ -338,7 +338,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/company/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/company/resource"));
     resource.getContents().add(company);
     transaction.commit();
 
@@ -367,7 +367,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/company/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/company/resource"));
     resource.getContents().add(company);
     transaction.commit();
 
@@ -403,7 +403,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/company/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/company/resource"));
     resource.getContents().add(company);
     // DO NOT: transaction.commit();
 
@@ -432,7 +432,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/company/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/company/resource"));
     resource.getContents().add(company);
     // DO NOT: transaction.commit();
 
@@ -465,7 +465,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/company/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/company/resource"));
     resource.getContents().add(company);
     // DO NOT: transaction.commit();
 

@@ -29,8 +29,8 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/my/resource1");
-    CDOResource resource2 = transaction.createResource("/my/resource2");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
+    CDOResource resource2 = transaction.createResource(getResourcePath("/my/resource2"));
     Company company = getModel1Factory().createCompany();
     resource1.getContents().add(company);
     transaction.commit();
@@ -67,7 +67,7 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/my/resource1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
     transaction.commit();
 
     resource1.setTrackingModification(true);
@@ -87,7 +87,7 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/my/resource1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
     resource1.setTrackingModification(true);
     assertEquals(false, resource1.isModified());
 
@@ -109,7 +109,7 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/my/resource1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
     resource1.setTrackingModification(true);
     assertEquals(false, resource1.isModified());
 
@@ -127,7 +127,7 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/my/resource1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
     resource1.setTrackingModification(false);
     assertEquals(false, resource1.isModified());
 
@@ -152,7 +152,7 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/my/resource1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
     resource1.setTrackingModification(true);
     assertEquals(false, resource1.isModified());
 
@@ -175,7 +175,7 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/my/resource1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
     Company company = getModel1Factory().createCompany();
     resource1.getContents().add(company);
     transaction.commit();
@@ -193,7 +193,7 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/my/resource1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
     Company company1 = getModel1Factory().createCompany();
     Company company2 = getModel1Factory().createCompany();
     resource1.getContents().add(company1);
@@ -219,7 +219,7 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource1");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource1"));
     resource.setTrackingModification(true);
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);

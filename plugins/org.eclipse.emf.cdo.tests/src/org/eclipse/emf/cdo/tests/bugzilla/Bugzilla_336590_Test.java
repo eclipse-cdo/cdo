@@ -49,7 +49,7 @@ public class Bugzilla_336590_Test extends AbstractCDOTest
     CDOTransaction tx = session.openTransaction();
     tx.options().addConflictResolver(new TestResolver());
 
-    CDOResource resource = tx.createResource("test");
+    CDOResource resource = tx.createResource(getResourcePath("test"));
     Model1Factory f = getModel1Factory();
     SalesOrder order = f.createSalesOrder();
     for (int i = 0; i < 3; i++)
@@ -79,7 +79,7 @@ public class Bugzilla_336590_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource resource = tx.getResource("test");
+    CDOResource resource = tx.getResource(getResourcePath("test"));
 
     SalesOrder order = (SalesOrder)resource.getContents().get(0);
     OrderDetail removedDetail = order.getOrderDetails().get(0);

@@ -44,7 +44,7 @@ public class Bugzilla_313913_Test extends AbstractCDOTest
       container.getTasks().add(task);
     }
 
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
     resourceA.getContents().add(container);
     transaction.commit();
 

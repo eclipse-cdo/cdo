@@ -47,7 +47,7 @@ public class GeneratedEcoreTest extends AbstractCDOTest
     // Load resource in session 2
     CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
-    CDOResource res2 = transaction2.getResource("/res");
+    CDOResource res2 = transaction2.getResource(getResourcePath("/res"));
 
     EList<EObject> contents = res2.getContents();
     EPackage root2 = (EPackage)contents.get(0);

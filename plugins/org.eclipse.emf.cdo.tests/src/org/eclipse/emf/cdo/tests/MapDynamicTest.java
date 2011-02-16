@@ -203,7 +203,7 @@ public class MapDynamicTest extends MapTest
       }
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource(resourceName);
+      CDOResource resource = transaction.getResource(getResourcePath(resourceName));
 
       EObject mapHolder = resource.getContents().get(0);
 
@@ -234,7 +234,7 @@ public class MapDynamicTest extends MapTest
         session.getPackageRegistry().putEPackage(epackage);
       }
 
-      CDOResource resource = transaction.getResource(resourceName);
+      CDOResource resource = transaction.getResource(getResourcePath(resourceName));
 
       EObject mapHolder = resource.getContents().get(0);
 
@@ -258,7 +258,7 @@ public class MapDynamicTest extends MapTest
       }
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource(resourceName);
+      CDOResource resource = transaction.getResource(getResourcePath(resourceName));
 
       EObject mapHolder = resource.getContents().get(0);
 

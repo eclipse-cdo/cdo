@@ -35,7 +35,7 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     // setup connection1.
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
-    CDOResource resource1 = transaction1.createResource("/test1");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
 
     // add initial model.
     Company company1 = getModel1Factory().createCompany();
@@ -50,7 +50,7 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
     transaction2.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-    CDOResource resource2 = transaction2.getOrCreateResource("/test1");
+    CDOResource resource2 = transaction2.getOrCreateResource(getResourcePath("/test1"));
 
     // add adapter to company2 to have sendDeltaNotification being called.
     Company company2 = (Company)resource2.getContents().get(0);
@@ -101,7 +101,7 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     // setup connection1.
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
-    CDOResource resource1 = transaction1.createResource("/test1");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
 
     // add initial model.
     Company company1 = getModel1Factory().createCompany();
@@ -114,7 +114,7 @@ public class Bugzilla_306710_Test extends AbstractCDOTest
     CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
     transaction2.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-    CDOResource resource2 = transaction2.getOrCreateResource("/test1");
+    CDOResource resource2 = transaction2.getOrCreateResource(getResourcePath("/test1"));
 
     // add adapter to company2 to have sendDeltaNotification being called.
     Company company2 = (Company)resource2.getContents().get(0);

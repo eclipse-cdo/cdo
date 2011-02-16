@@ -660,7 +660,7 @@ public class SetFeatureTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       assertEquals(false, object.eIsSet(feature));
 
@@ -714,7 +714,7 @@ public class SetFeatureTest extends AbstractCDOTest
       session = openSession();
 
       transaction = session.openTransaction();
-      resource = transaction.getResource("/test1", true);
+      resource = transaction.getResource(getResourcePath("/test1"), true);
 
       object = resource.getContents().get(0);
       if (!feature.isUnsettable() && ObjectUtil.equals(feature.getDefaultValue(), value))
@@ -747,7 +747,7 @@ public class SetFeatureTest extends AbstractCDOTest
 
       transaction = session.openTransaction();
       CDOView view = session.openView();
-      resource = view.getResource("/test1");
+      resource = view.getResource(getResourcePath("/test1"));
 
       object = resource.getContents().get(0);
       assertEquals(false, object.eIsSet(feature));

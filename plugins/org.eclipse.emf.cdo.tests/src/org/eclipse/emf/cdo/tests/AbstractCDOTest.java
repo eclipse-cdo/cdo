@@ -195,4 +195,35 @@ public abstract class AbstractCDOTest extends ConfigTest
       }
     }
   }
+
+  /**
+   * Constructs a test-specific resource path of the format "/TestClass_testMethod/resourceName". Using this instead of
+   * (just) a hardcoded name for the test resource, ensures that the test method is isolated from all others at the
+   * resource level.
+   * 
+   * @param resourceName
+   *          - the test-local name of the resource (or null if one wants to receive the path of the test-local resource
+   *          folder
+   * @return the full path of the resource
+   */
+  protected String getResourcePath(String resourceName)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append('/');
+    builder.append(getClass().getSimpleName()); // Name of this test class
+    builder.append('_');
+    builder.append(getName()); // Name of this test method
+
+    if (resourceName == null || resourceName.length() == 0 || resourceName.charAt(0) != '/')
+    {
+      builder.append('/');
+    }
+
+    if (resourceName != null)
+    {
+      builder.append(resourceName);
+    }
+
+    return builder.toString();
+  }
 }

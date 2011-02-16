@@ -62,7 +62,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/test1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/test1"));
 
     Company company1 = getModel1Factory().createCompany();
     Category category1 = getModel1Factory().createCategory();
@@ -122,7 +122,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     SalesOrder salesOrder = getModel1Factory().createSalesOrder();
     resource.getContents().add(salesOrder);
@@ -156,7 +156,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     SalesOrder salesOrder = getModel1Factory().createSalesOrder();
     resource.getContents().add(salesOrder);
@@ -180,7 +180,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
@@ -210,7 +210,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     Customer customer = getModel1Factory().createCustomer();
     resource.getContents().add(customer);
@@ -242,7 +242,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     NodeD a = getModel3Factory().createNodeD();
     NodeD b = getModel3Factory().createNodeD();
@@ -259,7 +259,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
       transaction.commit();
       transaction.close();
       transaction = session.openTransaction();
-      resource = transaction.getResource("/test1");
+      resource = transaction.getResource(getResourcePath("/test1"));
     }
 
     // Start test logic
@@ -282,7 +282,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     NodeD a = getModel3Factory().createNodeD();
     NodeD b = getModel3Factory().createNodeD();
@@ -299,7 +299,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
       transaction.commit();
       transaction.close();
       transaction = session.openTransaction();
-      resource = transaction.getResource("/test1");
+      resource = transaction.getResource(getResourcePath("/test1"));
     }
 
     // Start test logic
@@ -545,7 +545,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       for (int i = 0; i < 20; i++)
       {
@@ -577,7 +577,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/test1");
+      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       manipulator.doManipulations(resource.getContents());
       manipulator.doManipulations(reference);
@@ -600,7 +600,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/test1");
+      CDOResource resource = view.getResource(getResourcePath("/test1"));
 
       assertEquals(reference.size(), resource.getContents().size());
 

@@ -41,7 +41,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource1 = transaction.createResource("/test1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/test1"));
     objects.add(resource1);
     Company company1 = getModel1Factory().createCompany();
     Category category1 = getModel1Factory().createCategory();
@@ -52,13 +52,14 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     objects.add(company1);
     objects.add(category1);
     objects.add(transaction.getRootResource());
+    objects.add(transaction.getResourceNode(getResourcePath(null)));
     company1.setName("TEST");
 
     transaction.commit();
 
     CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
     List<Object> result = query.getResult(Object.class);
-    assertEquals(4, result.size());
+    assertEquals(5, result.size());
     for (Object object : result)
     {
       assertEquals(true, objects.contains(object));
@@ -76,7 +77,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource1 = transaction.createResource("/test1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/test1"));
     objects.add(resource1);
     Company company1 = getModel1Factory().createCompany();
     Category category1 = getModel1Factory().createCategory();
@@ -204,7 +205,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource1 = transaction.createResource("/test1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/test1"));
 
     for (int i = 0; i < number; i++)
     {

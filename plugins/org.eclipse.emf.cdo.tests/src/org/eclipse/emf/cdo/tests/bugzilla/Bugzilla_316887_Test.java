@@ -53,7 +53,7 @@ public class Bugzilla_316887_Test extends AbstractCDOTest
     final CDOSession session = openSession();
     final CDOTransaction tr1 = session.openTransaction();
 
-    final CDOResource resource = tr1.createResource("/test1");
+    final CDOResource resource = tr1.createResource(getResourcePath("/test1"));
     TaskContainer container = getModel2Factory().createTaskContainer();
     resource.getContents().add(container);
 

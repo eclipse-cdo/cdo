@@ -129,7 +129,7 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     CDOTransaction transaction5 = session1.openTransaction();
 
     // create initial model.
-    CDOResource resource = transaction1.createResource("/test");
+    CDOResource resource = transaction1.createResource(getResourcePath("/test"));
     Company company1 = getModel1Factory().createCompany();
     company1.setName("company1");
     resource.getContents().add(company1);
@@ -215,7 +215,7 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     final CDOTransaction transaction3 = session1.openTransaction();
 
     // create initial model.
-    CDOResource resource = transaction1.createResource("/test");
+    CDOResource resource = transaction1.createResource(getResourcePath("/test"));
     Company company1a = getModel1Factory().createCompany();
     company1a.setName("companyA");
     resource.getContents().add(company1a);
@@ -313,7 +313,7 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     final CDOTransaction transaction3 = session1.openTransaction();
 
     // create initial model.
-    CDOResource resource = transaction1.createResource("/test");
+    CDOResource resource = transaction1.createResource(getResourcePath("/test"));
     Company company1 = getModel1Factory().createCompany();
     company1.setName("company1");
     resource.getContents().add(company1);

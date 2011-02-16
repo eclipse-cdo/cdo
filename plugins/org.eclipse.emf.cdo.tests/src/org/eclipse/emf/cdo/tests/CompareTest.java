@@ -44,7 +44,7 @@ public class CompareTest extends AbstractCDOTest
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     EList<EObject> contents = resource.getContents();
     addCompany(contents);
     addCompany(contents);
@@ -86,7 +86,7 @@ public class CompareTest extends AbstractCDOTest
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     EList<EObject> contents = resource.getContents();
     addCompany(contents);
     addCompany(contents);
@@ -111,7 +111,7 @@ public class CompareTest extends AbstractCDOTest
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source1);
-    CDOResource res1 = tx1.getResource("/res");
+    CDOResource res1 = tx1.getResource(getResourcePath("/res"));
     EList<EObject> contents1 = res1.getContents();
     addCompany(contents1);
     addCompany(contents1);
@@ -129,7 +129,7 @@ public class CompareTest extends AbstractCDOTest
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     EList<EObject> contents = resource.getContents();
     addCompany(contents);
     addCompany(contents);
@@ -155,7 +155,7 @@ public class CompareTest extends AbstractCDOTest
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source1);
-    CDOResource res1 = tx1.getResource("/res");
+    CDOResource res1 = tx1.getResource(getResourcePath("/res"));
     EList<EObject> contents1 = res1.getContents();
     addCompany(contents1);
     addCompany(contents1);
@@ -164,7 +164,7 @@ public class CompareTest extends AbstractCDOTest
 
     sleep(10);
     CDOTransaction tx2 = session.openTransaction(source2);
-    CDOResource res2 = tx2.getResource("/res");
+    CDOResource res2 = tx2.getResource(getResourcePath("/res"));
     EList<EObject> contents2 = res2.getContents();
     addCompany(contents2);
     tx2.commit();
@@ -195,7 +195,7 @@ public class CompareTest extends AbstractCDOTest
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
-    CDOResource res1 = tx1.getResource("/res" + 0);
+    CDOResource res1 = tx1.getResource(getResourcePath("/res" + 0));
     EList<EObject> contents1 = res1.getContents();
     ((Company)contents1.get(0)).setName("Company0");
     ((Company)contents1.get(1)).setName("Company1");
@@ -214,7 +214,7 @@ public class CompareTest extends AbstractCDOTest
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     EList<EObject> contents = resource.getContents();
     addCompany(contents);
     addCompany(contents);
@@ -226,7 +226,7 @@ public class CompareTest extends AbstractCDOTest
 
     sleep(10);
     CDOTransaction tx1 = session.openTransaction(source);
-    CDOResource res1 = tx1.getResource("/res");
+    CDOResource res1 = tx1.getResource(getResourcePath("/res"));
     EList<EObject> contents1 = res1.getContents();
     ((Company)contents1.get(0)).setName("Company0");
     contents1.remove(1);

@@ -113,7 +113,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
 
       assertEquals(isSet, instance.eIsSet(feature));
 
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(instance);
       assertEquals(isSet, instance.eIsSet(feature));
 
@@ -136,10 +136,10 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
     EStructuralFeature feature = class1Class.getEStructuralFeature(featureName);
 
     CDOTransaction transaction = session.openTransaction();
-    CDOObject instance = CDOUtil.getCDOObject(transaction.getResource("/test1").getContents().get(0));
+    CDOObject instance = CDOUtil.getCDOObject(transaction.getResource(getResourcePath("/test1")).getContents().get(0));
     assertEquals(isSet, instance.eIsSet(feature));
 
-    transaction.getResource("/test1").getContents().remove(0);
+    transaction.getResource(getResourcePath("/test1")).getContents().remove(0);
     assertEquals(isSet, instance.eIsSet(feature));
 
     if (feature.isUnsettable())
@@ -159,7 +159,7 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
       session.getPackageRegistry().putEPackage(getModel1Package());
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(order);
       assertEquals(false, order.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
@@ -173,10 +173,10 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
     CDOSession session = openSession();
 
     CDOTransaction transaction = session.openTransaction();
-    Order instance = (Order)transaction.getResource("/test1").getContents().get(0);
+    Order instance = (Order)transaction.getResource(getResourcePath("/test1")).getContents().get(0);
     assertEquals(false, instance.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
-    transaction.getResource("/test1").getContents().remove(0);
+    transaction.getResource(getResourcePath("/test1")).getContents().remove(0);
     assertEquals(false, instance.eIsSet(getModel1Package().getOrder_OrderDetails()));
 
     instance.getOrderDetails().add(getModel1Factory().createOrderDetail());

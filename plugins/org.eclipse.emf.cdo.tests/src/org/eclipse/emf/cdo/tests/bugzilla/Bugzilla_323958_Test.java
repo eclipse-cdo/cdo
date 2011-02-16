@@ -40,7 +40,7 @@ public class Bugzilla_323958_Test extends AbstractCDOTest
         }
       });
 
-      CDOResource resource = transaction.createResource("/test");
+      CDOResource resource = transaction.createResource(getResourcePath("/test"));
       resource.getContents().add(company);
 
       transaction.commit();
@@ -49,7 +49,7 @@ public class Bugzilla_323958_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/test");
+    CDOResource resource = transaction.getResource(getResourcePath("/test"));
 
     Company company = (Company)resource.getContents().get(0);
     assertEquals("Y", company.getName());
@@ -72,7 +72,7 @@ public class Bugzilla_323958_Test extends AbstractCDOTest
         }
       });
 
-      CDOResource resource = transaction.createResource("/test");
+      CDOResource resource = transaction.createResource(getResourcePath("/test"));
       resource.getContents().add(company);
 
       transaction.commit();
@@ -81,7 +81,7 @@ public class Bugzilla_323958_Test extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("/test");
+    CDOResource resource = transaction.getResource(getResourcePath("/test"));
 
     Company company = (Company)resource.getContents().get(0);
     assertEquals(1, company.getCategories().size());

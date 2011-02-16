@@ -47,7 +47,7 @@ public class Bugzilla_316434_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
 
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(target);
       resource.getContents().add(source);
 
@@ -57,7 +57,7 @@ public class Bugzilla_316434_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
     resource.getContents().remove(0);
 
     try

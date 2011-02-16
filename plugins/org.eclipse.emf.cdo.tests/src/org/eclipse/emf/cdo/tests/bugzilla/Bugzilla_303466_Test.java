@@ -57,7 +57,7 @@ public class Bugzilla_303466_Test extends AbstractCDOTest
     assertNull(derivedClass.getEStructuralFeature("couter"));
 
     CDOTransaction tx = session.openTransaction();
-    CDOResource resource2 = tx.createResource("/resource1");
+    CDOResource resource2 = tx.createResource(getResourcePath("/resource1"));
     resource2.getContents().add(derived);
 
     try
@@ -119,7 +119,7 @@ public class Bugzilla_303466_Test extends AbstractCDOTest
     assertNotNull(derivedClass.getEStructuralFeature("couter"));
 
     CDOTransaction tx = session.openTransaction();
-    CDOResource resource3 = tx.createResource("/resource1");
+    CDOResource resource3 = tx.createResource(getResourcePath("/resource1"));
     resource3.getContents().add(derived);
 
     try

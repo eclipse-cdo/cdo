@@ -53,7 +53,7 @@ public class Bugzilla_252214_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
       Company company = getModel1Factory().createCompany();
       company.setName("ESC");
@@ -73,7 +73,7 @@ public class Bugzilla_252214_Test extends AbstractCDOTest
     CDOView audit = session.openView(commitTime1);
 
     {
-      CDOResource auditResource = audit.getResource("/res1");
+      CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
       Company auditCompany = (Company)auditResource.getContents().get(0);
       CDOObject cdoAuditCompany = CDOUtil.getCDOObject(auditCompany);
       CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)cdoAuditCompany, null, CDOBranchPoint.UNSPECIFIED_DATE);
@@ -82,7 +82,7 @@ public class Bugzilla_252214_Test extends AbstractCDOTest
     audit.setTimeStamp(commitTime2);
 
     {
-      CDOResource auditResource = audit.getResource("/res1");
+      CDOResource auditResource = audit.getResource(getResourcePath("/res1"));
       Company auditCompany = (Company)auditResource.getContents().get(0);
       assertEquals("Sympedia", auditCompany.getName());
     }

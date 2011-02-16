@@ -42,7 +42,7 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
 
     Company obj2 = getModel1Factory().createCompany();
 
@@ -68,7 +68,7 @@ public class Bugzilla_251087_Test extends AbstractCDOTest
     transaction1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     String resourcePath = "/test1";
-    CDOResource res = transaction1.createResource(resourcePath);
+    CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     Company obj2 = getModel1Factory().createCompany();
     res.getContents().add(obj2);
     transaction1.commit();

@@ -120,7 +120,7 @@ public class Bugzilla_335772_Test extends AbstractCDOTest
 
       try
       {
-        customerResource = transaction.getOrCreateResource("/customer"); //$NON-NLS-1$
+        customerResource = transaction.getOrCreateResource(getResourcePath("/customer")); //$NON-NLS-1$
         EList<EObject> customerResourceContents = customerResource.getContents();
         customerResourceContents.clear();
         customerResourceContents.add(customer);
@@ -140,7 +140,7 @@ public class Bugzilla_335772_Test extends AbstractCDOTest
 
       try
       {
-        customerResource = transaction.getResource("/customer"); //$NON-NLS-1$
+        customerResource = transaction.getResource(getResourcePath("/customer")); //$NON-NLS-1$
 
         Customer customer = (Customer)customerResource.getContents().get(0);
         EMap<Product1, SalesOrder> orderByProduct = customer.getOrderByProduct();

@@ -40,7 +40,7 @@ public class Bugzilla_324756_Test extends AbstractCDOTest
     s1Tr1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     // create resource, container using transaction 1.
-    final CDOResource resource = s1Tr1.createResource("/test1");
+    final CDOResource resource = s1Tr1.createResource(getResourcePath("/test1"));
     RefMultiContained container = getModel4Factory().createRefMultiContained();
     resource.getContents().add(container);
 
@@ -94,7 +94,7 @@ public class Bugzilla_324756_Test extends AbstractCDOTest
     s1Tr1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     // create resource, element using transaction 1.
-    final CDOResource resource = s1Tr1.createResource("/test1");
+    final CDOResource resource = s1Tr1.createResource(getResourcePath("/test1"));
     ContainedElementNoOpposite element = getModel4Factory().createContainedElementNoOpposite();
     element.setName("Version1");
     resource.getContents().add(element);

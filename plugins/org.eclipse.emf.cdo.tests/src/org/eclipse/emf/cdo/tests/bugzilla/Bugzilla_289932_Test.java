@@ -31,7 +31,7 @@ public class Bugzilla_289932_Test extends AbstractCDOTest
     CDOSession session = openSession();
     session.getPackageRegistry().putEPackage(getModel5Package());
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res1 = transaction.createResource("/res1");
+    CDOResource res1 = transaction.createResource(getResourcePath("/res1"));
 
     TestFeatureMap testFeatureMap = getModel5Factory().createTestFeatureMap();
     Doctor doctor = getModel5Factory().createDoctor();

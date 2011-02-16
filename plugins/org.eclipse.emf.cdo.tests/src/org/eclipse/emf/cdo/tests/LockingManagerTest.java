@@ -21,8 +21,8 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 import org.eclipse.emf.cdo.util.LockTimeoutException;
+import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
@@ -148,7 +148,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
@@ -173,7 +173,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
@@ -181,7 +181,7 @@ public class LockingManagerTest extends AbstractCDOTest
     readLock(cdoCompany);
 
     CDOTransaction transaction2 = session.openTransaction();
-    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
 
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
     assertEquals(false, cdoCompany2.cdoWriteLock().isLockedByOthers());
@@ -194,12 +194,12 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
     res.getContents().remove(0);
 
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
@@ -224,7 +224,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
@@ -232,7 +232,7 @@ public class LockingManagerTest extends AbstractCDOTest
     writeLock(cdoCompany);
 
     CDOTransaction transaction2 = session.openTransaction();
-    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
 
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
     assertEquals(true, cdoCompany2.cdoWriteLock().isLockedByOthers());
@@ -245,12 +245,12 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
@@ -284,12 +284,12 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
@@ -317,12 +317,12 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
 
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
@@ -345,12 +345,12 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
 
     transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.READ, CDOLock.WAIT);
@@ -372,12 +372,12 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    Company company2 = (Company)transaction2.getResource("/res1").getContents().get(0);
+    Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
 
     transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, CDOLock.WAIT);
@@ -400,7 +400,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
@@ -417,7 +417,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
@@ -440,7 +440,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
@@ -458,7 +458,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
@@ -539,7 +539,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     IView view = repo.getSessionManager().getSession(session.getSessionID()).getView(transaction.getViewID());
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
@@ -558,7 +558,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
     IView view = repo.getSessionManager().getSession(session.getSessionID()).getView(transaction.getViewID());
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
@@ -599,7 +599,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
     transaction.options().setAutoReleaseLocksEnabled(false);
@@ -639,7 +639,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
     transaction.options().setAutoReleaseLocksEnabled(false);
@@ -680,7 +680,7 @@ public class LockingManagerTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
     res.getContents().add(company);
     transaction.commit();
 
@@ -721,7 +721,7 @@ public class LockingManagerTest extends AbstractCDOTest
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res1");
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("AAA");
@@ -753,7 +753,7 @@ public class LockingManagerTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res1");
+    CDOResource res = transaction.getResource(getResourcePath("/res1"));
 
     Company company = (Company)res.getContents().get(0);
     company.setName("BBB");

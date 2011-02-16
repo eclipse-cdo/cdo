@@ -337,7 +337,7 @@ public class BranchingTest extends AbstractCDOTest
     orderDetail.setProduct(product);
     orderDetail.setPrice(5);
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     resource.getContents().add(product);
     resource.getContents().add(orderDetail);
 
@@ -353,7 +353,7 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
 
-    resource = transaction.getResource("/res");
+    resource = transaction.getResource(getResourcePath("/res"));
     orderDetail = (OrderDetail)resource.getContents().get(1);
     assertEquals(5.0f, orderDetail.getPrice());
     product = orderDetail.getProduct();
@@ -403,7 +403,7 @@ public class BranchingTest extends AbstractCDOTest
     orderDetail.setProduct(product);
     orderDetail.setPrice(5);
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     resource.getContents().add(product);
     resource.getContents().add(orderDetail);
 
@@ -419,7 +419,7 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
 
-    resource = transaction.getResource("/res");
+    resource = transaction.getResource(getResourcePath("/res"));
     orderDetail = (OrderDetail)resource.getContents().get(1);
     assertEquals(5.0f, orderDetail.getPrice());
     product = orderDetail.getProduct();
@@ -477,7 +477,7 @@ public class BranchingTest extends AbstractCDOTest
     orderDetail2.setProduct(product);
     orderDetail2.setPrice(10);
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     resource.getContents().add(orderDetail2);
     resource.getContents().add(product);
     resource.getContents().add(orderDetail);
@@ -494,7 +494,7 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
 
-    resource = transaction.getResource("/res");
+    resource = transaction.getResource(getResourcePath("/res"));
     orderDetail = (OrderDetail)resource.getContents().get(2);
     assertEquals(5.0f, orderDetail.getPrice());
     product = orderDetail.getProduct();
@@ -545,7 +545,7 @@ public class BranchingTest extends AbstractCDOTest
     orderDetail.setProduct(product);
     orderDetail.setPrice(5);
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     resource.getContents().add(product);
     resource.getContents().add(orderDetail);
 
@@ -560,7 +560,7 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
 
-    resource = transaction.getResource("/res");
+    resource = transaction.getResource(getResourcePath("/res"));
     orderDetail = (OrderDetail)resource.getContents().get(1);
     assertEquals(5.0f, orderDetail.getPrice());
     product = orderDetail.getProduct();
@@ -660,7 +660,7 @@ public class BranchingTest extends AbstractCDOTest
   private void check(CDOSession session, CDOBranch branch, long timeStamp, float price, String name)
   {
     CDOView view = session.openView(branch, timeStamp);
-    CDOResource resource = view.getResource("/res");
+    CDOResource resource = view.getResource(getResourcePath("/res"));
     assertEquals(2, resource.getContents().size());
 
     dumpAll(session);
@@ -679,7 +679,7 @@ public class BranchingTest extends AbstractCDOTest
   private void check(CDOSession session, CDOBranch branch, long timeStamp, float price, float price2, String name)
   {
     CDOView view = session.openView(branch, timeStamp);
-    CDOResource resource = view.getResource("/res");
+    CDOResource resource = view.getResource(getResourcePath("/res"));
     assertEquals(3, resource.getContents().size());
 
     dumpAll(session);
@@ -713,7 +713,7 @@ public class BranchingTest extends AbstractCDOTest
     Product1 product = getModel1Factory().createProduct1();
     product.setName("CDO");
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -727,7 +727,7 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
 
-    resource = transaction.getResource("/res");
+    resource = transaction.getResource(getResourcePath("/res"));
     product = (Product1)resource.getContents().get(0);
     assertEquals("CDO", product.getName());
 
@@ -785,7 +785,7 @@ public class BranchingTest extends AbstractCDOTest
     Product1 product = getModel1Factory().createProduct1();
     product.setName("CDO");
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -799,7 +799,7 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(subBranch, transaction.getBranch());
     assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
 
-    resource = transaction.getResource("/res");
+    resource = transaction.getResource(getResourcePath("/res"));
     product = (Product1)resource.getContents().get(0);
     assertEquals("CDO", product.getName());
 
@@ -861,7 +861,7 @@ public class BranchingTest extends AbstractCDOTest
     Product1 product = getModel1Factory().createProduct1();
     product.setName("CDO");
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     resource.getContents().add(product);
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -892,7 +892,7 @@ public class BranchingTest extends AbstractCDOTest
     Product1 product = getModel1Factory().createProduct1();
     product.setName("CDO");
 
-    CDOResource resource = transaction.createResource("/res");
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
     resource.getContents().add(product);
 
     // Commit to main branch
@@ -921,7 +921,7 @@ public class BranchingTest extends AbstractCDOTest
   private void check(CDOSession session, CDOBranch branch, long timeStamp, String name)
   {
     CDOView view = session.openView(branch, timeStamp);
-    CDOResource resource = view.getResource("/res");
+    CDOResource resource = view.getResource(getResourcePath("/res"));
 
     dumpAll(session);
     Product1 product = (Product1)resource.getContents().get(0);

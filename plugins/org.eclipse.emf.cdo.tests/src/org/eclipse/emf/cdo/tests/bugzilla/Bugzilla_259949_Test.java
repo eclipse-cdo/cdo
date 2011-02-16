@@ -34,7 +34,7 @@ public class Bugzilla_259949_Test extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       resource.getContents().add(customer);
 
       transaction.commit();
@@ -45,13 +45,13 @@ public class Bugzilla_259949_Test extends AbstractCDOTest
     session1.options().setPassiveUpdateEnabled(false);
 
     CDOView view1 = session1.openView();
-    CDOResource res1 = view1.getResource("/test1");
+    CDOResource res1 = view1.getResource(getResourcePath("/test1"));
     assertEquals(1, res1.getContents().size());
     assertEquals("customer", ((Customer)res1.getContents().get(0)).getName());
 
     CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
-    CDOResource res2 = transaction2.getResource("/test1");
+    CDOResource res2 = transaction2.getResource(getResourcePath("/test1"));
     assertEquals(1, res2.getContents().size());
     assertEquals("customer", ((Customer)res2.getContents().get(0)).getName());
     res2.getContents().clear();

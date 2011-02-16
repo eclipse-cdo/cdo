@@ -80,7 +80,7 @@ public class CDOTransactionDefImplTest extends AbstractCDOTest
     resource.getContents().add(customer);
     transaction.commit();
 
-    CDOResource resourceFetched = transaction.getResource(TEST_RESOURCE);
+    CDOResource resourceFetched = transaction.getResource(getResourcePath(TEST_RESOURCE));
     assertEquals(true, resourceFetched.eContents().contains(customer));
 
     transaction.getSession().close();

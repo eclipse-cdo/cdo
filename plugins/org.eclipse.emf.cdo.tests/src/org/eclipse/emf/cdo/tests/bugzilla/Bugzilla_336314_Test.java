@@ -68,7 +68,7 @@ public class Bugzilla_336314_Test extends AbstractCDOTest
     assertEquals(true, getModel1Package().getOrder_OrderDetails().isOrdered());
 
     Model1Factory mf = getModel1Factory();
-    CDOResource resource = tx.createResource("test");
+    CDOResource resource = tx.createResource(getResourcePath("test"));
 
     OrderDetail detailY = mf.createOrderDetail();
     detailY.setPrice(1.0f);

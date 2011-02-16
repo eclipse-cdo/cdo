@@ -59,15 +59,15 @@ public class ViewTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      transaction.createResource("/test1");
+      transaction.createResource(getResourcePath("/test1"));
       transaction.commit();
       session.close();
     }
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    assertEquals(true, view.hasResource("/test1"));
-    assertEquals(false, view.hasResource("/test2"));
+    assertEquals(true, view.hasResource(getResourcePath("/test1")));
+    assertEquals(false, view.hasResource(getResourcePath("/test2")));
     session.close();
   }
 
@@ -85,7 +85,7 @@ public class ViewTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       transaction.commit();
       id = resource.cdoID().toString();
       session.close();
@@ -93,8 +93,8 @@ public class ViewTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    assertEquals(id, transaction.getOrCreateResource("/test1").cdoID().toString());
-    assertNotSame(id, transaction.getOrCreateResource("/test2").cdoID().toString());
+    assertEquals(id, transaction.getOrCreateResource(getResourcePath("/test1")).cdoID().toString());
+    assertNotSame(id, transaction.getOrCreateResource(getResourcePath("/test2")).cdoID().toString());
     session.close();
   }
 
@@ -103,7 +103,7 @@ public class ViewTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       EList<EObject> contents = resource.getContents();
       for (int i = 0; i < 100; i++)
       {
@@ -121,7 +121,7 @@ public class ViewTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
     EList<EObject> contents = resource.getContents();
     for (int i = 100; i < 110; i++)
     {
@@ -142,7 +142,7 @@ public class ViewTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       EList<EObject> contents = resource.getContents();
       for (int i = 0; i < 100; i++)
       {
@@ -160,7 +160,7 @@ public class ViewTest extends AbstractCDOTest
 
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
     EList<EObject> contents = resource.getContents();
     for (int i = 100; i < 110; i++)
     {
@@ -185,15 +185,15 @@ public class ViewTest extends AbstractCDOTest
       ResourceSet resourceSet = new ResourceSetImpl();
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction(resourceSet);
-      transaction.createResource("/test1");
+      transaction.createResource(getResourcePath("/test1"));
       transaction.commit();
       session.close();
     }
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    assertEquals(true, view.hasResource("/test1"));
-    assertEquals(false, view.hasResource("/test2"));
+    assertEquals(true, view.hasResource(getResourcePath("/test1")));
+    assertEquals(false, view.hasResource(getResourcePath("/test2")));
     session.close();
   }
 
@@ -201,12 +201,12 @@ public class ViewTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     transaction.commit();
 
     CDOView view = session.openView();
     CDOResource resource2 = view.getObject(resource);
-    assertEquals("/test1", resource2.getPath());
+    assertEquals(getResourcePath("/test1"), resource2.getPath());
     session.close();
   }
 
@@ -214,7 +214,7 @@ public class ViewTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     transaction.commit();
 
     getRepository("repo2");
@@ -240,7 +240,7 @@ public class ViewTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     transaction.commit();
 
     CDOSession session2 = openSession();
@@ -258,13 +258,13 @@ public class ViewTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    transaction.createResource("/my/test1");
+    transaction.createResource(getResourcePath("/my/test1"));
     transaction.commit();
 
-    transaction.createResource("/my/test2");
-    transaction.createResource("/my/test3");
-    transaction.createResource("/my/test4");
-    transaction.createResource("/my/test5");
+    transaction.createResource(getResourcePath("/my/test2"));
+    transaction.createResource(getResourcePath("/my/test3"));
+    transaction.createResource(getResourcePath("/my/test4"));
+    transaction.createResource(getResourcePath("/my/test5"));
 
     boolean done;
     done = transaction.options().setCacheReferenceType(ReferenceType.SOFT);

@@ -195,7 +195,7 @@ public class OCLQueryTest extends AbstractCDOTest
   private CDOResource createTestSet(CDOTransaction transaction) throws CommitException
   {
     disableConsole();
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     fillResource(resource);
     transaction.commit();
     enableConsole();

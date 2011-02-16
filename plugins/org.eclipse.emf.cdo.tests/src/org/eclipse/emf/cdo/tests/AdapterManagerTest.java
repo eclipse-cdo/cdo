@@ -47,7 +47,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     transaction.options().setCacheReferenceType(ReferenceType.WEAK);
     transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.NONE);
 
-    transaction.createResource("/resA").getContents().add(companyA);
+    transaction.createResource(getResourcePath("/resA")).getContents().add(companyA);
 
     msg("Committing");
     transaction.commit();
@@ -81,7 +81,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     transaction.options().setCacheReferenceType(ReferenceType.WEAK);
     transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.ALL);
 
-    transaction.createResource("/resA").getContents().add(companyA);
+    transaction.createResource(getResourcePath("/resA")).getContents().add(companyA);
 
     msg("Committing");
     transaction.commit();
@@ -121,7 +121,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     transaction.options().setCacheReferenceType(ReferenceType.WEAK);
     transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.ALL);
 
-    transaction.createResource("/resA").getContents().add(companyA);
+    transaction.createResource(getResourcePath("/resA")).getContents().add(companyA);
 
     msg("Committing");
     transaction.commit();
@@ -163,7 +163,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     transaction.options().setCacheReferenceType(ReferenceType.WEAK);
     transaction.options().setStrongReferencePolicy(CDOAdapterPolicy.ALL);
 
-    transaction.createResource("/resA").getContents().add(companyA);
+    transaction.createResource(getResourcePath("/resA")).getContents().add(companyA);
 
     msg("Committing");
     transaction.commit();
@@ -178,7 +178,7 @@ public class AdapterManagerTest extends AbstractCDOTest
     Company companyB = (Company)CDOUtil.getEObject(transaction.getObject(id));
     assertEquals(companyB, weakCompanyA.get());
     companyB.setCity("Ottawa");
-    transaction.getResource("/resA").getContents().remove(0);
+    transaction.getResource(getResourcePath("/resA")).getContents().remove(0);
     transaction.commit();
   }
 }

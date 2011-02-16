@@ -27,7 +27,7 @@ public class Bugzilla_320837_Test extends AbstractCDOTest
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
 
-    CDOResource resource1 = transaction1.createResource("/test");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test"));
     RefSingleContainedNPL container1 = getModel4Factory().createRefSingleContainedNPL();
     ContainedElementNoOpposite contained1 = getModel4Factory().createContainedElementNoOpposite();
     container1.setElement(contained1);

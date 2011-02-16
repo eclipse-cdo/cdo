@@ -684,7 +684,7 @@ public class PartialCommitTest extends AbstractCDOTest
     {
       CDOSession session2 = openSession();
       CDOView view = session2.openView();
-      CDOResource resource = view.getResource(resource1.getPath());
+      CDOResource resource = view.getResource(getResourcePath(resource1.getPath()));
 
       // We want to know if the new company that was committed, is an element
       // in the getContents() collection of the Resource. We cannot just call

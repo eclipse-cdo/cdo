@@ -42,14 +42,14 @@ public class Bugzilla_254489_Test extends AbstractCDOTest
     final CDOTransaction transaction1 = session.openTransaction();
     final CDOTransaction transaction2 = session.openTransaction();
 
-    CDOResource res1 = transaction1.createResource("/res1");
+    CDOResource res1 = transaction1.createResource(getResourcePath("/res1"));
     final Company companyA1 = getModel1Factory().createCompany();
     res1.getContents().add(companyA1);
 
     transaction1.commit();
 
     transaction2.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
-    CDOResource res2 = transaction2.getResource("/res1");
+    CDOResource res2 = transaction2.getResource(getResourcePath("/res1"));
     Company companyA2 = (Company)res2.getContents().get(0);
     final TestAdapter companyA2Adapter = new TestAdapter();
     companyA2.eAdapters().add(companyA2Adapter);

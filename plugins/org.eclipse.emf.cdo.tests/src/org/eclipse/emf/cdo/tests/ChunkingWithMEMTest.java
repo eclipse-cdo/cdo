@@ -41,7 +41,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Creating customer");
       Customer customer = getModel1Factory().createCustomer();
@@ -72,7 +72,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     msg("Attaching transaction");
     CDOTransaction transaction = session.openTransaction();
     msg("Loading resource");
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     Customer customer = (Customer)resource.getContents().get(0);
     EList<SalesOrder> salesOrders = customer.getSalesOrders();
@@ -99,7 +99,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
 
       msg("Creating resource");
-      CDOResource resource = transaction.createResource("/test1");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
       msg("Creating customer");
       Customer customer = getModel1Factory().createCustomer();
@@ -132,7 +132,7 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Loading resource");
-    CDOResource resource = transaction.getResource("/test1");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     Customer customer = (Customer)resource.getContents().get(0);
     EList<SalesOrder> salesOrders = customer.getSalesOrders();

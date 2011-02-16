@@ -38,7 +38,7 @@ public class Bugzilla_313326_Test extends AbstractCDOTest
     tr1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     // init model with a container.
-    final CDOResource resource = tr1.createResource("/test1");
+    final CDOResource resource = tr1.createResource(getResourcePath("/test1"));
     RefSingleContained container = getModel4Factory().createRefSingleContained();
     container.setElement(getModel4Factory().createSingleContainedElement());
 

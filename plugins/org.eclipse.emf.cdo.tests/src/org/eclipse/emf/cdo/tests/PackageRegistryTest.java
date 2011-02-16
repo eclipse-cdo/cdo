@@ -64,7 +64,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       // Create resource in session 1
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       Company company = getModel1Factory().createCompany();
       company.setName("Eike");
@@ -75,7 +75,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     // Load resource in session 2
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     Company company = (Company)res.getContents().get(0);
     assertEquals("Eike", company.getName());
@@ -88,7 +88,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       session.getPackageRegistry().putEPackage(getModel1Package());
       session.getPackageRegistry().putEPackage(getModel2Package());
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       SpecialPurchaseOrder specialPurchaseOrder = getModel2Factory().createSpecialPurchaseOrder();
       specialPurchaseOrder.setDiscountCode("12345");
@@ -98,7 +98,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     SpecialPurchaseOrder specialPurchaseOrder = (SpecialPurchaseOrder)res.getContents().get(0);
     assertEquals("12345", specialPurchaseOrder.getDiscountCode());
@@ -109,7 +109,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
       res.getContents().add(purchaseOrder);
@@ -120,7 +120,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     MangoValue value = getMangoFactory().createMangoValue();
     value.setName("V0");
@@ -150,7 +150,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     assertEquals(5, session.getPackageRegistry().size());
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.createResource("/res");
+    CDOResource res = transaction.createResource(getResourcePath("/res"));
 
     Class1 class1 = getModel3Factory().createClass1();
     res.getContents().add(class1);
@@ -168,7 +168,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       session.getPackageRegistry().putEPackage(getModel3Package());
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       Class1 class1 = getModel3Factory().createClass1();
       res.getContents().add(class1);
@@ -191,8 +191,8 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(Model3Package.eINSTANCE);
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res1 = transaction.createResource("/res1");
-      CDOResource res2 = transaction.createResource("/res2");
+      CDOResource res1 = transaction.createResource(getResourcePath("/res1"));
+      CDOResource res2 = transaction.createResource(getResourcePath("/res2"));
 
       Class1 class1 = getModel3Factory().createClass1();
       Class2 class2 = getModel3SubpackageFactory().createClass2();
@@ -207,7 +207,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res1 = transaction.getResource("/res1");
+      CDOResource res1 = transaction.getResource(getResourcePath("/res1"));
 
       Class1 class1 = (Class1)res1.getContents().get(0);
       assertNotNull(class1);
@@ -218,7 +218,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res2 = transaction.getResource("/res2");
+    CDOResource res2 = transaction.getResource(getResourcePath("/res2"));
 
     Class2 class2 = (Class2)res2.getContents().get(0);
     assertNotNull(class2);
@@ -232,7 +232,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       // Create resource in session 1
       CDOSession session = openSession(IRepositoryConfig.REPOSITORY_NAME);
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       Company company = getModel1Factory().createCompany();
       company.setName("Eike");
@@ -243,7 +243,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     // Load resource in session 2
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     Company company = (Company)res.getContents().get(0);
     assertEquals("Eike", company.getName());
@@ -274,7 +274,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       p = session.getPackageRegistry().getEPackage(nsURI);
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       EFactory factory = p.getEFactoryInstance();
       EObject object = factory.create(c);
@@ -316,7 +316,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       EFactory factory = p.getEFactoryInstance();
       EObject object = factory.create(c);
@@ -355,7 +355,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOUtil.setLegacyModeDefault(false);
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       EFactory factory = p.getEFactoryInstance();
       EObject object = factory.create(c);
@@ -392,7 +392,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       assertEquals(model1Resource, model1.eResource());
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       EFactory factory = model1.getEFactoryInstance();
       EObject company = factory.create(companyClass);
@@ -405,7 +405,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     // Load resource in session 2
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     CDOObject company = CDOUtil.getCDOObject(res.getContents().get(0));
     EClass companyClass = company.eClass();
@@ -426,7 +426,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(model1);
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       CDOObject company = CDOUtil.getCDOObject(EcoreUtil.create(companyClass));
       company.eSet(nameAttribute, "Eike");
@@ -438,7 +438,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     // Load resource in session 2
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     CDOObject company = CDOUtil.getCDOObject(res.getContents().get(0));
     EClass companyClass = company.eClass();
@@ -457,7 +457,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     {
       {
         CDOTransaction transaction = session1.openTransaction();
-        CDOResource res = transaction.createResource("/res1");
+        CDOResource res = transaction.createResource(getResourcePath("/res1"));
 
         Company company = getModel1Factory().createCompany();
         company.setName("Company1");
@@ -475,7 +475,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
       {
         CDOTransaction transaction = session2.openTransaction();
-        CDOResource res = transaction.createResource("/res2");
+        CDOResource res = transaction.createResource(getResourcePath("/res2"));
 
         Company company = getModel1Factory().createCompany();
         company.setName("Company2");
@@ -500,7 +500,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     {
       {
         CDOTransaction transaction = session1.openTransaction();
-        CDOResource res = transaction.createResource("/res1");
+        CDOResource res = transaction.createResource(getResourcePath("/res1"));
 
         Company company = getModel1Factory().createCompany();
         company.setName("Company1");
@@ -519,7 +519,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
       {
         CDOTransaction transaction = session2.openTransaction();
-        CDOResource res = transaction.createResource("/res2");
+        CDOResource res = transaction.createResource(getResourcePath("/res2"));
 
         Company company = getModel1Factory().createCompany();
         company.setName("Company2");
@@ -546,7 +546,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     {
       {
         CDOTransaction transaction = session1.openTransaction();
-        CDOResource res = transaction.createResource("/res1");
+        CDOResource res = transaction.createResource(getResourcePath("/res1"));
 
         Company company = getModel1Factory().createCompany();
         company.setName("Company1");
@@ -563,7 +563,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
       {
         CDOTransaction transaction = session2.openTransaction();
-        CDOResource res = transaction.createResource("/res2");
+        CDOResource res = transaction.createResource(getResourcePath("/res2"));
 
         Company company = getModel1Factory().createCompany();
         company.setName("Company2");
@@ -599,7 +599,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       CDOPackageRegistryPopulator.populate(registry, session.getPackageRegistry());
 
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       Company company = getModel1Factory().createCompany();
       company.setName("Eike");
@@ -610,7 +610,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     // Load resource in session 2
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     Company company = (Company)res.getContents().get(0);
     assertEquals("Eike", company.getName());
@@ -639,7 +639,7 @@ public class PackageRegistryTest extends AbstractCDOTest
         CDOPackageRegistryPopulator.populate(registry, session.getPackageRegistry());
 
         CDOTransaction transaction = session.openTransaction();
-        CDOResource res = transaction.createResource("/res");
+        CDOResource res = transaction.createResource(getResourcePath("/res"));
 
         Company company = getModel1Factory().createCompany();
         company.setName("Eike");
@@ -650,7 +650,7 @@ public class PackageRegistryTest extends AbstractCDOTest
       // Load resource in session 2
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.getResource("/res");
+      CDOResource res = transaction.getResource(getResourcePath("/res"));
 
       Company company = (Company)res.getContents().get(0);
       assertEquals("Eike", company.getName());
@@ -666,7 +666,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource res = transaction.createResource("/res");
+      CDOResource res = transaction.createResource(getResourcePath("/res"));
 
       Company company = getModel1Factory().createCompany();
       company.setName("Eike");
@@ -677,7 +677,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     // Load resource in session 2
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource res = transaction.getResource("/res");
+    CDOResource res = transaction.getResource(getResourcePath("/res"));
 
     Company company = (Company)res.getContents().get(0);
     assertEquals("Eike", company.getName());

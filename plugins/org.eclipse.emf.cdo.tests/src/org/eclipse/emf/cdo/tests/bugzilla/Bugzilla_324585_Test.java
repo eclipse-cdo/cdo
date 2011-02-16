@@ -34,7 +34,7 @@ public class Bugzilla_324585_Test extends AbstractCDOTest
     // user 1
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
-    CDOResource resource1 = transaction1.createResource("test");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("test"));
 
     Category category1 = getModel1Factory().createCategory();
     resource1.getContents().add(category1);
@@ -45,7 +45,7 @@ public class Bugzilla_324585_Test extends AbstractCDOTest
     CDOSession session2 = openSession();
     session2.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction2 = session2.openTransaction();
-    CDOResource resource2 = transaction2.getResource("test");
+    CDOResource resource2 = transaction2.getResource(getResourcePath("test"));
 
     EObject category2 = resource2.getContents().get(0);
     category2.eAdapters().add(new AdapterImpl());

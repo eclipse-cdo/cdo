@@ -84,7 +84,7 @@ public class Bugzilla_325097_Test extends AbstractSyncingTest
 
     CDOSession session = openSession(master.getName());
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/my/resource");
+    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
@@ -115,7 +115,7 @@ public class Bugzilla_325097_Test extends AbstractSyncingTest
     assertEquals(CDOCommonRepository.Type.MASTER, session.getRepositoryInfo().getType());
     transaction = session.openTransaction();
 
-    resource = transaction.getResource("/my/resource");
+    resource = transaction.getResource(getResourcePath("/my/resource"));
     company = (Company)resource.getContents().get(0);
 
     // Create a new company

@@ -70,7 +70,7 @@ public class InvalidationTest extends AbstractCDOTest
     category2A.getCategories().add(category3A);
 
     final CDOTransaction transaction = session.openTransaction();
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
     resourceA.getContents().add(companyA);
     transaction.commit();
 
@@ -78,7 +78,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     final CDOView view = session.openTransaction();
 
-    final CDOResource resourceB = view.getResource("/test1");
+    final CDOResource resourceB = view.getResource(getResourcePath("/test1"));
     assertProxy(resourceB);
 
     EList<EObject> contents = resourceB.getContents();
@@ -142,14 +142,14 @@ public class InvalidationTest extends AbstractCDOTest
     category2A.getCategories().add(category3A);
 
     final CDOTransaction transaction = session.openTransaction();
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
     resourceA.getContents().add(companyA);
     transaction.commit();
 
     // ************************************************************* //
 
     final CDOView viewB = session.openTransaction();
-    final CDOResource resourceB = viewB.getResource("/test1");
+    final CDOResource resourceB = viewB.getResource(getResourcePath("/test1"));
     assertProxy(resourceB);
 
     EList<EObject> contents = resourceB.getContents();
@@ -281,10 +281,10 @@ public class InvalidationTest extends AbstractCDOTest
 
   private void testDetachedConflict(CDOTransaction trans1, CDOTransaction trans2) throws Exception
   {
-    final CDOResource res1 = trans1.getOrCreateResource("/test");
+    final CDOResource res1 = trans1.getOrCreateResource(getResourcePath("/test"));
     trans1.commit();
 
-    final CDOResource res2 = trans2.getResource("/test");
+    final CDOResource res2 = trans2.getResource(getResourcePath("/test"));
 
     res1.delete(null);
 
@@ -327,7 +327,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     final CDOSession sessionA = openSession();
     final CDOTransaction transaction = sessionA.openTransaction();
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
     resourceA.getContents().add(companyA);
     transaction.commit();
 
@@ -335,7 +335,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     final CDOSession sessionB = openSession();
     final CDOView viewB = sessionB.openTransaction();
-    final CDOResource resourceB = viewB.getResource("/test1");
+    final CDOResource resourceB = viewB.getResource(getResourcePath("/test1"));
     assertProxy(resourceB);
 
     EList<EObject> contents = resourceB.getContents();
@@ -466,7 +466,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     CDOSession sessionA = openSession();
     CDOTransaction transaction = sessionA.openTransaction();
-    CDOResource resourceA = transaction.createResource("/test1");
+    CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
     resourceA.getContents().add(companyA);
 
     transaction.commit();
@@ -527,7 +527,7 @@ public class InvalidationTest extends AbstractCDOTest
     final CDOTransaction transaction = sessionA.openTransaction();
 
     msg("Creating resource");
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
     resourceA.getContents().add(companyA);
@@ -624,7 +624,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     final CDOSession sessionA = openSession();
     final CDOTransaction transaction = sessionA.openTransaction();
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
 
     resourceA.getContents().add(categoryA);
     transaction.commit();
@@ -635,7 +635,7 @@ public class InvalidationTest extends AbstractCDOTest
     final CDOView viewB = sessionB.openTransaction();
     viewB.options().setInvalidationNotificationEnabled(true);
 
-    final CDOResource resourceB = viewB.getResource("/test1");
+    final CDOResource resourceB = viewB.getResource(getResourcePath("/test1"));
     assertProxy(resourceB);
 
     EList<EObject> contents = resourceB.getContents();
@@ -692,7 +692,7 @@ public class InvalidationTest extends AbstractCDOTest
     final CDOTransaction transaction = sessionA.openTransaction();
 
     msg("Creating resource");
-    final CDOResource resourceA = transaction.createResource("/test1");
+    final CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
     resourceA.getContents().add(categoryA);
@@ -711,7 +711,7 @@ public class InvalidationTest extends AbstractCDOTest
     viewB.options().setInvalidationNotificationEnabled(true);
 
     msg("Loading resource");
-    final CDOResource resourceB = viewB.getResource("/test1");
+    final CDOResource resourceB = viewB.getResource(getResourcePath("/test1"));
     assertProxy(resourceB);
 
     EList<EObject> contents = resourceB.getContents();
@@ -770,7 +770,7 @@ public class InvalidationTest extends AbstractCDOTest
 
     CDOSession sessionA = openSession();
     CDOTransaction transaction = sessionA.openTransaction();
-    CDOResource resourceA = transaction.createResource("/test1");
+    CDOResource resourceA = transaction.createResource(getResourcePath("/test1"));
 
     resourceA.getContents().add(categoryA);
     transaction.commit();
@@ -781,7 +781,7 @@ public class InvalidationTest extends AbstractCDOTest
     sessionB.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
 
     CDOView viewB = sessionB.openTransaction();
-    CDOResource resourceB = viewB.getResource("/test1");
+    CDOResource resourceB = viewB.getResource(getResourcePath("/test1"));
 
     Category categoryB = (Category)resourceB.getContents().get(0);
 

@@ -166,7 +166,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.getOrCreateResource("/r1");
+    CDOResource r1 = tx.getOrCreateResource(getResourcePath("/r1"));
     r1.getContents().clear();
 
     // Set things up
@@ -300,7 +300,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
     session.getPackageRegistry().putEPackage(model4interfacesPackage.eINSTANCE);
 
     CDOTransaction tx = session.openTransaction();
-    CDOResource res = tx.createResource("/test/1");
+    CDOResource res = tx.createResource(getResourcePath("/test/1"));
 
     GenRefMultiContained container1 = model4Factory.eINSTANCE.createGenRefMultiContained();
     GenRefMultiContained container2 = model4Factory.eINSTANCE.createGenRefMultiContained();
@@ -325,7 +325,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
     // === NEW TX ===
 
     tx = session.openTransaction();
-    res = tx.getResource("/test/1");
+    res = tx.getResource(getResourcePath("/test/1"));
 
     container1 = (GenRefMultiContained)res.getContents().get(0);
     container2 = (GenRefMultiContained)res.getContents().get(1);
@@ -349,7 +349,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.getOrCreateResource("/r1");
+    CDOResource r1 = tx.getOrCreateResource(getResourcePath("/r1"));
     r1.getContents().clear();
 
     // Set things up
@@ -416,7 +416,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.getOrCreateResource("/r1");
+    CDOResource r1 = tx.getOrCreateResource(getResourcePath("/r1"));
     r1.getContents().clear();
 
     // Set things up
@@ -472,7 +472,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource r1 = tx.getOrCreateResource("/r1");
+    CDOResource r1 = tx.getOrCreateResource(getResourcePath("/r1"));
     r1.getContents().clear();
 
     // Set things up
@@ -497,7 +497,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
     // See if the price update was incorporated in the commit
     {
       CDOView view = session.openView();
-      CDOResource res = view.getResource("/r1");
+      CDOResource res = view.getResource(getResourcePath("/r1"));
       Order order2prime = (Order)res.getContents().get(1);
       OrderDetail od1 = order2prime.getOrderDetails().get(0);
       assertEquals(PRICE, od1.getPrice());

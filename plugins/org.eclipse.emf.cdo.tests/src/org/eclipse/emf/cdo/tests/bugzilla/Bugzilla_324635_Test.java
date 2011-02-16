@@ -44,7 +44,7 @@ public class Bugzilla_324635_Test extends AbstractCDOTest
     s1Tr2.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     // create resource, container and 2 elements using transaction 1.
-    final CDOResource resource = s1Tr1.createResource("/test1");
+    final CDOResource resource = s1Tr1.createResource(getResourcePath("/test1"));
     RefMultiContained container = getModel4Factory().createRefMultiContained();
     resource.getContents().add(container);
     MultiContainedElement element1 = getModel4Factory().createMultiContainedElement();

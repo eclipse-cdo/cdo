@@ -37,7 +37,7 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
     CDOSession session = openSession();
 
     CDOTransaction transaction1 = session.openTransaction();
-    CDOResource res = transaction1.createResource("/test1");
+    CDOResource res = transaction1.createResource(getResourcePath("/test1"));
     Order order = getModel1Factory().createPurchaseOrder();
     OrderDetail orderDetail = getModel1Factory().createOrderDetail();
 
@@ -88,7 +88,7 @@ public class Bugzilla_246622_Test extends AbstractCDOTest
     CDOSession session = openSession();
 
     CDOTransaction transaction1 = session.openTransaction();
-    CDOResource res = transaction1.createResource("/test1");
+    CDOResource res = transaction1.createResource(getResourcePath("/test1"));
 
     msg("Test set with link before");
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();

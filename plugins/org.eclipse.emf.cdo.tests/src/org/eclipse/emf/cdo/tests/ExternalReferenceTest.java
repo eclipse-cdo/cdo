@@ -98,7 +98,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       sessionA.getPackageRegistry().putEPackage(getModel4Package());
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
 
-      CDOResource resA = transactionA1.createResource("/resA");
+      CDOResource resA = transactionA1.createResource(getResourcePath("/resA"));
       GenRefSingleNonContained objectFromResA = getModel4Factory().createGenRefSingleNonContained();
       objectFromResA.setElement(getModel1Package().getAddress());
       resA.getContents().add(objectFromResA);
@@ -113,7 +113,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       resourceSet.getPackageRegistry().put(getModel1Package().getNsURI(), getModel1Package());
 
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
-      CDOResource resA = transactionA1.getResource("/resA");
+      CDOResource resA = transactionA1.getResource(getResourcePath("/resA"));
 
       GenRefSingleNonContained objectFromResA = (GenRefSingleNonContained)resA.getContents().get(0);
       assertEquals(getModel1Package().getAddress(), objectFromResA.getElement());
@@ -132,7 +132,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       sessionA.getPackageRegistry().putEPackage(getModel4InterfacesPackage());
 
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
-      CDOResource resA = transactionA1.createResource("/resA");
+      CDOResource resA = transactionA1.createResource(getResourcePath("/resA"));
       GenRefSingleNonContained objectFromResA = getModel4Factory().createGenRefSingleNonContained();
       objectFromResA.setElement(getModel1Package());
       resA.getContents().add(objectFromResA);
@@ -147,7 +147,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       resourceSet.getPackageRegistry().put(getModel1Package().getNsURI(), getModel1Package());
 
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
-      CDOResource resA = transactionA1.getResource("/resA");
+      CDOResource resA = transactionA1.getResource(getResourcePath("/resA"));
 
       GenRefSingleNonContained objectFromResA = (GenRefSingleNonContained)resA.getContents().get(0);
       assertEquals(getModel1Package(), objectFromResA.getElement());
@@ -174,13 +174,13 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
       CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
 
-      CDOResource resA = transactionA1.createResource("/resA");
-      CDOResource resB = transactionB1.createResource("/resB");
+      CDOResource resA = transactionA1.createResource(getResourcePath("/resA"));
+      CDOResource resB = transactionB1.createResource(getResourcePath("/resB"));
 
       EList<Resource> resources = resourceSet.getResources();
       assertEquals(4, resources.size());
 
-      CDOResource resC = transactionA1.createResource("/resC");
+      CDOResource resC = transactionA1.createResource(getResourcePath("/resC"));
       assertNotNull(resC);
       assertEquals(5, resources.size());
 
@@ -238,8 +238,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
       Resource resD = resourceSet.createResource(URI.createURI("test://1"));
       resD.load(new ByteArrayInputStream(dataOfresD), null);
 
-      CDOResource resA = transaction.getResource("/resA");
-      CDOResource resB = transaction2.getResource("/resB");
+      CDOResource resA = transaction.getResource(getResourcePath("/resA"));
+      CDOResource resB = transaction2.getResource(getResourcePath("/resB"));
       Company companyA = (Company)resA.getContents().get(0);
       Company companyB = (Company)resB.getContents().get(0);
       Company companyD = (Company)resD.getContents().get(0);
@@ -278,8 +278,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction(resourceSet);
       CDOTransaction transactionB = sessionB.openTransaction(resourceSet);
 
-      CDOResource res = transaction.createResource("/resA");
-      CDOResource resB = transactionB.createResource("/resB");
+      CDOResource res = transaction.createResource(getResourcePath("/resA"));
+      CDOResource resB = transactionB.createResource(getResourcePath("/resB"));
 
       PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
       Supplier supplier = getModel1Factory().createSupplier();
@@ -304,10 +304,10 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOSession sessionB = openSession(REPOSITORY_B_NAME);
       CDOTransaction transactionB = sessionB.openTransaction(resourceSet);
 
-      CDOResource resA = transactionA.getResource("/resA");
+      CDOResource resA = transactionA.getResource(getResourcePath("/resA"));
       assertNotNull(resA);
 
-      CDOResource resB = transactionB.getResource("/resB");
+      CDOResource resB = transactionB.getResource(getResourcePath("/resB"));
       assertNotNull(resB);
 
       Supplier supplierB = (Supplier)resB.getContents().get(0);
@@ -331,7 +331,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource1 = transaction.createResource("/test1");
+    CDOResource resource1 = transaction.createResource(getResourcePath("/test1"));
 
     msg("Adding company");
     Supplier supplier = getModel1Factory().createSupplier();
@@ -389,7 +389,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.getPurchaseOrders().add(externalObject);
 
-    CDOResource resource = transaction.createResource("/internal");
+    CDOResource resource = transaction.createResource(getResourcePath("/internal"));
     resource.getContents().add(supplier);
     transaction.commit();
 
@@ -420,7 +420,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
         supplier.getPurchaseOrders().add(externalObject);
       }
 
-      CDOResource resource = transaction.createResource("/internal");
+      CDOResource resource = transaction.createResource(getResourcePath("/internal"));
       resource.getContents().add(supplier);
       transaction.commit();
     }
@@ -448,7 +448,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction(resourceSet);
       transaction.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
 
-      CDOResource resource = transaction.getResource("/internal");
+      CDOResource resource = transaction.getResource(getResourcePath("/internal"));
       Supplier supplier = (Supplier)resource.getContents().get(0);
 
       for (int i = 0; i < 200; i++)
@@ -458,7 +458,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       }
 
       int count = signalCounter.getCountFor(LoadRevisionsRequest.class);
-      assertEquals(2, count); // Resource + root object (supplier)
+      assertEquals(3, count); // Resource + top folder + top object (supplier)
 
       CDORevisionData data = CDOUtil.getCDOObject(supplier).cdoRevision().data();
       EReference reference = getModel1Package().getSupplier_PurchaseOrders();

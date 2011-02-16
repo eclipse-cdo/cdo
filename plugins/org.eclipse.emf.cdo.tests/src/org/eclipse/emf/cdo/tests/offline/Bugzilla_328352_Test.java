@@ -73,7 +73,7 @@ public class Bugzilla_328352_Test extends AbstractSyncingTest
     cloneViews[NUM_CLIENT_VIEWS] = transaction;
 
     // create resource and base model.
-    CDOResource resource = masterTransaction.createResource("/my/resource");
+    CDOResource resource = masterTransaction.createResource(getResourcePath("/my/resource"));
     Company company = getModel1Factory().createCompany();
     Category catA = getModel1Factory().createCategory();
     catA.setName("CatA");

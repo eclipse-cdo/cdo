@@ -33,7 +33,7 @@ public class Bugzilla_333299_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/res1");
+      CDOResource resource = transaction.createResource(getResourcePath("/res1"));
 
       EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
 
@@ -54,7 +54,7 @@ public class Bugzilla_333299_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource("/res1");
+      CDOResource resource = transaction.getResource(getResourcePath("/res1"));
 
       EPackage ePackage = (EPackage)resource.getContents().get(0);
       ePackage.getEClassifiers().remove(0);

@@ -75,9 +75,9 @@ public class MapTest extends AbstractCDOTest
     objects.put("Simon", "McDuff");
     objects.put("Stefan", "Winkler");
     objects.put("Victor", "Roldan Betancort");
-    objects.put("André", "Dietisheim");
+    objects.put("Andrï¿½", "Dietisheim");
     objects.put("Ibrahim", "Sallam");
-    objects.put("Martin", "Flügge");
+    objects.put("Martin", "Flï¿½gge");
     objects.put("Caspar", "De Groot");
     objects.put("Martin", "Taal");
 
@@ -216,7 +216,7 @@ public class MapTest extends AbstractCDOTest
     boolean keyNotContained = false;
     boolean valueNotContained = false;
 
-    String resourceName = "/test1" + count++;
+    String resourceName = getResourcePath("/test1" + count++);
 
     EClass eType = (EClass)feature.getEType();
     for (EStructuralFeature f : eType.getEAllStructuralFeatures())

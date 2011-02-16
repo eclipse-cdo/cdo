@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 /**
- * Resources fetched using CDOViewImpl.getResource(CDOID) not added to ResourceSet
+ * Resources fetched using CDOViewImpl.getResource(getResourcePath(CDOID)) not added to ResourceSet
  * <p>
  * See bug 248915
  * 
@@ -40,8 +40,8 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
     /*
      * Session has been established so 3) create the Supplier resource and 4) create the Purchase Order resource.
      */
-    CDOResource supplierResource = transaction1.createResource("/supplierResource");
-    CDOResource poResource = transaction1.createResource("/poResource");
+    CDOResource supplierResource = transaction1.createResource(getResourcePath("/supplierResource"));
+    CDOResource poResource = transaction1.createResource(getResourcePath("/poResource"));
 
     /* Create the supplier and add it to its respective resource */
     Supplier mySupplier = getModel1Factory().createSupplier();
@@ -76,7 +76,7 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
     CDOTransaction transaction2 = session2.openTransaction();
 
     /* 8) Load the supplier from transaction2, fetching it into transaction2's empty resourceSet */
-    CDOResource supplierResource2 = transaction2.getResource("/supplierResource");
+    CDOResource supplierResource2 = transaction2.getResource(getResourcePath("/supplierResource"));
     Supplier savedSupplier = (Supplier)supplierResource2.getContents().get(0);
 
     if (!isConfig(LEGACY))
@@ -112,7 +112,7 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
 
-    CDOResource supplierResource = transaction1.createResource("/supplierResource");
+    CDOResource supplierResource = transaction1.createResource(getResourcePath("/supplierResource"));
 
     transaction1.commit();
     CDOID resID = CDOUtil.getCDOObject(supplierResource).cdoID();
@@ -122,7 +122,7 @@ public class Bugzilla_248915_Test extends AbstractCDOTest
     CDOSession session2 = openSession();
     CDOTransaction transaction2 = session2.openTransaction();
     CDOResource resource = (CDOResource)transaction2.getObject(resID);
-    CDOResource resource1 = transaction2.getResource("/supplierResource");
+    CDOResource resource1 = transaction2.getResource(getResourcePath("/supplierResource"));
     assertSame(resource, resource1);
     transaction2.close();
     session2.close();

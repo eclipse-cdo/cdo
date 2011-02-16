@@ -28,7 +28,7 @@ public class Bugzilla_278900_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
-    CDOResource res = tx.getOrCreateResource("/resource1");
+    CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
     tx.commit();
 
     try

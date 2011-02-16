@@ -52,7 +52,7 @@ public class Bugzilla_325866_Test extends AbstractCDOTest
     s1Tr1.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
 
     // create resource, and container tree using transaction 1.
-    final CDOResource resource = s1Tr1.createResource("/test1");
+    final CDOResource resource = s1Tr1.createResource(getResourcePath("/test1"));
     GenRefMultiContained container1 = getModel4Factory().createGenRefMultiContained();
     GenRefMultiContained container2 = getModel4Factory().createGenRefMultiContained();
     GenRefMultiContained container3 = getModel4Factory().createGenRefMultiContained();

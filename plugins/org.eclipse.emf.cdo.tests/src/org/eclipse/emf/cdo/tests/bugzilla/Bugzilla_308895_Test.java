@@ -71,7 +71,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOTransaction tx = session.openTransaction();
-      CDOResource res = tx.createResource("/test");
+      CDOResource res = tx.createResource(getResourcePath("/test"));
       res.getContents().add(obj);
       tx.commit();
       tx.close();
@@ -84,7 +84,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOView v = session.openView();
-      CDOResource res = v.getResource("/test");
+      CDOResource res = v.getResource(getResourcePath("/test"));
       EObject persistent = res.getContents().get(0);
 
       CustomType pCustom = (CustomType)persistent.eGet(att);
@@ -108,7 +108,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOTransaction tx = session.openTransaction();
-      CDOResource res = tx.createResource("/test");
+      CDOResource res = tx.createResource(getResourcePath("/test"));
       res.getContents().add(obj);
       tx.commit();
       tx.close();
@@ -121,7 +121,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOView v = session.openView();
-      CDOResource res = v.getResource("/test");
+      CDOResource res = v.getResource(getResourcePath("/test"));
       EObject persistent = res.getContents().get(0);
 
       CustomType pCustom = (CustomType)persistent.eGet(att);
@@ -142,7 +142,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOTransaction tx = session.openTransaction();
-      CDOResource res = tx.createResource("/test");
+      CDOResource res = tx.createResource(getResourcePath("/test"));
       res.getContents().add(obj);
       tx.commit();
       tx.close();
@@ -155,7 +155,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOView v = session.openView();
-      CDOResource res = v.getResource("/test");
+      CDOResource res = v.getResource(getResourcePath("/test"));
       EObject persistent = res.getContents().get(0);
 
       CustomType pCustom = (CustomType)persistent.eGet(att);
@@ -177,7 +177,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOTransaction tx = session.openTransaction();
-      CDOResource res = tx.createResource("/test");
+      CDOResource res = tx.createResource(getResourcePath("/test"));
       res.getContents().add(obj);
       tx.commit();
       tx.close();
@@ -190,7 +190,7 @@ public class Bugzilla_308895_Test extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOView v = session.openView();
-      CDOResource res = v.getResource("/test");
+      CDOResource res = v.getResource(getResourcePath("/test"));
       EObject persistent = res.getContents().get(0);
 
       CustomType pCustom = (CustomType)persistent.eGet(att);

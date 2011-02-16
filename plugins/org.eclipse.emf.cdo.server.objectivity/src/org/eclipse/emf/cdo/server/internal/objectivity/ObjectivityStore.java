@@ -235,7 +235,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     throw new UnsupportedOperationException();
   }
 
-  public boolean isFirstTime()
+  public boolean isFirstStart()
   {
     return firstTime;
   }

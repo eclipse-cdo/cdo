@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.mongodbdb.IMongoDBStoreAccessor;
+import org.eclipse.emf.cdo.server.mongodb.IMongoDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;

@@ -10,7 +10,7 @@
  *    Stefan Winkler - 271444: [DB] Multiple refactorings
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
  */
-package org.eclipse.emf.cdo.server.mongodbdb;
+package org.eclipse.emf.cdo.server.mongodb;
 
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBBrowserPage;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;

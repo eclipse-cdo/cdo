@@ -342,7 +342,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     super.doActivate();
 
     InternalStore store = getStore();
-    if (!store.isFirstTime())
+    if (!store.isFirstStart())
     {
       Map<String, String> map = store.getPropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
       if (!map.containsKey(PROP_GRACEFULLY_SHUT_DOWN))

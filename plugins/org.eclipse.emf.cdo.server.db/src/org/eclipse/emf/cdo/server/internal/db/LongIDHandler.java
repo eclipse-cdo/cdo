@@ -55,19 +55,24 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     return store;
   }
 
-  public int compare(CDOID id1, CDOID id2)
-  {
-    return id1.compareTo(id2);
-  }
-
-  public DBType getDBType()
-  {
-    return DBType.BIGINT;
-  }
-
   public Set<ObjectType> getObjectIDTypes()
   {
     return LongIDStore.OBJECT_ID_TYPES;
+  }
+
+  public CDOID getMinCDOID()
+  {
+    return MIN;
+  }
+
+  public CDOID getMaxCDOID()
+  {
+    return MAX;
+  }
+
+  public int compare(CDOID id1, CDOID id2)
+  {
+    return id1.compareTo(id2);
   }
 
   public CDOID createCDOID(String val)
@@ -112,6 +117,11 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
   public boolean isLocalCDOID(CDOID id)
   {
     return compare(id, nextLocalObjectID) > 0;
+  }
+
+  public DBType getDBType()
+  {
+    return DBType.BIGINT;
   }
 
   public ITypeMapping getObjectTypeMapping()
@@ -182,16 +192,6 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     }
 
     return create(id);
-  }
-
-  public CDOID getMinCDOID()
-  {
-    return MIN;
-  }
-
-  public CDOID getMaxCDOID()
-  {
-    return MAX;
   }
 
   public CDOID mapURI(IDBStoreAccessor accessor, String uri, long commitTime)

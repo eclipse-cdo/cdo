@@ -536,7 +536,7 @@ public class HibernateStore extends Store implements IHibernateStore
     return currentHibernateStore.get();
   }
 
-  public boolean isFirstTime()
+  public boolean isFirstStart()
   {
     return getSystemInformation().isFirstTime();
   }

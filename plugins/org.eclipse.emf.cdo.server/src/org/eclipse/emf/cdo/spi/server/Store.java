@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -470,6 +471,24 @@ public abstract class Store extends Lifecycle implements InternalStore
   protected static <T> Set<T> set(T... elements)
   {
     return Collections.unmodifiableSet(new HashSet<T>(Arrays.asList(elements)));
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static String idToString(CDOID id)
+  {
+    StringBuilder builder = new StringBuilder();
+    CDOIDUtil.write(builder, id);
+    return builder.toString();
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDOID stringToID(String string)
+  {
+    return CDOIDUtil.read(string);
   }
 
   /**

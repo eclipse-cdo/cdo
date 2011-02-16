@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.server.mongodbdb;
+package org.eclipse.emf.cdo.server.mongodb;
 
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 

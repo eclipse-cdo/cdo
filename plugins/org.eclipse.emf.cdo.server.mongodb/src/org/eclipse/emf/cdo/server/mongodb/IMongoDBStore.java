@@ -10,14 +10,21 @@
  *    Stefan Winkler - 271444: [DB] Multiple refactorings
  *    Stefan Winkler - 249610: [DB] Support external references (Implementation)
  */
-package org.eclipse.emf.cdo.server.mongodbdb;
+package org.eclipse.emf.cdo.server.mongodb;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.ITransaction;
 
 import com.mongodb.DB;
+import com.mongodb.DBCollection;
 import com.mongodb.MongoURI;
+
+import java.util.Comparator;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -28,8 +35,6 @@ public interface IMongoDBStore extends IStore
 
   public String getDBName();
 
-  public DB getDB();
-
   public IsolationLevel getIsolationLevel();
 
   public EmbeddingStrategy getEmbeddingStrategy();
@@ -39,6 +44,10 @@ public interface IMongoDBStore extends IStore
   public IMongoDBStoreAccessor getReader(ISession session);
 
   public IMongoDBStoreAccessor getWriter(ITransaction transaction);
+
+  public DB getDB();
+
+  public DBCollection getPropertiesCollection();
 
   /**
    * @author Eike Stepper
@@ -57,7 +66,28 @@ public interface IMongoDBStore extends IStore
   /**
    * @author Eike Stepper
    */
-  public interface IDHandler
+  public interface IDHandler extends Comparator<CDOID>
   {
+    public IMongoDBStore getStore();
+
+    public Set<ObjectType> getObjectIDTypes();
+
+    public CDOID getMinCDOID();
+
+    public CDOID getMaxCDOID();
+
+    public boolean isLocalCDOID(CDOID id);
+
+    public CDOID getNextCDOID(CDORevision revision);
+
+    public CDOID createCDOID(String val);
+
+    public CDOID getNextLocalObjectID();
+
+    public void setNextLocalObjectID(CDOID nextLocalObjectID);
+
+    public CDOID getLastObjectID();
+
+    public void setLastObjectID(CDOID lastObjectID);
   }
 }

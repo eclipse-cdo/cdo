@@ -2,7 +2,7 @@ package org.eclipse.emf.cdo.server.internal.mongodb;
 
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerBrowser.AbstractPage;
-import org.eclipse.emf.cdo.server.mongodbdb.IMongoDBStore;
+import org.eclipse.emf.cdo.server.mongodb.IMongoDBStore;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;

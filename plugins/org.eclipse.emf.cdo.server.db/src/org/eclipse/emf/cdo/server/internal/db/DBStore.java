@@ -17,7 +17,6 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -467,7 +466,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     setPropertyValues(map);
   }
 
-  public boolean isFirstTime()
+  public boolean isFirstStart()
   {
     return firstTime;
   }
@@ -541,8 +540,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     Map<String, String> map = new HashMap<String, String>();
     map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
     map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
-    map.put(PROP_NEXT_LOCAL_CDOID, idToString(idHandler.getNextLocalObjectID()));
-    map.put(PROP_LAST_CDOID, idToString(idHandler.getLastObjectID()));
+    map.put(PROP_NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
+    map.put(PROP_LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
     map.put(PROP_LAST_BRANCHID, Integer.toString(getLastBranchID()));
     map.put(PROP_LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
     map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
@@ -599,8 +598,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       names.add(PROP_LAST_NONLOCAL_COMMITTIME);
       map = getPropertyValues(names);
 
-      idHandler.setNextLocalObjectID(stringToID(map.get(PROP_NEXT_LOCAL_CDOID)));
-      idHandler.setLastObjectID(stringToID(map.get(PROP_LAST_CDOID)));
+      idHandler.setNextLocalObjectID(Store.stringToID(map.get(PROP_NEXT_LOCAL_CDOID)));
+      idHandler.setLastObjectID(Store.stringToID(map.get(PROP_LAST_CDOID)));
       setLastBranchID(Integer.valueOf(map.get(PROP_LAST_BRANCHID)));
       setLastLocalBranchID(Integer.valueOf(map.get(PROP_LAST_LOCAL_BRANCHID)));
       setLastCommitTime(Long.valueOf(map.get(PROP_LAST_COMMITTIME)));
@@ -660,17 +659,5 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   {
     String name = getRepository().getName();
     return new DBSchema(name);
-  }
-
-  private String idToString(CDOID id)
-  {
-    StringBuilder builder = new StringBuilder();
-    CDOIDUtil.write(builder, id);
-    return builder.toString();
-  }
-
-  private CDOID stringToID(String string)
-  {
-    return CDOIDUtil.read(string);
   }
 }

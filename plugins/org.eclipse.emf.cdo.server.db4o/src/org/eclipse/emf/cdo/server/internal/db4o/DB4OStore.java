@@ -94,7 +94,7 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     getServerInfo().setCreationTime(creationTime);
   }
 
-  public boolean isFirstTime()
+  public boolean isFirstStart()
   {
     return getServerInfo().isFirstTime();
   }

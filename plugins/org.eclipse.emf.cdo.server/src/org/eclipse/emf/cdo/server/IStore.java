@@ -72,9 +72,9 @@ public interface IStore
   /**
    * Returns <code>true</code>if this store was activated for the first time, <code>false</code> otherwise.
    * 
-   * @since 2.0
+   * @since 4.0
    */
-  public boolean isFirstTime();
+  public boolean isFirstStart();
 
   /**
    * Returns the store creation time.

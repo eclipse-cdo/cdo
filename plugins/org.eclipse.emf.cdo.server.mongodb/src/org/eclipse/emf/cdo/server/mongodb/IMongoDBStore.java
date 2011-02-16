@@ -49,6 +49,10 @@ public interface IMongoDBStore extends IStore
 
   public DBCollection getPropertiesCollection();
 
+  public DBCollection getPackageUnitsCollection();
+
+  public DBCollection getCommitInfosCollection();
+
   /**
    * @author Eike Stepper
    */

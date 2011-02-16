@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.tests.mongodb;
 
+import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
 import org.eclipse.emf.cdo.server.mongodb.CDOMongoDBUtil;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
@@ -30,6 +32,8 @@ public class MongoDBStoreRepositoryConfig extends RepositoryConfig
 
   private static final long serialVersionUID = 1L;
 
+  private transient CDOServerBrowser mongoBrowser;
+
   public MongoDBStoreRepositoryConfig(String name)
   {
     super(name);
@@ -39,7 +43,19 @@ public class MongoDBStoreRepositoryConfig extends RepositoryConfig
   public void setUp() throws Exception
   {
     CDOMongoDBUtil.prepareContainer(IPluginContainer.INSTANCE);
+
+    mongoBrowser = new CDOServerBrowser(MongoDBStore.REPOS);
+    mongoBrowser.setPort(7778);
+    mongoBrowser.activate();
+
     super.setUp();
+  }
+
+  @Override
+  public void tearDown() throws Exception
+  {
+    mongoBrowser.deactivate();
+    super.tearDown();
   }
 
   @Override

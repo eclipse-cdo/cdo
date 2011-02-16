@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.internal.mongodb.bundle.OM;
 import org.eclipse.emf.cdo.server.mongodb.IMongoDBStore;
 import org.eclipse.emf.cdo.server.mongodb.IMongoDBStoreAccessor;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
@@ -78,9 +79,15 @@ public class MongoDBStore extends Store implements IMongoDBStore
 
   private DBCollection propertiesCollection;
 
+  private DBCollection packageUnitsCollection;
+
+  private DBCollection commitInfosCollection;
+
   private boolean firstStart;
 
   private long creationTime;
+
+  public static Map<String, InternalRepository> REPOS = new HashMap<String, InternalRepository>();
 
   public MongoDBStore()
   {
@@ -154,6 +161,16 @@ public class MongoDBStore extends Store implements IMongoDBStore
     return propertiesCollection;
   }
 
+  public DBCollection getPackageUnitsCollection()
+  {
+    return packageUnitsCollection;
+  }
+
+  public DBCollection getCommitInfosCollection()
+  {
+    return commitInfosCollection;
+  }
+
   public Map<String, String> getPropertyValues(Set<String> names)
   {
     Map<String, String> result = new HashMap<String, String>();
@@ -167,7 +184,7 @@ public class MongoDBStore extends Store implements IMongoDBStore
         if (cursor.hasNext())
         {
           DBObject doc = cursor.next();
-          result.put(name, (String)doc.get("v"));
+          result.put(name, (String)doc.get("value"));
         }
       }
       finally
@@ -185,7 +202,7 @@ public class MongoDBStore extends Store implements IMongoDBStore
     {
       DBObject doc = new BasicDBObject();
       doc.put("_id", property.getKey());
-      doc.put("v", property.getValue());
+      doc.put("value", property.getValue());
 
       propertiesCollection.insert(doc);
 
@@ -275,6 +292,8 @@ public class MongoDBStore extends Store implements IMongoDBStore
   @Override
   protected void doActivate() throws Exception
   {
+    REPOS.put(getRepository().getName(), getRepository());
+
     super.doActivate();
     setObjectIDTypes(idHandler.getObjectIDTypes());
 
@@ -285,6 +304,8 @@ public class MongoDBStore extends Store implements IMongoDBStore
     firstStart = !collectionNames.contains("cdo.properties");
 
     propertiesCollection = db.getCollection("cdo.properties");
+    packageUnitsCollection = db.getCollection("cdo.packageUnits");
+    commitInfosCollection = db.getCollection("cdo.commitInfos");
 
     LifecycleUtil.activate(idHandler);
 
@@ -301,6 +322,8 @@ public class MongoDBStore extends Store implements IMongoDBStore
   @Override
   protected void doDeactivate() throws Exception
   {
+    REPOS.remove(getRepository().getName());
+
     Map<String, String> map = new HashMap<String, String>();
     map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
     map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));

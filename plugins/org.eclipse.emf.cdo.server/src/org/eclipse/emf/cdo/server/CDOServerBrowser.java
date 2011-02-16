@@ -67,6 +67,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -279,13 +280,13 @@ public class CDOServerBrowser extends Worker
   {
     String repo = getParam("repo");
 
-    List<String> repoNames = new ArrayList<String>(repositories.keySet());
+    List<String> repoNames = new ArrayList<String>(getRepositoryNames());
     Collections.sort(repoNames);
 
     pout.print("<h3><a href=\"/\">" + page.getLabel() + "</a>:&nbsp;&nbsp;");
     for (String repoName : repoNames)
     {
-      InternalRepository repository = repositories.get(repoName);
+      InternalRepository repository = getRepository(repoName);
       if (!page.canDisplay(repository))
       {
         continue;
@@ -308,12 +309,22 @@ public class CDOServerBrowser extends Worker
 
     pout.print("</h3>");
 
-    InternalRepository repository = repositories.get(repo);
+    InternalRepository repository = getRepository(repo);
     if (repository != null)
     {
       pout.print("<p>\r\n");
       page.display(this, repository, pout);
     }
+  }
+
+  protected Set<String> getRepositoryNames()
+  {
+    return repositories.keySet();
+  }
+
+  protected InternalRepository getRepository(String name)
+  {
+    return repositories.get(name);
   }
 
   @Override

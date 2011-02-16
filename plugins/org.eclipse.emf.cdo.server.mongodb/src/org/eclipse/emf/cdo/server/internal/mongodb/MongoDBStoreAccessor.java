@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -28,8 +29,10 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.mongodb.IMongoDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorBase;
@@ -40,6 +43,10 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -52,6 +59,8 @@ import java.util.Set;
  */
 public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBStoreAccessor
 {
+  private static final boolean ZIP_PACKAGE_BYTES = true;
+
   public MongoDBStoreAccessor(Store store, ISession session)
   {
     super(store, session);
@@ -174,17 +183,98 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    DBCollection packageUnitsCollection = getStore().getPackageUnitsCollection();
+    for (DBObject doc : marshallPackageUnits(packageUnits))
+    {
+      packageUnitsCollection.insert(doc);
+    }
   }
 
   public void write(InternalCommitContext context, OMMonitor monitor)
+  {
+    CDOBranchPoint branchPoint = context.getBranchPoint();
+
+    DBObject doc = new BasicDBObject();
+    doc.put("_id", branchPoint.getTimeStamp());
+    doc.put("previous", context.getPreviousTimeStamp());
+    doc.put("branch", branchPoint.getBranch().getID());
+    doc.put("user", context.getUserID());
+    doc.put("comment", context.getCommitComment());
+
+    InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
+    if (newPackageUnits != null)
+    {
+      doc.put("meta", marshallPackageUnits(newPackageUnits));
+    }
+
+    InternalCDORevision[] newObjects = context.getNewObjects();
+    if (newObjects != null)
+    {
+      doc.put("new", marshallRevisions(newObjects));
+    }
+
+    InternalCDORevisionDelta[] dirtyObjectDeltas = context.getDirtyObjectDeltas();
+    if (dirtyObjectDeltas != null)
+    {
+      doc.put("changed", marshallRevisionDeltas(dirtyObjectDeltas));
+    }
+
+    CDOID[] detachedObjects = context.getDetachedObjects();
+    if (detachedObjects != null)
+    {
+      doc.put("detached", marshallCDOIDs(detachedObjects));
+    }
+
+    getStore().getCommitInfosCollection().insert(doc);
+  }
+
+  private DBObject[] marshallPackageUnits(InternalCDOPackageUnit[] packageUnits)
+  {
+    DBObject[] result = new DBObject[packageUnits.length];
+    InternalCDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
+
+    for (int i = 0; i < packageUnits.length; i++)
+    {
+      InternalCDOPackageUnit packageUnit = packageUnits[i];
+      EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
+      byte[] bytes = EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, packageRegistry);
+
+      DBObject doc = new BasicDBObject();
+      doc.put("_id", packageUnit.getID());
+      doc.put("originalType", packageUnit.getOriginalType().toString());
+      doc.put("timeStamp", packageUnit.getTimeStamp());
+      doc.put("packageData", bytes);
+
+      result[i] = doc;
+    }
+
+    return result;
+  }
+
+  private DBObject[] marshallRevisions(InternalCDORevision[] revisions)
+  {
+    DBObject[] result = new DBObject[revisions.length];
+    for (int i = 0; i < revisions.length; i++)
+    {
+      InternalCDORevision revision = revisions[i];
+    }
+
+    return result;
+  }
+
+  private DBObject[] marshallRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas)
+  {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+  }
+
+  private DBObject[] marshallCDOIDs(CDOID[] ids)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void commit(OMMonitor monitor)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    // Do nothing
   }
 
   public void rollback()

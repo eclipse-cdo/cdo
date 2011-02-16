@@ -8,6 +8,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import com.mongodb.DB;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 import java.io.PrintStream;
 import java.util.Set;
@@ -20,7 +22,7 @@ public class MongoDBBrowserPage extends AbstractPage
 {
   public MongoDBBrowserPage()
   {
-    super("tables", "Database Tables");
+    super("collections", "MongoDB Collections");
   }
 
   public boolean canDisplay(InternalRepository repository)
@@ -37,13 +39,13 @@ public class MongoDBBrowserPage extends AbstractPage
     out.print("<tr>\r\n");
 
     out.print("<td valign=\"top\">\r\n");
-    String table = showTables(browser, out, db, repository.getName());
+    String collection = showCollections(browser, out, db, repository.getName());
     out.print("</td>\r\n");
 
-    if (table != null)
+    if (collection != null)
     {
       out.print("<td valign=\"top\">\r\n");
-      showTable(browser, out, db, table);
+      showCollection(browser, out, db, collection);
       out.print("</td>\r\n");
     }
 
@@ -54,107 +56,55 @@ public class MongoDBBrowserPage extends AbstractPage
   /**
    * @since 4.0
    */
-  protected String showTables(CDOServerBrowser browser, PrintStream pout, DB db, String repo)
+  protected String showCollections(CDOServerBrowser browser, PrintStream pout, DB db, String repo)
   {
-    String table = browser.getParam("table");
+    String collection = browser.getParam("collection");
 
-    Set<String> allTableNames = db.getCollectionNames();
-    for (String tableName : allTableNames)
+    Set<String> allCollectionNames = db.getCollectionNames();
+    for (String collectionName : allCollectionNames)
     {
-      if (table == null)
+      if (collection == null)
       {
-        table = tableName;
+        collection = collectionName;
       }
 
-      String label = browser.escape(tableName)/* .toLowerCase() */;
-      if (tableName.equals(table))
+      String label = browser.escape(collectionName)/* .toLowerCase() */;
+      if (collectionName.equals(collection))
       {
         pout.print("<b>" + label + "</b><br>\r\n");
       }
       else
       {
-        pout.print(browser.href(label, getName(), "table", tableName, "order", null, "direction", null) + "<br>\r\n");
+        pout.print(browser.href(label, getName(), "collection", collectionName) + "<br>\r\n");
       }
     }
 
-    return table;
+    return collection;
   }
 
   /**
    * @since 4.0
    */
-  protected void showTable(CDOServerBrowser browser, PrintStream pout, DB db, String table)
+  protected void showCollection(CDOServerBrowser browser, PrintStream pout, DB db, String collection)
   {
+    DBCursor cursor = null;
+    
     try
     {
-      String order = browser.getParam("order");
-      executeQuery(browser, pout, db, "SELECT * FROM " + table
-          + (order == null ? "" : " ORDER BY " + order + " " + browser.getParam("direction")));
+      cursor = db.getCollection(collection).find();
+      while (cursor.hasNext())
+      {
+        DBObject doc = cursor.next();
+        pout.print(browser.escape(doc.toString()) + "<br>\r\n");
+      }
     }
-    catch (Exception ex)
+    finally
     {
-      browser.removeParam("order");
-      browser.removeParam("direction");
-      executeQuery(browser, pout, db, "SELECT * FROM " + table);
+      if (cursor != null)
+      {
+        cursor.close();
+      }
     }
-  }
-
-  protected void executeQuery(CDOServerBrowser browser, PrintStream pout, DB db, String sql)
-  {
-    // String order = browser.getParam("order");
-    // String direction = browser.getParam("direction");
-    //
-    // Statement stmt = null;
-    // ResultSet resultSet = null;
-    //
-    // try
-    // {
-    // stmt = db.createStatement();
-    // resultSet = stmt.executeQuery(sql);
-    //
-    // ResultSetMetaData metaData = resultSet.getMetaData();
-    // int columns = metaData.getColumnCount();
-    //
-    // pout.print("<table border=\"1\" cellpadding=\"2\">\r\n");
-    // pout.print("<tr>\r\n");
-    // pout.print("<td>&nbsp;</td>\r\n");
-    // for (int i = 0; i < columns; i++)
-    // {
-    // String column = metaData.getColumnLabel(1 + i);
-    // String type = metaData.getColumnTypeName(1 + i).toLowerCase();
-    //
-    // String dir = column.equals(order) && "ASC".equals(direction) ? "DESC" : "ASC";
-    // pout.print("<td align=\"center\"><b>" + browser.href(column, getName(), "order", column, "direction", dir));
-    // pout.print("</b><br>" + type + "</td>\r\n");
-    // }
-    //
-    // pout.print("</tr>\r\n");
-    //
-    // int row = 0;
-    // while (resultSet.next())
-    // {
-    // ++row;
-    // pout.print("<tr>\r\n");
-    // pout.print("<td><b>" + row + "</b></td>\r\n");
-    // for (int i = 0; i < columns; i++)
-    // {
-    // pout.print("<td>" + browser.escape(resultSet.getString(1 + i)) + "</td>\r\n");
-    // }
-    //
-    // pout.print("</tr>\r\n");
-    // }
-    //
-    // pout.print("</table>\r\n");
-    // }
-    // catch (SQLException ex)
-    // {
-    // ex.printStackTrace();
-    // }
-    // finally
-    // {
-    // DBUtil.close(resultSet);
-    // DBUtil.close(stmt);
-    // }
   }
 
   /**

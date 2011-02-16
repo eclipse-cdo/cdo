@@ -187,11 +187,14 @@ public abstract class AbstractCDOTest extends ConfigTest
   protected static void commitAndSync(CDOTransaction transaction, CDOUpdatable... updatables) throws CommitException
   {
     CDOCommitInfo info = transaction.commit();
-    for (CDOUpdatable updatable : updatables)
+    if (info != null)
     {
-      if (!updatable.waitForUpdate(info.getTimeStamp(), DEFAULT_TIMEOUT))
+      for (CDOUpdatable updatable : updatables)
       {
-        throw new TimeoutRuntimeException(updatable.toString() + " did not receive an update of " + info);
+        if (!updatable.waitForUpdate(info.getTimeStamp(), DEFAULT_TIMEOUT))
+        {
+          throw new TimeoutRuntimeException(updatable.toString() + " did not receive an update of " + info);
+        }
       }
     }
   }

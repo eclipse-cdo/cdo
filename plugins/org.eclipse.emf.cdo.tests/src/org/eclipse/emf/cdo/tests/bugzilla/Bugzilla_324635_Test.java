@@ -68,7 +68,7 @@ public class Bugzilla_324635_Test extends AbstractCDOTest
     // remove an element on the other branch.
     otherContainer.getElements().remove(0);
 
-    s1Tr3.commit();
+    commitAndSync(s1Tr3, s1Tr1);
 
     // merge the other branch to main (this creates the targetGoalDelta for the RevisionDelta).
     s1Tr1.merge(s1Tr3.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());

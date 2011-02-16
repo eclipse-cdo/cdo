@@ -69,9 +69,9 @@ public class MongoDBStore extends Store implements IMongoDBStore
 
   private String dbName;
 
-  private MongoDBMapper mapper = new MongoDBMapper(this);
-
   private IDHandler idHandler = new LongIDHandler(this);
+
+  private MongoDBMapper mapper = new MongoDBMapper(this);
 
   private DB db;
 
@@ -116,11 +116,6 @@ public class MongoDBStore extends Store implements IMongoDBStore
     this.dbName = dbName;
   }
 
-  public MongoDBMapper getMapper()
-  {
-    return mapper;
-  }
-
   public IDHandler getIDHandler()
   {
     return idHandler;
@@ -130,6 +125,11 @@ public class MongoDBStore extends Store implements IMongoDBStore
   {
     checkInactive();
     this.idHandler = idHandler;
+  }
+
+  public MongoDBMapper getMapper()
+  {
+    return mapper;
   }
 
   public DB getDB()
@@ -289,6 +289,7 @@ public class MongoDBStore extends Store implements IMongoDBStore
     commitInfosCollection = db.getCollection("cdo.commitInfos");
 
     LifecycleUtil.activate(idHandler);
+    LifecycleUtil.activate(mapper);
 
     if (firstStart)
     {
@@ -316,6 +317,7 @@ public class MongoDBStore extends Store implements IMongoDBStore
     map.put(PROP_LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
     setPropertyValues(map);
 
+    LifecycleUtil.activate(mapper);
     LifecycleUtil.activate(idHandler);
 
     if (db != null)

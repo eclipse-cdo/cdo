@@ -141,51 +141,12 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;
 
     // First query folders
-    DBCollection resourceFolder = mapper.getCollection(resourcesPackage.getCDOResourceFolder());
-    boolean shallContinue = queryResources(context, resourceFolder);
+    boolean shallContinue = mapper.queryResources(context, resourcesPackage.getCDOResourceFolder());
 
     // Not enough results? -> query resources
     if (shallContinue)
     {
-      DBCollection resource = mapper.getCollection(resourcesPackage.getCDOResource());
-      queryResources(context, resource);
-    }
-  }
-
-  private boolean queryResources(QueryResourcesContext context, DBCollection collection)
-  {
-    // IDHandler idHandler = getStore().getIDHandler();
-    // PreparedStatement stmt = null;
-    // ResultSet resultSet = null;
-    //
-    // CDOID folderID = context.getFolderID();
-    // String name = context.getName();
-    // boolean exactMatch = context.exactMatch();
-
-    try
-    {
-      // stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, context);
-      // resultSet = stmt.executeQuery();
-      //
-      // while (resultSet.next())
-      // {
-      // CDOID id = idHandler.getCDOID(resultSet, 1);
-      // if (TRACER.isEnabled())
-      // {
-      //          TRACER.trace("Resource query returned ID " + id); //$NON-NLS-1$
-      // }
-      //
-      // if (!context.addResource(id))
-      // {
-      // // No more results allowed
-      // return false; // don't continue
-      // }
-      // }
-
-      return true; // Continue with other results
-    }
-    finally
-    {
+      mapper.queryResources(context, resourcesPackage.getCDOResource());
     }
   }
 
@@ -322,6 +283,8 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
       monitor.worked();
       getStore().getCommitInfosCollection().insert(doc);
       monitor.worked(100);
+
+      getStore().getMapper().addWork(doc);
     }
     finally
     {

@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
@@ -54,6 +55,8 @@ import com.mongodb.DBObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -130,7 +133,62 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public void queryResources(QueryResourcesContext context)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    // Only support timestamp in audit mode
+    if (context.getTimeStamp() != CDORevision.UNSPECIFIED_DATE && !getStore().getRepository().isSupportingAudits())
+    {
+      throw new IllegalArgumentException("Auditing not supported");
+    }
+
+    MongoDBMapper mapper = getStore().getMapper();
+    EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;
+
+    // First query folders
+    DBCollection resourceFolder = mapper.getCollection(resourcesPackage.getCDOResourceFolder());
+    boolean shallContinue = queryResources(context, resourceFolder);
+
+    // Not enough results? -> query resources
+    if (shallContinue)
+    {
+      DBCollection resource = mapper.getCollection(resourcesPackage.getCDOResource());
+      queryResources(context, resource);
+    }
+  }
+
+  private boolean queryResources(QueryResourcesContext context, DBCollection collection)
+  {
+    IDHandler idHandler = getStore().getIDHandler();
+    PreparedStatement stmt = null;
+    ResultSet resultSet = null;
+
+    CDOID folderID = context.getFolderID();
+    String name = context.getName();
+    boolean exactMatch = context.exactMatch();
+
+    try
+    {
+      // stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, context);
+      // resultSet = stmt.executeQuery();
+      //
+      // while (resultSet.next())
+      // {
+      // CDOID id = idHandler.getCDOID(resultSet, 1);
+      // if (TRACER.isEnabled())
+      // {
+      //          TRACER.trace("Resource query returned ID " + id); //$NON-NLS-1$
+      // }
+      //
+      // if (!context.addResource(id))
+      // {
+      // // No more results allowed
+      // return false; // don't continue
+      // }
+      // }
+
+      return true; // Continue with other results
+    }
+    finally
+    {
+    }
   }
 
   public void queryXRefs(QueryXRefsContext context)

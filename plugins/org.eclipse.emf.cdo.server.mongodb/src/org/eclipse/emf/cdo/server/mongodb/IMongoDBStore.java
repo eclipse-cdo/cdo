@@ -36,10 +36,6 @@ public interface IMongoDBStore extends IStore
 
   public String getDBName();
 
-  public IsolationLevel getIsolationLevel();
-
-  public EmbeddingStrategy getEmbeddingStrategy();
-
   public IDHandler getIDHandler();
 
   public IMongoDBStoreAccessor getReader(ISession session);
@@ -53,20 +49,6 @@ public interface IMongoDBStore extends IStore
   public DBCollection getPackageUnitsCollection();
 
   public DBCollection getCommitInfosCollection();
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface IsolationLevel
-  {
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface EmbeddingStrategy
-  {
-  }
 
   /**
    * @author Eike Stepper

@@ -69,9 +69,7 @@ public class MongoDBStore extends Store implements IMongoDBStore
 
   private String dbName;
 
-  private IsolationLevel isolationLevel;
-
-  private EmbeddingStrategy embeddingStrategy;
+  private MongoDBMapper mapper = new MongoDBMapper(this);
 
   private IDHandler idHandler = new LongIDHandler(this);
 
@@ -118,26 +116,9 @@ public class MongoDBStore extends Store implements IMongoDBStore
     this.dbName = dbName;
   }
 
-  public IsolationLevel getIsolationLevel()
+  public MongoDBMapper getMapper()
   {
-    return isolationLevel;
-  }
-
-  public void setIsolationLevel(IsolationLevel isolationLevel)
-  {
-    checkInactive();
-    this.isolationLevel = isolationLevel;
-  }
-
-  public EmbeddingStrategy getEmbeddingStrategy()
-  {
-    return embeddingStrategy;
-  }
-
-  public void setEmbeddingStrategy(EmbeddingStrategy embeddingStrategy)
-  {
-    checkInactive();
-    this.embeddingStrategy = embeddingStrategy;
+    return mapper;
   }
 
   public IDHandler getIDHandler()

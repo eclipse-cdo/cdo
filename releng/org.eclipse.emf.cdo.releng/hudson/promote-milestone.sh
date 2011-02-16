@@ -45,4 +45,3 @@ echo ""
 echo "pushd /home/data/httpd/download.eclipse.org/modeling/emf/cdo/updates/$stream; cp -R $stream-$milestone-$label staging.tmp; mv staging staging.old; mv staging.tmp staging; rm -rf staging.old; popd"
 echo ""
 echo "svn cp  -m "Tagging $branch as $stream-$milestone" https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/branches/$branch https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/tags/$stream-$milestone"
-svn cp  -m "Tagging $branch as $stream-$milestone" https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/branches/$branch https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/tags/$stream-$milestone

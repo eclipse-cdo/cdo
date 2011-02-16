@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -40,7 +38,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -55,71 +52,20 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
+public abstract class StoreAccessor extends StoreAccessorBase
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, StoreAccessor.class);
 
   private List<CommitContext> commitContexts = new ArrayList<CommitContext>();
 
-  private Store store;
-
-  private Object context;
-
-  private boolean reader;
-
-  private StoreAccessor(Store store, Object context, boolean reader)
-  {
-    this.store = store;
-    this.context = context;
-    this.reader = reader;
-  }
-
   protected StoreAccessor(Store store, ISession session)
   {
-    this(store, session, true);
+    super(store, session);
   }
 
   protected StoreAccessor(Store store, ITransaction transaction)
   {
-    this(store, transaction, false);
-  }
-
-  public Store getStore()
-  {
-    return store;
-  }
-
-  public boolean isReader()
-  {
-    return reader;
-  }
-
-  /**
-   * @since 3.0
-   */
-  public InternalSession getSession()
-  {
-    if (context instanceof ITransaction)
-    {
-      return (InternalSession)((ITransaction)context).getSession();
-    }
-
-    return (InternalSession)context;
-  }
-
-  public ITransaction getTransaction()
-  {
-    if (context instanceof ITransaction)
-    {
-      return (ITransaction)context;
-    }
-
-    return null;
-  }
-
-  void setContext(Object context)
-  {
-    this.context = context;
+    super(store, transaction);
   }
 
   /**
@@ -158,7 +104,7 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
     String userID = context.getUserID();
     String commitComment = context.getCommitComment();
 
-    boolean deltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
+    boolean deltas = getStore().getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
 
     InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
     InternalCDORevision[] newObjects = context.getNewObjects();
@@ -260,8 +206,8 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
       }
     }
 
-    store.setLastCommitTime(latest);
-    store.setLastNonLocalCommitTime(latestNonLocal);
+    getStore().setLastCommitTime(latest);
+    getStore().setLastNonLocalCommitTime(latestNonLocal);
   }
 
   /**
@@ -284,53 +230,12 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
 
   protected abstract void rollback(CommitContext commitContext);
 
-  public final void release()
+  @Override
+  public void release()
   {
-    store.releaseAccessor(this);
+    super.release();
     commitContexts.clear();
   }
-
-  /**
-   * Add ID mappings for all new objects of a transaction to the commit context. The implementor must, for each new
-   * object of the commit context, determine a permanent CDOID and make it known to the context by calling
-   * {@link CommitContext#addIDMapping(CDOIDTemp, CDOID)}.
-   * 
-   * @since 3.0
-   */
-  protected void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
-  {
-    try
-    {
-      CDORevision[] newObjects = commitContext.getNewObjects();
-      monitor.begin(newObjects.length);
-      for (CDORevision revision : newObjects)
-      {
-        CDOID id = revision.getID();
-        if (id instanceof CDOIDTemp)
-        {
-          CDOIDTemp oldID = (CDOIDTemp)id;
-          CDOID newID = getNextCDOID(revision);
-          if (CDOIDUtil.isNull(newID) || newID.isTemporary())
-          {
-            throw new IllegalStateException("newID=" + newID); //$NON-NLS-1$
-          }
-
-          commitContext.addIDMapping(oldID, newID);
-        }
-
-        monitor.worked();
-      }
-    }
-    finally
-    {
-      monitor.done();
-    }
-  }
-
-  /**
-   * @since 4.0
-   */
-  protected abstract CDOID getNextCDOID(CDORevision revision);
 
   /**
    * @since 3.0
@@ -371,16 +276,6 @@ public abstract class StoreAccessor extends Lifecycle implements IStoreAccessor
    * @since 4.0
    */
   protected abstract void writeClob(byte[] id, long size, Reader reader) throws IOException;
-
-  @Override
-  protected abstract void doActivate() throws Exception;
-
-  @Override
-  protected abstract void doDeactivate() throws Exception;
-
-  protected abstract void doPassivate() throws Exception;
-
-  protected abstract void doUnpassivate() throws Exception;
 
   /**
    * @author Eike Stepper

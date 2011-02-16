@@ -37,7 +37,7 @@ public class StoreAccessorPool
    */
   private Object context;
 
-  private ConcurrentLinkedQueue<StoreAccessor> accessors = new ConcurrentLinkedQueue<StoreAccessor>();
+  private ConcurrentLinkedQueue<StoreAccessorBase> accessors = new ConcurrentLinkedQueue<StoreAccessorBase>();
 
   public StoreAccessorPool(IStore store, Object context)
   {
@@ -57,8 +57,10 @@ public class StoreAccessorPool
 
   /**
    * Passivates the given {@link StoreAccessor store accessor} and adds it to this pool.
+   * 
+   * @since 4.0
    */
-  public void addStoreAccessor(StoreAccessor storeAccessor)
+  public void addStoreAccessor(StoreAccessorBase storeAccessor)
   {
     try
     {
@@ -75,11 +77,11 @@ public class StoreAccessorPool
    * Returns a {@link StoreAccessor store accessor} from this pool if one is available, or <code>null</code> otherwise.
    * If a store accessor is available it is removed from this pool and its unpassivate method is called.
    * 
-   * @since 3.0
+   * @since 4.0
    */
-  public StoreAccessor removeStoreAccessor(Object context)
+  public StoreAccessorBase removeStoreAccessor(Object context)
   {
-    StoreAccessor accessor = accessors.poll();
+    StoreAccessorBase accessor = accessors.poll();
     if (accessor != null)
     {
       try
@@ -104,7 +106,7 @@ public class StoreAccessorPool
   {
     for (;;)
     {
-      StoreAccessor accessor = accessors.poll();
+      StoreAccessorBase accessor = accessors.poll();
       if (accessor == null)
       {
         break;

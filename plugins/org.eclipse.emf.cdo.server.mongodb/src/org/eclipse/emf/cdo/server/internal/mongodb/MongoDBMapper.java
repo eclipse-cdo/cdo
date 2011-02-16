@@ -36,7 +36,8 @@ public class MongoDBMapper
     DBCollection collection = collections.get(eClass);
     if (collection == null)
     {
-      collection = store.getDB().getCollection(mapClass(eClass));
+      String name = mapClass(eClass);
+      collection = store.getDB().getCollection(name);
       collections.put(eClass, collection);
     }
 

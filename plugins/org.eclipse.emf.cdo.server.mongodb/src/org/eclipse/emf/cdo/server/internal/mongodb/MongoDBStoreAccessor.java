@@ -55,8 +55,6 @@ import com.mongodb.DBObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -156,13 +154,13 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   private boolean queryResources(QueryResourcesContext context, DBCollection collection)
   {
-    IDHandler idHandler = getStore().getIDHandler();
-    PreparedStatement stmt = null;
-    ResultSet resultSet = null;
-
-    CDOID folderID = context.getFolderID();
-    String name = context.getName();
-    boolean exactMatch = context.exactMatch();
+    // IDHandler idHandler = getStore().getIDHandler();
+    // PreparedStatement stmt = null;
+    // ResultSet resultSet = null;
+    //
+    // CDOID folderID = context.getFolderID();
+    // String name = context.getName();
+    // boolean exactMatch = context.exactMatch();
 
     try
     {

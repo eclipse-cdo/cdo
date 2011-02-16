@@ -116,39 +116,42 @@ public class MongoDBStore extends Store implements IMongoDBStore
 
   public Map<String, String> getPropertyValues(Set<String> names)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void setPropertyValues(Map<String, String> properties)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void removePropertyValues(Set<String> names)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public boolean isFirstTime()
   {
-    return true;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public long getCreationTime()
   {
-    return 0;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void setCreationTime(long creationTime)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public CDOID createObjectID(String val)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public boolean isLocal(CDOID id)
   {
-    return false;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
@@ -178,12 +181,14 @@ public class MongoDBStore extends Store implements IMongoDBStore
   @Override
   protected StoreAccessorPool getReaderPool(ISession session, boolean forReleasing)
   {
+    // No pooling needed
     return null;
   }
 
   @Override
   protected StoreAccessorPool getWriterPool(IView view, boolean forReleasing)
   {
+    // No pooling needed
     return null;
   }
 

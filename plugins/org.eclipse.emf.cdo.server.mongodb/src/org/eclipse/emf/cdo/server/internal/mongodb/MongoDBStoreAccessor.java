@@ -71,140 +71,157 @@ public class MongoDBStoreAccessor extends StoreAccessor implements IMongoDBStore
 
   public IStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
   {
+    // Partial collection loading not supported, yet.
     return null;
   }
 
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
       CDORevisionHandler handler)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void queryResources(QueryResourcesContext context)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void queryXRefs(QueryXRefsContext context)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void queryLobs(List<byte[]> ids)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public BranchInfo loadBranch(int branchID)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
-    return 0;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
   protected void doCommit(OMMonitor monitor)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
   protected void rollback(CommitContext commitContext)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
   protected CDOID getNextCDOID(CDORevision revision)
   {
-    return null;
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
   protected void writeRevisions(InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
   protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
       OMMonitor monitor)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
   protected void detachObjects(CDOID[] detachedObjects, CDOBranch branch, long timeStamp, OMMonitor monitor)
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   @Override
@@ -220,10 +237,14 @@ public class MongoDBStoreAccessor extends StoreAccessor implements IMongoDBStore
   @Override
   protected void doPassivate() throws Exception
   {
+    // Pooling not supported
+    throw new UnsupportedOperationException();
   }
 
   @Override
   protected void doUnpassivate() throws Exception
   {
+    // Pooling not supported
+    throw new UnsupportedOperationException();
   }
 }

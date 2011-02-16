@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
 import com.mongodb.MongoURI;
 
 import java.util.Comparator;
@@ -93,5 +94,7 @@ public interface IMongoDBStore extends IStore
     public CDOID getLastObjectID();
 
     public void setLastObjectID(CDOID lastObjectID);
+
+    public void write(DBObject doc, String key, CDOID id);
   }
 }

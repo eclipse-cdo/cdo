@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.spi.server.LongIDStore;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import com.mongodb.DBObject;
+
 import java.util.Set;
 
 /**
@@ -118,5 +120,11 @@ public class LongIDHandler extends Lifecycle implements IDHandler
   private static long value(CDOID id)
   {
     return CDOIDUtil.getLong(id);
+  }
+
+  public void write(DBObject doc, String key, CDOID id)
+  {
+    long value = CDOIDUtil.getLong(id);
+    doc.put(key, value);
   }
 }

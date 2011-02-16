@@ -17,7 +17,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
@@ -27,6 +29,7 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.mongodb.IMongoDBStore.IDHandler;
 import org.eclipse.emf.cdo.server.mongodb.IMongoDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -37,6 +40,7 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorBase;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -51,7 +55,10 @@ import com.mongodb.DBObject;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -183,8 +190,11 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
-    DBCollection packageUnitsCollection = getStore().getPackageUnitsCollection();
-    for (DBObject doc : marshallPackageUnits(packageUnits))
+    MongoDBStore store = getStore();
+    DBCollection packageUnitsCollection = store.getPackageUnitsCollection();
+    DBObject[] docs = marshallPackageUnits(packageUnits);
+
+    for (DBObject doc : docs)
     {
       packageUnitsCollection.insert(doc);
     }
@@ -192,43 +202,94 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public void write(InternalCommitContext context, OMMonitor monitor)
   {
-    CDOBranchPoint branchPoint = context.getBranchPoint();
-
-    DBObject doc = new BasicDBObject();
-    doc.put("_id", branchPoint.getTimeStamp());
-    doc.put("previous", context.getPreviousTimeStamp());
-    doc.put("branch", branchPoint.getBranch().getID());
-    doc.put("user", context.getUserID());
-    doc.put("comment", context.getCommitComment());
-
-    InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
-    if (newPackageUnits != null)
+    try
     {
-      doc.put("meta", marshallPackageUnits(newPackageUnits));
-    }
+      monitor.begin(106);
+      CDOBranchPoint branchPoint = context.getBranchPoint();
 
-    InternalCDORevision[] newObjects = context.getNewObjects();
-    if (newObjects != null)
+      DBObject doc = new BasicDBObject();
+      doc.put("_id", branchPoint.getTimeStamp());
+
+      long previous = context.getPreviousTimeStamp();
+      if (previous != CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        doc.put("previous", previous);
+      }
+
+      if (getStore().getRepository().isSupportingBranches())
+      {
+        doc.put("branch", branchPoint.getBranch().getID());
+      }
+
+      String user = context.getUserID();
+      if (user != null)
+      {
+        doc.put("user", user);
+      }
+
+      String comment = context.getCommitComment();
+      if (comment != null)
+      {
+        doc.put("comment", comment);
+      }
+
+      InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
+      if (!ObjectUtil.isEmpty(newPackageUnits))
+      {
+        doc.put("meta", marshallPackageUnits(newPackageUnits));
+      }
+
+      monitor.worked();
+      addIDMappings(context, monitor.fork());
+      context.applyIDMappings(monitor.fork());
+
+      InternalCDORevision[] newObjects = context.getNewObjects();
+      if (!ObjectUtil.isEmpty(newObjects))
+      {
+        doc.put("new", marshallRevisions(newObjects));
+      }
+
+      monitor.worked();
+      InternalCDORevisionDelta[] dirtyObjectDeltas = context.getDirtyObjectDeltas();
+      if (!ObjectUtil.isEmpty(dirtyObjectDeltas))
+      {
+        doc.put("changed", marshallRevisionDeltas(dirtyObjectDeltas));
+      }
+
+      monitor.worked();
+      Map<CDOID, EClass> detachedObjectTypes = context.getDetachedObjectTypes();
+      if (!ObjectUtil.isEmpty(detachedObjectTypes))
+      {
+        doc.put("detached", marshallObjectTypes(detachedObjectTypes));
+      }
+
+      monitor.worked();
+      getStore().getCommitInfosCollection().insert(doc);
+      monitor.worked(100);
+    }
+    finally
     {
-      doc.put("new", marshallRevisions(newObjects));
+      monitor.done();
     }
-
-    InternalCDORevisionDelta[] dirtyObjectDeltas = context.getDirtyObjectDeltas();
-    if (dirtyObjectDeltas != null)
-    {
-      doc.put("changed", marshallRevisionDeltas(dirtyObjectDeltas));
-    }
-
-    CDOID[] detachedObjects = context.getDetachedObjects();
-    if (detachedObjects != null)
-    {
-      doc.put("detached", marshallCDOIDs(detachedObjects));
-    }
-
-    getStore().getCommitInfosCollection().insert(doc);
   }
 
-  private DBObject[] marshallPackageUnits(InternalCDOPackageUnit[] packageUnits)
+  public void commit(OMMonitor monitor)
+  {
+    // Do nothing
+  }
+
+  public void rollback()
+  {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+  }
+
+  @Override
+  protected CDOID getNextCDOID(CDORevision revision)
+  {
+    return getStore().getIDHandler().getNextCDOID(revision);
+  }
+
+  protected DBObject[] marshallPackageUnits(InternalCDOPackageUnit[] packageUnits)
   {
     DBObject[] result = new DBObject[packageUnits.length];
     InternalCDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
@@ -251,40 +312,107 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     return result;
   }
 
-  private DBObject[] marshallRevisions(InternalCDORevision[] revisions)
+  protected DBObject[] marshallRevisions(InternalCDORevision[] revisions)
   {
     DBObject[] result = new DBObject[revisions.length];
     for (int i = 0; i < revisions.length; i++)
     {
       InternalCDORevision revision = revisions[i];
+      result[i] = marshallRevision(revision);
     }
 
     return result;
   }
 
-  private DBObject[] marshallRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas)
+  protected DBObject marshallRevision(InternalCDORevision revision)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    IDHandler idHandler = getStore().getIDHandler();
+
+    DBObject doc = new BasicDBObject();
+    idHandler.write(doc, "_cdoid", revision.getID());
+    if (getStore().getRepository().isSupportingBranches())
+    {
+      doc.put("_branch", revision.getBranch().getID());
+    }
+
+    // doc.put("_version", revision.getVersion());
+    // doc.put("_created", revision.getTimeStamp());
+
+    long revised = revision.getRevised();
+    if (revised != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      doc.put("_revised", revised);
+    }
+
+    doc.put("_class", new CDOClassifierRef(revision.getEClass()).toString());
+
+    CDOID resourceID = revision.getResourceID();
+    if (!CDOIDUtil.isNull(resourceID))
+    {
+      idHandler.write(doc, "_resource", resourceID);
+    }
+
+    CDOID containerID = (CDOID)revision.getContainerID();
+    if (!CDOIDUtil.isNull(containerID))
+    {
+      idHandler.write(doc, "_container", containerID);
+      int featureID = revision.getContainingFeatureID();
+      if (featureID != 0)
+      {
+        doc.put("_feature", featureID);
+      }
+    }
+
+    return doc;
   }
 
-  private DBObject[] marshallCDOIDs(CDOID[] ids)
+  protected DBObject[] marshallRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    DBObject[] result = new DBObject[revisionDeltas.length];
+    for (int i = 0; i < revisionDeltas.length; i++)
+    {
+      InternalCDORevisionDelta revisionDelta = revisionDeltas[i];
+      result[i] = marshallRevisionDelta(revisionDelta);
+    }
+
+    return result;
   }
 
-  public void commit(OMMonitor monitor)
+  protected DBObject marshallRevisionDelta(InternalCDORevisionDelta revisionDelta)
   {
-    // Do nothing
+    IDHandler idHandler = getStore().getIDHandler();
+
+    DBObject doc = new BasicDBObject();
+    idHandler.write(doc, "_cdoid", revisionDelta.getID());
+    if (getStore().getRepository().isSupportingBranches())
+    {
+      doc.put("_branch", revisionDelta.getBranch().getID());
+    }
+
+    // doc.put("_version", revisionDelta.getVersion());
+
+    return doc;
   }
 
-  public void rollback()
+  private DBObject[] marshallObjectTypes(Map<CDOID, EClass> objectTypes)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
-  }
+    IDHandler idHandler = getStore().getIDHandler();
+    Iterator<Entry<CDOID, EClass>> it = objectTypes.entrySet().iterator();
 
-  @Override
-  protected CDOID getNextCDOID(CDORevision revision)
-  {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    DBObject[] result = new DBObject[objectTypes.size()];
+    for (int i = 0; i < result.length; i++)
+    {
+      Entry<CDOID, EClass> entry = it.next();
+      CDOID id = entry.getKey();
+      EClass type = entry.getValue();
+
+      DBObject doc = new BasicDBObject();
+      idHandler.write(doc, "id", id);
+      doc.put("type", new CDOClassifierRef(type).toString());
+
+      result[i] = doc;
+    }
+
+    return result;
   }
 }

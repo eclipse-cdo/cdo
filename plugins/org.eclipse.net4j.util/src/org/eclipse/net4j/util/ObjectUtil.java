@@ -11,6 +11,8 @@
 package org.eclipse.net4j.util;
 
 import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -53,5 +55,37 @@ public final class ObjectUtil
     System.arraycopy(array, 0, result, 0, array.length);
     System.arraycopy(elements, 0, result, array.length, elements.length);
     return result;
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static <T> boolean isEmpty(T[] array)
+  {
+    return array == null || array.length == 0;
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static <T extends Map<?, ?>> boolean isEmpty(Map<?, ?> map)
+  {
+    return map == null || map.isEmpty();
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static <T extends Collection<?>> boolean isEmpty(Collection<?> collection)
+  {
+    return collection == null || collection.isEmpty();
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static boolean isEmpty(String string)
+  {
+    return string == null || string.length() == 0;
   }
 }

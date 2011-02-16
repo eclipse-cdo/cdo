@@ -260,6 +260,8 @@ public final class ExtendedIOUtil
    */
   public static class ClassLoaderClassResolver implements ClassResolver
   {
+    private static final String STACK_TRACE_ELEMENT = StackTraceElement[].class.getName();
+
     private ClassLoader classLoader;
 
     public ClassLoaderClassResolver(ClassLoader classLoader)
@@ -277,7 +279,11 @@ public final class ExtendedIOUtil
       }
       catch (ClassNotFoundException ex)
       {
-        OM.LOG.error(ex);
+        if (!STACK_TRACE_ELEMENT.equals(className))
+        {
+          OM.LOG.error(ex);
+        }
+
         return null;
       }
     }

@@ -92,6 +92,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -1442,21 +1443,20 @@ public class Repository extends Container<Object> implements InternalRepository
 
     commitContext.setNewObjects(new InternalCDORevision[] { rootResource });
     commitContext.preWrite();
-    boolean success = false;
 
-    try
-    {
-      commitContext.write(new Monitor());
-      commitContext.commit(new Monitor());
-      success = true;
+    commitContext.write(new Monitor());
+    commitContext.commit(new Monitor());
 
-      rootResourceID = commitContext.getIDMappings().get(tempID);
-    }
-    finally
+    String rollbackMessage = commitContext.getRollbackMessage();
+    if (rollbackMessage != null)
     {
-      commitContext.postCommit(success);
-      session.close();
+      throw new TransactionException(rollbackMessage);
     }
+
+    rootResourceID = commitContext.getIDMappings().get(tempID);
+
+    commitContext.postCommit(true);
+    session.close();
   }
 
   protected void readRootResource()

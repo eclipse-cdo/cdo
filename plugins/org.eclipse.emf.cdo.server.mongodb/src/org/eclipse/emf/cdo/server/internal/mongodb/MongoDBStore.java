@@ -129,7 +129,7 @@ public class MongoDBStore extends Store implements IMongoDBStore
 
   public boolean isFirstTime()
   {
-    return false;
+    return true;
   }
 
   public long getCreationTime()
@@ -166,13 +166,13 @@ public class MongoDBStore extends Store implements IMongoDBStore
   @Override
   protected IStoreAccessor createReader(ISession session)
   {
-    return null;
+    return new MongoDBStoreAccessor(this, session);
   }
 
   @Override
   protected IStoreAccessor createWriter(ITransaction transaction)
   {
-    return null;
+    return new MongoDBStoreAccessor(this, transaction);
   }
 
   @Override

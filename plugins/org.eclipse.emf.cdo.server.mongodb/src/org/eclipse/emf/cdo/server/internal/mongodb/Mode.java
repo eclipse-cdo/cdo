@@ -55,9 +55,13 @@ public abstract class Mode
       {
         query.put("name", new BasicDBObject("$exists", false));
       }
+      else if (exactMatch)
+      {
+        query.put("name", name);
+      }
       else
       {
-        query.put("name", exactMatch ? name : new BasicDBObject("$regex", "/^" + name + "/"));
+        query.put("name", new BasicDBObject("$regex", "/^" + name + "/"));
       }
 
       return query;

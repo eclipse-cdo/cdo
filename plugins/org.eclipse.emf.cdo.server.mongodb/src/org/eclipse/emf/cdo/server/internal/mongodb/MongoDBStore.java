@@ -69,7 +69,7 @@ public class MongoDBStore extends Store implements IMongoDBStore
 
   private String dbName;
 
-  private IDHandler idHandler = new LongIDHandler(this);
+  private IDHandler idHandler = new IDHandler.LongValue(this);
 
   private Mapper mapper = new Mapper(this);
 

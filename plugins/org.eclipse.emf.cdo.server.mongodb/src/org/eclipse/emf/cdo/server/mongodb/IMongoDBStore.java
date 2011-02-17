@@ -12,73 +12,14 @@
  */
 package org.eclipse.emf.cdo.server.mongodb;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.ITransaction;
 
 import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.mongodb.MongoURI;
-
-import java.util.Comparator;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public interface IMongoDBStore extends IStore
 {
-  public MongoURI getMongoURI();
-
-  public String getDBName();
-
-  public IDHandler getIDHandler();
-
-  public IMongoDBStoreAccessor getReader(ISession session);
-
-  public IMongoDBStoreAccessor getWriter(ITransaction transaction);
-
   public DB getDB();
-
-  public DBCollection getPropertiesCollection();
-
-  public DBCollection getPackageUnitsCollection();
-
-  public DBCollection getCommitInfosCollection();
-
-  /**
-   * @author Eike Stepper
-   */
-  public interface IDHandler extends Comparator<CDOID>
-  {
-    public IMongoDBStore getStore();
-
-    public Set<ObjectType> getObjectIDTypes();
-
-    public CDOID getMinCDOID();
-
-    public CDOID getMaxCDOID();
-
-    public boolean isLocalCDOID(CDOID id);
-
-    public CDOID getNextCDOID(CDORevision revision);
-
-    public CDOID createCDOID(String val);
-
-    public CDOID getNextLocalObjectID();
-
-    public void setNextLocalObjectID(CDOID nextLocalObjectID);
-
-    public CDOID getLastObjectID();
-
-    public void setLastObjectID(CDOID lastObjectID);
-
-    public void write(DBObject doc, String key, CDOID id);
-
-    public CDOID read(DBObject doc, String key);
-  }
 }

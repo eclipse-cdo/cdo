@@ -78,5 +78,7 @@ public interface IMongoDBStore extends IStore
     public void setLastObjectID(CDOID lastObjectID);
 
     public void write(DBObject doc, String key, CDOID id);
+
+    public CDOID read(DBObject doc, String key);
   }
 }

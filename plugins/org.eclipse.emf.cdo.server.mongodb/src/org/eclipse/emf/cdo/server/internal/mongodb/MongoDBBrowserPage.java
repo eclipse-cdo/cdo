@@ -53,9 +53,6 @@ public class MongoDBBrowserPage extends AbstractPage
     out.print("</table>\r\n");
   }
 
-  /**
-   * @since 4.0
-   */
   protected String showCollections(CDOServerBrowser browser, PrintStream pout, DB db, String repo)
   {
     String collection = browser.getParam("collection");
@@ -82,27 +79,56 @@ public class MongoDBBrowserPage extends AbstractPage
     return collection;
   }
 
-  /**
-   * @since 4.0
-   */
   protected void showCollection(CDOServerBrowser browser, PrintStream pout, DB db, String collection)
   {
     DBCursor cursor = null;
-    
+
     try
     {
+      pout.print("<ol>\r\n");
+      pout.print("<ol>\r\n");
       cursor = db.getCollection(collection).find();
       while (cursor.hasNext())
       {
         DBObject doc = cursor.next();
-        pout.print(browser.escape(doc.toString()) + "<br>\r\n");
+        pout.print("<li>");
+        showDocument(browser, pout, doc, "");
+        pout.print("<p>\r\n");
       }
+
+      pout.print("</ol>\r\n");
     }
     finally
     {
       if (cursor != null)
       {
         cursor.close();
+      }
+    }
+  }
+
+  protected void showDocument(CDOServerBrowser browser, PrintStream pout, DBObject doc, String level)
+  {
+    for (String key : doc.keySet())
+    {
+      pout.print(level);
+      pout.print("<b>");
+      pout.print(key);
+      pout.print("</b> = ");
+
+      Object value = doc.get(key);
+      if (value instanceof DBObject)
+      {
+        DBObject child = (DBObject)value;
+        pout.print("<br>");
+        showDocument(browser, pout, child, level + "&nbsp;&nbsp;");
+      }
+      else
+      {
+        pout.print(value);
+        pout.print("<em>&nbsp;&nbsp;(");
+        pout.print(value.getClass().getSimpleName().toLowerCase());
+        pout.print(")</em><br>");
       }
     }
   }

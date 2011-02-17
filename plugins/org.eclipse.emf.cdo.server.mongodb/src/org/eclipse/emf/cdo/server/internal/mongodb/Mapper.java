@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.mongodb;
 
-import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 
 import org.eclipse.net4j.util.concurrent.QueueWorker;
 
@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EClass;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,13 +25,13 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class MongoDBMapper extends QueueWorker<DBObject>
+public class Mapper extends QueueWorker<CDOCommitInfo>
 {
   private Map<EClass, DBCollection> collections = new HashMap<EClass, DBCollection>();
 
   private MongoDBStore store;
 
-  public MongoDBMapper(MongoDBStore store)
+  public Mapper(MongoDBStore store)
   {
     this.store = store;
   }
@@ -55,47 +54,8 @@ public class MongoDBMapper extends QueueWorker<DBObject>
     return db.getCollection(name);
   }
 
-  public boolean queryResources(QueryResourcesContext context, EClass eClass)
-  {
-    DBCollection collection = getCollection(eClass);
-
-    // IDHandler idHandler = getStore().getIDHandler();
-    // PreparedStatement stmt = null;
-    // ResultSet resultSet = null;
-    //
-    // CDOID folderID = context.getFolderID();
-    // String name = context.getName();
-    // boolean exactMatch = context.exactMatch();
-
-    try
-    {
-      // stmt = classMapping.createResourceQueryStatement(accessor, folderID, name, exactMatch, context);
-      // resultSet = stmt.executeQuery();
-      //
-      // while (resultSet.next())
-      // {
-      // CDOID id = idHandler.getCDOID(resultSet, 1);
-      // if (TRACER.isEnabled())
-      // {
-      //          TRACER.trace("Resource query returned ID " + id); //$NON-NLS-1$
-      // }
-      //
-      // if (!context.addResource(id))
-      // {
-      // // No more results allowed
-      // return false; // don't continue
-      // }
-      // }
-
-      return true; // Continue with other results
-    }
-    finally
-    {
-    }
-  }
-
   @Override
-  protected void work(WorkContext context, DBObject commitInfo)
+  protected void work(WorkContext context, CDOCommitInfo commitInfo)
   {
   }
 

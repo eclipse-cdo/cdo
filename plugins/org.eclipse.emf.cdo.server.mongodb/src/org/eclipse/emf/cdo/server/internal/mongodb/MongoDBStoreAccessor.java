@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -30,6 +31,7 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.internal.mongodb.bundle.OM;
 import org.eclipse.emf.cdo.server.mongodb.IMongoDBStore.IDHandler;
 import org.eclipse.emf.cdo.server.mongodb.IMongoDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -44,6 +46,7 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorBase;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -51,6 +54,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 import java.io.IOException;
@@ -67,6 +71,8 @@ import java.util.Set;
  */
 public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBStoreAccessor
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MongoDBStoreAccessor.class);
+
   private static final boolean ZIP_PACKAGE_BYTES = true;
 
   public MongoDBStoreAccessor(Store store, ISession session)
@@ -137,16 +143,57 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
       throw new IllegalArgumentException("Auditing not supported");
     }
 
-    MongoDBMapper mapper = getStore().getMapper();
     EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;
 
     // First query folders
-    boolean shallContinue = mapper.queryResources(context, resourcesPackage.getCDOResourceFolder());
+    boolean shallContinue = queryResources(context, resourcesPackage.getCDOResourceFolder());
 
     // Not enough results? -> query resources
     if (shallContinue)
     {
-      mapper.queryResources(context, resourcesPackage.getCDOResource());
+      queryResources(context, resourcesPackage.getCDOResource());
+    }
+  }
+
+  private boolean queryResources(QueryResourcesContext context, EClass eClass)
+  {
+    IDHandler idHandler = getStore().getIDHandler();
+    Mapper mapper = getStore().getMapper();
+
+    DBCollection collection = mapper.getCollection(eClass);
+    DBCursor cursor = null;
+
+    CDOID folderID = context.getFolderID();
+    String name = context.getName();
+    boolean exactMatch = context.exactMatch();
+
+    try
+    {
+
+      DBObject query = getStore().getMode().createResourcesQuery(folderID, name, exactMatch, context);
+      DBObject keys = new BasicDBObject("_cdoid", 1);
+      cursor = collection.find(query, keys);
+      while (cursor.hasNext())
+      {
+        DBObject doc = cursor.next();
+
+        CDOID id = idHandler.read(doc, "_cdoid");
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Resources query returned ID " + id); //$NON-NLS-1$
+        }
+
+        if (!context.addResource(id))
+        {
+          // No more results allowed
+          return false; // Don't continue
+        }
+      }
+
+      return true; // Continue with other results
+    }
+    finally
+    {
     }
   }
 
@@ -221,7 +268,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
   {
     try
     {
-      monitor.begin(106);
+      monitor.begin(107);
       CDOBranchPoint branchPoint = context.getBranchPoint();
 
       DBObject doc = new BasicDBObject();
@@ -284,7 +331,8 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
       getStore().getCommitInfosCollection().insert(doc);
       monitor.worked(100);
 
-      getStore().getMapper().addWork(doc);
+      CDOCommitInfo commitInfo = context.createCommitInfo();
+      getStore().getMapper().addWork(commitInfo);
     }
     finally
     {
@@ -363,7 +411,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
       doc.put("_revised", revised);
     }
 
-    doc.put("_class", new CDOClassifierRef(revision.getEClass()).toString());
+    doc.put("_class", new CDOClassifierRef(revision.getEClass()).getURI());
 
     CDOID resourceID = revision.getResourceID();
     if (!CDOIDUtil.isNull(resourceID))
@@ -427,7 +475,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
       DBObject doc = new BasicDBObject();
       idHandler.write(doc, "id", id);
-      doc.put("type", new CDOClassifierRef(type).toString());
+      doc.put("type", new CDOClassifierRef(type).getURI());
 
       result[i] = doc;
     }

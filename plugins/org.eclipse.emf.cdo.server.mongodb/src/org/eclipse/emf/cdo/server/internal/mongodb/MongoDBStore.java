@@ -71,7 +71,9 @@ public class MongoDBStore extends Store implements IMongoDBStore
 
   private IDHandler idHandler = new LongIDHandler(this);
 
-  private MongoDBMapper mapper = new MongoDBMapper(this);
+  private Mapper mapper = new Mapper(this);
+
+  private Mode mode;
 
   private DB db;
 
@@ -127,9 +129,14 @@ public class MongoDBStore extends Store implements IMongoDBStore
     this.idHandler = idHandler;
   }
 
-  public MongoDBMapper getMapper()
+  public Mapper getMapper()
   {
     return mapper;
+  }
+
+  public Mode getMode()
+  {
+    return mode;
   }
 
   public DB getDB()
@@ -276,7 +283,6 @@ public class MongoDBStore extends Store implements IMongoDBStore
     REPOS.put(getRepository().getName(), getRepository());
 
     super.doActivate();
-    setObjectIDTypes(idHandler.getObjectIDTypes());
 
     Mongo mongo = new Mongo(mongoURI);
     db = mongo.getDB(dbName);
@@ -289,7 +295,10 @@ public class MongoDBStore extends Store implements IMongoDBStore
     commitInfosCollection = db.getCollection("cdo.commitInfos");
 
     LifecycleUtil.activate(idHandler);
+    setObjectIDTypes(idHandler.getObjectIDTypes());
+
     LifecycleUtil.activate(mapper);
+    initMode();
 
     if (firstStart)
     {
@@ -327,6 +336,24 @@ public class MongoDBStore extends Store implements IMongoDBStore
     }
 
     super.doDeactivate();
+  }
+
+  protected void initMode()
+  {
+    if (getRepository().isSupportingBranches())
+    {
+      mode = new Mode.Branching();
+    }
+    else if (getRepository().isSupportingBranches())
+    {
+      mode = new Mode.Audditing();
+    }
+    else
+    {
+      mode = new Mode.Normal();
+    }
+
+    mode.setStore(this);
   }
 
   protected void firstStart()

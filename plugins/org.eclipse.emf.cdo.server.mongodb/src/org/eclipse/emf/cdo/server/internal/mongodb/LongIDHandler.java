@@ -127,4 +127,10 @@ public class LongIDHandler extends Lifecycle implements IDHandler
     long value = CDOIDUtil.getLong(id);
     doc.put(key, value);
   }
+
+  public CDOID read(DBObject doc, String key)
+  {
+    long value = (Long)doc.get(key);
+    return CDOIDUtil.createLong(value);
+  }
 }

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.mongodb;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IScenario;
@@ -20,6 +21,15 @@ import org.eclipse.emf.cdo.tests.config.impl.Scenario;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+
+import java.io.PrintStream;
 
 /**
  * @author Eike Stepper
@@ -37,7 +47,64 @@ public class InitialTestMongoDB extends AbstractCDOTest
     resource.getContents().add(supplier);
     transaction.commit();
 
-    sleep(1000000L);
+    query(new BasicDBObject("revisions", new BasicDBObject("$elemMatch", new BasicDBObject("cdo_resource", 1))));
+  }
+
+  protected void query(DBObject query)
+  {
+    System.err.println();
+    System.err.println("Query:");
+    showDocument(query, "");
+    System.err.println();
+    System.err.println("Results:");
+
+    MongoDBStore store = (MongoDBStore)getRepository().getStore();
+    DBCollection collection = store.getCommitInfosCollection();
+    DBCursor cursor = collection.find(query);
+
+    int i = 0;
+    while (cursor.hasNext())
+    {
+      ++i;
+      System.out.println("" + i + " = ");
+      showDocument(cursor.next(), "    ");
+    }
+
+    ConcurrencyUtil.sleep(1000000L);
+  }
+
+  protected void showDocument(DBObject doc, String level)
+  {
+    PrintStream pout = System.out;
+    for (String key : doc.keySet())
+    {
+      pout.print(level);
+      pout.print(key);
+      pout.print(" = ");
+
+      Object value = doc.get(key);
+      if (value instanceof DBObject)
+      {
+        DBObject child = (DBObject)value;
+        pout.println();
+        showDocument(child, level + "    ");
+      }
+      else
+      {
+        if (value instanceof String)
+        {
+          pout.print("\"");
+        }
+
+        pout.print(value);
+        if (value instanceof String)
+        {
+          pout.print("\"");
+        }
+
+        pout.println();
+      }
+    }
   }
 
   @Override

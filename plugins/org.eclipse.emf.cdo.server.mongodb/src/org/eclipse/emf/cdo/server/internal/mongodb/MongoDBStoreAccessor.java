@@ -58,6 +58,7 @@ import com.mongodb.DBObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -267,7 +268,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
   {
     try
     {
-      monitor.begin(107);
+      monitor.begin(104);
       CDOBranchPoint branchPoint = context.getBranchPoint();
 
       DBObject doc = new BasicDBObject();
@@ -299,34 +300,23 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
       InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
       if (!ObjectUtil.isEmpty(newPackageUnits))
       {
-        doc.put("meta", marshallPackageUnits(newPackageUnits));
+        doc.put("packages", marshallPackageUnits(newPackageUnits));
       }
 
       monitor.worked();
       addIDMappings(context, monitor.fork());
       context.applyIDMappings(monitor.fork());
 
-      InternalCDORevision[] newObjects = context.getNewObjects();
-      if (!ObjectUtil.isEmpty(newObjects))
+      List<DBObject> docs = new ArrayList<DBObject>();
+      marshalRevisions(docs, context.getNewObjects());
+      marshalRevisions(docs, context.getDirtyObjects());
+      if (!docs.isEmpty())
       {
-        doc.put("new", marshallRevisions(newObjects));
+        doc.put("revisions", docs);
       }
 
       monitor.worked();
-      InternalCDORevisionDelta[] dirtyObjectDeltas = context.getDirtyObjectDeltas();
-      if (!ObjectUtil.isEmpty(dirtyObjectDeltas))
-      {
-        doc.put("changed", marshallRevisionDeltas(dirtyObjectDeltas));
-      }
 
-      monitor.worked();
-      Map<CDOID, EClass> detachedObjectTypes = context.getDetachedObjectTypes();
-      if (!ObjectUtil.isEmpty(detachedObjectTypes))
-      {
-        doc.put("detached", marshallObjectTypes(detachedObjectTypes));
-      }
-
-      monitor.worked();
       getStore().getCommitInfosCollection().insert(doc);
       monitor.worked(100);
 
@@ -355,7 +345,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     return getStore().getIDHandler().getNextCDOID(revision);
   }
 
-  protected DBObject[] marshallPackageUnits(InternalCDOPackageUnit[] packageUnits)
+  private DBObject[] marshallPackageUnits(InternalCDOPackageUnit[] packageUnits)
   {
     DBObject[] result = new DBObject[packageUnits.length];
     InternalCDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
@@ -367,10 +357,10 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
       byte[] bytes = EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, packageRegistry);
 
       DBObject doc = new BasicDBObject();
-      doc.put("_id", packageUnit.getID());
-      doc.put("originalType", packageUnit.getOriginalType().toString());
-      doc.put("timeStamp", packageUnit.getTimeStamp());
-      doc.put("packageData", bytes);
+      doc.put("id", packageUnit.getID());
+      doc.put("type", packageUnit.getOriginalType().toString());
+      doc.put("time", packageUnit.getTimeStamp());
+      doc.put("data", bytes);
 
       result[i] = doc;
     }
@@ -378,7 +368,16 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     return result;
   }
 
-  protected DBObject[] marshallRevisions(InternalCDORevision[] revisions)
+  private void marshalRevisions(List<DBObject> docs, InternalCDORevision[] revisions)
+  {
+    for (InternalCDORevision revision : revisions)
+    {
+      DBObject doc = marshallRevision(revision);
+      docs.add(doc);
+    }
+  }
+
+  private DBObject[] marshallRevisions(InternalCDORevision[] revisions)
   {
     DBObject[] result = new DBObject[revisions.length];
     for (int i = 0; i < revisions.length; i++)
@@ -390,7 +389,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     return result;
   }
 
-  protected DBObject marshallRevision(InternalCDORevision revision)
+  private DBObject marshallRevision(InternalCDORevision revision)
   {
     IDHandler idHandler = getStore().getIDHandler();
 
@@ -436,7 +435,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     return doc;
   }
 
-  protected DBObject[] marshallRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas)
+  private DBObject[] marshallRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas)
   {
     DBObject[] result = new DBObject[revisionDeltas.length];
     for (int i = 0; i < revisionDeltas.length; i++)
@@ -448,7 +447,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     return result;
   }
 
-  protected DBObject marshallRevisionDelta(InternalCDORevisionDelta revisionDelta)
+  private DBObject marshallRevisionDelta(InternalCDORevisionDelta revisionDelta)
   {
     IDHandler idHandler = getStore().getIDHandler();
 

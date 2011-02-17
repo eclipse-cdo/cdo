@@ -41,6 +41,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
+ * TODO:
+ * <ul>
+ * <li>Are indexes always unique? Do unique indexes exist?
+ * <li>Are <code>_id</code> fields in embedded objects automatically indexed?
+ * </ul>
+ * 
  * @author Eike Stepper
  */
 public class MongoDBStore extends Store implements IMongoDBStore
@@ -293,6 +299,21 @@ public class MongoDBStore extends Store implements IMongoDBStore
     propertiesCollection = db.getCollection("cdo.properties");
     packageUnitsCollection = db.getCollection("cdo.packageUnits");
     commitInfosCollection = db.getCollection("cdo.commitInfos");
+
+    DBObject packages_pk = new BasicDBObject("packages.id", 1);
+    commitInfosCollection.ensureIndex(packages_pk, "packages_pk");
+
+    DBObject packages_time = new BasicDBObject("packages.time", 1);
+    commitInfosCollection.ensureIndex(packages_time, "packages_time");
+
+    DBObject revisions_pk = new BasicDBObject("revisions.cdo_id", 1).append("revisions.cdo_version", 1);
+    commitInfosCollection.ensureIndex(revisions_pk, "revisions_pk");
+
+    DBObject revisions_created = new BasicDBObject("revisions.cdo_created", 1);
+    commitInfosCollection.ensureIndex(revisions_created, "revisions_created");
+
+    DBObject revisions_revised = new BasicDBObject("revisions.cdo_revised", 1);
+    commitInfosCollection.ensureIndex(revisions_revised, "revisions_revised");
 
     LifecycleUtil.activate(idHandler);
     setObjectIDTypes(idHandler.getObjectIDTypes());

@@ -1001,7 +1001,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
    * the commitContext. The objects data will be updated in the call to writeRevision().
    */
   @Override
-  protected void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
+  public void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
   {
     long start = System.currentTimeMillis();
     ensureSessionBegin();

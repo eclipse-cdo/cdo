@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.mongodb;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.internal.mongodb.Commits;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -47,7 +48,8 @@ public class InitialTestMongoDB extends AbstractCDOTest
     resource.getContents().add(supplier);
     transaction.commit();
 
-    query(new BasicDBObject("revisions", new BasicDBObject("$elemMatch", new BasicDBObject("cdo_resource", 1))));
+    query(new BasicDBObject(Commits.REVISIONS, new BasicDBObject("$elemMatch", new BasicDBObject(
+        Commits.REVISIONS_RESOURCE, 1))));
   }
 
   protected void query(DBObject query)
@@ -59,7 +61,7 @@ public class InitialTestMongoDB extends AbstractCDOTest
     System.err.println("Results:");
 
     MongoDBStore store = (MongoDBStore)getRepository().getStore();
-    DBCollection collection = store.getCommitInfosCollection();
+    DBCollection collection = store.getCommits().getCollection();
     DBCursor cursor = collection.find(query);
 
     int i = 0;

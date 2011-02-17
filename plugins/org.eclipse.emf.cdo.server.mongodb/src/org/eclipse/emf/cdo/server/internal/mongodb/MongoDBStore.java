@@ -25,11 +25,10 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import com.mongodb.BasicDBObject;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+
 import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 
@@ -37,7 +36,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -51,25 +49,9 @@ import java.util.Set;
  */
 public class MongoDBStore extends Store implements IMongoDBStore
 {
+  public static final String PROPERTIES = "props";
+
   public static final String TYPE = "mongodb"; //$NON-NLS-1$
-
-  private static final String PROP_REPOSITORY_CREATED = "org.eclipse.emf.cdo.server.mongodb.repositoryCreated"; //$NON-NLS-1$
-
-  private static final String PROP_REPOSITORY_STOPPED = "org.eclipse.emf.cdo.server.mongodb.repositoryStopped"; //$NON-NLS-1$
-
-  private static final String PROP_NEXT_LOCAL_CDOID = "org.eclipse.emf.cdo.server.mongodb.nextLocalCDOID"; //$NON-NLS-1$
-
-  private static final String PROP_LAST_CDOID = "org.eclipse.emf.cdo.server.mongodb.lastCDOID"; //$NON-NLS-1$
-
-  private static final String PROP_LAST_BRANCHID = "org.eclipse.emf.cdo.server.mongodb.lastBranchID"; //$NON-NLS-1$
-
-  private static final String PROP_LAST_LOCAL_BRANCHID = "org.eclipse.emf.cdo.server.mongodb.lastLocalBranchID"; //$NON-NLS-1$
-
-  private static final String PROP_LAST_COMMITTIME = "org.eclipse.emf.cdo.server.mongodb.lastCommitTime"; //$NON-NLS-1$
-
-  private static final String PROP_LAST_NONLOCAL_COMMITTIME = "org.eclipse.emf.cdo.server.mongodb.lastNonLocalCommitTime"; //$NON-NLS-1$
-
-  private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.mongodb.gracefullyShutDown"; //$NON-NLS-1$
 
   private MongoURI mongoURI;
 
@@ -79,19 +61,23 @@ public class MongoDBStore extends Store implements IMongoDBStore
 
   private Mapper mapper = new Mapper(this);
 
-  private Mode mode;
-
   private DB db;
 
-  private DBCollection propertiesCollection;
+  private Props props;
 
-  private DBCollection packageUnitsCollection;
-
-  private DBCollection commitInfosCollection;
+  private Commits commits;
 
   private boolean firstStart;
 
   private long creationTime;
+
+  private boolean branching;
+
+  private int lastClassifierID;
+
+  private Map<EClassifier, Integer> classifierToIDs = new HashMap<EClassifier, Integer>();
+
+  private Map<Integer, EClassifier> idToClassifiers = new HashMap<Integer, EClassifier>();
 
   public static Map<String, InternalRepository> REPOS = new HashMap<String, InternalRepository>();
 
@@ -140,72 +126,34 @@ public class MongoDBStore extends Store implements IMongoDBStore
     return mapper;
   }
 
-  public Mode getMode()
-  {
-    return mode;
-  }
-
   public DB getDB()
   {
     return db;
   }
 
-  public DBCollection getPropertiesCollection()
+  public Props getProps()
   {
-    return propertiesCollection;
+    return props;
   }
 
-  public DBCollection getPackageUnitsCollection()
+  public Commits getCommits()
   {
-    return packageUnitsCollection;
-  }
-
-  public DBCollection getCommitInfosCollection()
-  {
-    return commitInfosCollection;
+    return commits;
   }
 
   public Map<String, String> getPropertyValues(Set<String> names)
   {
-    Map<String, String> result = new HashMap<String, String>();
-    for (String name : names)
-    {
-      DBObject query = new BasicDBObject("_id", name);
-      DBCursor cursor = propertiesCollection.find(query);
-
-      try
-      {
-        if (cursor.hasNext())
-        {
-          DBObject doc = cursor.next();
-          result.put(name, (String)doc.get("value"));
-        }
-      }
-      finally
-      {
-        cursor.close();
-      }
-    }
-
-    return result;
+    return props.get(names);
   }
 
   public void setPropertyValues(Map<String, String> properties)
   {
-    for (Entry<String, String> property : properties.entrySet())
-    {
-      DBObject doc = new BasicDBObject();
-      doc.put("_id", property.getKey());
-      doc.put("value", property.getValue());
-
-      propertiesCollection.insert(doc);
-
-    }
+    props.set(properties);
   }
 
   public void removePropertyValues(Set<String> names)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    props.remove(names);
   }
 
   public boolean isFirstStart()
@@ -223,8 +171,46 @@ public class MongoDBStore extends Store implements IMongoDBStore
     this.creationTime = creationTime;
 
     Map<String, String> map = new HashMap<String, String>();
-    map.put(PROP_REPOSITORY_CREATED, Long.toString(creationTime));
-    setPropertyValues(map);
+    map.put(Props.REPOSITORY_CREATED, Long.toString(creationTime));
+    props.set(map);
+  }
+
+  public boolean isBranching()
+  {
+    return branching;
+  }
+
+  public int getLastClassifierID()
+  {
+    return lastClassifierID;
+  }
+
+  public void setLastClassifierID(int lastClassifierID)
+  {
+    this.lastClassifierID = lastClassifierID;
+  }
+
+  public synchronized int mapNewClassifier(EClassifier classifier)
+  {
+    int id = ++lastClassifierID;
+    classifierToIDs.put(classifier, id);
+    idToClassifiers.put(id, classifier);
+    return id;
+  }
+
+  public synchronized int getClassifierID(EClassifier classifier)
+  {
+    return classifierToIDs.get(classifier);
+  }
+
+  public synchronized EClassifier getClassifier(int id)
+  {
+    return idToClassifiers.get(id);
+  }
+
+  public synchronized EClass getClass(int id)
+  {
+    return (EClass)idToClassifiers.get(id);
   }
 
   public CDOID createObjectID(String val)
@@ -286,7 +272,10 @@ public class MongoDBStore extends Store implements IMongoDBStore
   @Override
   protected void doActivate() throws Exception
   {
-    REPOS.put(getRepository().getName(), getRepository());
+    InternalRepository repository = getRepository();
+    branching = repository.isSupportingBranches();
+
+    REPOS.put(repository.getName(), repository);
 
     super.doActivate();
 
@@ -294,32 +283,15 @@ public class MongoDBStore extends Store implements IMongoDBStore
     db = mongo.getDB(dbName);
 
     Set<String> collectionNames = db.getCollectionNames();
-    firstStart = !collectionNames.contains("cdo.properties");
+    firstStart = !collectionNames.contains(PROPERTIES);
 
-    propertiesCollection = db.getCollection("cdo.properties");
-    packageUnitsCollection = db.getCollection("cdo.packageUnits");
-    commitInfosCollection = db.getCollection("cdo.commitInfos");
-
-    DBObject packages_pk = new BasicDBObject("packages.id", 1);
-    commitInfosCollection.ensureIndex(packages_pk, "packages_pk");
-
-    DBObject packages_time = new BasicDBObject("packages.time", 1);
-    commitInfosCollection.ensureIndex(packages_time, "packages_time");
-
-    DBObject revisions_pk = new BasicDBObject("revisions.cdo_id", 1).append("revisions.cdo_version", 1);
-    commitInfosCollection.ensureIndex(revisions_pk, "revisions_pk");
-
-    DBObject revisions_created = new BasicDBObject("revisions.cdo_created", 1);
-    commitInfosCollection.ensureIndex(revisions_created, "revisions_created");
-
-    DBObject revisions_revised = new BasicDBObject("revisions.cdo_revised", 1);
-    commitInfosCollection.ensureIndex(revisions_revised, "revisions_revised");
+    props = new Props(this);
+    commits = new Commits(this);
 
     LifecycleUtil.activate(idHandler);
     setObjectIDTypes(idHandler.getObjectIDTypes());
 
     LifecycleUtil.activate(mapper);
-    initMode();
 
     if (firstStart)
     {
@@ -337,14 +309,15 @@ public class MongoDBStore extends Store implements IMongoDBStore
     REPOS.remove(getRepository().getName());
 
     Map<String, String> map = new HashMap<String, String>();
-    map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
-    map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
-    map.put(PROP_NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
-    map.put(PROP_LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
-    map.put(PROP_LAST_BRANCHID, Integer.toString(getLastBranchID()));
-    map.put(PROP_LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
-    map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
-    map.put(PROP_LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
+    map.put(Props.GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
+    map.put(Props.REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
+    map.put(Props.NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
+    map.put(Props.LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
+    map.put(Props.LAST_CLASSIFIERID, Integer.toString(getLastClassifierID()));
+    map.put(Props.LAST_BRANCHID, Integer.toString(getLastBranchID()));
+    map.put(Props.LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
+    map.put(Props.LAST_COMMITTIME, Long.toString(getLastCommitTime()));
+    map.put(Props.LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
     setPropertyValues(map);
 
     LifecycleUtil.activate(mapper);
@@ -359,24 +332,6 @@ public class MongoDBStore extends Store implements IMongoDBStore
     super.doDeactivate();
   }
 
-  protected void initMode()
-  {
-    if (getRepository().isSupportingBranches())
-    {
-      mode = new Mode.Branching();
-    }
-    else if (getRepository().isSupportingBranches())
-    {
-      mode = new Mode.Audditing();
-    }
-    else
-    {
-      mode = new Mode.Normal();
-    }
-
-    mode.setStore(this);
-  }
-
   protected void firstStart()
   {
     setCreationTime(getRepository().getTimeStamp());
@@ -386,36 +341,38 @@ public class MongoDBStore extends Store implements IMongoDBStore
   protected void reStart()
   {
     Set<String> names = new HashSet<String>();
-    names.add(PROP_REPOSITORY_CREATED);
-    names.add(PROP_GRACEFULLY_SHUT_DOWN);
+    names.add(Props.REPOSITORY_CREATED);
+    names.add(Props.GRACEFULLY_SHUT_DOWN);
 
     Map<String, String> map = getPropertyValues(names);
-    creationTime = Long.valueOf(map.get(PROP_REPOSITORY_CREATED));
+    creationTime = Long.valueOf(map.get(Props.REPOSITORY_CREATED));
 
-    if (map.containsKey(PROP_GRACEFULLY_SHUT_DOWN))
+    if (map.containsKey(Props.GRACEFULLY_SHUT_DOWN))
     {
       names.clear();
-      names.add(PROP_NEXT_LOCAL_CDOID);
-      names.add(PROP_LAST_CDOID);
-      names.add(PROP_LAST_BRANCHID);
-      names.add(PROP_LAST_LOCAL_BRANCHID);
-      names.add(PROP_LAST_COMMITTIME);
-      names.add(PROP_LAST_NONLOCAL_COMMITTIME);
+      names.add(Props.NEXT_LOCAL_CDOID);
+      names.add(Props.LAST_CDOID);
+      names.add(Props.LAST_CLASSIFIERID);
+      names.add(Props.LAST_BRANCHID);
+      names.add(Props.LAST_LOCAL_BRANCHID);
+      names.add(Props.LAST_COMMITTIME);
+      names.add(Props.LAST_NONLOCAL_COMMITTIME);
       map = getPropertyValues(names);
 
-      idHandler.setNextLocalObjectID(stringToID(map.get(PROP_NEXT_LOCAL_CDOID)));
-      idHandler.setLastObjectID(stringToID(map.get(PROP_LAST_CDOID)));
-      setLastBranchID(Integer.valueOf(map.get(PROP_LAST_BRANCHID)));
-      setLastLocalBranchID(Integer.valueOf(map.get(PROP_LAST_LOCAL_BRANCHID)));
-      setLastCommitTime(Long.valueOf(map.get(PROP_LAST_COMMITTIME)));
-      setLastNonLocalCommitTime(Long.valueOf(map.get(PROP_LAST_NONLOCAL_COMMITTIME)));
+      idHandler.setNextLocalObjectID(stringToID(map.get(Props.NEXT_LOCAL_CDOID)));
+      idHandler.setLastObjectID(stringToID(map.get(Props.LAST_CDOID)));
+      setLastClassifierID(Integer.valueOf(map.get(Props.LAST_CLASSIFIERID)));
+      setLastBranchID(Integer.valueOf(map.get(Props.LAST_BRANCHID)));
+      setLastLocalBranchID(Integer.valueOf(map.get(Props.LAST_LOCAL_BRANCHID)));
+      setLastCommitTime(Long.valueOf(map.get(Props.LAST_COMMITTIME)));
+      setLastNonLocalCommitTime(Long.valueOf(map.get(Props.LAST_NONLOCAL_COMMITTIME)));
     }
     else
     {
       repairAfterCrash();
     }
 
-    removePropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
+    removePropertyValues(Collections.singleton(Props.GRACEFULLY_SHUT_DOWN));
   }
 
   protected void repairAfterCrash()

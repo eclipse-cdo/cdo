@@ -148,12 +148,12 @@ public class MongoDBBrowserPage extends AbstractPage
         if (value instanceof String)
         {
           pout.print("\"");
-        }
-
-        pout.print(value);
-        if (value instanceof String)
-        {
+          pout.print(browser.escape((String)value));
           pout.print("\"");
+        }
+        else
+        {
+          pout.print(value);
         }
 
         pout.print("</font><br>");

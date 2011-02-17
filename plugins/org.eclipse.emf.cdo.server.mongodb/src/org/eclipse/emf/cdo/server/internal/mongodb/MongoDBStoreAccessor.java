@@ -15,13 +15,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -34,15 +30,12 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.internal.mongodb.bundle.OM;
 import org.eclipse.emf.cdo.server.mongodb.IMongoDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorBase;
 
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -58,12 +51,8 @@ import com.mongodb.DBObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -72,8 +61,6 @@ import java.util.Set;
 public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBStoreAccessor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MongoDBStoreAccessor.class);
-
-  private static final boolean ZIP_PACKAGE_BYTES = true;
 
   public MongoDBStoreAccessor(Store store, ISession session)
   {
@@ -170,8 +157,8 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     try
     {
 
-      DBObject query = getStore().getMode().createResourcesQuery(folderID, name, exactMatch, context);
-      DBObject keys = new BasicDBObject("_cdoid", 1);
+      DBObject query = createResourcesQuery(folderID, name, exactMatch, context);
+      DBObject keys = new BasicDBObject(Commits.REVISIONS_ID, 1);
       cursor = collection.find(query, keys);
       while (cursor.hasNext())
       {
@@ -195,6 +182,27 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     finally
     {
     }
+  }
+
+  public DBObject createResourcesQuery(CDOID folderID, String name, boolean exactMatch, QueryResourcesContext context)
+  {
+    DBObject query = new BasicDBObject();
+    query.put("_version", new BasicDBObject("$gt", 0));
+    getStore().getIDHandler().write(query, "_container", folderID);
+    if (name == null)
+    {
+      query.put("name", new BasicDBObject("$exists", false));
+    }
+    else if (exactMatch)
+    {
+      query.put("name", name);
+    }
+    else
+    {
+      query.put("name", new BasicDBObject("$regex", "/^" + name + "/"));
+    }
+
+    return query;
   }
 
   public void queryXRefs(QueryXRefsContext context)
@@ -254,79 +262,12 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
-    MongoDBStore store = getStore();
-    DBCollection packageUnitsCollection = store.getPackageUnitsCollection();
-    DBObject[] docs = marshallPackageUnits(packageUnits);
-
-    for (DBObject doc : docs)
-    {
-      packageUnitsCollection.insert(doc);
-    }
+    getStore().getCommits().writePackageUnits(this, packageUnits, monitor);
   }
 
   public void write(InternalCommitContext context, OMMonitor monitor)
   {
-    try
-    {
-      monitor.begin(104);
-      CDOBranchPoint branchPoint = context.getBranchPoint();
-
-      DBObject doc = new BasicDBObject();
-      doc.put("_id", branchPoint.getTimeStamp());
-
-      long previous = context.getPreviousTimeStamp();
-      if (previous != CDOBranchPoint.UNSPECIFIED_DATE)
-      {
-        doc.put("previous", previous);
-      }
-
-      if (getStore().getRepository().isSupportingBranches())
-      {
-        doc.put("branch", branchPoint.getBranch().getID());
-      }
-
-      String user = context.getUserID();
-      if (user != null)
-      {
-        doc.put("user", user);
-      }
-
-      String comment = context.getCommitComment();
-      if (comment != null)
-      {
-        doc.put("comment", comment);
-      }
-
-      InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
-      if (!ObjectUtil.isEmpty(newPackageUnits))
-      {
-        doc.put("packages", marshallPackageUnits(newPackageUnits));
-      }
-
-      monitor.worked();
-      addIDMappings(context, monitor.fork());
-      context.applyIDMappings(monitor.fork());
-
-      List<DBObject> docs = new ArrayList<DBObject>();
-      marshalRevisions(docs, context.getNewObjects());
-      marshalRevisions(docs, context.getDirtyObjects());
-      if (!docs.isEmpty())
-      {
-        doc.put("revisions", docs);
-      }
-
-      monitor.worked();
-
-      getStore().getCommitInfosCollection().insert(doc);
-      monitor.worked(100);
-
-      CDOCommitInfo commitInfo = context.createCommitInfo();
-      getStore().getMapper().addWork(commitInfo);
-    }
-    finally
-    {
-      monitor.done();
-    }
+    getStore().getCommits().write(this, context, monitor);
   }
 
   public void commit(OMMonitor monitor)
@@ -343,145 +284,5 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
   protected CDOID getNextCDOID(CDORevision revision)
   {
     return getStore().getIDHandler().getNextCDOID(revision);
-  }
-
-  private DBObject[] marshallPackageUnits(InternalCDOPackageUnit[] packageUnits)
-  {
-    DBObject[] result = new DBObject[packageUnits.length];
-    InternalCDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
-
-    for (int i = 0; i < packageUnits.length; i++)
-    {
-      InternalCDOPackageUnit packageUnit = packageUnits[i];
-      EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
-      byte[] bytes = EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, packageRegistry);
-
-      DBObject doc = new BasicDBObject();
-      doc.put("id", packageUnit.getID());
-      doc.put("type", packageUnit.getOriginalType().toString());
-      doc.put("time", packageUnit.getTimeStamp());
-      doc.put("data", bytes);
-
-      result[i] = doc;
-    }
-
-    return result;
-  }
-
-  private void marshalRevisions(List<DBObject> docs, InternalCDORevision[] revisions)
-  {
-    for (InternalCDORevision revision : revisions)
-    {
-      DBObject doc = marshallRevision(revision);
-      docs.add(doc);
-    }
-  }
-
-  private DBObject[] marshallRevisions(InternalCDORevision[] revisions)
-  {
-    DBObject[] result = new DBObject[revisions.length];
-    for (int i = 0; i < revisions.length; i++)
-    {
-      InternalCDORevision revision = revisions[i];
-      result[i] = marshallRevision(revision);
-    }
-
-    return result;
-  }
-
-  private DBObject marshallRevision(InternalCDORevision revision)
-  {
-    IDHandler idHandler = getStore().getIDHandler();
-
-    DBObject doc = new BasicDBObject();
-    idHandler.write(doc, "cdo_id", revision.getID());
-    if (getStore().getRepository().isSupportingBranches())
-    {
-      int branch = revision.getBranch().getID();
-      if (branch != 0)
-      {
-        doc.put("cdo_branch", branch);
-      }
-    }
-
-    doc.put("cdo_version", revision.getVersion());
-    doc.put("cdo_created", revision.getTimeStamp());
-
-    long revised = revision.getRevised();
-    if (revised != CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      doc.put("cdo_revised", revised);
-    }
-
-    doc.put("cdo_class", new CDOClassifierRef(revision.getEClass()).getURI());
-
-    CDOID resourceID = revision.getResourceID();
-    if (!CDOIDUtil.isNull(resourceID))
-    {
-      idHandler.write(doc, "cdo_resource", resourceID);
-    }
-
-    CDOID containerID = (CDOID)revision.getContainerID();
-    if (!CDOIDUtil.isNull(containerID))
-    {
-      idHandler.write(doc, "cdo_container", containerID);
-      int featureID = revision.getContainingFeatureID();
-      if (featureID != 0)
-      {
-        doc.put("cdo_feature", featureID);
-      }
-    }
-
-    return doc;
-  }
-
-  private DBObject[] marshallRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas)
-  {
-    DBObject[] result = new DBObject[revisionDeltas.length];
-    for (int i = 0; i < revisionDeltas.length; i++)
-    {
-      InternalCDORevisionDelta revisionDelta = revisionDeltas[i];
-      result[i] = marshallRevisionDelta(revisionDelta);
-    }
-
-    return result;
-  }
-
-  private DBObject marshallRevisionDelta(InternalCDORevisionDelta revisionDelta)
-  {
-    IDHandler idHandler = getStore().getIDHandler();
-
-    DBObject doc = new BasicDBObject();
-    idHandler.write(doc, "cdo_id", revisionDelta.getID());
-    if (getStore().getRepository().isSupportingBranches())
-    {
-      doc.put("cdo_branch", revisionDelta.getBranch().getID());
-    }
-
-    // doc.put("cdo_version", revisionDelta.getVersion());
-
-    return doc;
-  }
-
-  private DBObject[] marshallObjectTypes(Map<CDOID, EClass> objectTypes)
-  {
-    IDHandler idHandler = getStore().getIDHandler();
-    Iterator<Entry<CDOID, EClass>> it = objectTypes.entrySet().iterator();
-
-    DBObject[] result = new DBObject[objectTypes.size()];
-    for (int i = 0; i < result.length; i++)
-    {
-      Entry<CDOID, EClass> entry = it.next();
-      CDOID id = entry.getKey();
-      EClass type = entry.getValue();
-
-      DBObject doc = new BasicDBObject();
-      idHandler.write(doc, "id", id);
-      doc.put("type", new CDOClassifierRef(type).getURI());
-
-      result[i] = doc;
-    }
-
-    return result;
   }
 }

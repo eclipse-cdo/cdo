@@ -1437,7 +1437,7 @@ public class Repository extends Container<Object> implements InternalRepository
       @Override
       public String getCommitComment()
       {
-        return "<initialize root resource>"; //$NON-NLS-1$
+        return "<initialize>"; //$NON-NLS-1$
       }
     };
 

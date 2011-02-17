@@ -793,13 +793,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
+  public void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
   {
     // Do nothing
   }
 
   @Override
-  protected CDOID getNextCDOID(CDORevision revision)
+  public CDOID getNextCDOID(CDORevision revision)
   {
     // Never called
     throw new UnsupportedOperationException();

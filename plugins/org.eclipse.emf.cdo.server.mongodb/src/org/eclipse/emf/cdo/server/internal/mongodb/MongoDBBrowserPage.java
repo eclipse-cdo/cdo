@@ -8,6 +8,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import com.mongodb.DB;
+import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
@@ -41,6 +42,7 @@ public class MongoDBBrowserPage extends AbstractPage
     out.print("<td valign=\"top\">\r\n");
     String collection = showCollections(browser, out, db, repository.getName());
     out.print("</td>\r\n");
+    out.print("<td>&nbsp;&nbsp;&nbsp;</td>\r\n");
 
     if (collection != null)
     {
@@ -81,22 +83,39 @@ public class MongoDBBrowserPage extends AbstractPage
 
   protected void showCollection(CDOServerBrowser browser, PrintStream pout, DB db, String collection)
   {
+    DBCollection coll = db.getCollection(collection);
+    pout.print("<table border=\"1\" cellpadding=\"4\">\r\n");
+    pout.print("<tr><td colspan=\"2\" align=\"center\"><h2>" + collection + "</h2></td></tr>\r\n");
+    pout.print("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"EEEEEE\"><h4>Indexes</h4></td></tr>\r\n");
+
+    int i = 0;
+    for (DBObject index : coll.getIndexInfo())
+    {
+      ++i;
+      pout.print("<tr><td valign=\"top\">" + i + "</td><td valign=\"top\">");
+      showDocument(browser, pout, index, "");
+      pout.print("</td></tr>\r\n");
+    }
+
     DBCursor cursor = null;
 
     try
     {
-      pout.print("<ol>\r\n");
-      pout.print("<ol>\r\n");
-      cursor = db.getCollection(collection).find();
+      pout.print("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"EEEEEE\"><h4>Documents</h4></td></tr>\r\n");
+
+      i = 0;
+      cursor = coll.find();
       while (cursor.hasNext())
       {
         DBObject doc = cursor.next();
-        pout.print("<li>");
+
+        ++i;
+        pout.print("<tr><td valign=\"top\">" + i + "</td><td valign=\"top\">");
         showDocument(browser, pout, doc, "");
-        pout.print("<p>\r\n");
+        pout.print("</td></tr>\r\n");
       }
 
-      pout.print("</ol>\r\n");
+      pout.print("</table>\r\n");
     }
     finally
     {

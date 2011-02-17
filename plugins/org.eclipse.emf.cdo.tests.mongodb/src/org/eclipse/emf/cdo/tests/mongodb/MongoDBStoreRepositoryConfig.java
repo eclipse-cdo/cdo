@@ -28,15 +28,15 @@ import com.mongodb.MongoURI;
  */
 public class MongoDBStoreRepositoryConfig extends RepositoryConfig
 {
-  public static final MongoDBStoreRepositoryConfig INSTANCE = new MongoDBStoreRepositoryConfig("MongoDBStore");
+  public static final MongoDBStoreRepositoryConfig INSTANCE = new MongoDBStoreRepositoryConfig();
 
   private static final long serialVersionUID = 1L;
 
   private transient CDOServerBrowser mongoBrowser;
 
-  public MongoDBStoreRepositoryConfig(String name)
+  public MongoDBStoreRepositoryConfig()
   {
-    super(name);
+    super("MongoDBStore");
   }
 
   @Override

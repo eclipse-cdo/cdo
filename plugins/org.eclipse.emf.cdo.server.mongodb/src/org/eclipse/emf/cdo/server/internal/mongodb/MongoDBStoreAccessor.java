@@ -395,37 +395,41 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     IDHandler idHandler = getStore().getIDHandler();
 
     DBObject doc = new BasicDBObject();
-    idHandler.write(doc, "_cdoid", revision.getID());
+    idHandler.write(doc, "cdo_id", revision.getID());
     if (getStore().getRepository().isSupportingBranches())
     {
-      doc.put("_branch", revision.getBranch().getID());
+      int branch = revision.getBranch().getID();
+      if (branch != 0)
+      {
+        doc.put("cdo_branch", branch);
+      }
     }
 
-    // doc.put("_version", revision.getVersion());
-    // doc.put("_created", revision.getTimeStamp());
+    doc.put("cdo_version", revision.getVersion());
+    doc.put("cdo_created", revision.getTimeStamp());
 
     long revised = revision.getRevised();
     if (revised != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      doc.put("_revised", revised);
+      doc.put("cdo_revised", revised);
     }
 
-    doc.put("_class", new CDOClassifierRef(revision.getEClass()).getURI());
+    doc.put("cdo_class", new CDOClassifierRef(revision.getEClass()).getURI());
 
     CDOID resourceID = revision.getResourceID();
     if (!CDOIDUtil.isNull(resourceID))
     {
-      idHandler.write(doc, "_resource", resourceID);
+      idHandler.write(doc, "cdo_resource", resourceID);
     }
 
     CDOID containerID = (CDOID)revision.getContainerID();
     if (!CDOIDUtil.isNull(containerID))
     {
-      idHandler.write(doc, "_container", containerID);
+      idHandler.write(doc, "cdo_container", containerID);
       int featureID = revision.getContainingFeatureID();
       if (featureID != 0)
       {
-        doc.put("_feature", featureID);
+        doc.put("cdo_feature", featureID);
       }
     }
 
@@ -449,13 +453,13 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     IDHandler idHandler = getStore().getIDHandler();
 
     DBObject doc = new BasicDBObject();
-    idHandler.write(doc, "_cdoid", revisionDelta.getID());
+    idHandler.write(doc, "cdo_id", revisionDelta.getID());
     if (getStore().getRepository().isSupportingBranches())
     {
-      doc.put("_branch", revisionDelta.getBranch().getID());
+      doc.put("cdo_branch", revisionDelta.getBranch().getID());
     }
 
-    // doc.put("_version", revisionDelta.getVersion());
+    // doc.put("cdo_version", revisionDelta.getVersion());
 
     return doc;
   }

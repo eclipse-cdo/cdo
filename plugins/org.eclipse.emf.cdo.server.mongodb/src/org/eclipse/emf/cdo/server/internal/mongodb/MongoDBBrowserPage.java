@@ -144,10 +144,19 @@ public class MongoDBBrowserPage extends AbstractPage
       }
       else
       {
+        pout.print("<font color=\"#0000FF\">");
+        if (value instanceof String)
+        {
+          pout.print("\"");
+        }
+
         pout.print(value);
-        pout.print("<em>&nbsp;&nbsp;(");
-        pout.print(value.getClass().getSimpleName().toLowerCase());
-        pout.print(")</em><br>");
+        if (value instanceof String)
+        {
+          pout.print("\"");
+        }
+
+        pout.print("</font><br>");
       }
     }
   }

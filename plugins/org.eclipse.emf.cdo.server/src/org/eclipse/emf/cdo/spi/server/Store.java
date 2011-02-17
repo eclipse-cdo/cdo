@@ -394,6 +394,9 @@ public abstract class Store extends Lifecycle implements InternalStore
     return revision;
   }
 
+  /**
+   * @since 4.0
+   */
   protected void releaseAccessor(StoreAccessorBase accessor)
   {
     StoreAccessorPool pool = null;

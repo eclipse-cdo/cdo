@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.mongodb;
 
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.internal.mongodb.Commits;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -25,7 +25,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
-import com.mongodb.BasicDBObject;
+import org.eclipse.emf.common.util.URI;
+
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -48,8 +49,20 @@ public class InitialTestMongoDB extends AbstractCDOTest
     resource.getContents().add(supplier);
     transaction.commit();
 
-    query(new BasicDBObject(Commits.REVISIONS, new BasicDBObject("$elemMatch", new BasicDBObject(
-        Commits.REVISIONS_RESOURCE, 1))));
+    // query(new BasicDBObject(Commits.REVISIONS, new BasicDBObject("$elemMatch", new BasicDBObject(
+    // Commits.REVISIONS_RESOURCE, 1))));
+    transaction = session.openTransaction();
+
+    msg("Getting resource");
+    resource = transaction.getResource(getResourcePath("/test1"), true);
+    assertNotNull(resource);
+    assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
+        resource.getURI());
+    assertEquals(transaction.getResourceSet(), resource.getResourceSet());
+    assertEquals(1, transaction.getResourceSet().getResources().size());
+    assertEquals(CDOState.CLEAN, resource.cdoState());
+    assertEquals(transaction, resource.cdoView());
+    assertNotNull(resource.cdoRevision());
   }
 
   protected void query(DBObject query)

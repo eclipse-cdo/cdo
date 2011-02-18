@@ -25,9 +25,6 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
@@ -49,8 +46,6 @@ import java.util.Set;
  */
 public class MongoDBStore extends Store implements IMongoDBStore
 {
-  public static final String PROPERTIES = "props";
-
   public static final String TYPE = "mongodb"; //$NON-NLS-1$
 
   private MongoURI mongoURI;
@@ -59,25 +54,19 @@ public class MongoDBStore extends Store implements IMongoDBStore
 
   private IDHandler idHandler = new IDHandler.LongValue(this);
 
-  private Mapper mapper = new Mapper(this);
-
   private DB db;
 
   private Props props;
 
   private Commits commits;
 
+  private Classes classes;
+
   private boolean firstStart;
 
   private long creationTime;
 
   private boolean branching;
-
-  private int lastClassifierID;
-
-  private Map<EClassifier, Integer> classifierToIDs = new HashMap<EClassifier, Integer>();
-
-  private Map<Integer, EClassifier> idToClassifiers = new HashMap<Integer, EClassifier>();
 
   public static Map<String, InternalRepository> REPOS = new HashMap<String, InternalRepository>();
 
@@ -121,11 +110,6 @@ public class MongoDBStore extends Store implements IMongoDBStore
     this.idHandler = idHandler;
   }
 
-  public Mapper getMapper()
-  {
-    return mapper;
-  }
-
   public DB getDB()
   {
     return db;
@@ -139,6 +123,11 @@ public class MongoDBStore extends Store implements IMongoDBStore
   public Commits getCommits()
   {
     return commits;
+  }
+
+  public Classes getClasses()
+  {
+    return classes;
   }
 
   public Map<String, String> getPropertyValues(Set<String> names)
@@ -178,39 +167,6 @@ public class MongoDBStore extends Store implements IMongoDBStore
   public boolean isBranching()
   {
     return branching;
-  }
-
-  public int getLastClassifierID()
-  {
-    return lastClassifierID;
-  }
-
-  public void setLastClassifierID(int lastClassifierID)
-  {
-    this.lastClassifierID = lastClassifierID;
-  }
-
-  public synchronized int mapNewClassifier(EClassifier classifier)
-  {
-    int id = ++lastClassifierID;
-    classifierToIDs.put(classifier, id);
-    idToClassifiers.put(id, classifier);
-    return id;
-  }
-
-  public synchronized int getClassifierID(EClassifier classifier)
-  {
-    return classifierToIDs.get(classifier);
-  }
-
-  public synchronized EClassifier getClassifier(int id)
-  {
-    return idToClassifiers.get(id);
-  }
-
-  public synchronized EClass getClass(int id)
-  {
-    return (EClass)idToClassifiers.get(id);
   }
 
   public CDOID createObjectID(String val)
@@ -283,15 +239,14 @@ public class MongoDBStore extends Store implements IMongoDBStore
     db = mongo.getDB(dbName);
 
     Set<String> collectionNames = db.getCollectionNames();
-    firstStart = !collectionNames.contains(PROPERTIES);
+    firstStart = !collectionNames.contains(Props.NAME);
 
     props = new Props(this);
     commits = new Commits(this);
+    classes = new Classes();
 
     LifecycleUtil.activate(idHandler);
     setObjectIDTypes(idHandler.getObjectIDTypes());
-
-    LifecycleUtil.activate(mapper);
 
     if (firstStart)
     {
@@ -313,14 +268,13 @@ public class MongoDBStore extends Store implements IMongoDBStore
     map.put(Props.REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
     map.put(Props.NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
     map.put(Props.LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
-    map.put(Props.LAST_CLASSIFIERID, Integer.toString(getLastClassifierID()));
+    map.put(Props.LAST_CLASSIFIERID, Integer.toString(classes.getLastClassifierID()));
     map.put(Props.LAST_BRANCHID, Integer.toString(getLastBranchID()));
     map.put(Props.LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
     map.put(Props.LAST_COMMITTIME, Long.toString(getLastCommitTime()));
     map.put(Props.LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
     setPropertyValues(map);
 
-    LifecycleUtil.activate(mapper);
     LifecycleUtil.activate(idHandler);
 
     if (db != null)
@@ -361,7 +315,7 @@ public class MongoDBStore extends Store implements IMongoDBStore
 
       idHandler.setNextLocalObjectID(stringToID(map.get(Props.NEXT_LOCAL_CDOID)));
       idHandler.setLastObjectID(stringToID(map.get(Props.LAST_CDOID)));
-      setLastClassifierID(Integer.valueOf(map.get(Props.LAST_CLASSIFIERID)));
+      classes.setLastClassifierID(Integer.valueOf(map.get(Props.LAST_CLASSIFIERID)));
       setLastBranchID(Integer.valueOf(map.get(Props.LAST_BRANCHID)));
       setLastLocalBranchID(Integer.valueOf(map.get(Props.LAST_LOCAL_BRANCHID)));
       setLastCommitTime(Long.valueOf(map.get(Props.LAST_COMMITTIME)));

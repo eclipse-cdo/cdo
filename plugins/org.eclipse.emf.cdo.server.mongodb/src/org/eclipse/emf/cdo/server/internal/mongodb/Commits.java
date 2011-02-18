@@ -13,7 +13,10 @@ package org.eclipse.emf.cdo.server.internal.mongodb;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -24,13 +27,18 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -128,7 +136,7 @@ public class Commits extends Coll
         doc.put(COMMITS_PREVIOUS, previous);
       }
 
-      if (getStore().isBranching())
+      if (store.isBranching())
       {
         doc.put(COMMITS_BRANCH, branchPoint.getBranch().getID());
       }
@@ -177,7 +185,7 @@ public class Commits extends Coll
   private DBObject[] marshallUnits(InternalCDOPackageUnit[] packageUnits)
   {
     DBObject[] result = new DBObject[packageUnits.length];
-    InternalCDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
+    InternalCDOPackageRegistry packageRegistry = store.getRepository().getPackageRegistry();
 
     for (int i = 0; i < packageUnits.length; i++)
     {
@@ -216,7 +224,7 @@ public class Commits extends Coll
 
       for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
       {
-        int classifierID = getStore().mapNewClassifier(classifier);
+        int classifierID = store.getClasses().mapNewClassifier(classifier);
         doc.put(CLASSIFIER_PREFIX + classifierID, classifier.getName());
       }
 
@@ -237,11 +245,11 @@ public class Commits extends Coll
 
   private DBObject marshallRevision(InternalCDORevision revision)
   {
-    IDHandler idHandler = getStore().getIDHandler();
+    IDHandler idHandler = store.getIDHandler();
 
     DBObject doc = new BasicDBObject();
     idHandler.write(doc, REVISIONS_ID, revision.getID());
-    if (getStore().isBranching())
+    if (store.isBranching())
     {
       int branch = revision.getBranch().getID();
       if (branch != 0)
@@ -251,7 +259,9 @@ public class Commits extends Coll
     }
 
     doc.put(REVISIONS_VERSION, revision.getVersion());
-    doc.put(REVISIONS_CLASS, store.getClassifierID(revision.getEClass()));
+
+    EClass eClass = revision.getEClass();
+    doc.put(REVISIONS_CLASS, store.getClasses().getClassifierID(eClass));
 
     CDOID resourceID = revision.getResourceID();
     if (!CDOIDUtil.isNull(resourceID))
@@ -270,6 +280,233 @@ public class Commits extends Coll
       }
     }
 
+    CDOClassInfo classInfo = CDOModelUtil.getClassInfo(eClass); // TODO Cache id-->classInfo
+    for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+    {
+      Object value = revision.getValue(feature);
+      if (value == null)
+      {
+        continue;
+      }
+
+      if (value instanceof List<?>)
+      {
+        List<?> list = (List<?>)value;
+        Object[] array = new Object[list.size()];
+        int i = 0;
+        for (Object element : list)
+        {
+          if (element instanceof CDOID)
+          {
+            CDOID id = (CDOID)element;
+            element = idHandler.toValue(id);
+          }
+
+          array[i++] = element;
+        }
+
+        value = array;
+      }
+      else if (value instanceof CDOID)
+      {
+        CDOID id = (CDOID)value;
+        value = idHandler.toValue(id);
+      }
+
+      doc.put(feature.getName(), value);
+    }
+
     return doc;
+  }
+
+  public Collection<InternalCDOPackageUnit> readPackageUnits()
+  {
+    Collection<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
+
+    DBObject query = new BasicDBObject();
+    query.put(UNITS, new BasicDBObject("$exists", true));
+
+    DBCursor cursor = collection.find(query);
+    while (cursor.hasNext())
+    {
+      DBObject doc = cursor.next();
+      readPackageUnits(doc, packageUnits);
+    }
+
+    return packageUnits;
+  }
+
+  private void readPackageUnits(DBObject doc, Collection<InternalCDOPackageUnit> packageUnits)
+  {
+    // DBObject units = (DBObject)doc.get(UNITS);
+    Object object = doc.get(UNITS);
+    System.out.println(object);
+
+    // TODO: implement readPackageUnits(doc, packageUnits)
+    throw new UnsupportedOperationException();
+  }
+
+  public void queryResources(final QueryResourcesContext context)
+  {
+
+    CDOID folderID = context.getFolderID();
+    String name = context.getName();
+    boolean exactMatch = context.exactMatch();
+
+    Classes classes = getStore().getClasses();
+
+    DBObject query = new BasicDBObject();
+    query.put("$or",
+        new Object[] { new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, classes.getResourceFolderClassID()),
+            new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, classes.getResourceClassID()) });
+
+    query.put(REVISIONS + "." + REVISIONS_VERSION, new BasicDBObject("$gt", 0)); // Not detached
+
+    if (CDOIDUtil.isNull(folderID))
+    {
+      query.put(REVISIONS + "." + REVISIONS_CONTAINER, new BasicDBObject("$exists", false));
+    }
+    else
+    {
+      query.put(REVISIONS + "." + REVISIONS_CONTAINER, getStore().getIDHandler().toValue(folderID));
+    }
+
+    if (name == null)
+    {
+      query.put(REVISIONS + "." + "name", new BasicDBObject("$exists", false));
+    }
+    else if (exactMatch)
+    {
+      query.put(REVISIONS + "." + "name", name);
+    }
+    else
+    {
+      query.put(REVISIONS + "." + "name", new BasicDBObject("$regex", "/^" + name + "/"));
+    }
+
+    final IDHandler idHandler = store.getIDHandler();
+
+    // Ref ref = new Ref().or( //
+    // new Ref(REVISIONS + "." + REVISIONS_CLASS, classes.getResourceFolderClassID()), //
+    // new Ref(REVISIONS + "." + REVISIONS_CLASS, classes.getResourceClassID())) //
+    // .gt(REVISIONS + "." + REVISIONS_VERSION, 0) //
+    // ;
+
+    new Revisions(query)
+    {
+      @Override
+      protected void handleRevision(DBObject revision)
+      {
+
+        CDOID id = idHandler.read(revision, REVISIONS_ID);
+
+        if (!context.addResource(id))
+        {
+          // No more results allowed
+          return;
+        }
+      }
+    }.execute();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public abstract class Query
+  {
+    private DBObject ref;
+
+    public Query(DBObject ref)
+    {
+      this.ref = ref;
+    }
+
+    @Deprecated
+    public DBObject pair(String key, Object value)
+    {
+      return new BasicDBObject(key, value);
+    }
+
+    public final int execute()
+    {
+      return execute(collection.find(ref));
+    }
+
+    public final int execute(DBObject keys)
+    {
+      return execute(collection.find(ref, keys));
+    }
+
+    private int execute(DBCursor cursor)
+    {
+      try
+      {
+        int i = 0;
+        while (cursor.hasNext())
+        {
+          DBObject doc = cursor.next();
+          handleDoc(i++, doc);
+        }
+
+        return i;
+      }
+      finally
+      {
+        cursor.close();
+      }
+    }
+
+    protected abstract void handleDoc(int i, DBObject doc);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public abstract class ListQuery<RESULT> extends Query
+  {
+    private List<RESULT> results = new ArrayList<RESULT>();
+
+    public ListQuery(DBObject ref)
+    {
+      super(ref);
+    }
+
+    public final List<RESULT> getResults()
+    {
+      execute();
+      return results;
+    }
+
+    @Override
+    protected final void handleDoc(int i, DBObject doc)
+    {
+      handleDoc(i, doc, results);
+    }
+
+    protected abstract void handleDoc(int i, DBObject doc, List<RESULT> results);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public abstract class Revisions extends Query
+  {
+    public Revisions(DBObject ref)
+    {
+      super(ref);
+    }
+
+    @Override
+    protected void handleDoc(int i, DBObject doc)
+    {
+      BasicDBList list = (BasicDBList)doc.get(REVISIONS);
+      for (Object object : list)
+      {
+        DBObject revision = (DBObject)object;
+        handleRevision(revision);
+      }
+    }
+
+    protected abstract void handleRevision(DBObject revision);
   }
 }

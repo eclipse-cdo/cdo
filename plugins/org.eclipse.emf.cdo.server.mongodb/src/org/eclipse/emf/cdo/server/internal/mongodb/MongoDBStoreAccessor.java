@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
-import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
@@ -43,11 +42,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -86,7 +80,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    return getStore().getCommits().readPackageUnits();
   }
 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
@@ -130,79 +124,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
       throw new IllegalArgumentException("Auditing not supported");
     }
 
-    EresourcePackage resourcesPackage = EresourcePackage.eINSTANCE;
-
-    // First query folders
-    boolean shallContinue = queryResources(context, resourcesPackage.getCDOResourceFolder());
-
-    // Not enough results? -> query resources
-    if (shallContinue)
-    {
-      queryResources(context, resourcesPackage.getCDOResource());
-    }
-  }
-
-  private boolean queryResources(QueryResourcesContext context, EClass eClass)
-  {
-    IDHandler idHandler = getStore().getIDHandler();
-    Mapper mapper = getStore().getMapper();
-
-    DBCollection collection = mapper.getCollection(eClass);
-    DBCursor cursor = null;
-
-    CDOID folderID = context.getFolderID();
-    String name = context.getName();
-    boolean exactMatch = context.exactMatch();
-
-    try
-    {
-
-      DBObject query = createResourcesQuery(folderID, name, exactMatch, context);
-      DBObject keys = new BasicDBObject(Commits.REVISIONS_ID, 1);
-      cursor = collection.find(query, keys);
-      while (cursor.hasNext())
-      {
-        DBObject doc = cursor.next();
-
-        CDOID id = idHandler.read(doc, "_cdoid");
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Resources query returned ID " + id); //$NON-NLS-1$
-        }
-
-        if (!context.addResource(id))
-        {
-          // No more results allowed
-          return false; // Don't continue
-        }
-      }
-
-      return true; // Continue with other results
-    }
-    finally
-    {
-    }
-  }
-
-  public DBObject createResourcesQuery(CDOID folderID, String name, boolean exactMatch, QueryResourcesContext context)
-  {
-    DBObject query = new BasicDBObject();
-    query.put("_version", new BasicDBObject("$gt", 0));
-    getStore().getIDHandler().write(query, "_container", folderID);
-    if (name == null)
-    {
-      query.put("name", new BasicDBObject("$exists", false));
-    }
-    else if (exactMatch)
-    {
-      query.put("name", name);
-    }
-    else
-    {
-      query.put("name", new BasicDBObject("$regex", "/^" + name + "/"));
-    }
-
-    return query;
+    getStore().getCommits().queryResources(context);
   }
 
   public void queryXRefs(QueryXRefsContext context)

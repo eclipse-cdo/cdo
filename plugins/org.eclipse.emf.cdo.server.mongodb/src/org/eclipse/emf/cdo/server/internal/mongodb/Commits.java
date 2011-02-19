@@ -30,6 +30,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.mongodb.BasicDBList;
@@ -94,6 +95,12 @@ public class Commits extends Coll
 
   private static final boolean ZIP_PACKAGE_BYTES = true;
 
+  private IDHandler idHandler;
+
+  private int resourceFolderClassID;
+
+  private int resourceClassID;
+
   private InternalCDOPackageUnit[] systemPackageUnits;
 
   public Commits(MongoDBStore store)
@@ -111,6 +118,12 @@ public class Commits extends Coll
     {
       ensureIndex(REVISIONS, REVISIONS_ID, REVISIONS_VERSION);
     }
+
+    idHandler = store.getIDHandler();
+
+    Classes classes = getStore().getClasses();
+    resourceFolderClassID = classes.getResourceFolderClassID();
+    resourceClassID = classes.getResourceClassID();
   }
 
   public void writePackageUnits(MongoDBStoreAccessor mongoDBStoreAccessor, InternalCDOPackageUnit[] packageUnits,
@@ -245,17 +258,12 @@ public class Commits extends Coll
 
   private DBObject marshallRevision(InternalCDORevision revision)
   {
-    IDHandler idHandler = store.getIDHandler();
-
     DBObject doc = new BasicDBObject();
     idHandler.write(doc, REVISIONS_ID, revision.getID());
     if (store.isBranching())
     {
       int branch = revision.getBranch().getID();
-      if (branch != 0)
-      {
-        doc.put(REVISIONS_BRANCH, branch);
-      }
+      doc.put(REVISIONS_BRANCH, branch);
     }
 
     doc.put(REVISIONS_VERSION, revision.getVersion());
@@ -264,21 +272,13 @@ public class Commits extends Coll
     doc.put(REVISIONS_CLASS, store.getClasses().getClassifierID(eClass));
 
     CDOID resourceID = revision.getResourceID();
-    if (!CDOIDUtil.isNull(resourceID))
-    {
-      idHandler.write(doc, REVISIONS_RESOURCE, resourceID);
-    }
+    idHandler.write(doc, REVISIONS_RESOURCE, resourceID);
 
     CDOID containerID = (CDOID)revision.getContainerID();
-    if (!CDOIDUtil.isNull(containerID))
-    {
-      idHandler.write(doc, REVISIONS_CONTAINER, containerID);
-      int featureID = revision.getContainingFeatureID();
-      if (featureID != 0)
-      {
-        doc.put(REVISIONS_FEATURE, featureID);
-      }
-    }
+    idHandler.write(doc, REVISIONS_CONTAINER, containerID);
+
+    int featureID = revision.getContainingFeatureID();
+    doc.put(REVISIONS_FEATURE, featureID);
 
     CDOClassInfo classInfo = CDOModelUtil.getClassInfo(eClass); // TODO Cache id-->classInfo
     for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
@@ -289,14 +289,14 @@ public class Commits extends Coll
         continue;
       }
 
-      if (value instanceof List<?>)
+      if (feature.isMany())
       {
         List<?> list = (List<?>)value;
         Object[] array = new Object[list.size()];
         int i = 0;
         for (Object element : list)
         {
-          if (element instanceof CDOID)
+          if (feature instanceof EReference)
           {
             CDOID id = (CDOID)element;
             element = idHandler.toValue(id);
@@ -307,7 +307,7 @@ public class Commits extends Coll
 
         value = array;
       }
-      else if (value instanceof CDOID)
+      else if (feature instanceof EReference)
       {
         CDOID id = (CDOID)value;
         value = idHandler.toValue(id);
@@ -353,12 +353,9 @@ public class Commits extends Coll
     String name = context.getName();
     boolean exactMatch = context.exactMatch();
 
-    Classes classes = getStore().getClasses();
-
     DBObject query = new BasicDBObject();
-    query.put("$or",
-        new Object[] { new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, classes.getResourceFolderClassID()),
-            new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, classes.getResourceClassID()) });
+    query.put("$or", new Object[] { new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, resourceFolderClassID),
+        new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, resourceClassID) });
 
     query.put(REVISIONS + "." + REVISIONS_VERSION, new BasicDBObject("$gt", 0)); // Not detached
 
@@ -384,19 +381,16 @@ public class Commits extends Coll
       query.put(REVISIONS + "." + "name", new BasicDBObject("$regex", "/^" + name + "/"));
     }
 
-    final IDHandler idHandler = store.getIDHandler();
-
-    // Ref ref = new Ref().or( //
-    // new Ref(REVISIONS + "." + REVISIONS_CLASS, classes.getResourceFolderClassID()), //
-    // new Ref(REVISIONS + "." + REVISIONS_CLASS, classes.getResourceClassID())) //
-    // .gt(REVISIONS + "." + REVISIONS_VERSION, 0) //
-    // ;
-
     new Revisions(query)
     {
       @Override
       protected void handleRevision(DBObject revision)
       {
+        int classID = (Integer)revision.get(REVISIONS_CLASS);
+        if (classID != resourceFolderClassID && classID != resourceClassID)
+        {
+          return;
+        }
 
         CDOID id = idHandler.read(revision, REVISIONS_ID);
 

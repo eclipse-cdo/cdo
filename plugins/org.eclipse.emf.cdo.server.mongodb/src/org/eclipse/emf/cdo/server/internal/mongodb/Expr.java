@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.mongodb;
 
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -21,7 +23,8 @@ public abstract class Expr
 {
   public void evaluate(DBCollection collection, ResultHandler handler)
   {
-    DBCursor cursor = findDocuments(collection);
+    DBObject query = buildQuery(null);
+    DBCursor cursor = findDocuments(collection, query);
 
     try
     {
@@ -37,17 +40,104 @@ public abstract class Expr
     }
   }
 
-  protected void handleDocument(DBObject doc, ResultHandler handler)
+  protected DBCursor findDocuments(DBCollection collection, DBObject query)
   {
+    return collection.find(query);
   }
 
-  protected abstract DBCursor findDocuments(DBCollection collection);
+  protected void handleDocument(DBObject document, ResultHandler handler)
+  {
+    handleObject(document, handler);
+  }
+
+  protected abstract DBObject buildQuery(String context);
+
+  protected abstract void handleObject(DBObject object, ResultHandler handler);
 
   /**
    * @author Eike Stepper
    */
-  public interface ResultHandler
+  public static interface ResultHandler
   {
+    public void handleResult(DBObject object);
+  }
 
+  /**
+   * @author Eike Stepper
+   */
+  public static class Embed extends Expr
+  {
+    private String field;
+
+    private Expr expr;
+
+    public Embed(String field, Expr expr)
+    {
+      this.field = field;
+      this.expr = expr;
+    }
+
+    public String getField()
+    {
+      return field;
+    }
+
+    public Expr getExpr()
+    {
+      return expr;
+    }
+
+    @Override
+    protected DBObject buildQuery(String context)
+    {
+      String newContext = context == null ? field : context + "." + field;
+      return expr.buildQuery(newContext);
+    }
+
+    @Override
+    protected void handleObject(DBObject object, ResultHandler handler)
+    {
+      DBObject embedded = (DBObject)object.get(field);
+      expr.handleObject(embedded, handler);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Or extends Expr
+  {
+    private Expr[] operands;
+
+    public Or(Expr... operands)
+    {
+      this.operands = operands;
+    }
+
+    public Expr[] getOperands()
+    {
+      return operands;
+    }
+
+    @Override
+    protected DBObject buildQuery(String context)
+    {
+      BasicDBList list = new BasicDBList();
+      for (Expr expr : operands)
+      {
+        list.add(expr.buildQuery(context));
+      }
+
+      return new BasicDBObject("$or", list);
+    }
+
+    @Override
+    protected void handleObject(DBObject object, ResultHandler handler)
+    {
+      for (Expr expr : operands)
+      {
+        expr.handleObject(object, handler);
+      }
+    }
   }
 }

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 
@@ -259,6 +260,13 @@ public class Commits extends Coll
       List<DBObject> docs = new ArrayList<DBObject>();
       marshalRevisions(docs, context.getNewObjects());
       marshalRevisions(docs, context.getDirtyObjects());
+
+      for (CDOID id : context.getDetachedObjects())
+      {
+        BasicDBObject detached = new BasicDBObject();
+        // detached.put();
+      }
+
       if (!docs.isEmpty())
       {
         doc.put(REVISIONS, docs);
@@ -303,7 +311,7 @@ public class Commits extends Coll
     int featureID = revision.getContainingFeatureID();
     doc.put(REVISIONS_FEATURE, featureID);
 
-    CDOClassInfo classInfo = CDOModelUtil.getClassInfo(eClass); // TODO Cache id-->classInfo
+    CDOClassInfo classInfo = revision.getClassInfo();
     for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
     {
       Object value = revision.getValue(feature);
@@ -496,16 +504,21 @@ public class Commits extends Coll
 
         long revisionTime = (Long)doc.get(COMMITS_ID);
 
+        InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
+        CDOBranchPoint revisionBranchPoint = branchManager.getBranch(revisionBranch).getPoint(revisionTime);
+
         int classID = (Integer)revision.get(REVISIONS_CLASS);
         EClass eClass = store.getClasses().getClass(classID);
 
         int version = (Integer)revision.get(REVISIONS_VERSION);
+        if (version < 0)
+        {
+          return new DetachedCDORevision(eClass, id, revisionBranchPoint.getBranch(), version, revisionTime);
+        }
+
         CDOID resourceID = idHandler.read(revision, REVISIONS_RESOURCE);
         CDOID containerID = idHandler.read(revision, REVISIONS_CONTAINER);
         int featureID = (Integer)revision.get(REVISIONS_FEATURE);
-
-        InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
-        CDOBranchPoint revisionBranchPoint = branchManager.getBranch(revisionBranch).getPoint(revisionTime);
 
         InternalCDORevision result = store.createRevision(eClass, id);
         result.setBranchPoint(revisionBranchPoint);

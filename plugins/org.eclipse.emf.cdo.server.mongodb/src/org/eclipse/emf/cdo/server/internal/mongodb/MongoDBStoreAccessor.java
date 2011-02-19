@@ -170,7 +170,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    getStore().getCommits().loadCommitInfos(branch, startTime, endTime, handler);
   }
 
   public CDOCommitData loadCommitData(long timeStamp)

@@ -68,6 +68,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
 
   public void postCommit(boolean success);
 
+  /**
+   * @since 4.0
+   */
+  public InternalCDORevision[] getDetachedRevisions();
+
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits);
 
   public void setNewObjects(InternalCDORevision[] newObjects);

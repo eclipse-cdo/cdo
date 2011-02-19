@@ -12,6 +12,9 @@ package org.eclipse.emf.cdo.server.internal.mongodb;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -23,6 +26,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore.ValueHandler;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -44,6 +48,7 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.QueryOperators;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -258,14 +263,9 @@ public class Commits extends Coll
       context.applyIDMappings(monitor.fork());
 
       List<DBObject> docs = new ArrayList<DBObject>();
-      marshalRevisions(docs, context.getNewObjects());
-      marshalRevisions(docs, context.getDirtyObjects());
-
-      for (CDOID id : context.getDetachedObjects())
-      {
-        BasicDBObject detached = new BasicDBObject();
-        // detached.put();
-      }
+      marshalRevisions(docs, context.getNewObjects(), false);
+      marshalRevisions(docs, context.getDirtyObjects(), false);
+      marshalRevisions(docs, context.getDetachedRevisions(), true);
 
       if (!docs.isEmpty())
       {
@@ -283,24 +283,30 @@ public class Commits extends Coll
     }
   }
 
-  private void marshalRevisions(List<DBObject> docs, InternalCDORevision[] revisions)
+  private void marshalRevisions(List<DBObject> docs, InternalCDORevision[] revisions, boolean detached)
   {
     for (InternalCDORevision revision : revisions)
     {
-      DBObject doc = marshallRevision(revision);
+      DBObject doc = marshallRevision(revision, detached);
       docs.add(doc);
     }
   }
 
-  private DBObject marshallRevision(InternalCDORevision revision)
+  private DBObject marshallRevision(InternalCDORevision revision, boolean detached)
   {
     DBObject doc = new BasicDBObject();
     idHandler.write(doc, REVISIONS_ID, revision.getID());
 
-    doc.put(REVISIONS_VERSION, revision.getVersion());
-
     EClass eClass = revision.getEClass();
     doc.put(REVISIONS_CLASS, store.getClasses().getClassifierID(eClass));
+
+    if (detached)
+    {
+      doc.put(REVISIONS_VERSION, -revision.getVersion() - 1);
+      return doc;
+    }
+
+    doc.put(REVISIONS_VERSION, revision.getVersion());
 
     CDOID resourceID = revision.getResourceID();
     idHandler.write(doc, REVISIONS_RESOURCE, resourceID);
@@ -315,10 +321,6 @@ public class Commits extends Coll
     for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
     {
       Object value = revision.getValue(feature);
-      if (value != null && value.getClass() == Object.class)
-      {
-        System.out.println();
-      }
 
       if (feature.isUnsettable())
       {
@@ -469,6 +471,9 @@ public class Commits extends Coll
     DBObject query = new BasicDBObject();
     idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
 
+    // Exclude detached objects
+    query.put(REVISIONS + "." + REVISIONS_VERSION, new BasicDBObject("$gte", CDOBranchVersion.FIRST_VERSION));
+
     if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       query.put(COMMITS_ID, new BasicDBObject("$lte", timeStamp));
@@ -511,9 +516,9 @@ public class Commits extends Coll
         EClass eClass = store.getClasses().getClass(classID);
 
         int version = (Integer)revision.get(REVISIONS_VERSION);
-        if (version < 0)
+        if (version < CDOBranchVersion.FIRST_VERSION)
         {
-          return new DetachedCDORevision(eClass, id, revisionBranchPoint.getBranch(), version, revisionTime);
+          return new DetachedCDORevision(eClass, id, revisionBranchPoint.getBranch(), -version, revisionTime);
         }
 
         CDOID resourceID = idHandler.read(revision, REVISIONS_RESOURCE);
@@ -578,6 +583,75 @@ public class Commits extends Coll
         result.set(feature, EStore.NO_INDEX, value);
       }
     }
+  }
+
+  public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, final CDOCommitInfoHandler handler)
+  {
+    DBObject query = new BasicDBObject();
+
+    if (branch != null && store.isBranching())
+    {
+      query.put(COMMITS_BRANCH, branch.getID());
+    }
+
+    BasicDBList list = new BasicDBList();
+    if (startTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      list.add(new BasicDBObject(QueryOperators.GTE, startTime));
+    }
+
+    if (endTime != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      list.add(new BasicDBObject(QueryOperators.LTE, endTime));
+    }
+
+    int size = list.size();
+    if (size == 2)
+    {
+      query.put(COMMITS_ID, list);
+    }
+    else if (size == 1)
+    {
+      query.put(COMMITS_ID, list.get(0));
+    }
+
+    final InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
+    final InternalCDOCommitInfoManager commitManager = store.getRepository().getCommitInfoManager();
+
+    new Query<Object>(query)
+    {
+      @Override
+      public Object execute()
+      {
+        return execute(collection.find(getRef()).sort(new BasicDBObject(COMMITS_ID, 1)));
+      }
+
+      @Override
+      protected Object handleDoc(DBObject doc)
+      {
+        long time = (Long)doc.get(COMMITS_ID);
+        Object value = doc.get(COMMITS_PREVIOUS);
+        long previous = value == null ? 0L : (Long)value;
+
+        CDOBranch commitBranch;
+        if (store.isBranching())
+        {
+          int branchID = (Integer)doc.get(COMMITS_BRANCH);
+          commitBranch = branchManager.getBranch(branchID);
+        }
+        else
+        {
+          commitBranch = branchManager.getMainBranch();
+        }
+
+        String user = (String)doc.get(COMMITS_USER);
+        String comment = (String)doc.get(COMMITS_COMMENT);
+
+        CDOCommitInfo commitInfo = commitManager.createCommitInfo(commitBranch, time, previous, user, comment, null);
+        handler.handleCommitInfo(commitInfo);
+        return null;
+      }
+    }.execute();
   }
 
   /**

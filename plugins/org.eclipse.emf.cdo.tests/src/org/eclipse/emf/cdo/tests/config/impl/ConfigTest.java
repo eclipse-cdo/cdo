@@ -524,6 +524,11 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     skipTest(!getRepository().isSupportingBranches());
   }
 
+  protected void skipMongo()
+  {
+    skipConfig("MongoDBStore");
+  }
+
   protected void clearCache(CDORevisionManager revisionManager)
   {
     ((InternalCDORevisionManager)revisionManager).getCache().clear();

@@ -118,7 +118,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private InternalCDORevision[] dirtyObjects = new InternalCDORevision[0];
 
-  private List<InternalCDORevision> detachedRevisions = new ArrayList<InternalCDORevision>();
+  private InternalCDORevision[] detachedRevisions = new InternalCDORevision[0];
 
   private Map<CDOID, InternalCDORevision> cachedRevisions;
 
@@ -214,6 +214,11 @@ public class TransactionCommitContext implements InternalCommitContext
   public Map<CDOID, EClass> getDetachedObjectTypes()
   {
     return detachedObjectTypes;
+  }
+
+  public InternalCDORevision[] getDetachedRevisions()
+  {
+    return detachedRevisions;
   }
 
   public InternalCDORevisionDelta[] getDirtyObjectDeltas()
@@ -588,13 +593,13 @@ public class TransactionCommitContext implements InternalCommitContext
       @Override
       public CDOIDAndVersion get(int i)
       {
-        return detachedRevisions.get(i);
+        return detachedRevisions[i];
       }
 
       @Override
       public int size()
       {
-        return detachedRevisions.size();
+        return detachedRevisions.length;
       }
     };
 
@@ -1050,11 +1055,15 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     try
     {
-      monitor.begin(detachedRevisions.size());
+      monitor.begin(detachedRevisions.length);
       long revised = getBranchPoint().getTimeStamp() - 1;
       for (InternalCDORevision revision : detachedRevisions)
       {
-        revision.setRevised(revised);
+        if (revision != null)
+        {
+          revision.setRevised(revised);
+        }
+
         monitor.worked();
       }
     }
@@ -1066,19 +1075,22 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private void detachObjects(OMMonitor monitor)
   {
-    detachedRevisions.clear();
+    int size = detachedObjects.length;
+    detachedRevisions = new InternalCDORevision[size];
+
     InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
     CDOID[] detachedObjects = getDetachedObjects();
 
     try
     {
-      monitor.begin(detachedObjects.length);
-      for (CDOID id : detachedObjects)
+      monitor.begin(size);
+      for (int i = 0; i < size; i++)
       {
+        CDOID id = detachedObjects[i];
         InternalCDORevision revision = (InternalCDORevision)revisionManager.getCache().getRevision(id, transaction);
         if (revision != null)
         {
-          detachedRevisions.add(revision);
+          detachedRevisions[i] = revision;
         }
 
         monitor.worked();

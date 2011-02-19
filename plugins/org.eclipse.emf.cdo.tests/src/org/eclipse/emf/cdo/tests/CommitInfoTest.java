@@ -145,6 +145,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerBranch() throws Exception
   {
+    skipMongo();
+
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -157,6 +159,7 @@ public class CommitInfoTest extends AbstractCDOTest
     Handler handler = new Handler();
     getRepository().getCommitInfoManager().getCommitInfos(null, CDOBranchPoint.UNSPECIFIED_DATE,
         CDOBranchPoint.UNSPECIFIED_DATE, handler);
+
     List<CDOCommitInfo> infos = handler.getInfos();
 
     assertEquals(2, infos.size()); // Initial root resource commit + 1
@@ -188,6 +191,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerUser() throws Exception
   {
+    skipMongo();
+
     UserManager userManager = new UserManager();
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
@@ -218,6 +223,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerComment() throws Exception
   {
+    skipMongo();
+
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -241,6 +248,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerTimestampWithBranch() throws Exception
   {
+    skipMongo();
+
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -262,6 +271,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerBranchWithBranch() throws Exception
   {
+    skipMongo();
+
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -307,6 +318,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerUserWithBranch() throws Exception
   {
+    skipMongo();
+
     UserManager userManager = new UserManager();
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
@@ -338,6 +351,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerCommentWithBranch() throws Exception
   {
+    skipMongo();
+
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -840,6 +855,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testLogThroughClient() throws Exception
   {
+    skipUnlessAuditing();
+
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(RESOURCE_PATH);
@@ -863,6 +880,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testLogThroughWriteAccessHandler() throws Exception
   {
+    skipUnlessAuditing();
+
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final TextCommitInfoLog log = new TextCommitInfoLog(baos);
 
@@ -897,6 +916,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testLogThroughCommitInfoHandler() throws Exception
   {
+    skipUnlessAuditing();
+
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     getRepository().addCommitInfoHandler(new TextCommitInfoLog(baos));
 
@@ -917,6 +938,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testLogAsync() throws Exception
   {
+    skipUnlessAuditing();
+
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     AsyncCommitInfoHandler log = new AsyncCommitInfoHandler(new TextCommitInfoLog(baos));
     log.activate();

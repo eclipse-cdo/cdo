@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server.internal.mongodb;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -29,6 +30,9 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,6 +51,8 @@ import java.util.Set;
 public class MongoDBStore extends Store implements IMongoDBStore
 {
   public static final String TYPE = "mongodb"; //$NON-NLS-1$
+
+  private ValueHandler[] valueHandlers = new ValueHandler[Byte.MAX_VALUE - Byte.MIN_VALUE + 1];
 
   private MongoURI mongoURI;
 
@@ -75,6 +81,11 @@ public class MongoDBStore extends Store implements IMongoDBStore
     super(TYPE, null, set(ChangeFormat.DELTA), //
         set(RevisionTemporality.AUDITING, RevisionTemporality.NONE), //
         set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
+  }
+
+  public ValueHandler getValueHandler(CDOType type)
+  {
+    return valueHandlers[type.getTypeID() - Byte.MIN_VALUE];
   }
 
   public MongoURI getMongoURI()
@@ -248,6 +259,9 @@ public class MongoDBStore extends Store implements IMongoDBStore
     LifecycleUtil.activate(idHandler);
     setObjectIDTypes(idHandler.getObjectIDTypes());
 
+    Arrays.fill(valueHandlers, new ValueHandler());
+    initValueHandlers();
+
     if (firstStart)
     {
       firstStart();
@@ -256,6 +270,165 @@ public class MongoDBStore extends Store implements IMongoDBStore
     {
       reStart();
     }
+  }
+
+  protected void initValueHandlers()
+  {
+    initValueHandler(CDOType.OBJECT, new ValueHandler()
+    {
+      @Override
+      public Object toMongo(Object value)
+      {
+        if (value != null)
+        {
+          return idHandler.toValue((CDOID)value);
+        }
+
+        return null;
+      }
+
+      @Override
+      public Object fromMongo(Object value)
+      {
+        if (value != null)
+        {
+          return idHandler.fromValue(value);
+        }
+
+        return null;
+      }
+    });
+
+    initValueHandler(CDOType.CHAR, new ValueHandler()
+    {
+      @Override
+      public Object toMongo(Object value)
+      {
+        return Character.toString((Character)value);
+      }
+
+      @Override
+      public Object fromMongo(Object value)
+      {
+        if (value instanceof String)
+        {
+          return ((String)value).charAt(0);
+        }
+
+        return value;
+      }
+    });
+
+    initValueHandler(CDOType.BYTE, new ValueHandler()
+    {
+      @Override
+      public Object fromMongo(Object value)
+      {
+        if (value instanceof Integer)
+        {
+          return (byte)(int)(Integer)value;
+        }
+
+        return value;
+      }
+    });
+
+    initValueHandler(CDOType.SHORT, new ValueHandler()
+    {
+      @Override
+      public Object fromMongo(Object value)
+      {
+        if (value instanceof Integer)
+        {
+          return (short)(int)(Integer)value;
+        }
+
+        return value;
+      }
+    });
+
+    initValueHandler(CDOType.LONG, new ValueHandler()
+    {
+      @Override
+      public Object fromMongo(Object value)
+      {
+        if (value instanceof Integer)
+        {
+          return (long)(Integer)value;
+        }
+
+        return value;
+      }
+    });
+
+    initValueHandler(CDOType.FLOAT, new ValueHandler()
+    {
+      @Override
+      public Object fromMongo(Object value)
+      {
+        if (value instanceof Double)
+        {
+          return (float)(double)(Double)value;
+        }
+
+        return value;
+      }
+    });
+
+    initValueHandler(CDOType.BIG_DECIMAL, new ValueHandler()
+    {
+      @Override
+      public Object toMongo(Object value)
+      {
+        if (value != null)
+        {
+          return ((BigDecimal)value).toPlainString();
+        }
+
+        return null;
+      }
+
+      @Override
+      public Object fromMongo(Object value)
+      {
+        if (value != null)
+        {
+          return new BigDecimal((String)value);
+        }
+
+        return null;
+      }
+    });
+
+    initValueHandler(CDOType.BIG_INTEGER, new ValueHandler()
+    {
+      @Override
+      public Object toMongo(Object value)
+      {
+        if (value != null)
+        {
+          return ((BigInteger)value).toString();
+        }
+
+        return null;
+      }
+
+      @Override
+      public Object fromMongo(Object value)
+      {
+        if (value != null)
+        {
+          return new BigInteger((String)value);
+        }
+
+        return null;
+      }
+    });
+  }
+
+  protected void initValueHandler(CDOType type, ValueHandler valueHandler)
+  {
+    valueHandlers[type.getTypeID() - Byte.MIN_VALUE] = valueHandler;
   }
 
   @Override
@@ -332,5 +505,21 @@ public class MongoDBStore extends Store implements IMongoDBStore
   protected void repairAfterCrash()
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class ValueHandler
+  {
+    public Object toMongo(Object value)
+    {
+      return value;
+    }
+
+    public Object fromMongo(Object value)
+    {
+      return value;
+    }
   }
 }

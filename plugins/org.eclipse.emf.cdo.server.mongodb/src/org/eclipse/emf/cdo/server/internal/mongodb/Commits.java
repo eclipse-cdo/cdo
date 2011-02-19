@@ -15,10 +15,13 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
+import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore.ValueHandler;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -33,7 +36,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 
@@ -78,6 +80,8 @@ public class Commits extends Coll
   public static final String PACKAGES_PARENT = "parent";
 
   public static final String CLASSIFIER_PREFIX = "c";
+
+  public static final String SET_SUFFIX = "___set";
 
   public static final String REVISIONS = "revisions";
 
@@ -284,11 +288,6 @@ public class Commits extends Coll
   {
     DBObject doc = new BasicDBObject();
     idHandler.write(doc, REVISIONS_ID, revision.getID());
-    // if (store.isBranching())
-    // {
-    // int branch = revision.getBranch().getID();
-    // doc.put(REVISIONS_BRANCH, branch);
-    // }
 
     doc.put(REVISIONS_VERSION, revision.getVersion());
 
@@ -308,33 +307,47 @@ public class Commits extends Coll
     for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
     {
       Object value = revision.getValue(feature);
-      if (value == null)
+      if (value != null && value.getClass() == Object.class)
       {
-        continue;
+        System.out.println();
       }
+
+      if (feature.isUnsettable())
+      {
+        boolean set = value != null;
+        doc.put(feature.getName() + SET_SUFFIX, set);
+        if (!set)
+        {
+          continue;
+        }
+
+        if (value == CDORevisionData.NIL)
+        {
+          value = null;
+        }
+      }
+
+      CDOType type = CDOModelUtil.getType(feature);
+      ValueHandler valueHandler = store.getValueHandler(type);
 
       if (feature.isMany())
       {
-        List<?> list = (List<?>)value;
-        Object[] array = new Object[list.size()];
-        int i = 0;
-        for (Object element : list)
+        if (value != null)
         {
-          if (feature instanceof EReference) // TODO Remove loop invariant
+          List<?> cdoList = (List<?>)value;
+          BasicDBList mongoList = new BasicDBList();
+          for (Object element : cdoList)
           {
-            CDOID id = (CDOID)element;
-            element = idHandler.toValue(id);
+            element = valueHandler.toMongo(element);
+            mongoList.add(element);
           }
 
-          array[i++] = element;
+          value = mongoList;
         }
-
-        value = array;
       }
-      else if (feature instanceof EReference)
+      else
       {
-        CDOID id = (CDOID)value;
-        value = idHandler.toValue(id);
+        value = valueHandler.toMongo(value);
       }
 
       doc.put(feature.getName(), value);
@@ -405,7 +418,7 @@ public class Commits extends Coll
         }
         else
         {
-          String revisionName = (String)revision.get("name");
+          String revisionName = (String)revision.get("name"); // TODO Use ValueHandler?
           if (revisionName == null)
           {
             return null;
@@ -501,41 +514,57 @@ public class Commits extends Coll
         result.setContainerID(containerID);
         result.setContainingFeatureID(featureID);
 
-        CDOClassInfo classInfo = CDOModelUtil.getClassInfo(eClass); // TODO Cache id-->classInfo
-        for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
-        {
-          Object value = revision.get(feature.getName());
-          if (feature.isMany())
-          {
-            if (value != null)
-            {
-              List<?> list = (List<?>)value;
-              CDOList revisionList = result.getList(feature, list.size());
-              for (Object element : list)
-              {
-                if (element != null && feature instanceof EReference)
-                {
-                  element = idHandler.fromValue(element);
-                }
-
-                revisionList.add(element);
-              }
-            }
-          }
-          else
-          {
-            if (value != null && feature instanceof EReference)
-            {
-              value = idHandler.fromValue(value);
-            }
-
-            result.set(feature, EStore.NO_INDEX, value);
-          }
-        }
+        unmarshallRevision(revision, result);
 
         return result;
       }
     }.execute();
+  }
+
+  private void unmarshallRevision(DBObject revision, InternalCDORevision result)
+  {
+    CDOClassInfo classInfo = result.getClassInfo();
+    for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+    {
+      Object value = revision.get(feature.getName());
+
+      if (feature.isUnsettable())
+      {
+        boolean set = (Boolean)revision.get(feature.getName() + SET_SUFFIX);
+        if (!set)
+        {
+          continue;
+        }
+
+        if (value == null)
+        {
+          result.set(feature, EStore.NO_INDEX, CDORevisionData.NIL);
+          continue;
+        }
+      }
+
+      CDOType type = CDOModelUtil.getType(feature);
+      ValueHandler valueHandler = store.getValueHandler(type);
+
+      if (feature.isMany())
+      {
+        if (value != null)
+        {
+          List<?> list = (List<?>)value;
+          CDOList revisionList = result.getList(feature, list.size());
+          for (Object element : list)
+          {
+            element = valueHandler.fromMongo(element);
+            revisionList.add(element);
+          }
+        }
+      }
+      else
+      {
+        value = valueHandler.fromMongo(value);
+        result.set(feature, EStore.NO_INDEX, value);
+      }
+    }
   }
 
   /**

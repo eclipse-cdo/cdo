@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.server.internal.mongodb.bundle.OM;
 import org.eclipse.emf.cdo.server.mongodb.IMongoDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -37,7 +36,6 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorBase;
 
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -54,8 +52,6 @@ import java.util.Set;
  */
 public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBStoreAccessor
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MongoDBStoreAccessor.class);
-
   public MongoDBStoreAccessor(Store store, ISession session)
   {
     super(store, session);

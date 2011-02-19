@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.InitialTest;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ContainerConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
@@ -38,9 +38,9 @@ import java.io.PrintStream;
 /**
  * @author Eike Stepper
  */
-public class InitialTestMongoDB extends AbstractCDOTest
+public class InitialTestMongoDB extends InitialTest
 {
-  public void testGetContents() throws Exception
+  public void testGetContentsClearedCache() throws Exception
   {
     {
       msg("Opening session");
@@ -86,7 +86,7 @@ public class InitialTestMongoDB extends AbstractCDOTest
     assertEquals("Stepper", name);
   }
 
-  public void _testGetResource() throws Exception
+  public void testGetResourceClearedCache() throws Exception
   {
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");
@@ -96,6 +96,8 @@ public class InitialTestMongoDB extends AbstractCDOTest
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().add(supplier);
     transaction.commit();
+
+    clearCache(getRepository().getRevisionManager());
 
     // query(new BasicDBObject(Commits.REVISIONS, new BasicDBObject("$elemMatch", new BasicDBObject(
     // Commits.REVISIONS_RESOURCE, 1))));

@@ -69,8 +69,6 @@ public class Commits extends Coll
 
   public static final String UNITS_TYPE = "type";
 
-  // public static final String UNITS_TIME = "time";
-
   public static final String UNITS_DATA = "data";
 
   public static final String PACKAGES = "packages";
@@ -84,8 +82,6 @@ public class Commits extends Coll
   public static final String REVISIONS = "revisions";
 
   public static final String REVISIONS_ID = "cdo_id";
-
-  // public static final String REVISIONS_BRANCH = "cdo_branch";
 
   public static final String REVISIONS_VERSION = "cdo_version";
 
@@ -540,74 +536,6 @@ public class Commits extends Coll
         return result;
       }
     }.execute();
-
-    // commit.id = 100
-    // commit.branch = 3
-    // commit.revisions.id = 5
-    // commit.revisions.version = 1
-
-    // commit.id = 200
-    // commit.branch = 3
-    // commit.revisions.id = 5
-    // commit.revisions.version = 2
-
-    // commit.id = 300
-    // commit.branch = 3
-    // commit.revisions.id = 5
-    // commit.revisions.version = 3
-
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public abstract class Query<RESULT>
-  {
-    private DBObject ref;
-
-    public Query(DBObject ref)
-    {
-      this.ref = ref;
-    }
-
-    public DBObject getRef()
-    {
-      return ref;
-    }
-
-    public RESULT execute()
-    {
-      return execute(collection.find(ref));
-    }
-
-    public RESULT execute(DBObject keys)
-    {
-      return execute(collection.find(ref, keys));
-    }
-
-    protected RESULT execute(DBCursor cursor)
-    {
-      try
-      {
-        while (cursor.hasNext())
-        {
-          DBObject doc = cursor.next();
-          RESULT result = handleDoc(doc);
-          if (result != null)
-          {
-            return result;
-          }
-        }
-
-        return null;
-      }
-      finally
-      {
-        cursor.close();
-      }
-    }
-
-    protected abstract RESULT handleDoc(DBObject doc);
   }
 
   /**
@@ -639,4 +567,5 @@ public class Commits extends Coll
 
     protected abstract RESULT handleRevision(DBObject doc, DBObject revision);
   }
+
 }

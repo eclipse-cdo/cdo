@@ -25,7 +25,9 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -38,7 +40,53 @@ import java.io.PrintStream;
  */
 public class InitialTestMongoDB extends AbstractCDOTest
 {
-  public void testGetResource() throws Exception
+  public void testGetContents() throws Exception
+  {
+    {
+      msg("Opening session");
+      CDOSession session = openSession();
+
+      msg("Opening transaction");
+      CDOTransaction transaction = session.openTransaction();
+
+      msg("Creating resource");
+      CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+
+      msg("Creating supplier");
+      Supplier supplier = getModel1Factory().createSupplier();
+
+      msg("Setting name");
+      supplier.setName("Stepper");
+
+      msg("Adding supplier");
+      resource.getContents().add(supplier);
+
+      msg("Committing");
+      transaction.commit();
+      session.close();
+    }
+
+    clearCache(getRepository().getRevisionManager());
+
+    msg("Opening session");
+    CDOSession session = openSession();
+
+    msg("Opening transaction");
+    CDOTransaction transaction = session.openTransaction();
+
+    msg("Getting resource");
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
+
+    msg("Getting contents");
+    EList<EObject> contents = resource.getContents();
+    assertNotNull(contents);
+
+    Supplier supplier = (Supplier)contents.get(0);
+    String name = supplier.getName();
+    assertEquals("Stepper", name);
+  }
+
+  public void _testGetResource() throws Exception
   {
     Supplier supplier = getModel1Factory().createSupplier();
     supplier.setName("Stepper");

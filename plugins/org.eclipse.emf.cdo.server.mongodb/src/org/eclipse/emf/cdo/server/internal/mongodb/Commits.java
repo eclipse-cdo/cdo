@@ -10,13 +10,16 @@
  */
 package org.eclipse.emf.cdo.server.internal.mongodb;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -32,6 +35,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject.EStore;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -65,7 +69,7 @@ public class Commits extends Coll
 
   public static final String UNITS_TYPE = "type";
 
-  public static final String UNITS_TIME = "time";
+  // public static final String UNITS_TIME = "time";
 
   public static final String UNITS_DATA = "data";
 
@@ -81,7 +85,7 @@ public class Commits extends Coll
 
   public static final String REVISIONS_ID = "cdo_id";
 
-  public static final String REVISIONS_BRANCH = "cdo_branch";
+  // public static final String REVISIONS_BRANCH = "cdo_branch";
 
   public static final String REVISIONS_VERSION = "cdo_version";
 
@@ -97,10 +101,6 @@ public class Commits extends Coll
 
   private IDHandler idHandler;
 
-  private int resourceFolderClassID;
-
-  private int resourceClassID;
-
   private InternalCDOPackageUnit[] systemPackageUnits;
 
   public Commits(MongoDBStore store)
@@ -108,11 +108,16 @@ public class Commits extends Coll
     super(store, COMMITS);
 
     ensureIndex(UNITS, UNITS_ID);
-    ensureIndex(UNITS, UNITS_TIME);
+    // ensureIndex(UNITS, UNITS_TIME);
 
     if (store.isBranching())
     {
-      ensureIndex(REVISIONS, REVISIONS_ID, REVISIONS_BRANCH, REVISIONS_VERSION);
+      DBObject index = new BasicDBObject();
+      index.put(REVISIONS + "." + REVISIONS_ID, 1);
+      index.put(COMMITS_BRANCH, 1);
+      index.put(REVISIONS + "." + REVISIONS_VERSION, 1);
+
+      collection.ensureIndex(index);
     }
     else
     {
@@ -120,16 +125,91 @@ public class Commits extends Coll
     }
 
     idHandler = store.getIDHandler();
+  }
 
-    Classes classes = getStore().getClasses();
-    resourceFolderClassID = classes.getResourceFolderClassID();
-    resourceClassID = classes.getResourceClassID();
+  public Collection<InternalCDOPackageUnit> readPackageUnits()
+  {
+    Collection<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
+
+    DBObject query = new BasicDBObject();
+    query.put(UNITS, new BasicDBObject("$exists", true));
+
+    DBCursor cursor = collection.find(query);
+    while (cursor.hasNext())
+    {
+      DBObject doc = cursor.next();
+      readPackageUnits(doc, packageUnits);
+    }
+
+    return packageUnits;
+  }
+
+  private void readPackageUnits(DBObject doc, Collection<InternalCDOPackageUnit> packageUnits)
+  {
+    // DBObject units = (DBObject)doc.get(UNITS);
+    Object object = doc.get(UNITS);
+    System.out.println(object);
+
+    // TODO: implement readPackageUnits(doc, packageUnits)
+    throw new UnsupportedOperationException();
   }
 
   public void writePackageUnits(MongoDBStoreAccessor mongoDBStoreAccessor, InternalCDOPackageUnit[] packageUnits,
       OMMonitor monitor)
   {
     systemPackageUnits = packageUnits;
+  }
+
+  private DBObject[] marshallUnits(InternalCDOPackageUnit[] packageUnits)
+  {
+    DBObject[] result = new DBObject[packageUnits.length];
+    InternalCDOPackageRegistry packageRegistry = store.getRepository().getPackageRegistry();
+
+    for (int i = 0; i < packageUnits.length; i++)
+    {
+      InternalCDOPackageUnit packageUnit = packageUnits[i];
+      EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
+      byte[] bytes = EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, packageRegistry);
+      DBObject[] packages = marshallPackages(packageUnit.getPackageInfos());
+
+      DBObject doc = new BasicDBObject();
+      doc.put(UNITS_ID, packageUnit.getID());
+      doc.put(UNITS_TYPE, packageUnit.getOriginalType().toString());
+      // doc.put(UNITS_TIME, packageUnit.getTimeStamp());
+      doc.put(UNITS_DATA, bytes);
+      doc.put(PACKAGES, packages);
+
+      result[i] = doc;
+    }
+
+    return result;
+  }
+
+  private DBObject[] marshallPackages(InternalCDOPackageInfo[] packageInfos)
+  {
+    DBObject[] result = new DBObject[packageInfos.length];
+    for (int i = 0; i < packageInfos.length; i++)
+    {
+      InternalCDOPackageInfo packageInfo = packageInfos[i];
+
+      DBObject doc = new BasicDBObject();
+      doc.put(PACKAGES_URI, packageInfo.getPackageURI());
+      String parent = packageInfo.getParentURI();
+      if (!StringUtil.isEmpty(parent))
+      {
+        doc.put(PACKAGES_PARENT, parent);
+      }
+
+      for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
+      {
+        int classifierID = store.getClasses().mapNewClassifier(classifier);
+        doc.put(CLASSIFIER_PREFIX + classifierID, classifier.getName());
+      }
+
+      result[i] = doc;
+    }
+
+    return result;
   }
 
   public void write(MongoDBStoreAccessor accessor, InternalCommitContext context, OMMonitor monitor)
@@ -195,58 +275,6 @@ public class Commits extends Coll
     }
   }
 
-  private DBObject[] marshallUnits(InternalCDOPackageUnit[] packageUnits)
-  {
-    DBObject[] result = new DBObject[packageUnits.length];
-    InternalCDOPackageRegistry packageRegistry = store.getRepository().getPackageRegistry();
-
-    for (int i = 0; i < packageUnits.length; i++)
-    {
-      InternalCDOPackageUnit packageUnit = packageUnits[i];
-      EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
-      byte[] bytes = EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, packageRegistry);
-      DBObject[] packages = marshallPackages(packageUnit.getPackageInfos());
-
-      DBObject doc = new BasicDBObject();
-      doc.put(UNITS_ID, packageUnit.getID());
-      doc.put(UNITS_TYPE, packageUnit.getOriginalType().toString());
-      doc.put(UNITS_TIME, packageUnit.getTimeStamp());
-      doc.put(UNITS_DATA, bytes);
-      doc.put(PACKAGES, packages);
-
-      result[i] = doc;
-    }
-
-    return result;
-  }
-
-  private DBObject[] marshallPackages(InternalCDOPackageInfo[] packageInfos)
-  {
-    DBObject[] result = new DBObject[packageInfos.length];
-    for (int i = 0; i < packageInfos.length; i++)
-    {
-      InternalCDOPackageInfo packageInfo = packageInfos[i];
-
-      DBObject doc = new BasicDBObject();
-      doc.put(PACKAGES_URI, packageInfo.getPackageURI());
-      String parent = packageInfo.getParentURI();
-      if (!StringUtil.isEmpty(parent))
-      {
-        doc.put(PACKAGES_PARENT, parent);
-      }
-
-      for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
-      {
-        int classifierID = store.getClasses().mapNewClassifier(classifier);
-        doc.put(CLASSIFIER_PREFIX + classifierID, classifier.getName());
-      }
-
-      result[i] = doc;
-    }
-
-    return result;
-  }
-
   private void marshalRevisions(List<DBObject> docs, InternalCDORevision[] revisions)
   {
     for (InternalCDORevision revision : revisions)
@@ -260,11 +288,11 @@ public class Commits extends Coll
   {
     DBObject doc = new BasicDBObject();
     idHandler.write(doc, REVISIONS_ID, revision.getID());
-    if (store.isBranching())
-    {
-      int branch = revision.getBranch().getID();
-      doc.put(REVISIONS_BRANCH, branch);
-    }
+    // if (store.isBranching())
+    // {
+    // int branch = revision.getBranch().getID();
+    // doc.put(REVISIONS_BRANCH, branch);
+    // }
 
     doc.put(REVISIONS_VERSION, revision.getVersion());
 
@@ -296,7 +324,7 @@ public class Commits extends Coll
         int i = 0;
         for (Object element : list)
         {
-          if (feature instanceof EReference)
+          if (feature instanceof EReference) // TODO Remove loop invariant
           {
             CDOID id = (CDOID)element;
             element = idHandler.toValue(id);
@@ -319,54 +347,22 @@ public class Commits extends Coll
     return doc;
   }
 
-  public Collection<InternalCDOPackageUnit> readPackageUnits()
-  {
-    Collection<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
-
-    DBObject query = new BasicDBObject();
-    query.put(UNITS, new BasicDBObject("$exists", true));
-
-    DBCursor cursor = collection.find(query);
-    while (cursor.hasNext())
-    {
-      DBObject doc = cursor.next();
-      readPackageUnits(doc, packageUnits);
-    }
-
-    return packageUnits;
-  }
-
-  private void readPackageUnits(DBObject doc, Collection<InternalCDOPackageUnit> packageUnits)
-  {
-    // DBObject units = (DBObject)doc.get(UNITS);
-    Object object = doc.get(UNITS);
-    System.out.println(object);
-
-    // TODO: implement readPackageUnits(doc, packageUnits)
-    throw new UnsupportedOperationException();
-  }
-
   public void queryResources(final QueryResourcesContext context)
   {
+    Classes classes = getStore().getClasses();
+    final int resourceFolderClassID = classes.getResourceFolderClassID();
+    final int resourceClassID = classes.getResourceClassID();
 
-    CDOID folderID = context.getFolderID();
-    String name = context.getName();
-    boolean exactMatch = context.exactMatch();
+    final CDOID folderID = context.getFolderID();
+    final String name = context.getName();
+    final boolean exactMatch = context.exactMatch();
 
     DBObject query = new BasicDBObject();
     query.put("$or", new Object[] { new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, resourceFolderClassID),
         new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, resourceClassID) });
 
     query.put(REVISIONS + "." + REVISIONS_VERSION, new BasicDBObject("$gt", 0)); // Not detached
-
-    if (CDOIDUtil.isNull(folderID))
-    {
-      query.put(REVISIONS + "." + REVISIONS_CONTAINER, new BasicDBObject("$exists", false));
-    }
-    else
-    {
-      query.put(REVISIONS + "." + REVISIONS_CONTAINER, getStore().getIDHandler().toValue(folderID));
-    }
+    query.put(REVISIONS + "." + REVISIONS_CONTAINER, idHandler.toValue(folderID));
 
     if (name == null)
     {
@@ -381,32 +377,191 @@ public class Commits extends Coll
       query.put(REVISIONS + "." + "name", new BasicDBObject("$regex", "/^" + name + "/"));
     }
 
-    new Revisions(query)
+    new Revisions<Boolean>(query)
     {
       @Override
-      protected void handleRevision(DBObject revision)
+      protected Boolean handleRevision(DBObject doc, DBObject revision)
       {
         int classID = (Integer)revision.get(REVISIONS_CLASS);
         if (classID != resourceFolderClassID && classID != resourceClassID)
         {
-          return;
+          return null;
+        }
+
+        int version = (Integer)revision.get(REVISIONS_VERSION);
+        if (version <= 0)
+        {
+          return null;
+        }
+
+        CDOID container = idHandler.read(revision, REVISIONS_CONTAINER);
+        if (!ObjectUtil.equals(container, folderID))
+        {
+          return null;
+        }
+
+        if (name == null)
+        {
+          if (revision.containsField("name"))
+          {
+            return null;
+          }
+        }
+        else
+        {
+          String revisionName = (String)revision.get("name");
+          if (revisionName == null)
+          {
+            return null;
+          }
+
+          if (exactMatch)
+          {
+            if (!revisionName.equals(name))
+            {
+              return null;
+            }
+          }
+          else
+          {
+            if (!revisionName.startsWith(name))
+            {
+              return null;
+            }
+          }
         }
 
         CDOID id = idHandler.read(revision, REVISIONS_ID);
-
         if (!context.addResource(id))
         {
           // No more results allowed
-          return;
+          return true;
         }
+
+        return null;
       }
     }.execute();
+  }
+
+  public InternalCDORevision readRevision(final CDOID id, CDOBranchPoint branchPoint, int listChunk,
+      CDORevisionCacheAdder cache)
+  {
+    final int branch = branchPoint.getBranch().getID();
+    final long timeStamp = branchPoint.getTimeStamp();
+
+    DBObject query = new BasicDBObject();
+    idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
+
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      query.put(COMMITS_ID, new BasicDBObject("$lte", timeStamp));
+    }
+
+    if (store.isBranching())
+    {
+      query.put(COMMITS_BRANCH, branch);
+    }
+
+    return new Revisions<InternalCDORevision>(query)
+    {
+      @Override
+      public InternalCDORevision execute()
+      {
+        return execute(collection.find(getRef()).sort(new BasicDBObject(COMMITS_ID, -1)).limit(1));
+      }
+
+      @Override
+      protected InternalCDORevision handleRevision(DBObject doc, DBObject revision)
+      {
+        CDOID revisionID = idHandler.read(revision, REVISIONS_ID);
+        if (!ObjectUtil.equals(revisionID, id))
+        {
+          return null;
+        }
+
+        int revisionBranch = CDOBranch.MAIN_BRANCH_ID;
+        if (store.isBranching())
+        {
+          revisionBranch = (Integer)doc.get(COMMITS_BRANCH);
+        }
+
+        long revisionTime = (Long)doc.get(COMMITS_ID);
+
+        int classID = (Integer)revision.get(REVISIONS_CLASS);
+        EClass eClass = store.getClasses().getClass(classID);
+
+        int version = (Integer)revision.get(REVISIONS_VERSION);
+        CDOID resourceID = idHandler.read(revision, REVISIONS_RESOURCE);
+        CDOID containerID = idHandler.read(revision, REVISIONS_CONTAINER);
+        int featureID = (Integer)revision.get(REVISIONS_FEATURE);
+
+        InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
+        CDOBranchPoint revisionBranchPoint = branchManager.getBranch(revisionBranch).getPoint(revisionTime);
+
+        InternalCDORevision result = store.createRevision(eClass, id);
+        result.setBranchPoint(revisionBranchPoint);
+        result.setVersion(version);
+        result.setResourceID(resourceID);
+        result.setContainerID(containerID);
+        result.setContainingFeatureID(featureID);
+
+        CDOClassInfo classInfo = CDOModelUtil.getClassInfo(eClass); // TODO Cache id-->classInfo
+        for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+        {
+          Object value = revision.get(feature.getName());
+          if (feature.isMany())
+          {
+            if (value != null)
+            {
+              List<?> list = (List<?>)value;
+              CDOList revisionList = result.getList(feature, list.size());
+              for (Object element : list)
+              {
+                if (element != null && feature instanceof EReference)
+                {
+                  element = idHandler.fromValue(element);
+                }
+
+                revisionList.add(element);
+              }
+            }
+          }
+          else
+          {
+            if (value != null && feature instanceof EReference)
+            {
+              value = idHandler.fromValue(value);
+            }
+
+            result.set(feature, EStore.NO_INDEX, value);
+          }
+        }
+
+        return result;
+      }
+    }.execute();
+
+    // commit.id = 100
+    // commit.branch = 3
+    // commit.revisions.id = 5
+    // commit.revisions.version = 1
+
+    // commit.id = 200
+    // commit.branch = 3
+    // commit.revisions.id = 5
+    // commit.revisions.version = 2
+
+    // commit.id = 300
+    // commit.branch = 3
+    // commit.revisions.id = 5
+    // commit.revisions.version = 3
+
   }
 
   /**
    * @author Eike Stepper
    */
-  public abstract class Query
+  public abstract class Query<RESULT>
   {
     private DBObject ref;
 
@@ -415,34 +570,36 @@ public class Commits extends Coll
       this.ref = ref;
     }
 
-    @Deprecated
-    public DBObject pair(String key, Object value)
+    public DBObject getRef()
     {
-      return new BasicDBObject(key, value);
+      return ref;
     }
 
-    public final int execute()
+    public RESULT execute()
     {
       return execute(collection.find(ref));
     }
 
-    public final int execute(DBObject keys)
+    public RESULT execute(DBObject keys)
     {
       return execute(collection.find(ref, keys));
     }
 
-    private int execute(DBCursor cursor)
+    protected RESULT execute(DBCursor cursor)
     {
       try
       {
-        int i = 0;
         while (cursor.hasNext())
         {
           DBObject doc = cursor.next();
-          handleDoc(i++, doc);
+          RESULT result = handleDoc(doc);
+          if (result != null)
+          {
+            return result;
+          }
         }
 
-        return i;
+        return null;
       }
       finally
       {
@@ -450,40 +607,13 @@ public class Commits extends Coll
       }
     }
 
-    protected abstract void handleDoc(int i, DBObject doc);
+    protected abstract RESULT handleDoc(DBObject doc);
   }
 
   /**
    * @author Eike Stepper
    */
-  public abstract class ListQuery<RESULT> extends Query
-  {
-    private List<RESULT> results = new ArrayList<RESULT>();
-
-    public ListQuery(DBObject ref)
-    {
-      super(ref);
-    }
-
-    public final List<RESULT> getResults()
-    {
-      execute();
-      return results;
-    }
-
-    @Override
-    protected final void handleDoc(int i, DBObject doc)
-    {
-      handleDoc(i, doc, results);
-    }
-
-    protected abstract void handleDoc(int i, DBObject doc, List<RESULT> results);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public abstract class Revisions extends Query
+  public abstract class Revisions<RESULT> extends Query<RESULT>
   {
     public Revisions(DBObject ref)
     {
@@ -491,16 +621,22 @@ public class Commits extends Coll
     }
 
     @Override
-    protected void handleDoc(int i, DBObject doc)
+    protected RESULT handleDoc(DBObject doc)
     {
       BasicDBList list = (BasicDBList)doc.get(REVISIONS);
       for (Object object : list)
       {
         DBObject revision = (DBObject)object;
-        handleRevision(revision);
+        RESULT result = handleRevision(doc, revision);
+        if (result != null)
+        {
+          return result;
+        }
       }
+
+      return null;
     }
 
-    protected abstract void handleRevision(DBObject revision);
+    protected abstract RESULT handleRevision(DBObject doc, DBObject revision);
   }
 }

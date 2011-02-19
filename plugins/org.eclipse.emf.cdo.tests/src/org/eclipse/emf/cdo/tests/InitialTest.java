@@ -437,6 +437,9 @@ public class InitialTest extends AbstractCDOTest
     msg("Getting contents");
     EList<EObject> contents = resource.getContents();
     assertNotNull(contents);
+
+    Supplier supplier = (Supplier)contents.get(0);
+    assertEquals("Stepper", supplier.getName());
   }
 
   public void testReadObjectProxy() throws Exception

@@ -47,6 +47,8 @@ public interface IDHandler extends Comparator<CDOID>
 
   public Object toValue(CDOID id);
 
+  public CDOID fromValue(Object value);
+
   /**
    * @author Eike Stepper
    */
@@ -148,20 +150,24 @@ public interface IDHandler extends Comparator<CDOID>
 
     public void write(DBObject doc, String key, CDOID id)
     {
-      long value = CDOIDUtil.getLong(id);
+      long value = toValue(id);
       doc.put(key, value);
     }
 
     public CDOID read(DBObject doc, String key)
     {
       long value = (Long)doc.get(key);
-      return CDOIDUtil.createLong(value);
+      return fromValue(value);
     }
 
     public Long toValue(CDOID id)
     {
-      long value = CDOIDUtil.getLong(id);
-      return value;
+      return CDOIDUtil.getLong(id);
+    }
+
+    public CDOID fromValue(Object value)
+    {
+      return CDOIDUtil.createLong((Long)value);
     }
   }
 }

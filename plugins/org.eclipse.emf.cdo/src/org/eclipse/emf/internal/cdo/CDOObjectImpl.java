@@ -491,7 +491,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
         }
         else
         {
-          result = eStore().get(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX);
+          result = eStore().get(this, eStructuralFeature, EStore.NO_INDEX);
           if (eIsCaching())
           {
             eSettings[dynamicFeatureID] = result;
@@ -513,7 +513,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
-      eStore().set(this, eStructuralFeature, InternalEObject.EStore.NO_INDEX, value);
+      eStore().set(this, eStructuralFeature, EStore.NO_INDEX, value);
       if (eIsCaching())
       {
         eSettings[dynamicFeatureID] = value;
@@ -562,7 +562,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    * @since 2.0
    */
   @Override
-  public InternalEObject.EStore eStore()
+  public EStore eStore()
   {
     if (FSMUtil.isTransient(this))
     {

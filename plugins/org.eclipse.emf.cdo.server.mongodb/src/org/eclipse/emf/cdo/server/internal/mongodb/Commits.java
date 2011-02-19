@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -120,9 +121,7 @@ public class Commits extends Coll
   public Commits(MongoDBStore store)
   {
     super(store, COMMITS);
-
     ensureIndex(UNITS, UNITS_ID);
-    // ensureIndex(UNITS, UNITS_TIME);
 
     if (store.isBranching())
     {
@@ -171,6 +170,7 @@ public class Commits extends Coll
   public void writePackageUnits(MongoDBStoreAccessor mongoDBStoreAccessor, InternalCDOPackageUnit[] packageUnits,
       OMMonitor monitor)
   {
+    // This must be the first commit into the repo.
     systemPackageUnits = packageUnits;
   }
 
@@ -189,7 +189,6 @@ public class Commits extends Coll
       DBObject doc = new BasicDBObject();
       doc.put(UNITS_ID, packageUnit.getID());
       doc.put(UNITS_TYPE, packageUnit.getOriginalType().toString());
-      // doc.put(UNITS_TIME, packageUnit.getTimeStamp());
       doc.put(UNITS_DATA, bytes);
       doc.put(PACKAGES, packages);
 
@@ -455,7 +454,7 @@ public class Commits extends Coll
         }
         else
         {
-          String revisionName = (String)revision.get("name"); // TODO Use ValueHandler?
+          String revisionName = (String)revision.get("name");
           if (revisionName == null)
           {
             return null;
@@ -642,8 +641,9 @@ public class Commits extends Coll
       query.put(COMMITS_ID, list.get(0));
     }
 
-    final InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
-    final InternalCDOCommitInfoManager commitManager = store.getRepository().getCommitInfoManager();
+    InternalRepository repository = store.getRepository();
+    final InternalCDOBranchManager branchManager = repository.getBranchManager();
+    final InternalCDOCommitInfoManager commitManager = repository.getCommitInfoManager();
 
     new Query<Object>(query)
     {
@@ -710,5 +710,4 @@ public class Commits extends Coll
 
     protected abstract RESULT handleRevision(DBObject doc, DBObject revision);
   }
-
 }

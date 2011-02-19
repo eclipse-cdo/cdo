@@ -124,6 +124,8 @@ public class CommitInfoTest extends AbstractCDOTest
 
   public void testServerTimestamp() throws Exception
   {
+    skipMongo();
+
     CDOSession session = openSession();
     InternalSession serverSession = getRepository().getSessionManager().getSession(session.getSessionID());
     StoreThreadLocal.setSession(serverSession);

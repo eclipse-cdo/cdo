@@ -12,16 +12,35 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -143,5 +162,138 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
 
   protected void doUnpassivate() throws Exception
   {
+  }
+
+  /**
+   * @since 3.0
+   */
+  public CDOID readResourceID(CDOID folderID, String name, CDOBranchPoint branchPoint)
+  {
+    QueryResourcesContext.ExactMatch context = Store.createExactMatchContext(folderID, name, branchPoint);
+    queryResources(context);
+    return context.getResourceID();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public CDOCommitData loadCommitData(long timeStamp)
+  {
+    CommitDataRevisionHandler handler = new CommitDataRevisionHandler(this, timeStamp);
+    return handler.getCommitData();
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.0
+   */
+  public static class CommitDataRevisionHandler implements CDORevisionHandler
+  {
+    private IStoreAccessor storeAccessor;
+
+    private long timeStamp;
+
+    private InternalCDORevisionManager revisionManager;
+
+    private List<CDOPackageUnit> newPackageUnits = new ArrayList<CDOPackageUnit>();
+
+    private List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
+
+    private List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
+
+    private List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
+
+    public CommitDataRevisionHandler(IStoreAccessor storeAccessor, long timeStamp)
+    {
+      this.storeAccessor = storeAccessor;
+      this.timeStamp = timeStamp;
+
+      InternalStore store = (InternalStore)storeAccessor.getStore();
+      InternalRepository repository = store.getRepository();
+      revisionManager = repository.getRevisionManager();
+
+      InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+      InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(timeStamp, timeStamp);
+      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      {
+        if (!packageUnit.isSystem())
+        {
+          newPackageUnits.add(packageUnit);
+        }
+      }
+    }
+
+    public CDOCommitData getCommitData()
+    {
+      storeAccessor.handleRevisions(null, null, timeStamp, true, this);
+      return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);
+    }
+
+    /**
+     * @since 4.0
+     */
+    public boolean handleRevision(CDORevision rev)
+    {
+      if (rev.getTimeStamp() != timeStamp)
+      {
+        throw new IllegalArgumentException("Invalid revision time stamp: "
+            + CDOCommonUtil.formatTimeStamp(rev.getTimeStamp()));
+      }
+
+      if (rev instanceof DetachedCDORevision)
+      {
+        detachedObjects.add(rev);
+      }
+      else
+      {
+        InternalCDORevision revision = (InternalCDORevision)rev;
+        CDOID id = revision.getID();
+        CDOBranch branch = revision.getBranch();
+        int version = revision.getVersion();
+        if (version > CDOBranchVersion.FIRST_VERSION)
+        {
+          CDOBranchVersion oldVersion = branch.getVersion(version - 1);
+          InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, oldVersion, CDORevision.UNCHUNKED,
+              true);
+          InternalCDORevisionDelta delta = revision.compare(oldRevision);
+          changedObjects.add(delta);
+        }
+        else
+        {
+          InternalCDORevision oldRevision = getRevisionFromBase(id, branch);
+          if (oldRevision != null)
+          {
+            InternalCDORevisionDelta delta = revision.compare(oldRevision);
+            changedObjects.add(delta);
+          }
+          else
+          {
+            InternalCDORevision newRevision = revision.copy();
+            newRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
+            newObjects.add(newRevision);
+          }
+        }
+      }
+
+      return true;
+    }
+
+    private InternalCDORevision getRevisionFromBase(CDOID id, CDOBranch branch)
+    {
+      if (branch.isMainBranch())
+      {
+        return null;
+      }
+
+      CDOBranchPoint base = branch.getBase();
+      InternalCDORevision revision = revisionManager.getRevision(id, base, CDORevision.UNCHUNKED,
+          CDORevision.DEPTH_NONE, true);
+      if (revision == null)
+      {
+        revision = getRevisionFromBase(id, base.getBranch());
+      }
+
+      return revision;
+    }
   }
 }

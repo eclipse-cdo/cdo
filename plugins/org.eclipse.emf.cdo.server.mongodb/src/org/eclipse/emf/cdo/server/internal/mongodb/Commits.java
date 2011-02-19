@@ -13,17 +13,22 @@ package org.eclipse.emf.cdo.server.internal.mongodb;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
+import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore.ValueHandler;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -32,6 +37,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -108,6 +114,8 @@ public class Commits extends Coll
   private IDHandler idHandler;
 
   private InternalCDOPackageUnit[] systemPackageUnits;
+
+  private EStructuralFeature resourceNameFeature;
 
   public Commits(MongoDBStore store)
   {
@@ -263,9 +271,9 @@ public class Commits extends Coll
       context.applyIDMappings(monitor.fork());
 
       List<DBObject> docs = new ArrayList<DBObject>();
-      marshalRevisions(docs, context.getNewObjects(), false);
-      marshalRevisions(docs, context.getDirtyObjects(), false);
-      marshalRevisions(docs, context.getDetachedRevisions(), true);
+      marshalRevisions(docs, context.getNewObjects(), CDOChangeKind.NEW);
+      marshalRevisions(docs, context.getDirtyObjects(), CDOChangeKind.CHANGED);
+      marshalRevisions(docs, context.getDetachedRevisions(), CDOChangeKind.DETACHED);
 
       if (!docs.isEmpty())
       {
@@ -283,24 +291,30 @@ public class Commits extends Coll
     }
   }
 
-  private void marshalRevisions(List<DBObject> docs, InternalCDORevision[] revisions, boolean detached)
+  private void marshalRevisions(List<DBObject> docs, InternalCDORevision[] revisions, CDOChangeKind changeKind)
   {
     for (InternalCDORevision revision : revisions)
     {
-      DBObject doc = marshallRevision(revision, detached);
+      DBObject doc = marshallRevision(revision, changeKind);
       docs.add(doc);
     }
   }
 
-  private DBObject marshallRevision(InternalCDORevision revision, boolean detached)
+  private DBObject marshallRevision(InternalCDORevision revision, CDOChangeKind changeKind)
   {
+    boolean resource = !(revision instanceof SyntheticCDORevision) && revision.isResource();
+    if (resource && resourceNameFeature == null)
+    {
+      resourceNameFeature = revision.getEClass().getEStructuralFeature(CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
+    }
+
     DBObject doc = new BasicDBObject();
     idHandler.write(doc, REVISIONS_ID, revision.getID());
 
     EClass eClass = revision.getEClass();
     doc.put(REVISIONS_CLASS, store.getClasses().getClassifierID(eClass));
 
-    if (detached)
+    if (changeKind == CDOChangeKind.DETACHED)
     {
       doc.put(REVISIONS_VERSION, -revision.getVersion() - 1);
       return doc;
@@ -316,6 +330,19 @@ public class Commits extends Coll
 
     int featureID = revision.getContainingFeatureID();
     doc.put(REVISIONS_FEATURE, featureID);
+
+    if (resource && changeKind == CDOChangeKind.NEW)
+    {
+      String name = (String)revision.data().get(resourceNameFeature, 0);
+      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+
+      CDOID duplicateID = accessor.readResourceID(containerID, name, revision);
+      if (!CDOIDUtil.isNull(duplicateID))
+      {
+        duplicateID = accessor.readResourceID(containerID, name, revision);
+        throw new IllegalStateException("Duplicate resource: name=" + name + ", folderID=" + containerID); //$NON-NLS-1$ //$NON-NLS-2$
+      }
+    }
 
     CDOClassInfo classInfo = revision.getClassInfo();
     for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())

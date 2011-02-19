@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
-import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
@@ -96,11 +95,6 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
-  public CDOID readResourceID(CDOID folderID, String name, CDOBranchPoint branchPoint)
-  {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
-  }
-
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
       CDORevisionHandler handler)
   {
@@ -114,11 +108,11 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public void queryResources(QueryResourcesContext context)
   {
-    // Only support timestamp in audit mode
-    if (context.getTimeStamp() != CDORevision.UNSPECIFIED_DATE && !getStore().getRepository().isSupportingAudits())
-    {
-      throw new IllegalArgumentException("Auditing not supported");
-    }
+    // // Only support timestamp in audit mode
+    // if (context.getTimeStamp() != CDORevision.UNSPECIFIED_DATE && !getStore().getRepository().isSupportingAudits())
+    // {
+    // throw new IllegalArgumentException("Auditing not supported");
+    // }
 
     getStore().getCommits().queryResources(context);
   }
@@ -171,11 +165,6 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     getStore().getCommits().loadCommitInfos(branch, startTime, endTime, handler);
-  }
-
-  public CDOCommitData loadCommitData(long timeStamp)
-  {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)

@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -307,9 +306,9 @@ public class Commits extends Coll
       context.applyIDMappings(monitor.fork());
 
       List<DBObject> docs = new ArrayList<DBObject>();
+      marshalRevisions(docs, context.getDetachedRevisions(), CDOChangeKind.DETACHED); // Must come first, bug 272861
       marshalRevisions(docs, context.getNewObjects(), CDOChangeKind.NEW);
       marshalRevisions(docs, context.getDirtyObjects(), CDOChangeKind.CHANGED);
-      marshalRevisions(docs, context.getDetachedRevisions(), CDOChangeKind.DETACHED);
 
       if (!docs.isEmpty())
       {
@@ -367,15 +366,14 @@ public class Commits extends Coll
     int featureID = revision.getContainingFeatureID();
     doc.put(REVISIONS_FEATURE, featureID);
 
-    if (resource && changeKind == CDOChangeKind.NEW)
+    if (resource && changeKind != CDOChangeKind.DETACHED)
     {
       String name = (String)revision.data().get(resourceNameFeature, 0);
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
 
-      CDOID duplicateID = accessor.readResourceID(containerID, name, revision);
-      if (!CDOIDUtil.isNull(duplicateID))
+      CDOID existingID = accessor.readResourceID(containerID, name, revision);
+      if (existingID != null && !existingID.equals(revision.getID()))
       {
-        duplicateID = accessor.readResourceID(containerID, name, revision);
         throw new IllegalStateException("Duplicate resource: name=" + name + ", folderID=" + containerID); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
@@ -578,7 +576,7 @@ public class Commits extends Coll
     return CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
-  public InternalCDORevision readRevision(final CDOID id, CDOBranchPoint branchPoint, int listChunk,
+  public InternalCDORevision readRevision(final CDOID id, final CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
     DBObject query = new BasicDBObject();
@@ -614,7 +612,15 @@ public class Commits extends Coll
         InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
         CDOBranchPoint revisionBranchPoint = branchManager.getBranch(revisionBranch).getPoint(revisionTime);
 
-        return unmarshallRevision(doc, embedded, id, revisionBranchPoint);
+        InternalCDORevision revision = unmarshallRevision(doc, embedded, id, revisionBranchPoint);
+
+        // long revised = revision.getRevised();
+        // if (revised != CDOBranchPoint.UNSPECIFIED_DATE && revised < branchPoint.getTimeStamp())
+        // {
+        // return null;
+        // }
+
+        return revision;
       }
     }.execute();
   }

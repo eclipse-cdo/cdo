@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
+ * Bug 272861
+ * 
  * @author Simon McDuff
  */
 public class Bugzilla_272861_Test extends AbstractCDOTest

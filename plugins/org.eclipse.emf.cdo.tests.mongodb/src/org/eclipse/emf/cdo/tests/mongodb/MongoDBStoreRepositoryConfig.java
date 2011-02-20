@@ -103,7 +103,7 @@ public class MongoDBStoreRepositoryConfig extends RepositoryConfig
   protected void initRepositoryProperties(Map<String, String> props)
   {
     super.initRepositoryProperties(props);
-    props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
+    props.put(IRepository.Props.SUPPORTING_AUDITS, "false");
     props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
   }
 }

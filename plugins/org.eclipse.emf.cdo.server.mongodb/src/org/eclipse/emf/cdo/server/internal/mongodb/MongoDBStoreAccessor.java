@@ -139,7 +139,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    return null;
   }
 
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
@@ -187,7 +187,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
   @Override
   protected void doRollback(CommitContext commitContext)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    // Do nothing
   }
 
   @Override

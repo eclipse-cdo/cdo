@@ -68,7 +68,7 @@ public class AllTestsMongoDB extends AllConfigs
 
   protected boolean hasAuditSupport()
   {
-    return true;
+    return false;
   }
 
   protected boolean hasBranchingSupport()

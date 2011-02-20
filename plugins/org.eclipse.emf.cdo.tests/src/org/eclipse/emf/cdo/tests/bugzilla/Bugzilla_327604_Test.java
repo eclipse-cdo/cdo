@@ -136,6 +136,8 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
 
   public void testReadObjects() throws Exception
   {
+    skipHandleRevisions();
+
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOView view = workspace.openView();

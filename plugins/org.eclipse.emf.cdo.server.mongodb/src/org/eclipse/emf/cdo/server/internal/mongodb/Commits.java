@@ -231,20 +231,20 @@ public class Commits extends Coll
         BasicDBList infos = (BasicDBList)embedded.get(PACKAGES);
         InternalCDOPackageInfo[] result = new InternalCDOPackageInfo[infos.size()];
         int i = 0;
-      
+
         for (Object info : infos)
         {
           DBObject infoObject = (DBObject)info;
           String uri = (String)infoObject.get(PACKAGES_URI);
           String parent = (String)infoObject.get(PACKAGES_PARENT);
-      
+
           InternalCDOPackageInfo packageInfo = createPackageInfo();
           packageInfo.setPackageURI(uri);
           packageInfo.setParentURI(parent);
-      
+
           result[i++] = packageInfo;
         }
-      
+
         return result;
       }
 
@@ -608,29 +608,7 @@ public class Commits extends Coll
         InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
         CDOBranchPoint revisionBranchPoint = branchManager.getBranch(revisionBranch).getPoint(revisionTime);
 
-        int classID = (Integer)embedded.get(REVISIONS_CLASS);
-        EClass eClass = store.getClasses().getClass(classID);
-
-        int version = (Integer)embedded.get(REVISIONS_VERSION);
-        if (version < CDOBranchVersion.FIRST_VERSION)
-        {
-          return new DetachedCDORevision(eClass, id, revisionBranchPoint.getBranch(), -version, revisionTime);
-        }
-
-        CDOID resourceID = idHandler.read(embedded, REVISIONS_RESOURCE);
-        CDOID containerID = idHandler.read(embedded, REVISIONS_CONTAINER);
-        int featureID = (Integer)embedded.get(REVISIONS_FEATURE);
-
-        InternalCDORevision result = store.createRevision(eClass, id);
-        result.setBranchPoint(revisionBranchPoint);
-        result.setVersion(version);
-        result.setResourceID(resourceID);
-        result.setContainerID(containerID);
-        result.setContainingFeatureID(featureID);
-
-        unmarshallRevision(embedded, result);
-
-        return result;
+        return unmarshallRevision(embedded, id, revisionBranchPoint);
       }
     }.execute();
   }
@@ -653,16 +631,88 @@ public class Commits extends Coll
     }
   }
 
-  private void unmarshallRevision(DBObject revision, InternalCDORevision result)
+  public InternalCDORevision readRevisionByVersion(final CDOID id, CDOBranchVersion branchVersion, int listChunk,
+      CDORevisionCacheAdder cache)
   {
-    CDOClassInfo classInfo = result.getClassInfo();
+    DBObject query = new BasicDBObject();
+    idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
+
+    int version = branchVersion.getVersion();
+    query.put(REVISIONS + "." + REVISIONS_VERSION, version);
+
+    final CDOBranch branch = branchVersion.getBranch();
+    if (store.isBranching())
+    {
+      query.put(COMMITS_BRANCH, branch.getID());
+    }
+
+    return new QueryEmbeddedRevisions<InternalCDORevision>(query)
+    {
+      @Override
+      protected InternalCDORevision handleEmbedded(DBObject doc, DBObject embedded)
+      {
+        CDOID revisionID = idHandler.read(embedded, REVISIONS_ID);
+        if (!ObjectUtil.equals(revisionID, id))
+        {
+          return null;
+        }
+
+        int revisionBranch = CDOBranch.MAIN_BRANCH_ID;
+        if (store.isBranching())
+        {
+          revisionBranch = (Integer)doc.get(COMMITS_BRANCH);
+        }
+
+        if (branch.getID() != revisionBranch)
+        {
+          return null;
+        }
+
+        long revisionTime = (Long)doc.get(COMMITS_ID);
+        CDOBranchPoint branchPoint = branch.getPoint(revisionTime);
+
+        return unmarshallRevision(embedded, id, branchPoint);
+      }
+    }.execute();
+  }
+
+  private InternalCDORevision unmarshallRevision(DBObject doc, final CDOID id, CDOBranchPoint branchPoint)
+  {
+    int classID = (Integer)doc.get(REVISIONS_CLASS);
+    EClass eClass = store.getClasses().getClass(classID);
+
+    int version = (Integer)doc.get(REVISIONS_VERSION);
+    if (version < CDOBranchVersion.FIRST_VERSION)
+    {
+      return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), -version, branchPoint.getTimeStamp());
+    }
+
+    CDOID resourceID = idHandler.read(doc, REVISIONS_RESOURCE);
+    CDOID containerID = idHandler.read(doc, REVISIONS_CONTAINER);
+    int featureID = (Integer)doc.get(REVISIONS_FEATURE);
+
+    InternalCDORevision result = store.createRevision(eClass, id);
+    result.setBranchPoint(branchPoint);
+    result.setVersion(version);
+    result.setResourceID(resourceID);
+    result.setContainerID(containerID);
+    result.setContainingFeatureID(featureID);
+
+    unmarshallRevision(doc, result);
+
+    return result;
+  }
+
+  private void unmarshallRevision(DBObject doc, InternalCDORevision revision)
+  {
+    CDOClassInfo classInfo = revision.getClassInfo();
     for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
     {
-      Object value = revision.get(feature.getName());
+      Object value = doc.get(feature.getName());
 
       if (feature.isUnsettable())
       {
-        boolean set = (Boolean)revision.get(feature.getName() + SET_SUFFIX);
+        boolean set = (Boolean)doc.get(feature.getName() + SET_SUFFIX);
         if (!set)
         {
           continue;
@@ -670,7 +720,7 @@ public class Commits extends Coll
 
         if (value == null)
         {
-          result.set(feature, EStore.NO_INDEX, CDORevisionData.NIL);
+          revision.set(feature, EStore.NO_INDEX, CDORevisionData.NIL);
           continue;
         }
       }
@@ -683,7 +733,7 @@ public class Commits extends Coll
         if (value != null)
         {
           List<?> list = (List<?>)value;
-          CDOList revisionList = result.getList(feature, list.size());
+          CDOList revisionList = revision.getList(feature, list.size());
           for (Object element : list)
           {
             element = valueHandler.fromMongo(element);
@@ -694,7 +744,7 @@ public class Commits extends Coll
       else
       {
         value = valueHandler.fromMongo(value);
-        result.set(feature, EStore.NO_INDEX, value);
+        revision.set(feature, EStore.NO_INDEX, value);
       }
     }
   }

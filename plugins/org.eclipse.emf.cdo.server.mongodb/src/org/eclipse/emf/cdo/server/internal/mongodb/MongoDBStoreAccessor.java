@@ -92,7 +92,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    return getStore().getCommits().readRevisionByVersion(id, branchVersion, listChunk, cache);
   }
 
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,

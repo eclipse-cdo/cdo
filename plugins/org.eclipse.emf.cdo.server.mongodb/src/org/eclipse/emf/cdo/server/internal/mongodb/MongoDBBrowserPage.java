@@ -7,6 +7,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -21,7 +22,7 @@ import java.util.Set;
  */
 public class MongoDBBrowserPage extends AbstractPage
 {
-  private static final boolean SHOW_INDEXES = false;
+  private static final boolean SHOW_INDEXES = true;
 
   private static final boolean SHOW_DOCUMENTS = true;
 
@@ -128,6 +129,16 @@ public class MongoDBBrowserPage extends AbstractPage
 
       int i = 0;
       cursor = coll.find();
+
+      try
+      {
+        cursor = cursor.sort(new BasicDBObject("_id", 1));
+      }
+      catch (Exception ex)
+      {
+        // Ignore
+      }
+
       while (cursor.hasNext())
       {
         DBObject doc = cursor.next();

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
@@ -38,6 +39,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +50,15 @@ import java.util.List;
  */
 public abstract class StoreAccessorBase extends Lifecycle implements IStoreAccessor
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, StoreAccessorBase.class);
+
   private Store store;
 
   private Object context;
 
   private boolean reader;
+
+  private List<CommitContext> commitContexts = new ArrayList<CommitContext>();
 
   private StoreAccessorBase(Store store, Object context, boolean reader)
   {
@@ -112,6 +118,94 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
   public void release()
   {
     store.releaseAccessor(this);
+    commitContexts.clear();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public final void write(InternalCommitContext context, OMMonitor monitor)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing transaction: {0}", getTransaction()); //$NON-NLS-1$
+    }
+
+    commitContexts.add(context);
+    doWrite(context, monitor);
+  }
+
+  protected abstract void doWrite(InternalCommitContext context, OMMonitor monitor);
+
+  /**
+   * @since 3.0
+   */
+  public final void commit(OMMonitor monitor)
+  {
+    doCommit(monitor);
+
+    long latest = CDORevision.UNSPECIFIED_DATE;
+    long latestNonLocal = CDORevision.UNSPECIFIED_DATE;
+    for (CommitContext commitContext : commitContexts)
+    {
+      CDOBranchPoint branchPoint = commitContext.getBranchPoint();
+      long timeStamp = branchPoint.getTimeStamp();
+      if (timeStamp > latest)
+      {
+        latest = timeStamp;
+      }
+
+      CDOBranch branch = branchPoint.getBranch();
+      if (!branch.isLocal())
+      {
+        if (timeStamp > latestNonLocal)
+        {
+          latestNonLocal = timeStamp;
+        }
+      }
+    }
+
+    getStore().setLastCommitTime(latest);
+    getStore().setLastNonLocalCommitTime(latestNonLocal);
+  }
+
+  /**
+   * @since 3.0
+   */
+  protected abstract void doCommit(OMMonitor monitor);
+
+  public final void rollback()
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Rolling back transaction: {0}", getTransaction()); //$NON-NLS-1$
+    }
+
+    for (CommitContext commitContext : commitContexts)
+    {
+      doRollback(commitContext);
+    }
+  }
+
+  protected abstract void doRollback(CommitContext commitContext);
+
+  /**
+   * @since 3.0
+   */
+  public CDOID readResourceID(CDOID folderID, String name, CDOBranchPoint branchPoint)
+  {
+    QueryResourcesContext.ExactMatch context = Store.createExactMatchContext(folderID, name, branchPoint);
+    queryResources(context);
+    return context.getResourceID();
+  }
+
+  /**
+   * @since 3.0
+   */
+  public CDOCommitData loadCommitData(long timeStamp)
+  {
+    CommitDataRevisionHandler handler = new CommitDataRevisionHandler(this, timeStamp);
+    return handler.getCommitData();
   }
 
   /**
@@ -151,9 +245,6 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
     }
   }
 
-  /**
-   * @since 4.0
-   */
   protected abstract CDOID getNextCDOID(CDORevision revision);
 
   protected void doPassivate() throws Exception
@@ -162,25 +253,6 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
 
   protected void doUnpassivate() throws Exception
   {
-  }
-
-  /**
-   * @since 3.0
-   */
-  public CDOID readResourceID(CDOID folderID, String name, CDOBranchPoint branchPoint)
-  {
-    QueryResourcesContext.ExactMatch context = Store.createExactMatchContext(folderID, name, branchPoint);
-    queryResources(context);
-    return context.getResourceID();
-  }
-
-  /**
-   * @since 3.0
-   */
-  public CDOCommitData loadCommitData(long timeStamp)
-  {
-    CommitDataRevisionHandler handler = new CommitDataRevisionHandler(this, timeStamp);
-    return handler.getCommitData();
   }
 
   /**

@@ -317,7 +317,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   // }
 
   @Override
-  protected void rollback(CommitContext commitContext)
+  protected void doRollback(CommitContext commitContext)
   {
     try
     {

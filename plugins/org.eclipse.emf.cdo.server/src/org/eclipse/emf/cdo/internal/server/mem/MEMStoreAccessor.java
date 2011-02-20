@@ -224,7 +224,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAcces
   }
 
   @Override
-  public void write(InternalCommitContext context, OMMonitor monitor)
+  public void doWrite(InternalCommitContext context, OMMonitor monitor)
   {
     MEMStore store = getStore();
     synchronized (store)
@@ -241,7 +241,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAcces
   }
 
   @Override
-  protected void rollback(CommitContext context)
+  protected void doRollback(CommitContext context)
   {
     MEMStore store = getStore();
     synchronized (store)

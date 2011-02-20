@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -53,7 +54,6 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.QueryOperators;
 
@@ -143,33 +143,6 @@ public class Commits extends Coll
     idHandler = store.getIDHandler();
   }
 
-  public Collection<InternalCDOPackageUnit> readPackageUnits()
-  {
-    Collection<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
-
-    DBObject query = new BasicDBObject();
-    query.put(UNITS, new BasicDBObject("$exists", true));
-
-    DBCursor cursor = collection.find(query);
-    while (cursor.hasNext())
-    {
-      DBObject doc = cursor.next();
-      readPackageUnits(doc, packageUnits);
-    }
-
-    return packageUnits;
-  }
-
-  private void readPackageUnits(DBObject doc, Collection<InternalCDOPackageUnit> packageUnits)
-  {
-    // DBObject units = (DBObject)doc.get(UNITS);
-    Object object = doc.get(UNITS);
-    System.out.println(object);
-
-    // TODO: implement readPackageUnits(doc, packageUnits)
-    throw new UnsupportedOperationException();
-  }
-
   public void writePackageUnits(MongoDBStoreAccessor mongoDBStoreAccessor, InternalCDOPackageUnit[] packageUnits,
       OMMonitor monitor)
   {
@@ -226,6 +199,67 @@ public class Commits extends Coll
     }
 
     return result;
+  }
+
+  public Collection<InternalCDOPackageUnit> readPackageUnits()
+  {
+    final Collection<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
+
+    DBObject query = new BasicDBObject();
+    query.put(UNITS, new BasicDBObject("$exists", true));
+
+    new QueryEmbeddedUnits<Object>(query)
+    {
+      @Override
+      protected Object handleEmbedded(DBObject doc, DBObject embedded)
+      {
+        long time = (Long)doc.get(COMMITS_ID);
+        CDOPackageUnit.Type type = CDOPackageUnit.Type.valueOf((String)embedded.get(UNITS_TYPE));
+        InternalCDOPackageInfo[] infos = readPackageInfos(embedded);
+
+        InternalCDOPackageUnit packageUnit = createPackageUnit();
+        packageUnit.setOriginalType(type);
+        packageUnit.setTimeStamp(time);
+        packageUnit.setPackageInfos(infos);
+
+        packageUnits.add(packageUnit);
+        return null;
+      }
+
+      private InternalCDOPackageInfo[] readPackageInfos(DBObject embedded)
+      {
+        BasicDBList infos = (BasicDBList)embedded.get(PACKAGES);
+        InternalCDOPackageInfo[] result = new InternalCDOPackageInfo[infos.size()];
+        int i = 0;
+      
+        for (Object info : infos)
+        {
+          DBObject infoObject = (DBObject)info;
+          String uri = (String)infoObject.get(PACKAGES_URI);
+          String parent = (String)infoObject.get(PACKAGES_PARENT);
+      
+          InternalCDOPackageInfo packageInfo = createPackageInfo();
+          packageInfo.setPackageURI(uri);
+          packageInfo.setParentURI(parent);
+      
+          result[i++] = packageInfo;
+        }
+      
+        return result;
+      }
+
+      private InternalCDOPackageUnit createPackageUnit()
+      {
+        return (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
+      }
+
+      private InternalCDOPackageInfo createPackageInfo()
+      {
+        return (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
+      }
+    };
+
+    return packageUnits;
   }
 
   public void write(MongoDBStoreAccessor accessor, InternalCommitContext context, OMMonitor monitor)
@@ -425,24 +459,24 @@ public class Commits extends Coll
       query.put(REVISIONS + "." + "name", Pattern.compile("^" + name));
     }
 
-    new Revisions<Boolean>(query)
+    new QueryEmbeddedRevisions<Boolean>(query)
     {
       @Override
-      protected Boolean handleRevision(DBObject doc, DBObject revision)
+      protected Boolean handleEmbedded(DBObject doc, DBObject embedded)
       {
-        int classID = (Integer)revision.get(REVISIONS_CLASS);
+        int classID = (Integer)embedded.get(REVISIONS_CLASS);
         if (classID != folderCID && classID != resourceCID)
         {
           return null;
         }
 
-        int version = (Integer)revision.get(REVISIONS_VERSION);
+        int version = (Integer)embedded.get(REVISIONS_VERSION);
         if (version <= 0)
         {
           return null;
         }
 
-        CDOID container = idHandler.read(revision, REVISIONS_CONTAINER);
+        CDOID container = idHandler.read(embedded, REVISIONS_CONTAINER);
         if (!ObjectUtil.equals(container, folderID))
         {
           return null;
@@ -450,14 +484,14 @@ public class Commits extends Coll
 
         if (name == null)
         {
-          if (revision.containsField("name"))
+          if (embedded.containsField("name"))
           {
             return null;
           }
         }
         else
         {
-          String revisionName = (String)revision.get("name");
+          String revisionName = (String)embedded.get("name");
           if (revisionName == null)
           {
             return null;
@@ -479,8 +513,8 @@ public class Commits extends Coll
           }
         }
 
-        CDOID id = idHandler.read(revision, REVISIONS_ID);
-        long revised = getRevised(id, context.getBranch(), version, doc, revision);
+        CDOID id = idHandler.read(embedded, REVISIONS_ID);
+        long revised = getRevised(id, context.getBranch(), version, doc, embedded);
         if (revised != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           return null;
@@ -546,7 +580,7 @@ public class Commits extends Coll
 
     addToQuery(query, branchPoint);
 
-    return new Revisions<InternalCDORevision>(query)
+    return new QueryEmbeddedRevisions<InternalCDORevision>(query)
     {
       @Override
       public InternalCDORevision execute()
@@ -555,9 +589,9 @@ public class Commits extends Coll
       }
 
       @Override
-      protected InternalCDORevision handleRevision(DBObject doc, DBObject revision)
+      protected InternalCDORevision handleEmbedded(DBObject doc, DBObject embedded)
       {
-        CDOID revisionID = idHandler.read(revision, REVISIONS_ID);
+        CDOID revisionID = idHandler.read(embedded, REVISIONS_ID);
         if (!ObjectUtil.equals(revisionID, id))
         {
           return null;
@@ -574,18 +608,18 @@ public class Commits extends Coll
         InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
         CDOBranchPoint revisionBranchPoint = branchManager.getBranch(revisionBranch).getPoint(revisionTime);
 
-        int classID = (Integer)revision.get(REVISIONS_CLASS);
+        int classID = (Integer)embedded.get(REVISIONS_CLASS);
         EClass eClass = store.getClasses().getClass(classID);
 
-        int version = (Integer)revision.get(REVISIONS_VERSION);
+        int version = (Integer)embedded.get(REVISIONS_VERSION);
         if (version < CDOBranchVersion.FIRST_VERSION)
         {
           return new DetachedCDORevision(eClass, id, revisionBranchPoint.getBranch(), -version, revisionTime);
         }
 
-        CDOID resourceID = idHandler.read(revision, REVISIONS_RESOURCE);
-        CDOID containerID = idHandler.read(revision, REVISIONS_CONTAINER);
-        int featureID = (Integer)revision.get(REVISIONS_FEATURE);
+        CDOID resourceID = idHandler.read(embedded, REVISIONS_RESOURCE);
+        CDOID containerID = idHandler.read(embedded, REVISIONS_CONTAINER);
+        int featureID = (Integer)embedded.get(REVISIONS_FEATURE);
 
         InternalCDORevision result = store.createRevision(eClass, id);
         result.setBranchPoint(revisionBranchPoint);
@@ -594,7 +628,7 @@ public class Commits extends Coll
         result.setContainerID(containerID);
         result.setContainingFeatureID(featureID);
 
-        unmarshallRevision(revision, result);
+        unmarshallRevision(embedded, result);
 
         return result;
       }
@@ -738,21 +772,24 @@ public class Commits extends Coll
   /**
    * @author Eike Stepper
    */
-  public abstract class Revisions<RESULT> extends Query<RESULT>
+  public abstract class QueryEmbedded<RESULT> extends Query<RESULT>
   {
-    public Revisions(DBObject ref)
+    private String field;
+
+    public QueryEmbedded(DBObject ref, String field)
     {
       super(ref);
+      this.field = field;
     }
 
     @Override
     protected RESULT handleDoc(DBObject doc)
     {
-      BasicDBList list = (BasicDBList)doc.get(REVISIONS);
+      BasicDBList list = (BasicDBList)doc.get(field);
       for (Object object : list)
       {
-        DBObject revision = (DBObject)object;
-        RESULT result = handleRevision(doc, revision);
+        DBObject embedded = (DBObject)object;
+        RESULT result = handleEmbedded(doc, embedded);
         if (result != null)
         {
           return result;
@@ -762,6 +799,28 @@ public class Commits extends Coll
       return null;
     }
 
-    protected abstract RESULT handleRevision(DBObject doc, DBObject revision);
+    protected abstract RESULT handleEmbedded(DBObject doc, DBObject embedded);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public abstract class QueryEmbeddedUnits<RESULT> extends QueryEmbedded<RESULT>
+  {
+    public QueryEmbeddedUnits(DBObject ref)
+    {
+      super(ref, UNITS);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public abstract class QueryEmbeddedRevisions<RESULT> extends QueryEmbedded<RESULT>
+  {
+    public QueryEmbeddedRevisions(DBObject ref)
+    {
+      super(ref, REVISIONS);
+    }
   }
 }

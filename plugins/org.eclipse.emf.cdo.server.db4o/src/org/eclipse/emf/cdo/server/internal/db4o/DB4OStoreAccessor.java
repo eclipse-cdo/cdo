@@ -290,7 +290,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   }
 
   @Override
-  protected void rollback(CommitContext commitContext)
+  protected void doRollback(CommitContext commitContext)
   {
     getObjectContainer().rollback();
   }

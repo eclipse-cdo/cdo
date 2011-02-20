@@ -281,6 +281,34 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
     }
   }
 
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    Map<String, String> map = new HashMap<String, String>();
+    map.put(Props.GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
+    map.put(Props.REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
+    map.put(Props.NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
+    map.put(Props.LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
+    map.put(Props.LAST_CLASSIFIERID, Integer.toString(classes.getLastClassifierID()));
+    map.put(Props.LAST_BRANCHID, Integer.toString(getLastBranchID()));
+    map.put(Props.LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
+    map.put(Props.LAST_COMMITTIME, Long.toString(getLastCommitTime()));
+    map.put(Props.LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
+    setPropertyValues(map);
+
+    LifecycleUtil.deactivate(idHandler);
+
+    REPOS.remove(getRepository().getName());
+
+    if (db != null)
+    {
+      db.getMongo().close();
+      db = null;
+    }
+
+    super.doDeactivate();
+  }
+
   protected void initValueHandlers()
   {
     initValueHandler(CDOType.OBJECT, new ValueHandler()
@@ -438,34 +466,6 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
   protected void initValueHandler(CDOType type, ValueHandler valueHandler)
   {
     valueHandlers[type.getTypeID() - Byte.MIN_VALUE] = valueHandler;
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    REPOS.remove(getRepository().getName());
-
-    Map<String, String> map = new HashMap<String, String>();
-    map.put(Props.GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
-    map.put(Props.REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
-    map.put(Props.NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
-    map.put(Props.LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
-    map.put(Props.LAST_CLASSIFIERID, Integer.toString(classes.getLastClassifierID()));
-    map.put(Props.LAST_BRANCHID, Integer.toString(getLastBranchID()));
-    map.put(Props.LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
-    map.put(Props.LAST_COMMITTIME, Long.toString(getLastCommitTime()));
-    map.put(Props.LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
-    setPropertyValues(map);
-
-    LifecycleUtil.activate(idHandler);
-
-    if (db != null)
-    {
-      db.getMongo().close();
-      db = null;
-    }
-
-    super.doDeactivate();
   }
 
   protected void firstStart()

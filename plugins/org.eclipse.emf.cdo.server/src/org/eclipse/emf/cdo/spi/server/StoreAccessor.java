@@ -13,10 +13,7 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.ITransaction;
@@ -27,14 +24,11 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -42,10 +36,6 @@ import java.util.List;
  */
 public abstract class StoreAccessor extends StoreAccessorBase
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, StoreAccessor.class);
-
-  private List<CommitContext> commitContexts = new ArrayList<CommitContext>();
-
   protected StoreAccessor(Store store, ISession session)
   {
     super(store, session);
@@ -57,16 +47,11 @@ public abstract class StoreAccessor extends StoreAccessorBase
   }
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void write(InternalCommitContext context, OMMonitor monitor)
+  @Override
+  protected void doWrite(InternalCommitContext context, OMMonitor monitor)
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing transaction: {0}", getTransaction()); //$NON-NLS-1$
-    }
-
-    commitContexts.add(context);
     CDOBranch branch = context.getBranchPoint().getBranch();
     long timeStamp = context.getBranchPoint().getTimeStamp();
     long previousTimeStamp = context.getPreviousTimeStamp();
@@ -145,65 +130,6 @@ public abstract class StoreAccessor extends StoreAccessorBase
     {
       monitor.done();
     }
-  }
-
-  /**
-   * @since 3.0
-   */
-  public final void commit(OMMonitor monitor)
-  {
-    doCommit(monitor);
-
-    long latest = CDORevision.UNSPECIFIED_DATE;
-    long latestNonLocal = CDORevision.UNSPECIFIED_DATE;
-    for (CommitContext commitContext : commitContexts)
-    {
-      CDOBranchPoint branchPoint = commitContext.getBranchPoint();
-      long timeStamp = branchPoint.getTimeStamp();
-      if (timeStamp > latest)
-      {
-        latest = timeStamp;
-      }
-
-      CDOBranch branch = branchPoint.getBranch();
-      if (!branch.isLocal())
-      {
-        if (timeStamp > latestNonLocal)
-        {
-          latestNonLocal = timeStamp;
-        }
-      }
-    }
-
-    getStore().setLastCommitTime(latest);
-    getStore().setLastNonLocalCommitTime(latestNonLocal);
-  }
-
-  /**
-   * @since 3.0
-   */
-  protected abstract void doCommit(OMMonitor monitor);
-
-  public void rollback()
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Rolling back transaction: {0}", getTransaction()); //$NON-NLS-1$
-    }
-
-    for (CommitContext commitContext : commitContexts)
-    {
-      rollback(commitContext);
-    }
-  }
-
-  protected abstract void rollback(CommitContext commitContext);
-
-  @Override
-  public void release()
-  {
-    super.release();
-    commitContexts.clear();
   }
 
   /**

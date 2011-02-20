@@ -589,7 +589,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
    *          not used by this method
    */
   @Override
-  public void write(InternalCommitContext context, OMMonitor monitor)
+  public void doWrite(InternalCommitContext context, OMMonitor monitor)
   {
     // NOTE: the same flow is also present in the super class (StoreAccessor)
     // changes in flow can mean that the flow here also has to change
@@ -755,7 +755,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   }
 
   @Override
-  protected void rollback(CommitContext context)
+  protected void doRollback(CommitContext context)
   {
     setErrorOccured(true);
     endHibernateSession();

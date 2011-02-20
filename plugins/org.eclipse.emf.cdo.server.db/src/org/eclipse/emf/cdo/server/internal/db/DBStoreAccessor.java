@@ -719,7 +719,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   }
 
   @Override
-  protected final void rollback(IStoreAccessor.CommitContext commitContext)
+  protected final void doRollback(IStoreAccessor.CommitContext commitContext)
   {
     getStore().getMetaDataManager().clearMetaIDMappings();
 

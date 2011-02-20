@@ -172,17 +172,20 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
     getStore().getCommits().writePackageUnits(this, packageUnits, monitor);
   }
 
-  public void write(InternalCommitContext context, OMMonitor monitor)
+  @Override
+  protected void doWrite(InternalCommitContext context, OMMonitor monitor)
   {
     getStore().getCommits().write(this, context, monitor);
   }
 
-  public void commit(OMMonitor monitor)
+  @Override
+  protected void doCommit(OMMonitor monitor)
   {
     // Do nothing
   }
 
-  public void rollback()
+  @Override
+  protected void doRollback(CommitContext commitContext)
   {
     throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
   }

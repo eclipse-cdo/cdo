@@ -62,7 +62,10 @@ public class MongoDBStoreRepositoryConfig extends RepositoryConfig
   public IStore createStore(String repoName)
   {
     MongoURI mongoURI = new MongoURI("mongodb://localhost");
-    dropDatabase(mongoURI, repoName);
+    if (!isRestarting())
+    {
+      dropDatabase(mongoURI, repoName);
+    }
 
     return CDOMongoDBUtil.createStore(mongoURI, repoName);
   }

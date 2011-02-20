@@ -60,6 +60,7 @@ import com.mongodb.QueryOperators;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
@@ -421,7 +422,7 @@ public class Commits extends Coll
     }
     else
     {
-      query.put(REVISIONS + "." + "name", new BasicDBObject("$regex", "/^" + name + "/"));
+      query.put(REVISIONS + "." + "name", Pattern.compile("^" + name));
     }
 
     new Revisions<Boolean>(query)

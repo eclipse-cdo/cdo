@@ -703,6 +703,7 @@ public class Commits extends Coll
 
     InternalCDORevision result = store.createRevision(eClass, id);
     result.setBranchPoint(branchPoint);
+    result.setRevised(revised);
     result.setVersion(version);
     result.setResourceID(resourceID);
     result.setContainerID(containerID);

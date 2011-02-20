@@ -22,11 +22,11 @@ import java.util.Set;
  */
 public class MongoDBBrowserPage extends AbstractPage
 {
-  private static final boolean SHOW_INDEXES = false;
+  private static final boolean SHOW_INDEXES = true;
 
   private static final boolean SHOW_DOCUMENTS = true;
 
-  private static final boolean SHOW_INITIAL_COMMIT = false;
+  private static final boolean SHOW_INITIAL_COMMIT = true;
 
   public MongoDBBrowserPage()
   {
@@ -144,12 +144,14 @@ public class MongoDBBrowserPage extends AbstractPage
         DBObject doc = cursor.next();
 
         ++i;
-        if (SHOW_INITIAL_COMMIT || i > 1)
+        if (i == 1 && showFirstCommit(coll))
         {
-          pout.print("<tr><td valign=\"top\">" + i + "</td><td valign=\"top\">");
-          showObject(browser, pout, doc, "");
-          pout.print("</td></tr>\r\n");
+          continue;
         }
+
+        pout.print("<tr><td valign=\"top\">" + i + "</td><td valign=\"top\">");
+        showObject(browser, pout, doc, "");
+        pout.print("</td></tr>\r\n");
       }
 
       pout.print("</table>\r\n");
@@ -228,6 +230,11 @@ public class MongoDBBrowserPage extends AbstractPage
     {
       pout.print("</td></tr></table>");
     }
+  }
+
+  protected boolean showFirstCommit(DBCollection coll)
+  {
+    return coll.getName().equals(Commits.COMMITS) && !SHOW_INITIAL_COMMIT;
   }
 
   /**

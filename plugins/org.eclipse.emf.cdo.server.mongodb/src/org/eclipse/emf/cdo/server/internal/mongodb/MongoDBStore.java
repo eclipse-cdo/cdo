@@ -316,23 +316,23 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
       @Override
       public Object toMongo(Object value)
       {
-        if (value != null)
+        if (value == null)
         {
-          return idHandler.toValue((CDOID)value);
+          return null;
         }
 
-        return null;
+        return idHandler.toValue((CDOID)value);
       }
 
       @Override
       public Object fromMongo(Object value)
       {
-        if (value != null)
+        if (value == null)
         {
-          return idHandler.fromValue(value);
+          return null;
         }
 
-        return null;
+        return idHandler.fromValue(value);
       }
     });
 
@@ -341,6 +341,11 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
       @Override
       public Object toMongo(Object value)
       {
+        if (value == null)
+        {
+          return null;
+        }
+
         return Character.toString((Character)value);
       }
 
@@ -417,23 +422,23 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
       @Override
       public Object toMongo(Object value)
       {
-        if (value != null)
+        if (value == null)
         {
-          return ((BigDecimal)value).toPlainString();
+          return null;
         }
 
-        return null;
+        return ((BigDecimal)value).toPlainString();
       }
 
       @Override
       public Object fromMongo(Object value)
       {
-        if (value != null)
+        if (value == null)
         {
-          return new BigDecimal((String)value);
+          return null;
         }
 
-        return null;
+        return new BigDecimal((String)value);
       }
     });
 
@@ -442,23 +447,23 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
       @Override
       public Object toMongo(Object value)
       {
-        if (value != null)
+        if (value == null)
         {
-          return ((BigInteger)value).toString();
+          return null;
         }
 
-        return null;
+        return ((BigInteger)value).toString();
       }
 
       @Override
       public Object fromMongo(Object value)
       {
-        if (value != null)
+        if (value == null)
         {
-          return new BigInteger((String)value);
+          return null;
         }
 
-        return null;
+        return new BigInteger((String)value);
       }
     });
   }

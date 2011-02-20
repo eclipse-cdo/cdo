@@ -229,7 +229,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAcces
     MEMStore store = getStore();
     synchronized (store)
     {
-      super.write(context, monitor);
+      super.doWrite(context, monitor);
     }
   }
 

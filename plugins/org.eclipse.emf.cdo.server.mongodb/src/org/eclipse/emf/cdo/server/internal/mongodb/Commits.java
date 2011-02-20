@@ -438,6 +438,7 @@ public class Commits extends Coll
     final CDOID folderID = context.getFolderID();
     final String name = context.getName();
     final boolean exactMatch = context.exactMatch();
+    final long timeStamp = context.getTimeStamp();
 
     DBObject query = new BasicDBObject();
 
@@ -465,6 +466,11 @@ public class Commits extends Coll
       protected Boolean handleEmbedded(DBObject doc, DBObject embedded)
       {
         int classID = (Integer)embedded.get(REVISIONS_CLASS);
+        if (classID != folderCID && classID != resourceCID)
+        {
+          return null;
+        }
+
         if (classID != folderCID && classID != resourceCID)
         {
           return null;
@@ -515,7 +521,7 @@ public class Commits extends Coll
 
         CDOID id = idHandler.read(embedded, REVISIONS_ID);
         long revised = getRevised(id, context.getBranch(), version, doc, embedded);
-        if (revised != CDOBranchPoint.UNSPECIFIED_DATE)
+        if (revised != CDOBranchPoint.UNSPECIFIED_DATE && revised < timeStamp)
         {
           return null;
         }

@@ -397,16 +397,16 @@ public class Commits extends Coll
   public void queryResources(final QueryResourcesContext context)
   {
     Classes classes = getStore().getClasses();
-    final int resourceFolderClassID = classes.getResourceFolderClassID();
-    final int resourceClassID = classes.getResourceClassID();
+    final int folderCID = classes.getResourceFolderClassID();
+    final int resourceCID = classes.getResourceClassID();
 
     final CDOID folderID = context.getFolderID();
     final String name = context.getName();
     final boolean exactMatch = context.exactMatch();
 
     DBObject query = new BasicDBObject();
-    query.put("$or", new Object[] { new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, resourceFolderClassID),
-        new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, resourceClassID) });
+
+    query.put(REVISIONS + "." + REVISIONS_CLASS, new BasicDBObject("$in", new int[] { folderCID, resourceCID }));
 
     addToQuery(query, context);
     query.put(REVISIONS + "." + REVISIONS_CONTAINER, idHandler.toValue(folderID));
@@ -430,7 +430,7 @@ public class Commits extends Coll
       protected Boolean handleRevision(DBObject doc, DBObject revision)
       {
         int classID = (Integer)revision.get(REVISIONS_CLASS);
-        if (classID != resourceFolderClassID && classID != resourceClassID)
+        if (classID != folderCID && classID != resourceCID)
         {
           return null;
         }
@@ -512,8 +512,7 @@ public class Commits extends Coll
     }
 
     int nextVersion = version + 1;
-    query.put("$or", new DBObject[] { new BasicDBObject(REVISIONS + "." + REVISIONS_VERSION, nextVersion),
-        new BasicDBObject(REVISIONS + "." + REVISIONS_VERSION, -nextVersion) });
+    query.put(REVISIONS + "." + REVISIONS_VERSION, new BasicDBObject("$in", new int[] { nextVersion, -nextVersion }));
 
     Long result = new Query<Long>(query)
     {
@@ -529,8 +528,8 @@ public class Commits extends Coll
       long revised = result - 1;
 
       // TODO Cache REVISIONS_REVISED
-      revision.put(REVISIONS_REVISED, result);
-      collection.save(doc);
+      // revision.put(REVISIONS_REVISED, revised);
+      // collection.save(doc);
 
       return revised;
     }

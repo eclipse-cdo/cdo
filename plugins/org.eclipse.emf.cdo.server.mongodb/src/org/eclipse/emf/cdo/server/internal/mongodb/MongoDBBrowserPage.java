@@ -22,7 +22,7 @@ import java.util.Set;
  */
 public class MongoDBBrowserPage extends AbstractPage
 {
-  private static final boolean SHOW_INDEXES = true;
+  private static final boolean SHOW_INDEXES = false;
 
   private static final boolean SHOW_DOCUMENTS = true;
 

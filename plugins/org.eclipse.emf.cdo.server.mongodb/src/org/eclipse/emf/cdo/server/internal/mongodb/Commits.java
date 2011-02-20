@@ -102,6 +102,8 @@ public class Commits extends Coll
 
   public static final String REVISIONS_VERSION = "cdo_version";
 
+  private static final String REVISIONS_REVISED = "cdo_revised";
+
   public static final String REVISIONS_CLASS = "cdo_class";
 
   public static final String REVISIONS_RESOURCE = "cdo_resource";
@@ -406,7 +408,7 @@ public class Commits extends Coll
     query.put("$or", new Object[] { new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, resourceFolderClassID),
         new BasicDBObject(REVISIONS + "." + REVISIONS_CLASS, resourceClassID) });
 
-    query.put(REVISIONS + "." + REVISIONS_VERSION, new BasicDBObject("$gt", 0)); // Not detached
+    addToQuery(query, context);
     query.put(REVISIONS + "." + REVISIONS_CONTAINER, idHandler.toValue(folderID));
 
     if (name == null)
@@ -477,6 +479,12 @@ public class Commits extends Coll
         }
 
         CDOID id = idHandler.read(revision, REVISIONS_ID);
+        long revised = getRevised(id, context.getBranch(), version, doc, revision);
+        if (revised != CDOBranchPoint.UNSPECIFIED_DATE)
+        {
+          return null;
+        }
+
         if (!context.addResource(id))
         {
           // No more results allowed
@@ -488,27 +496,50 @@ public class Commits extends Coll
     }.execute();
   }
 
-  public InternalCDORevision readRevision(final CDOID id, CDOBranchPoint branchPoint, int listChunk,
-      CDORevisionCacheAdder cache)
+  private long getRevised(CDOID id, CDOBranch branch, int version, DBObject doc, DBObject revision)
   {
-    final int branch = branchPoint.getBranch().getID();
-    final long timeStamp = branchPoint.getTimeStamp();
+    Object value = revision.get(REVISIONS_REVISED);
+    if (value instanceof Long)
+    {
+      return (Long)value;
+    }
 
     DBObject query = new BasicDBObject();
     idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
-
-    // Exclude detached objects
-    query.put(REVISIONS + "." + REVISIONS_VERSION, new BasicDBObject("$gte", CDOBranchVersion.FIRST_VERSION));
-
-    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      query.put(COMMITS_ID, new BasicDBObject("$lte", timeStamp));
-    }
-
     if (store.isBranching())
     {
-      query.put(COMMITS_BRANCH, branch);
+      query.put(COMMITS_BRANCH, branch.getID());
     }
+
+    query.put(REVISIONS + "." + REVISIONS_VERSION, -version - 1);
+
+    Long result = new Query<Long>(query)
+    {
+      @Override
+      protected Long handleDoc(DBObject doc)
+      {
+        return (Long)doc.get(COMMITS_ID);
+      }
+    }.execute();
+
+    if (result != null)
+    {
+      // TODO Cache REVISIONS_REVISED
+      // revision.put(REVISIONS_REVISED, result);
+      // collection.save(doc);
+      return result;
+    }
+
+    return CDOBranchPoint.UNSPECIFIED_DATE;
+  }
+
+  public InternalCDORevision readRevision(final CDOID id, CDOBranchPoint branchPoint, int listChunk,
+      CDORevisionCacheAdder cache)
+  {
+    DBObject query = new BasicDBObject();
+    idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
+
+    addToQuery(query, branchPoint);
 
     return new Revisions<InternalCDORevision>(query)
     {
@@ -563,6 +594,24 @@ public class Commits extends Coll
         return result;
       }
     }.execute();
+  }
+
+  private void addToQuery(DBObject query, CDOBranchPoint branchPoint)
+  {
+    // Exclude detached objects
+    query.put(REVISIONS + "." + REVISIONS_VERSION, new BasicDBObject("$gte", CDOBranchVersion.FIRST_VERSION));
+
+    long timeStamp = branchPoint.getTimeStamp();
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      query.put(COMMITS_ID, new BasicDBObject("$lte", timeStamp));
+    }
+
+    if (store.isBranching())
+    {
+      int branch = branchPoint.getBranch().getID();
+      query.put(COMMITS_BRANCH, branch);
+    }
   }
 
   private void unmarshallRevision(DBObject revision, InternalCDORevision result)

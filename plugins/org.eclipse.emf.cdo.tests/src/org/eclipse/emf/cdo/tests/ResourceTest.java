@@ -1598,7 +1598,8 @@ public class ResourceTest extends AbstractCDOTest
 
     try
     {
-      transaction.getResourceSet().getResource(CDOURIUtil.createResourceURI(session, oldPath), true);
+      URI uri = CDOURIUtil.createResourceURI(session, oldPath);
+      transaction.getResourceSet().getResource(uri, true);
       fail("Doesn't exist");
     }
     catch (Exception ex)

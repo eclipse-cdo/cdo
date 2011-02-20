@@ -393,11 +393,11 @@ public class Commits extends Coll
         {
           continue;
         }
+      }
 
-        if (value == CDORevisionData.NIL)
-        {
-          value = null;
-        }
+      if (value == CDORevisionData.NIL)
+      {
+        value = null;
       }
 
       CDOType type = CDOModelUtil.getType(feature);
@@ -608,7 +608,7 @@ public class Commits extends Coll
         InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
         CDOBranchPoint revisionBranchPoint = branchManager.getBranch(revisionBranch).getPoint(revisionTime);
 
-        return unmarshallRevision(embedded, id, revisionBranchPoint);
+        return unmarshallRevision(doc, embedded, id, revisionBranchPoint);
       }
     }.execute();
   }
@@ -671,25 +671,29 @@ public class Commits extends Coll
         long revisionTime = (Long)doc.get(COMMITS_ID);
         CDOBranchPoint branchPoint = branch.getPoint(revisionTime);
 
-        return unmarshallRevision(embedded, id, branchPoint);
+        return unmarshallRevision(doc, embedded, id, branchPoint);
       }
     }.execute();
   }
 
-  private InternalCDORevision unmarshallRevision(DBObject doc, final CDOID id, CDOBranchPoint branchPoint)
+  private InternalCDORevision unmarshallRevision(DBObject doc, DBObject embedded, CDOID id, CDOBranchPoint branchPoint)
   {
-    int classID = (Integer)doc.get(REVISIONS_CLASS);
+    int classID = (Integer)embedded.get(REVISIONS_CLASS);
     EClass eClass = store.getClasses().getClass(classID);
 
-    int version = (Integer)doc.get(REVISIONS_VERSION);
+    CDOBranch branch = branchPoint.getBranch();
+    int version = (Integer)embedded.get(REVISIONS_VERSION);
+    long revised = getRevised(id, branch, Math.abs(version), doc, embedded);
+
     if (version < CDOBranchVersion.FIRST_VERSION)
     {
-      return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), -version, branchPoint.getTimeStamp());
+      long timeStamp = branchPoint.getTimeStamp();
+      return new DetachedCDORevision(eClass, id, branch, -version, timeStamp, revised);
     }
 
-    CDOID resourceID = idHandler.read(doc, REVISIONS_RESOURCE);
-    CDOID containerID = idHandler.read(doc, REVISIONS_CONTAINER);
-    int featureID = (Integer)doc.get(REVISIONS_FEATURE);
+    CDOID resourceID = idHandler.read(embedded, REVISIONS_RESOURCE);
+    CDOID containerID = idHandler.read(embedded, REVISIONS_CONTAINER);
+    int featureID = (Integer)embedded.get(REVISIONS_FEATURE);
 
     InternalCDORevision result = store.createRevision(eClass, id);
     result.setBranchPoint(branchPoint);
@@ -698,7 +702,7 @@ public class Commits extends Coll
     result.setContainerID(containerID);
     result.setContainingFeatureID(featureID);
 
-    unmarshallRevision(doc, result);
+    unmarshallRevision(embedded, result);
 
     return result;
   }

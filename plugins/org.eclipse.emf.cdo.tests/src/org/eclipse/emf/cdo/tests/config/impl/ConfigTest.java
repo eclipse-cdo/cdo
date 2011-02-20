@@ -15,6 +15,12 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoExternalReferences;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoFeatureMaps;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoHandleRevisions;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoLobs;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoQueryXRefs;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoRaw;
 import org.eclipse.emf.cdo.tests.config.IConstants;
 import org.eclipse.emf.cdo.tests.config.IContainerConfig;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
@@ -527,6 +533,36 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   protected void skipMongo()
   {
     skipConfig("MongoDBStore");
+  }
+
+  protected void skipExternalReferences()
+  {
+    skipTest(getRepository().getStore() instanceof NoExternalReferences);
+  }
+
+  protected void skipQueryXRefs()
+  {
+    skipTest(getRepository().getStore() instanceof NoQueryXRefs);
+  }
+
+  protected void skipLobs()
+  {
+    skipTest(getRepository().getStore() instanceof NoLobs);
+  }
+
+  protected void skipFeatureMaps()
+  {
+    skipTest(getRepository().getStore() instanceof NoFeatureMaps);
+  }
+
+  protected void skipHandleRevisions()
+  {
+    skipTest(getRepository().getStore() instanceof NoHandleRevisions);
+  }
+
+  protected void skipRaw()
+  {
+    skipTest(getRepository().getStore() instanceof NoRaw);
   }
 
   protected void clearCache(CDORevisionManager revisionManager)

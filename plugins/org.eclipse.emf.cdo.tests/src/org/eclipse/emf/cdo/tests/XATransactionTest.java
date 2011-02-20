@@ -82,6 +82,7 @@ public class XATransactionTest extends AbstractCDOTest
 
   public void testRollback_AfterSetpoint() throws Exception
   {
+    skipExternalReferences();
     getRepository(REPOSITORY2_NAME);
 
     CDOSession sessionA = openSession();
@@ -142,6 +143,7 @@ public class XATransactionTest extends AbstractCDOTest
 
   public void testCommitFromTransactionDisabled() throws Exception
   {
+    skipExternalReferences();
     getRepository(REPOSITORY2_NAME);
 
     {
@@ -189,6 +191,7 @@ public class XATransactionTest extends AbstractCDOTest
   {
     // Skip this test until the problems with XATransactions are solved.
     skipConfig(LEGACY);
+    skipExternalReferences();
     getRepository(REPOSITORY2_NAME);
 
     {
@@ -231,6 +234,7 @@ public class XATransactionTest extends AbstractCDOTest
 
   public void test_ExceptionInReadingStream() throws Exception
   {
+    skipExternalReferences();
     getRepository(REPOSITORY2_NAME);
 
     CDOSession sessionA = openSession();

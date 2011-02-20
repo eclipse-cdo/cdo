@@ -46,6 +46,13 @@ import java.util.List;
  */
 public class XRefTest extends AbstractCDOTest
 {
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    skipQueryXRefs();
+  }
+
   public void testCrossReferenceMultivalueEReferenceQuery() throws Exception
   {
     PurchaseOrder purchaseOrder1 = getModel1Factory().createPurchaseOrder();

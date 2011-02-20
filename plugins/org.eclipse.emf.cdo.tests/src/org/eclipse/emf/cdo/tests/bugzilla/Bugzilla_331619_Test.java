@@ -40,6 +40,8 @@ public class Bugzilla_331619_Test extends AbstractCDOTest
   @SuppressWarnings("unchecked")
   public void testAbstractXRef() throws CommitException
   {
+    skipQueryXRefs();
+
     // set up model
     EPackage pkg = EMFUtil.createEPackage("test", "test", "http://www.eclipse.org/CDO/Tests/331619.ecore");
     EClass ref = EMFUtil.createEClass(pkg, "referencee", false, false);

@@ -246,6 +246,8 @@ public class PartialCommitTest extends AbstractCDOTest
 
   public void testPartialCleanUp_detachedObjects() throws CommitException
   {
+    skipQueryXRefs();
+
     simpleModel1Setup();
     Category cat = Model1Factory.eINSTANCE.createCategory();
     resource1.getContents().add(cat);
@@ -363,6 +365,8 @@ public class PartialCommitTest extends AbstractCDOTest
 
   public void testDetach() throws CommitException
   {
+    skipQueryXRefs();
+
     simpleModel1Setup();
     EcoreUtil.delete(purchaseOrder);
 
@@ -531,6 +535,8 @@ public class PartialCommitTest extends AbstractCDOTest
 
   public void testDetachSingleRef() throws CommitException
   {
+    skipQueryXRefs();
+
     simpleModel4ContainmentSetup();
     refSingleContained1.setElement(null);
 
@@ -824,6 +830,8 @@ public class PartialCommitTest extends AbstractCDOTest
 
   public void testSingleBidiOnRemovedObject() throws CommitException
   {
+    skipQueryXRefs();
+
     simpleModel4SingleBidiSetup();
     EcoreUtil.delete(singleNonContainedElement1);
 
@@ -930,6 +938,8 @@ public class PartialCommitTest extends AbstractCDOTest
 
   public void testMultiBidiOnRemovedObject() throws CommitException
   {
+    skipQueryXRefs();
+
     simpleModel4MultiBidiSetup();
     EcoreUtil.delete(multiNonContainedElement1);
 

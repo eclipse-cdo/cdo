@@ -61,4 +61,52 @@ public interface InternalStore extends IStore, ILifecycle
    * @since 4.0
    */
   public void setCreationTime(long creationTime);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.0
+   */
+  public interface NoExternalReferences
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.0
+   */
+  public interface NoQueryXRefs
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.0
+   */
+  public interface NoLobs
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.0
+   */
+  public interface NoFeatureMaps
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.0
+   */
+  public interface NoHandleRevisions
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.0
+   */
+  public interface NoRaw
+  {
+  }
 }

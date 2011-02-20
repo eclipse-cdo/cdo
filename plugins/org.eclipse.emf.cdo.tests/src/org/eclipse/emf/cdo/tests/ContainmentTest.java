@@ -348,6 +348,8 @@ public class ContainmentTest extends AbstractCDOTest
 
   public void testObjectNotSameResourceThanItsContainerCDOANDXMI() throws Exception
   {
+    skipExternalReferences();
+
     byte[] data = null;
     {
       CDOSession session = openSession();

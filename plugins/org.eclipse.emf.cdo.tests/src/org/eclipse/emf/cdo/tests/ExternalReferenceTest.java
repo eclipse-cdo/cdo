@@ -61,35 +61,38 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testExternalWithDynamicEObject() throws Exception
   {
-    {
-      ResourceSet resourceSet = new ResourceSetImpl();
-      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
+    skipExternalReferences();
 
-      CDOSession sessionA = openSession();
-      sessionA.getPackageRegistry().putEPackage(getModel4InterfacesPackage());
-      sessionA.getPackageRegistry().putEPackage(getModel4Package());
-      CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
 
-      CDOResource resA = transactionA1.createResource("/resA");
-      Resource resD = resourceSet.createResource(URI.createURI("test://1"));
+    CDOSession sessionA = openSession();
+    sessionA.getPackageRegistry().putEPackage(getModel4InterfacesPackage());
+    sessionA.getPackageRegistry().putEPackage(getModel4Package());
+    CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
 
-      EPackage schoolPackage = createDynamicEPackage();
-      resourceSet.getPackageRegistry().put(schoolPackage.getNsURI(), schoolPackage);
+    CDOResource resA = transactionA1.createResource("/resA");
+    Resource resD = resourceSet.createResource(URI.createURI("test://1"));
 
-      EClass eClass = (EClass)schoolPackage.getEClassifier("SchoolBook");
-      EObject schoolbook = EcoreUtil.create(eClass);
+    EPackage schoolPackage = createDynamicEPackage();
+    resourceSet.getPackageRegistry().put(schoolPackage.getNsURI(), schoolPackage);
 
-      GenRefSingleNonContained objectFromResA = getModel4Factory().createGenRefSingleNonContained();
-      objectFromResA.setElement(schoolbook);
-      resD.getContents().add(schoolbook);
+    EClass eClass = (EClass)schoolPackage.getEClassifier("SchoolBook");
+    EObject schoolbook = EcoreUtil.create(eClass);
 
-      resA.getContents().add(objectFromResA);
-      transactionA1.commit();
-    }
+    GenRefSingleNonContained objectFromResA = getModel4Factory().createGenRefSingleNonContained();
+    objectFromResA.setElement(schoolbook);
+    resD.getContents().add(schoolbook);
+
+    resA.getContents().add(objectFromResA);
+    transactionA1.commit();
+
   }
 
   public void testExternalWithEClass() throws Exception
   {
+    skipExternalReferences();
+
     {
       ResourceSet resourceSet = new ResourceSetImpl();
 
@@ -123,6 +126,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testExternalWithEPackage() throws Exception
   {
+    skipExternalReferences();
+
     {
       CDOSession sessionA = openSession();
 
@@ -157,6 +162,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
+    skipExternalReferences();
+
     byte[] dataOfresD = null;
     getRepository(REPOSITORY_B_NAME);
 
@@ -265,6 +272,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
   {
     // Skip this test until the problems with XATransactions are solved.
     skipConfig(LEGACY);
+    skipExternalReferences();
 
     getRepository(REPOSITORY_B_NAME);
 
@@ -375,6 +383,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testWithXML() throws Exception
   {
+    skipExternalReferences();
+
     ResourceSet resourceSet = new ResourceSetImpl();
     Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
     map.put("xml", new XMLResourceFactoryImpl());
@@ -400,6 +410,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testWithXMLAndPrefetching() throws Exception
   {
+    skipExternalReferences();
+
     {
       ResourceSet resourceSet = new ResourceSetImpl();
       Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();

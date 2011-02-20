@@ -33,6 +33,13 @@ import java.io.Reader;
  */
 public class LobTest extends AbstractCDOTest
 {
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    skipLobs();
+  }
+
   public void testCommitBlob() throws Exception
   {
     InputStream inputStream = null;

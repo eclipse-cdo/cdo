@@ -32,6 +32,13 @@ public class Bugzilla_323930_Test extends AbstractCDOTest
     return map;
   }
 
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    skipQueryXRefs();
+  }
+
   public void testChangeIndexesInTargetList() throws Exception
   {
     NodeA a = getModel3Factory().createNodeA();

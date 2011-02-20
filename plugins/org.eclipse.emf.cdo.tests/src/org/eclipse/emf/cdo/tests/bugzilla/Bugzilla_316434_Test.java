@@ -39,6 +39,8 @@ public class Bugzilla_316434_Test extends AbstractCDOTest
 
   public void testInitial() throws Exception
   {
+    skipQueryXRefs();
+
     {
       ContainedElementNoOpposite target = getModel4Factory().createContainedElementNoOpposite();
       RefSingleNonContainedNPL source = getModel4Factory().createRefSingleNonContainedNPL();

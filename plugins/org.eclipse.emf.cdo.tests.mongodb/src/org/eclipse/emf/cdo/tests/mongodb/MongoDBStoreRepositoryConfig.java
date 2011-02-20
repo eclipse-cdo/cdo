@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.mongodb;
 
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
 import org.eclipse.emf.cdo.server.mongodb.CDOMongoDBUtil;
@@ -22,6 +23,8 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
+
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -94,5 +97,13 @@ public class MongoDBStoreRepositoryConfig extends RepositoryConfig
         mongo.close();
       }
     }
+  }
+
+  @Override
+  protected void initRepositoryProperties(Map<String, String> props)
+  {
+    super.initRepositoryProperties(props);
+    props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
+    props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
   }
 }

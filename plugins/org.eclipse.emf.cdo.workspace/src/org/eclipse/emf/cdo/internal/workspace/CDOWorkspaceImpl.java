@@ -147,7 +147,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     Map<String, InternalRepository> repositories = new HashMap<String, InternalRepository>();
     repositories.put(localRepository.getName(), localRepository);
     browser = new CDOServerBrowser(repositories);
-    browser.setPort(7778);
+    browser.setPort(7779);
     browser.activate();
 
     this.base = base;

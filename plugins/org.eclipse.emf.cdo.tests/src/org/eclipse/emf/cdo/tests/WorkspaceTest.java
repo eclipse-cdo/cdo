@@ -99,6 +99,7 @@ public class WorkspaceTest extends AbstractCDOTest
     disableConsole();
     super.doSetUp();
     skipUnlessAuditing();
+    skipHandleRevisions();
     skipTest(!getRepository().getStore().getObjectIDTypes().equals(MEMStore.OBJECT_ID_TYPES));
 
     CDOSession session = openSession();

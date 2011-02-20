@@ -21,6 +21,12 @@ import java.util.Set;
  */
 public class MongoDBBrowserPage extends AbstractPage
 {
+  private static final boolean SHOW_INDEXES = false;
+
+  private static final boolean SHOW_DOCUMENTS = true;
+
+  private static final boolean SHOW_INITIAL_COMMIT = false;
+
   public MongoDBBrowserPage()
   {
     super("collections", "MongoDB Collections");
@@ -86,6 +92,20 @@ public class MongoDBBrowserPage extends AbstractPage
     DBCollection coll = db.getCollection(collection);
     pout.print("<table border=\"1\" cellpadding=\"4\">\r\n");
     pout.print("<tr><td colspan=\"2\" align=\"center\"><h2>" + collection + "</h2></td></tr>\r\n");
+
+    if (SHOW_INDEXES)
+    {
+      showIndexes(browser, pout, coll);
+    }
+
+    if (SHOW_DOCUMENTS)
+    {
+      showDocuments(browser, pout, coll);
+    }
+  }
+
+  protected void showIndexes(CDOServerBrowser browser, PrintStream pout, DBCollection coll)
+  {
     pout.print("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"EEEEEE\"><h4>Indexes</h4></td></tr>\r\n");
 
     int i = 0;
@@ -93,26 +113,32 @@ public class MongoDBBrowserPage extends AbstractPage
     {
       ++i;
       pout.print("<tr><td valign=\"top\">" + i + "</td><td valign=\"top\">");
-      showDocument(browser, pout, index, "");
+      showObject(browser, pout, index, "");
       pout.print("</td></tr>\r\n");
     }
+  }
 
+  protected void showDocuments(CDOServerBrowser browser, PrintStream pout, DBCollection coll)
+  {
     DBCursor cursor = null;
 
     try
     {
       pout.print("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"EEEEEE\"><h4>Documents</h4></td></tr>\r\n");
 
-      i = 0;
+      int i = 0;
       cursor = coll.find();
       while (cursor.hasNext())
       {
         DBObject doc = cursor.next();
 
         ++i;
-        pout.print("<tr><td valign=\"top\">" + i + "</td><td valign=\"top\">");
-        showDocument(browser, pout, doc, "");
-        pout.print("</td></tr>\r\n");
+        if (SHOW_INITIAL_COMMIT || i > 1)
+        {
+          pout.print("<tr><td valign=\"top\">" + i + "</td><td valign=\"top\">");
+          showObject(browser, pout, doc, "");
+          pout.print("</td></tr>\r\n");
+        }
       }
 
       pout.print("</table>\r\n");
@@ -126,9 +152,35 @@ public class MongoDBBrowserPage extends AbstractPage
     }
   }
 
-  protected void showDocument(CDOServerBrowser browser, PrintStream pout, DBObject doc, String level)
+  protected void showObject(CDOServerBrowser browser, PrintStream pout, DBObject doc, String level)
   {
-    for (String key : doc.keySet())
+    Set<String> keySet = doc.keySet();
+
+    boolean highlight = false;
+    try
+    {
+      String paramKey = browser.getParam("key");
+      if (paramKey != null)
+      {
+        String paramValue = browser.getParam("value");
+        Object value = doc.get(paramKey);
+        if (String.valueOf(value).equals(paramValue))
+        {
+          highlight = true;
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      // Ignore
+    }
+
+    if (highlight)
+    {
+      pout.print("<table border=\"0\" bgcolor=\"#FFFFA8\"><tr><td>");
+    }
+
+    for (String key : keySet)
     {
       pout.print(level);
       pout.print("<b>");
@@ -140,7 +192,7 @@ public class MongoDBBrowserPage extends AbstractPage
       {
         DBObject child = (DBObject)value;
         pout.print("<br>");
-        showDocument(browser, pout, child, level + "&nbsp;&nbsp;");
+        showObject(browser, pout, child, level + "&nbsp;&nbsp;");
       }
       else
       {
@@ -153,11 +205,17 @@ public class MongoDBBrowserPage extends AbstractPage
         }
         else
         {
-          pout.print(value);
+          String string = String.valueOf(value);
+          pout.print(browser.href(string, "collections", "key", key, "value", string));
         }
 
         pout.print("</font><br>");
       }
+    }
+
+    if (highlight)
+    {
+      pout.print("</td></tr></table>");
     }
   }
 

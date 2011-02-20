@@ -37,7 +37,7 @@ public class LobTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    skipLobs();
+    skipLargeObjects();
   }
 
   public void testCommitBlob() throws Exception

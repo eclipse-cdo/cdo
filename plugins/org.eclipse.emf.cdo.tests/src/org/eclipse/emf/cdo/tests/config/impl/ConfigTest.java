@@ -18,9 +18,9 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoExternalReferences;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoFeatureMaps;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoHandleRevisions;
-import org.eclipse.emf.cdo.spi.server.InternalStore.NoLobs;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoLargeObjects;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoQueryXRefs;
-import org.eclipse.emf.cdo.spi.server.InternalStore.NoRaw;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoRawAccess;
 import org.eclipse.emf.cdo.tests.config.IConstants;
 import org.eclipse.emf.cdo.tests.config.IContainerConfig;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
@@ -545,9 +545,9 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     skipTest(getRepository().getStore() instanceof NoQueryXRefs);
   }
 
-  protected void skipLobs()
+  protected void skipLargeObjects()
   {
-    skipTest(getRepository().getStore() instanceof NoLobs);
+    skipTest(getRepository().getStore() instanceof NoLargeObjects);
   }
 
   protected void skipFeatureMaps()
@@ -560,9 +560,9 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     skipTest(getRepository().getStore() instanceof NoHandleRevisions);
   }
 
-  protected void skipRaw()
+  protected void skipRawAccess()
   {
-    skipTest(getRepository().getStore() instanceof NoRaw);
+    skipTest(getRepository().getStore() instanceof NoRawAccess);
   }
 
   protected void clearCache(CDORevisionManager revisionManager)

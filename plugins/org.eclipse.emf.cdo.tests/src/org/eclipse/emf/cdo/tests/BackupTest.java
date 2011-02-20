@@ -51,7 +51,7 @@ public class BackupTest extends AbstractCDOTest
   {
     disableConsole();
     super.doSetUp();
-    skipRaw();
+    skipRawAccess();
   }
 
   @Override

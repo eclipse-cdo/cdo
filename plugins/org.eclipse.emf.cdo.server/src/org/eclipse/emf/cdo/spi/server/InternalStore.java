@@ -82,7 +82,7 @@ public interface InternalStore extends IStore, ILifecycle
    * @author Eike Stepper
    * @since 4.0
    */
-  public interface NoLobs
+  public interface NoLargeObjects
   {
   }
 
@@ -106,7 +106,7 @@ public interface InternalStore extends IStore, ILifecycle
    * @author Eike Stepper
    * @since 4.0
    */
-  public interface NoRaw
+  public interface NoRawAccess
   {
   }
 }

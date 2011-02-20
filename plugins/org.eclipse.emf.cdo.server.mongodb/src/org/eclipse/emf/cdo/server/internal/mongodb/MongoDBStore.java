@@ -24,9 +24,9 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoExternalReferences;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoFeatureMaps;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoHandleRevisions;
-import org.eclipse.emf.cdo.spi.server.InternalStore.NoLobs;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoLargeObjects;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoQueryXRefs;
-import org.eclipse.emf.cdo.spi.server.InternalStore.NoRaw;
+import org.eclipse.emf.cdo.spi.server.InternalStore.NoRawAccess;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
@@ -57,7 +57,7 @@ import java.util.Set;
  * @author Eike Stepper
  */
 public class MongoDBStore extends Store implements IMongoDBStore, //
-    NoExternalReferences, NoQueryXRefs, NoLobs, NoFeatureMaps, NoHandleRevisions, NoRaw
+    NoExternalReferences, NoQueryXRefs, NoLargeObjects, NoFeatureMaps, NoHandleRevisions, NoRawAccess
 {
   public static final String TYPE = "mongodb"; //$NON-NLS-1$
 

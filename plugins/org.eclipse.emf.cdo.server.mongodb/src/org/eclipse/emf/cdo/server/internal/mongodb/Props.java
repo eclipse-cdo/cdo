@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.mongodb;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -88,13 +89,22 @@ public class Props extends Coll
       doc.put(ID, property.getKey());
       doc.put(VALUE, property.getValue());
 
-      collection.insert(doc);
+      collection.save(doc);
 
     }
   }
 
   public void remove(Set<String> names)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    BasicDBList list = new BasicDBList();
+    for (String name : names)
+    {
+      list.add(name);
+    }
+
+    DBObject ref = new BasicDBObject();
+    ref.put(ID, new BasicDBObject("$in", list));
+
+    collection.remove(ref);
   }
 }

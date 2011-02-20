@@ -37,8 +37,11 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -81,6 +84,30 @@ public class RepositoryTest extends AbstractCDOTest
     store.setPropertyValues(expected);
 
     Map<String, String> actual = store.getPropertyValues(expected.keySet());
+    assertEquals(expected, actual);
+  }
+
+  public void testRemoveProperties() throws Exception
+  {
+    Map<String, String> expected = new HashMap<String, String>();
+    expected.put("BOOLEAN", "true");
+    expected.put("INTEGER", "1234567");
+    expected.put("LONG", "12345671234567");
+    expected.put("DOUBLE", "1234567.1234567");
+    expected.put("STRING", "Arbitrary text");
+
+    InternalStore store = getRepository().getStore();
+    store.setPropertyValues(expected);
+
+    Map<String, String> actual = store.getPropertyValues(expected.keySet());
+    assertEquals(expected, actual);
+
+    Set<String> names = new HashSet<String>(Arrays.asList(new String[] { "INTEGER", "DOUBLE" }));
+    store.removePropertyValues(names);
+
+    expected.remove("INTEGER");
+    expected.remove("DOUBLE");
+    actual = store.getPropertyValues(expected.keySet());
     assertEquals(expected, actual);
   }
 

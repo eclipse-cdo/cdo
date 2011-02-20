@@ -511,7 +511,9 @@ public class Commits extends Coll
       query.put(COMMITS_BRANCH, branch.getID());
     }
 
-    query.put(REVISIONS + "." + REVISIONS_VERSION, -version - 1);
+    int nextVersion = version + 1;
+    query.put("$or", new DBObject[] { new BasicDBObject(REVISIONS + "." + REVISIONS_VERSION, nextVersion),
+        new BasicDBObject(REVISIONS + "." + REVISIONS_VERSION, -nextVersion) });
 
     Long result = new Query<Long>(query)
     {
@@ -524,10 +526,13 @@ public class Commits extends Coll
 
     if (result != null)
     {
+      long revised = result - 1;
+
       // TODO Cache REVISIONS_REVISED
-      // revision.put(REVISIONS_REVISED, result);
-      // collection.save(doc);
-      return result;
+      revision.put(REVISIONS_REVISED, result);
+      collection.save(doc);
+
+      return revised;
     }
 
     return CDOBranchPoint.UNSPECIFIED_DATE;

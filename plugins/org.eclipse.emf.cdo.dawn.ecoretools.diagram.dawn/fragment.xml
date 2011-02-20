@@ -17,7 +17,7 @@
             class="org.eclipse.emf.cdo.dawn.ecoretools.diagram.part.DawnEcoreDiagramEditor"
             contributorClass="org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramActionBarContributor"
             default="true"
-	            extensions="Ecore_diagram"
+	            extensions="ecorediag"
 	            icon="platform:/plugin/org.eclipse.emf.ecoretools.diagram/icons/obj16/EcoreDiagramFile.gif"
 	            id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.part.DawnEcoreDiagramEditor"
 	            matchingStrategy="org.eclipse.emf.ecoretools.diagram.part.EcoreMatchingStrategy"

@@ -43,4 +43,5 @@ Export-Package: org.eclipse.emf.cdo.dawn.internal.ui.bundle;version="1.0.0";
    org.eclipse.emf.cdo.view,
    org.eclipse.jface.viewers,
    org.eclipse.net4j.util.ui.views,
-   org.eclipse.swt.widgets"
+   org.eclipse.swt.widgets",
+ org.eclipse.emf.cdo.dawn.ui.wizards.dialogs;version="1.0.0"

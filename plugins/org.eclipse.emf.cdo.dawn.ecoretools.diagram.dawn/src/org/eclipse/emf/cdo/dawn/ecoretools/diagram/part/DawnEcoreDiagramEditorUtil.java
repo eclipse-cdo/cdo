@@ -23,16 +23,20 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecoretools.diagram.edit.commands.InitializeAndLayoutDiagramCommand;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EPackageEditPart;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorPlugin;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorUtil;
 import org.eclipse.emf.ecoretools.diagram.part.Messages;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.workspace.WorkspaceEditingDomainFactory;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.OperationHistoryFactory;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
@@ -184,6 +188,62 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
   private static void attachModelToResource(EObject model, Resource resource)
   {
     resource.getContents().add(model);
+  }
+
+  public static Resource createDiagramOnly(URI diagramURI, URI modelURI, EObject domainElement,
+      final boolean initializeDiagram, IProgressMonitor progressMonitor)
+  {
+    final TransactionalEditingDomain editingDomain = WorkspaceEditingDomainFactory.INSTANCE.createEditingDomain();
+    progressMonitor.beginTask("", 3); //$NON-NLS-1$
+    final Resource diagramResource = editingDomain.getResourceSet().createResource(diagramURI);
+    final EObject model = domainElement;
+    final String diagramName = diagramURI.lastSegment();
+    AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain, "", Collections.EMPTY_LIST) { //$NON-NLS-1$
+
+      @Override
+      protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
+      {
+        Diagram diagram = ViewService.createDiagram(model, EPackageEditPart.MODEL_ID,
+            EcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+        if (diagram != null)
+        {
+          diagramResource.getContents().add(diagram);
+          diagram.setName(diagramName);
+          diagram.setElement(model);
+        }
+
+        try
+        {
+          diagramResource.save(Collections.EMPTY_MAP);
+
+          // Initialize and Layout Diagram
+          if (initializeDiagram && diagramResource.getContents().get(0) instanceof Diagram)
+          {
+            InitializeAndLayoutDiagramCommand initializeAndLayoutDiagram = new InitializeAndLayoutDiagramCommand(
+                editingDomain, (Diagram)diagramResource.getContents().get(0), false);
+            OperationHistoryFactory.getOperationHistory().execute(initializeAndLayoutDiagram,
+                new NullProgressMonitor(), null);
+            diagramResource.save(EcoreDiagramEditorUtil.getSaveOptions());
+          }
+
+        }
+        catch (IOException e)
+        {
+
+          EcoreDiagramEditorPlugin.getInstance().logError("Unable to store diagram resources", e); //$NON-NLS-1$
+        }
+        return CommandResult.newOKCommandResult();
+      }
+    };
+    try
+    {
+      OperationHistoryFactory.getOperationHistory().execute(command, new SubProgressMonitor(progressMonitor, 1), null);
+    }
+    catch (ExecutionException e)
+    {
+      EcoreDiagramEditorPlugin.getInstance().logError("Unable to create diagram", e); //$NON-NLS-1$
+    }
+    return diagramResource;
   }
 
   // /**

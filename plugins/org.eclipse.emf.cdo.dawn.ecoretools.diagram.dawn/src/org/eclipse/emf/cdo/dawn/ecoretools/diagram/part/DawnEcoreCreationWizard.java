@@ -11,24 +11,30 @@
 package org.eclipse.emf.cdo.dawn.ecoretools.diagram.part;
 
 import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
-import org.eclipse.emf.cdo.dawn.ui.composites.CDOResourceNodeChooserComposite.ResourceChooserValidator;
-import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewDiagramResourceWizardPage;
-import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewResourceWizardPage;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreCreationWizard;
+import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditor;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorPlugin;
+import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorUtil;
 import org.eclipse.emf.ecoretools.diagram.part.Messages;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.part.FileEditorInput;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -39,9 +45,7 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
 {
   private CDOView view;
 
-  private DawnCreateNewDiagramResourceWizardPage dawnDiagramModelFilePage;
-
-  private DawnCreateNewResourceWizardPage dawnDomainModelFilePage;
+  private DawnEcoreCreationWizardPage diagPage;
 
   public DawnEcoreCreationWizard()
   {
@@ -60,15 +64,26 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
       @Override
       protected void execute(IProgressMonitor monitor) throws CoreException, InterruptedException
       {
-        URI diagramResourceURI = dawnDiagramModelFilePage.getURI();
-        URI domainModelResourceURI = dawnDomainModelFilePage.getURI();
 
-        diagram = DawnEcoreDiagramEditorUtil.createDiagram(diagramResourceURI, domainModelResourceURI, monitor);
-
-        if (/* isOpenNewlyCreatedDiagramEditor() && */diagram != null)
+        if (diagPage.isNewModel())
+        {
+          // case of creating an empty domain/diagram Resources
+          diagram = EcoreDiagramEditorUtil.createDiagram(diagPage.getDiagramModelURI(), diagPage.getDomainModelURI(),
+              monitor);
+        }
+        else
+        {
+          // case of creating only a diagram Resource (the domain file
+          // already exists)
+          diagram = DawnEcoreDiagramEditorUtil.createDiagramOnly(diagPage.getDiagramModelURI(),
+              diagPage.getDomainModelURI(), diagPage.getDiagramEObject(), diagPage.isInitialized(), monitor);
+        }
+        if (diagram != null)
         {
           try
           {
+            // try to open the current diagram resource into the
+            // appropriate editor
             DawnEcoreDiagramEditorUtil.openDiagram(diagram);
           }
           catch (PartInitException e)
@@ -106,35 +121,10 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
   @Override
   public void addPages()
   {
-    dawnDiagramModelFilePage = new DawnCreateNewDiagramResourceWizardPage("Ecore_diagram", false, view);
-    dawnDiagramModelFilePage.setTitle(Messages.EcoreCreationWizard_DiagramModelFilePageTitle);
-    dawnDiagramModelFilePage.setDescription(Messages.EcoreCreationWizard_DiagramModelFilePageDescription);
-    dawnDiagramModelFilePage.setCreateAutomaticResourceName(true);
-    addPage(dawnDiagramModelFilePage);
-
-    dawnDomainModelFilePage = new DawnCreateNewResourceWizardPage("Ecore", true, view)
-    {
-      @Override
-      public void setVisible(boolean visible)
-      {
-        if (visible)
-        {
-          URI uri = dawnDiagramModelFilePage.getURI();
-          String fileName = uri.lastSegment();
-          fileName = fileName.substring(0, fileName.length() - ".Ecore_diagram".length()); //$NON-NLS-1$
-          fileName += ".Ecore";
-          dawnDomainModelFilePage.setResourceNamePrefix(fileName);
-          dawnDomainModelFilePage.setResourcePath(dawnDiagramModelFilePage.getResourcePath());
-        }
-        super.setVisible(visible);
-      }
-    };
-    dawnDomainModelFilePage.setTitle(Messages.EcoreCreationWizard_DomainModelFilePageTitle);
-    dawnDomainModelFilePage.setDescription(Messages.EcoreCreationWizard_DomainModelFilePageDescription);
-
-    // allows to connect to an existing resource
-    dawnDomainModelFilePage.setResourceValidationType(ResourceChooserValidator.VALIDATION_WARN);
-    addPage(dawnDomainModelFilePage);
+    diagPage = new DawnEcoreCreationWizardPage("NewEcoreToolsDiagram", getSelection(), view); //$NON-NLS-1$
+    diagPage.setTitle(Messages.EcoreCreationWizard_DiagramModelFilePageTitle);
+    diagPage.setDescription(Messages.EcoreCreationWizard_DiagramModelFilePageDescription);
+    addPage(diagPage);
   }
 
   @Override
@@ -147,5 +137,17 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
   public boolean canFinish()
   {
     return true;
+  }
+
+  public static boolean openDiagram(Resource diagram) throws PartInitException
+  {
+    String path = diagram.getURI().toPlatformString(true);
+    IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot().findMember(new Path(path));
+    if (workspaceResource instanceof IFile)
+    {
+      IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+      return null != page.openEditor(new FileEditorInput((IFile)workspaceResource), EcoreDiagramEditor.ID);
+    }
+    return false;
   }
 }

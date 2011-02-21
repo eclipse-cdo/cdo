@@ -158,6 +158,11 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    initObjectServer();
+  }
+
+  protected void initObjectServer()
+  {
     Configuration configuration = serverConfiguration;
     if (configuration == null)
     {
@@ -166,6 +171,12 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
     server = Db4o.openServer(configuration, storeLocation, port);
     getServerInfo();
+  }
+
+  protected void tearDownObjectServer()
+  {
+    server.close();
+    server = null;
   }
 
   private ServerInfo getServerInfo()
@@ -234,8 +245,7 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   @Override
   protected void doDeactivate() throws Exception
   {
-    server.close();
-    server = null;
+    tearDownObjectServer();
     super.doDeactivate();
   }
 

@@ -670,7 +670,7 @@ public class Commits extends Coll
     idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
 
     int version = branchVersion.getVersion();
-    query.put(REVISIONS + "." + REVISIONS_VERSION, version);
+    query.put(REVISIONS + "." + REVISIONS_VERSION, new BasicDBObject("$in", new int[] { version, -version }));
 
     final CDOBranch branch = branchVersion.getBranch();
     if (store.isBranching())
@@ -685,17 +685,6 @@ public class Commits extends Coll
       {
         CDOID revisionID = idHandler.read(embedded, REVISIONS_ID);
         if (!ObjectUtil.equals(revisionID, id))
-        {
-          return null;
-        }
-
-        int revisionBranch = CDOBranch.MAIN_BRANCH_ID;
-        if (store.isBranching())
-        {
-          revisionBranch = (Integer)doc.get(COMMITS_BRANCH);
-        }
-
-        if (branch.getID() != revisionBranch)
         {
           return null;
         }

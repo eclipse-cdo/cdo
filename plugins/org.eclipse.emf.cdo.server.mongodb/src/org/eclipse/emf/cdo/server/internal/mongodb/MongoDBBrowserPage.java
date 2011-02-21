@@ -113,7 +113,8 @@ public class MongoDBBrowserPage extends AbstractPage
     for (DBObject index : coll.getIndexInfo())
     {
       ++i;
-      pout.print("<tr><td valign=\"top\">" + i + "</td><td valign=\"top\">");
+      String bg = (i & 1) == 1 ? "bgcolor=\"DDDDDD\"" : "bgcolor=\"EEEEEE\"";
+      pout.print("<tr><td valign=\"top\" " + bg + "><b>" + i + "&nbsp;</b></td><td valign=\"top\">");
       showObject(browser, pout, index, "");
       pout.print("</td></tr>\r\n");
     }
@@ -149,7 +150,8 @@ public class MongoDBBrowserPage extends AbstractPage
           continue;
         }
 
-        pout.print("<tr><td valign=\"top\">" + i + "</td><td valign=\"top\">");
+        String bg = (i & 1) == 1 ? "bgcolor=\"DDDDDD\"" : "bgcolor=\"EEEEEE\"";
+        pout.print("<tr><td valign=\"top\" " + bg + "><b>" + i + "&nbsp;</b></td><td valign=\"top\">");
         showObject(browser, pout, doc, "");
         pout.print("</td></tr>\r\n");
       }

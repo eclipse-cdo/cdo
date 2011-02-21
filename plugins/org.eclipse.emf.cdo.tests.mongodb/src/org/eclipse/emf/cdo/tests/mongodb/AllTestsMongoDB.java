@@ -35,7 +35,7 @@ public class AllTestsMongoDB extends AllConfigs
   {
     addScenario(parent, COMBINED, MongoDBStoreRepositoryConfig.INSTANCE, JVM, NATIVE);
     addScenario(parent, COMBINED, MongoDBStoreRepositoryConfig.AUDITING, JVM, NATIVE);
-    addScenario(parent, COMBINED, MongoDBStoreRepositoryConfig.BRANCHING, JVM, NATIVE);
+    // addScenario(parent, COMBINED, MongoDBStoreRepositoryConfig.BRANCHING, JVM, NATIVE);
   }
 
   @Override

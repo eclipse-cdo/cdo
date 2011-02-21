@@ -258,6 +258,10 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
   {
     InternalRepository repository = getRepository();
     branching = repository.isSupportingBranches();
+    if (branching)
+    {
+      throw new IllegalStateException("Branching is not supported");
+    }
 
     REPOS.put(repository.getName(), repository);
 

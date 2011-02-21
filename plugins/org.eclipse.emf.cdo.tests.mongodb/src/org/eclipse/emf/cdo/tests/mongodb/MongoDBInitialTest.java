@@ -14,12 +14,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.InitialTest;
-import org.eclipse.emf.cdo.tests.config.IScenario;
-import org.eclipse.emf.cdo.tests.config.impl.ContainerConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
-import org.eclipse.emf.cdo.tests.config.impl.Scenario;
-import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
+import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -38,7 +33,7 @@ import java.io.PrintStream;
 /**
  * @author Eike Stepper
  */
-public class InitialTestMongoDB extends InitialTest
+public class MongoDBInitialTest extends AbstractCDOTest
 {
   public void testGetContentsClearedCache() throws Exception
   {
@@ -171,15 +166,15 @@ public class InitialTestMongoDB extends InitialTest
       }
     }
   }
-
-  @Override
-  protected IScenario getDefaultScenario()
-  {
-    Scenario scenario = new Scenario();
-    scenario.setContainerConfig(ContainerConfig.Combined.INSTANCE);
-    scenario.setRepositoryConfig(MongoDBStoreRepositoryConfig.INSTANCE);
-    scenario.setSessionConfig(Net4j.JVM.INSTANCE);
-    scenario.setModelConfig(ModelConfig.Native.INSTANCE);
-    return scenario;
-  }
+  //
+  // @Override
+  // protected IScenario getDefaultScenario()
+  // {
+  // Scenario scenario = new Scenario();
+  // scenario.setContainerConfig(ContainerConfig.Combined.INSTANCE);
+  // scenario.setRepositoryConfig(MongoDBStoreRepositoryConfig.INSTANCE);
+  // scenario.setSessionConfig(Net4j.JVM.INSTANCE);
+  // scenario.setModelConfig(ModelConfig.Native.INSTANCE);
+  // return scenario;
+  // }
 }

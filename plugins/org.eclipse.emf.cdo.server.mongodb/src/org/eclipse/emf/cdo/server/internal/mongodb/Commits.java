@@ -307,9 +307,9 @@ public class Commits extends Coll
       context.applyIDMappings(monitor.fork());
 
       List<DBObject> docs = new ArrayList<DBObject>();
-      marshalRevisions(docs, context.getDetachedRevisions(), CDOChangeKind.DETACHED); // Must come first, bug 272861
-      marshalRevisions(docs, context.getNewObjects(), CDOChangeKind.NEW);
-      marshalRevisions(docs, context.getDirtyObjects(), CDOChangeKind.CHANGED);
+      marshalRevisions(docs, context, context.getNewObjects(), CDOChangeKind.NEW);
+      marshalRevisions(docs, context, context.getDirtyObjects(), CDOChangeKind.CHANGED);
+      marshalRevisions(docs, context, context.getDetachedRevisions(), CDOChangeKind.DETACHED);
 
       if (!docs.isEmpty())
       {
@@ -327,16 +327,18 @@ public class Commits extends Coll
     }
   }
 
-  private void marshalRevisions(List<DBObject> docs, InternalCDORevision[] revisions, CDOChangeKind changeKind)
+  private void marshalRevisions(List<DBObject> docs, InternalCommitContext context, InternalCDORevision[] revisions,
+      CDOChangeKind changeKind)
   {
     for (InternalCDORevision revision : revisions)
     {
-      DBObject doc = marshallRevision(revision, changeKind);
+      DBObject doc = marshallRevision(context, revision, changeKind);
       docs.add(doc);
     }
   }
 
-  private DBObject marshallRevision(InternalCDORevision revision, CDOChangeKind changeKind)
+  private DBObject marshallRevision(InternalCommitContext context, InternalCDORevision revision,
+      CDOChangeKind changeKind)
   {
     boolean resource = !(revision instanceof SyntheticCDORevision) && revision.isResource();
     if (resource && resourceNameFeature == null)
@@ -373,7 +375,7 @@ public class Commits extends Coll
       IStoreAccessor accessor = StoreThreadLocal.getAccessor();
 
       CDOID existingID = accessor.readResourceID(containerID, name, revision);
-      if (existingID != null && !existingID.equals(revision.getID()))
+      if (existingID != null && !existingID.equals(revision.getID()) && !isBeingDetached(context, existingID))
       {
         throw new IllegalStateException("Duplicate resource: name=" + name + ", folderID=" + containerID); //$NON-NLS-1$ //$NON-NLS-2$
       }
@@ -426,6 +428,19 @@ public class Commits extends Coll
     }
 
     return doc;
+  }
+
+  private boolean isBeingDetached(InternalCommitContext context, CDOID id)
+  {
+    for (CDOID idBeingDetached : context.getDetachedObjects())
+    {
+      if (id.equals(idBeingDetached))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public void queryResources(final QueryResourcesContext context)
@@ -577,6 +592,9 @@ public class Commits extends Coll
   public InternalCDORevision readRevision(final CDOID id, final CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
+    final CDOBranch branch = branchPoint.getBranch();
+    final long timeStamp = branchPoint.getTimeStamp();
+
     DBObject query = new BasicDBObject();
     idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
 
@@ -593,27 +611,19 @@ public class Commits extends Coll
       @Override
       protected InternalCDORevision handleEmbedded(DBObject doc, DBObject embedded)
       {
-        CDOID revisionID = idHandler.read(embedded, REVISIONS_ID);
-        if (!ObjectUtil.equals(revisionID, id))
+        CDOID embeddedID = idHandler.read(embedded, REVISIONS_ID);
+        if (!ObjectUtil.equals(embeddedID, id))
         {
           return null;
         }
 
-        int revisionBranch = CDOBranch.MAIN_BRANCH_ID;
-        if (store.isBranching())
-        {
-          revisionBranch = (Integer)doc.get(COMMITS_BRANCH);
-        }
-
-        long revisionTime = (Long)doc.get(COMMITS_ID);
-
-        InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
-        CDOBranchPoint revisionBranchPoint = branchManager.getBranch(revisionBranch).getPoint(revisionTime);
+        long created = (Long)doc.get(COMMITS_ID);
+        CDOBranchPoint revisionBranchPoint = branch.getPoint(created);
 
         InternalCDORevision revision = unmarshallRevision(doc, embedded, id, revisionBranchPoint);
 
         long revised = revision.getRevised();
-        if (revised != CDOBranchPoint.UNSPECIFIED_DATE && revised < branchPoint.getTimeStamp())
+        if (!CDOCommonUtil.isValidTimeStamp(timeStamp, created, revised))
         {
           return null;
         }

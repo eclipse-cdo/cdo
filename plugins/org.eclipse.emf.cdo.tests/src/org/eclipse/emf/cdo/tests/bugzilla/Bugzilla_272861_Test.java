@@ -27,11 +27,11 @@ public class Bugzilla_272861_Test extends AbstractCDOTest
     CDOSession session = openSession();
 
     CDOTransaction trans = session.openTransaction();
-    CDOResource res = trans.createResource(getResourcePath("/test/1"));
+    CDOResource res = trans.createResource(getResourcePath("/test/RESOURCE"));
     trans.commit();
 
     res.delete(null);
-    res = trans.createResource(getResourcePath("/test/1"));
+    res = trans.createResource(getResourcePath("/test/RESOURCE"));
     trans.commit();
 
     trans.close();

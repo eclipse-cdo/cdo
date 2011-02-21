@@ -46,6 +46,7 @@ public class AllTestsMongoDB extends AllConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
+    testClasses.add(MongoDBInitialTest.class);
     super.initTestClasses(testClasses);
     testClasses.remove(MEMStoreQueryTest.class);
 

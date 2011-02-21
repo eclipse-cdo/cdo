@@ -215,7 +215,7 @@ public abstract class AbstractCDOTest extends ConfigTest
     builder.append('/');
     builder.append(getClass().getSimpleName()); // Name of this test class
     builder.append('_');
-    builder.append(getName()); // Name of this test method
+    builder.append(getName()); // Name of the executing test method
 
     if (resourceName == null || resourceName.length() == 0 || resourceName.charAt(0) != '/')
     {

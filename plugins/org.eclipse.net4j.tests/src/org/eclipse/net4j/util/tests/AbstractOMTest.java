@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.FileLogHandler;
 import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.log.OMLogger.Level;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
@@ -61,6 +62,8 @@ public abstract class AbstractOMTest extends TestCase
 
   private static boolean consoleEnabled;
 
+  private static String testName;
+
   private transient List<File> filesToDelete = new ArrayList<File>();
 
   private transient String codeLink;
@@ -74,7 +77,16 @@ public abstract class AbstractOMTest extends TestCase
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         String prefix = AbstractOMTest.class.getName() + "-" + formatter.format(new Date()) + "-";
         File logFile = TMPUtil.createTempFile(prefix, ".log");
-        OMPlatform.INSTANCE.addLogHandler(new FileLogHandler(logFile, OMLogger.Level.WARN));
+
+        OMPlatform.INSTANCE.addLogHandler(new FileLogHandler(logFile, OMLogger.Level.WARN)
+        {
+          @Override
+          protected void writeLog(OMLogger logger, Level level, String msg, Throwable t) throws Throwable
+          {
+            super.writeLog(logger, level, "--> " + testName + "\n" + msg, t);
+          }
+        });
+
         IOUtil.ERR().println("Logging errors and warnings to " + logFile);
         IOUtil.ERR().println();
       }
@@ -128,7 +140,9 @@ public abstract class AbstractOMTest extends TestCase
   @Override
   public void setUp() throws Exception
   {
+    testName = getClass().getName() + "." + getName() + "()";
     codeLink = null;
+
     enableConsole();
     if (!SUPPRESS_OUTPUT)
     {

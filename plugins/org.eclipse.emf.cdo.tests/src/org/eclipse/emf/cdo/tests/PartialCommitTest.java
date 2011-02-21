@@ -85,15 +85,6 @@ public class PartialCommitTest extends AbstractCDOTest
   private MultiNonContainedElement multiNonContainedElement1, multiNonContainedElement2;
 
   @Override
-  public void setUp() throws Exception
-  {
-    super.setUp();
-    session = openSession();
-    session.options().setPassiveUpdateEnabled(false);
-    tx = (InternalCDOTransaction)session.openTransaction();
-  }
-
-  @Override
   public synchronized Map<String, Object> getTestProperties()
   {
     Map<String, Object> map = super.getTestProperties();
@@ -102,11 +93,21 @@ public class PartialCommitTest extends AbstractCDOTest
   }
 
   @Override
-  public void tearDown() throws Exception
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+
+    session = openSession();
+    session.options().setPassiveUpdateEnabled(false);
+    tx = (InternalCDOTransaction)session.openTransaction();
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
   {
     tx.close();
     session.close();
-    super.tearDown();
+    super.doTearDown();
   }
 
   public void testNewTopLevelResource() throws CommitException

@@ -591,9 +591,15 @@ public class Commits extends Coll
     {
       long revised = result - 1;
 
-      // TODO Cache REVISIONS_REVISED
+      // try
+      // {
       // revision.put(REVISIONS_REVISED, revised);
       // collection.save(doc);
+      // }
+      // catch (Exception ex)
+      // {
+      // OM.LOG.warn(ex);
+      // }
 
       return revised;
     }

@@ -85,6 +85,14 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
   private IStore localStore;
 
   @Override
+  public synchronized Map<String, Object> getTestProperties()
+  {
+    Map<String, Object> map = super.getTestProperties();
+    map.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "false");
+    return map;
+  }
+
+  @Override
   protected void doSetUp() throws Exception
   {
     disableConsole();
@@ -124,14 +132,6 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
 
     workspaces.clear();
     super.doTearDown();
-  }
-
-  @Override
-  public synchronized Map<String, Object> getTestProperties()
-  {
-    Map<String, Object> map = super.getTestProperties();
-    map.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "false");
-    return map;
   }
 
   public void testReadObjects() throws Exception

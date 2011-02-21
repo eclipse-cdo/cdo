@@ -118,7 +118,6 @@ public class Bugzilla_320690_Test extends AbstractCDOTest
   public void testDeleteTargetAndReferenceAtOnce() throws Exception
   {
     skipQueryXRefs();
-
     NodeA a = getModel3Factory().createNodeA();
     NodeA b = getModel3Factory().createNodeA();
     NodeA c = getModel3Factory().createNodeA();

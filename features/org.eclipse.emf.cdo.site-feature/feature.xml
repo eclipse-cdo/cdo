@@ -85,6 +85,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.server.mongodb"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.tests"
          version="0.0.0"/>
 

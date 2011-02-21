@@ -59,6 +59,14 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
   private List<Exception> exceptions = new ArrayList<Exception>();
 
   @Override
+  public synchronized Map<String, Object> getTestProperties()
+  {
+    Map<String, Object> map = super.getTestProperties();
+    map.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "true");
+    return map;
+  }
+
+  @Override
   protected void doSetUp() throws Exception
   {
     createRepository();
@@ -151,14 +159,6 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
 
     Map<String, Object> map = getTestProperties();
     map.put(RepositoryConfig.PROP_TEST_REPOSITORY, repository);
-  }
-
-  @Override
-  public synchronized Map<String, Object> getTestProperties()
-  {
-    Map<String, Object> map = super.getTestProperties();
-    map.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "true");
-    return map;
   }
 
   public void testMovingSubtree() throws Exception

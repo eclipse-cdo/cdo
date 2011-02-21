@@ -31,15 +31,25 @@ import java.util.Map;
  */
 public class MongoDBStoreRepositoryConfig extends RepositoryConfig
 {
-  public static final MongoDBStoreRepositoryConfig INSTANCE = new MongoDBStoreRepositoryConfig();
+  public static final MongoDBStoreRepositoryConfig INSTANCE = new MongoDBStoreRepositoryConfig(false, false);
+
+  public static final MongoDBStoreRepositoryConfig AUDITING = new MongoDBStoreRepositoryConfig(true, false);
+
+  public static final MongoDBStoreRepositoryConfig BRANCHING = new MongoDBStoreRepositoryConfig(true, true);
 
   private static final long serialVersionUID = 1L;
 
+  private boolean auditing;
+
+  private boolean branching;
+
   private transient CDOServerBrowser mongoBrowser;
 
-  public MongoDBStoreRepositoryConfig()
+  public MongoDBStoreRepositoryConfig(boolean auditing, boolean branching)
   {
-    super("MongoDBStore");
+    super("MongoDBStore" + (branching ? " (branching)" : auditing ? " (auditing)" : ""));
+    this.auditing = auditing;
+    this.branching = branching;
   }
 
   @Override
@@ -103,7 +113,7 @@ public class MongoDBStoreRepositoryConfig extends RepositoryConfig
   protected void initRepositoryProperties(Map<String, String> props)
   {
     super.initRepositoryProperties(props);
-    props.put(IRepository.Props.SUPPORTING_AUDITS, "false");
-    props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
+    props.put(IRepository.Props.SUPPORTING_AUDITS, Boolean.toString(auditing));
+    props.put(IRepository.Props.SUPPORTING_BRANCHES, Boolean.toString(branching));
   }
 }

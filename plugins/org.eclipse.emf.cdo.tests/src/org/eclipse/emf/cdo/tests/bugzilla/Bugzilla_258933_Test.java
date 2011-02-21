@@ -136,10 +136,11 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
     EStructuralFeature feature = class1Class.getEStructuralFeature(featureName);
 
     CDOTransaction transaction = session.openTransaction();
-    CDOObject instance = CDOUtil.getCDOObject(transaction.getResource(getResourcePath("/test1")).getContents().get(0));
+    CDOResource resource = transaction.getResource(getResourcePath("/test1"));
+    CDOObject instance = CDOUtil.getCDOObject(resource.getContents().get(0));
     assertEquals(isSet, instance.eIsSet(feature));
 
-    transaction.getResource(getResourcePath("/test1")).getContents().remove(0);
+    resource.getContents().remove(0);
     assertEquals(isSet, instance.eIsSet(feature));
 
     if (feature.isUnsettable())

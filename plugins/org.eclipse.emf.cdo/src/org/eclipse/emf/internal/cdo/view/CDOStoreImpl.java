@@ -210,7 +210,9 @@ public final class CDOStoreImpl implements CDOStore
           return list != null && !list.isEmpty();
         }
 
-        return !ObjectUtil.equals(eObject.eGet(feature), feature.getDefaultValue());
+        Object value = eObject.eGet(feature);
+        Object defaultValue = feature.getDefaultValue();
+        return !ObjectUtil.equals(value, defaultValue);
       }
 
       // TODO This get() may not work for lists, see above

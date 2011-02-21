@@ -386,27 +386,39 @@ public class Commits extends Coll
     {
       Object value = revision.getValue(feature);
 
+      CDOType type = CDOModelUtil.getType(feature);
+      ValueHandler valueHandler = store.getValueHandler(type);
+
       if (feature.isUnsettable())
       {
-        boolean set = value != null;
-        doc.put(feature.getName() + SET_SUFFIX, set);
-        if (!set)
+        if (value == null)
         {
+          doc.put(feature.getName() + SET_SUFFIX, false);
+          doc.put(feature.getName(), valueHandler.getMongoDefaultValue(feature));
           continue;
         }
+
+        doc.put(feature.getName() + SET_SUFFIX, true);
       }
 
       if (value == CDORevisionData.NIL)
       {
-        value = null;
+        doc.put(feature.getName(), null);
       }
-
-      CDOType type = CDOModelUtil.getType(feature);
-      ValueHandler valueHandler = store.getValueHandler(type);
-
-      if (feature.isMany())
+      else if (value == null)
       {
-        if (value != null)
+        if (feature.isMany() || feature.getDefaultValue() == null)
+        {
+          doc.put(feature.getName(), null);
+        }
+        else
+        {
+          doc.put(feature.getName(), valueHandler.getMongoDefaultValue(feature));
+        }
+      }
+      else
+      {
+        if (feature.isMany())
         {
           List<?> cdoList = (List<?>)value;
           BasicDBList mongoList = new BasicDBList();
@@ -418,13 +430,13 @@ public class Commits extends Coll
 
           value = mongoList;
         }
-      }
-      else
-      {
-        value = valueHandler.toMongo(value);
-      }
+        else
+        {
+          value = valueHandler.toMongo(value);
+        }
 
-      doc.put(feature.getName(), value);
+        doc.put(feature.getName(), value);
+      }
     }
 
     return doc;
@@ -742,11 +754,16 @@ public class Commits extends Coll
         {
           continue;
         }
+      }
 
-        if (value == null)
+      if (value == null)
+      {
+        if (!feature.isMany())
         {
-          revision.set(feature, EStore.NO_INDEX, CDORevisionData.NIL);
-          continue;
+          if (feature.getDefaultValue() != null)
+          {
+            value = CDORevisionData.NIL;
+          }
         }
       }
 

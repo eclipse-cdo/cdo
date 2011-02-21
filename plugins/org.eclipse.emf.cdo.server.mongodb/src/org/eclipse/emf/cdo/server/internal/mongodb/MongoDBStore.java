@@ -32,6 +32,14 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.common.util.Enumerator;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
@@ -466,6 +474,37 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
         return new BigInteger((String)value);
       }
     });
+
+    initValueHandler(CDOType.ENUM_ORDINAL, new ValueHandler()
+    {
+      @Override
+      public Object getMongoDefaultValue(EStructuralFeature feature)
+      {
+        EEnum eenum = (EEnum)feature.getEType();
+
+        String defaultValueLiteral = feature.getDefaultValueLiteral();
+        if (defaultValueLiteral != null)
+        {
+          EEnumLiteral literal = eenum.getEEnumLiteralByLiteral(defaultValueLiteral);
+          return literal.getValue();
+        }
+
+        Enumerator enumerator = (Enumerator)eenum.getDefaultValue();
+        return enumerator.getValue();
+      }
+    });
+
+    initValueHandler(CDOType.CUSTOM, new ValueHandler()
+    {
+      @Override
+      public Object getMongoDefaultValue(EStructuralFeature feature)
+      {
+        Object defaultValue = feature.getDefaultValue();
+        EClassifier eType = feature.getEType();
+        EFactory factory = eType.getEPackage().getEFactoryInstance();
+        return factory.convertToString((EDataType)eType, defaultValue);
+      }
+    });
   }
 
   protected void initValueHandler(CDOType type, ValueHandler valueHandler)
@@ -526,6 +565,12 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
    */
   public static class ValueHandler
   {
+    public Object getMongoDefaultValue(EStructuralFeature feature)
+    {
+      Object defaultValue = feature.getDefaultValue();
+      return toMongo(defaultValue);
+    }
+
     public Object toMongo(Object value)
     {
       return value;

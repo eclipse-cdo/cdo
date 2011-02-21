@@ -22,11 +22,11 @@ import java.util.Set;
  */
 public class MongoDBBrowserPage extends AbstractPage
 {
-  private static final boolean SHOW_INDEXES = true;
+  private static final boolean SHOW_INDEXES = false;
 
   private static final boolean SHOW_DOCUMENTS = true;
 
-  private static final boolean SHOW_INITIAL_COMMIT = true;
+  private static final boolean SHOW_INITIAL_COMMIT = false;
 
   public MongoDBBrowserPage()
   {

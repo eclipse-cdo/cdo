@@ -51,7 +51,7 @@ import java.util.Set;
  * <li>Are indexes always unique? Do unique indexes exist?
  * <li>Are <code>_id</code> fields in embedded objects automatically indexed?
  * <li>Ensure indexes: cdo_class, (cdo_branch/cdo_version)?
- * <li>Remove skipMongo()
+ * <li>Remove skipMongo() - server-side CommitInfoManager
  * </ul>
  * 
  * @author Eike Stepper

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -469,11 +470,6 @@ public class Commits extends Coll
           return null;
         }
 
-        if (classID != folderCID && classID != resourceCID)
-        {
-          return null;
-        }
-
         int version = (Integer)embedded.get(REVISIONS_VERSION);
         if (version <= 0)
         {
@@ -518,8 +514,10 @@ public class Commits extends Coll
         }
 
         CDOID id = idHandler.read(embedded, REVISIONS_ID);
+
+        long created = (Long)doc.get(COMMITS_ID);
         long revised = getRevised(id, context.getBranch(), version, doc, embedded);
-        if (revised != CDOBranchPoint.UNSPECIFIED_DATE && revised < timeStamp)
+        if (!CDOCommonUtil.isValidTimeStamp(timeStamp, created, revised))
         {
           return null;
         }
@@ -614,11 +612,11 @@ public class Commits extends Coll
 
         InternalCDORevision revision = unmarshallRevision(doc, embedded, id, revisionBranchPoint);
 
-        // long revised = revision.getRevised();
-        // if (revised != CDOBranchPoint.UNSPECIFIED_DATE && revised < branchPoint.getTimeStamp())
-        // {
-        // return null;
-        // }
+        long revised = revision.getRevised();
+        if (revised != CDOBranchPoint.UNSPECIFIED_DATE && revised < branchPoint.getTimeStamp())
+        {
+          return null;
+        }
 
         return revision;
       }

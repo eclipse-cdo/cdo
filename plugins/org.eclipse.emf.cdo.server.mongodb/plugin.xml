@@ -14,6 +14,15 @@
 <plugin>
 
    <extension
+         point="org.eclipse.net4j.util.factories">
+      <factory
+            class="org.eclipse.emf.cdo.server.internal.mongodb.MongoDBBrowserPage$Factory"
+            productGroup="org.eclipse.emf.cdo.server.browserPages"
+            type="mongodb">
+      </factory>
+   </extension>
+
+   <extension
          point="org.eclipse.emf.cdo.server.storeFactories">
       <storeFactory
             class="org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStoreFactory"

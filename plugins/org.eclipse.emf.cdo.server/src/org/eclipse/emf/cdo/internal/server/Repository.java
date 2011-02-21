@@ -1566,6 +1566,11 @@ public class Repository extends Container<Object> implements InternalRepository
         readPackageUnits();
         readRootResource();
       }
+
+      if (CDOIDUtil.isNull(rootResourceID))
+      {
+        throw new IllegalStateException("Root resource ID is null");
+      }
     }
   }
 

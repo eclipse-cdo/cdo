@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
+import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -51,6 +52,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -60,6 +62,7 @@ import com.mongodb.QueryOperators;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -115,6 +118,8 @@ public class Commits extends Coll
 
   private static final boolean ZIP_PACKAGE_BYTES = true;
 
+  private InternalCDOPackageRegistry packageRegistry;
+
   private IDHandler idHandler;
 
   private InternalCDOPackageUnit[] systemPackageUnits;
@@ -140,6 +145,7 @@ public class Commits extends Coll
       ensureIndex(REVISIONS, REVISIONS_ID, REVISIONS_VERSION);
     }
 
+    packageRegistry = store.getRepository().getPackageRegistry();
     idHandler = store.getIDHandler();
   }
 
@@ -257,9 +263,75 @@ public class Commits extends Coll
       {
         return (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
       }
-    };
+    }.execute();
 
     return packageUnits;
+  }
+
+  public EPackage[] loadPackageUnit(final InternalCDOPackageUnit packageUnit)
+  {
+    DBObject query = new BasicDBObject();
+    query.put(UNITS + "." + UNITS_ID, packageUnit.getID());
+
+    return new QueryEmbeddedUnits<EPackage[]>(query)
+    {
+      @Override
+      protected EPackage[] handleEmbedded(DBObject doc, DBObject embedded)
+      {
+        byte[] data = (byte[])embedded.get(UNITS_DATA);
+        EPackage ePackage = createEPackage(packageUnit, data);
+        return EMFUtil.getAllPackages(ePackage);
+      }
+
+      private EPackage createEPackage(InternalCDOPackageUnit packageUnit, byte[] bytes)
+      {
+        ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(packageRegistry);
+        return EMFUtil.createEPackage(packageUnit.getID(), bytes, ZIP_PACKAGE_BYTES, resourceSet, false);
+      }
+    }.execute();
+  }
+
+  public void initializeClassifiers()
+  {
+    final Classes classes = store.getClasses();
+
+    DBObject query = new BasicDBObject();
+    query.put(UNITS, new BasicDBObject("$exists", true));
+
+    new QueryEmbeddedUnits<Object>(query)
+    {
+      @Override
+      protected Object handleEmbedded(DBObject doc, DBObject embedded)
+      {
+        BasicDBList infos = (BasicDBList)embedded.get(PACKAGES);
+        for (Object info : infos)
+        {
+          DBObject infoObject = (DBObject)info;
+          String uri = (String)infoObject.get(PACKAGES_URI);
+          handleClassifiers(infoObject, uri);
+        }
+
+        return null;
+      }
+
+      private void handleClassifiers(DBObject embedded, String packageURI)
+      {
+        Set<String> keys = embedded.keySet();
+        for (String key : keys)
+        {
+          if (key.startsWith(CLASSIFIER_PREFIX))
+          {
+            int id = Integer.parseInt(key.substring(CLASSIFIER_PREFIX.length()));
+            String classifierName = (String)embedded.get(key);
+
+            CDOClassifierRef classifierRef = new CDOClassifierRef(packageURI, classifierName);
+            EClassifier classifier = classifierRef.resolve(packageRegistry);
+
+            classes.mapClassifier(classifier, id);
+          }
+        }
+      }
+    }.execute();
   }
 
   public void write(MongoDBStoreAccessor accessor, InternalCommitContext context, OMMonitor monitor)
@@ -473,11 +545,7 @@ public class Commits extends Coll
     addToQuery(query, context);
     query.put(REVISIONS + "." + REVISIONS_CONTAINER, idHandler.toValue(folderID));
 
-    if (name == null)
-    {
-      query.put(REVISIONS + "." + "name", new BasicDBObject("$exists", false));
-    }
-    else if (exactMatch)
+    if (name == null || exactMatch)
     {
       query.put(REVISIONS + "." + "name", name);
     }
@@ -509,34 +577,19 @@ public class Commits extends Coll
           return null;
         }
 
-        if (name == null)
+        String revisionName = (String)embedded.get("name");
+        if (name == null || exactMatch)
         {
-          if (embedded.containsField("name"))
+          if (!ObjectUtil.equals(revisionName, name))
           {
             return null;
           }
         }
         else
         {
-          String revisionName = (String)embedded.get("name");
-          if (revisionName == null)
+          if (!revisionName.startsWith(name))
           {
             return null;
-          }
-
-          if (exactMatch)
-          {
-            if (!revisionName.equals(name))
-            {
-              return null;
-            }
-          }
-          else
-          {
-            if (!revisionName.startsWith(name))
-            {
-              return null;
-            }
           }
         }
 

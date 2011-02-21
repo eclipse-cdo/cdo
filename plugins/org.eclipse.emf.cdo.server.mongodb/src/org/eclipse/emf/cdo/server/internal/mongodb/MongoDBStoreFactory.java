@@ -12,29 +12,80 @@ package org.eclipse.emf.cdo.server.internal.mongodb;
 
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
+import org.eclipse.emf.cdo.server.mongodb.CDOMongoDBUtil;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
+
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
+
+import com.mongodb.DB;
+import com.mongodb.Mongo;
+import com.mongodb.MongoURI;
 
 import org.w3c.dom.Element;
+
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public class MongoDBStoreFactory implements IStoreFactory
 {
-  public static final String TYPE = "mongodb";
-
   public MongoDBStoreFactory()
   {
   }
 
   public String getStoreType()
   {
-    return TYPE;
+    return MongoDBStore.TYPE;
   }
 
   public IStore createStore(InternalRepository repository, Element storeConfig)
   {
-    // TODO: implement MongoDBStoreFactory.createStore(repository, storeConfig)
-    throw new UnsupportedOperationException();
+    Map<String, String> properties = RepositoryConfigurator.getProperties(storeConfig, 1);
+    String uri = properties.get("uri");
+    if (StringUtil.isEmpty(uri))
+    {
+      throw new IllegalArgumentException("Property 'uri' missing");
+    }
+
+    MongoURI mongoURI = new MongoURI(uri);
+    String dbName = properties.get("db");
+    if (StringUtil.isEmpty(dbName))
+    {
+      dbName = repository.getName();
+    }
+
+    String drop = properties.get("drop");
+    if (Boolean.toString(true).equals(drop))
+    {
+      dropDatabase(mongoURI, dbName);
+    }
+
+    return CDOMongoDBUtil.createStore(mongoURI, dbName);
+  }
+
+  protected void dropDatabase(MongoURI mongoURI, String dbName)
+  {
+    Mongo mongo = null;
+
+    try
+    {
+      mongo = new Mongo(mongoURI);
+      DB db = mongo.getDB(dbName);
+      db.dropDatabase();
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+    finally
+    {
+      if (mongo != null)
+      {
+        mongo.close();
+      }
+    }
   }
 }

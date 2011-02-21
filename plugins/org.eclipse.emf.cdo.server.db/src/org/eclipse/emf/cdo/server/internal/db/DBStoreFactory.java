@@ -11,12 +11,12 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
-import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;

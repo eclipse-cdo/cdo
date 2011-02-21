@@ -9,18 +9,15 @@
  *    Eike Stepper - initial API and implementation
  *    Lothar Werzinger - support for configuring user managers
  */
-package org.eclipse.emf.cdo.internal.server;
+package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryFactory;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
-import org.eclipse.emf.cdo.spi.server.InternalStore;
-import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -52,6 +49,7 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
+ * @since 4.0
  */
 public class RepositoryConfigurator
 {
@@ -206,11 +204,11 @@ public class RepositoryConfigurator
   protected Element getStoreConfig(Element repositoryConfig)
   {
     NodeList storeConfigs = repositoryConfig.getElementsByTagName("store"); //$NON-NLS-1$
-    if (storeConfigs.getLength() != 1)
-    {
-      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
-      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName); //$NON-NLS-1$
-    }
+    // if (storeConfigs.getLength() != 1)
+    // {
+    //      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+    //      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName); //$NON-NLS-1$
+    // }
 
     return (Element)storeConfigs.item(0);
   }

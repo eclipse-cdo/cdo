@@ -14,7 +14,7 @@
 
     <property name="overrideUUID" value=""/>
     <property name="supportingAudits" value="true"/>
-    <property name="supportingBranches" value="true"/>
+    <property name="supportingBranches" value="false"/>
     <property name="supportingEcore" value="true"/>
     <property name="ensureReferentialIntegrity" value="false"/>
 
@@ -68,6 +68,14 @@
 
     </store>
 
+    <store type="mongodb">
+		<property name="uri" value="mongodb://localhost"/>
+		<property name="db" value="cdodb"/>
+		<!--
+		<property name="drop" value="true"/>
+		-->
+    </store>
+	  
   </repository>
 
 </cdoServer>

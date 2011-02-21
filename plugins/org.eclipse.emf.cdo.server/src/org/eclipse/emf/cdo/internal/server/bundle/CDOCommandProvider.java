@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.internal.server.bundle;
 
-import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -23,6 +22,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
+import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;

@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.internal.server.bundle;
 
-import org.eclipse.emf.cdo.internal.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.internal.server.messages.Messages;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.IAppExtension;
+import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;

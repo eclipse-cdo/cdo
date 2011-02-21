@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.spi.server.InternalStore.NoRawAccess;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.util.Enumerator;
@@ -69,13 +70,14 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
 {
   public static final String TYPE = "mongodb"; //$NON-NLS-1$
 
+  @ExcludeFromDump
   private ValueHandler[] valueHandlers = new ValueHandler[Byte.MAX_VALUE - Byte.MIN_VALUE + 1];
+
+  private IDHandler idHandler = new IDHandler.LongValue(this);
 
   private MongoURI mongoURI;
 
   private String dbName;
-
-  private IDHandler idHandler = new IDHandler.LongValue(this);
 
   private DB db;
 
@@ -103,222 +105,6 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
   public ValueHandler getValueHandler(CDOType type)
   {
     return valueHandlers[type.getTypeID() - Byte.MIN_VALUE];
-  }
-
-  public MongoURI getMongoURI()
-  {
-    return mongoURI;
-  }
-
-  public void setMongoURI(MongoURI mongoURI)
-  {
-    checkInactive();
-    this.mongoURI = mongoURI;
-  }
-
-  public String getDBName()
-  {
-    return dbName;
-  }
-
-  public void setDBName(String dbName)
-  {
-    checkInactive();
-    this.dbName = dbName;
-  }
-
-  public IDHandler getIDHandler()
-  {
-    return idHandler;
-  }
-
-  public void setIDHandler(IDHandler idHandler)
-  {
-    checkInactive();
-    this.idHandler = idHandler;
-  }
-
-  public DB getDB()
-  {
-    return db;
-  }
-
-  public Props getProps()
-  {
-    return props;
-  }
-
-  public Commits getCommits()
-  {
-    return commits;
-  }
-
-  public Classes getClasses()
-  {
-    return classes;
-  }
-
-  public Map<String, String> getPropertyValues(Set<String> names)
-  {
-    return props.get(names);
-  }
-
-  public void setPropertyValues(Map<String, String> properties)
-  {
-    props.set(properties);
-  }
-
-  public void removePropertyValues(Set<String> names)
-  {
-    props.remove(names);
-  }
-
-  public boolean isFirstStart()
-  {
-    return firstStart;
-  }
-
-  public long getCreationTime()
-  {
-    return creationTime;
-  }
-
-  public void setCreationTime(long creationTime)
-  {
-    this.creationTime = creationTime;
-
-    Map<String, String> map = new HashMap<String, String>();
-    map.put(Props.REPOSITORY_CREATED, Long.toString(creationTime));
-    props.set(map);
-  }
-
-  public boolean isBranching()
-  {
-    return branching;
-  }
-
-  public CDOID createObjectID(String val)
-  {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
-  }
-
-  public boolean isLocal(CDOID id)
-  {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
-  }
-
-  @Override
-  public IMongoDBStoreAccessor getReader(ISession session)
-  {
-    return (IMongoDBStoreAccessor)super.getReader(session);
-  }
-
-  @Override
-  public IMongoDBStoreAccessor getWriter(ITransaction transaction)
-  {
-    return (IMongoDBStoreAccessor)super.getWriter(transaction);
-  }
-
-  @Override
-  protected IStoreAccessor createReader(ISession session)
-  {
-    return new MongoDBStoreAccessor(this, session);
-  }
-
-  @Override
-  protected IStoreAccessor createWriter(ITransaction transaction)
-  {
-    return new MongoDBStoreAccessor(this, transaction);
-  }
-
-  @Override
-  protected StoreAccessorPool getReaderPool(ISession session, boolean forReleasing)
-  {
-    // No pooling needed
-    return null;
-  }
-
-  @Override
-  protected StoreAccessorPool getWriterPool(IView view, boolean forReleasing)
-  {
-    // No pooling needed
-    return null;
-  }
-
-  @Override
-  protected void doBeforeActivate() throws Exception
-  {
-    super.doBeforeActivate();
-    checkState(mongoURI, "mongoURI");
-    checkState(dbName, "dbName");
-  }
-
-  @Override
-  protected void doActivate() throws Exception
-  {
-    InternalRepository repository = getRepository();
-    branching = repository.isSupportingBranches();
-    if (branching)
-    {
-      throw new IllegalStateException("Branching is not supported");
-    }
-
-    REPOS.put(repository.getName(), repository);
-
-    super.doActivate();
-
-    Mongo mongo = new Mongo(mongoURI);
-    db = mongo.getDB(dbName);
-
-    Set<String> collectionNames = db.getCollectionNames();
-    firstStart = !collectionNames.contains(Props.NAME);
-
-    props = new Props(this);
-    commits = new Commits(this);
-    classes = new Classes();
-
-    LifecycleUtil.activate(idHandler);
-    setObjectIDTypes(idHandler.getObjectIDTypes());
-
-    Arrays.fill(valueHandlers, new ValueHandler());
-    initValueHandlers();
-
-    if (firstStart)
-    {
-      firstStart();
-    }
-    else
-    {
-      reStart();
-    }
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    Map<String, String> map = new HashMap<String, String>();
-    map.put(Props.GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
-    map.put(Props.REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
-    map.put(Props.NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
-    map.put(Props.LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
-    map.put(Props.LAST_CLASSIFIERID, Integer.toString(classes.getLastClassifierID()));
-    map.put(Props.LAST_BRANCHID, Integer.toString(getLastBranchID()));
-    map.put(Props.LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
-    map.put(Props.LAST_COMMITTIME, Long.toString(getLastCommitTime()));
-    map.put(Props.LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
-    setPropertyValues(map);
-
-    LifecycleUtil.deactivate(idHandler);
-
-    REPOS.remove(getRepository().getName());
-
-    if (db != null)
-    {
-      db.getMongo().close();
-      db = null;
-    }
-
-    super.doDeactivate();
   }
 
   protected void initValueHandlers()
@@ -514,6 +300,222 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
   protected void initValueHandler(CDOType type, ValueHandler valueHandler)
   {
     valueHandlers[type.getTypeID() - Byte.MIN_VALUE] = valueHandler;
+  }
+
+  public IDHandler getIDHandler()
+  {
+    return idHandler;
+  }
+
+  public void setIDHandler(IDHandler idHandler)
+  {
+    checkInactive();
+    this.idHandler = idHandler;
+  }
+
+  public MongoURI getMongoURI()
+  {
+    return mongoURI;
+  }
+
+  public void setMongoURI(MongoURI mongoURI)
+  {
+    checkInactive();
+    this.mongoURI = mongoURI;
+  }
+
+  public String getDBName()
+  {
+    return dbName;
+  }
+
+  public void setDBName(String dbName)
+  {
+    checkInactive();
+    this.dbName = dbName;
+  }
+
+  public DB getDB()
+  {
+    return db;
+  }
+
+  public Props getProps()
+  {
+    return props;
+  }
+
+  public Commits getCommits()
+  {
+    return commits;
+  }
+
+  public Classes getClasses()
+  {
+    return classes;
+  }
+
+  public Map<String, String> getPropertyValues(Set<String> names)
+  {
+    return props.get(names);
+  }
+
+  public void setPropertyValues(Map<String, String> properties)
+  {
+    props.set(properties);
+  }
+
+  public void removePropertyValues(Set<String> names)
+  {
+    props.remove(names);
+  }
+
+  public boolean isFirstStart()
+  {
+    return firstStart;
+  }
+
+  public long getCreationTime()
+  {
+    return creationTime;
+  }
+
+  public void setCreationTime(long creationTime)
+  {
+    this.creationTime = creationTime;
+
+    Map<String, String> map = new HashMap<String, String>();
+    map.put(Props.REPOSITORY_CREATED, Long.toString(creationTime));
+    props.set(map);
+  }
+
+  public boolean isBranching()
+  {
+    return branching;
+  }
+
+  public CDOID createObjectID(String val)
+  {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+  }
+
+  public boolean isLocal(CDOID id)
+  {
+    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+  }
+
+  @Override
+  public IMongoDBStoreAccessor getReader(ISession session)
+  {
+    return (IMongoDBStoreAccessor)super.getReader(session);
+  }
+
+  @Override
+  public IMongoDBStoreAccessor getWriter(ITransaction transaction)
+  {
+    return (IMongoDBStoreAccessor)super.getWriter(transaction);
+  }
+
+  @Override
+  protected IStoreAccessor createReader(ISession session)
+  {
+    return new MongoDBStoreAccessor(this, session);
+  }
+
+  @Override
+  protected IStoreAccessor createWriter(ITransaction transaction)
+  {
+    return new MongoDBStoreAccessor(this, transaction);
+  }
+
+  @Override
+  protected StoreAccessorPool getReaderPool(ISession session, boolean forReleasing)
+  {
+    // No pooling needed
+    return null;
+  }
+
+  @Override
+  protected StoreAccessorPool getWriterPool(IView view, boolean forReleasing)
+  {
+    // No pooling needed
+    return null;
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    super.doBeforeActivate();
+    checkState(mongoURI, "mongoURI");
+    checkState(dbName, "dbName");
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    InternalRepository repository = getRepository();
+    branching = repository.isSupportingBranches();
+    if (branching)
+    {
+      throw new IllegalStateException("Branching is not supported");
+    }
+
+    REPOS.put(repository.getName(), repository);
+
+    super.doActivate();
+
+    Mongo mongo = new Mongo(mongoURI);
+    db = mongo.getDB(dbName);
+
+    Set<String> collectionNames = db.getCollectionNames();
+    firstStart = !collectionNames.contains(Props.NAME);
+
+    props = new Props(this);
+    commits = new Commits(this);
+    classes = new Classes(this);
+
+    LifecycleUtil.activate(idHandler);
+    setObjectIDTypes(idHandler.getObjectIDTypes());
+
+    Arrays.fill(valueHandlers, new ValueHandler());
+    initValueHandlers();
+
+    if (firstStart)
+    {
+      firstStart();
+    }
+    else
+    {
+      reStart();
+    }
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    Map<String, String> map = new HashMap<String, String>();
+    map.put(Props.GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
+    map.put(Props.REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
+    map.put(Props.NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
+    map.put(Props.LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
+    map.put(Props.LAST_CLASSIFIERID, Integer.toString(classes.getLastClassifierID()));
+    map.put(Props.LAST_BRANCHID, Integer.toString(getLastBranchID()));
+    map.put(Props.LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
+    map.put(Props.LAST_COMMITTIME, Long.toString(getLastCommitTime()));
+    map.put(Props.LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
+    setPropertyValues(map);
+
+    LifecycleUtil.deactivate(idHandler);
+
+    REPOS.remove(getRepository().getName());
+
+    if (db != null)
+    {
+      db.getMongo().close();
+      db = null;
+    }
+
+    super.doDeactivate();
   }
 
   protected void firstStart()

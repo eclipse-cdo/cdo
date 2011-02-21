@@ -51,14 +51,18 @@ import java.util.Set;
  */
 public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBStoreAccessor
 {
+  private Commits commits;
+
   public MongoDBStoreAccessor(Store store, ISession session)
   {
     super(store, session);
+    commits = getStore().getCommits();
   }
 
   public MongoDBStoreAccessor(Store store, ITransaction transaction)
   {
     super(store, transaction);
+    commits = getStore().getCommits();
   }
 
   @Override
@@ -75,24 +79,24 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
-    return getStore().getCommits().readPackageUnits();
+    return commits.readPackageUnits();
   }
 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
-    throw new UnsupportedOperationException("Not yet implemented"); // TODO Implement me
+    return commits.loadPackageUnit(packageUnit);
   }
 
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    return getStore().getCommits().readRevision(id, branchPoint, listChunk, cache);
+    return commits.readRevision(id, branchPoint, listChunk, cache);
   }
 
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    return getStore().getCommits().readRevisionByVersion(id, branchVersion, listChunk, cache);
+    return commits.readRevisionByVersion(id, branchVersion, listChunk, cache);
   }
 
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
@@ -108,13 +112,7 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public void queryResources(QueryResourcesContext context)
   {
-    // // Only support timestamp in audit mode
-    // if (context.getTimeStamp() != CDORevision.UNSPECIFIED_DATE && !getStore().getRepository().isSupportingAudits())
-    // {
-    // throw new IllegalArgumentException("Auditing not supported");
-    // }
-
-    getStore().getCommits().queryResources(context);
+    commits.queryResources(context);
   }
 
   public void queryXRefs(QueryXRefsContext context)
@@ -164,18 +162,18 @@ public class MongoDBStoreAccessor extends StoreAccessorBase implements IMongoDBS
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
-    getStore().getCommits().loadCommitInfos(branch, startTime, endTime, handler);
+    commits.loadCommitInfos(branch, startTime, endTime, handler);
   }
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
-    getStore().getCommits().writePackageUnits(this, packageUnits, monitor);
+    commits.writePackageUnits(this, packageUnits, monitor);
   }
 
   @Override
   protected void doWrite(InternalCommitContext context, OMMonitor monitor)
   {
-    getStore().getCommits().write(this, context, monitor);
+    commits.write(this, context, monitor);
   }
 
   @Override

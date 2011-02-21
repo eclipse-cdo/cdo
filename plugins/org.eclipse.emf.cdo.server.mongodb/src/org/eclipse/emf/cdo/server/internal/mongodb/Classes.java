@@ -29,31 +29,26 @@ public class Classes
 
   private Map<Integer, EClassifier> idToClassifiers = new HashMap<Integer, EClassifier>();
 
+  private MongoDBStore store;
+
+  private boolean initialized;
+
+  private int lastClassifierID;
+
   private int resourceNodeClassID;
 
   private int resourceFolderClassID;
 
   private int resourceClassID;
 
-  private int lastClassifierID;
-
-  public Classes()
+  public Classes(MongoDBStore store)
   {
+    this.store = store;
   }
 
-  public int getResourceNodeClassID()
+  public MongoDBStore getStore()
   {
-    return resourceNodeClassID;
-  }
-
-  public int getResourceFolderClassID()
-  {
-    return resourceFolderClassID;
-  }
-
-  public int getResourceClassID()
-  {
-    return resourceClassID;
+    return store;
   }
 
   public int getLastClassifierID()
@@ -66,9 +61,33 @@ public class Classes
     this.lastClassifierID = lastClassifierID;
   }
 
+  public synchronized int getResourceNodeClassID()
+  {
+    initialize();
+    return resourceNodeClassID;
+  }
+
+  public synchronized int getResourceFolderClassID()
+  {
+    initialize();
+    return resourceFolderClassID;
+  }
+
+  public synchronized int getResourceClassID()
+  {
+    initialize();
+    return resourceClassID;
+  }
+
   public synchronized int mapNewClassifier(EClassifier classifier)
   {
     int id = ++lastClassifierID;
+    mapClassifier(classifier, id);
+    return id;
+  }
+
+  public synchronized void mapClassifier(EClassifier classifier, int id)
+  {
     classifierToIDs.put(classifier, id);
     idToClassifiers.put(id, classifier);
 
@@ -84,22 +103,32 @@ public class Classes
     {
       resourceClassID = id;
     }
-
-    return id;
   }
 
   public synchronized int getClassifierID(EClassifier classifier)
   {
+    initialize();
     return classifierToIDs.get(classifier);
   }
 
   public synchronized EClassifier getClassifier(int id)
   {
+    initialize();
     return idToClassifiers.get(id);
   }
 
   public synchronized EClass getClass(int id)
   {
-    return (EClass)idToClassifiers.get(id);
+    return (EClass)getClassifier(id);
+  }
+
+  private void initialize()
+  {
+    if (!initialized)
+    {
+      Commits commits = store.getCommits();
+      commits.initializeClassifiers();
+      initialized = true;
+    }
   }
 }

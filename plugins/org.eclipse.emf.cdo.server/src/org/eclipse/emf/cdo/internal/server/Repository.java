@@ -1567,10 +1567,11 @@ public class Repository extends Container<Object> implements InternalRepository
         readRootResource();
       }
 
-      if (CDOIDUtil.isNull(rootResourceID))
-      {
-        throw new IllegalStateException("Root resource ID is null");
-      }
+      // This check does not work for CDOWorkspace:
+      // if (CDOIDUtil.isNull(rootResourceID))
+      // {
+      // throw new IllegalStateException("Root resource ID is null");
+      // }
     }
   }
 

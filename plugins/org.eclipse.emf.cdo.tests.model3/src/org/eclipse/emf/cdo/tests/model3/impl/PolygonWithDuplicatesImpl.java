@@ -51,7 +51,7 @@ public class PolygonWithDuplicatesImpl extends CDOObjectImpl implements PolygonW
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.POLYGON_WITH_DUPLICATES;
+    return Model3Package.eINSTANCE.getPolygonWithDuplicates();
   }
 
   /**
@@ -73,7 +73,7 @@ public class PolygonWithDuplicatesImpl extends CDOObjectImpl implements PolygonW
   @SuppressWarnings("unchecked")
   public EList<Point> getPoints()
   {
-    return (EList<Point>)eGet(Model3Package.Literals.POLYGON_WITH_DUPLICATES__POINTS, true);
+    return (EList<Point>)eGet(Model3Package.eINSTANCE.getPolygonWithDuplicates_Points(), true);
   }
 
 } // PolygonWithDuplicatesImpl

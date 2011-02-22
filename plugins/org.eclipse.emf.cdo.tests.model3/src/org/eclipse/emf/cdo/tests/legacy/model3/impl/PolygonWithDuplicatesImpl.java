@@ -63,7 +63,7 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.POLYGON_WITH_DUPLICATES;
+    return Model3Package.eINSTANCE.getPolygonWithDuplicates();
   }
 
   /**

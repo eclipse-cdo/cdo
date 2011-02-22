@@ -63,7 +63,7 @@ public class GenRefMultiNUNonContainedImpl extends EObjectImpl implements GenRef
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.GEN_REF_MULTI_NU_NON_CONTAINED;
+    return model4Package.eINSTANCE.getGenRefMultiNUNonContained();
   }
 
   /**

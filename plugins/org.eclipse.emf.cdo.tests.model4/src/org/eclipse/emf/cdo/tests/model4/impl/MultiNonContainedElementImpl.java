@@ -51,7 +51,7 @@ public class MultiNonContainedElementImpl extends CDOObjectImpl implements Multi
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.MULTI_NON_CONTAINED_ELEMENT;
+    return model4Package.eINSTANCE.getMultiNonContainedElement();
   }
 
   /**
@@ -72,7 +72,7 @@ public class MultiNonContainedElementImpl extends CDOObjectImpl implements Multi
    */
   public String getName()
   {
-    return (String)eGet(model4Package.Literals.MULTI_NON_CONTAINED_ELEMENT__NAME, true);
+    return (String)eGet(model4Package.eINSTANCE.getMultiNonContainedElement_Name(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class MultiNonContainedElementImpl extends CDOObjectImpl implements Multi
    */
   public void setName(String newName)
   {
-    eSet(model4Package.Literals.MULTI_NON_CONTAINED_ELEMENT__NAME, newName);
+    eSet(model4Package.eINSTANCE.getMultiNonContainedElement_Name(), newName);
   }
 
   /**
@@ -92,7 +92,7 @@ public class MultiNonContainedElementImpl extends CDOObjectImpl implements Multi
    */
   public RefMultiNonContained getParent()
   {
-    return (RefMultiNonContained)eGet(model4Package.Literals.MULTI_NON_CONTAINED_ELEMENT__PARENT, true);
+    return (RefMultiNonContained)eGet(model4Package.eINSTANCE.getMultiNonContainedElement_Parent(), true);
   }
 
   /**
@@ -102,7 +102,7 @@ public class MultiNonContainedElementImpl extends CDOObjectImpl implements Multi
    */
   public void setParent(RefMultiNonContained newParent)
   {
-    eSet(model4Package.Literals.MULTI_NON_CONTAINED_ELEMENT__PARENT, newParent);
+    eSet(model4Package.eINSTANCE.getMultiNonContainedElement_Parent(), newParent);
   }
 
 } // MultiNonContainedElementImpl

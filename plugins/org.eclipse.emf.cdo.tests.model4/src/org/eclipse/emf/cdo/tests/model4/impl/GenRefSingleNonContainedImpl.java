@@ -50,7 +50,7 @@ public class GenRefSingleNonContainedImpl extends CDOObjectImpl implements GenRe
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.GEN_REF_SINGLE_NON_CONTAINED;
+    return model4Package.eINSTANCE.getGenRefSingleNonContained();
   }
 
   /**
@@ -71,7 +71,7 @@ public class GenRefSingleNonContainedImpl extends CDOObjectImpl implements GenRe
    */
   public EObject getElement()
   {
-    return (EObject)eGet(model4Package.Literals.GEN_REF_SINGLE_NON_CONTAINED__ELEMENT, true);
+    return (EObject)eGet(model4Package.eINSTANCE.getGenRefSingleNonContained_Element(), true);
   }
 
   /**
@@ -81,7 +81,7 @@ public class GenRefSingleNonContainedImpl extends CDOObjectImpl implements GenRe
    */
   public void setElement(EObject newElement)
   {
-    eSet(model4Package.Literals.GEN_REF_SINGLE_NON_CONTAINED__ELEMENT, newElement);
+    eSet(model4Package.eINSTANCE.getGenRefSingleNonContained_Element(), newElement);
   }
 
 } // GenRefSingleNonContainedImpl

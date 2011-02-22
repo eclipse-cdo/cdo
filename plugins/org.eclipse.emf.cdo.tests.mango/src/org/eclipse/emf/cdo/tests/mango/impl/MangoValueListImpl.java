@@ -51,7 +51,7 @@ public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
   @Override
   protected EClass eStaticClass()
   {
-    return MangoPackage.Literals.MANGO_VALUE_LIST;
+    return MangoPackage.eINSTANCE.getMangoValueList();
   }
 
   /**
@@ -72,7 +72,7 @@ public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
    */
   public String getName()
   {
-    return (String)eGet(MangoPackage.Literals.MANGO_VALUE_LIST__NAME, true);
+    return (String)eGet(MangoPackage.eINSTANCE.getMangoValueList_Name(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
    */
   public void setName(String newName)
   {
-    eSet(MangoPackage.Literals.MANGO_VALUE_LIST__NAME, newName);
+    eSet(MangoPackage.eINSTANCE.getMangoValueList_Name(), newName);
   }
 
   /**
@@ -93,7 +93,7 @@ public class MangoValueListImpl extends CDOObjectImpl implements MangoValueList
   @SuppressWarnings("unchecked")
   public EList<MangoValue> getValues()
   {
-    return (EList<MangoValue>)eGet(MangoPackage.Literals.MANGO_VALUE_LIST__VALUES, true);
+    return (EList<MangoValue>)eGet(MangoPackage.eINSTANCE.getMangoValueList_Values(), true);
   }
 
 } // ValueListImpl

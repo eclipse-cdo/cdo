@@ -63,7 +63,7 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.ENUM_LIST_HOLDER;
+    return Model2Package.eINSTANCE.getEnumListHolder();
   }
 
   /**

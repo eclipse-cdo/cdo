@@ -66,7 +66,7 @@ public class GenRefMultiContainedImpl extends EObjectImpl implements GenRefMulti
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.GEN_REF_MULTI_CONTAINED;
+    return model4Package.eINSTANCE.getGenRefMultiContained();
   }
 
   /**

@@ -53,7 +53,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.PERSISTENT_CONTAINMENT;
+    return Model2Package.eINSTANCE.getPersistentContainment();
   }
 
   /**
@@ -74,7 +74,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
    */
   public String getAttrBefore()
   {
-    return (String)eGet(Model2Package.Literals.PERSISTENT_CONTAINMENT__ATTR_BEFORE, true);
+    return (String)eGet(Model2Package.eINSTANCE.getPersistentContainment_AttrBefore(), true);
   }
 
   /**
@@ -84,7 +84,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
    */
   public void setAttrBefore(String newAttrBefore)
   {
-    eSet(Model2Package.Literals.PERSISTENT_CONTAINMENT__ATTR_BEFORE, newAttrBefore);
+    eSet(Model2Package.eINSTANCE.getPersistentContainment_AttrBefore(), newAttrBefore);
   }
 
   /**
@@ -95,7 +95,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
   @SuppressWarnings("unchecked")
   public EList<TransientContainer> getChildren()
   {
-    return (EList<TransientContainer>)eGet(Model2Package.Literals.PERSISTENT_CONTAINMENT__CHILDREN, true);
+    return (EList<TransientContainer>)eGet(Model2Package.eINSTANCE.getPersistentContainment_Children(), true);
   }
 
   /**
@@ -105,7 +105,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
    */
   public String getAttrAfter()
   {
-    return (String)eGet(Model2Package.Literals.PERSISTENT_CONTAINMENT__ATTR_AFTER, true);
+    return (String)eGet(Model2Package.eINSTANCE.getPersistentContainment_AttrAfter(), true);
   }
 
   /**
@@ -115,7 +115,7 @@ public class PersistentContainmentImpl extends CDOObjectImpl implements Persiste
    */
   public void setAttrAfter(String newAttrAfter)
   {
-    eSet(Model2Package.Literals.PERSISTENT_CONTAINMENT__ATTR_AFTER, newAttrAfter);
+    eSet(Model2Package.eINSTANCE.getPersistentContainment_AttrAfter(), newAttrAfter);
   }
 
 } // PersistentContainmentImpl

@@ -51,7 +51,7 @@ public class RefMultiContainedNPLImpl extends CDOObjectImpl implements RefMultiC
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_MULTI_CONTAINED_NPL;
+    return model4Package.eINSTANCE.getRefMultiContainedNPL();
   }
 
   /**
@@ -73,7 +73,7 @@ public class RefMultiContainedNPLImpl extends CDOObjectImpl implements RefMultiC
   @SuppressWarnings("unchecked")
   public EList<ContainedElementNoOpposite> getElements()
   {
-    return (EList<ContainedElementNoOpposite>)eGet(model4Package.Literals.REF_MULTI_CONTAINED_NPL__ELEMENTS, true);
+    return (EList<ContainedElementNoOpposite>)eGet(model4Package.eINSTANCE.getRefMultiContainedNPL_Elements(), true);
   }
 
 } // RefMultiContainedNPLImpl

@@ -52,7 +52,7 @@ public class ImplSingleRefContainedElementImpl extends CDOObjectImpl implements 
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_SINGLE_REF_CONTAINED_ELEMENT;
+    return model4Package.eINSTANCE.getImplSingleRefContainedElement();
   }
 
   /**
@@ -73,7 +73,7 @@ public class ImplSingleRefContainedElementImpl extends CDOObjectImpl implements 
    */
   public ISingleRefContainer getParent()
   {
-    return (ISingleRefContainer)eGet(model4interfacesPackage.Literals.ISINGLE_REF_CONTAINED_ELEMENT__PARENT, true);
+    return (ISingleRefContainer)eGet(model4interfacesPackage.eINSTANCE.getISingleRefContainedElement_Parent(), true);
   }
 
   /**
@@ -83,7 +83,7 @@ public class ImplSingleRefContainedElementImpl extends CDOObjectImpl implements 
    */
   public void setParent(ISingleRefContainer newParent)
   {
-    eSet(model4interfacesPackage.Literals.ISINGLE_REF_CONTAINED_ELEMENT__PARENT, newParent);
+    eSet(model4interfacesPackage.eINSTANCE.getISingleRefContainedElement_Parent(), newParent);
   }
 
   /**
@@ -93,7 +93,7 @@ public class ImplSingleRefContainedElementImpl extends CDOObjectImpl implements 
    */
   public String getName()
   {
-    return (String)eGet(model4Package.Literals.IMPL_SINGLE_REF_CONTAINED_ELEMENT__NAME, true);
+    return (String)eGet(model4Package.eINSTANCE.getImplSingleRefContainedElement_Name(), true);
   }
 
   /**
@@ -103,7 +103,7 @@ public class ImplSingleRefContainedElementImpl extends CDOObjectImpl implements 
    */
   public void setName(String newName)
   {
-    eSet(model4Package.Literals.IMPL_SINGLE_REF_CONTAINED_ELEMENT__NAME, newName);
+    eSet(model4Package.eINSTANCE.getImplSingleRefContainedElement_Name(), newName);
   }
 
 } // ImplSingleRefContainedElementImpl

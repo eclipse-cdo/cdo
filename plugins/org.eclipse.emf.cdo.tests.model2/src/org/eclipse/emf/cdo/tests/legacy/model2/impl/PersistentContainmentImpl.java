@@ -111,7 +111,7 @@ public class PersistentContainmentImpl extends EObjectImpl implements Persistent
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.PERSISTENT_CONTAINMENT;
+    return Model2Package.eINSTANCE.getPersistentContainment();
   }
 
   /**

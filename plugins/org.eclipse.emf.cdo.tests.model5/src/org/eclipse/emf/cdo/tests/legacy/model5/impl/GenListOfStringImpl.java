@@ -69,7 +69,7 @@ public class GenListOfStringImpl extends EObjectImpl implements GenListOfString
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_STRING;
+    return Model5Package.eINSTANCE.getGenListOfString();
   }
 
   /**

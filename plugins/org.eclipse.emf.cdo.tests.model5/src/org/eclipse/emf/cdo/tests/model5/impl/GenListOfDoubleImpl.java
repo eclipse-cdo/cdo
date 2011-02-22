@@ -57,7 +57,7 @@ public class GenListOfDoubleImpl extends CDOObjectImpl implements GenListOfDoubl
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_DOUBLE;
+    return Model5Package.eINSTANCE.getGenListOfDouble();
   }
 
   /**
@@ -79,7 +79,7 @@ public class GenListOfDoubleImpl extends CDOObjectImpl implements GenListOfDoubl
   @SuppressWarnings("unchecked")
   public EList<Double> getElements()
   {
-    return (EList<Double>)eGet(Model5Package.Literals.GEN_LIST_OF_DOUBLE__ELEMENTS, true);
+    return (EList<Double>)eGet(Model5Package.eINSTANCE.getGenListOfDouble_Elements(), true);
   }
 
 } // GenListOfDoubleImpl

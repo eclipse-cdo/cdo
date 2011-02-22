@@ -51,7 +51,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.SPECIAL_PURCHASE_ORDER;
+    return Model2Package.eINSTANCE.getSpecialPurchaseOrder();
   }
 
   /**
@@ -61,7 +61,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    */
   public String getDiscountCode()
   {
-    return (String)eGet(Model2Package.Literals.SPECIAL_PURCHASE_ORDER__DISCOUNT_CODE, true);
+    return (String)eGet(Model2Package.eINSTANCE.getSpecialPurchaseOrder_DiscountCode(), true);
   }
 
   /**
@@ -71,7 +71,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    */
   public void setDiscountCode(String newDiscountCode)
   {
-    eSet(Model2Package.Literals.SPECIAL_PURCHASE_ORDER__DISCOUNT_CODE, newDiscountCode);
+    eSet(Model2Package.eINSTANCE.getSpecialPurchaseOrder_DiscountCode(), newDiscountCode);
   }
 
   /**
@@ -81,7 +81,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    */
   public Address getShippingAddress()
   {
-    return (Address)eGet(Model2Package.Literals.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, true);
+    return (Address)eGet(Model2Package.eINSTANCE.getSpecialPurchaseOrder_ShippingAddress(), true);
   }
 
   /**
@@ -91,7 +91,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
    */
   public void setShippingAddress(Address newShippingAddress)
   {
-    eSet(Model2Package.Literals.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, newShippingAddress);
+    eSet(Model2Package.eINSTANCE.getSpecialPurchaseOrder_ShippingAddress(), newShippingAddress);
   }
 
 } // SpecialPurchaseOrderImpl

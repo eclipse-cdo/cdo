@@ -51,7 +51,7 @@ public class SingleContainedElementImpl extends CDOObjectImpl implements SingleC
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.SINGLE_CONTAINED_ELEMENT;
+    return model4Package.eINSTANCE.getSingleContainedElement();
   }
 
   /**
@@ -72,7 +72,7 @@ public class SingleContainedElementImpl extends CDOObjectImpl implements SingleC
    */
   public String getName()
   {
-    return (String)eGet(model4Package.Literals.SINGLE_CONTAINED_ELEMENT__NAME, true);
+    return (String)eGet(model4Package.eINSTANCE.getSingleContainedElement_Name(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class SingleContainedElementImpl extends CDOObjectImpl implements SingleC
    */
   public void setName(String newName)
   {
-    eSet(model4Package.Literals.SINGLE_CONTAINED_ELEMENT__NAME, newName);
+    eSet(model4Package.eINSTANCE.getSingleContainedElement_Name(), newName);
   }
 
   /**
@@ -92,7 +92,7 @@ public class SingleContainedElementImpl extends CDOObjectImpl implements SingleC
    */
   public RefSingleContained getParent()
   {
-    return (RefSingleContained)eGet(model4Package.Literals.SINGLE_CONTAINED_ELEMENT__PARENT, true);
+    return (RefSingleContained)eGet(model4Package.eINSTANCE.getSingleContainedElement_Parent(), true);
   }
 
   /**
@@ -102,7 +102,7 @@ public class SingleContainedElementImpl extends CDOObjectImpl implements SingleC
    */
   public void setParent(RefSingleContained newParent)
   {
-    eSet(model4Package.Literals.SINGLE_CONTAINED_ELEMENT__PARENT, newParent);
+    eSet(model4Package.eINSTANCE.getSingleContainedElement_Parent(), newParent);
   }
 
 } // SingleContainedElementImpl

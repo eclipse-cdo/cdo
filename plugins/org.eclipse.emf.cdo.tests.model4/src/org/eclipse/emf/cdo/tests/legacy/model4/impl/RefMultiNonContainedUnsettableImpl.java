@@ -67,7 +67,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_MULTI_NON_CONTAINED_UNSETTABLE;
+    return model4Package.eINSTANCE.getRefMultiNonContainedUnsettable();
   }
 
   /**
@@ -94,9 +94,7 @@ public class RefMultiNonContainedUnsettableImpl extends EObjectImpl implements R
   public void unsetElements()
   {
     if (elements != null)
-    {
       ((InternalEList.Unsettable<?>)elements).unset();
-    }
   }
 
   /**

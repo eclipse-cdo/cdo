@@ -51,7 +51,7 @@ public class RefMultiNonContainedUnsettableImpl extends CDOObjectImpl implements
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_MULTI_NON_CONTAINED_UNSETTABLE;
+    return model4Package.eINSTANCE.getRefMultiNonContainedUnsettable();
   }
 
   /**
@@ -74,7 +74,7 @@ public class RefMultiNonContainedUnsettableImpl extends CDOObjectImpl implements
   public EList<MultiNonContainedUnsettableElement> getElements()
   {
     return (EList<MultiNonContainedUnsettableElement>)eGet(
-        model4Package.Literals.REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS, true);
+        model4Package.eINSTANCE.getRefMultiNonContainedUnsettable_Elements(), true);
   }
 
   /**
@@ -84,7 +84,7 @@ public class RefMultiNonContainedUnsettableImpl extends CDOObjectImpl implements
    */
   public void unsetElements()
   {
-    eUnset(model4Package.Literals.REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS);
+    eUnset(model4Package.eINSTANCE.getRefMultiNonContainedUnsettable_Elements());
   }
 
   /**
@@ -94,7 +94,7 @@ public class RefMultiNonContainedUnsettableImpl extends CDOObjectImpl implements
    */
   public boolean isSetElements()
   {
-    return eIsSet(model4Package.Literals.REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS);
+    return eIsSet(model4Package.eINSTANCE.getRefMultiNonContainedUnsettable_Elements());
   }
 
 } // RefMultiNonContainedUnsettableImpl

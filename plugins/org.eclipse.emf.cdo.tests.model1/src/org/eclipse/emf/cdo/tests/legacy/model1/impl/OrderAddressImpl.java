@@ -33,20 +33,21 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getOrderDetails <em>Order Details</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getOrder <em>Order</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getProduct <em>Product</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getPrice <em>Price</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#isTestAttribute <em>Test Attribute</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getOrderDetails <em>Order Details</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getOrder <em>Order</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getProduct <em>Product</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#getPrice <em>Price</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.OrderAddressImpl#isTestAttribute <em>Test Attribute</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class OrderAddressImpl extends AddressImpl implements OrderAddress
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
@@ -62,9 +63,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   protected EList<OrderDetail> orderDetails;
 
   /**
-   * The cached value of the '{@link #getProduct() <em>Product</em>}' reference.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getProduct() <em>Product</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getProduct()
    * @generated
    * @ordered
@@ -92,9 +93,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   protected float price = PRICE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isTestAttribute() <em>Test Attribute</em>}' attribute.
-   * <!-- begin-user-doc -->
+   * The default value of the '{@link #isTestAttribute() <em>Test Attribute</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #isTestAttribute()
    * @generated
    * @ordered
@@ -102,9 +103,9 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
   protected static final boolean TEST_ATTRIBUTE_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isTestAttribute() <em>Test Attribute</em>}' attribute.
-   * <!-- begin-user-doc -->
+   * The cached value of the '{@link #isTestAttribute() <em>Test Attribute</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #isTestAttribute()
    * @generated
    * @ordered
@@ -113,6 +114,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected OrderAddressImpl()
@@ -122,16 +124,18 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model1Package.Literals.ORDER_ADDRESS;
+    return Model1Package.eINSTANCE.getOrderAddress();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<OrderDetail> getOrderDetails()
@@ -146,6 +150,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Order getOrder()
@@ -157,6 +162,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NotificationChain basicSetOrder(Order newOrder, NotificationChain msgs)
@@ -167,6 +173,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setOrder(Order newOrder)
@@ -191,6 +198,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Product1 getProduct()
@@ -211,6 +219,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Product1 basicGetProduct()
@@ -220,6 +229,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NotificationChain basicSetProduct(Product1 newProduct, NotificationChain msgs)
@@ -240,6 +250,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setProduct(Product1 newProduct)
@@ -264,6 +275,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public float getPrice()
@@ -273,6 +285,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setPrice(float newPrice)
@@ -285,6 +298,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isTestAttribute()
@@ -294,6 +308,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTestAttribute(boolean newTestAttribute)
@@ -307,6 +322,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -332,6 +348,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -351,6 +368,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -366,6 +384,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -391,6 +410,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -421,6 +441,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -449,6 +470,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -472,6 +494,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -506,6 +529,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -540,6 +564,7 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

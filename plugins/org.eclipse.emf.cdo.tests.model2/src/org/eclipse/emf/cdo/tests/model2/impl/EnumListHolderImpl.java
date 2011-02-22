@@ -51,7 +51,7 @@ public class EnumListHolderImpl extends CDOObjectImpl implements EnumListHolder
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.ENUM_LIST_HOLDER;
+    return Model2Package.eINSTANCE.getEnumListHolder();
   }
 
   /**
@@ -73,7 +73,7 @@ public class EnumListHolderImpl extends CDOObjectImpl implements EnumListHolder
   @SuppressWarnings("unchecked")
   public EList<VAT> getEnumList()
   {
-    return (EList<VAT>)eGet(Model2Package.Literals.ENUM_LIST_HOLDER__ENUM_LIST, true);
+    return (EList<VAT>)eGet(Model2Package.eINSTANCE.getEnumListHolder_EnumList(), true);
   }
 
 } // EnumListHolderImpl

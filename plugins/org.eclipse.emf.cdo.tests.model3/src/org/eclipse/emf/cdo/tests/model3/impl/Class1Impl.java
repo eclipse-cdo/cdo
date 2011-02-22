@@ -50,7 +50,7 @@ public class Class1Impl extends CDOObjectImpl implements Class1
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.CLASS1;
+    return Model3Package.eINSTANCE.getClass1();
   }
 
   /**
@@ -72,7 +72,7 @@ public class Class1Impl extends CDOObjectImpl implements Class1
   @SuppressWarnings("unchecked")
   public EList<Class2> getClass2()
   {
-    return (EList<Class2>)eGet(Model3Package.Literals.CLASS1__CLASS2, true);
+    return (EList<Class2>)eGet(Model3Package.eINSTANCE.getClass1_Class2(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class Class1Impl extends CDOObjectImpl implements Class1
    */
   public void unsetClass2()
   {
-    eUnset(Model3Package.Literals.CLASS1__CLASS2);
+    eUnset(Model3Package.eINSTANCE.getClass1_Class2());
   }
 
   /**
@@ -92,7 +92,7 @@ public class Class1Impl extends CDOObjectImpl implements Class1
    */
   public boolean isSetClass2()
   {
-    return eIsSet(Model3Package.Literals.CLASS1__CLASS2);
+    return eIsSet(Model3Package.eINSTANCE.getClass1_Class2());
   }
 
 } // Class1Impl

@@ -66,7 +66,7 @@ public class RefMultiNonContainedImpl extends EObjectImpl implements RefMultiNon
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_MULTI_NON_CONTAINED;
+    return model4Package.eINSTANCE.getRefMultiNonContained();
   }
 
   /**

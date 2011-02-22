@@ -11,7 +11,7 @@
   <foreignModel>model4.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="model4" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
-      ecorePackage="model4.ecore#/">
+      literalsInterface="false" ecorePackage="model4.ecore#/">
     <genClasses ecoreClass="model4.ecore#//RefSingleContained">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model4.ecore#//RefSingleContained/element"/>
     </genClasses>
@@ -39,6 +39,13 @@
     <genClasses ecoreClass="model4.ecore#//MultiNonContainedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model4.ecore#//MultiNonContainedElement/name"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference model4.ecore#//MultiNonContainedElement/parent"/>
+    </genClasses>
+    <genClasses ecoreClass="model4.ecore#//RefMultiNonContainedUnsettable">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model4.ecore#//RefMultiNonContainedUnsettable/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="model4.ecore#//MultiNonContainedUnsettableElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model4.ecore#//MultiNonContainedUnsettableElement/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model4.ecore#//MultiNonContainedUnsettableElement/parent"/>
     </genClasses>
     <genClasses ecoreClass="model4.ecore#//RefSingleContainedNPL">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model4.ecore#//RefSingleContainedNPL/element"/>

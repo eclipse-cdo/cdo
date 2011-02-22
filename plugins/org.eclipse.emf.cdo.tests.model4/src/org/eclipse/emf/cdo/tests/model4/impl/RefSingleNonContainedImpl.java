@@ -50,7 +50,7 @@ public class RefSingleNonContainedImpl extends CDOObjectImpl implements RefSingl
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_SINGLE_NON_CONTAINED;
+    return model4Package.eINSTANCE.getRefSingleNonContained();
   }
 
   /**
@@ -71,7 +71,7 @@ public class RefSingleNonContainedImpl extends CDOObjectImpl implements RefSingl
    */
   public SingleNonContainedElement getElement()
   {
-    return (SingleNonContainedElement)eGet(model4Package.Literals.REF_SINGLE_NON_CONTAINED__ELEMENT, true);
+    return (SingleNonContainedElement)eGet(model4Package.eINSTANCE.getRefSingleNonContained_Element(), true);
   }
 
   /**
@@ -81,7 +81,7 @@ public class RefSingleNonContainedImpl extends CDOObjectImpl implements RefSingl
    */
   public void setElement(SingleNonContainedElement newElement)
   {
-    eSet(model4Package.Literals.REF_SINGLE_NON_CONTAINED__ELEMENT, newElement);
+    eSet(model4Package.eINSTANCE.getRefSingleNonContained_Element(), newElement);
   }
 
 } // RefSingleNonContainedImpl

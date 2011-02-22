@@ -51,7 +51,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.SINGLE_NON_CONTAINED_ELEMENT;
+    return model4Package.eINSTANCE.getSingleNonContainedElement();
   }
 
   /**
@@ -72,7 +72,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
    */
   public String getName()
   {
-    return (String)eGet(model4Package.Literals.SINGLE_NON_CONTAINED_ELEMENT__NAME, true);
+    return (String)eGet(model4Package.eINSTANCE.getSingleNonContainedElement_Name(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
    */
   public void setName(String newName)
   {
-    eSet(model4Package.Literals.SINGLE_NON_CONTAINED_ELEMENT__NAME, newName);
+    eSet(model4Package.eINSTANCE.getSingleNonContainedElement_Name(), newName);
   }
 
   /**
@@ -92,7 +92,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
    */
   public RefSingleNonContained getParent()
   {
-    return (RefSingleNonContained)eGet(model4Package.Literals.SINGLE_NON_CONTAINED_ELEMENT__PARENT, true);
+    return (RefSingleNonContained)eGet(model4Package.eINSTANCE.getSingleNonContainedElement_Parent(), true);
   }
 
   /**
@@ -102,7 +102,7 @@ public class SingleNonContainedElementImpl extends CDOObjectImpl implements Sing
    */
   public void setParent(RefSingleNonContained newParent)
   {
-    eSet(model4Package.Literals.SINGLE_NON_CONTAINED_ELEMENT__PARENT, newParent);
+    eSet(model4Package.eINSTANCE.getSingleNonContainedElement_Parent(), newParent);
   }
 
 } // SingleNonContainedElementImpl

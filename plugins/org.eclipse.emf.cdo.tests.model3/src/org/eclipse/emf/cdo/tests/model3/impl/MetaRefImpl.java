@@ -51,7 +51,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.META_REF;
+    return Model3Package.eINSTANCE.getMetaRef();
   }
 
   /**
@@ -72,7 +72,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    */
   public EPackage getEPackageRef()
   {
-    return (EPackage)eGet(Model3Package.Literals.META_REF__EPACKAGE_REF, true);
+    return (EPackage)eGet(Model3Package.eINSTANCE.getMetaRef_EPackageRef(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    */
   public void setEPackageRef(EPackage newEPackageRef)
   {
-    eSet(Model3Package.Literals.META_REF__EPACKAGE_REF, newEPackageRef);
+    eSet(Model3Package.eINSTANCE.getMetaRef_EPackageRef(), newEPackageRef);
   }
 
   /**
@@ -92,7 +92,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    */
   public EClass getEClassRef()
   {
-    return (EClass)eGet(Model3Package.Literals.META_REF__ECLASS_REF, true);
+    return (EClass)eGet(Model3Package.eINSTANCE.getMetaRef_EClassRef(), true);
   }
 
   /**
@@ -102,7 +102,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    */
   public void setEClassRef(EClass newEClassRef)
   {
-    eSet(Model3Package.Literals.META_REF__ECLASS_REF, newEClassRef);
+    eSet(Model3Package.eINSTANCE.getMetaRef_EClassRef(), newEClassRef);
   }
 
   /**
@@ -112,7 +112,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    */
   public EReference getEReferenceRef()
   {
-    return (EReference)eGet(Model3Package.Literals.META_REF__EREFERENCE_REF, true);
+    return (EReference)eGet(Model3Package.eINSTANCE.getMetaRef_EReferenceRef(), true);
   }
 
   /**
@@ -122,7 +122,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
    */
   public void setEReferenceRef(EReference newEReferenceRef)
   {
-    eSet(Model3Package.Literals.META_REF__EREFERENCE_REF, newEReferenceRef);
+    eSet(Model3Package.eINSTANCE.getMetaRef_EReferenceRef(), newEReferenceRef);
   }
 
 } // MetaRefImpl

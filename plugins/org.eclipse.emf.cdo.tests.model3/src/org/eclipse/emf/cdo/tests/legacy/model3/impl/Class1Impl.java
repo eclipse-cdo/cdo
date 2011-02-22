@@ -66,7 +66,7 @@ public class Class1Impl extends EObjectImpl implements Class1
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.CLASS1;
+    return Model3Package.eINSTANCE.getClass1();
   }
 
   /**

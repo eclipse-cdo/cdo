@@ -52,7 +52,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.TRANSIENT_CONTAINER;
+    return Model2Package.eINSTANCE.getTransientContainer();
   }
 
   /**
@@ -73,7 +73,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    */
   public String getAttrBefore()
   {
-    return (String)eGet(Model2Package.Literals.TRANSIENT_CONTAINER__ATTR_BEFORE, true);
+    return (String)eGet(Model2Package.eINSTANCE.getTransientContainer_AttrBefore(), true);
   }
 
   /**
@@ -83,7 +83,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    */
   public void setAttrBefore(String newAttrBefore)
   {
-    eSet(Model2Package.Literals.TRANSIENT_CONTAINER__ATTR_BEFORE, newAttrBefore);
+    eSet(Model2Package.eINSTANCE.getTransientContainer_AttrBefore(), newAttrBefore);
   }
 
   /**
@@ -93,7 +93,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    */
   public PersistentContainment getParent()
   {
-    return (PersistentContainment)eGet(Model2Package.Literals.TRANSIENT_CONTAINER__PARENT, true);
+    return (PersistentContainment)eGet(Model2Package.eINSTANCE.getTransientContainer_Parent(), true);
   }
 
   /**
@@ -103,7 +103,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    */
   public void setParent(PersistentContainment newParent)
   {
-    eSet(Model2Package.Literals.TRANSIENT_CONTAINER__PARENT, newParent);
+    eSet(Model2Package.eINSTANCE.getTransientContainer_Parent(), newParent);
   }
 
   /**
@@ -113,7 +113,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    */
   public String getAttrAfter()
   {
-    return (String)eGet(Model2Package.Literals.TRANSIENT_CONTAINER__ATTR_AFTER, true);
+    return (String)eGet(Model2Package.eINSTANCE.getTransientContainer_AttrAfter(), true);
   }
 
   /**
@@ -123,7 +123,7 @@ public class TransientContainerImpl extends CDOObjectImpl implements TransientCo
    */
   public void setAttrAfter(String newAttrAfter)
   {
-    eSet(Model2Package.Literals.TRANSIENT_CONTAINER__ATTR_AFTER, newAttrAfter);
+    eSet(Model2Package.eINSTANCE.getTransientContainer_AttrAfter(), newAttrAfter);
   }
 
 } // TransientContainerImpl

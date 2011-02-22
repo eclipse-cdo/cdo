@@ -2,8 +2,11 @@
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Eike Stepper - initial API and implementation" modelDirectory="/org.eclipse.emf.cdo.tests.model5/src" editDirectory="" editorDirectory="" modelPluginID="org.eclipse.emf.cdo.tests.model5" modelName="Model5" updateClasspath="false" codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" providerRootExtendsClass="">
   <foreignModel>model5.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
-  <genPackages prefix="Model5" basePackage="org.eclipse.emf.cdo.tests.legacy" disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true">
+  <genPackages prefix="Model5" basePackage="org.eclipse.emf.cdo.tests.legacy" disposableProviderFactory="true" literalsInterface="false" extensibleProviderFactory="true" childCreationExtenders="true">
     <ecorePackage href="model5.ecore#/"/>
+    <genDataTypes>
+      <ecoreDataType href="model5.ecore#//IntArray"/>
+    </genDataTypes>
     <genClasses>
       <ecoreClass href="model5.ecore#//TestFeatureMap"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true">
@@ -80,6 +83,12 @@
       <ecoreClass href="model5.ecore#//GenListOfChar"/>
       <genFeatures createChild="false">
         <ecoreFeature xsi:type="ecore:EAttribute" href="model5.ecore#//GenListOfChar/elements"/>
+      </genFeatures>
+    </genClasses>
+    <genClasses>
+      <ecoreClass href="model5.ecore#//GenListOfIntArray"/>
+      <genFeatures createChild="false">
+        <ecoreFeature xsi:type="ecore:EAttribute" href="model5.ecore#//GenListOfIntArray/elements"/>
       </genFeatures>
     </genClasses>
   </genPackages>

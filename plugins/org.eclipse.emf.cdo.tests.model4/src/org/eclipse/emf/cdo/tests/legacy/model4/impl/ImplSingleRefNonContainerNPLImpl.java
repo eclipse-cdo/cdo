@@ -63,7 +63,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_SINGLE_REF_NON_CONTAINER_NPL;
+    return model4Package.eINSTANCE.getImplSingleRefNonContainerNPL();
   }
 
   /**
@@ -80,10 +80,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
       if (element != oldElement)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               model4Package.IMPL_SINGLE_REF_NON_CONTAINER_NPL__ELEMENT, oldElement, element));
-        }
       }
     }
     return element;
@@ -109,10 +107,8 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
     IContainedElementNoParentLink oldElement = element;
     element = newElement;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_NON_CONTAINER_NPL__ELEMENT,
           oldElement, element));
-    }
   }
 
   /**
@@ -127,9 +123,7 @@ public class ImplSingleRefNonContainerNPLImpl extends EObjectImpl implements Imp
     {
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINER_NPL__ELEMENT:
       if (resolve)
-      {
         return getElement();
-      }
       return basicGetElement();
     }
     return super.eGet(featureID, resolve, coreType);

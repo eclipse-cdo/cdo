@@ -68,7 +68,7 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.MAP_HOLDER;
+    return Model2Package.eINSTANCE.getMapHolder();
   }
 
   /**
@@ -90,7 +90,7 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
   @SuppressWarnings("unchecked")
   public EMap<Integer, String> getIntegerToStringMap()
   {
-    return (EMap<Integer, String>)eGet(Model2Package.Literals.MAP_HOLDER__INTEGER_TO_STRING_MAP, true);
+    return (EMap<Integer, String>)eGet(Model2Package.eINSTANCE.getMapHolder_IntegerToStringMap(), true);
   }
 
   /**
@@ -101,7 +101,7 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
   @SuppressWarnings("unchecked")
   public EMap<String, String> getStringToStringMap()
   {
-    return (EMap<String, String>)eGet(Model2Package.Literals.MAP_HOLDER__STRING_TO_STRING_MAP, true);
+    return (EMap<String, String>)eGet(Model2Package.eINSTANCE.getMapHolder_StringToStringMap(), true);
   }
 
   /**
@@ -112,7 +112,7 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
   @SuppressWarnings("unchecked")
   public EMap<String, VAT> getStringToVATMap()
   {
-    return (EMap<String, VAT>)eGet(Model2Package.Literals.MAP_HOLDER__STRING_TO_VAT_MAP, true);
+    return (EMap<String, VAT>)eGet(Model2Package.eINSTANCE.getMapHolder_StringToVATMap(), true);
   }
 
   /**
@@ -123,7 +123,7 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
   @SuppressWarnings("unchecked")
   public EMap<String, Address> getStringToAddressContainmentMap()
   {
-    return (EMap<String, Address>)eGet(Model2Package.Literals.MAP_HOLDER__STRING_TO_ADDRESS_CONTAINMENT_MAP, true);
+    return (EMap<String, Address>)eGet(Model2Package.eINSTANCE.getMapHolder_StringToAddressContainmentMap(), true);
   }
 
   /**
@@ -134,7 +134,7 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
   @SuppressWarnings("unchecked")
   public EMap<String, Address> getStringToAddressReferenceMap()
   {
-    return (EMap<String, Address>)eGet(Model2Package.Literals.MAP_HOLDER__STRING_TO_ADDRESS_REFERENCE_MAP, true);
+    return (EMap<String, Address>)eGet(Model2Package.eINSTANCE.getMapHolder_StringToAddressReferenceMap(), true);
   }
 
   /**
@@ -145,7 +145,7 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
   @SuppressWarnings("unchecked")
   public EMap<EObject, EObject> getEObjectToEObjectMap()
   {
-    return (EMap<EObject, EObject>)eGet(Model2Package.Literals.MAP_HOLDER__EOBJECT_TO_EOBJECT_MAP, true);
+    return (EMap<EObject, EObject>)eGet(Model2Package.eINSTANCE.getMapHolder_EObjectToEObjectMap(), true);
   }
 
   /**
@@ -156,7 +156,7 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
   @SuppressWarnings("unchecked")
   public EMap<EObject, EObject> getEObjectToEObjectKeyContainedMap()
   {
-    return (EMap<EObject, EObject>)eGet(Model2Package.Literals.MAP_HOLDER__EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP, true);
+    return (EMap<EObject, EObject>)eGet(Model2Package.eINSTANCE.getMapHolder_EObjectToEObjectKeyContainedMap(), true);
   }
 
   /**
@@ -167,7 +167,7 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
   @SuppressWarnings("unchecked")
   public EMap<EObject, EObject> getEObjectToEObjectBothContainedMap()
   {
-    return (EMap<EObject, EObject>)eGet(Model2Package.Literals.MAP_HOLDER__EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP, true);
+    return (EMap<EObject, EObject>)eGet(Model2Package.eINSTANCE.getMapHolder_EObjectToEObjectBothContainedMap(), true);
   }
 
   /**
@@ -178,7 +178,7 @@ public class MapHolderImpl extends CDOObjectImpl implements MapHolder
   @SuppressWarnings("unchecked")
   public EMap<EObject, EObject> getEObjectToEObjectValueContainedMap()
   {
-    return (EMap<EObject, EObject>)eGet(Model2Package.Literals.MAP_HOLDER__EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP, true);
+    return (EMap<EObject, EObject>)eGet(Model2Package.eINSTANCE.getMapHolder_EObjectToEObjectValueContainedMap(), true);
   }
 
 } // MapHolderImpl

@@ -55,7 +55,7 @@ public class StringToAddressContainmentMapImpl extends CDOObjectImpl implements 
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.STRING_TO_ADDRESS_CONTAINMENT_MAP;
+    return Model2Package.eINSTANCE.getStringToAddressContainmentMap();
   }
 
   /**
@@ -76,7 +76,7 @@ public class StringToAddressContainmentMapImpl extends CDOObjectImpl implements 
    */
   public String getTypedKey()
   {
-    return (String)eGet(Model2Package.Literals.STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY, true);
+    return (String)eGet(Model2Package.eINSTANCE.getStringToAddressContainmentMap_Key(), true);
   }
 
   /**
@@ -86,7 +86,7 @@ public class StringToAddressContainmentMapImpl extends CDOObjectImpl implements 
    */
   public void setTypedKey(String newKey)
   {
-    eSet(Model2Package.Literals.STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY, newKey);
+    eSet(Model2Package.eINSTANCE.getStringToAddressContainmentMap_Key(), newKey);
   }
 
   /**
@@ -96,7 +96,7 @@ public class StringToAddressContainmentMapImpl extends CDOObjectImpl implements 
    */
   public Address getTypedValue()
   {
-    return (Address)eGet(Model2Package.Literals.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, true);
+    return (Address)eGet(Model2Package.eINSTANCE.getStringToAddressContainmentMap_Value(), true);
   }
 
   /**
@@ -106,7 +106,7 @@ public class StringToAddressContainmentMapImpl extends CDOObjectImpl implements 
    */
   public void setTypedValue(Address newValue)
   {
-    eSet(Model2Package.Literals.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, newValue);
+    eSet(Model2Package.eINSTANCE.getStringToAddressContainmentMap_Value(), newValue);
   }
 
   /**

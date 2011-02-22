@@ -51,7 +51,7 @@ public class ManagerImpl extends CDOObjectImpl implements Manager
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.MANAGER;
+    return Model5Package.eINSTANCE.getManager();
   }
 
   /**

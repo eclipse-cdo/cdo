@@ -66,7 +66,7 @@ public class RefMultiContainedNPLImpl extends EObjectImpl implements RefMultiCon
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_MULTI_CONTAINED_NPL;
+    return model4Package.eINSTANCE.getRefMultiContainedNPL();
   }
 
   /**

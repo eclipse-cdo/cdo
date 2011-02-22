@@ -48,7 +48,7 @@ public class MangoValueImpl extends CDOObjectImpl implements MangoValue
   @Override
   protected EClass eStaticClass()
   {
-    return MangoPackage.Literals.MANGO_VALUE;
+    return MangoPackage.eINSTANCE.getMangoValue();
   }
 
   /**
@@ -69,7 +69,7 @@ public class MangoValueImpl extends CDOObjectImpl implements MangoValue
    */
   public String getName()
   {
-    return (String)eGet(MangoPackage.Literals.MANGO_VALUE__NAME, true);
+    return (String)eGet(MangoPackage.eINSTANCE.getMangoValue_Name(), true);
   }
 
   /**
@@ -79,7 +79,7 @@ public class MangoValueImpl extends CDOObjectImpl implements MangoValue
    */
   public void setName(String newName)
   {
-    eSet(MangoPackage.Literals.MANGO_VALUE__NAME, newName);
+    eSet(MangoPackage.eINSTANCE.getMangoValue_Name(), newName);
   }
 
 } // ValueImpl

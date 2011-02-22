@@ -54,7 +54,7 @@ public class EObjectToEObjectMapImpl extends CDOObjectImpl implements BasicEMap.
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.EOBJECT_TO_EOBJECT_MAP;
+    return Model2Package.eINSTANCE.getEObjectToEObjectMap();
   }
 
   /**
@@ -75,7 +75,7 @@ public class EObjectToEObjectMapImpl extends CDOObjectImpl implements BasicEMap.
    */
   public EObject getTypedKey()
   {
-    return (EObject)eGet(Model2Package.Literals.EOBJECT_TO_EOBJECT_MAP__KEY, true);
+    return (EObject)eGet(Model2Package.eINSTANCE.getEObjectToEObjectMap_Key(), true);
   }
 
   /**
@@ -85,7 +85,7 @@ public class EObjectToEObjectMapImpl extends CDOObjectImpl implements BasicEMap.
    */
   public void setTypedKey(EObject newKey)
   {
-    eSet(Model2Package.Literals.EOBJECT_TO_EOBJECT_MAP__KEY, newKey);
+    eSet(Model2Package.eINSTANCE.getEObjectToEObjectMap_Key(), newKey);
   }
 
   /**
@@ -95,7 +95,7 @@ public class EObjectToEObjectMapImpl extends CDOObjectImpl implements BasicEMap.
    */
   public EObject getTypedValue()
   {
-    return (EObject)eGet(Model2Package.Literals.EOBJECT_TO_EOBJECT_MAP__VALUE, true);
+    return (EObject)eGet(Model2Package.eINSTANCE.getEObjectToEObjectMap_Value(), true);
   }
 
   /**
@@ -105,7 +105,7 @@ public class EObjectToEObjectMapImpl extends CDOObjectImpl implements BasicEMap.
    */
   public void setTypedValue(EObject newValue)
   {
-    eSet(Model2Package.Literals.EOBJECT_TO_EOBJECT_MAP__VALUE, newValue);
+    eSet(Model2Package.eINSTANCE.getEObjectToEObjectMap_Value(), newValue);
   }
 
   /**

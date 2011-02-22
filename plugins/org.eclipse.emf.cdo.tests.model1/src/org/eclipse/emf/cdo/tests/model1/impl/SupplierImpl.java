@@ -22,23 +22,25 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SupplierImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SupplierImpl#isPreferred <em>Preferred</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SupplierImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.SupplierImpl#isPreferred <em>Preferred</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class SupplierImpl extends AddressImpl implements Supplier
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected SupplierImpl()
@@ -48,40 +50,44 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model1Package.Literals.SUPPLIER;
+    return Model1Package.eINSTANCE.getSupplier();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   public EList<PurchaseOrder> getPurchaseOrders()
   {
-    return (EList<PurchaseOrder>)eGet(Model1Package.Literals.SUPPLIER__PURCHASE_ORDERS, true);
+    return (EList<PurchaseOrder>)eGet(Model1Package.eINSTANCE.getSupplier_PurchaseOrders(), true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isPreferred()
   {
-    return (Boolean)eGet(Model1Package.Literals.SUPPLIER__PREFERRED, true);
+    return (Boolean)eGet(Model1Package.eINSTANCE.getSupplier_Preferred(), true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setPreferred(boolean newPreferred)
   {
-    eSet(Model1Package.Literals.SUPPLIER__PREFERRED, newPreferred);
+    eSet(Model1Package.eINSTANCE.getSupplier_Preferred(), newPreferred);
   }
 
 } // SupplierImpl

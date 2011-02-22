@@ -51,7 +51,7 @@ public class RefMultiNonContainedImpl extends CDOObjectImpl implements RefMultiN
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_MULTI_NON_CONTAINED;
+    return model4Package.eINSTANCE.getRefMultiNonContained();
   }
 
   /**
@@ -73,7 +73,7 @@ public class RefMultiNonContainedImpl extends CDOObjectImpl implements RefMultiN
   @SuppressWarnings("unchecked")
   public EList<MultiNonContainedElement> getElements()
   {
-    return (EList<MultiNonContainedElement>)eGet(model4Package.Literals.REF_MULTI_NON_CONTAINED__ELEMENTS, true);
+    return (EList<MultiNonContainedElement>)eGet(model4Package.eINSTANCE.getRefMultiNonContained_Elements(), true);
   }
 
 } // RefMultiNonContainedImpl

@@ -84,7 +84,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.META_REF;
+    return Model3Package.eINSTANCE.getMetaRef();
   }
 
   /**

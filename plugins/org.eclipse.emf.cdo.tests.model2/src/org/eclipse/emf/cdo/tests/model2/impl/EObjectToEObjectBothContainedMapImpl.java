@@ -54,7 +54,7 @@ public class EObjectToEObjectBothContainedMapImpl extends CDOObjectImpl implemen
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP;
+    return Model2Package.eINSTANCE.getEObjectToEObjectBothContainedMap();
   }
 
   /**
@@ -75,7 +75,7 @@ public class EObjectToEObjectBothContainedMapImpl extends CDOObjectImpl implemen
    */
   public EObject getTypedKey()
   {
-    return (EObject)eGet(Model2Package.Literals.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, true);
+    return (EObject)eGet(Model2Package.eINSTANCE.getEObjectToEObjectBothContainedMap_Key(), true);
   }
 
   /**
@@ -85,7 +85,7 @@ public class EObjectToEObjectBothContainedMapImpl extends CDOObjectImpl implemen
    */
   public void setTypedKey(EObject newKey)
   {
-    eSet(Model2Package.Literals.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, newKey);
+    eSet(Model2Package.eINSTANCE.getEObjectToEObjectBothContainedMap_Key(), newKey);
   }
 
   /**
@@ -95,7 +95,7 @@ public class EObjectToEObjectBothContainedMapImpl extends CDOObjectImpl implemen
    */
   public EObject getTypedValue()
   {
-    return (EObject)eGet(Model2Package.Literals.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, true);
+    return (EObject)eGet(Model2Package.eINSTANCE.getEObjectToEObjectBothContainedMap_Value(), true);
   }
 
   /**
@@ -105,7 +105,7 @@ public class EObjectToEObjectBothContainedMapImpl extends CDOObjectImpl implemen
    */
   public void setTypedValue(EObject newValue)
   {
-    eSet(Model2Package.Literals.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, newValue);
+    eSet(Model2Package.eINSTANCE.getEObjectToEObjectBothContainedMap_Value(), newValue);
   }
 
   /**

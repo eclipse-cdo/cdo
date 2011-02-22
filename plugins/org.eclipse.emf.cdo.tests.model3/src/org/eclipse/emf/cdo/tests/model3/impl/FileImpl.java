@@ -50,7 +50,7 @@ public class FileImpl extends CDOObjectImpl implements File
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.FILE;
+    return Model3Package.eINSTANCE.getFile();
   }
 
   /**
@@ -71,7 +71,7 @@ public class FileImpl extends CDOObjectImpl implements File
    */
   public String getName()
   {
-    return (String)eGet(Model3Package.Literals.FILE__NAME, true);
+    return (String)eGet(Model3Package.eINSTANCE.getFile_Name(), true);
   }
 
   /**
@@ -81,7 +81,7 @@ public class FileImpl extends CDOObjectImpl implements File
    */
   public void setName(String newName)
   {
-    eSet(Model3Package.Literals.FILE__NAME, newName);
+    eSet(Model3Package.eINSTANCE.getFile_Name(), newName);
   }
 
   /**
@@ -91,7 +91,7 @@ public class FileImpl extends CDOObjectImpl implements File
    */
   public CDOClob getData()
   {
-    return (CDOClob)eGet(Model3Package.Literals.FILE__DATA, true);
+    return (CDOClob)eGet(Model3Package.eINSTANCE.getFile_Data(), true);
   }
 
   /**
@@ -101,7 +101,7 @@ public class FileImpl extends CDOObjectImpl implements File
    */
   public void setData(CDOClob newData)
   {
-    eSet(Model3Package.Literals.FILE__DATA, newData);
+    eSet(Model3Package.eINSTANCE.getFile_Data(), newData);
   }
 
 } // FileImpl

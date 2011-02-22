@@ -57,7 +57,7 @@ public class GenListOfLongImpl extends CDOObjectImpl implements GenListOfLong
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_LONG;
+    return Model5Package.eINSTANCE.getGenListOfLong();
   }
 
   /**
@@ -79,7 +79,7 @@ public class GenListOfLongImpl extends CDOObjectImpl implements GenListOfLong
   @SuppressWarnings("unchecked")
   public EList<Long> getElements()
   {
-    return (EList<Long>)eGet(Model5Package.Literals.GEN_LIST_OF_LONG__ELEMENTS, true);
+    return (EList<Long>)eGet(Model5Package.eINSTANCE.getGenListOfLong_Elements(), true);
   }
 
 } // GenListOfLongImpl

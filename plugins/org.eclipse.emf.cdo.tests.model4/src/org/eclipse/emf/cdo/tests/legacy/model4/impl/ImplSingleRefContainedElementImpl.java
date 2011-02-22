@@ -75,7 +75,7 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_SINGLE_REF_CONTAINED_ELEMENT;
+    return model4Package.eINSTANCE.getImplSingleRefContainedElement();
   }
 
   /**
@@ -86,9 +86,7 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
   public ISingleRefContainer getParent()
   {
     if (eContainerFeatureID() != model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT)
-    {
       return null;
-    }
     return (ISingleRefContainer)eContainer();
   }
 
@@ -111,33 +109,23 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
   public void setParent(ISingleRefContainer newParent)
   {
     if (newParent != eInternalContainer()
-        || eContainerFeatureID() != model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT && newParent != null)
+        || (eContainerFeatureID() != model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT && newParent != null))
     {
       if (EcoreUtil.isAncestor(this, newParent))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newParent != null)
-      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, model4interfacesPackage.ISINGLE_REF_CONTAINER__ELEMENT,
             ISingleRefContainer.class, msgs);
-      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT,
           newParent, newParent));
-    }
   }
 
   /**
@@ -160,10 +148,8 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__NAME,
           oldName, name));
-    }
   }
 
   /**
@@ -178,9 +164,7 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
     {
     case model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT__PARENT:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetParent((ISingleRefContainer)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -304,9 +288,7 @@ public class ImplSingleRefContainedElementImpl extends EObjectImpl implements Im
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

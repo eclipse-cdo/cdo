@@ -62,7 +62,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.TEST_FEATURE_MAP;
+    return Model5Package.eINSTANCE.getTestFeatureMap();
   }
 
   /**
@@ -84,7 +84,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
   @SuppressWarnings("unchecked")
   public EList<Manager> getManagers()
   {
-    return (EList<Manager>)eGet(Model5Package.Literals.TEST_FEATURE_MAP__MANAGERS, true);
+    return (EList<Manager>)eGet(Model5Package.eINSTANCE.getTestFeatureMap_Managers(), true);
   }
 
   /**
@@ -95,7 +95,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
   @SuppressWarnings("unchecked")
   public EList<Doctor> getDoctors()
   {
-    return (EList<Doctor>)eGet(Model5Package.Literals.TEST_FEATURE_MAP__DOCTORS, true);
+    return (EList<Doctor>)eGet(Model5Package.eINSTANCE.getTestFeatureMap_Doctors(), true);
   }
 
   /**
@@ -105,7 +105,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
    */
   public FeatureMap getPeople()
   {
-    return (FeatureMap)eGet(Model5Package.Literals.TEST_FEATURE_MAP__PEOPLE, true);
+    return (FeatureMap)eGet(Model5Package.eINSTANCE.getTestFeatureMap_People(), true);
   }
 
 } // TestFeatureMapImpl

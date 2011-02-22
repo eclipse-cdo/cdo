@@ -55,7 +55,7 @@ public class StringToAddressReferenceMapImpl extends CDOObjectImpl implements Ba
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.STRING_TO_ADDRESS_REFERENCE_MAP;
+    return Model2Package.eINSTANCE.getStringToAddressReferenceMap();
   }
 
   /**
@@ -76,7 +76,7 @@ public class StringToAddressReferenceMapImpl extends CDOObjectImpl implements Ba
    */
   public String getTypedKey()
   {
-    return (String)eGet(Model2Package.Literals.STRING_TO_ADDRESS_REFERENCE_MAP__KEY, true);
+    return (String)eGet(Model2Package.eINSTANCE.getStringToAddressReferenceMap_Key(), true);
   }
 
   /**
@@ -86,7 +86,7 @@ public class StringToAddressReferenceMapImpl extends CDOObjectImpl implements Ba
    */
   public void setTypedKey(String newKey)
   {
-    eSet(Model2Package.Literals.STRING_TO_ADDRESS_REFERENCE_MAP__KEY, newKey);
+    eSet(Model2Package.eINSTANCE.getStringToAddressReferenceMap_Key(), newKey);
   }
 
   /**
@@ -96,7 +96,7 @@ public class StringToAddressReferenceMapImpl extends CDOObjectImpl implements Ba
    */
   public Address getTypedValue()
   {
-    return (Address)eGet(Model2Package.Literals.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE, true);
+    return (Address)eGet(Model2Package.eINSTANCE.getStringToAddressReferenceMap_Value(), true);
   }
 
   /**
@@ -106,7 +106,7 @@ public class StringToAddressReferenceMapImpl extends CDOObjectImpl implements Ba
    */
   public void setTypedValue(Address newValue)
   {
-    eSet(Model2Package.Literals.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE, newValue);
+    eSet(Model2Package.eINSTANCE.getStringToAddressReferenceMap_Value(), newValue);
   }
 
   /**

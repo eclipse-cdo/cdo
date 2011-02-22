@@ -65,7 +65,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.GEN_REF_MAP_NON_CONTAINED;
+    return model4Package.eINSTANCE.getGenRefMapNonContained();
   }
 
   /**
@@ -77,8 +77,8 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   {
     if (elements == null)
     {
-      elements = new EcoreEMap<String, EObject>(model4Package.Literals.STRING_TO_EOBJECT, StringToEObjectImpl.class,
-          this, model4Package.GEN_REF_MAP_NON_CONTAINED__ELEMENTS);
+      elements = new EcoreEMap<String, EObject>(model4Package.eINSTANCE.getStringToEObject(),
+          StringToEObjectImpl.class, this, model4Package.GEN_REF_MAP_NON_CONTAINED__ELEMENTS);
     }
     return elements;
   }
@@ -111,13 +111,9 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
     {
     case model4Package.GEN_REF_MAP_NON_CONTAINED__ELEMENTS:
       if (coreType)
-      {
         return getElements();
-      }
       else
-      {
         return getElements().map();
-      }
     }
     return super.eGet(featureID, resolve, coreType);
   }

@@ -111,7 +111,7 @@ public class ImageImpl extends EObjectImpl implements Image
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.IMAGE;
+    return Model3Package.eINSTANCE.getImage();
   }
 
   /**

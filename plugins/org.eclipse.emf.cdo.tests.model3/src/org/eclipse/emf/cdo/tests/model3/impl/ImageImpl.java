@@ -51,7 +51,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.IMAGE;
+    return Model3Package.eINSTANCE.getImage();
   }
 
   /**
@@ -72,7 +72,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    */
   public int getWidth()
   {
-    return (Integer)eGet(Model3Package.Literals.IMAGE__WIDTH, true);
+    return (Integer)eGet(Model3Package.eINSTANCE.getImage_Width(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    */
   public void setWidth(int newWidth)
   {
-    eSet(Model3Package.Literals.IMAGE__WIDTH, newWidth);
+    eSet(Model3Package.eINSTANCE.getImage_Width(), newWidth);
   }
 
   /**
@@ -92,7 +92,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    */
   public int getHeight()
   {
-    return (Integer)eGet(Model3Package.Literals.IMAGE__HEIGHT, true);
+    return (Integer)eGet(Model3Package.eINSTANCE.getImage_Height(), true);
   }
 
   /**
@@ -102,7 +102,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    */
   public void setHeight(int newHeight)
   {
-    eSet(Model3Package.Literals.IMAGE__HEIGHT, newHeight);
+    eSet(Model3Package.eINSTANCE.getImage_Height(), newHeight);
   }
 
   /**
@@ -112,7 +112,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    */
   public CDOBlob getData()
   {
-    return (CDOBlob)eGet(Model3Package.Literals.IMAGE__DATA, true);
+    return (CDOBlob)eGet(Model3Package.eINSTANCE.getImage_Data(), true);
   }
 
   /**
@@ -122,7 +122,7 @@ public class ImageImpl extends CDOObjectImpl implements Image
    */
   public void setData(CDOBlob newData)
   {
-    eSet(Model3Package.Literals.IMAGE__DATA, newData);
+    eSet(Model3Package.eINSTANCE.getImage_Data(), newData);
   }
 
 } // ImageImpl

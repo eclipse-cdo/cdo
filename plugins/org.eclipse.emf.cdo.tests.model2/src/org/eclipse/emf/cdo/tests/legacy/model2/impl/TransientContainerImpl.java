@@ -96,7 +96,7 @@ public class TransientContainerImpl extends EObjectImpl implements TransientCont
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.TRANSIENT_CONTAINER;
+    return Model2Package.eINSTANCE.getTransientContainer();
   }
 
   /**

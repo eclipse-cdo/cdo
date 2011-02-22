@@ -385,7 +385,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT;
+    return Model2Package.eINSTANCE.getUnsettable2WithDefault();
   }
 
   /**

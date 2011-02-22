@@ -98,7 +98,7 @@ public class NodeAImpl extends EObjectImpl implements NodeA
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.NODE_A;
+    return Model3Package.eINSTANCE.getNodeA();
   }
 
   /**

@@ -33,6 +33,7 @@ public class Bugzilla_305527_Test extends AbstractCDOTest
 {
   public void testAvoidReferencingDifferentViews() throws CommitException
   {
+    skipConfig(LEGACY);
     skipUnlessAuditing();
     final CDOSession session = openSession();
     long commitTime;

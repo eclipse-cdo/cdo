@@ -85,7 +85,7 @@ public class ImplSingleRefNonContainedElementImpl extends EObjectImpl implements
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT;
+    return model4Package.eINSTANCE.getImplSingleRefNonContainedElement();
   }
 
   /**
@@ -102,10 +102,8 @@ public class ImplSingleRefNonContainedElementImpl extends EObjectImpl implements
       if (parent != oldParent)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               model4Package.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__PARENT, oldParent, parent));
-        }
       }
     }
     return parent;
@@ -135,13 +133,9 @@ public class ImplSingleRefNonContainedElementImpl extends EObjectImpl implements
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           model4Package.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__PARENT, oldParent, newParent);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -157,26 +151,18 @@ public class ImplSingleRefNonContainedElementImpl extends EObjectImpl implements
     {
       NotificationChain msgs = null;
       if (parent != null)
-      {
         msgs = ((InternalEObject)parent).eInverseRemove(this,
             model4interfacesPackage.ISINGLE_REF_NON_CONTAINER__ELEMENT, ISingleRefNonContainer.class, msgs);
-      }
       if (newParent != null)
-      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this,
             model4interfacesPackage.ISINGLE_REF_NON_CONTAINER__ELEMENT, ISingleRefNonContainer.class, msgs);
-      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           model4Package.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__PARENT, newParent, newParent));
-    }
   }
 
   /**
@@ -199,10 +185,8 @@ public class ImplSingleRefNonContainedElementImpl extends EObjectImpl implements
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__NAME,
           oldName, name));
-    }
   }
 
   /**
@@ -217,10 +201,8 @@ public class ImplSingleRefNonContainedElementImpl extends EObjectImpl implements
     {
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__PARENT:
       if (parent != null)
-      {
         msgs = ((InternalEObject)parent).eInverseRemove(this,
             model4interfacesPackage.ISINGLE_REF_NON_CONTAINER__ELEMENT, ISingleRefNonContainer.class, msgs);
-      }
       return basicSetParent((ISingleRefNonContainer)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -254,9 +236,7 @@ public class ImplSingleRefNonContainedElementImpl extends EObjectImpl implements
     {
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__PARENT:
       if (resolve)
-      {
         return getParent();
-      }
       return basicGetParent();
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__NAME:
       return getName();
@@ -331,9 +311,7 @@ public class ImplSingleRefNonContainedElementImpl extends EObjectImpl implements
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

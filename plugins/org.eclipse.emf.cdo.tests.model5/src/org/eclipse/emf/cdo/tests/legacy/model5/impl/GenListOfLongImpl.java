@@ -69,7 +69,7 @@ public class GenListOfLongImpl extends EObjectImpl implements GenListOfLong
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_LONG;
+    return Model5Package.eINSTANCE.getGenListOfLong();
   }
 
   /**

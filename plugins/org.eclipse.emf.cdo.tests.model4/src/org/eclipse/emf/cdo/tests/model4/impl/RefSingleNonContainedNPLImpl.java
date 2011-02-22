@@ -50,7 +50,7 @@ public class RefSingleNonContainedNPLImpl extends CDOObjectImpl implements RefSi
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_SINGLE_NON_CONTAINED_NPL;
+    return model4Package.eINSTANCE.getRefSingleNonContainedNPL();
   }
 
   /**
@@ -71,7 +71,7 @@ public class RefSingleNonContainedNPLImpl extends CDOObjectImpl implements RefSi
    */
   public ContainedElementNoOpposite getElement()
   {
-    return (ContainedElementNoOpposite)eGet(model4Package.Literals.REF_SINGLE_NON_CONTAINED_NPL__ELEMENT, true);
+    return (ContainedElementNoOpposite)eGet(model4Package.eINSTANCE.getRefSingleNonContainedNPL_Element(), true);
   }
 
   /**
@@ -81,7 +81,7 @@ public class RefSingleNonContainedNPLImpl extends CDOObjectImpl implements RefSi
    */
   public void setElement(ContainedElementNoOpposite newElement)
   {
-    eSet(model4Package.Literals.REF_SINGLE_NON_CONTAINED_NPL__ELEMENT, newElement);
+    eSet(model4Package.eINSTANCE.getRefSingleNonContainedNPL_Element(), newElement);
   }
 
 } // RefSingleNonContainedNPLImpl

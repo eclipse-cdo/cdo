@@ -51,7 +51,7 @@ public class ImplSingleRefContainerImpl extends CDOObjectImpl implements ImplSin
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_SINGLE_REF_CONTAINER;
+    return model4Package.eINSTANCE.getImplSingleRefContainer();
   }
 
   /**
@@ -72,7 +72,7 @@ public class ImplSingleRefContainerImpl extends CDOObjectImpl implements ImplSin
    */
   public ISingleRefContainedElement getElement()
   {
-    return (ISingleRefContainedElement)eGet(model4interfacesPackage.Literals.ISINGLE_REF_CONTAINER__ELEMENT, true);
+    return (ISingleRefContainedElement)eGet(model4interfacesPackage.eINSTANCE.getISingleRefContainer_Element(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class ImplSingleRefContainerImpl extends CDOObjectImpl implements ImplSin
    */
   public void setElement(ISingleRefContainedElement newElement)
   {
-    eSet(model4interfacesPackage.Literals.ISINGLE_REF_CONTAINER__ELEMENT, newElement);
+    eSet(model4interfacesPackage.eINSTANCE.getISingleRefContainer_Element(), newElement);
   }
 
 } // ImplSingleRefContainerImpl

@@ -51,7 +51,7 @@ public class GenRefMultiNonContainedImpl extends CDOObjectImpl implements GenRef
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.GEN_REF_MULTI_NON_CONTAINED;
+    return model4Package.eINSTANCE.getGenRefMultiNonContained();
   }
 
   /**
@@ -73,7 +73,7 @@ public class GenRefMultiNonContainedImpl extends CDOObjectImpl implements GenRef
   @SuppressWarnings("unchecked")
   public EList<EObject> getElements()
   {
-    return (EList<EObject>)eGet(model4Package.Literals.GEN_REF_MULTI_NON_CONTAINED__ELEMENTS, true);
+    return (EList<EObject>)eGet(model4Package.eINSTANCE.getGenRefMultiNonContained_Elements(), true);
   }
 
 } // GenRefMultiNonContainedImpl

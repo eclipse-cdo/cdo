@@ -50,7 +50,7 @@ public class PolygonImpl extends CDOObjectImpl implements Polygon
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.POLYGON;
+    return Model3Package.eINSTANCE.getPolygon();
   }
 
   /**
@@ -72,7 +72,7 @@ public class PolygonImpl extends CDOObjectImpl implements Polygon
   @SuppressWarnings("unchecked")
   public EList<Point> getPoints()
   {
-    return (EList<Point>)eGet(Model3Package.Literals.POLYGON__POINTS, true);
+    return (EList<Point>)eGet(Model3Package.eINSTANCE.getPolygon_Points(), true);
   }
 
 } // PolygonImpl

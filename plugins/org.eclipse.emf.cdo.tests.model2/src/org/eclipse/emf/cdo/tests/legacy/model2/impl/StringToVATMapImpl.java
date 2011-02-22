@@ -96,7 +96,7 @@ public class StringToVATMapImpl extends EObjectImpl implements BasicEMap.Entry<S
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.STRING_TO_VAT_MAP;
+    return Model2Package.eINSTANCE.getStringToVATMap();
   }
 
   /**

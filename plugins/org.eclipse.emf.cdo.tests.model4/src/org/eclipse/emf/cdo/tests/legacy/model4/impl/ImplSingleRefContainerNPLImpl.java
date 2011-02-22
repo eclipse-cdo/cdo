@@ -63,7 +63,7 @@ public class ImplSingleRefContainerNPLImpl extends EObjectImpl implements ImplSi
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_SINGLE_REF_CONTAINER_NPL;
+    return model4Package.eINSTANCE.getImplSingleRefContainerNPL();
   }
 
   /**
@@ -90,13 +90,9 @@ public class ImplSingleRefContainerNPLImpl extends EObjectImpl implements ImplSi
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT, oldElement, newElement);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -112,26 +108,18 @@ public class ImplSingleRefContainerNPLImpl extends EObjectImpl implements ImplSi
     {
       NotificationChain msgs = null;
       if (element != null)
-      {
         msgs = ((InternalEObject)element).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
             - model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT, null, msgs);
-      }
       if (newElement != null)
-      {
         msgs = ((InternalEObject)newElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
             - model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT, null, msgs);
-      }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINER_NPL__ELEMENT,
           newElement, newElement));
-    }
   }
 
   /**

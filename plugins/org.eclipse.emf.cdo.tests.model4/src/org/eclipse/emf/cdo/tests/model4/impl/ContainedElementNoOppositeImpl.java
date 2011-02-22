@@ -49,7 +49,7 @@ public class ContainedElementNoOppositeImpl extends CDOObjectImpl implements Con
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.CONTAINED_ELEMENT_NO_OPPOSITE;
+    return model4Package.eINSTANCE.getContainedElementNoOpposite();
   }
 
   /**
@@ -70,7 +70,7 @@ public class ContainedElementNoOppositeImpl extends CDOObjectImpl implements Con
    */
   public String getName()
   {
-    return (String)eGet(model4Package.Literals.CONTAINED_ELEMENT_NO_OPPOSITE__NAME, true);
+    return (String)eGet(model4Package.eINSTANCE.getContainedElementNoOpposite_Name(), true);
   }
 
   /**
@@ -80,7 +80,7 @@ public class ContainedElementNoOppositeImpl extends CDOObjectImpl implements Con
    */
   public void setName(String newName)
   {
-    eSet(model4Package.Literals.CONTAINED_ELEMENT_NO_OPPOSITE__NAME, newName);
+    eSet(model4Package.eINSTANCE.getContainedElementNoOpposite_Name(), newName);
   }
 
 } // ContainedElementNoOppositeImpl

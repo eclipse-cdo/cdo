@@ -69,7 +69,7 @@ public class GenListOfBooleanImpl extends EObjectImpl implements GenListOfBoolea
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_BOOLEAN;
+    return Model5Package.eINSTANCE.getGenListOfBoolean();
   }
 
   /**

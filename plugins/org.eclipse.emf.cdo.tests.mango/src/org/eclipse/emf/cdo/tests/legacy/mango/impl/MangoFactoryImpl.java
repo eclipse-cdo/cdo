@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
-import org.eclipse.emf.cdo.tests.mango.MangoFactory;
-import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.legacy.mango.MangoFactory;
+import org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.mango.MangoParameter;
 import org.eclipse.emf.cdo.tests.mango.MangoValue;
 import org.eclipse.emf.cdo.tests.mango.MangoValueList;
@@ -41,12 +41,12 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
    * 
    * @generated NOT
    */
-  public static org.eclipse.emf.cdo.tests.mango.MangoFactory init()
+  public static MangoFactory init()
   {
     try
     {
       MangoFactory theMangoFactory = (MangoFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/mango");
+          .getEFactory("http://www.eclipse.org/emf/CDO/tests/legacy/mango");
       if (theMangoFactory instanceof MangoFactoryImpl)
       {
         return theMangoFactory;
@@ -170,10 +170,8 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   {
     ParameterPassing result = ParameterPassing.get(initialValue);
     if (result == null)
-    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
           + eDataType.getName() + "'");
-    }
     return result;
   }
 

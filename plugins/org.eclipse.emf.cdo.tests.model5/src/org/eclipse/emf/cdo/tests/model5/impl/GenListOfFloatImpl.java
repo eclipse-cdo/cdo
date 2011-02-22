@@ -57,7 +57,7 @@ public class GenListOfFloatImpl extends CDOObjectImpl implements GenListOfFloat
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_FLOAT;
+    return Model5Package.eINSTANCE.getGenListOfFloat();
   }
 
   /**
@@ -79,7 +79,7 @@ public class GenListOfFloatImpl extends CDOObjectImpl implements GenListOfFloat
   @SuppressWarnings("unchecked")
   public EList<Float> getElements()
   {
-    return (EList<Float>)eGet(Model5Package.Literals.GEN_LIST_OF_FLOAT__ELEMENTS, true);
+    return (EList<Float>)eGet(Model5Package.eINSTANCE.getGenListOfFloat_Elements(), true);
   }
 
 } // GenListOfFloatImpl

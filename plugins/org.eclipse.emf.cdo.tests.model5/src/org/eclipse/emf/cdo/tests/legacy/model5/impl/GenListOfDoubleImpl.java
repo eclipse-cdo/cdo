@@ -69,7 +69,7 @@ public class GenListOfDoubleImpl extends EObjectImpl implements GenListOfDouble
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_DOUBLE;
+    return Model5Package.eINSTANCE.getGenListOfDouble();
   }
 
   /**

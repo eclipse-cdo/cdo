@@ -51,7 +51,7 @@ public class RefMultiNonContainedNPLImpl extends CDOObjectImpl implements RefMul
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_MULTI_NON_CONTAINED_NPL;
+    return model4Package.eINSTANCE.getRefMultiNonContainedNPL();
   }
 
   /**
@@ -73,7 +73,7 @@ public class RefMultiNonContainedNPLImpl extends CDOObjectImpl implements RefMul
   @SuppressWarnings("unchecked")
   public EList<ContainedElementNoOpposite> getElements()
   {
-    return (EList<ContainedElementNoOpposite>)eGet(model4Package.Literals.REF_MULTI_NON_CONTAINED_NPL__ELEMENTS, true);
+    return (EList<ContainedElementNoOpposite>)eGet(model4Package.eINSTANCE.getRefMultiNonContainedNPL_Elements(), true);
   }
 
 } // RefMultiNonContainedNPLImpl

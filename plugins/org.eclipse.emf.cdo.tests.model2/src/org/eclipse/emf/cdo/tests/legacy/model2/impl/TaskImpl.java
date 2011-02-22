@@ -93,7 +93,7 @@ public class TaskImpl extends EObjectImpl implements Task
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.TASK;
+    return Model2Package.eINSTANCE.getTask();
   }
 
   /**

@@ -51,7 +51,7 @@ public class ImplSingleRefNonContainerImpl extends CDOObjectImpl implements Impl
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_SINGLE_REF_NON_CONTAINER;
+    return model4Package.eINSTANCE.getImplSingleRefNonContainer();
   }
 
   /**
@@ -72,7 +72,7 @@ public class ImplSingleRefNonContainerImpl extends CDOObjectImpl implements Impl
    */
   public ISingleRefNonContainedElement getElement()
   {
-    return (ISingleRefNonContainedElement)eGet(model4interfacesPackage.Literals.ISINGLE_REF_NON_CONTAINER__ELEMENT,
+    return (ISingleRefNonContainedElement)eGet(model4interfacesPackage.eINSTANCE.getISingleRefNonContainer_Element(),
         true);
   }
 
@@ -83,7 +83,7 @@ public class ImplSingleRefNonContainerImpl extends CDOObjectImpl implements Impl
    */
   public void setElement(ISingleRefNonContainedElement newElement)
   {
-    eSet(model4interfacesPackage.Literals.ISINGLE_REF_NON_CONTAINER__ELEMENT, newElement);
+    eSet(model4interfacesPackage.eINSTANCE.getISingleRefNonContainer_Element(), newElement);
   }
 
 } // ImplSingleRefNonContainerImpl

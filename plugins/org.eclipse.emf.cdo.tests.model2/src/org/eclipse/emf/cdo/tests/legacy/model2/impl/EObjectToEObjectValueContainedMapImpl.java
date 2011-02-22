@@ -79,7 +79,7 @@ public class EObjectToEObjectValueContainedMapImpl extends EObjectImpl implement
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP;
+    return Model2Package.eINSTANCE.getEObjectToEObjectValueContainedMap();
   }
 
   /**

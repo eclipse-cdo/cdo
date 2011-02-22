@@ -86,7 +86,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.SPECIAL_PURCHASE_ORDER;
+    return Model2Package.eINSTANCE.getSpecialPurchaseOrder();
   }
 
   /**

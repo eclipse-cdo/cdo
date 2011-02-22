@@ -57,7 +57,7 @@ public class GenListOfBooleanImpl extends CDOObjectImpl implements GenListOfBool
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_BOOLEAN;
+    return Model5Package.eINSTANCE.getGenListOfBoolean();
   }
 
   /**
@@ -79,7 +79,7 @@ public class GenListOfBooleanImpl extends CDOObjectImpl implements GenListOfBool
   @SuppressWarnings("unchecked")
   public EList<Boolean> getElements()
   {
-    return (EList<Boolean>)eGet(Model5Package.Literals.GEN_LIST_OF_BOOLEAN__ELEMENTS, true);
+    return (EList<Boolean>)eGet(Model5Package.eINSTANCE.getGenListOfBoolean_Elements(), true);
   }
 
 } // GenListOfBooleanImpl

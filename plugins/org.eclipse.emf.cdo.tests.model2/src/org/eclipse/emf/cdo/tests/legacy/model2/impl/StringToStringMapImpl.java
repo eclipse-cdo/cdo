@@ -95,7 +95,7 @@ public class StringToStringMapImpl extends EObjectImpl implements BasicEMap.Entr
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.STRING_TO_STRING_MAP;
+    return Model2Package.eINSTANCE.getStringToStringMap();
   }
 
   /**

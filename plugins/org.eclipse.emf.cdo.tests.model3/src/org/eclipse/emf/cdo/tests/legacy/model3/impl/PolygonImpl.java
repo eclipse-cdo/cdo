@@ -62,7 +62,7 @@ public class PolygonImpl extends EObjectImpl implements Polygon
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.POLYGON;
+    return Model3Package.eINSTANCE.getPolygon();
   }
 
   /**

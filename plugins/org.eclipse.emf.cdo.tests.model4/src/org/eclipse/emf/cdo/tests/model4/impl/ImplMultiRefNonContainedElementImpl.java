@@ -52,7 +52,7 @@ public class ImplMultiRefNonContainedElementImpl extends CDOObjectImpl implement
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT;
+    return model4Package.eINSTANCE.getImplMultiRefNonContainedElement();
   }
 
   /**
@@ -73,7 +73,7 @@ public class ImplMultiRefNonContainedElementImpl extends CDOObjectImpl implement
    */
   public IMultiRefNonContainer getParent()
   {
-    return (IMultiRefNonContainer)eGet(model4interfacesPackage.Literals.IMULTI_REF_NON_CONTAINED_ELEMENT__PARENT, true);
+    return (IMultiRefNonContainer)eGet(model4interfacesPackage.eINSTANCE.getIMultiRefNonContainedElement_Parent(), true);
   }
 
   /**
@@ -83,7 +83,7 @@ public class ImplMultiRefNonContainedElementImpl extends CDOObjectImpl implement
    */
   public void setParent(IMultiRefNonContainer newParent)
   {
-    eSet(model4interfacesPackage.Literals.IMULTI_REF_NON_CONTAINED_ELEMENT__PARENT, newParent);
+    eSet(model4interfacesPackage.eINSTANCE.getIMultiRefNonContainedElement_Parent(), newParent);
   }
 
   /**
@@ -93,7 +93,7 @@ public class ImplMultiRefNonContainedElementImpl extends CDOObjectImpl implement
    */
   public String getName()
   {
-    return (String)eGet(model4Package.Literals.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__NAME, true);
+    return (String)eGet(model4Package.eINSTANCE.getImplMultiRefNonContainedElement_Name(), true);
   }
 
   /**
@@ -103,7 +103,7 @@ public class ImplMultiRefNonContainedElementImpl extends CDOObjectImpl implement
    */
   public void setName(String newName)
   {
-    eSet(model4Package.Literals.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__NAME, newName);
+    eSet(model4Package.eINSTANCE.getImplMultiRefNonContainedElement_Name(), newName);
   }
 
 } // ImplMultiRefNonContainedElementImpl

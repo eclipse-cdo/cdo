@@ -67,7 +67,7 @@ public class ImplMultiRefContainerImpl extends EObjectImpl implements ImplMultiR
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_MULTI_REF_CONTAINER;
+    return model4Package.eINSTANCE.getImplMultiRefContainer();
   }
 
   /**

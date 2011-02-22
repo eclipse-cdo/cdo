@@ -51,7 +51,7 @@ public class GenRefMapNonContainedImpl extends CDOObjectImpl implements GenRefMa
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.GEN_REF_MAP_NON_CONTAINED;
+    return model4Package.eINSTANCE.getGenRefMapNonContained();
   }
 
   /**
@@ -73,7 +73,7 @@ public class GenRefMapNonContainedImpl extends CDOObjectImpl implements GenRefMa
   @SuppressWarnings("unchecked")
   public EMap<String, EObject> getElements()
   {
-    return (EMap<String, EObject>)eGet(model4Package.Literals.GEN_REF_MAP_NON_CONTAINED__ELEMENTS, true);
+    return (EMap<String, EObject>)eGet(model4Package.eINSTANCE.getGenRefMapNonContained_Elements(), true);
   }
 
 } // GenRefMapNonContainedImpl

@@ -89,7 +89,7 @@ public class FileImpl extends EObjectImpl implements File
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.FILE;
+    return Model3Package.eINSTANCE.getFile();
   }
 
   /**

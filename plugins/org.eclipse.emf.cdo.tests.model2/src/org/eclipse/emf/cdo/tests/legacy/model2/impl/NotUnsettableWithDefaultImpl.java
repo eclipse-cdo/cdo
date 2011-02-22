@@ -299,7 +299,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT;
+    return Model2Package.eINSTANCE.getNotUnsettableWithDefault();
   }
 
   /**

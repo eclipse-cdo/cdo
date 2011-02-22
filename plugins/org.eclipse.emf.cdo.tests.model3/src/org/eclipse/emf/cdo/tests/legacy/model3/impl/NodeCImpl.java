@@ -111,7 +111,7 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.NODE_C;
+    return Model3Package.eINSTANCE.getNodeC();
   }
 
   /**

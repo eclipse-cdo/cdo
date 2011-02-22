@@ -95,7 +95,7 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.INTEGER_TO_STRING_MAP;
+    return Model2Package.eINSTANCE.getIntegerToStringMap();
   }
 
   /**

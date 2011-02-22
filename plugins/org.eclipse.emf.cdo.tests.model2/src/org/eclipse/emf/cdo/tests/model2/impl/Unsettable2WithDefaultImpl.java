@@ -73,7 +73,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT;
+    return Model2Package.eINSTANCE.getUnsettable2WithDefault();
   }
 
   /**
@@ -94,7 +94,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isUnsettableBoolean()
   {
-    return (Boolean)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN, true);
+    return (Boolean)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableBoolean(), true);
   }
 
   /**
@@ -104,7 +104,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableBoolean(boolean newUnsettableBoolean)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN, newUnsettableBoolean);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableBoolean(), newUnsettableBoolean);
   }
 
   /**
@@ -114,7 +114,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableBoolean()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableBoolean());
   }
 
   /**
@@ -124,7 +124,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableBoolean()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableBoolean());
   }
 
   /**
@@ -134,7 +134,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public byte getUnsettableByte()
   {
-    return (Byte)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BYTE, true);
+    return (Byte)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableByte(), true);
   }
 
   /**
@@ -144,7 +144,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableByte(byte newUnsettableByte)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BYTE, newUnsettableByte);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableByte(), newUnsettableByte);
   }
 
   /**
@@ -154,7 +154,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableByte()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BYTE);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableByte());
   }
 
   /**
@@ -164,7 +164,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableByte()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BYTE);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableByte());
   }
 
   /**
@@ -174,7 +174,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public char getUnsettableChar()
   {
-    return (Character)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_CHAR, true);
+    return (Character)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableChar(), true);
   }
 
   /**
@@ -184,7 +184,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableChar(char newUnsettableChar)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_CHAR, newUnsettableChar);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableChar(), newUnsettableChar);
   }
 
   /**
@@ -194,7 +194,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableChar()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_CHAR);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableChar());
   }
 
   /**
@@ -204,7 +204,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableChar()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_CHAR);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableChar());
   }
 
   /**
@@ -214,7 +214,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public Date getUnsettableDate()
   {
-    return (Date)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DATE, true);
+    return (Date)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDate(), true);
   }
 
   /**
@@ -224,7 +224,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableDate(Date newUnsettableDate)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DATE, newUnsettableDate);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDate(), newUnsettableDate);
   }
 
   /**
@@ -234,7 +234,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableDate()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DATE);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDate());
   }
 
   /**
@@ -244,7 +244,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableDate()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DATE);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDate());
   }
 
   /**
@@ -254,7 +254,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public double getUnsettableDouble()
   {
-    return (Double)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DOUBLE, true);
+    return (Double)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDouble(), true);
   }
 
   /**
@@ -264,7 +264,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableDouble(double newUnsettableDouble)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DOUBLE, newUnsettableDouble);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDouble(), newUnsettableDouble);
   }
 
   /**
@@ -274,7 +274,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableDouble()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DOUBLE);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDouble());
   }
 
   /**
@@ -284,7 +284,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableDouble()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DOUBLE);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableDouble());
   }
 
   /**
@@ -294,7 +294,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public float getUnsettableFloat()
   {
-    return (Float)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_FLOAT, true);
+    return (Float)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableFloat(), true);
   }
 
   /**
@@ -304,7 +304,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableFloat(float newUnsettableFloat)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_FLOAT, newUnsettableFloat);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableFloat(), newUnsettableFloat);
   }
 
   /**
@@ -314,7 +314,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableFloat()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_FLOAT);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableFloat());
   }
 
   /**
@@ -324,7 +324,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableFloat()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_FLOAT);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableFloat());
   }
 
   /**
@@ -334,7 +334,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public int getUnsettableInt()
   {
-    return (Integer)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_INT, true);
+    return (Integer)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableInt(), true);
   }
 
   /**
@@ -344,7 +344,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableInt(int newUnsettableInt)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_INT, newUnsettableInt);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableInt(), newUnsettableInt);
   }
 
   /**
@@ -354,7 +354,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableInt()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_INT);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableInt());
   }
 
   /**
@@ -364,7 +364,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableInt()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_INT);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableInt());
   }
 
   /**
@@ -374,7 +374,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public long getUnsettableLong()
   {
-    return (Long)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_LONG, true);
+    return (Long)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableLong(), true);
   }
 
   /**
@@ -384,7 +384,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableLong(long newUnsettableLong)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_LONG, newUnsettableLong);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableLong(), newUnsettableLong);
   }
 
   /**
@@ -394,7 +394,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableLong()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_LONG);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableLong());
   }
 
   /**
@@ -404,7 +404,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableLong()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_LONG);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableLong());
   }
 
   /**
@@ -414,7 +414,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public short getUnsettableShort()
   {
-    return (Short)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_SHORT, true);
+    return (Short)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableShort(), true);
   }
 
   /**
@@ -424,7 +424,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableShort(short newUnsettableShort)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_SHORT, newUnsettableShort);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableShort(), newUnsettableShort);
   }
 
   /**
@@ -434,7 +434,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableShort()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_SHORT);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableShort());
   }
 
   /**
@@ -444,7 +444,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableShort()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_SHORT);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableShort());
   }
 
   /**
@@ -454,7 +454,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public String getUnsettableString()
   {
-    return (String)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING, true);
+    return (String)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableString(), true);
   }
 
   /**
@@ -464,7 +464,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableString(String newUnsettableString)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING, newUnsettableString);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableString(), newUnsettableString);
   }
 
   /**
@@ -474,7 +474,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableString()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableString());
   }
 
   /**
@@ -484,7 +484,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableString()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableString());
   }
 
   /**
@@ -494,7 +494,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public VAT getUnsettableVAT()
   {
-    return (VAT)eGet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT, true);
+    return (VAT)eGet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableVAT(), true);
   }
 
   /**
@@ -504,7 +504,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void setUnsettableVAT(VAT newUnsettableVAT)
   {
-    eSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT, newUnsettableVAT);
+    eSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableVAT(), newUnsettableVAT);
   }
 
   /**
@@ -514,7 +514,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public void unsetUnsettableVAT()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT);
+    eUnset(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableVAT());
   }
 
   /**
@@ -524,7 +524,7 @@ public class Unsettable2WithDefaultImpl extends CDOObjectImpl implements Unsetta
    */
   public boolean isSetUnsettableVAT()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable2WithDefault_UnsettableVAT());
   }
 
 } // Unsettable2WithDefaultImpl

@@ -64,7 +64,7 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_SINGLE_REF_CONTAINER;
+    return model4Package.eINSTANCE.getImplSingleRefContainer();
   }
 
   /**
@@ -91,13 +91,9 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT, oldElement, newElement);
       if (msgs == null)
-      {
         msgs = notification;
-      }
       else
-      {
         msgs.add(notification);
-      }
     }
     return msgs;
   }
@@ -113,26 +109,18 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
     {
       NotificationChain msgs = null;
       if (element != null)
-      {
         msgs = ((InternalEObject)element).eInverseRemove(this,
             model4interfacesPackage.ISINGLE_REF_CONTAINED_ELEMENT__PARENT, ISingleRefContainedElement.class, msgs);
-      }
       if (newElement != null)
-      {
         msgs = ((InternalEObject)newElement).eInverseAdd(this,
             model4interfacesPackage.ISINGLE_REF_CONTAINED_ELEMENT__PARENT, ISingleRefContainedElement.class, msgs);
-      }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT,
           newElement, newElement));
-    }
   }
 
   /**
@@ -147,10 +135,8 @@ public class ImplSingleRefContainerImpl extends EObjectImpl implements ImplSingl
     {
     case model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT:
       if (element != null)
-      {
         msgs = ((InternalEObject)element).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
             - model4Package.IMPL_SINGLE_REF_CONTAINER__ELEMENT, null, msgs);
-      }
       return basicSetElement((ISingleRefContainedElement)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);

@@ -52,7 +52,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.STRING_TO_EOBJECT;
+    return model4Package.eINSTANCE.getStringToEObject();
   }
 
   /**
@@ -73,7 +73,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
    */
   public String getTypedKey()
   {
-    return (String)eGet(model4Package.Literals.STRING_TO_EOBJECT__KEY, true);
+    return (String)eGet(model4Package.eINSTANCE.getStringToEObject_Key(), true);
   }
 
   /**
@@ -83,7 +83,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
    */
   public void setTypedKey(String newKey)
   {
-    eSet(model4Package.Literals.STRING_TO_EOBJECT__KEY, newKey);
+    eSet(model4Package.eINSTANCE.getStringToEObject_Key(), newKey);
   }
 
   /**
@@ -93,7 +93,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
    */
   public EObject getTypedValue()
   {
-    return (EObject)eGet(model4Package.Literals.STRING_TO_EOBJECT__VALUE, true);
+    return (EObject)eGet(model4Package.eINSTANCE.getStringToEObject_Value(), true);
   }
 
   /**
@@ -103,7 +103,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
    */
   public void setTypedValue(EObject newValue)
   {
-    eSet(model4Package.Literals.STRING_TO_EOBJECT__VALUE, newValue);
+    eSet(model4Package.eINSTANCE.getStringToEObject_Value(), newValue);
   }
 
   /**
@@ -123,7 +123,7 @@ public class StringToEObjectImpl extends CDOObjectImpl implements BasicEMap.Entr
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = theKey == null ? 0 : theKey.hashCode();
+      hash = (theKey == null ? 0 : theKey.hashCode());
     }
     return hash;
   }

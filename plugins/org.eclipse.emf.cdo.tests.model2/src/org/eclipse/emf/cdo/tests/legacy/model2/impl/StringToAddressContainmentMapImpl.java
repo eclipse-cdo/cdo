@@ -89,7 +89,7 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.STRING_TO_ADDRESS_CONTAINMENT_MAP;
+    return Model2Package.eINSTANCE.getStringToAddressContainmentMap();
   }
 
   /**

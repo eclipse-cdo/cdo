@@ -57,7 +57,7 @@ public class GenListOfShortImpl extends CDOObjectImpl implements GenListOfShort
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_SHORT;
+    return Model5Package.eINSTANCE.getGenListOfShort();
   }
 
   /**
@@ -79,7 +79,7 @@ public class GenListOfShortImpl extends CDOObjectImpl implements GenListOfShort
   @SuppressWarnings("unchecked")
   public EList<Short> getElements()
   {
-    return (EList<Short>)eGet(Model5Package.Literals.GEN_LIST_OF_SHORT__ELEMENTS, true);
+    return (EList<Short>)eGet(Model5Package.eINSTANCE.getGenListOfShort_Elements(), true);
   }
 
 } // GenListOfShortImpl

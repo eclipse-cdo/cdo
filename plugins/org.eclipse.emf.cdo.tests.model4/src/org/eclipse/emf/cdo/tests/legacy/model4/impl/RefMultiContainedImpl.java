@@ -66,7 +66,7 @@ public class RefMultiContainedImpl extends EObjectImpl implements RefMultiContai
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_MULTI_CONTAINED;
+    return model4Package.eINSTANCE.getRefMultiContained();
   }
 
   /**

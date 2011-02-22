@@ -50,7 +50,7 @@ public class ManagerImpl extends EObjectImpl implements Manager
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.MANAGER;
+    return Model5Package.eINSTANCE.getManager();
   }
 
 } // ManagerImpl

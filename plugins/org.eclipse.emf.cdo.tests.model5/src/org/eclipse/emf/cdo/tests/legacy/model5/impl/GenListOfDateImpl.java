@@ -70,7 +70,7 @@ public class GenListOfDateImpl extends EObjectImpl implements GenListOfDate
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_DATE;
+    return Model5Package.eINSTANCE.getGenListOfDate();
   }
 
   /**

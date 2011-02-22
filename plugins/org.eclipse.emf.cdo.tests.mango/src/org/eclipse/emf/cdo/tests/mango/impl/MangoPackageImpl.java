@@ -99,9 +99,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
   public static MangoPackage init()
   {
     if (isInited)
-    {
       return (MangoPackage)EPackage.Registry.INSTANCE.getEPackage(MangoPackage.eNS_URI);
-    }
 
     // Obtain or create and register package
     MangoPackageImpl theMangoPackage = (MangoPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof MangoPackageImpl ? EPackage.Registry.INSTANCE
@@ -239,9 +237,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -276,9 +272,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -297,7 +291,7 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getMangoValueList_Name(), ecorePackage.getEString(), "name", null, 0, 1, MangoValueList.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMangoValueList_Values(), getMangoValue(), null, "values", null, 0, -1, MangoValueList.class,
+    initEReference(getMangoValueList_Values(), this.getMangoValue(), null, "values", null, 0, -1, MangoValueList.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -310,8 +304,9 @@ public class MangoPackageImpl extends EPackageImpl implements MangoPackage
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getMangoParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, MangoParameter.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMangoParameter_Passing(), getParameterPassing(), "passing", null, 0, 1, MangoParameter.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMangoParameter_Passing(), this.getParameterPassing(), "passing", null, 0, 1,
+        MangoParameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(parameterPassingEEnum, ParameterPassing.class, "ParameterPassing");

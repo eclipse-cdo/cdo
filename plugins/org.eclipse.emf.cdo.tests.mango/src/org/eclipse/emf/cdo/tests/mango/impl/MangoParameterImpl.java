@@ -50,7 +50,7 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
   @Override
   protected EClass eStaticClass()
   {
-    return MangoPackage.Literals.MANGO_PARAMETER;
+    return MangoPackage.eINSTANCE.getMangoParameter();
   }
 
   /**
@@ -71,7 +71,7 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
    */
   public String getName()
   {
-    return (String)eGet(MangoPackage.Literals.MANGO_PARAMETER__NAME, true);
+    return (String)eGet(MangoPackage.eINSTANCE.getMangoParameter_Name(), true);
   }
 
   /**
@@ -81,7 +81,7 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
    */
   public void setName(String newName)
   {
-    eSet(MangoPackage.Literals.MANGO_PARAMETER__NAME, newName);
+    eSet(MangoPackage.eINSTANCE.getMangoParameter_Name(), newName);
   }
 
   /**
@@ -91,7 +91,7 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
    */
   public ParameterPassing getPassing()
   {
-    return (ParameterPassing)eGet(MangoPackage.Literals.MANGO_PARAMETER__PASSING, true);
+    return (ParameterPassing)eGet(MangoPackage.eINSTANCE.getMangoParameter_Passing(), true);
   }
 
   /**
@@ -101,7 +101,7 @@ public class MangoParameterImpl extends CDOObjectImpl implements MangoParameter
    */
   public void setPassing(ParameterPassing newPassing)
   {
-    eSet(MangoPackage.Literals.MANGO_PARAMETER__PASSING, newPassing);
+    eSet(MangoPackage.eINSTANCE.getMangoParameter_Passing(), newPassing);
   }
 
 } // ParameterImpl

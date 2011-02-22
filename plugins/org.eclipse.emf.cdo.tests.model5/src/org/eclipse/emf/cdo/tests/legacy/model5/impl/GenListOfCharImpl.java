@@ -69,7 +69,7 @@ public class GenListOfCharImpl extends EObjectImpl implements GenListOfChar
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_CHAR;
+    return Model5Package.eINSTANCE.getGenListOfChar();
   }
 
   /**

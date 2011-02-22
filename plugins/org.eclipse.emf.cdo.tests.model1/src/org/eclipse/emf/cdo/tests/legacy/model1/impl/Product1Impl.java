@@ -32,19 +32,20 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.Product1Impl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.Product1Impl#getOrderDetails <em>Order Details</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.Product1Impl#getVat <em>Vat</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.Product1Impl#getDescription <em>Description</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.Product1Impl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.Product1Impl#getOrderDetails <em>Order Details</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.Product1Impl#getVat <em>Vat</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.Product1Impl#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class Product1Impl extends EObjectImpl implements Product1
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
@@ -60,8 +61,8 @@ public class Product1Impl extends EObjectImpl implements Product1
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -69,9 +70,9 @@ public class Product1Impl extends EObjectImpl implements Product1
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getOrderDetails() <em>Order Details</em>}' reference list.
-   * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getOrderDetails() <em>Order Details</em>}' reference list. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #getOrderDetails()
    * @generated
    * @ordered
@@ -79,8 +80,8 @@ public class Product1Impl extends EObjectImpl implements Product1
   protected EList<OrderDetail> orderDetails;
 
   /**
-   * The default value of the '{@link #getVat() <em>Vat</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The default value of the '{@link #getVat() <em>Vat</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getVat()
    * @generated
    * @ordered
@@ -88,8 +89,8 @@ public class Product1Impl extends EObjectImpl implements Product1
   protected static final VAT VAT_EDEFAULT = VAT.VAT15;
 
   /**
-   * The cached value of the '{@link #getVat() <em>Vat</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getVat() <em>Vat</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getVat()
    * @generated
    * @ordered
@@ -97,9 +98,9 @@ public class Product1Impl extends EObjectImpl implements Product1
   protected VAT vat = VAT_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-   * <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getDescription() <em>Description</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getDescription()
    * @generated
    * @ordered
@@ -107,9 +108,9 @@ public class Product1Impl extends EObjectImpl implements Product1
   protected static final String DESCRIPTION_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getDescription()
    * @generated
    * @ordered
@@ -118,6 +119,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected Product1Impl()
@@ -127,16 +129,18 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model1Package.Literals.PRODUCT1;
+    return Model1Package.eINSTANCE.getProduct1();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -146,6 +150,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -158,6 +163,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<OrderDetail> getOrderDetails()
@@ -172,6 +178,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public VAT getVat()
@@ -181,6 +188,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setVat(VAT newVat)
@@ -193,6 +201,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getDescription()
@@ -202,6 +211,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setDescription(String newDescription)
@@ -215,6 +225,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -231,6 +242,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -246,6 +258,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -267,6 +280,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -294,6 +308,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -319,6 +334,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -340,6 +356,7 @@ public class Product1Impl extends EObjectImpl implements Product1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

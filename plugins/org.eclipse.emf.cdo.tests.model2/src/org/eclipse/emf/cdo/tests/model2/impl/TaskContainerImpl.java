@@ -50,7 +50,7 @@ public class TaskContainerImpl extends CDOObjectImpl implements TaskContainer
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.TASK_CONTAINER;
+    return Model2Package.eINSTANCE.getTaskContainer();
   }
 
   /**
@@ -72,7 +72,7 @@ public class TaskContainerImpl extends CDOObjectImpl implements TaskContainer
   @SuppressWarnings("unchecked")
   public EList<Task> getTasks()
   {
-    return (EList<Task>)eGet(Model2Package.Literals.TASK_CONTAINER__TASKS, true);
+    return (EList<Task>)eGet(Model2Package.eINSTANCE.getTaskContainer_Tasks(), true);
   }
 
 } // TaskContainerImpl

@@ -51,7 +51,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.TASK;
+    return Model2Package.eINSTANCE.getTask();
   }
 
   /**
@@ -72,7 +72,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    */
   public TaskContainer getTaskContainer()
   {
-    return (TaskContainer)eGet(Model2Package.Literals.TASK__TASK_CONTAINER, true);
+    return (TaskContainer)eGet(Model2Package.eINSTANCE.getTask_TaskContainer(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    */
   public void setTaskContainer(TaskContainer newTaskContainer)
   {
-    eSet(Model2Package.Literals.TASK__TASK_CONTAINER, newTaskContainer);
+    eSet(Model2Package.eINSTANCE.getTask_TaskContainer(), newTaskContainer);
   }
 
   /**
@@ -92,7 +92,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    */
   public String getDescription()
   {
-    return (String)eGet(Model2Package.Literals.TASK__DESCRIPTION, true);
+    return (String)eGet(Model2Package.eINSTANCE.getTask_Description(), true);
   }
 
   /**
@@ -102,7 +102,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    */
   public void setDescription(String newDescription)
   {
-    eSet(Model2Package.Literals.TASK__DESCRIPTION, newDescription);
+    eSet(Model2Package.eINSTANCE.getTask_Description(), newDescription);
   }
 
   /**
@@ -112,7 +112,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    */
   public boolean isDone()
   {
-    return (Boolean)eGet(Model2Package.Literals.TASK__DONE, true);
+    return (Boolean)eGet(Model2Package.eINSTANCE.getTask_Done(), true);
   }
 
   /**
@@ -122,7 +122,7 @@ public class TaskImpl extends CDOObjectImpl implements Task
    */
   public void setDone(boolean newDone)
   {
-    eSet(Model2Package.Literals.TASK__DONE, newDone);
+    eSet(Model2Package.eINSTANCE.getTask_Done(), newDone);
   }
 
 } // TaskImpl

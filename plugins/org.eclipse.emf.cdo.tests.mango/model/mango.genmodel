@@ -10,7 +10,7 @@
   <foreignModel>mango.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Mango" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
-      ecorePackage="mango.ecore#/">
+      literalsInterface="false" ecorePackage="mango.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="mango.ecore#//ParameterPassing">
       <genEnumLiterals ecoreEnumLiteral="mango.ecore#//ParameterPassing/ByValue"/>
       <genEnumLiterals ecoreEnumLiteral="mango.ecore#//ParameterPassing/ByReference"/>

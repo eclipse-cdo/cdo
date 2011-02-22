@@ -11,7 +11,7 @@
   <foreignModel>interfaces.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="model4interfaces" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
-      ecorePackage="interfaces.ecore#/">
+      literalsInterface="false" ecorePackage="interfaces.ecore#/">
     <genClasses image="false" ecoreClass="interfaces.ecore#//ISingleRefContainer">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference interfaces.ecore#//ISingleRefContainer/element"/>
     </genClasses>

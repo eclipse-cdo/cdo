@@ -30,25 +30,26 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.SupplierImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.SupplierImpl#isPreferred <em>Preferred</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.SupplierImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.SupplierImpl#isPreferred <em>Preferred</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class SupplierImpl extends AddressImpl implements Supplier
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The cached value of the '{@link #getPurchaseOrders() <em>Purchase Orders</em>}' reference list.
-   * <!-- begin-user-doc
+   * The cached value of the '{@link #getPurchaseOrders() <em>Purchase Orders</em>}' reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
+   * 
    * @see #getPurchaseOrders()
    * @generated
    * @ordered
@@ -56,9 +57,9 @@ public class SupplierImpl extends AddressImpl implements Supplier
   protected EList<PurchaseOrder> purchaseOrders;
 
   /**
-   * The default value of the '{@link #isPreferred() <em>Preferred</em>}' attribute.
-   * <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #isPreferred() <em>Preferred</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #isPreferred()
    * @generated
    * @ordered
@@ -66,9 +67,9 @@ public class SupplierImpl extends AddressImpl implements Supplier
   protected static final boolean PREFERRED_EDEFAULT = true;
 
   /**
-   * The cached value of the '{@link #isPreferred() <em>Preferred</em>}' attribute.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #isPreferred() <em>Preferred</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #isPreferred()
    * @generated
    * @ordered
@@ -77,6 +78,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected SupplierImpl()
@@ -86,16 +88,18 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model1Package.Literals.SUPPLIER;
+    return Model1Package.eINSTANCE.getSupplier();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<PurchaseOrder> getPurchaseOrders()
@@ -110,6 +114,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public boolean isPreferred()
@@ -119,6 +124,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setPreferred(boolean newPreferred)
@@ -131,6 +137,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -147,6 +154,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -162,6 +170,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -179,6 +188,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -200,6 +210,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -219,6 +230,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -236,6 +248,7 @@ public class SupplierImpl extends AddressImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

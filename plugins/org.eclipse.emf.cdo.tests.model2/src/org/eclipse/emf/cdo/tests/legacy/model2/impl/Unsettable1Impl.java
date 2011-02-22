@@ -375,7 +375,7 @@ public class Unsettable1Impl extends EObjectImpl implements Unsettable1
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.UNSETTABLE1;
+    return Model2Package.eINSTANCE.getUnsettable1();
   }
 
   /**

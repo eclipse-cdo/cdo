@@ -76,7 +76,7 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.EOBJECT_TO_EOBJECT_MAP;
+    return Model2Package.eINSTANCE.getEObjectToEObjectMap();
   }
 
   /**

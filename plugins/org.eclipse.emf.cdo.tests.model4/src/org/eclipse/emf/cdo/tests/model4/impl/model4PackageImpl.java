@@ -348,9 +348,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
   public static model4Package init()
   {
     if (isInited)
-    {
       return (model4Package)EPackage.Registry.INSTANCE.getEPackage(model4Package.eNS_URI);
-    }
 
     // Obtain or create and register package
     model4PackageImpl themodel4Package = (model4PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof model4PackageImpl ? EPackage.Registry.INSTANCE
@@ -1071,9 +1069,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -1196,9 +1192,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -1236,23 +1230,25 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
     // Initialize classes and features; add operations and parameters
     initEClass(refSingleContainedEClass, RefSingleContained.class, "RefSingleContained", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRefSingleContained_Element(), getSingleContainedElement(), getSingleContainedElement_Parent(),
-        "element", null, 0, 1, RefSingleContained.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRefSingleContained_Element(), this.getSingleContainedElement(),
+        this.getSingleContainedElement_Parent(), "element", null, 0, 1, RefSingleContained.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(singleContainedElementEClass, SingleContainedElement.class, "SingleContainedElement", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSingleContainedElement_Name(), ecorePackage.getEString(), "name", null, 0, 1,
         SingleContainedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getSingleContainedElement_Parent(), getRefSingleContained(), getRefSingleContained_Element(),
-        "parent", null, 0, 1, SingleContainedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSingleContainedElement_Parent(), this.getRefSingleContained(),
+        this.getRefSingleContained_Element(), "parent", null, 0, 1, SingleContainedElement.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(refSingleNonContainedEClass, RefSingleNonContained.class, "RefSingleNonContained", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRefSingleNonContained_Element(), getSingleNonContainedElement(),
-        getSingleNonContainedElement_Parent(), "element", null, 0, 1, RefSingleNonContained.class, !IS_TRANSIENT,
+    initEReference(getRefSingleNonContained_Element(), this.getSingleNonContainedElement(),
+        this.getSingleNonContainedElement_Parent(), "element", null, 0, 1, RefSingleNonContained.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
@@ -1261,30 +1257,32 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
     initEAttribute(getSingleNonContainedElement_Name(), ecorePackage.getEString(), "name", null, 0, 1,
         SingleNonContainedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getSingleNonContainedElement_Parent(), getRefSingleNonContained(),
-        getRefSingleNonContained_Element(), "parent", null, 0, 1, SingleNonContainedElement.class, !IS_TRANSIENT,
+    initEReference(getSingleNonContainedElement_Parent(), this.getRefSingleNonContained(),
+        this.getRefSingleNonContained_Element(), "parent", null, 0, 1, SingleNonContainedElement.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
     initEClass(refMultiContainedEClass, RefMultiContained.class, "RefMultiContained", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRefMultiContained_Elements(), getMultiContainedElement(), getMultiContainedElement_Parent(),
-        "elements", null, 0, -1, RefMultiContained.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRefMultiContained_Elements(), this.getMultiContainedElement(),
+        this.getMultiContainedElement_Parent(), "elements", null, 0, -1, RefMultiContained.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(multiContainedElementEClass, MultiContainedElement.class, "MultiContainedElement", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getMultiContainedElement_Name(), ecorePackage.getEString(), "name", null, 0, 1,
         MultiContainedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getMultiContainedElement_Parent(), getRefMultiContained(), getRefMultiContained_Elements(),
-        "parent", null, 0, 1, MultiContainedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMultiContainedElement_Parent(), this.getRefMultiContained(),
+        this.getRefMultiContained_Elements(), "parent", null, 0, 1, MultiContainedElement.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(refMultiNonContainedEClass, RefMultiNonContained.class, "RefMultiNonContained", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRefMultiNonContained_Elements(), getMultiNonContainedElement(),
-        getMultiNonContainedElement_Parent(), "elements", null, 0, -1, RefMultiNonContained.class, !IS_TRANSIENT,
+    initEReference(getRefMultiNonContained_Elements(), this.getMultiNonContainedElement(),
+        this.getMultiNonContainedElement_Parent(), "elements", null, 0, -1, RefMultiNonContained.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
@@ -1293,49 +1291,50 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
     initEAttribute(getMultiNonContainedElement_Name(), ecorePackage.getEString(), "name", null, 0, 1,
         MultiNonContainedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getMultiNonContainedElement_Parent(), getRefMultiNonContained(), getRefMultiNonContained_Elements(),
-        "parent", null, 0, 1, MultiNonContainedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMultiNonContainedElement_Parent(), this.getRefMultiNonContained(),
+        this.getRefMultiNonContained_Elements(), "parent", null, 0, 1, MultiNonContainedElement.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(refMultiNonContainedUnsettableEClass, RefMultiNonContainedUnsettable.class,
         "RefMultiNonContainedUnsettable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRefMultiNonContainedUnsettable_Elements(), getMultiNonContainedUnsettableElement(),
-        getMultiNonContainedUnsettableElement_Parent(), "elements", null, 0, -1, RefMultiNonContainedUnsettable.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getRefMultiNonContainedUnsettable_Elements(), this.getMultiNonContainedUnsettableElement(),
+        this.getMultiNonContainedUnsettableElement_Parent(), "elements", null, 0, -1,
+        RefMultiNonContainedUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(multiNonContainedUnsettableElementEClass, MultiNonContainedUnsettableElement.class,
         "MultiNonContainedUnsettableElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getMultiNonContainedUnsettableElement_Name(), ecorePackage.getEString(), "name", null, 0, 1,
         MultiNonContainedUnsettableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMultiNonContainedUnsettableElement_Parent(), getRefMultiNonContainedUnsettable(),
-        getRefMultiNonContainedUnsettable_Elements(), "parent", null, 0, 1, MultiNonContainedUnsettableElement.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getMultiNonContainedUnsettableElement_Parent(), this.getRefMultiNonContainedUnsettable(),
+        this.getRefMultiNonContainedUnsettable_Elements(), "parent", null, 0, 1,
+        MultiNonContainedUnsettableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(refSingleContainedNPLEClass, RefSingleContainedNPL.class, "RefSingleContainedNPL", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRefSingleContainedNPL_Element(), getContainedElementNoOpposite(), null, "element", null, 0, 1,
-        RefSingleContainedNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+    initEReference(getRefSingleContainedNPL_Element(), this.getContainedElementNoOpposite(), null, "element", null, 0,
+        1, RefSingleContainedNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(refSingleNonContainedNPLEClass, RefSingleNonContainedNPL.class, "RefSingleNonContainedNPL",
         !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRefSingleNonContainedNPL_Element(), getContainedElementNoOpposite(), null, "element", null, 0, 1,
-        RefSingleNonContainedNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRefSingleNonContainedNPL_Element(), this.getContainedElementNoOpposite(), null, "element", null,
+        0, 1, RefSingleNonContainedNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(refMultiContainedNPLEClass, RefMultiContainedNPL.class, "RefMultiContainedNPL", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRefMultiContainedNPL_Elements(), getContainedElementNoOpposite(), null, "elements", null, 0, -1,
-        RefMultiContainedNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+    initEReference(getRefMultiContainedNPL_Elements(), this.getContainedElementNoOpposite(), null, "elements", null, 0,
+        -1, RefMultiContainedNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(refMultiNonContainedNPLEClass, RefMultiNonContainedNPL.class, "RefMultiNonContainedNPL", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRefMultiNonContainedNPL_Elements(), getContainedElementNoOpposite(), null, "elements", null, 0,
-        -1, RefMultiNonContainedNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+    initEReference(getRefMultiNonContainedNPL_Elements(), this.getContainedElementNoOpposite(), null, "elements", null,
+        0, -1, RefMultiNonContainedNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(containedElementNoOppositeEClass, ContainedElementNoOpposite.class, "ContainedElementNoOpposite",
@@ -1427,7 +1426,7 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
 
     initEClass(genRefMapNonContainedEClass, GenRefMapNonContained.class, "GenRefMapNonContained", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getGenRefMapNonContained_Elements(), getStringToEObject(), null, "elements", null, 0, -1,
+    initEReference(getGenRefMapNonContained_Elements(), this.getStringToEObject(), null, "elements", null, 0, -1,
         GenRefMapNonContained.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

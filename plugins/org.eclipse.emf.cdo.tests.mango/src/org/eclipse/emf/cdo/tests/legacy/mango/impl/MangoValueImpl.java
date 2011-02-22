@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
-import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.mango.MangoValue;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -68,7 +68,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
   @Override
   protected EClass eStaticClass()
   {
-    return MangoPackage.Literals.MANGO_VALUE;
+    return MangoPackage.eINSTANCE.getMangoValue();
   }
 
   /**
@@ -91,9 +91,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_VALUE__NAME, oldName, name));
-    }
   }
 
   /**
@@ -171,9 +169,7 @@ public class MangoValueImpl extends EObjectImpl implements MangoValue
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

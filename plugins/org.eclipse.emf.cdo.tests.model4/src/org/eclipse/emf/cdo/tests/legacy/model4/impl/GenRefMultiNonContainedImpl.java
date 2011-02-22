@@ -63,7 +63,7 @@ public class GenRefMultiNonContainedImpl extends EObjectImpl implements GenRefMu
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.GEN_REF_MULTI_NON_CONTAINED;
+    return model4Package.eINSTANCE.getGenRefMultiNonContained();
   }
 
   /**

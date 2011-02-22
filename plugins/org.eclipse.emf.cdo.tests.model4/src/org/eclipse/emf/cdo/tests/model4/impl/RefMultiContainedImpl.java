@@ -51,7 +51,7 @@ public class RefMultiContainedImpl extends CDOObjectImpl implements RefMultiCont
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_MULTI_CONTAINED;
+    return model4Package.eINSTANCE.getRefMultiContained();
   }
 
   /**
@@ -73,7 +73,7 @@ public class RefMultiContainedImpl extends CDOObjectImpl implements RefMultiCont
   @SuppressWarnings("unchecked")
   public EList<MultiContainedElement> getElements()
   {
-    return (EList<MultiContainedElement>)eGet(model4Package.Literals.REF_MULTI_CONTAINED__ELEMENTS, true);
+    return (EList<MultiContainedElement>)eGet(model4Package.eINSTANCE.getRefMultiContained_Elements(), true);
   }
 
 } // RefMultiContainedImpl

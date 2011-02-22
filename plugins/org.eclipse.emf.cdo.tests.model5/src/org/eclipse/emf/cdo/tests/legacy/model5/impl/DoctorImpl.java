@@ -50,7 +50,7 @@ public class DoctorImpl extends EObjectImpl implements Doctor
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.DOCTOR;
+    return Model5Package.eINSTANCE.getDoctor();
   }
 
 } // DoctorImpl

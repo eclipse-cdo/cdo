@@ -51,7 +51,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.NODE_B;
+    return Model3Package.eINSTANCE.getNodeB();
   }
 
   /**
@@ -73,7 +73,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
   @SuppressWarnings("unchecked")
   public EList<NodeB> getChildren()
   {
-    return (EList<NodeB>)eGet(Model3Package.Literals.NODE_B__CHILDREN, true);
+    return (EList<NodeB>)eGet(Model3Package.eINSTANCE.getNodeB_Children(), true);
   }
 
   /**
@@ -83,7 +83,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
    */
   public NodeB getParent()
   {
-    return (NodeB)eGet(Model3Package.Literals.NODE_B__PARENT, true);
+    return (NodeB)eGet(Model3Package.eINSTANCE.getNodeB_Parent(), true);
   }
 
   /**
@@ -93,7 +93,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
    */
   public void setParent(NodeB newParent)
   {
-    eSet(Model3Package.Literals.NODE_B__PARENT, newParent);
+    eSet(Model3Package.eINSTANCE.getNodeB_Parent(), newParent);
   }
 
   /**
@@ -103,7 +103,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
    */
   public String getName()
   {
-    return (String)eGet(Model3Package.Literals.NODE_B__NAME, true);
+    return (String)eGet(Model3Package.eINSTANCE.getNodeB_Name(), true);
   }
 
   /**
@@ -113,7 +113,7 @@ public class NodeBImpl extends CDOObjectImpl implements NodeB
    */
   public void setName(String newName)
   {
-    eSet(Model3Package.Literals.NODE_B__NAME, newName);
+    eSet(Model3Package.eINSTANCE.getNodeB_Name(), newName);
   }
 
 } // NodeBImpl

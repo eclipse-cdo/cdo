@@ -51,7 +51,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.NODE_A;
+    return Model3Package.eINSTANCE.getNodeA();
   }
 
   /**
@@ -73,7 +73,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
   @SuppressWarnings("unchecked")
   public EList<NodeA> getChildren()
   {
-    return (EList<NodeA>)eGet(Model3Package.Literals.NODE_A__CHILDREN, true);
+    return (EList<NodeA>)eGet(Model3Package.eINSTANCE.getNodeA_Children(), true);
   }
 
   /**
@@ -83,7 +83,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
    */
   public String getName()
   {
-    return (String)eGet(Model3Package.Literals.NODE_A__NAME, true);
+    return (String)eGet(Model3Package.eINSTANCE.getNodeA_Name(), true);
   }
 
   /**
@@ -93,7 +93,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
    */
   public void setName(String newName)
   {
-    eSet(Model3Package.Literals.NODE_A__NAME, newName);
+    eSet(Model3Package.eINSTANCE.getNodeA_Name(), newName);
   }
 
   /**
@@ -104,7 +104,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
   @SuppressWarnings("unchecked")
   public EList<NodeA> getOtherNodes()
   {
-    return (EList<NodeA>)eGet(Model3Package.Literals.NODE_A__OTHER_NODES, true);
+    return (EList<NodeA>)eGet(Model3Package.eINSTANCE.getNodeA_OtherNodes(), true);
   }
 
 } // NodeAImpl

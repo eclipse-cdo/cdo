@@ -98,7 +98,7 @@ public class TestFeatureMapImpl extends EObjectImpl implements TestFeatureMap
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.TEST_FEATURE_MAP;
+    return Model5Package.eINSTANCE.getTestFeatureMap();
   }
 
   /**

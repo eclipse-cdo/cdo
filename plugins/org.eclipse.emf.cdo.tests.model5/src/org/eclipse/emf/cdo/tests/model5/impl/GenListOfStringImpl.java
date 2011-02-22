@@ -57,7 +57,7 @@ public class GenListOfStringImpl extends CDOObjectImpl implements GenListOfStrin
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_STRING;
+    return Model5Package.eINSTANCE.getGenListOfString();
   }
 
   /**
@@ -79,7 +79,7 @@ public class GenListOfStringImpl extends CDOObjectImpl implements GenListOfStrin
   @SuppressWarnings("unchecked")
   public EList<String> getElements()
   {
-    return (EList<String>)eGet(Model5Package.Literals.GEN_LIST_OF_STRING__ELEMENTS, true);
+    return (EList<String>)eGet(Model5Package.eINSTANCE.getGenListOfString_Elements(), true);
   }
 
 } // GenListOfStringImpl

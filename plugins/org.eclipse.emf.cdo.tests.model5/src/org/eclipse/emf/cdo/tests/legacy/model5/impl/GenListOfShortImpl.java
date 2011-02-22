@@ -69,7 +69,7 @@ public class GenListOfShortImpl extends EObjectImpl implements GenListOfShort
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_SHORT;
+    return Model5Package.eINSTANCE.getGenListOfShort();
   }
 
   /**

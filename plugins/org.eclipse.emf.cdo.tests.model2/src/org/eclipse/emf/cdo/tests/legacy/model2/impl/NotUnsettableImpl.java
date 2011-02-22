@@ -295,7 +295,7 @@ public class NotUnsettableImpl extends EObjectImpl implements NotUnsettable
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.NOT_UNSETTABLE;
+    return Model2Package.eINSTANCE.getNotUnsettable();
   }
 
   /**

@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -6,7 +16,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -20,6 +29,9 @@ import org.eclipse.emf.ecore.EObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Eike Stepper
+ */
 public class Bugzilla_335772_Test extends AbstractCDOTest
 {
 
@@ -53,7 +65,7 @@ public class Bugzilla_335772_Test extends AbstractCDOTest
 
     map = new HashMap<Product1, SalesOrder>();
     map.put(product1, order1);
-    customer.eSet(Model1Package.Literals.CUSTOMER__ORDER_BY_PRODUCT, map);
+    customer.eSet(getModel1Package().getCustomer_OrderByProduct(), map);
 
     // delegateEList is not empty at this point
     customer.getOrderByProduct().get(0);
@@ -99,14 +111,14 @@ public class Bugzilla_335772_Test extends AbstractCDOTest
   {
     map.put(product1, order2);
     assertEquals(1, map.size());
-    customer.eSet(Model1Package.Literals.CUSTOMER__ORDER_BY_PRODUCT, map);
+    customer.eSet(getModel1Package().getCustomer_OrderByProduct(), map);
   }
 
   private void addMapEntry()
   {
     map.put(product2, order2);
     assertEquals(2, map.size());
-    customer.eSet(Model1Package.Literals.CUSTOMER__ORDER_BY_PRODUCT, map);
+    customer.eSet(getModel1Package().getCustomer_OrderByProduct(), map);
   }
 
   private Integer persistAndRetrieveOrderIdForProduct1() throws CommitException

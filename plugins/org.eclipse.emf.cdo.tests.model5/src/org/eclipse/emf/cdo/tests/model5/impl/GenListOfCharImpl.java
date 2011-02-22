@@ -57,7 +57,7 @@ public class GenListOfCharImpl extends CDOObjectImpl implements GenListOfChar
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_CHAR;
+    return Model5Package.eINSTANCE.getGenListOfChar();
   }
 
   /**
@@ -79,7 +79,7 @@ public class GenListOfCharImpl extends CDOObjectImpl implements GenListOfChar
   @SuppressWarnings("unchecked")
   public EList<Character> getElements()
   {
-    return (EList<Character>)eGet(Model5Package.Literals.GEN_LIST_OF_CHAR__ELEMENTS, true);
+    return (EList<Character>)eGet(Model5Package.eINSTANCE.getGenListOfChar_Elements(), true);
   }
 
 } // GenListOfCharImpl

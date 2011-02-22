@@ -66,7 +66,7 @@ public class ImplMultiRefContainerNPLImpl extends EObjectImpl implements ImplMul
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_MULTI_REF_CONTAINER_NPL;
+    return model4Package.eINSTANCE.getImplMultiRefContainerNPL();
   }
 
   /**

@@ -69,7 +69,7 @@ public class GenListOfIntegerImpl extends EObjectImpl implements GenListOfIntege
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_INTEGER;
+    return Model5Package.eINSTANCE.getGenListOfInteger();
   }
 
   /**

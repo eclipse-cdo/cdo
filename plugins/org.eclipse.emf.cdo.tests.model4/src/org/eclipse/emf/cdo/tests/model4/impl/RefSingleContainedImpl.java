@@ -50,7 +50,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.REF_SINGLE_CONTAINED;
+    return model4Package.eINSTANCE.getRefSingleContained();
   }
 
   /**
@@ -71,7 +71,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
    */
   public SingleContainedElement getElement()
   {
-    return (SingleContainedElement)eGet(model4Package.Literals.REF_SINGLE_CONTAINED__ELEMENT, true);
+    return (SingleContainedElement)eGet(model4Package.eINSTANCE.getRefSingleContained_Element(), true);
   }
 
   /**
@@ -81,7 +81,7 @@ public class RefSingleContainedImpl extends CDOObjectImpl implements RefSingleCo
    */
   public void setElement(SingleContainedElement newElement)
   {
-    eSet(model4Package.Literals.REF_SINGLE_CONTAINED__ELEMENT, newElement);
+    eSet(model4Package.eINSTANCE.getRefSingleContained_Element(), newElement);
   }
 
 } // RefSingleContainedImpl

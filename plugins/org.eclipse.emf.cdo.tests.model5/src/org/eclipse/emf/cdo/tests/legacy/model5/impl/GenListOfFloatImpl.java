@@ -69,7 +69,7 @@ public class GenListOfFloatImpl extends EObjectImpl implements GenListOfFloat
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_FLOAT;
+    return Model5Package.eINSTANCE.getGenListOfFloat();
   }
 
   /**

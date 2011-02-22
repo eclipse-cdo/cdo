@@ -52,7 +52,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT;
+    return model4Package.eINSTANCE.getImplSingleRefNonContainedElement();
   }
 
   /**
@@ -73,7 +73,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
    */
   public ISingleRefNonContainer getParent()
   {
-    return (ISingleRefNonContainer)eGet(model4interfacesPackage.Literals.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT,
+    return (ISingleRefNonContainer)eGet(model4interfacesPackage.eINSTANCE.getISingleRefNonContainedElement_Parent(),
         true);
   }
 
@@ -84,7 +84,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
    */
   public void setParent(ISingleRefNonContainer newParent)
   {
-    eSet(model4interfacesPackage.Literals.ISINGLE_REF_NON_CONTAINED_ELEMENT__PARENT, newParent);
+    eSet(model4interfacesPackage.eINSTANCE.getISingleRefNonContainedElement_Parent(), newParent);
   }
 
   /**
@@ -94,7 +94,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
    */
   public String getName()
   {
-    return (String)eGet(model4Package.Literals.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__NAME, true);
+    return (String)eGet(model4Package.eINSTANCE.getImplSingleRefNonContainedElement_Name(), true);
   }
 
   /**
@@ -104,7 +104,7 @@ public class ImplSingleRefNonContainedElementImpl extends CDOObjectImpl implemen
    */
   public void setName(String newName)
   {
-    eSet(model4Package.Literals.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__NAME, newName);
+    eSet(model4Package.eINSTANCE.getImplSingleRefNonContainedElement_Name(), newName);
   }
 
 } // ImplSingleRefNonContainedElementImpl

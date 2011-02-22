@@ -38,12 +38,14 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ProductToOrderImpl()
@@ -53,16 +55,18 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model1Package.Literals.PRODUCT_TO_ORDER;
+    return Model1Package.eINSTANCE.getProductToOrder();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -73,48 +77,54 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Product1 getTypedKey()
   {
-    return (Product1)eGet(Model1Package.Literals.PRODUCT_TO_ORDER__KEY, true);
+    return (Product1)eGet(Model1Package.eINSTANCE.getProductToOrder_Key(), true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTypedKey(Product1 newKey)
   {
-    eSet(Model1Package.Literals.PRODUCT_TO_ORDER__KEY, newKey);
+    eSet(Model1Package.eINSTANCE.getProductToOrder_Key(), newKey);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SalesOrder getTypedValue()
   {
-    return (SalesOrder)eGet(Model1Package.Literals.PRODUCT_TO_ORDER__VALUE, true);
+    return (SalesOrder)eGet(Model1Package.eINSTANCE.getProductToOrder_Value(), true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setTypedValue(SalesOrder newValue)
   {
-    eSet(Model1Package.Literals.PRODUCT_TO_ORDER__VALUE, newValue);
+    eSet(Model1Package.eINSTANCE.getProductToOrder_Value(), newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected int hash = -1;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public int getHash()
@@ -129,6 +139,7 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setHash(int hash)
@@ -138,6 +149,7 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public Product1 getKey()
@@ -147,6 +159,7 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setKey(Product1 key)
@@ -156,6 +169,7 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SalesOrder getValue()
@@ -165,6 +179,7 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public SalesOrder setValue(SalesOrder value)
@@ -176,6 +191,7 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

@@ -54,7 +54,7 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.INTEGER_TO_STRING_MAP;
+    return Model2Package.eINSTANCE.getIntegerToStringMap();
   }
 
   /**
@@ -75,7 +75,7 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
    */
   public Integer getTypedKey()
   {
-    return (Integer)eGet(Model2Package.Literals.INTEGER_TO_STRING_MAP__KEY, true);
+    return (Integer)eGet(Model2Package.eINSTANCE.getIntegerToStringMap_Key(), true);
   }
 
   /**
@@ -85,7 +85,7 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
    */
   public void setTypedKey(Integer newKey)
   {
-    eSet(Model2Package.Literals.INTEGER_TO_STRING_MAP__KEY, newKey);
+    eSet(Model2Package.eINSTANCE.getIntegerToStringMap_Key(), newKey);
   }
 
   /**
@@ -95,7 +95,7 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
    */
   public String getTypedValue()
   {
-    return (String)eGet(Model2Package.Literals.INTEGER_TO_STRING_MAP__VALUE, true);
+    return (String)eGet(Model2Package.eINSTANCE.getIntegerToStringMap_Value(), true);
   }
 
   /**
@@ -105,7 +105,7 @@ public class IntegerToStringMapImpl extends CDOObjectImpl implements BasicEMap.E
    */
   public void setTypedValue(String newValue)
   {
-    eSet(Model2Package.Literals.INTEGER_TO_STRING_MAP__VALUE, newValue);
+    eSet(Model2Package.eINSTANCE.getIntegerToStringMap_Value(), newValue);
   }
 
   /**

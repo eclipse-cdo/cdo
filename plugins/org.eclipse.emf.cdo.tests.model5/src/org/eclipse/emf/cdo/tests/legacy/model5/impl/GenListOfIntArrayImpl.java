@@ -69,7 +69,7 @@ public class GenListOfIntArrayImpl extends EObjectImpl implements GenListOfIntAr
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_INT_ARRAY;
+    return Model5Package.eINSTANCE.getGenListOfIntArray();
   }
 
   /**

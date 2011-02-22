@@ -51,7 +51,7 @@ public class DoctorImpl extends CDOObjectImpl implements Doctor
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.DOCTOR;
+    return Model5Package.eINSTANCE.getDoctor();
   }
 
   /**

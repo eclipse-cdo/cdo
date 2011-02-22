@@ -26,26 +26,28 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getCategories <em>Categories</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getSuppliers <em>Suppliers</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getCustomers <em>Customers</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getSalesOrders <em>Sales Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getCategories <em>Categories</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getSuppliers <em>Suppliers</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getCustomers <em>Customers</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl#getSalesOrders <em>Sales Orders</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class CompanyImpl extends AddressImpl implements Company
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected CompanyImpl()
@@ -55,62 +57,68 @@ public class CompanyImpl extends AddressImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model1Package.Literals.COMPANY;
+    return Model1Package.eINSTANCE.getCompany();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   public EList<Category> getCategories()
   {
-    return (EList<Category>)eGet(Model1Package.Literals.COMPANY__CATEGORIES, true);
+    return (EList<Category>)eGet(Model1Package.eINSTANCE.getCompany_Categories(), true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   public EList<Supplier> getSuppliers()
   {
-    return (EList<Supplier>)eGet(Model1Package.Literals.COMPANY__SUPPLIERS, true);
+    return (EList<Supplier>)eGet(Model1Package.eINSTANCE.getCompany_Suppliers(), true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   public EList<PurchaseOrder> getPurchaseOrders()
   {
-    return (EList<PurchaseOrder>)eGet(Model1Package.Literals.COMPANY__PURCHASE_ORDERS, true);
+    return (EList<PurchaseOrder>)eGet(Model1Package.eINSTANCE.getCompany_PurchaseOrders(), true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   public EList<Customer> getCustomers()
   {
-    return (EList<Customer>)eGet(Model1Package.Literals.COMPANY__CUSTOMERS, true);
+    return (EList<Customer>)eGet(Model1Package.eINSTANCE.getCompany_Customers(), true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   public EList<SalesOrder> getSalesOrders()
   {
-    return (EList<SalesOrder>)eGet(Model1Package.Literals.COMPANY__SALES_ORDERS, true);
+    return (EList<SalesOrder>)eGet(Model1Package.eINSTANCE.getCompany_SalesOrders(), true);
   }
 
 } // CompanyImpl

@@ -50,7 +50,7 @@ public class GenRefSingleContainedImpl extends CDOObjectImpl implements GenRefSi
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.GEN_REF_SINGLE_CONTAINED;
+    return model4Package.eINSTANCE.getGenRefSingleContained();
   }
 
   /**
@@ -71,7 +71,7 @@ public class GenRefSingleContainedImpl extends CDOObjectImpl implements GenRefSi
    */
   public EObject getElement()
   {
-    return (EObject)eGet(model4Package.Literals.GEN_REF_SINGLE_CONTAINED__ELEMENT, true);
+    return (EObject)eGet(model4Package.eINSTANCE.getGenRefSingleContained_Element(), true);
   }
 
   /**
@@ -81,7 +81,7 @@ public class GenRefSingleContainedImpl extends CDOObjectImpl implements GenRefSi
    */
   public void setElement(EObject newElement)
   {
-    eSet(model4Package.Literals.GEN_REF_SINGLE_CONTAINED__ELEMENT, newElement);
+    eSet(model4Package.eINSTANCE.getGenRefSingleContained_Element(), newElement);
   }
 
 } // GenRefSingleContainedImpl

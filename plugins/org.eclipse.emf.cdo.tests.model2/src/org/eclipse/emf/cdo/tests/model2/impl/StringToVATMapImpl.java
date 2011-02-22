@@ -55,7 +55,7 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.STRING_TO_VAT_MAP;
+    return Model2Package.eINSTANCE.getStringToVATMap();
   }
 
   /**
@@ -76,7 +76,7 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
    */
   public String getTypedKey()
   {
-    return (String)eGet(Model2Package.Literals.STRING_TO_VAT_MAP__KEY, true);
+    return (String)eGet(Model2Package.eINSTANCE.getStringToVATMap_Key(), true);
   }
 
   /**
@@ -86,7 +86,7 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
    */
   public void setTypedKey(String newKey)
   {
-    eSet(Model2Package.Literals.STRING_TO_VAT_MAP__KEY, newKey);
+    eSet(Model2Package.eINSTANCE.getStringToVATMap_Key(), newKey);
   }
 
   /**
@@ -96,7 +96,7 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
    */
   public VAT getTypedValue()
   {
-    return (VAT)eGet(Model2Package.Literals.STRING_TO_VAT_MAP__VALUE, true);
+    return (VAT)eGet(Model2Package.eINSTANCE.getStringToVATMap_Value(), true);
   }
 
   /**
@@ -106,7 +106,7 @@ public class StringToVATMapImpl extends CDOObjectImpl implements BasicEMap.Entry
    */
   public void setTypedValue(VAT newValue)
   {
-    eSet(Model2Package.Literals.STRING_TO_VAT_MAP__VALUE, newValue);
+    eSet(Model2Package.eINSTANCE.getStringToVATMap_Value(), newValue);
   }
 
   /**

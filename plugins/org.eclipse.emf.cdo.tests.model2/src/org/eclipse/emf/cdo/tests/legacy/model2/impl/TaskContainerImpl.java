@@ -65,7 +65,7 @@ public class TaskContainerImpl extends EObjectImpl implements TaskContainer
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.TASK_CONTAINER;
+    return Model2Package.eINSTANCE.getTaskContainer();
   }
 
   /**

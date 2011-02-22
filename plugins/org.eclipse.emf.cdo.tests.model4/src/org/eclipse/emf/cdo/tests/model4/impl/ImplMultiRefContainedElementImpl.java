@@ -52,7 +52,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_MULTI_REF_CONTAINED_ELEMENT;
+    return model4Package.eINSTANCE.getImplMultiRefContainedElement();
   }
 
   /**
@@ -73,7 +73,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
    */
   public IMultiRefContainer getParent()
   {
-    return (IMultiRefContainer)eGet(model4interfacesPackage.Literals.IMULTI_REF_CONTAINED_ELEMENT__PARENT, true);
+    return (IMultiRefContainer)eGet(model4interfacesPackage.eINSTANCE.getIMultiRefContainedElement_Parent(), true);
   }
 
   /**
@@ -83,7 +83,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
    */
   public void setParent(IMultiRefContainer newParent)
   {
-    eSet(model4interfacesPackage.Literals.IMULTI_REF_CONTAINED_ELEMENT__PARENT, newParent);
+    eSet(model4interfacesPackage.eINSTANCE.getIMultiRefContainedElement_Parent(), newParent);
   }
 
   /**
@@ -93,7 +93,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
    */
   public String getName()
   {
-    return (String)eGet(model4Package.Literals.IMPL_MULTI_REF_CONTAINED_ELEMENT__NAME, true);
+    return (String)eGet(model4Package.eINSTANCE.getImplMultiRefContainedElement_Name(), true);
   }
 
   /**
@@ -103,7 +103,7 @@ public class ImplMultiRefContainedElementImpl extends CDOObjectImpl implements I
    */
   public void setName(String newName)
   {
-    eSet(model4Package.Literals.IMPL_MULTI_REF_CONTAINED_ELEMENT__NAME, newName);
+    eSet(model4Package.eINSTANCE.getImplMultiRefContainedElement_Name(), newName);
   }
 
 } // ImplMultiRefContainedElementImpl

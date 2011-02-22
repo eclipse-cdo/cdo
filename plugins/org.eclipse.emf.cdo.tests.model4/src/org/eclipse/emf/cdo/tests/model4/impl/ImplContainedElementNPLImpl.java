@@ -51,7 +51,7 @@ public class ImplContainedElementNPLImpl extends CDOObjectImpl implements ImplCo
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_CONTAINED_ELEMENT_NPL;
+    return model4Package.eINSTANCE.getImplContainedElementNPL();
   }
 
   /**
@@ -72,7 +72,7 @@ public class ImplContainedElementNPLImpl extends CDOObjectImpl implements ImplCo
    */
   public String getName()
   {
-    return (String)eGet(model4interfacesPackage.Literals.INAMED_ELEMENT__NAME, true);
+    return (String)eGet(model4interfacesPackage.eINSTANCE.getINamedElement_Name(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class ImplContainedElementNPLImpl extends CDOObjectImpl implements ImplCo
    */
   public void setName(String newName)
   {
-    eSet(model4interfacesPackage.Literals.INAMED_ELEMENT__NAME, newName);
+    eSet(model4interfacesPackage.eINSTANCE.getINamedElement_Name(), newName);
   }
 
   /**

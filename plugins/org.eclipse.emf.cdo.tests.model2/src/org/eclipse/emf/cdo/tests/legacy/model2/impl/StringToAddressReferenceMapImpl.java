@@ -88,7 +88,7 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.STRING_TO_ADDRESS_REFERENCE_MAP;
+    return Model2Package.eINSTANCE.getStringToAddressReferenceMap();
   }
 
   /**

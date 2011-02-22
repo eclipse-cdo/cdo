@@ -24,24 +24,26 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getCategories <em>Categories</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getProducts <em>Products</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getCategories <em>Categories</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getProducts <em>Products</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class CategoryImpl extends CDOObjectImpl implements Category
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected CategoryImpl()
@@ -51,16 +53,18 @@ public class CategoryImpl extends CDOObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model1Package.Literals.CATEGORY;
+    return Model1Package.eINSTANCE.getCategory();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -71,40 +75,44 @@ public class CategoryImpl extends CDOObjectImpl implements Category
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
   {
-    return (String)eGet(Model1Package.Literals.CATEGORY__NAME, true);
+    return (String)eGet(Model1Package.eINSTANCE.getCategory_Name(), true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
   {
-    eSet(Model1Package.Literals.CATEGORY__NAME, newName);
+    eSet(Model1Package.eINSTANCE.getCategory_Name(), newName);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   public EList<Category> getCategories()
   {
-    return (EList<Category>)eGet(Model1Package.Literals.CATEGORY__CATEGORIES, true);
+    return (EList<Category>)eGet(Model1Package.eINSTANCE.getCategory_Categories(), true);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   public EList<Product1> getProducts()
   {
-    return (EList<Product1>)eGet(Model1Package.Literals.CATEGORY__PRODUCTS, true);
+    return (EList<Product1>)eGet(Model1Package.eINSTANCE.getCategory_Products(), true);
   }
 
 } // CategoryImpl

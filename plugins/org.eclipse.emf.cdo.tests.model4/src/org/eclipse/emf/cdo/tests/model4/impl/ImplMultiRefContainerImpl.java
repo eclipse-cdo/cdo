@@ -52,7 +52,7 @@ public class ImplMultiRefContainerImpl extends CDOObjectImpl implements ImplMult
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_MULTI_REF_CONTAINER;
+    return model4Package.eINSTANCE.getImplMultiRefContainer();
   }
 
   /**
@@ -74,7 +74,8 @@ public class ImplMultiRefContainerImpl extends CDOObjectImpl implements ImplMult
   @SuppressWarnings("unchecked")
   public EList<IMultiRefContainedElement> getElements()
   {
-    return (EList<IMultiRefContainedElement>)eGet(model4interfacesPackage.Literals.IMULTI_REF_CONTAINER__ELEMENTS, true);
+    return (EList<IMultiRefContainedElement>)eGet(model4interfacesPackage.eINSTANCE.getIMultiRefContainer_Elements(),
+        true);
   }
 
 } // ImplMultiRefContainerImpl

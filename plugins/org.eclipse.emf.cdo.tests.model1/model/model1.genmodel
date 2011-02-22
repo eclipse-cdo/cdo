@@ -11,7 +11,8 @@
   <foreignModel>model1.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Model1" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
-      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="model1.ecore#/">
+      literalsInterface="false" extensibleProviderFactory="true" childCreationExtenders="true"
+      ecorePackage="model1.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="model1.ecore#//VAT">
       <genEnumLiterals ecoreEnumLiteral="model1.ecore#//VAT/vat0"/>
       <genEnumLiterals ecoreEnumLiteral="model1.ecore#//VAT/vat7"/>

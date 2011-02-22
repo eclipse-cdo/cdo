@@ -51,7 +51,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT;
+    return model4Package.eINSTANCE.getMultiNonContainedUnsettableElement();
   }
 
   /**
@@ -72,7 +72,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    */
   public String getName()
   {
-    return (String)eGet(model4Package.Literals.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__NAME, true);
+    return (String)eGet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Name(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    */
   public void setName(String newName)
   {
-    eSet(model4Package.Literals.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__NAME, newName);
+    eSet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Name(), newName);
   }
 
   /**
@@ -92,7 +92,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    */
   public RefMultiNonContainedUnsettable getParent()
   {
-    return (RefMultiNonContainedUnsettable)eGet(model4Package.Literals.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT,
+    return (RefMultiNonContainedUnsettable)eGet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Parent(),
         true);
   }
 
@@ -103,7 +103,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    */
   public void setParent(RefMultiNonContainedUnsettable newParent)
   {
-    eSet(model4Package.Literals.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT, newParent);
+    eSet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Parent(), newParent);
   }
 
   /**
@@ -113,7 +113,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    */
   public void unsetParent()
   {
-    eUnset(model4Package.Literals.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT);
+    eUnset(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Parent());
   }
 
   /**
@@ -123,7 +123,7 @@ public class MultiNonContainedUnsettableElementImpl extends CDOObjectImpl implem
    */
   public boolean isSetParent()
   {
-    return eIsSet(model4Package.Literals.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT);
+    return eIsSet(model4Package.eINSTANCE.getMultiNonContainedUnsettableElement_Parent());
   }
 
 } // MultiNonContainedUnsettableElementImpl

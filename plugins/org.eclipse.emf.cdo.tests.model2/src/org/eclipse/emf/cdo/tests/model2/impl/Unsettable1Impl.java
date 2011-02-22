@@ -61,7 +61,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.UNSETTABLE1;
+    return Model2Package.eINSTANCE.getUnsettable1();
   }
 
   /**
@@ -82,7 +82,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isUnsettableBoolean()
   {
-    return (Boolean)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_BOOLEAN, true);
+    return (Boolean)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableBoolean(), true);
   }
 
   /**
@@ -92,7 +92,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableBoolean(boolean newUnsettableBoolean)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_BOOLEAN, newUnsettableBoolean);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableBoolean(), newUnsettableBoolean);
   }
 
   /**
@@ -102,7 +102,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableBoolean()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_BOOLEAN);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableBoolean());
   }
 
   /**
@@ -112,7 +112,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableBoolean()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_BOOLEAN);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableBoolean());
   }
 
   /**
@@ -122,7 +122,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public byte getUnsettableByte()
   {
-    return (Byte)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_BYTE, true);
+    return (Byte)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableByte(), true);
   }
 
   /**
@@ -132,7 +132,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableByte(byte newUnsettableByte)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_BYTE, newUnsettableByte);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableByte(), newUnsettableByte);
   }
 
   /**
@@ -142,7 +142,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableByte()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_BYTE);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableByte());
   }
 
   /**
@@ -152,7 +152,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableByte()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_BYTE);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableByte());
   }
 
   /**
@@ -162,7 +162,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public char getUnsettableChar()
   {
-    return (Character)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_CHAR, true);
+    return (Character)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableChar(), true);
   }
 
   /**
@@ -172,7 +172,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableChar(char newUnsettableChar)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_CHAR, newUnsettableChar);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableChar(), newUnsettableChar);
   }
 
   /**
@@ -182,7 +182,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableChar()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_CHAR);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableChar());
   }
 
   /**
@@ -192,7 +192,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableChar()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_CHAR);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableChar());
   }
 
   /**
@@ -202,7 +202,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public Date getUnsettableDate()
   {
-    return (Date)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_DATE, true);
+    return (Date)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableDate(), true);
   }
 
   /**
@@ -212,7 +212,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableDate(Date newUnsettableDate)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_DATE, newUnsettableDate);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableDate(), newUnsettableDate);
   }
 
   /**
@@ -222,7 +222,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableDate()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_DATE);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableDate());
   }
 
   /**
@@ -232,7 +232,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableDate()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_DATE);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableDate());
   }
 
   /**
@@ -242,7 +242,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public double getUnsettableDouble()
   {
-    return (Double)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_DOUBLE, true);
+    return (Double)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableDouble(), true);
   }
 
   /**
@@ -252,7 +252,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableDouble(double newUnsettableDouble)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_DOUBLE, newUnsettableDouble);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableDouble(), newUnsettableDouble);
   }
 
   /**
@@ -262,7 +262,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableDouble()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_DOUBLE);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableDouble());
   }
 
   /**
@@ -272,7 +272,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableDouble()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_DOUBLE);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableDouble());
   }
 
   /**
@@ -282,7 +282,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public float getUnsettableFloat()
   {
-    return (Float)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_FLOAT, true);
+    return (Float)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableFloat(), true);
   }
 
   /**
@@ -292,7 +292,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableFloat(float newUnsettableFloat)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_FLOAT, newUnsettableFloat);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableFloat(), newUnsettableFloat);
   }
 
   /**
@@ -302,7 +302,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableFloat()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_FLOAT);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableFloat());
   }
 
   /**
@@ -312,7 +312,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableFloat()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_FLOAT);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableFloat());
   }
 
   /**
@@ -322,7 +322,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public int getUnsettableInt()
   {
-    return (Integer)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_INT, true);
+    return (Integer)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableInt(), true);
   }
 
   /**
@@ -332,7 +332,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableInt(int newUnsettableInt)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_INT, newUnsettableInt);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableInt(), newUnsettableInt);
   }
 
   /**
@@ -342,7 +342,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableInt()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_INT);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableInt());
   }
 
   /**
@@ -352,7 +352,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableInt()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_INT);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableInt());
   }
 
   /**
@@ -362,7 +362,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public long getUnsettableLong()
   {
-    return (Long)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_LONG, true);
+    return (Long)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableLong(), true);
   }
 
   /**
@@ -372,7 +372,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableLong(long newUnsettableLong)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_LONG, newUnsettableLong);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableLong(), newUnsettableLong);
   }
 
   /**
@@ -382,7 +382,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableLong()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_LONG);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableLong());
   }
 
   /**
@@ -392,7 +392,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableLong()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_LONG);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableLong());
   }
 
   /**
@@ -402,7 +402,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public short getUnsettableShort()
   {
-    return (Short)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_SHORT, true);
+    return (Short)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableShort(), true);
   }
 
   /**
@@ -412,7 +412,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableShort(short newUnsettableShort)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_SHORT, newUnsettableShort);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableShort(), newUnsettableShort);
   }
 
   /**
@@ -422,7 +422,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableShort()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_SHORT);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableShort());
   }
 
   /**
@@ -432,7 +432,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableShort()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_SHORT);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableShort());
   }
 
   /**
@@ -442,7 +442,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public String getUnsettableString()
   {
-    return (String)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_STRING, true);
+    return (String)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableString(), true);
   }
 
   /**
@@ -452,7 +452,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableString(String newUnsettableString)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_STRING, newUnsettableString);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableString(), newUnsettableString);
   }
 
   /**
@@ -462,7 +462,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableString()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_STRING);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableString());
   }
 
   /**
@@ -472,7 +472,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableString()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_STRING);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableString());
   }
 
   /**
@@ -482,7 +482,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public VAT getUnsettableVAT()
   {
-    return (VAT)eGet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_VAT, true);
+    return (VAT)eGet(Model2Package.eINSTANCE.getUnsettable1_UnsettableVAT(), true);
   }
 
   /**
@@ -492,7 +492,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void setUnsettableVAT(VAT newUnsettableVAT)
   {
-    eSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_VAT, newUnsettableVAT);
+    eSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableVAT(), newUnsettableVAT);
   }
 
   /**
@@ -502,7 +502,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public void unsetUnsettableVAT()
   {
-    eUnset(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_VAT);
+    eUnset(Model2Package.eINSTANCE.getUnsettable1_UnsettableVAT());
   }
 
   /**
@@ -512,7 +512,7 @@ public class Unsettable1Impl extends CDOObjectImpl implements Unsettable1
    */
   public boolean isSetUnsettableVAT()
   {
-    return eIsSet(Model2Package.Literals.UNSETTABLE1__UNSETTABLE_VAT);
+    return eIsSet(Model2Package.eINSTANCE.getUnsettable1_UnsettableVAT());
   }
 
 } // Unsettable1Impl

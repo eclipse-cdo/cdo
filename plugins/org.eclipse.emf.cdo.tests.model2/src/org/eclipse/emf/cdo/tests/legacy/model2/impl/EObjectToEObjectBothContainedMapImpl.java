@@ -79,7 +79,7 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP;
+    return Model2Package.eINSTANCE.getEObjectToEObjectBothContainedMap();
   }
 
   /**

@@ -53,7 +53,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
   @Override
   protected EClass eStaticClass()
   {
-    return Model3Package.Literals.NODE_D;
+    return Model3Package.eINSTANCE.getNodeD();
   }
 
   /**
@@ -75,7 +75,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
   @SuppressWarnings("unchecked")
   public EList<NodeD> getChildren()
   {
-    return (EList<NodeD>)eGet(Model3Package.Literals.NODE_D__CHILDREN, true);
+    return (EList<NodeD>)eGet(Model3Package.eINSTANCE.getNodeD_Children(), true);
   }
 
   /**
@@ -85,7 +85,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    */
   public NodeD getParent()
   {
-    return (NodeD)eGet(Model3Package.Literals.NODE_D__PARENT, true);
+    return (NodeD)eGet(Model3Package.eINSTANCE.getNodeD_Parent(), true);
   }
 
   /**
@@ -95,7 +95,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    */
   public void setParent(NodeD newParent)
   {
-    eSet(Model3Package.Literals.NODE_D__PARENT, newParent);
+    eSet(Model3Package.eINSTANCE.getNodeD_Parent(), newParent);
   }
 
   /**
@@ -105,7 +105,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    */
   public String getName()
   {
-    return (String)eGet(Model3Package.Literals.NODE_D__NAME, true);
+    return (String)eGet(Model3Package.eINSTANCE.getNodeD_Name(), true);
   }
 
   /**
@@ -115,7 +115,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    */
   public void setName(String newName)
   {
-    eSet(Model3Package.Literals.NODE_D__NAME, newName);
+    eSet(Model3Package.eINSTANCE.getNodeD_Name(), newName);
   }
 
   /**
@@ -126,7 +126,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
   @SuppressWarnings("unchecked")
   public EList<NodeD> getOtherNodes()
   {
-    return (EList<NodeD>)eGet(Model3Package.Literals.NODE_D__OTHER_NODES, true);
+    return (EList<NodeD>)eGet(Model3Package.eINSTANCE.getNodeD_OtherNodes(), true);
   }
 
   /**
@@ -136,7 +136,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    */
   public NodeD getOppositeNode()
   {
-    return (NodeD)eGet(Model3Package.Literals.NODE_D__OPPOSITE_NODE, true);
+    return (NodeD)eGet(Model3Package.eINSTANCE.getNodeD_OppositeNode(), true);
   }
 
   /**
@@ -146,7 +146,7 @@ public class NodeDImpl extends CDOObjectImpl implements NodeD
    */
   public void setOppositeNode(NodeD newOppositeNode)
   {
-    eSet(Model3Package.Literals.NODE_D__OPPOSITE_NODE, newOppositeNode);
+    eSet(Model3Package.eINSTANCE.getNodeD_OppositeNode(), newOppositeNode);
   }
 
 } // NodeDImpl

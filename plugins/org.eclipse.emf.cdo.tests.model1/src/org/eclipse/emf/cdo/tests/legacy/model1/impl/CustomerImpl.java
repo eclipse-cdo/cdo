@@ -32,25 +32,26 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CustomerImpl#getOrderByProduct <em>Order By Product</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model1.impl.CustomerImpl#getOrderByProduct <em>Order By Product</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class CustomerImpl extends AddressImpl implements Customer
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The cached value of the '{@link #getSalesOrders() <em>Sales Orders</em>}' reference list.
-   * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getSalesOrders() <em>Sales Orders</em>}' reference list. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #getSalesOrders()
    * @generated
    * @ordered
@@ -58,9 +59,9 @@ public class CustomerImpl extends AddressImpl implements Customer
   protected EList<SalesOrder> salesOrders;
 
   /**
-   * The cached value of the '{@link #getOrderByProduct() <em>Order By Product</em>}' map.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getOrderByProduct() <em>Order By Product</em>}' map. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getOrderByProduct()
    * @generated
    * @ordered
@@ -69,6 +70,7 @@ public class CustomerImpl extends AddressImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected CustomerImpl()
@@ -78,16 +80,18 @@ public class CustomerImpl extends AddressImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   protected EClass eStaticClass()
   {
-    return Model1Package.Literals.CUSTOMER;
+    return Model1Package.eINSTANCE.getCustomer();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EList<SalesOrder> getSalesOrders()
@@ -102,13 +106,14 @@ public class CustomerImpl extends AddressImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EMap<Product1, SalesOrder> getOrderByProduct()
   {
     if (orderByProduct == null)
     {
-      orderByProduct = new EcoreEMap<Product1, SalesOrder>(Model1Package.Literals.PRODUCT_TO_ORDER,
+      orderByProduct = new EcoreEMap<Product1, SalesOrder>(Model1Package.eINSTANCE.getProductToOrder(),
           ProductToOrderImpl.class, this, Model1Package.CUSTOMER__ORDER_BY_PRODUCT);
     }
     return orderByProduct;
@@ -116,6 +121,7 @@ public class CustomerImpl extends AddressImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -132,6 +138,7 @@ public class CustomerImpl extends AddressImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -149,6 +156,7 @@ public class CustomerImpl extends AddressImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -169,6 +177,7 @@ public class CustomerImpl extends AddressImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -190,6 +199,7 @@ public class CustomerImpl extends AddressImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -209,6 +219,7 @@ public class CustomerImpl extends AddressImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

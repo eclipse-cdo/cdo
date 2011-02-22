@@ -52,7 +52,7 @@ public class ImplMultiRefNonContainerNPLImpl extends CDOObjectImpl implements Im
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.IMPL_MULTI_REF_NON_CONTAINER_NPL;
+    return model4Package.eINSTANCE.getImplMultiRefNonContainerNPL();
   }
 
   /**
@@ -75,7 +75,7 @@ public class ImplMultiRefNonContainerNPLImpl extends CDOObjectImpl implements Im
   public EList<IContainedElementNoParentLink> getElements()
   {
     return (EList<IContainedElementNoParentLink>)eGet(
-        model4interfacesPackage.Literals.IMULTI_REF_NON_CONTAINER_NPL__ELEMENTS, true);
+        model4interfacesPackage.eINSTANCE.getIMultiRefNonContainerNPL_Elements(), true);
   }
 
 } // ImplMultiRefNonContainerNPLImpl

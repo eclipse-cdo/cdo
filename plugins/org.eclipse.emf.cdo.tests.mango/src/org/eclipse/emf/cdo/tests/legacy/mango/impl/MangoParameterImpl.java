@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.legacy.mango.impl;
 
-import org.eclipse.emf.cdo.tests.mango.MangoPackage;
+import org.eclipse.emf.cdo.tests.legacy.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.mango.MangoParameter;
 import org.eclipse.emf.cdo.tests.mango.ParameterPassing;
 
@@ -90,7 +90,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
   @Override
   protected EClass eStaticClass()
   {
-    return MangoPackage.Literals.MANGO_PARAMETER;
+    return MangoPackage.eINSTANCE.getMangoParameter();
   }
 
   /**
@@ -113,9 +113,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_PARAMETER__NAME, oldName, name));
-    }
   }
 
   /**
@@ -138,9 +136,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
     ParameterPassing oldPassing = passing;
     passing = newPassing == null ? PASSING_EDEFAULT : newPassing;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_PARAMETER__PASSING, oldPassing, passing));
-    }
   }
 
   /**
@@ -228,9 +224,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

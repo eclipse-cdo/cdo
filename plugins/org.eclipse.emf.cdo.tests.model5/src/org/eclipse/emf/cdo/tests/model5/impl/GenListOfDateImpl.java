@@ -59,7 +59,7 @@ public class GenListOfDateImpl extends CDOObjectImpl implements GenListOfDate
   @Override
   protected EClass eStaticClass()
   {
-    return Model5Package.Literals.GEN_LIST_OF_DATE;
+    return Model5Package.eINSTANCE.getGenListOfDate();
   }
 
   /**
@@ -81,7 +81,7 @@ public class GenListOfDateImpl extends CDOObjectImpl implements GenListOfDate
   @SuppressWarnings("unchecked")
   public EList<Date> getElements()
   {
-    return (EList<Date>)eGet(Model5Package.Literals.GEN_LIST_OF_DATE__ELEMENTS, true);
+    return (EList<Date>)eGet(Model5Package.eINSTANCE.getGenListOfDate_Elements(), true);
   }
 
 } // GenListOfDateImpl

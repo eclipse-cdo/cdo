@@ -51,7 +51,7 @@ public class MultiContainedElementImpl extends CDOObjectImpl implements MultiCon
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.MULTI_CONTAINED_ELEMENT;
+    return model4Package.eINSTANCE.getMultiContainedElement();
   }
 
   /**
@@ -72,7 +72,7 @@ public class MultiContainedElementImpl extends CDOObjectImpl implements MultiCon
    */
   public String getName()
   {
-    return (String)eGet(model4Package.Literals.MULTI_CONTAINED_ELEMENT__NAME, true);
+    return (String)eGet(model4Package.eINSTANCE.getMultiContainedElement_Name(), true);
   }
 
   /**
@@ -82,7 +82,7 @@ public class MultiContainedElementImpl extends CDOObjectImpl implements MultiCon
    */
   public void setName(String newName)
   {
-    eSet(model4Package.Literals.MULTI_CONTAINED_ELEMENT__NAME, newName);
+    eSet(model4Package.eINSTANCE.getMultiContainedElement_Name(), newName);
   }
 
   /**
@@ -92,7 +92,7 @@ public class MultiContainedElementImpl extends CDOObjectImpl implements MultiCon
    */
   public RefMultiContained getParent()
   {
-    return (RefMultiContained)eGet(model4Package.Literals.MULTI_CONTAINED_ELEMENT__PARENT, true);
+    return (RefMultiContained)eGet(model4Package.eINSTANCE.getMultiContainedElement_Parent(), true);
   }
 
   /**
@@ -102,7 +102,7 @@ public class MultiContainedElementImpl extends CDOObjectImpl implements MultiCon
    */
   public void setParent(RefMultiContained newParent)
   {
-    eSet(model4Package.Literals.MULTI_CONTAINED_ELEMENT__PARENT, newParent);
+    eSet(model4Package.eINSTANCE.getMultiContainedElement_Parent(), newParent);
   }
 
 } // MultiContainedElementImpl

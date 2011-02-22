@@ -75,7 +75,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
   @Override
   protected EClass eStaticClass()
   {
-    return Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT;
+    return Model2Package.eINSTANCE.getNotUnsettableWithDefault();
   }
 
   /**
@@ -96,7 +96,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public boolean isNotUnsettableBoolean()
   {
-    return (Boolean)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BOOLEAN, true);
+    return (Boolean)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableBoolean(), true);
   }
 
   /**
@@ -106,7 +106,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableBoolean(boolean newNotUnsettableBoolean)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BOOLEAN, newNotUnsettableBoolean);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableBoolean(), newNotUnsettableBoolean);
   }
 
   /**
@@ -116,7 +116,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public byte getNotUnsettableByte()
   {
-    return (Byte)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BYTE, true);
+    return (Byte)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableByte(), true);
   }
 
   /**
@@ -126,7 +126,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableByte(byte newNotUnsettableByte)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BYTE, newNotUnsettableByte);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableByte(), newNotUnsettableByte);
   }
 
   /**
@@ -136,7 +136,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public char getNotUnsettableChar()
   {
-    return (Character)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_CHAR, true);
+    return (Character)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableChar(), true);
   }
 
   /**
@@ -146,7 +146,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableChar(char newNotUnsettableChar)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_CHAR, newNotUnsettableChar);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableChar(), newNotUnsettableChar);
   }
 
   /**
@@ -156,7 +156,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public Date getNotUnsettableDate()
   {
-    return (Date)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE, true);
+    return (Date)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableDate(), true);
   }
 
   /**
@@ -166,7 +166,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableDate(Date newNotUnsettableDate)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE, newNotUnsettableDate);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableDate(), newNotUnsettableDate);
   }
 
   /**
@@ -176,7 +176,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public double getNotUnsettableDouble()
   {
-    return (Double)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE, true);
+    return (Double)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableDouble(), true);
   }
 
   /**
@@ -186,7 +186,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableDouble(double newNotUnsettableDouble)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE, newNotUnsettableDouble);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableDouble(), newNotUnsettableDouble);
   }
 
   /**
@@ -196,7 +196,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public float getNotUnsettableFloat()
   {
-    return (Float)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT, true);
+    return (Float)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableFloat(), true);
   }
 
   /**
@@ -206,7 +206,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableFloat(float newNotUnsettableFloat)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT, newNotUnsettableFloat);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableFloat(), newNotUnsettableFloat);
   }
 
   /**
@@ -216,7 +216,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public int getNotUnsettableInt()
   {
-    return (Integer)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_INT, true);
+    return (Integer)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableInt(), true);
   }
 
   /**
@@ -226,7 +226,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableInt(int newNotUnsettableInt)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_INT, newNotUnsettableInt);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableInt(), newNotUnsettableInt);
   }
 
   /**
@@ -236,7 +236,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public long getNotUnsettableLong()
   {
-    return (Long)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_LONG, true);
+    return (Long)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableLong(), true);
   }
 
   /**
@@ -246,7 +246,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableLong(long newNotUnsettableLong)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_LONG, newNotUnsettableLong);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableLong(), newNotUnsettableLong);
   }
 
   /**
@@ -256,7 +256,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public short getNotUnsettableShort()
   {
-    return (Short)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_SHORT, true);
+    return (Short)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableShort(), true);
   }
 
   /**
@@ -266,7 +266,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableShort(short newNotUnsettableShort)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_SHORT, newNotUnsettableShort);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableShort(), newNotUnsettableShort);
   }
 
   /**
@@ -276,7 +276,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public String getNotUnsettableString()
   {
-    return (String)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING, true);
+    return (String)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableString(), true);
   }
 
   /**
@@ -286,7 +286,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableString(String newNotUnsettableString)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING, newNotUnsettableString);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableString(), newNotUnsettableString);
   }
 
   /**
@@ -296,7 +296,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public VAT getNotUnsettableVAT()
   {
-    return (VAT)eGet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT, true);
+    return (VAT)eGet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableVAT(), true);
   }
 
   /**
@@ -306,7 +306,7 @@ public class NotUnsettableWithDefaultImpl extends CDOObjectImpl implements NotUn
    */
   public void setNotUnsettableVAT(VAT newNotUnsettableVAT)
   {
-    eSet(Model2Package.Literals.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT, newNotUnsettableVAT);
+    eSet(Model2Package.eINSTANCE.getNotUnsettableWithDefault_NotUnsettableVAT(), newNotUnsettableVAT);
   }
 
 } // NotUnsettableWithDefaultImpl

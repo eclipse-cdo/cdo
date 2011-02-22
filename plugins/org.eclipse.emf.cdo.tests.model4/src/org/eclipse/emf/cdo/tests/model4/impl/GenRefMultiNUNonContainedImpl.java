@@ -51,7 +51,7 @@ public class GenRefMultiNUNonContainedImpl extends CDOObjectImpl implements GenR
   @Override
   protected EClass eStaticClass()
   {
-    return model4Package.Literals.GEN_REF_MULTI_NU_NON_CONTAINED;
+    return model4Package.eINSTANCE.getGenRefMultiNUNonContained();
   }
 
   /**
@@ -73,7 +73,7 @@ public class GenRefMultiNUNonContainedImpl extends CDOObjectImpl implements GenR
   @SuppressWarnings("unchecked")
   public EList<EObject> getElements()
   {
-    return (EList<EObject>)eGet(model4Package.Literals.GEN_REF_MULTI_NU_NON_CONTAINED__ELEMENTS, true);
+    return (EList<EObject>)eGet(model4Package.eINSTANCE.getGenRefMultiNUNonContained_Elements(), true);
   }
 
 } // GenRefMultiNUNonContainedImpl

@@ -180,6 +180,7 @@ public final class DBUtil
     {
       try
       {
+        rollback(connection);
         connection.close();
       }
       catch (Exception ex)
@@ -190,6 +191,18 @@ public final class DBUtil
     }
 
     return null;
+  }
+
+  private static void rollback(Connection connection)
+  {
+    try
+    {
+      connection.rollback();
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
   }
 
   public static Exception close(Statement statement)

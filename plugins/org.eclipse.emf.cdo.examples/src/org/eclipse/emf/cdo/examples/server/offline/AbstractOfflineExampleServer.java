@@ -40,6 +40,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  * @author Martin Fluegge
+ * @since 4.0
  */
 public abstract class AbstractOfflineExampleServer
 {

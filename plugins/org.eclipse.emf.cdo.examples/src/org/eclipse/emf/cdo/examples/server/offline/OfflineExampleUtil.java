@@ -22,6 +22,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
  * @author Martin Fluegge
+ * @since 4.0
  */
 public class OfflineExampleUtil
 {

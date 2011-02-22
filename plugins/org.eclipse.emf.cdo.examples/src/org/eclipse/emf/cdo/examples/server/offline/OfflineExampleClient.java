@@ -40,6 +40,7 @@ import java.io.InputStreamReader;
  * 
  * @author Eike Stepper
  * @author Martin Fluegge
+ * @since 4.0
  */
 public class OfflineExampleClient
 {

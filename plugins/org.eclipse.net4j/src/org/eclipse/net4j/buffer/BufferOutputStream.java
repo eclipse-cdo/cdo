@@ -33,6 +33,8 @@ public class BufferOutputStream extends OutputStream
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, BufferOutputStream.class);
 
+  private final boolean tracerEnabled;
+
   private IBufferProvider bufferProvider;
 
   private IBufferHandler bufferHandler;
@@ -67,6 +69,7 @@ public class BufferOutputStream extends OutputStream
     this.bufferHandler = bufferHandler;
     this.bufferProvider = bufferProvider;
     this.channelID = channelID;
+    tracerEnabled = TRACER.isEnabled();
   }
 
   public BufferOutputStream(IBufferHandler bufferHandler, short channelID)
@@ -102,7 +105,7 @@ public class BufferOutputStream extends OutputStream
     // the implicit conversion prepended 24 leading 1's. We'll undo those.
     b = b & 0xFF;
 
-    if (TRACER.isEnabled())
+    if (tracerEnabled)
     {
       TRACER.trace("--> " + HexUtil.formatByte(b) //$NON-NLS-1$
           + (b >= 32 ? " " + Character.toString((char)b) : "")); //$NON-NLS-1$ //$NON-NLS-2$

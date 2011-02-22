@@ -38,6 +38,8 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, BufferInputStream.class);
 
+  private final boolean tracerEnabled;
+
   private BlockingQueue<IBuffer> buffers = new LinkedBlockingQueue<IBuffer>();
 
   private IBuffer currentBuffer;
@@ -50,6 +52,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   public BufferInputStream()
   {
+    tracerEnabled = TRACER.isEnabled();
   }
 
   public long getMillisBeforeTimeout()
@@ -121,7 +124,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     }
 
     final int result = byteBuffer.get() & 0xFF;
-    if (TRACER.isEnabled())
+    if (tracerEnabled)
     {
       TRACER.trace("<-- " + HexUtil.formatByte(result) //$NON-NLS-1$
           + (result >= 32 ? " " + Character.toString((char)result) : "")); //$NON-NLS-1$ //$NON-NLS-2$

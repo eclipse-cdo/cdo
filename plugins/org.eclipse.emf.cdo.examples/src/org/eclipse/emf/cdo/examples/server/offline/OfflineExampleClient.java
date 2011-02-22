@@ -68,7 +68,6 @@ public class OfflineExampleClient
 
   private static boolean isAutoMerge(String[] args)
   {
-
     for (int i = 0; i < args.length; i++)
     {
       if (args[i].equals("-automerge"))
@@ -76,6 +75,7 @@ public class OfflineExampleClient
         return true;
       }
     }
+
     return false;
   }
 
@@ -83,7 +83,7 @@ public class OfflineExampleClient
   {
     session.addListener(new IListener()
     {
-      private boolean wasOffline = false;
+      private boolean wasOffline;
 
       public void notifyEvent(IEvent event)
       {

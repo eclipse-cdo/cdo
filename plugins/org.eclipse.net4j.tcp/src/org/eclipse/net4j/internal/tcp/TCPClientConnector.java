@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - maintenance
  */
 package org.eclipse.net4j.internal.tcp;
 
@@ -44,18 +45,6 @@ public class TCPClientConnector extends TCPConnector
   public Location getLocation()
   {
     return Location.CLIENT;
-  }
-
-  @Override
-  public void setHost(String host)
-  {
-    super.setHost(host);
-  }
-
-  @Override
-  public void setPort(int port)
-  {
-    super.setPort(port);
   }
 
   @Override

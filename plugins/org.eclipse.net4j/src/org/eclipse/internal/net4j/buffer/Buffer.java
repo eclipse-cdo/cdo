@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - maintenance
  */
 package org.eclipse.internal.net4j.buffer;
 
@@ -31,10 +32,11 @@ import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
+ * @since 4.0
  */
 public class Buffer implements InternalBuffer
 {
-  private static final int EOS_OFFSET = 1;
+  public static final int EOS_OFFSET = 1;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER, Buffer.class);
 
@@ -86,6 +88,11 @@ public class Buffer implements InternalBuffer
     return channelID;
   }
 
+  public void setChannelID(short channelID)
+  {
+    this.channelID = channelID;
+  }
+
   public short getCapacity()
   {
     return (short)byteBuffer.capacity();
@@ -96,6 +103,11 @@ public class Buffer implements InternalBuffer
     return state;
   }
 
+  public void setState(BufferState state)
+  {
+    this.state = state;
+  }
+
   public ByteBuffer getByteBuffer()
   {
     if (state != BufferState.GETTING && state != BufferState.PUTTING)
@@ -104,6 +116,11 @@ public class Buffer implements InternalBuffer
     }
 
     return byteBuffer;
+  }
+
+  public void setByteBuffer(ByteBuffer buffer)
+  {
+    byteBuffer = buffer;
   }
 
   public void clear()
@@ -389,7 +406,7 @@ public class Buffer implements InternalBuffer
     this.errorHandler = errorHandler;
   }
 
-  private void handleError(Throwable t)
+  public void handleError(Throwable t)
   {
     if (errorHandler != null)
     {

@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - maintenance
  */
 package org.eclipse.net4j.internal.tcp;
 
@@ -75,7 +76,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     return host;
   }
 
-  void setHost(String host)
+  public void setHost(String host)
   {
     this.host = host;
   }
@@ -85,7 +86,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     return port;
   }
 
-  void setPort(int port)
+  public void setPort(int port)
   {
     this.port = port;
   }
@@ -113,11 +114,51 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     this.socketChannel = socketChannel;
   }
 
+  public SelectionKey getSelectionKey()
+  {
+    return selectionKey;
+  }
+
+  public void setSelectionKey(SelectionKey selectionKey)
+  {
+    this.selectionKey = selectionKey;
+  }
+
+  public BlockingQueue<InternalChannel> getWriteQueue()
+  {
+    return writeQueue;
+  }
+
+  public void setWriteQueue(BlockingQueue<InternalChannel> writeQueue)
+  {
+    this.writeQueue = writeQueue;
+  }
+
+  public IBuffer getInputBuffer()
+  {
+    return inputBuffer;
+  }
+
+  public void setInputBuffer(IBuffer inputBuffer)
+  {
+    this.inputBuffer = inputBuffer;
+  }
+
+  public ControlChannel getControlChannel()
+  {
+    return controlChannel;
+  }
+
+  public void setControlChannel(ControlChannel controlChannel)
+  {
+    this.controlChannel = controlChannel;
+  }
+
   @Override
   public String getURL()
   {
     StringBuilder builder = new StringBuilder();
-    builder.append("tcp://");
+    builder.append(getProtocolString());
     builder.append(host);
     if (port != DEFAULT_PORT)
     {
@@ -126,6 +167,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
 
     return builder.toString();
+  }
+
+  public String getProtocolString()
+  {
+    return "tcp://";
   }
 
   public void handleRegistration(ITCPSelector selector, SocketChannel socketChannel)
@@ -242,7 +288,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       {
         if (selectionKey != null)
         {
-          selector.orderWriteInterest(selectionKey, isClient(), true);
+          doOrderWriteInterest(true);
         }
       }
     }
@@ -277,7 +323,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         {
           if (selectionKey != null)
           {
-            selector.orderWriteInterest(selectionKey, isClient(), false);
+            doOrderWriteInterest(false);
           }
         }
       }
@@ -302,6 +348,11 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         deactivateAsync();
       }
     }
+  }
+
+  protected void doOrderWriteInterest(boolean on)
+  {
+    selector.orderWriteInterest(selectionKey, isClient(), on);
   }
 
   @Override

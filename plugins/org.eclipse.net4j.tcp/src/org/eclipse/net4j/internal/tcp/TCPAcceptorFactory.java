@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - maintenance
  */
 package org.eclipse.net4j.internal.tcp;
 
@@ -29,6 +30,14 @@ public class TCPAcceptorFactory extends AcceptorFactory
     super(TYPE);
   }
 
+  /**
+   * Allows derived classes to override the TYPE identifier
+   */
+  protected TCPAcceptorFactory(String type)
+  {
+    super(type);
+  }
+
   public TCPAcceptor create(String description)
   {
     String address = ITCPAcceptor.DEFAULT_ADDRESS;
@@ -48,10 +57,15 @@ public class TCPAcceptorFactory extends AcceptorFactory
       }
     }
 
-    TCPAcceptor acceptor = new TCPAcceptor();
+    TCPAcceptor acceptor = createAcceptor();
     acceptor.setAddress(address);
     acceptor.setPort(port);
     return acceptor;
+  }
+
+  protected TCPAcceptor createAcceptor()
+  {
+    return new TCPAcceptor();
   }
 
   @Override

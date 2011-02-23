@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - maintenance
  */
 package org.eclipse.net4j.internal.tcp;
 
@@ -33,7 +34,15 @@ public class TCPConnectorFactory extends ConnectorFactory
     super(TYPE);
   }
 
-  public TCPClientConnector create(String description)
+  /**
+   * Allows derived classes to override the TYPE identifier
+   */
+  protected TCPConnectorFactory(String type)
+  {
+    super(type);
+  }
+
+  public TCPConnector create(String description)
   {
     try
     {
@@ -48,7 +57,7 @@ public class TCPConnectorFactory extends ConnectorFactory
         port = ITCPConnector.DEFAULT_PORT;
       }
 
-      TCPClientConnector connector = new TCPClientConnector();
+      TCPConnector connector = createConnector();
       connector.setUserID(userID);
       connector.setHost(host);
       connector.setPort(port);
@@ -60,12 +69,17 @@ public class TCPConnectorFactory extends ConnectorFactory
     }
   }
 
+  protected TCPConnector createConnector()
+  {
+    return new TCPClientConnector();
+  }
+
   @Override
   public String getDescriptionFor(Object object)
   {
-    if (object instanceof TCPClientConnector)
+    if (object instanceof TCPConnector)
     {
-      TCPClientConnector connector = (TCPClientConnector)object;
+      TCPConnector connector = (TCPConnector)object;
       String description = connector.getHost();
       String userID = connector.getUserID();
       if (!StringUtil.isEmpty(userID))

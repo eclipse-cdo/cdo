@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - maintenance
  */
 package org.eclipse.net4j.internal.tcp;
 
@@ -183,7 +184,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
         // socketChannel.socket().setKeepAlive(true);
         socketChannel.configureBlocking(false);
 
-        TCPServerConnector connector = createConnector();
+        TCPConnector connector = createConnector();
         prepareConnector(connector);
         connector.setSocketChannel(socketChannel);
         connector.setSelector(selector);
@@ -211,7 +212,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     return MessageFormat.format("TCPAcceptor[{0}:{1}]", address, port); //$NON-NLS-1$
   }
 
-  protected TCPServerConnector createConnector()
+  protected TCPConnector createConnector()
   {
     return new TCPServerConnector(this);
   }

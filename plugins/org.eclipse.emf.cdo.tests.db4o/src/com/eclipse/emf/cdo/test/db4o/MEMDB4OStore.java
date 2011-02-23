@@ -9,7 +9,9 @@
  *    Victor Roldan Betancort - initial API and implementation
  */
 
-package org.eclipse.emf.cdo.server.internal.db4o;
+package com.eclipse.emf.cdo.test.db4o;
+
+import org.eclipse.emf.cdo.server.internal.db4o.DB4OStore;
 
 import com.db4o.ObjectContainer;
 import com.db4o.ext.ExtDb4o;
@@ -23,7 +25,7 @@ import com.db4o.ext.MemoryFile;
 public final class MEMDB4OStore extends DB4OStore
 {
 
-  private ObjectContainer objectContainer;
+  private static ObjectContainer objectContainer;
 
   public MEMDB4OStore()
   {
@@ -56,5 +58,10 @@ public final class MEMDB4OStore extends DB4OStore
   protected void closeClient(ObjectContainer container)
   {
     // no server is defined. Objects are mantained in-memory in ObjectContainer instances
+  }
+
+  public static void clearContainer()
+  {
+    objectContainer = ExtDb4o.openMemoryFile(new MemoryFile());
   }
 }

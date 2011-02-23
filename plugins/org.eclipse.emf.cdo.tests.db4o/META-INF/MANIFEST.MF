@@ -9,3 +9,5 @@ Require-Bundle: org.eclipse.emf.cdo.tests;bundle-version="3.0.0",
 Bundle-Vendor: %providerName
 Export-Package: com.eclipse.emf.cdo.test.db4o;version="1.0.0"
 Bundle-Localization: plugin
+Import-Package: com.db4o;version="[7.4.0,8.0.0)",
+ com.db4o.ext;version="[7.4.0,8.0.0)"

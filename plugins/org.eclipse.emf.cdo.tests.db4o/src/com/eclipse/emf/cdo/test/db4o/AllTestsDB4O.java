@@ -12,8 +12,8 @@ package com.eclipse.emf.cdo.test.db4o;
 
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.internal.db4o.MEMDB4OStore;
 import org.eclipse.emf.cdo.tests.AllConfigs;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_261218_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
@@ -38,9 +38,9 @@ public class AllTestsDB4O extends AllConfigs
   {
     super.initTestClasses(testClasses);
 
-    // Added here testcases to skip, example:
-    // testClasses.remove(Bugzilla_261218_Test.class);
-    // testClasses.remove(Bugzilla_316444_Test.class);
+    // Added here testcases to skip
+    // takes too much
+    testClasses.remove(Bugzilla_261218_Test.class);
   }
 
   @Override
@@ -80,6 +80,7 @@ public class AllTestsDB4O extends AllConfigs
     @Override
     protected IStore createStore(String repoName)
     {
+      MEMDB4OStore.clearContainer();
       return new MEMDB4OStore();
     }
   }

@@ -160,6 +160,8 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   {
     super.doActivate();
     initObjectServer();
+    initServerInfo();
+    setLastCommitTime(getServerInfo().getLastCommitTime());
   }
 
   protected void initObjectServer()
@@ -171,7 +173,6 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     }
 
     server = Db4o.openServer(configuration, storeLocation, port);
-    getServerInfo();
   }
 
   protected void tearDownObjectServer()
@@ -252,6 +253,16 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   protected void doDeactivate() throws Exception
   {
     tearDownObjectServer();
+    ObjectContainer container = openClient();
+    try
+    {
+      getServerInfo().setLastCommitTime(getLastCommitTime());
+      commitServerInfo(container);
+    }
+    finally
+    {
+      closeClient(container);
+    }
     super.doDeactivate();
   }
 
@@ -344,6 +355,8 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
     private long creationTime;
 
+    private long lastCommitTime;
+
     private Map<String, String> properties = new HashMap<String, String>();
 
     public boolean isFirstTime()
@@ -375,6 +388,16 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     public Map<String, String> getProperties()
     {
       return properties;
+    }
+
+    public long getLastCommitTime()
+    {
+      return lastCommitTime;
+    }
+
+    public void setLastCommitTime(long lastCommitTime)
+    {
+      this.lastCommitTime = lastCommitTime;
     }
   }
 }

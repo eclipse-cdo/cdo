@@ -209,6 +209,7 @@ public class AllTestsDBH2Branching extends DBConfigs
         finally
         {
           DBUtil.close(stmt);
+          DBUtil.close(conn);
         }
 
         JdbcDataSource dataSource = new JdbcDataSource();

@@ -128,7 +128,7 @@ public class SQLQueryTest extends AbstractCDOTest
         intResult = ((Long)result).intValue();
       }
 
-      assertEquals(intResult, NUM_OF_PRODUCTS);
+      assertEquals(NUM_OF_PRODUCTS, intResult);
     }
 
     transaction.commit();
@@ -284,7 +284,7 @@ public class SQLQueryTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     fillResource(resource);
 

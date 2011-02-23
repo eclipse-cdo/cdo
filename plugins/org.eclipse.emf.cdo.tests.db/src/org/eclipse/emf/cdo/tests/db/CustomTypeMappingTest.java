@@ -56,8 +56,8 @@ public class CustomTypeMappingTest extends AbstractCDOTest
 
     try
     {
-      EPackage pkg = EMFUtil.createEPackage("underscoreTest", "uct",
-          "http://cdo.eclipse.org/tests/underscoreTest.ecore");
+      EPackage pkg = EMFUtil.createEPackage("underscoreTest2", "uct2",
+          "http://cdo.eclipse.org/tests/underscoreTest2.ecore");
       EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
       EAttribute att = EMFUtil.createEAttribute(cls, "bar", EcorePackage.eINSTANCE.getEInt());
 
@@ -75,7 +75,7 @@ public class CustomTypeMappingTest extends AbstractCDOTest
 
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test");
+      CDOResource resource = transaction.createResource(getResourcePath("/test"));
 
       EObject obj = EcoreUtil.create(cls);
       obj.eSet(att, 42);
@@ -96,7 +96,7 @@ public class CustomTypeMappingTest extends AbstractCDOTest
           try
           {
             stmt = getStatement();
-            rset = stmt.executeQuery("SELECT bar FROM underscoreTest_foo");
+            rset = stmt.executeQuery("SELECT bar FROM underscoreTest2_foo");
             assertEquals("java.lang.String", rset.getMetaData().getColumnClassName(1));
 
             rset.next();

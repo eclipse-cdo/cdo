@@ -52,7 +52,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Commit a product that has a name with an allowed string length.");
     EClass eClass = (EClass)model1.getEClassifier("Product1");
@@ -84,7 +84,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Commit a product that has a name with an invalid string length.");
     EClass eClass = (EClass)model1.getEClassifier("Product1");
@@ -124,7 +124,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Commit a product.");
     EClass eClass = (EClass)model1.getEClassifier("Product1");
@@ -210,7 +210,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Commit a category.");
     EClass eClass = (EClass)model1.getEClassifier("Category");
@@ -250,7 +250,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Commit a category.");
     EClass eClass = (EClass)model1.getEClassifier("Category");
@@ -295,7 +295,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Commit a category.");
     EClass eClass = (EClass)model1.getEClassifier("Category");
@@ -334,7 +334,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Creating resource");
-    CDOResource resource = transaction.createResource("/test1");
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     msg("Commit a category.");
     EClass eClass = (EClass)model1.getEClassifier("Category");

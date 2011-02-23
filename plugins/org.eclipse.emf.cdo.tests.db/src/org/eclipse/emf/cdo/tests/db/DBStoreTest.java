@@ -100,7 +100,7 @@ public class DBStoreTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getOrCreateResource("/test");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test"));
 
     PurchaseOrder o = Model1Factory.eINSTANCE.createPurchaseOrder();
     o.setDate(new GregorianCalendar(2008, 11, 24, 12, 34, 56).getTime());
@@ -114,7 +114,7 @@ public class DBStoreTest extends AbstractCDOTest
 
     session = openSession();
     CDOView view = session.openView();
-    resource = view.getResource("/test");
+    resource = view.getResource(getResourcePath("/test"));
 
     assertEquals(1, resource.getContents().size());
     o = (PurchaseOrder)resource.getContents().get(0);
@@ -155,7 +155,7 @@ public class DBStoreTest extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("/test");
+      CDOResource resource = transaction.createResource(getResourcePath("/test"));
       resource.getContents().add(obj1);
       resource.getContents().add(obj2);
       transaction.commit();
@@ -169,7 +169,7 @@ public class DBStoreTest extends AbstractCDOTest
       CDOSession session = openSession();
       session.getPackageRegistry().putEPackage(pkg);
       CDOView view = session.openView();
-      CDOResource resource = view.getResource("/test");
+      CDOResource resource = view.getResource(getResourcePath("/test"));
 
       assertEquals(2, resource.getContents().size());
 
@@ -249,7 +249,7 @@ public class DBStoreTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getOrCreateResource("/test");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test"));
 
     Company e = Model1Factory.eINSTANCE.createCompany();
     e.setName(s);
@@ -273,7 +273,7 @@ public class DBStoreTest extends AbstractCDOTest
 
     session = openSession();
     CDOView view = session.openView();
-    resource = view.getResource("/test");
+    resource = view.getResource(getResourcePath("/test"));
 
     assertEquals(1, resource.getContents().size());
     e = (Company)resource.getContents().get(0);
@@ -293,7 +293,7 @@ public class DBStoreTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test");
+    CDOResource resource = transaction.createResource(getResourcePath("/test"));
 
     EObject foo = EcoreUtil.create(cls);
     foo.eSet(att, "foobar");
@@ -315,7 +315,7 @@ public class DBStoreTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource("/test");
+    CDOResource resource = transaction.createResource(getResourcePath("/test"));
 
     EObject foo = EcoreUtil.create(cls);
     foo.eSet(att, "foobar");

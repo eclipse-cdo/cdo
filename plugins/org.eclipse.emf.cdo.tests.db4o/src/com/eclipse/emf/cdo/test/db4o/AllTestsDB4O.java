@@ -14,8 +14,6 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.db4o.MEMDB4OStore;
 import org.eclipse.emf.cdo.tests.AllConfigs;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_261218_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_316444_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
@@ -40,9 +38,9 @@ public class AllTestsDB4O extends AllConfigs
   {
     super.initTestClasses(testClasses);
 
-    // Takes too much time
-    testClasses.remove(Bugzilla_261218_Test.class);
-    testClasses.remove(Bugzilla_316444_Test.class);
+    // Added here testcases to skip, example:
+    // testClasses.remove(Bugzilla_261218_Test.class);
+    // testClasses.remove(Bugzilla_316444_Test.class);
   }
 
   @Override

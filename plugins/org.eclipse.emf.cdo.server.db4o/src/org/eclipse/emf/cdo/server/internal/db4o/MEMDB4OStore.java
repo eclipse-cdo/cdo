@@ -23,6 +23,8 @@ import com.db4o.ext.MemoryFile;
 public final class MEMDB4OStore extends DB4OStore
 {
 
+  private ObjectContainer objectContainer;
+
   public MEMDB4OStore()
   {
     super(null, 0);
@@ -31,7 +33,11 @@ public final class MEMDB4OStore extends DB4OStore
   @Override
   public ObjectContainer openClient()
   {
-    return ExtDb4o.openMemoryFile(new MemoryFile());
+    if (objectContainer == null)
+    {
+      objectContainer = ExtDb4o.openMemoryFile(new MemoryFile());
+    }
+    return objectContainer;
   }
 
   @Override
@@ -42,6 +48,12 @@ public final class MEMDB4OStore extends DB4OStore
 
   @Override
   protected void tearDownObjectServer()
+  {
+    // no server is defined. Objects are mantained in-memory in ObjectContainer instances
+  }
+
+  @Override
+  protected void closeClient(ObjectContainer container)
   {
     // no server is defined. Objects are mantained in-memory in ObjectContainer instances
   }

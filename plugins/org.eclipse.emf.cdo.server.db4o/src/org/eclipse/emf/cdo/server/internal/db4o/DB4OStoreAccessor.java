@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -27,6 +29,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.db4o.IDB4OIdentifiableObject;
@@ -68,6 +71,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -81,7 +85,7 @@ import java.util.Set;
 /**
  * @author Victor Roldan Betancort
  */
-public class DB4OStoreAccessor extends LongIDStoreAccessor
+public class DB4OStoreAccessor extends LongIDStoreAccessor implements IStoreAccessor.Raw
 {
   private ObjectContainer objectContainer;
 
@@ -312,8 +316,11 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
   {
     Query query = getObjectContainer().query();
     query.constrain(DB4ORevision.class);
-    query.descend(DB4ORevision.ATTRIBUTE_PACKAGE_NS_URI).constrain(eClass.getEPackage().getNsURI());
-    query.descend(DB4ORevision.ATTRIBUTE_CLASS_NAME).constrain(eClass.getName());
+    if (eClass != null)
+    {
+      query.descend(DB4ORevision.ATTRIBUTE_PACKAGE_NS_URI).constrain(eClass.getEPackage().getNsURI());
+      query.descend(DB4ORevision.ATTRIBUTE_CLASS_NAME).constrain(eClass.getName());
+    }
 
     ObjectSet<?> revisions = query.execute();
     if (revisions.isEmpty())
@@ -425,8 +432,42 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
 
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
-    // TODO: implement DB4OStoreAccessor.handleLobs(fromTime, toTime, handler)
-    throw new UnsupportedOperationException();
+    for (DB4OBlob db4oBlob : DB4OStore.getElementsOfType(getObjectContainer(), DB4OBlob.class))
+    {
+      byte[] id = HexUtil.hexToBytes(db4oBlob.getId());
+      byte[] blob = db4oBlob.getValue();
+      ByteArrayInputStream in = new ByteArrayInputStream(blob);
+      OutputStream out = handler.handleBlob(id, blob.length);
+      if (out != null)
+      {
+        try
+        {
+          IOUtil.copyBinary(in, out, blob.length);
+        }
+        finally
+        {
+          IOUtil.close(out);
+        }
+      }
+    }
+    for (DB4OClob db4oClob : DB4OStore.getElementsOfType(getObjectContainer(), DB4OClob.class))
+    {
+      byte[] id = HexUtil.hexToBytes(db4oClob.getId());
+      char[] clob = db4oClob.getValue();
+      CharArrayReader in = new CharArrayReader(clob);
+      Writer out = handler.handleClob(id, clob.length);
+      if (out != null)
+      {
+        try
+        {
+          IOUtil.copyCharacter(in, out, clob.length);
+        }
+        finally
+        {
+          IOUtil.close(out);
+        }
+      }
+    }
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
@@ -714,5 +755,58 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor
     {
       throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID); //$NON-NLS-1$ //$NON-NLS-2$
     }
+  }
+
+  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
+  {
+    // TODO: Implement DB4OStoreAccessor.rawExport(CDODataOutput, int, int, long, long)
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException
+  {
+    // TODO: Implement DB4OStoreAccessor.rawImport(CDODataInput, int, int, long, long, OMMonitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
+  {
+    writePackageUnits(packageUnits, monitor);
+  }
+
+  public void rawStore(InternalCDORevision revision, OMMonitor monitor)
+  {
+    writeRevision(revision, monitor);
+  }
+
+  public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
+  {
+    // TODO: Implement DB4OStoreAccessor.rawExport(CDODataOutput, int, int, long, long)
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(byte[] id, long size, Reader reader) throws IOException
+  {
+    // TODO: Implement DB4OStoreAccessor.rawStore(byte[], long, Reader)
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+      OMMonitor monitor)
+  {
+    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
+  }
+
+  public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
+  {
+    // TODO: Implement DB4OStoreAccessor.rawDelete(CDOID, int, CDOBranch, EClass, OMMonitor)
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawCommit(double commitWork, OMMonitor monitor)
+  {
+    doCommit(monitor);
   }
 }

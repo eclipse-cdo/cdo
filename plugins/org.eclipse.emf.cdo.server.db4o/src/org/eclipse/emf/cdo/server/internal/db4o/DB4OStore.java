@@ -33,6 +33,7 @@ import com.db4o.query.Query;
 import com.db4o.reflect.jdk.JdkReflector;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -220,8 +221,13 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     }
     finally
     {
-      container.close();
+      closeClient(container);
     }
+  }
+
+  protected void closeClient(ObjectContainer container)
+  {
+    container.close();
   }
 
   private void commitServerInfo(ObjectContainer container)
@@ -237,7 +243,7 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     {
       if (usedContainer != container)
       {
-        usedContainer.close();
+        closeClient(usedContainer);
       }
     }
   }
@@ -293,6 +299,12 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     }
 
     return (DB4ORevision)revisions.get(0);
+  }
+
+  public static <T> List<T> getElementsOfType(ObjectContainer container, Class<T> clazz)
+  {
+    ObjectSet<T> elements = container.query(clazz);
+    return elements;
   }
 
   public static IDB4OIdentifiableObject getIdentifiableObject(ObjectContainer container, String id)

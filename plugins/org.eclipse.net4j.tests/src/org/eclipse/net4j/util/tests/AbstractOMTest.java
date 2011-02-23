@@ -50,7 +50,7 @@ import junit.framework.TestResult;
  */
 public abstract class AbstractOMTest extends TestCase
 {
-  public static final long DEFAULT_TIMEOUT = 120 * 1000;
+  public static final long DEFAULT_TIMEOUT = 15 * 1000;
 
   public static final long DEFAULT_TIMEOUT_EXPECTED = 2 * 1000;
 

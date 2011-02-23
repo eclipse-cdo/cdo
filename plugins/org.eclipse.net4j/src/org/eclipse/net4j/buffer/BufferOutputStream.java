@@ -99,7 +99,7 @@ public class BufferOutputStream extends OutputStream
   {
     throwExceptionOnError();
     flushIfFilled();
-    ensureBuffer();
+    ensureBufferPrivate();
 
     // If this was called with a primitive byte with a negative value,
     // the implicit conversion prepended 24 leading 1's. We'll undo those.
@@ -116,20 +116,6 @@ public class BufferOutputStream extends OutputStream
   }
 
   /**
-   * Flushes the current buffer if it has no remaining space.
-   * 
-   * @throws IOException
-   *           Signals that an I/O exception has occurred.
-   */
-  private void flushIfFilled() throws IOException
-  {
-    if (currentBuffer != null && !currentBuffer.getByteBuffer().hasRemaining())
-    {
-      flush();
-    }
-  }
-
-  /**
    * Flushes the current buffer, it's handled over to the buffer handler.
    * 
    * @throws IOException
@@ -139,6 +125,25 @@ public class BufferOutputStream extends OutputStream
    */
   @Override
   public void flush() throws IOException
+  {
+    flushPrivate();
+  }
+
+  /**
+   * Flushes the current buffer if it has no remaining space.
+   * 
+   * @throws IOException
+   *           Signals that an I/O exception has occurred.
+   */
+  private void flushIfFilled() throws IOException
+  {
+    if (currentBuffer != null && !currentBuffer.getByteBuffer().hasRemaining())
+    {
+      flushPrivate();
+    }
+  }
+
+  private void flushPrivate()
   {
     if (currentBuffer != null)
     {
@@ -150,9 +155,9 @@ public class BufferOutputStream extends OutputStream
   public void flushWithEOS() throws IOException
   {
     throwExceptionOnError();
-    ensureBuffer();
+    ensureBufferPrivate();
     currentBuffer.setEOS(true);
-    flush();
+    flushPrivate();
   }
 
   @Override
@@ -190,6 +195,11 @@ public class BufferOutputStream extends OutputStream
    * @see IBufferProvider#provideBuffer()
    */
   protected void ensureBuffer() throws IOException
+  {
+    ensureBufferPrivate();
+  }
+
+  private void ensureBufferPrivate()
   {
     if (currentBuffer == null)
     {

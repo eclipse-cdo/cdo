@@ -62,8 +62,11 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
   public DB4OStore(String storeLocation, int port)
   {
-    super(IDB4OStore.TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.NONE, RevisionTemporality.AUDITING),
-        set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
+    super(IDB4OStore.TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA), set(RevisionTemporality.NONE,
+        RevisionTemporality.AUDITING), set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
+
+    // setRevisionTemporality(RevisionTemporality.AUDITING);
+    // setRevisionParallelism(RevisionParallelism.BRANCHING);
 
     this.storeLocation = storeLocation;
     this.port = port;

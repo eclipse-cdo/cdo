@@ -699,8 +699,22 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements IStoreAcce
   protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
       OMMonitor monitor)
   {
-    // TODO: implement DB4OStoreAccessor.writeRevisionDeltas(revisionDeltas, branch, created, monitor)
-    throw new UnsupportedOperationException();
+    for (InternalCDORevisionDelta revisionDelta : revisionDeltas)
+    {
+      writeRevisionDelta(revisionDelta, branch, created);
+    }
+  }
+
+  protected void writeRevisionDelta(InternalCDORevisionDelta revisionDelta, CDOBranch branch, long created)
+  {
+    CDOID id = revisionDelta.getID();
+    InternalCDORevision revision = DB4ORevision.getCDORevision(getStore(),
+        DB4OStore.getRevision(getObjectContainer(), id));
+    InternalCDORevision newRevision = revision.copy();
+    newRevision.adjustForCommit(branch, created);
+
+    revisionDelta.apply(newRevision);
+    writeRevision(newRevision, new Monitor());
   }
 
   @Override

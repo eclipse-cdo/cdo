@@ -167,9 +167,9 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return getBranches();
   }
 
-  public synchronized InternalCDOBranch[] getBranches()
+  public InternalCDOBranch[] getBranches(boolean loadOnDemand)
   {
-    if (branches == null)
+    if (branches == null && loadOnDemand)
     {
       InternalCDOBranchManager branchManager = getBranchManager();
       SubBranchInfo[] infos = branchManager.getBranchLoader().loadSubBranches(id);
@@ -182,6 +182,11 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     }
 
     return branches;
+  }
+
+  public synchronized InternalCDOBranch[] getBranches()
+  {
+    return getBranches(true);
   }
 
   public InternalCDOBranch getBranch(String path)

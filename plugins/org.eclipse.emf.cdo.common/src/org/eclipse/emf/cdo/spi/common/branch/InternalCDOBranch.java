@@ -25,6 +25,8 @@ public interface InternalCDOBranch extends CDOBranch
 
   public InternalCDOBranch[] getBranches();
 
+  public InternalCDOBranch[] getBranches(boolean loadOnDemand);
+
   public InternalCDOBranch getBranch(String path);
 
   public InternalCDOBranch createBranch(String name, long timeStamp);

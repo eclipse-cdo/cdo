@@ -61,7 +61,7 @@ public abstract class QueueWorker<E> extends Worker
   }
 
   @Override
-  protected final void work(WorkContext context) throws Exception
+  protected void work(WorkContext context) throws Exception
   {
     if (queue == null)
     {

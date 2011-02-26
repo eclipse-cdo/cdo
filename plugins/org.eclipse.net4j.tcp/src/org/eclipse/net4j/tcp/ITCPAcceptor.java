@@ -27,6 +27,11 @@ public interface ITCPAcceptor extends IAcceptor
    */
   public static final int DEFAULT_PORT = OM.getDefaultPort();
 
+  /**
+   * @since 4.0
+   */
+  public ITCPSelector getSelector();
+
   public String getAddress();
 
   public int getPort();

@@ -107,6 +107,11 @@ public class CDOPackageInfoImpl extends AdapterImpl implements InternalCDOPackag
 
   public EPackage getEPackage(boolean loadOnDemand)
   {
+    return doGetEPackage(loadOnDemand);
+  }
+
+  public EPackage doGetEPackage(boolean loadOnDemand)
+  {
     EPackage ePackage = (EPackage)getTarget();
     if (ePackage != null)
     {

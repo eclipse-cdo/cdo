@@ -151,6 +151,11 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
     return delegate.getClassMappings();
   }
 
+  public Map<EClass, IClassMapping> getClassMappings(boolean createOnDemand)
+  {
+    return delegate.getClassMappings(createOnDemand);
+  }
+
   public boolean hasDeltaSupport()
   {
     return delegate.hasDeltaSupport();

@@ -204,6 +204,13 @@ public interface IMappingStrategy
   public Map<EClass, IClassMapping> getClassMappings();
 
   /**
+   * Returns all class mappings of this strategy.
+   * 
+   * @since 4.0
+   */
+  public Map<EClass, IClassMapping> getClassMappings(boolean createOnDemand);
+
+  /**
    * Query if this mapping supports revision deltas. <br>
    * If this method returns <code>true</code>, it is guaranteed that all class mappings returned by
    * {@link #getClassMapping(EClass)} implement {@link IClassMappingDeltaSupport}.

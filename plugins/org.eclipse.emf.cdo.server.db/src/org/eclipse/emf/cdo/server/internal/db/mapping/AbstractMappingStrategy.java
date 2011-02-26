@@ -565,6 +565,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public final Map<EClass, IClassMapping> getClassMappings(boolean createOnDemand)
   {
+    return doGetClassMappings(createOnDemand);
+  }
+
+  public final Map<EClass, IClassMapping> doGetClassMappings(boolean createOnDemand)
+  {
     if (createOnDemand)
     {
       synchronized (classMappings)

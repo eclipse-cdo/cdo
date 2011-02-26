@@ -71,6 +71,11 @@ public interface IClassMapping
   public List<IListMapping> getListMappings();
 
   /**
+   * @since 4.0
+   */
+  public List<ITypeMapping> getValueMappings();
+
+  /**
    * Read a revision. The branch and timestamp to be read are derived from the branchPoint which is set to the Revision.
    * Note that non-audit stores only support {@link CDOBranchPoint#UNSPECIFIED_DATE} and non-branching stores only
    * support the main branch.

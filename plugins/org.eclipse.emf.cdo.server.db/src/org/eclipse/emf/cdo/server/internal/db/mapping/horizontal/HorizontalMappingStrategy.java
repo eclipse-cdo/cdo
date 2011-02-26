@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,6 +56,21 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
 
   public HorizontalMappingStrategy()
   {
+  }
+
+  public Map<String, String> getProperties()
+  {
+    if (properties != null)
+    {
+      return properties;
+    }
+
+    if (delegate != null)
+    {
+      return delegate.getProperties();
+    }
+
+    return new HashMap<String, String>();
   }
 
   public void setProperties(Map<String, String> properties)

@@ -283,6 +283,13 @@ public interface IMappingStrategy
   public void repairAfterCrash(IDBAdapter dbAdapter, Connection connection);
 
   /**
+   * Returns the configuration properties of this mapping strategy.
+   * 
+   * @since 4.0
+   */
+  public Map<String, String> getProperties();
+
+  /**
    * Set configuration properties for this mapping strategy. Should only be called by the factory creating the mapping
    * strategy instance.
    * 

@@ -58,6 +58,11 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
   {
   }
 
+  public IMappingStrategy getDelegate()
+  {
+    return delegate;
+  }
+
   public Map<String, String> getProperties()
   {
     if (properties != null)

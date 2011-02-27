@@ -17,6 +17,7 @@
 package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonTransaction;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetDataProvider;
@@ -47,7 +48,7 @@ import java.util.Set;
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 2.0
  */
-public interface CDOTransaction extends CDOView, CDOUserTransaction, CDOChangeSetDataProvider
+public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTransaction, CDOChangeSetDataProvider
 {
   /**
    * Returns <code>true</code> if this transaction is not closed and contains uncommitted changes, <code>false</code>

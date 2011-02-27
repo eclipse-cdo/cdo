@@ -7,16 +7,13 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - bug 213402
  */
-package org.eclipse.emf.cdo.server;
-
-import org.eclipse.emf.cdo.common.CDOCommonTransaction;
+package org.eclipse.emf.cdo.common;
 
 /**
  * @author Eike Stepper
- * @noimplement This interface is not intended to be implemented by clients.
+ * @since 4.0
  */
-public interface ITransaction extends IView, CDOCommonTransaction
+public interface CDOCommonTransaction extends CDOCommonView
 {
 }

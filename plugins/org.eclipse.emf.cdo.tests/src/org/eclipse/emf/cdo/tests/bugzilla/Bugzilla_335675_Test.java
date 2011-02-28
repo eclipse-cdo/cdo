@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class Bugzilla_335675_Test extends AbstractCDOTest
 {
+  @NeedsCleanRepo
   public void test0() throws Exception
   {
     EPackage pkg = null;

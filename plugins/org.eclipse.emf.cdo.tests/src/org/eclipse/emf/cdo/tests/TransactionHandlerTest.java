@@ -47,7 +47,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     transaction.addTransactionHandler(handler);
 
-    CDOResource resource1 = transaction.getOrCreateResource("/test1");
+    CDOResource resource1 = transaction.getOrCreateResource(getResourcePath("/test1"));
 
     assertEquals(true, handler.getListOfAddingObject().contains(resource1));
 
@@ -82,7 +82,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     try
     {
-      transaction.getOrCreateResource("/test1");
+      transaction.getOrCreateResource(getResourcePath("/test1"));
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException ex)
@@ -236,7 +236,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
     try
     {
-      transaction.getOrCreateResource("/test1");
+      transaction.getOrCreateResource(getResourcePath("/test1"));
       fail("IllegalStateException expected");
     }
     catch (IllegalStateException ex)
@@ -293,7 +293,7 @@ public class TransactionHandlerTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     transaction.addTransactionHandler(handler);
 
-    transaction.getOrCreateResource("/test1");
+    transaction.getOrCreateResource(getResourcePath("/test1"));
     transaction.commit();
     assertEquals(1, handler.getNumberOfCommit());
 

@@ -40,9 +40,9 @@ public abstract class ObjyStoreRepositoryConfig extends RepositoryConfig
   }
 
   @Override
-  public void tearDown() throws Exception
+  protected void deactivateRepositories()
   {
-    super.tearDown();
+    super.deactivateRepositories();
     // System.out.println(">>>>IS:<<<< We need to remove all data created here....");
     storeConfig.resetFD();
   }

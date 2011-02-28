@@ -31,6 +31,7 @@ public class DISABLE_XATransactionTest extends XATransactionTest
     super.testCommitFromTransactionDisabled();
   }
 
+  @NeedsCleanRepo
   @Override
   public void test_ExceptionInReadingStream() throws Exception
   {

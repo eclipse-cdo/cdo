@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -46,6 +47,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
+@NeedsCleanRepo
 public class BranchingTest extends AbstractCDOTest
 {
   protected CDOSession session1;
@@ -85,6 +87,7 @@ public class BranchingTest extends AbstractCDOTest
     return openSession();
   }
 
+  @NeedsCleanRepo
   public void testMainBranch() throws Exception
   {
     CDOSession session = openSession1();
@@ -104,6 +107,7 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
+  @NeedsCleanRepo
   public void testCreateBranch() throws Exception
   {
     CDOSession session = openSession1();

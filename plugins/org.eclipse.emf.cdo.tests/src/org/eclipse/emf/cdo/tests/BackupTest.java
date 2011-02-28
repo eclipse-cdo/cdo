@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.bundle.OM;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
@@ -44,6 +45,7 @@ import java.util.Date;
 /**
  * @author Eike Stepper
  */
+@NeedsCleanRepo
 public class BackupTest extends AbstractCDOTest
 {
   @Override

@@ -87,25 +87,25 @@ public class ViewProviderTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(PATH));
     resource.getContents().add(product);
     transaction.commit();
     session.close();
 
-    uri = URI.createURI(getURIPrefix() + "/" + REPO + PATH + "?transactional=true");
+    uri = URI.createURI(getURIPrefix() + "/" + REPO + getResourcePath(PATH) + "?transactional=true");
   }
 
   public void testNormal() throws Exception
   {
     init();
-    URI uri = CDOURIUtil.createResourceURI(REPO, PATH);
+    URI uri = CDOURIUtil.createResourceURI(REPO, getResourcePath(PATH));
     IPluginContainer.INSTANCE.putElement(CDOSessionFactory.PRODUCT_GROUP, "my-type", "my-description", openSession());
 
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOResource resource = (CDOResource)resourceSet.getResource(uri, true);
 
     String path = resource.getPath();
-    assertEquals(PATH, path);
+    assertEquals(getResourcePath(PATH), path);
 
     Product1 product = (Product1)resource.getContents().get(0);
     assertEquals("ESC", product.getName());
@@ -118,7 +118,7 @@ public class ViewProviderTest extends AbstractCDOTest
     CDOResource resource = (CDOResource)resourceSet.getResource(uri, true);
 
     String path = resource.getPath();
-    assertEquals(PATH, path);
+    assertEquals(getResourcePath(PATH), path);
 
     Product1 product = (Product1)resource.getContents().get(0);
     assertEquals("ESC", product.getName());

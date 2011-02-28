@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -20,6 +21,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 /**
  * @author Simon McDuff
  */
+@NeedsCleanRepo
 public class ConflictResolverTest extends AbstractCDOTest
 {
   public void testMergeLocalChangesPerFeature_Basic() throws Exception
@@ -31,13 +33,13 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     Address address = getModel1Factory().createAddress();
 
-    transaction.getOrCreateResource("/res1").getContents().add(address);
+    transaction.getOrCreateResource(getResourcePath("/res1")).getContents().add(address);
 
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
     transaction2.options().addConflictResolver(createConflictResolver());
-    Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
+    Address address2 = (Address)transaction2.getOrCreateResource(getResourcePath("/res1")).getContents().get(0);
 
     address2.setCity("OTTAWA");
 
@@ -67,13 +69,13 @@ public class ConflictResolverTest extends AbstractCDOTest
 
     Address address = getModel1Factory().createAddress();
 
-    transaction.getOrCreateResource("/res1").getContents().add(address);
+    transaction.getOrCreateResource(getResourcePath("/res1")).getContents().add(address);
 
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
     transaction2.options().addConflictResolver(createConflictResolver());
-    final Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
+    final Address address2 = (Address)transaction2.getOrCreateResource(getResourcePath("/res1")).getContents().get(0);
 
     address2.setCity("OTTAWA");
 
@@ -91,13 +93,13 @@ public class ConflictResolverTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     Address address = getModel1Factory().createAddress();
-    transaction.getOrCreateResource("/res1").getContents().add(address);
+    transaction.getOrCreateResource(getResourcePath("/res1")).getContents().add(address);
     transaction.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
     transaction2.options().addConflictResolver(createConflictResolver());
 
-    Address address2 = (Address)transaction2.getOrCreateResource("/res1").getContents().get(0);
+    Address address2 = (Address)transaction2.getOrCreateResource(getResourcePath("/res1")).getContents().get(0);
     address2.setCity("OTTAWA");
 
     address.setName("NAME1");

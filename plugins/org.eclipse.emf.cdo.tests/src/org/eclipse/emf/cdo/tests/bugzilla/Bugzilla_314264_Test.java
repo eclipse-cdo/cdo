@@ -30,6 +30,7 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  */
 public class Bugzilla_314264_Test extends AbstractCDOTest
 {
+  @NeedsCleanRepo
   public void testMergeTest() throws Exception
   {
     skipUnlessBranching();

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
@@ -29,6 +30,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
+@NeedsCleanRepo
 public class OCLQueryTest extends AbstractCDOTest
 {
   private static final int NUM_OF_PRODUCTS = 20;

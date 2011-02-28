@@ -120,14 +120,14 @@ public class AllTestsDBDerby extends DBConfigs
     }
 
     @Override
-    public void tearDown() throws Exception
+    protected void deactivateRepositories()
     {
       for (File folder : getDbFolders())
       {
         tearDownClean(folder);
       }
 
-      super.tearDown();
+      super.deactivateRepositories();
     }
 
     protected void tearDownClean(File dbFolder)
@@ -161,21 +161,25 @@ public class AllTestsDBDerby extends DBConfigs
       @Override
       protected DataSource createDataSource(String repoName)
       {
-        EmbeddedDataSource dataSource = new EmbeddedDataSource();
         File reusableFolder = dbFolders.get(repoName);
 
-        if (reusableFolder == null)
+        boolean needsNewFolder = reusableFolder == null;
+        if (needsNewFolder)
         {
           reusableFolder = createDBFolder(repoName);
           IOUtil.delete(reusableFolder);
           dbFolders.put(repoName, reusableFolder);
         }
 
+        EmbeddedDataSource dataSource = new EmbeddedDataSource();
         dataSource.setDatabaseName(reusableFolder.getAbsolutePath());
         dataSource.setCreateDatabase("create");
         dataSources.put(reusableFolder, dataSource);
 
-        tearDownClean(reusableFolder);
+        if (!needsNewFolder)
+        {
+          tearDownClean(reusableFolder);
+        }
 
         return dataSource;
       }

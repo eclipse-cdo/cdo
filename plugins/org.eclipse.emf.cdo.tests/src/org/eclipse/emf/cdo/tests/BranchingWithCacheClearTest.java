@@ -10,9 +10,12 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
+
 /**
  * @author Eike Stepper
  */
+@NeedsCleanRepo
 public class BranchingWithCacheClearTest extends BranchingTest
 {
   @Override

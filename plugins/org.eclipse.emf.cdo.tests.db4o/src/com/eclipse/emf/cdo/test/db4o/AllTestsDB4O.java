@@ -72,12 +72,6 @@ public class AllTestsDB4O extends AllConfigs
     }
 
     @Override
-    public void tearDown() throws Exception
-    {
-      super.tearDown();
-    }
-
-    @Override
     protected IStore createStore(String repoName)
     {
       MEMDB4OStore.clearContainer();

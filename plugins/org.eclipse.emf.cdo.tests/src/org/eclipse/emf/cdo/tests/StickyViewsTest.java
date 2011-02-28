@@ -140,7 +140,7 @@ public class StickyViewsTest extends AbstractCDOTest
     session.options().setPassiveUpdateEnabled(false);
 
     CDOTransaction tx = session.openTransaction();
-    CDOResource res = tx.createResource("/res1");
+    CDOResource res = tx.createResource(getResourcePath("/res1"));
     Company company1 = getModel1Factory().createCompany();
     res.getContents().add(company1);
     tx.commit();

@@ -215,6 +215,7 @@ public class PushTransactionTest extends AbstractCDOTest
     assertEquals(2, resource.getContents().size());
   }
 
+  @NeedsCleanRepo
   public void testAddNewResource() throws Exception
   {
     String resourcePath2 = "res2";
@@ -317,6 +318,7 @@ public class PushTransactionTest extends AbstractCDOTest
     assertEquals(orderDetailPrice, detail.getPrice());
   }
 
+  @NeedsCleanRepo
   public void testMoveObject() throws Exception
   {
     {

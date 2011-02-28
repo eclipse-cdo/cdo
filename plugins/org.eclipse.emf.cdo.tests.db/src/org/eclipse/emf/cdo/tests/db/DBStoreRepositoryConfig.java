@@ -47,6 +47,12 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
   }
 
   @Override
+  protected boolean isOptimizing()
+  {
+    return true;
+  }
+
+  @Override
   public IStore createStore(String repoName)
   {
     IMappingStrategy mappingStrategy = createMappingStrategy();

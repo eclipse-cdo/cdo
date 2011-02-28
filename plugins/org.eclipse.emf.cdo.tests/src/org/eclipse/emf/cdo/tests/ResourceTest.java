@@ -190,36 +190,43 @@ public class ResourceTest extends AbstractCDOTest
     // TODO assertEquals(xmiString, cdoString);
   }
 
+  @NeedsCleanRepo
   public void testAttachDetachResourceDepth1_Delete() throws Exception
   {
     attachDetachResourceDepth1(1, true, 0);
   }
 
+  @NeedsCleanRepo
   public void testAttachDetachResourceDepth1_Remove() throws Exception
   {
     attachDetachResourceDepth1(1, false, 0);
   }
 
+  @NeedsCleanRepo
   public void testAttachDetachResourceDepth2_Delete() throws Exception
   {
     attachDetachResourceDepth1(2, true, 1);
   }
 
+  @NeedsCleanRepo
   public void testAttachDetachResourceDepth2_Remove() throws Exception
   {
     attachDetachResourceDepth1(2, false, 1);
   }
 
+  @NeedsCleanRepo
   public void testAttachDetachResourceDepth3_Delete() throws Exception
   {
     attachDetachResourceDepth1(3, true, 2);
   }
 
+  @NeedsCleanRepo
   public void testAttachDetachResourceDepth3_Remove() throws Exception
   {
     attachDetachResourceDepth1(3, false, 2);
   }
 
+  @NeedsCleanRepo
   public void testAttachDetachResourceDepth3_Remove_Tree() throws Exception
   {
     attachDetachResourceDepth1(3, false, 1);
@@ -258,6 +265,7 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
+  @NeedsCleanRepo
   public void testCreateResource_FromResourceSet() throws Exception
   {
     CDOSession session = openSession();
@@ -557,21 +565,25 @@ public class ResourceTest extends AbstractCDOTest
     changePath(0, 3);
   }
 
+  @NeedsCleanRepo
   public void testChangePathFromDepth3ToDepth3() throws Exception
   {
     changePath(3, 3);
   }
 
+  @NeedsCleanRepo
   public void testChangePathFromDepth3ToDepth2() throws Exception
   {
     changePath(3, 2);
   }
 
+  @NeedsCleanRepo
   public void testChangePathFromDepth3ToDepth1() throws Exception
   {
     changePath(3, 1);
   }
 
+  @NeedsCleanRepo
   public void testChangePathFromDepth3ToDepth0() throws Exception
   {
     changePath(3, 0);
@@ -602,6 +614,7 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(true, transaction.hasResource("/renamed"));
   }
 
+  @NeedsCleanRepo
   public void testChangeResourceFolderURI() throws Exception
   {
     {

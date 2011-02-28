@@ -42,7 +42,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     res.delete(null);
     transaction1.commit();
     CDOView view = session.openView();
-    assertEquals(false, view.hasResource(resourcePath));
+    assertEquals(false, view.hasResource(getResourcePath(resourcePath)));
   }
 
   public void testBugzilla_248124_getResourceWithCommit() throws Exception
@@ -62,7 +62,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
     try
     {
-      view.getResourceSet().getResource(CDOURIUtil.createResourceURI(view, resourcePath), true);
+      view.getResourceSet().getResource(CDOURIUtil.createResourceURI(view, getResourcePath(resourcePath)), true);
       fail("Exception expected");
     }
     catch (Exception expected)
@@ -73,7 +73,8 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
     try
     {
-      transaction2.getResourceSet().getResource(CDOURIUtil.createResourceURI(view, resourcePath), true);
+      transaction2.getResourceSet()
+          .getResource(CDOURIUtil.createResourceURI(view, getResourcePath(resourcePath)), true);
       fail("RuntimeException expected");
     }
     catch (RuntimeException expected)
@@ -93,7 +94,7 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
     res.getContents().add(getModel1Factory().createCompany());
 
     res.delete(null);
-    assertEquals(false, transaction1.hasResource(resourcePath));
+    assertEquals(false, transaction1.hasResource(getResourcePath(resourcePath)));
   }
 
   public void testBugzilla_248124_getResourceWithoutCommit() throws Exception
@@ -111,7 +112,8 @@ public class Bugzilla_248124_Test extends AbstractCDOTest
 
     try
     {
-      transaction1.getResourceSet().getResource(CDOURIUtil.createResourceURI(transaction1, resourcePath), true);
+      transaction1.getResourceSet().getResource(
+          CDOURIUtil.createResourceURI(transaction1, getResourcePath(resourcePath)), true);
       fail("RuntimeException expected");
     }
     catch (RuntimeException expected)

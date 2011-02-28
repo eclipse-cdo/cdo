@@ -314,6 +314,7 @@ public class RepositoryTest extends AbstractCDOTest
     session.close();
   }
 
+  @NeedsCleanRepo
   public void testReadAccessHandlers() throws Exception
   {
     {

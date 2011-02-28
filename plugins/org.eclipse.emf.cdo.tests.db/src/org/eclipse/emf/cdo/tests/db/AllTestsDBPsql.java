@@ -126,9 +126,9 @@ public class AllTestsDBPsql extends DBConfigs
     }
 
     @Override
-    public void tearDown() throws Exception
+    protected void deactivateRepositories()
     {
-      super.tearDown();
+      super.deactivateRepositories();
       dataSource = null;
       setupDataSource = null;
       dropDatabase();

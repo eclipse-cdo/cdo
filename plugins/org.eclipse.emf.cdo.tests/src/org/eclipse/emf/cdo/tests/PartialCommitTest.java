@@ -121,6 +121,7 @@ public class PartialCommitTest extends AbstractCDOTest
     goodAll();
   }
 
+  @NeedsCleanRepo
   public void testNewTopLevelResource_rootResourceNotIncluded() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -132,6 +133,7 @@ public class PartialCommitTest extends AbstractCDOTest
     badAll(createSet(tx.getRootResource()));
   }
 
+  @NeedsCleanRepo
   public void testNewNestedResource() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -143,6 +145,7 @@ public class PartialCommitTest extends AbstractCDOTest
     goodAll();
   }
 
+  @NeedsCleanRepo
   public void testNewNestedResource_rootResourceNotIncluded() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -154,6 +157,7 @@ public class PartialCommitTest extends AbstractCDOTest
     badAll(createSet(tx.getRootResource()));
   }
 
+  @NeedsCleanRepo
   public void testNewNestedResource_resourceFolderNotIncluded() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -364,6 +368,7 @@ public class PartialCommitTest extends AbstractCDOTest
     badAll(createSet(po));
   }
 
+  @NeedsCleanRepo
   public void testDetach() throws CommitException
   {
     skipQueryXRefs();
@@ -1306,7 +1311,7 @@ public class PartialCommitTest extends AbstractCDOTest
       throw new RuntimeException("Model1 does not meet prerequirements for this test");
     }
 
-    resource1 = tx.createResource(RESOURCENAME);
+    resource1 = tx.createResource(getResourcePath(RESOURCENAME));
     company1 = Model1Factory.eINSTANCE.createCompany();
     company2 = Model1Factory.eINSTANCE.createCompany();
     company3 = Model1Factory.eINSTANCE.createCompany();
@@ -1331,7 +1336,7 @@ public class PartialCommitTest extends AbstractCDOTest
       throw new RuntimeException("Model4 does not meet prerequirements for this test");
     }
 
-    resource1 = tx.createResource(RESOURCENAME);
+    resource1 = tx.createResource(getResourcePath(RESOURCENAME));
 
     refSingleContained1 = model4Factory.eINSTANCE.createRefSingleContainedNPL();
     refSingleContained2 = model4Factory.eINSTANCE.createRefSingleContainedNPL();
@@ -1352,7 +1357,7 @@ public class PartialCommitTest extends AbstractCDOTest
       throw new RuntimeException("Model4 does not meet prerequirements for this test");
     }
 
-    resource1 = tx.createResource(RESOURCENAME);
+    resource1 = tx.createResource(getResourcePath(RESOURCENAME));
 
     refSingleNonContained1 = model4Factory.eINSTANCE.createRefSingleNonContained();
     refSingleNonContained2 = model4Factory.eINSTANCE.createRefSingleNonContained();
@@ -1376,7 +1381,7 @@ public class PartialCommitTest extends AbstractCDOTest
       throw new RuntimeException("Model4 does not meet prerequirements for this test");
     }
 
-    resource1 = tx.createResource(RESOURCENAME);
+    resource1 = tx.createResource(getResourcePath(RESOURCENAME));
 
     refMultiNonContained1 = model4Factory.eINSTANCE.createRefMultiNonContained();
     refMultiNonContained2 = model4Factory.eINSTANCE.createRefMultiNonContained();

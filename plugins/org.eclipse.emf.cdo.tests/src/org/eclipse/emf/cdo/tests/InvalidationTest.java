@@ -221,10 +221,10 @@ public class InvalidationTest extends AbstractCDOTest
 
   private void testConflict(CDOTransaction trans1, CDOTransaction trans2) throws Exception
   {
-    final CDOResource res1 = trans1.getOrCreateResource("/test");
+    final CDOResource res1 = trans1.getOrCreateResource(getResourcePath("/test"));
     trans1.commit();
 
-    final CDOResource res2 = trans2.getOrCreateResource("/test");
+    final CDOResource res2 = trans2.getOrCreateResource(getResourcePath("/test"));
 
     final Customer customerA1 = getModel1Factory().createCustomer();
     res1.getContents().add(customerA1);
@@ -400,7 +400,7 @@ public class InvalidationTest extends AbstractCDOTest
       companyA.getCategories().add(categoryA);
 
       msg("Creating resource");
-      CDOResource resourceA = transactionA.createResource("/test1");
+      CDOResource resourceA = transactionA.createResource(getResourcePath("/test1"));
 
       msg("Adding companyA");
       resourceA.getContents().add(companyA);

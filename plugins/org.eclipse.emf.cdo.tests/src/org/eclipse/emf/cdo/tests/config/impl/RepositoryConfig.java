@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -49,6 +50,7 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -63,6 +65,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -91,6 +94,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
    * data and should only be used during {@link ConfigTest#restartRepository(String)}.
    */
   private transient boolean restarting;
+
+  private transient String lastRepoProps;
 
   private transient CDOServerBrowser serverBrowser;
 
@@ -232,8 +237,16 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   {
     super.setUp();
 
-    StoreThreadLocal.release();
-    repositories = new HashMap<String, InternalRepository>();
+    if (isOptimizing() && needsCleanRepos() && repositories != null && !repositories.isEmpty())
+    {
+      deactivateRepositories();
+    }
+
+    if (repositories == null)
+    {
+      StoreThreadLocal.release();
+      repositories = new HashMap<String, InternalRepository>();
+    }
 
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
     OCLQueryHandler.prepareContainer(serverContainer);
@@ -255,12 +268,31 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   @Override
   public void tearDown() throws Exception
   {
+    deactivateServerBrowser();
+    if (!isOptimizing())
+    {
+      deactivateRepositories();
+    }
+
+    super.tearDown();
+  }
+
+  protected boolean isOptimizing()
+  {
+    return false;
+  }
+
+  protected void deactivateServerBrowser()
+  {
     if (serverBrowser != null)
     {
       serverBrowser.deactivate();
       serverBrowser = null;
     }
+  }
 
+  protected void deactivateRepositories()
+  {
     Object[] array;
     synchronized (repositories)
     {
@@ -276,7 +308,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     repositories = null;
 
     StoreThreadLocal.release();
-    super.tearDown();
   }
 
   protected InternalRepository createRepository(String name)
@@ -331,6 +362,33 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected IQueryHandlerProvider getTestQueryHandlerProvider()
   {
     return (IQueryHandlerProvider)getTestProperty(PROP_TEST_QUERY_HANDLER_PROVIDER);
+  }
+
+  protected boolean needsCleanRepos()
+  {
+    // boolean branches = Boolean.parseBoolean(getRepositoryProperties().get(IRepository.Props.SUPPORTING_BRANCHES));
+    // boolean audits = Boolean.parseBoolean(getRepositoryProperties().get(IRepository.Props.SUPPORTING_AUDITS));
+
+    String repoProps = getRepositoryProperties().toString();
+    boolean sameProps = repoProps.equals(lastRepoProps);
+    lastRepoProps = repoProps;
+    if (!sameProps)
+    {
+      // If the props have changed (or if there are no lastRepoProps, which means
+      // this is the first test of a run) we definitely want a clean repo.
+      return true;
+    }
+
+    String testMethod = getCurrentTest().getName();
+    Class<? extends ConfigTest> testClass = getCurrentTest().getClass();
+    boolean needsCleanRepo = testClass.getAnnotation(NeedsCleanRepo.class) != null;
+    if (!needsCleanRepo)
+    {
+      Method method = ReflectUtil.getMethod(testClass, testMethod, new Class[0]);
+      needsCleanRepo = method.getAnnotation(NeedsCleanRepo.class) != null;
+    }
+
+    return needsCleanRepo;
   }
 
   static
@@ -404,9 +462,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     @Override
-    public void tearDown() throws Exception
+    protected void deactivateRepositories()
     {
-      super.tearDown();
+      super.deactivateRepositories();
       stopMasterTransport();
     }
 

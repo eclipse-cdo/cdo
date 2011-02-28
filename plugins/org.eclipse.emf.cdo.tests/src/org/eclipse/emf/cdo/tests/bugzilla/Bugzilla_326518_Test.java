@@ -46,6 +46,7 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
     return map;
   }
 
+  @NeedsCleanRepo
   public void testIndexBranchMerge() throws Exception
   {
     skipUnlessBranching();

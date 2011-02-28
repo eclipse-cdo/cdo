@@ -37,6 +37,7 @@ import junit.framework.Assert;
  */
 public class Bugzilla_334608_Test extends AbstractCDOTest
 {
+  @NeedsCleanRepo
   public void testOpposites() throws Exception
   {
     EPackage pkg1 = null;

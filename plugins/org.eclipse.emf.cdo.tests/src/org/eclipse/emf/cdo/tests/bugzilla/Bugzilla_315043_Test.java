@@ -40,6 +40,7 @@ import java.util.Set;
  */
 public class Bugzilla_315043_Test extends AbstractCDOTest
 {
+  @NeedsCleanRepo
   public void testReloadingRevisions() throws Exception
   {
     skipUnlessAuditing();

@@ -24,6 +24,8 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.hsqldb.HSQLDBAdapter;
 import org.eclipse.net4j.db.hsqldb.HSQLDBDataSource;
 
+import org.eclipse.emf.common.util.WrappedException;
+
 import javax.sql.DataSource;
 
 import java.io.PrintWriter;
@@ -85,7 +87,7 @@ public class AllTestsDBHsqldb extends DBConfigs
 
     public static boolean USE_VERIFIER = false;
 
-    private transient ArrayList<HSQLDBDataSource> dataSources = new ArrayList<HSQLDBDataSource>();
+    private transient ArrayList<HSQLDBDataSource> dataSources;
 
     public Hsqldb(String name)
     {
@@ -120,6 +122,10 @@ public class AllTestsDBHsqldb extends DBConfigs
         OM.LOG.warn(ex.getMessage());
       }
 
+      if (dataSources == null)
+      {
+        dataSources = new ArrayList<HSQLDBDataSource>();
+      }
       dataSources.add(dataSource);
       return dataSource;
     }
@@ -140,14 +146,24 @@ public class AllTestsDBHsqldb extends DBConfigs
       }
       finally
       {
-        try
-        {
-          super.tearDown();
-        }
-        finally
-        {
-          shutDownHsqldb();
-        }
+        super.tearDown();
+      }
+    }
+
+    @Override
+    protected void deactivateRepositories()
+    {
+      try
+      {
+        shutDownHsqldb();
+      }
+      catch (SQLException e)
+      {
+        throw new WrappedException(e);
+      }
+      finally
+      {
+        super.deactivateRepositories();
       }
     }
 

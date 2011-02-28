@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -44,6 +45,7 @@ import java.util.Random;
  * 
  * @author Eike Stepper
  */
+@NeedsCleanRepo
 public class Bugzilla_310574_Test extends AbstractCDOTest
 {
   @SuppressWarnings("unused")

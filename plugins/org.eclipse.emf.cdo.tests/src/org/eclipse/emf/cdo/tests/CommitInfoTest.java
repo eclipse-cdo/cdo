@@ -54,7 +54,7 @@ public class CommitInfoTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -66,7 +66,7 @@ public class CommitInfoTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -80,7 +80,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -101,7 +101,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOSession session = openSession(REPO_NAME);
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -112,7 +112,7 @@ public class CommitInfoTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     String comment = "Andre";
@@ -122,6 +122,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(comment, commitInfo.getComment());
   }
 
+  @NeedsCleanRepo
   public void testServerTimestamp() throws Exception
   {
     skipMongo();
@@ -131,7 +132,7 @@ public class CommitInfoTest extends AbstractCDOTest
     StoreThreadLocal.setSession(serverSession);
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -145,6 +146,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
+  @NeedsCleanRepo
   public void testServerBranch() throws Exception
   {
     skipMongo();
@@ -153,7 +155,7 @@ public class CommitInfoTest extends AbstractCDOTest
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -168,6 +170,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
+  @NeedsCleanRepo
   public void testServerSubBranch() throws Exception
   {
     skipUnlessBranching();
@@ -177,7 +180,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -191,6 +194,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
+  @NeedsCleanRepo
   public void testServerUser() throws Exception
   {
     skipMongo();
@@ -209,7 +213,7 @@ public class CommitInfoTest extends AbstractCDOTest
     StoreThreadLocal.setSession(getRepository(REPO_NAME).getSessionManager().getSession(session.getSessionID()));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -223,6 +227,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
+  @NeedsCleanRepo
   public void testServerComment() throws Exception
   {
     skipMongo();
@@ -231,7 +236,7 @@ public class CommitInfoTest extends AbstractCDOTest
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     String comment = "Andre";
@@ -248,6 +253,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
+  @NeedsCleanRepo
   public void testServerTimestampWithBranch() throws Exception
   {
     skipMongo();
@@ -256,7 +262,7 @@ public class CommitInfoTest extends AbstractCDOTest
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -271,6 +277,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
+  @NeedsCleanRepo
   public void testServerBranchWithBranch() throws Exception
   {
     skipMongo();
@@ -279,7 +286,7 @@ public class CommitInfoTest extends AbstractCDOTest
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -303,7 +310,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -318,6 +325,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
+  @NeedsCleanRepo
   public void testServerUserWithBranch() throws Exception
   {
     skipMongo();
@@ -336,7 +344,7 @@ public class CommitInfoTest extends AbstractCDOTest
     StoreThreadLocal.setSession(getRepository(REPO_NAME).getSessionManager().getSession(session.getSessionID()));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -351,6 +359,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
+  @NeedsCleanRepo
   public void testServerCommentWithBranch() throws Exception
   {
     skipMongo();
@@ -359,7 +368,7 @@ public class CommitInfoTest extends AbstractCDOTest
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     String comment = "Andre";
@@ -386,7 +395,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     transaction.commit();
@@ -408,7 +417,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     transaction.commit();
@@ -431,7 +440,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     transaction.commit();
@@ -463,7 +472,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOBranch wrong = getRepository(REPO_NAME).getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     transaction.commit();
@@ -485,7 +494,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOBranch wrong = getRepository().getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     String comment = "Andre";
@@ -501,11 +510,12 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  @NeedsCleanRepo
   public void testClientTimestamp() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -519,11 +529,12 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
+  @NeedsCleanRepo
   public void testClientBranch() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -537,6 +548,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
+  @NeedsCleanRepo
   public void testClientSubBranch() throws Exception
   {
     skipUnlessBranching();
@@ -544,7 +556,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -558,6 +570,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
+  @NeedsCleanRepo
   public void testClientUser() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -572,7 +585,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOSession session = openSession(REPO_NAME);
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -586,11 +599,12 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
+  @NeedsCleanRepo
   public void testClientComment() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     String comment = "Andre";
@@ -607,11 +621,12 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
+  @NeedsCleanRepo
   public void testClientTimestampWithBranch() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -625,11 +640,12 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
+  @NeedsCleanRepo
   public void testClientBranchWithBranch() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -650,7 +666,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -664,6 +680,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
+  @NeedsCleanRepo
   public void testClientUserWithBranch() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -678,7 +695,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOSession session = openSession(REPO_NAME);
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     CDOCommitInfo commitInfo = transaction.commit();
@@ -692,11 +709,12 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
+  @NeedsCleanRepo
   public void testClientCommentWithBranch() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     String comment = "Andre";
@@ -720,7 +738,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     transaction.commit();
@@ -740,7 +758,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     transaction.commit();
@@ -761,7 +779,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     transaction.commit();
@@ -791,7 +809,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession(REPO_NAME);
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     transaction.commit();
@@ -811,7 +829,7 @@ public class CommitInfoTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
     resource.getContents().add(getModel1Factory().createProduct1());
 
     String comment = "Andre";
@@ -827,11 +845,12 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  @NeedsCleanRepo
   public void testMultipleEntries() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
 
     List<CDOCommitInfo> expected = new ArrayList<CDOCommitInfo>();
     final int COMMITS = 20;
@@ -861,7 +880,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
 
     final int COMMITS = 20;
     for (int i = 0; i < COMMITS; i++)
@@ -903,7 +922,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
 
     final int COMMITS = 20;
     for (int i = 0; i < COMMITS; i++)
@@ -925,7 +944,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
 
     final int COMMITS = 20;
     for (int i = 0; i < COMMITS; i++)
@@ -949,7 +968,7 @@ public class CommitInfoTest extends AbstractCDOTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(RESOURCE_PATH);
+    CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
 
     final int COMMITS = 20;
     for (int i = 0; i < COMMITS; i++)

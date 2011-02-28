@@ -125,9 +125,9 @@ public class AllTestsDBMysql extends DBConfigs
     }
 
     @Override
-    public void tearDown() throws Exception
+    protected void deactivateRepositories()
     {
-      super.tearDown();
+      super.deactivateRepositories();
       for (String dbName : databases)
       {
         dropDatabase(dbName);

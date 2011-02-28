@@ -1,4 +1,4 @@
 # Debugging and tracing options
 
-org.eclipse.net4j.db.hsqldb/debug = true
-org.eclipse.net4j.db.hsqldb/debug.sql = true
+org.eclipse.net4j.db.h2/debug = true
+org.eclipse.net4j.db.h2/debug.sql = true

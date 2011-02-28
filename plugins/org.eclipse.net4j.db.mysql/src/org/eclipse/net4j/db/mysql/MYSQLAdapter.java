@@ -149,4 +149,10 @@ public class MYSQLAdapter extends DBAdapter
       return super.isTypeIndexable(type);
     }
   }
+
+  @Override
+  public boolean isDuplicateKeyException(SQLException ex)
+  {
+    return "23000".equals(ex.getSQLState());
+  }
 }

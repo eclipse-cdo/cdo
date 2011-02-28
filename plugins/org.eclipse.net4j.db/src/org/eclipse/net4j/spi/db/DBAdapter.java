@@ -508,4 +508,13 @@ public abstract class DBAdapter implements IDBAdapter
   {
     return true;
   }
+
+  /**
+   * @since 4.0
+   */
+  public boolean isDuplicateKeyException(SQLException ex)
+  {
+    /* SQL code for duplicate keys is 23001 */
+    return "23001".equals(ex.getSQLState());
+  }
 }

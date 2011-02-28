@@ -12,8 +12,12 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.server.IRepository.Props;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategyWithRanges;
+import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
+import org.eclipse.emf.cdo.tests.BranchingTest;
+import org.eclipse.emf.cdo.tests.MergingTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -27,6 +31,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
@@ -37,6 +42,17 @@ import junit.framework.TestSuite;
  */
 public class AllTestsDBMysql extends DBConfigs
 {
+  /**
+   * Instructions to test with MySQL: - create a mysql instance - set HOST to the host where the DB is running
+   * (listening on TCP) - set USER to a user who can create and drop databases (root, essentially) - set PASS to the
+   * password of the said user
+   */
+  public static final String HOST = "localhost";
+
+  public static final String USER = "root";
+
+  public static final String PASS = "root";
+
   public static Test suite()
   {
     return new AllTestsDBMysql().getTestSuite("CDO Tests (DBStore MySql Horizontal)");
@@ -57,7 +73,18 @@ public class AllTestsDBMysql extends DBConfigs
   @Override
   protected boolean hasBranchingSupport()
   {
-    return false;
+    return true;
+  }
+
+  @Override
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  {
+    // add branching tests for this testsuite
+    testClasses.add(BranchingTest.class);
+    testClasses.add(BranchingSameSessionTest.class);
+    testClasses.add(MergingTest.class);
+
+    super.initTestClasses(testClasses);
   }
 
   /**
@@ -71,7 +98,7 @@ public class AllTestsDBMysql extends DBConfigs
 
     private transient DataSource setupDataSource;
 
-    private transient ArrayList<String> databases = new ArrayList<String>();
+    private transient List<String> databases = new ArrayList<String>();
 
     public Mysql(String name)
     {
@@ -81,7 +108,7 @@ public class AllTestsDBMysql extends DBConfigs
     @Override
     protected IMappingStrategy createMappingStrategy()
     {
-      return CDODBUtil.createHorizontalMappingStrategy(true);
+      return new HorizontalBranchingMappingStrategyWithRanges();
     }
 
     @Override
@@ -97,8 +124,13 @@ public class AllTestsDBMysql extends DBConfigs
 
       initDatabase("test_" + repoName);
 
-      ds.setUrl("jdbc:mysql://localhost/test_" + repoName);
-      ds.setUser("sa");
+      ds.setUrl("jdbc:mysql://" + HOST + "/test_" + repoName);
+      ds.setUser(USER);
+      if (PASS != null)
+      {
+        ds.setPassword(PASS);
+      }
+
       return ds;
     }
 
@@ -138,6 +170,7 @@ public class AllTestsDBMysql extends DBConfigs
     {
       Connection connection = null;
       Statement stmt = null;
+
       try
       {
         connection = getSetupDataSource().getConnection();
@@ -159,8 +192,13 @@ public class AllTestsDBMysql extends DBConfigs
       if (setupDataSource == null)
       {
         MysqlDataSource ds = new MysqlDataSource();
-        ds.setUrl("jdbc:mysql://localhost");
-        ds.setUser("sa");
+        ds.setUrl("jdbc:mysql://" + HOST);
+        ds.setUser(USER);
+        if (PASS != null)
+        {
+          ds.setPassword(PASS);
+        }
+
         setupDataSource = ds;
       }
 
@@ -172,6 +210,7 @@ public class AllTestsDBMysql extends DBConfigs
     {
       super.initRepositoryProperties(props);
       props.put(Props.SUPPORTING_AUDITS, "true");
+      props.put(Props.SUPPORTING_BRANCHES, "true");
     }
   }
 }

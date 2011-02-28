@@ -49,8 +49,6 @@ import java.sql.Statement;
  */
 public class ObjectTypeTable extends AbstractObjectTypeMapper
 {
-  private static final String SQL_STATE_UNIQUE_KEY_VIOLATION = "23001";
-
   private IDBTable table;
 
   private IDBField idField;
@@ -104,7 +102,8 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
 
   public final void putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBStore store = getMappingStrategy().getStore();
+    IIDHandler idHandler = store.getIDHandler();
     IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
@@ -125,7 +124,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper
     catch (SQLException ex)
     {
       // Unique key violation can occur in rare cases (merging new objects from other branches)
-      if (!SQL_STATE_UNIQUE_KEY_VIOLATION.equals(ex.getSQLState()))
+      if (!store.getDBAdapter().isDuplicateKeyException(ex))
       {
         throw new DBException(ex);
       }

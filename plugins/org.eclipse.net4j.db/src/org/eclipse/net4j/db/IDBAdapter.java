@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 
 import java.sql.Connection;
 import java.sql.Driver;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.Set;
@@ -77,4 +78,11 @@ public interface IDBAdapter
    * @since 4.0
    */
   public boolean isValidFirstChar(char ch);
+
+  /**
+   * Check if an exception indicates a constraint violation (duplicate key)
+   * 
+   * @since 4.0
+   */
+  public boolean isDuplicateKeyException(SQLException ex);
 }

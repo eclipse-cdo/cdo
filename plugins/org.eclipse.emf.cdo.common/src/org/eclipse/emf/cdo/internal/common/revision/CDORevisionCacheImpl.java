@@ -44,7 +44,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -56,6 +55,8 @@ public class CDORevisionCacheImpl extends ReferenceQueueWorker<InternalCDORevisi
   private static boolean disableGC;
 
   private Map<CDOIDAndBranch, RevisionList> revisionLists = new HashMap<CDOIDAndBranch, RevisionList>();
+
+  private Map<CDOID, TypeAndRefCounter> typeMap = new HashMap<CDOID, TypeAndRefCounter>();
 
   public CDORevisionCacheImpl()
   {
@@ -70,21 +71,14 @@ public class CDORevisionCacheImpl extends ReferenceQueueWorker<InternalCDORevisi
   {
     synchronized (revisionLists)
     {
-      for (Entry<CDOIDAndBranch, RevisionList> entry : revisionLists.entrySet())
+      TypeAndRefCounter typeCounter = typeMap.get(id);
+      if (typeCounter != null)
       {
-        if (id.equals(entry.getKey().getID()))
-        {
-          RevisionList revisionList = entry.getValue();
-          EClass type = revisionList.getObjectType();
-          if (type != null)
-          {
-            return type;
-          }
-        }
+        return typeCounter.getType();
       }
-    }
 
-    return null;
+      return null;
+    }
   }
 
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
@@ -130,7 +124,10 @@ public class CDORevisionCacheImpl extends ReferenceQueueWorker<InternalCDORevisi
   public void addRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
-    CDOIDAndBranch key = CDOIDUtil.createIDAndBranch(revision.getID(), revision.getBranch());
+
+    CDOID id = revision.getID();
+    CDOIDAndBranch key = CDOIDUtil.createIDAndBranch(id, revision.getBranch());
+
     synchronized (revisionLists)
     {
       RevisionList list = revisionLists.get(key);
@@ -142,6 +139,15 @@ public class CDORevisionCacheImpl extends ReferenceQueueWorker<InternalCDORevisi
 
       InternalCDORevision rev = (InternalCDORevision)revision;
       list.addRevision(rev, createReference(key, rev));
+
+      TypeAndRefCounter typeCounter = typeMap.get(id);
+      if (typeCounter == null)
+      {
+        typeCounter = new TypeAndRefCounter(revision.getEClass());
+        typeMap.put(id, typeCounter);
+      }
+
+      typeCounter.increase();
     }
   }
 
@@ -157,6 +163,13 @@ public class CDORevisionCacheImpl extends ReferenceQueueWorker<InternalCDORevisi
         if (list.isEmpty())
         {
           revisionLists.remove(key);
+
+          TypeAndRefCounter typeCounter = typeMap.get(id);
+          if (typeCounter != null && typeCounter.decreaseAndGet() == 0)
+          {
+            typeMap.remove(id);
+          }
+
           if (TRACER.isEnabled())
           {
             TRACER.format("Removed cache list of {0}", key); //$NON-NLS-1$
@@ -173,6 +186,7 @@ public class CDORevisionCacheImpl extends ReferenceQueueWorker<InternalCDORevisi
     synchronized (revisionLists)
     {
       revisionLists.clear();
+      typeMap.clear();
     }
   }
 
@@ -314,27 +328,6 @@ public class CDORevisionCacheImpl extends ReferenceQueueWorker<InternalCDORevisi
 
     public RevisionList()
     {
-    }
-
-    public synchronized EClass getObjectType()
-    {
-      for (Iterator<KeyedReference<CDORevisionKey, InternalCDORevision>> it = iterator(); it.hasNext();)
-      {
-        KeyedReference<CDORevisionKey, InternalCDORevision> ref = it.next();
-        InternalCDORevision revision = ref.get();
-        if (revision != null)
-        {
-          EClass type = revision.getEClass();
-          if (type != null)
-          {
-            return type;
-          }
-        }
-
-        it.remove();
-      }
-
-      return null;
     }
 
     public synchronized InternalCDORevision getRevision(long timeStamp)
@@ -516,6 +509,36 @@ public class CDORevisionCacheImpl extends ReferenceQueueWorker<InternalCDORevisi
           resultList.add(revision);
         }
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class TypeAndRefCounter
+  {
+    private EClass type;
+
+    private int refCounter;
+
+    public TypeAndRefCounter(EClass type)
+    {
+      this.type = type;
+    }
+
+    public EClass getType()
+    {
+      return type;
+    }
+
+    public void increase()
+    {
+      ++refCounter;
+    }
+
+    public int decreaseAndGet()
+    {
+      return --refCounter;
     }
   }
 }

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.spi.cdo.CDOElementProxy;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -43,6 +44,14 @@ public interface CDOCollectionLoadingPolicy
       return CDORevision.UNCHUNKED;
     }
 
+    /**
+     * Returns {@link CDORevision#UNCHUNKED}.
+     */
+    public int getResolveChunkSize()
+    {
+      return CDORevision.UNCHUNKED;
+    }
+
     public Object resolveProxy(CDOSession session, CDORevision revision, EStructuralFeature feature, int accessIndex,
         int serverIndex)
     {
@@ -53,10 +62,19 @@ public interface CDOCollectionLoadingPolicy
   };
 
   /**
-   * Returns the maximum number of CDOIDs to be loaded for collections when an object is loaded, i.e. <b>before</b> any
-   * of their elements is accessed.
+   * Returns the maximum number of CDOIDs to be loaded for collections when the owning object is loaded initially, i.e.
+   * <b>before</b> any of the collection elements is actually accessed. The remaining elements will be initialized as
+   * {@link CDOElementProxy proxys}.
    */
   public int getInitialChunkSize();
+
+  /**
+   * Returns the maximum number of CDOIDs to be loaded for collections when the owning object is already loaded but the
+   * actually accessed element is still a {@link CDOElementProxy proxy}.
+   * 
+   * @since 4.0
+   */
+  public int getResolveChunkSize();
 
   /**
    * Defines a strategy to be used when the collection needs to resolve one element.

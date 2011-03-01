@@ -180,7 +180,13 @@ public final class DBUtil
     {
       try
       {
-        rollback(connection);
+        // Only for connections with autoCommit = false, we try a rollback
+        // first to clear any open transactions.
+        if (!connection.getAutoCommit())
+        {
+          rollback(connection);
+        }
+
         connection.close();
       }
       catch (Exception ex)
@@ -550,18 +556,18 @@ public final class DBUtil
   {
     trace(stmt.toString());
     int result = stmt.executeUpdate();
-  
+
     // basic check of update result
     if (exactlyOne && result != 1)
     {
       throw new IllegalStateException(stmt.toString() + " returned Update count " + result + " (expected: 1)"); //$NON-NLS-1$ //$NON-NLS-2$
     }
-  
+
     if (result == Statement.EXECUTE_FAILED)
     {
       throw new IllegalStateException(stmt.toString() + " returned EXECUTE_FAILED"); //$NON-NLS-1$
     }
-  
+
     return result;
   }
 

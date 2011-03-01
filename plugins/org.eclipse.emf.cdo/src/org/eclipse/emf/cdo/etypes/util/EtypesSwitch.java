@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.etypes.ModelElement;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.Switch;
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ import java.util.List;
  * @see org.eclipse.emf.cdo.etypes.EtypesPackage
  * @generated
  */
-public class EtypesSwitch<T>
+public class EtypesSwitch<T> extends Switch<T>
 {
   /**
    * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -52,15 +54,16 @@ public class EtypesSwitch<T>
   }
 
   /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Checks whether this is a switch for the given package. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * @parameter ePackage the package in question.
+   * @return whether this is a switch for the given package.
    * @generated
    */
-  public T doSwitch(EObject theEObject)
+  @Override
+  protected boolean isSwitchFor(EPackage ePackage)
   {
-    return doSwitch(theEObject.eClass(), theEObject);
+    return ePackage == modelPackage;
   }
 
   /**
@@ -68,8 +71,9 @@ public class EtypesSwitch<T>
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
-   * @generated NOT
+   * @generated
    */
+  @Override
   protected T doSwitch(EClass theEClass, EObject theEObject)
   {
     if (theEClass.eContainer() == modelPackage)
@@ -88,6 +92,7 @@ public class EtypesSwitch<T>
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
+  @Override
   protected T doSwitch(int classifierID, EObject theEObject)
   {
     switch (classifierID)
@@ -97,7 +102,9 @@ public class EtypesSwitch<T>
       ModelElement modelElement = (ModelElement)theEObject;
       T result = caseModelElement(modelElement);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EtypesPackage.ANNOTATION:
@@ -105,9 +112,13 @@ public class EtypesSwitch<T>
       Annotation annotation = (Annotation)theEObject;
       T result = caseAnnotation(annotation);
       if (result == null)
+      {
         result = caseModelElement(annotation);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -156,6 +167,7 @@ public class EtypesSwitch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated
    */
+  @Override
   public T defaultCase(EObject object)
   {
     return null;

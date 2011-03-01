@@ -222,7 +222,7 @@ public final class EMFUtil
           return true;
         }
       }
-      
+
       return false;
     }
 

@@ -41,7 +41,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
     try
     {
       EtypesFactory theEtypesFactory = (EtypesFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/Etypes/4.0.0"); //$NON-NLS-1$
+          .getEFactory("http://www.eclipse.org/emf/CDO/Etypes/4.0.0"); //$NON-NLS-1$ 
       if (theEtypesFactory != null)
       {
         return theEtypesFactory;
@@ -65,8 +65,9 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
    * 
+   * @SuppressWarnings("cast") <!-- end-user-doc -->
    * @generated
    */
   @Override

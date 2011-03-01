@@ -44,7 +44,7 @@ public interface EresourcePackage extends EPackage
    * 
    * @generated
    */
-  String eNS_URI = "http://www.eclipse.org/emf/CDO/Eresource/2.0.0"; //$NON-NLS-1$
+  String eNS_URI = "http://www.eclipse.org/emf/CDO/Eresource/4.0.0"; //$NON-NLS-1$
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->

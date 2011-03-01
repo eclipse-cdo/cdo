@@ -18,7 +18,7 @@
    <extension
   			point="org.eclipse.emf.ecore.generated_package">
      <package
-       		uri="http://www.eclipse.org/emf/CDO/Eresource/2.0.0"
+       		uri="http://www.eclipse.org/emf/CDO/Eresource/4.0.0"
        		class="org.eclipse.emf.cdo.eresource.EresourcePackage"
        		genModel="model/eresource.genmodel"/>
      <package

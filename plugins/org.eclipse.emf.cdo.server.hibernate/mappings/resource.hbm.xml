@@ -3,20 +3,20 @@
 
 <hibernate-mapping auto-import="false">
 	<typedef name="eresource.ResourceSet" class="org.eclipse.emf.teneo.hibernate.mapping.DefaultToStringUserType">
-		<param name="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</param>
+		<param name="epackage">http://www.eclipse.org/emf/CDO/Eresource/4.0.0</param>
 		<param name="edatatype">ResourceSet</param>
 	</typedef>
 	<typedef name="eresource.URI" class="org.eclipse.emf.teneo.hibernate.mapping.DefaultToStringUserType">
-		<param name="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</param>
+		<param name="epackage">http://www.eclipse.org/emf/CDO/Eresource/4.0.0</param>
 		<param name="edatatype">URI</param>
 	</typedef>
 	<typedef name="eresource.Diagnostic" class="org.eclipse.emf.teneo.hibernate.mapping.DefaultToStringUserType">
-		<param name="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</param>
+		<param name="epackage">http://www.eclipse.org/emf/CDO/Eresource/4.0.0</param>
 		<param name="edatatype">Diagnostic</param>
 	</typedef>
 	<class entity-name="CDOResourceNode" abstract="true" lazy="false" discriminator-value="CDOResourceNode" table="`cdoresourcenode`">
 		<meta attribute="eclassName">CDOResourceNode</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</meta>
+		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/4.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<id type="long" name="e_id" column="e_id" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
@@ -42,7 +42,7 @@
 	</class>
 	<subclass entity-name="CDOResourceFolder" abstract="false" lazy="false" extends="CDOResourceNode" discriminator-value="CDOResourceFolder">
 		<meta attribute="eclassName">CDOResourceFolder</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</meta>
+		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/4.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<list name="nodes" lazy="true" cascade="all,delete-orphan">
@@ -55,7 +55,7 @@
 	</subclass>
 	<subclass entity-name="CDOResource" abstract="false" lazy="false" extends="CDOResourceNode" discriminator-value="CDOResource">
 		<meta attribute="eclassName">CDOResource</meta>
-		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/2.0.0</meta>
+		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/4.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<list name="contents" table="`cdoresourcecontents`" lazy="true" cascade="all,delete-orphan">

@@ -67,7 +67,7 @@ public final class CDOModelUtil
   /**
    * @since 2.0
    */
-  public static final String RESOURCE_PACKAGE_URI = "http://www.eclipse.org/emf/CDO/Eresource/2.0.0"; //$NON-NLS-1$
+  public static final String RESOURCE_PACKAGE_URI = "http://www.eclipse.org/emf/CDO/Eresource/4.0.0"; //$NON-NLS-1$
 
   /**
    * @since 2.0

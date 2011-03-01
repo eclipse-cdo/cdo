@@ -19,16 +19,17 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-
-import org.junit.Test;
 
 /**
  * @author Eike Stepper
  */
 public class Bugzilla_324585_Test extends AbstractCDOTest
 {
-  @Test
+  /**
+   * To see the problem it may be necessary to limit the stack size with e.g. -Xss256k
+   */
   public void testUpdate() throws CommitException
   {
     // user 1
@@ -51,11 +52,12 @@ public class Bugzilla_324585_Test extends AbstractCDOTest
     category2.eAdapters().add(new AdapterImpl());
 
     // user1
-    for (int i = 0; i < 1000; i++)
+    EList<Product1> products = category1.getProducts();
+    for (int i = 0; i < 10000; i++)
     {
-      final Product1 product = getModel1Factory().createProduct1();
-      product.setName("product" + i);
-      category1.getProducts().add(product);
+      Product1 product = getModel1Factory().createProduct1();
+      product.setName("Product" + i);
+      products.add(product);
     }
 
     transaction1.commit();

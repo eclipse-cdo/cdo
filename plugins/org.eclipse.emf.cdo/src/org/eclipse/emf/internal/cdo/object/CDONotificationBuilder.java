@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -47,7 +48,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
 
   private CDORevisionDelta revisionDelta;
 
-  private CDODeltaNotificationImpl notification;
+  private NotificationChainImpl notification;
 
   private Set<CDOObject> detachedObjects;
 
@@ -75,7 +76,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
   public synchronized NotificationChain buildNotification(InternalEObject object, InternalCDORevision oldRevision,
       CDORevisionDelta revisionDelta, Set<CDOObject> detachedObjects)
   {
-    notification = null;
+    notification = new NotificationChainImpl();
 
     this.object = object;
     this.revisionDelta = revisionDelta;
@@ -254,13 +255,16 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
   protected void add(CDODeltaNotificationImpl newNotificaton)
   {
     newNotificaton.setRevisionDelta(revisionDelta);
-    if (notification == null)
+    if (notification.add(newNotificaton))
     {
-      notification = newNotificaton;
-    }
-    else
-    {
-      notification.add(newNotificaton);
+      int size = notification.size();
+      if (size > 1)
+      {
+        CDODeltaNotificationImpl previousNotification = (CDODeltaNotificationImpl)notification.get(size - 2);
+
+        // Ensure that previousNotification.next is set
+        previousNotification.add(newNotificaton);
+      }
     }
   }
 

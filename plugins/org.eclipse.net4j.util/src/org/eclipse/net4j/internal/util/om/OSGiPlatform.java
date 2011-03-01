@@ -90,9 +90,10 @@ public class OSGiPlatform extends AbstractPlatform
     }
   }
 
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   protected DebugOptions getDebugOptions() throws NoClassDefFoundError, NullPointerException
   {
-    ServiceReference<?> ref = systemContext.getServiceReference(DebugOptions.class.getName());
+    ServiceReference ref = systemContext.getServiceReference(DebugOptions.class.getName());
     return (DebugOptions)systemContext.getService(ref);
   }
 }

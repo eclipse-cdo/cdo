@@ -47,11 +47,12 @@ public class OSGiLoggingBridge implements OMLogHandler
     logService.log(toOSGi(level), msg, t);
   }
 
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   protected LogService getLogService(BundleContext bundleContext)
   {
     try
     {
-      ServiceReference<?> ref = bundleContext.getServiceReference(LogService.class.getName());
+      ServiceReference ref = bundleContext.getServiceReference(LogService.class.getName());
       LogService logService = (LogService)bundleContext.getService(ref);
       return logService;
     }

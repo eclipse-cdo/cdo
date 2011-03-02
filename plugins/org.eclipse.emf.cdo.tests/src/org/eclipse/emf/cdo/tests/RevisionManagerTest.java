@@ -92,6 +92,7 @@ public class RevisionManagerTest extends AbstractCDOTest
   {
     skipUnlessConfig(MEM);
     super.doSetUp();
+    skipUnlessBranching();
 
     Field disableGC = ReflectUtil.getField(CDORevisionCacheImpl.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, true);

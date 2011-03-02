@@ -1519,22 +1519,12 @@ public class Repository extends Container<Object> implements InternalRepository
     branchManager.setTimeProvider(this);
 
     revisionManager.setRevisionLoader(this);
-
     sessionManager.setRepository(this);
-
     queryManager.setRepository(this);
-
     commitInfoManager.setCommitInfoLoader(this);
-
     commitManager.setRepository(this);
-
     lockManager.setRepository(this);
-
-    store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
-        : IStore.RevisionTemporality.NONE);
-    store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING
-        : IStore.RevisionParallelism.NONE);
-    revisionManager.setSupportingBranches(supportingBranches);
+    store.setRepository(this);
   }
 
   @Override
@@ -1543,7 +1533,11 @@ public class Repository extends Container<Object> implements InternalRepository
     super.doActivate();
 
     initProperties();
-    store.setRepository(this);
+    store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
+        : IStore.RevisionTemporality.NONE);
+    store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING
+        : IStore.RevisionParallelism.NONE);
+    revisionManager.setSupportingBranches(supportingBranches);
 
     LifecycleUtil.activate(store);
     LifecycleUtil.activate(packageRegistry);

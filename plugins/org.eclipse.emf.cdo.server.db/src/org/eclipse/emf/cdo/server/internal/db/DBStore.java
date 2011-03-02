@@ -146,8 +146,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   {
     this.mappingStrategy = mappingStrategy;
     mappingStrategy.setStore(this);
-
-    setRevisionTemporality(mappingStrategy.hasAuditSupport() ? RevisionTemporality.AUDITING : RevisionTemporality.NONE);
   }
 
   public IDBAdapter getDBAdapter()
@@ -479,18 +477,13 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     checkNull(mappingStrategy, Messages.getString("DBStore.2")); //$NON-NLS-1$
     checkNull(dbAdapter, Messages.getString("DBStore.1")); //$NON-NLS-1$
     checkNull(dbConnectionProvider, Messages.getString("DBStore.0")); //$NON-NLS-1$
-
-    checkState(getRevisionTemporality() == RevisionTemporality.AUDITING == mappingStrategy.hasAuditSupport(),
-        Messages.getString("DBStore.7")); //$NON-NLS-1$
-
-    checkState(getRevisionParallelism() == RevisionParallelism.BRANCHING == mappingStrategy.hasBranchingSupport(),
-        Messages.getString("DBStore.11")); //$NON-NLS-1$
   }
 
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
     setObjectIDTypes(idHandler.getObjectIDTypes());
     connectionKeepAliveTimer = new Timer("Connection-Keep-Alive-" + this); //$NON-NLS-1$
 
@@ -519,6 +512,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     LifecycleUtil.activate(idHandler);
     LifecycleUtil.activate(metaDataManager);
     LifecycleUtil.activate(mappingStrategy);
+
+    setRevisionTemporality(mappingStrategy.hasAuditSupport() ? RevisionTemporality.AUDITING : RevisionTemporality.NONE);
+    setRevisionParallelism(mappingStrategy.hasBranchingSupport() ? RevisionParallelism.BRANCHING
+        : RevisionParallelism.NONE);
 
     if (isFirstStart(createdTables))
     {

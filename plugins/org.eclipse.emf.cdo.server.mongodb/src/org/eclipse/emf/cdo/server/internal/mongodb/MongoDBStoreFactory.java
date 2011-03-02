@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.server.internal.mongodb;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.mongodb.CDOMongoDBUtil;
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -41,7 +40,7 @@ public class MongoDBStoreFactory implements IStoreFactory
     return MongoDBStore.TYPE;
   }
 
-  public IStore createStore(InternalRepository repository, Element storeConfig)
+  public IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig)
   {
     Map<String, String> properties = RepositoryConfigurator.getProperties(storeConfig, 1);
     String uri = properties.get("uri");
@@ -54,7 +53,7 @@ public class MongoDBStoreFactory implements IStoreFactory
     String dbName = properties.get("db");
     if (StringUtil.isEmpty(dbName))
     {
-      dbName = repository.getName();
+      dbName = repositoryName;
     }
 
     String drop = properties.get("drop");

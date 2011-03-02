@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.db.DBUtil;
@@ -46,23 +45,23 @@ public class DBStoreFactory implements IStoreFactory
     return DBStore.TYPE;
   }
 
-  public IStore createStore(InternalRepository repository, Element storeConfig)
+  public IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig)
   {
-    IMappingStrategy mappingStrategy = getMappingStrategy(repository, storeConfig);
+    IMappingStrategy mappingStrategy = getMappingStrategy(repositoryName, repositoryProperties, storeConfig);
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
     DataSource dataSource = getDataSource(storeConfig);
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
 
     DBStore store = new DBStore();
-    store.setRepository(repository);
-    mappingStrategy.setStore(store);
     store.setMappingStrategy(mappingStrategy);
     store.setDBAdapter(dbAdapter);
     store.setDbConnectionProvider(connectionProvider);
+
     return store;
   }
 
-  private IMappingStrategy getMappingStrategy(InternalRepository repository, Element storeConfig)
+  private IMappingStrategy getMappingStrategy(String repositoryName, Map<String, String> repositoryProperties,
+      Element storeConfig)
   {
     NodeList mappingStrategyConfigs = storeConfig.getElementsByTagName("mappingStrategy"); //$NON-NLS-1$
     if (mappingStrategyConfigs.getLength() != 1)
@@ -79,7 +78,10 @@ public class DBStoreFactory implements IStoreFactory
     }
 
     Map<String, String> properties = RepositoryConfigurator.getProperties(mappingStrategyConfig, 1);
+    properties.put("repositoryName", repositoryName);
+    properties.putAll(repositoryProperties);
     mappingStrategy.setProperties(properties);
+
     return mappingStrategy;
   }
 

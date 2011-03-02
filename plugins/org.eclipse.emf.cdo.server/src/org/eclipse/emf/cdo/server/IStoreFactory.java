@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
-
 import org.w3c.dom.Element;
+
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -24,5 +24,5 @@ public interface IStoreFactory
   /**
    * @since 4.0
    */
-  public IStore createStore(InternalRepository repository, Element storeConfig);
+  public IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig);
 }

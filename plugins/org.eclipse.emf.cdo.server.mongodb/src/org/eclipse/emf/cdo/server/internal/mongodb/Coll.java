@@ -66,27 +66,27 @@ public class Coll
   public abstract class Query<RESULT>
   {
     private DBObject ref;
-  
+
     public Query(DBObject ref)
     {
       this.ref = ref;
     }
-  
+
     public DBObject getRef()
     {
       return ref;
     }
-  
+
     public RESULT execute()
     {
       return execute(collection.find(ref));
     }
-  
+
     public RESULT execute(DBObject keys)
     {
       return execute(collection.find(ref, keys));
     }
-  
+
     protected RESULT execute(DBCursor cursor)
     {
       try
@@ -100,7 +100,7 @@ public class Coll
             return result;
           }
         }
-  
+
         return null;
       }
       finally
@@ -108,7 +108,7 @@ public class Coll
         cursor.close();
       }
     }
-  
+
     protected abstract RESULT handleDoc(DBObject doc);
   }
 }

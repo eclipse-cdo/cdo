@@ -139,8 +139,7 @@ public class ObjyObjectManager
   }
 
   /**
-   * return an ObjyObject based on the id passed. usually this is used for existing object when trying to modify
-   * them.
+   * return an ObjyObject based on the id passed. usually this is used for existing object when trying to modify them.
    */
   public ObjyObject getObject(CDOID id)
   {

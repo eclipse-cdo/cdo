@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
-import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
@@ -52,6 +52,8 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
 {
   private Map<String, String> properties;
 
+  private IDBStore store;
+
   private IMappingStrategy delegate;
 
   public HorizontalMappingStrategy()
@@ -65,14 +67,14 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
 
   public Map<String, String> getProperties()
   {
-    if (properties != null)
-    {
-      return properties;
-    }
-
     if (delegate != null)
     {
       return delegate.getProperties();
+    }
+
+    if (properties != null)
+    {
+      return properties;
     }
 
     return new HashMap<String, String>();
@@ -80,34 +82,35 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
 
   public void setProperties(Map<String, String> properties)
   {
-    if (delegate == null)
+    if (delegate != null)
     {
-      this.properties = properties;
+      delegate.setProperties(properties);
     }
     else
     {
-      delegate.setProperties(properties);
+      this.properties = properties;
     }
   }
 
   public IDBStore getStore()
   {
-    return delegate.getStore();
+    if (delegate != null)
+    {
+      return delegate.getStore();
+    }
+
+    return store;
   }
 
   public void setStore(IDBStore store)
   {
-    IRepository repository = store.getRepository();
-    boolean auditing = repository.isSupportingAudits();
-    boolean branching = repository.isSupportingBranches();
-
-    delegate = CDODBUtil.createHorizontalMappingStrategy(auditing, branching);
-    delegate.setStore(store);
-
-    if (properties != null)
+    if (delegate != null)
     {
-      delegate.setProperties(properties);
-      properties = null;
+      delegate.setStore(store);
+    }
+    else
+    {
+      this.store = store;
     }
   }
 
@@ -233,6 +236,13 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
+    boolean auditing = getBooleanProperty(Props.SUPPORTING_AUDITS);
+    boolean branching = getBooleanProperty(Props.SUPPORTING_BRANCHES);
+
+    delegate = CDODBUtil.createHorizontalMappingStrategy(auditing, branching);
+    delegate.setStore(store);
+    delegate.setProperties(properties);
     LifecycleUtil.activate(delegate);
   }
 
@@ -241,5 +251,16 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
   {
     LifecycleUtil.deactivate(delegate);
     super.doDeactivate();
+  }
+
+  private boolean getBooleanProperty(String prop)
+  {
+    String valueAudits = properties.get(prop);
+    if (valueAudits != null)
+    {
+      return Boolean.valueOf(valueAudits);
+    }
+
+    return false;
   }
 }

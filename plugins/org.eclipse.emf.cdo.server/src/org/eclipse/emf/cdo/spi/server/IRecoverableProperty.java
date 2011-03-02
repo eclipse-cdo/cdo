@@ -93,7 +93,7 @@ public interface IRecoverableProperty
         {
           overflow();
         }
-    
+
         if (isAscending())
         {
           ++value;
@@ -103,7 +103,7 @@ public interface IRecoverableProperty
           --value;
         }
       }
-    
+
       needNext = true;
       return value;
     }
@@ -202,7 +202,7 @@ public interface IRecoverableProperty
         {
           overflow();
         }
-    
+
         if (isAscending())
         {
           ++value;
@@ -212,7 +212,7 @@ public interface IRecoverableProperty
           --value;
         }
       }
-    
+
       needNext = true;
       return value;
     }

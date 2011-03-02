@@ -138,8 +138,12 @@ public class RepositoryConfigurator
 
     Map<String, String> properties = getProperties(repositoryConfig, 1);
 
+    Element storeConfig = getStoreConfig(repositoryConfig);
+    IStore store = createStore(repositoryName, properties, storeConfig);
+
     InternalRepository repository = (InternalRepository)getRepository(repositoryType);
     repository.setName(repositoryName);
+    repository.setStore((InternalStore)store);
     repository.setProperties(properties);
 
     Element userManagerConfig = getUserManagerConfig(repositoryConfig);
@@ -158,9 +162,6 @@ public class RepositoryConfigurator
         sessionManager.setUserManager(userManager);
       }
     }
-
-    Element storeConfig = getStoreConfig(repositoryConfig);
-    createStore(repository, storeConfig);
 
     return repository;
   }
@@ -225,12 +226,12 @@ public class RepositoryConfigurator
     return factory;
   }
 
-  protected void createStore(InternalRepository repository, Element storeConfig) throws CoreException
+  protected IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig)
+      throws CoreException
   {
     String type = storeConfig.getAttribute("type"); //$NON-NLS-1$
     IStoreFactory storeFactory = getStoreFactory(type);
-    IStore store = storeFactory.createStore(repository, storeConfig);
-    repository.setStore((InternalStore)store);
+    return storeFactory.createStore(repositoryName, repositoryProperties, storeConfig);
   }
 
   public static Map<String, String> getProperties(Element element, int levels)

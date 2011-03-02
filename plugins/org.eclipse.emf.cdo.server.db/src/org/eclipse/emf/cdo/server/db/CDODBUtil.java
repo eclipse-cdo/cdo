@@ -32,7 +32,6 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
-
 /**
  * @author Eike Stepper
  */
@@ -67,7 +66,6 @@ public final class CDODBUtil
       IDBConnectionProvider dbConnectionProvider)
   {
     DBStore store = new DBStore();
-    mappingStrategy.setStore(store);
     store.setMappingStrategy(mappingStrategy);
     store.setDBAdapter(dbAdapter);
     store.setDbConnectionProvider(dbConnectionProvider);

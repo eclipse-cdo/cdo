@@ -214,7 +214,6 @@ public class Repository extends Container<Object> implements InternalRepository
   public void setStore(InternalStore store)
   {
     this.store = store;
-    store.setRepository(this);
   }
 
   public Type getType()
@@ -280,38 +279,6 @@ public class Repository extends Container<Object> implements InternalRepository
   public synchronized void setProperties(Map<String, String> properties)
   {
     this.properties = properties;
-
-    String valueAudits = properties.get(Props.SUPPORTING_AUDITS);
-    if (valueAudits != null)
-    {
-      supportingAudits = Boolean.valueOf(valueAudits);
-    }
-    else
-    {
-      supportingAudits = store.getRevisionTemporality() == IStore.RevisionTemporality.AUDITING;
-    }
-
-    String valueBranches = properties.get(Props.SUPPORTING_BRANCHES);
-    if (valueBranches != null)
-    {
-      supportingBranches = Boolean.valueOf(valueBranches);
-    }
-    else
-    {
-      supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
-    }
-
-    String valueEcore = properties.get(Props.SUPPORTING_ECORE);
-    if (valueEcore != null)
-    {
-      supportingEcore = Boolean.valueOf(valueEcore);
-    }
-
-    String valueIntegrity = properties.get(Props.ENSURE_REFERENTIAL_INTEGRITY);
-    if (valueIntegrity != null)
-    {
-      ensuringReferentialIntegrity = Boolean.valueOf(valueIntegrity);
-    }
   }
 
   public boolean isSupportingAudits()
@@ -1369,6 +1336,41 @@ public class Repository extends Container<Object> implements InternalRepository
     this.skipInitialization = skipInitialization;
   }
 
+  protected void initProperties()
+  {
+    String valueAudits = properties.get(Props.SUPPORTING_AUDITS);
+    if (valueAudits != null)
+    {
+      supportingAudits = Boolean.valueOf(valueAudits);
+    }
+    else
+    {
+      supportingAudits = store.getRevisionTemporality() == IStore.RevisionTemporality.AUDITING;
+    }
+
+    String valueBranches = properties.get(Props.SUPPORTING_BRANCHES);
+    if (valueBranches != null)
+    {
+      supportingBranches = Boolean.valueOf(valueBranches);
+    }
+    else
+    {
+      supportingBranches = store.getRevisionParallelism() == IStore.RevisionParallelism.BRANCHING;
+    }
+
+    String valueEcore = properties.get(Props.SUPPORTING_ECORE);
+    if (valueEcore != null)
+    {
+      supportingEcore = Boolean.valueOf(valueEcore);
+    }
+
+    String valueIntegrity = properties.get(Props.ENSURE_REFERENTIAL_INTEGRITY);
+    if (valueIntegrity != null)
+    {
+      ensuringReferentialIntegrity = Boolean.valueOf(valueIntegrity);
+    }
+  }
+
   public void initSystemPackages()
   {
     IStoreAccessor writer = store.getWriter(null);
@@ -1539,6 +1541,9 @@ public class Repository extends Container<Object> implements InternalRepository
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
+    initProperties();
+    store.setRepository(this);
 
     LifecycleUtil.activate(store);
     LifecycleUtil.activate(packageRegistry);

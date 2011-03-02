@@ -14,10 +14,11 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db4o.IDB4OStore;
 import org.eclipse.emf.cdo.server.internal.db4o.bundle.OM;
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import java.util.Map;
 
 /**
  * @author Victor Roldan Betancort
@@ -33,7 +34,7 @@ public class DB4OStoreFactory implements IStoreFactory
     return IDB4OStore.TYPE;
   }
 
-  public IStore createStore(InternalRepository repository, Element storeConfig)
+  public IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig)
   {
     try
     {

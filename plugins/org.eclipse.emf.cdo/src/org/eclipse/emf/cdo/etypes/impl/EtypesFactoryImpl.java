@@ -65,18 +65,18 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   }
 
   /**
-   * <!-- begin-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @SuppressWarnings("cast") <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("cast")
   @Override
   public EObject create(EClass eClass)
   {
     switch (eClass.getClassifierID())
     {
     case EtypesPackage.ANNOTATION:
-      return createAnnotation();
+      return (EObject)createAnnotation();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }

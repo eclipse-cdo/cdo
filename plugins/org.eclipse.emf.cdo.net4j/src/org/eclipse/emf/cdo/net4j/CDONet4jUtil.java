@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
+import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
+
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -109,5 +111,13 @@ public final class CDONet4jUtil
   {
     container.registerFactory(new CDOClientProtocolFactory());
     container.registerFactory(new Net4jSessionFactory());
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDOSession getSession(IManagedContainer container, String description)
+  {
+    return (CDOSession)container.getElement(CDOSessionFactory.PRODUCT_GROUP, Net4jSessionFactory.TYPE, description);
   }
 }

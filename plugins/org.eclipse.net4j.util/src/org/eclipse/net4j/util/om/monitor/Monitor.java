@@ -53,7 +53,7 @@ public class Monitor extends AbstractMonitor
   {
     if (cancelException != null)
     {
-      throw cancelException;
+      throw new MonitorCanceledException(cancelException);
     }
 
     if (canceled)

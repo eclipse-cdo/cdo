@@ -409,7 +409,8 @@ public class CommitIntegrityCheck
 
   private static boolean hasPersistentOpposite(EReference ref)
   {
-    return ref.getEOpposite() != null && EMFUtil.isPersistent(ref);
+    EReference eOpposite = ref.getEOpposite();
+    return eOpposite != null && EMFUtil.isPersistent(eOpposite);
   }
 
   /**

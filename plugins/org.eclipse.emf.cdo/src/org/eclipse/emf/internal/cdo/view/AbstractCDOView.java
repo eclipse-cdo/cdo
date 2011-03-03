@@ -152,6 +152,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
   public synchronized Map<CDOID, InternalCDOObject> getObjects()
   {
+    if (objects == null)
+    {
+      return Collections.emptyMap();
+    }
+
     return Collections.unmodifiableMap(objects);
   }
 
@@ -1251,14 +1256,14 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       builder.append("Transaction");
     }
 
-    builder.append(" "); //$NON-NLS-1$ 
+    builder.append(" "); //$NON-NLS-1$
     builder.append(getViewID());
 
     boolean brackets = false;
     if (getSession().getRepositoryInfo().isSupportingBranches())
     {
       brackets = true;
-      builder.append(" ["); //$NON-NLS-1$ 
+      builder.append(" ["); //$NON-NLS-1$
       builder.append(branchPoint.getBranch().getPathName()); // Do not synchronize on this view!
     }
 
@@ -1267,11 +1272,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     {
       if (brackets)
       {
-        builder.append(", "); //$NON-NLS-1$ 
+        builder.append(", "); //$NON-NLS-1$
       }
       else
       {
-        builder.append(" ["); //$NON-NLS-1$ 
+        builder.append(" ["); //$NON-NLS-1$
         brackets = true;
       }
 
@@ -1280,7 +1285,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
     if (brackets)
     {
-      builder.append("]"); //$NON-NLS-1$ 
+      builder.append("]"); //$NON-NLS-1$
     }
 
     return builder.toString();

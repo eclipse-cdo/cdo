@@ -4,14 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.util.om.trace;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.IdentityHashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -20,7 +20,7 @@ public class PerfTracer extends ContextTracer
 {
   public static final long NOT_STARTED = 0L;
 
-  private ConcurrentMap<Object, Long> timers = new ConcurrentHashMap<Object, Long>();
+  private Map<Object, Long> timers = new IdentityHashMap<Object, Long>();
 
   public PerfTracer(OMTracer delegate, Class<?> context)
   {
@@ -31,7 +31,10 @@ public class PerfTracer extends ContextTracer
   {
     if (isEnabled())
     {
-      timers.put(object, System.currentTimeMillis());
+      synchronized (timers)
+      {
+        timers.put(object, System.currentTimeMillis());
+      }
     }
   }
 
@@ -40,7 +43,12 @@ public class PerfTracer extends ContextTracer
     long duration = NOT_STARTED;
     if (isEnabled())
     {
-      Long timer = timers.remove(object);
+      Long timer;
+      synchronized (timers)
+      {
+        timer = timers.remove(object);
+      }
+
       if (timer != null)
       {
         duration = System.currentTimeMillis() - timer;
@@ -56,7 +64,12 @@ public class PerfTracer extends ContextTracer
     long duration = NOT_STARTED;
     if (isEnabled())
     {
-      Long timer = timers.get(object);
+      Long timer;
+      synchronized (timers)
+      {
+        timer = timers.get(object);
+      }
+
       if (timer != null)
       {
         duration = System.currentTimeMillis() - timer;

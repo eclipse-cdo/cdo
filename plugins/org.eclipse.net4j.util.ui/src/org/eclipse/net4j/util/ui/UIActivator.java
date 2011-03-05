@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.OSGiActivator.StateHandler;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
@@ -39,6 +40,14 @@ public class UIActivator extends AbstractUIPlugin
   public final OMBundle getOMBundle()
   {
     return omBundle;
+  }
+
+  /**
+   * @since 3.1
+   */
+  public ImageDescriptor loadImageDescriptor(String path)
+  {
+    return imageDescriptorFromPlugin(omBundle.getBundleID(), path);
   }
 
   @Override

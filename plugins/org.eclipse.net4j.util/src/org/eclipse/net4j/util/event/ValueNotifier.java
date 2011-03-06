@@ -55,7 +55,7 @@ public class ValueNotifier<VALUE> extends Notifier
 
   public synchronized void setValue(VALUE value)
   {
-    VALUE oldValue = value;
+    VALUE oldValue = this.value;
     if (!ObjectUtil.equals(value, oldValue))
     {
       this.value = value;

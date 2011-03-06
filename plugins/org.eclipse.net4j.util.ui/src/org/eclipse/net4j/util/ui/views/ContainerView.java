@@ -196,6 +196,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     hookContextMenu();
     hookDoubleClick();
     contributeToActionBars();
+    createdUI();
   }
 
   protected Control createUI(Composite parent)
@@ -206,6 +207,13 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     viewer.addSelectionChangedListener(selectionListener);
     getSite().setSelectionProvider(this);
     return viewer.getControl();
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected void createdUI()
+  {
   }
 
   /**

@@ -595,7 +595,10 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements IStoreAcce
 
     try
     {
+      long start = System.currentTimeMillis();
       getObjectContainer().commit();
+      long end = System.currentTimeMillis();
+      OM.LOG.debug("Commit took -> " + (end - start) + " milliseconds");
     }
     catch (Exception e)
     {
@@ -623,10 +626,13 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements IStoreAcce
 
     try
     {
+      long start = System.currentTimeMillis();
       for (InternalCDORevision revision : revisions)
       {
         writeRevision(revision, monitor.fork());
       }
+      long end = System.currentTimeMillis();
+      OM.LOG.debug("Storage of " + revisions.length + " revisions took: " + (end - start) + " milliseconds");
     }
     finally
     {
@@ -657,17 +663,17 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements IStoreAcce
         }
       }
 
-      // If revision is in the store, remove old, store new
-      ObjectContainer objectContainer = getObjectContainer();
-      CDOID id = revision.getID();
-      DB4ORevision revisionAlreadyInStore = DB4OStore.getRevision(objectContainer, id);
-      if (revisionAlreadyInStore != null)
-      {
-        DB4OStore.removeRevision(objectContainer, id);
-      }
+      // TODO removal of previous version implies query, this should be optimized
 
+      long start = System.currentTimeMillis();
+      // If revision is in the store, remove old, store new
+      // Remove previous version
+      CDOID id = revision.getID();
+      DB4OStore.removeRevision(getObjectContainer(), id);
       DB4ORevision primitiveRevision = DB4ORevision.getDB4ORevision(revision);
       writeObject(primitiveRevision, monitor);
+      long end = System.currentTimeMillis();
+      OM.LOG.debug("Writing revision " + id + " took: " + (end - start) + " milliseconds");
     }
     finally
     {

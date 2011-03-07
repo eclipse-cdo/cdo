@@ -14,9 +14,9 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db4o.IDB4OStore;
 import org.eclipse.emf.cdo.server.internal.db4o.bundle.OM;
+import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import java.util.Map;
 
@@ -25,6 +25,10 @@ import java.util.Map;
  */
 public class DB4OStoreFactory implements IStoreFactory
 {
+  private static final String PROPERTY_PORT = "port";
+
+  private static final String PROPERTY_PATH = "path";
+
   public DB4OStoreFactory()
   {
   }
@@ -38,8 +42,10 @@ public class DB4OStoreFactory implements IStoreFactory
   {
     try
     {
-      String dataFilePath = getFilePath(storeConfig);
-      int port = getPort(storeConfig);
+      Map<String, String> properties = RepositoryConfigurator.getProperties(storeConfig, 1);
+      String dataFilePath = properties.get(PROPERTY_PATH);
+      String portString = properties.get(PROPERTY_PORT);
+      int port = portString != null ? Integer.parseInt(portString) : 1677;
       return new DB4OStore(dataFilePath, port);
     }
     catch (Exception ex)
@@ -48,31 +54,5 @@ public class DB4OStoreFactory implements IStoreFactory
     }
 
     return null;
-  }
-
-  protected int getPort(Element storeConfig)
-  {
-    NodeList ooConfig = storeConfig.getElementsByTagName("ooData"); //$NON-NLS-1$
-    Element ooElement = (Element)ooConfig.item(0);
-    String port = ooElement.getAttribute("port"); //$NON-NLS-1$
-    if (port == null)
-    {
-      throw new IllegalArgumentException("DB4O port not defined"); //$NON-NLS-1$
-    }
-
-    return Integer.parseInt(port);
-  }
-
-  protected String getFilePath(Element storeConfig)
-  {
-    NodeList ooConfig = storeConfig.getElementsByTagName("ooData"); //$NON-NLS-1$
-    Element ooElement = (Element)ooConfig.item(0);
-    String filePath = ooElement.getAttribute("path"); //$NON-NLS-1$
-    if (filePath == null)
-    {
-      throw new IllegalArgumentException("DB4O file path not defined"); //$NON-NLS-1$
-    }
-
-    return filePath;
   }
 }

@@ -32,6 +32,8 @@ import com.db4o.config.Configuration;
 import com.db4o.query.Query;
 import com.db4o.reflect.jdk.JdkReflector;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,8 +64,8 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
   public DB4OStore(String storeLocation, int port)
   {
-    super(IDB4OStore.TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA), set(RevisionTemporality.NONE,
-        RevisionTemporality.AUDITING), set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
+    super(IDB4OStore.TYPE, set(ChangeFormat.REVISION), set(RevisionTemporality.NONE, RevisionTemporality.AUDITING),
+        set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
 
     // setRevisionTemporality(RevisionTemporality.AUDITING);
     // setRevisionParallelism(RevisionParallelism.BRANCHING);
@@ -174,8 +176,22 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     {
       configuration = createServerConfiguration();
     }
+    {
+      File file = new File(getStoreLocation());
+      if (!file.exists())
+      {
+        try
+        {
+          file.createNewFile();
+        }
+        catch (IOException ex)
+        {
+          throw new RuntimeException(ex);
+        }
+      }
+    }
 
-    server = Db4o.openServer(configuration, storeLocation, port);
+    server = Db4o.openServer(configuration, getStoreLocation(), getPort());
   }
 
   protected void tearDownObjectServer()
@@ -273,6 +289,10 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   {
     Configuration config = Db4o.newConfiguration();
     config.reflectWith(new JdkReflector(getClass().getClassLoader()));
+    config.objectClass(DB4ORevision.class).objectField("id").indexed(true);
+    config.objectClass(DB4OPackageUnit.class).objectField("id").indexed(true);
+    config.objectClass(DB4OIdentifiableObject.class).objectField("id").indexed(true);
+    config.objectClass(DB4OCommitInfo.class).objectField("timeStamp").indexed(true);
     return config;
   }
 
@@ -339,12 +359,10 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   public static void removeRevision(ObjectContainer container, CDOID id)
   {
     DB4ORevision revision = getRevision(container, id);
-    if (revision == null)
+    if (revision != null)
     {
-      throw new IllegalArgumentException("Revision with ID " + id + " not found");
+      container.delete(revision);
     }
-
-    container.delete(revision);
   }
 
   /**

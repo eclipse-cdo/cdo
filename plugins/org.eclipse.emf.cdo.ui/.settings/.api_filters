@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.ui" version="2">
+    <resource path="src/org/eclipse/emf/cdo/internal/ui/editor/CDOEditor.java" type="org.eclipse.emf.cdo.internal.ui.editor.CDOEditor">
+        <filter id="571519004">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.internal.ui.editor.CDOEditor.createPages()"/>
+                <message_argument value="TreeViewer"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

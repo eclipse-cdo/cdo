@@ -666,8 +666,6 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements IStoreAcce
       // TODO removal of previous version implies query, this should be optimized
 
       long start = System.currentTimeMillis();
-      // If revision is in the store, remove old, store new
-      // Remove previous version
       CDOID id = revision.getID();
       DB4OStore.removeRevision(getObjectContainer(), id);
       DB4ORevision primitiveRevision = DB4ORevision.getDB4ORevision(revision);

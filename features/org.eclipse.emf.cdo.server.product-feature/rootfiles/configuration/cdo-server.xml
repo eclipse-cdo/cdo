@@ -14,7 +14,7 @@
 
     <property name="overrideUUID" value=""/>
     <property name="supportingAudits" value="true"/>
-    <property name="supportingBranches" value="false"/>
+    <property name="supportingBranches" value="true"/>
     <property name="supportingEcore" value="true"/>
     <property name="ensureReferentialIntegrity" value="false"/>
 

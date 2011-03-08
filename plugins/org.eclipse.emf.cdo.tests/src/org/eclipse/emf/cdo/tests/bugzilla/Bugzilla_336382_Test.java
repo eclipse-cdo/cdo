@@ -28,6 +28,7 @@ public class Bugzilla_336382_Test extends AbstractCDOTest
   public void testPromoteToBranch() throws Exception
   {
     skipUnlessBranching();
+    skipConfig(LEGACY);
 
     CDOSession session = openSession();
 

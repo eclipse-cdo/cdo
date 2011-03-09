@@ -11,7 +11,9 @@
 package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
@@ -162,23 +164,16 @@ public class CommitIntegrityCheck
       }
       else if (feat instanceof EReference)
       {
-        EReference ref = (EReference)feat;
-        if (ref.isContainment() || hasPersistentOpposite(ref))
+        if (featureDelta instanceof CDOListFeatureDelta)
         {
-          // Object is dirty with respect to a containment feature or a feature with an eOpposite
-          // We must ensure that any reference targets that were added/removed/set, are also
-          // included in the commit
-          if (featureDelta instanceof CDOListFeatureDelta)
+          for (CDOFeatureDelta innerFeatDelta : ((CDOListFeatureDelta)featureDelta).getListChanges())
           {
-            for (CDOFeatureDelta innerFeatDelta : ((CDOListFeatureDelta)featureDelta).getListChanges())
-            {
-              checkFeatureDelta(innerFeatDelta, dirtyObject);
-            }
+            checkFeatureDelta(innerFeatDelta, dirtyObject);
           }
-          else
-          {
-            checkFeatureDelta(featureDelta, dirtyObject);
-          }
+        }
+        else
+        {
+          checkFeatureDelta(featureDelta, dirtyObject);
         }
       }
     }
@@ -201,16 +196,16 @@ public class CommitIntegrityCheck
 
   private void checkFeatureDelta(CDOFeatureDelta featureDelta, CDOObject dirtyObject) throws CommitIntegrityException
   {
-    if (featureDelta instanceof CDORemoveFeatureDelta)
-    {
-      Object idOrObject = ((CDORemoveFeatureDelta)featureDelta).getValue();
-      CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
-      checkIncluded(id, "removed child of", dirtyObject);
-    }
-    else if (featureDelta instanceof CDOAddFeatureDelta)
+    EReference ref = (EReference)featureDelta.getFeature();
+    boolean containmentOrWithOpposite = ref.isContainment() || hasPersistentOpposite(ref);
+
+    if (featureDelta instanceof CDOAddFeatureDelta)
     {
       Object idOrObject = ((CDOAddFeatureDelta)featureDelta).getValue();
-      checkIncluded(idOrObject, "added child of", dirtyObject);
+      if (containmentOrWithOpposite || isNew(idOrObject))
+      {
+        checkIncluded(idOrObject, "added child/refTarget of", dirtyObject);
+      }
     }
     else if (featureDelta instanceof CDOSetFeatureDelta)
     {
@@ -220,17 +215,26 @@ public class CommitIntegrityCheck
       if (oldIDOrObject != null)
       {
         // Old child must be included
-        checkIncluded(oldID, "removed/former child of", dirtyObject);
+        checkIncluded(oldID, "removed/former child/refTarget of", dirtyObject);
       }
 
       if (newIDOrObject != null)
       {
         // New child must be included
         newIDOrObject = transaction.convertObjectToID(newIDOrObject);
-        checkIncluded(newIDOrObject, "new child of", dirtyObject);
+        if (containmentOrWithOpposite || isNew(newIDOrObject))
+        {
+          checkIncluded(newIDOrObject, "new child/refTarget of", dirtyObject);
+        }
       }
     }
-    else if (featureDelta instanceof CDOClearFeatureDelta)
+    else if (containmentOrWithOpposite && featureDelta instanceof CDORemoveFeatureDelta)
+    {
+      Object idOrObject = ((CDORemoveFeatureDelta)featureDelta).getValue();
+      CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
+      checkIncluded(id, "removed child/refTarget of", dirtyObject);
+    }
+    else if (containmentOrWithOpposite && featureDelta instanceof CDOClearFeatureDelta)
     {
       EStructuralFeature feat = ((CDOClearFeatureDelta)featureDelta).getFeature();
       InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
@@ -239,18 +243,18 @@ public class CommitIntegrityCheck
       {
         Object idOrObject = cleanRev.get(feat, i);
         CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
-        checkIncluded(id, "removed child of", dirtyObject);
+        checkIncluded(id, "removed child/refTarget of", dirtyObject);
       }
     }
-    else if (featureDelta instanceof CDOUnsetFeatureDelta)
+    else if (containmentOrWithOpposite && featureDelta instanceof CDOUnsetFeatureDelta)
     {
       EStructuralFeature feat = ((CDOUnsetFeatureDelta)featureDelta).getFeature();
       InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
       Object idOrObject = cleanRev.getValue(feat);
       CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
-      checkIncluded(id, "removed child of", dirtyObject);
+      checkIncluded(id, "removed child/refTarget of", dirtyObject);
     }
-    else if (featureDelta instanceof CDOMoveFeatureDelta)
+    else if (containmentOrWithOpposite && featureDelta instanceof CDOMoveFeatureDelta)
     {
       // Nothing to do: a move doesn't affect the child being moved
       // so that child does not need to be included
@@ -259,6 +263,20 @@ public class CommitIntegrityCheck
     {
       throw new IllegalArgumentException("Unexpected delta type: " + featureDelta.getClass().getSimpleName());
     }
+  }
+
+  private boolean isNew(Object idOrObject)
+  {
+    if (idOrObject instanceof CDOIDTemp)
+    {
+      return true;
+    }
+    if (idOrObject instanceof EObject)
+    {
+      CDOObject obj = CDOUtil.getCDOObject((EObject)idOrObject);
+      return obj.cdoState() == CDOState.NEW;
+    }
+    return false;
   }
 
   private void checkIncluded(CDOID id, String msg, CDOObject o) throws CommitIntegrityException

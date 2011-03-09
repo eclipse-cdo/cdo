@@ -685,7 +685,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   /**
    * @since 4.0
    */
-  public void setCommittables(Set<EObject> committables)
+  public void setCommittables(Set<? extends EObject> committables)
   {
     delegate.setCommittables(committables);
   }
@@ -693,7 +693,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   /**
    * @since 4.0
    */
-  public Set<EObject> getCommittables()
+  public Set<? extends EObject> getCommittables()
   {
     return delegate.getCommittables();
   }

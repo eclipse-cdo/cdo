@@ -168,12 +168,12 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   /**
    * @since 4.0
    */
-  public void setCommittables(Set<EObject> committables);
+  public void setCommittables(Set<? extends EObject> committables);
 
   /**
    * @since 4.0
    */
-  public Set<EObject> getCommittables();
+  public Set<? extends EObject> getCommittables();
 
   /**
    * @since 4.0

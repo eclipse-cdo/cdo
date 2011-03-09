@@ -213,7 +213,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * An optional set to specify which objects in this TX are to be committed by {@link #commit()}
    */
-  private Set<EObject> committables;
+  private Set<? extends EObject> committables;
 
   /**
    * A map to hold a clean (i.e. unmodified) revision for objects that have been modified or detached.
@@ -2164,12 +2164,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     commitComment = comment;
   }
 
-  public synchronized void setCommittables(Set<EObject> committables)
+  public synchronized void setCommittables(Set<? extends EObject> committables)
   {
     this.committables = committables;
   }
 
-  public synchronized Set<EObject> getCommittables()
+  public synchronized Set<? extends EObject> getCommittables()
   {
     return committables;
   }

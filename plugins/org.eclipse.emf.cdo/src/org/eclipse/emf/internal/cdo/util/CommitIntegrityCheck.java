@@ -339,7 +339,7 @@ public class CommitIntegrityCheck
   {
     for (EReference eRef : referencer.eClass().getEAllReferences())
     {
-      if (hasPersistentOpposite(eRef))
+      if (EMFUtil.isPersistent(eRef) && hasPersistentOpposite(eRef))
       {
         if (eRef.isMany())
         {
@@ -372,7 +372,7 @@ public class CommitIntegrityCheck
 
     for (EReference eRef : referencer.eClass().getEAllReferences())
     {
-      if (hasPersistentOpposite(eRef))
+      if (EMFUtil.isPersistent(eRef) && hasPersistentOpposite(eRef))
       {
         Object value = cleanRev.get(eRef, EStore.NO_INDEX);
         if (value != null)

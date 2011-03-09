@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import java.text.MessageFormat;
@@ -29,6 +30,9 @@ public class CDOIDAndBranchImpl implements CDOIDAndBranch
 
   public CDOIDAndBranchImpl(CDOID id, CDOBranch branch)
   {
+    CheckUtil.checkNull(id, "id");
+    CheckUtil.checkNull(branch, "branch");
+
     this.id = id;
     this.branch = branch;
   }

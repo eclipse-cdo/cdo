@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.internal.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 
+import org.eclipse.net4j.util.CheckUtil;
+
 import java.text.MessageFormat;
 
 /**
@@ -26,6 +28,8 @@ public class CDOIDAndVersionImpl implements CDOIDAndVersion
 
   public CDOIDAndVersionImpl(CDOID id, int version)
   {
+    CheckUtil.checkNull(id, "id");
+
     this.id = id;
     this.version = version;
   }

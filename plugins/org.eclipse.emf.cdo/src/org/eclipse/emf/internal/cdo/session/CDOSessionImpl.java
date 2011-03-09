@@ -860,31 +860,17 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public boolean waitForUpdate(long updateTime, long timeoutMillis)
   {
     long end = timeoutMillis == NO_TIMEOUT ? Long.MAX_VALUE : System.currentTimeMillis() + timeoutMillis;
-    for (;;)
+    for (CDOView view : views)
     {
-      synchronized (lastUpdateTimeLock)
+      long viewTimeoutMillis = timeoutMillis == NO_TIMEOUT ? NO_TIMEOUT : end - System.currentTimeMillis();
+      boolean ok = view.waitForUpdate(updateTime, viewTimeoutMillis);
+      if (!ok)
       {
-        if (lastUpdateTime >= updateTime)
-        {
-          return true;
-        }
-
-        long now = System.currentTimeMillis();
-        if (now >= end)
-        {
-          return false;
-        }
-
-        try
-        {
-          lastUpdateTimeLock.wait(end - now);
-        }
-        catch (InterruptedException ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
+        return false;
       }
     }
+
+    return true;
   }
 
   /**

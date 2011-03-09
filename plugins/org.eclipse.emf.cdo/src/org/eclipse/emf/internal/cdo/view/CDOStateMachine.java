@@ -15,10 +15,10 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
-import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -830,30 +830,17 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Pair<CDORevisionKey, Long> keyAndTime)
     {
       CDORevisionKey key = keyAndTime.getElement1();
-      long lastUpdateTime = keyAndTime.getElement2();
       InternalCDORevision oldRevision = object.cdoRevision();
       if (key == null || key.getVersion() >= oldRevision.getVersion())
       {
         InternalCDOView view = object.cdoView();
-        if (key instanceof CDORevisionDelta)
+
+        CDORevisionKey newKey = key == null ? null : CDORevisionUtil.createRevisionKey(key.getID(), key.getBranch(),
+            key.getVersion() + 1);
+        InternalCDORevision newRevision = newKey == null ? null : view.getSession().getRevisionManager()
+            .getRevisionByVersion(newKey.getID(), newKey, 0, false);
+        if (newRevision != null)
         {
-          CDORevisionDelta delta = (CDORevisionDelta)key;
-          InternalCDORevision newRevision = oldRevision.copy();
-
-          CDORevisable target = delta.getTarget();
-          if (target != null)
-          {
-            newRevision.setBranchPoint(target);
-            newRevision.setVersion(target.getVersion());
-            newRevision.setRevised(target.getRevised());
-          }
-          else
-          {
-            newRevision.adjustForCommit(view.getBranch(), lastUpdateTime);
-          }
-
-          delta.apply(newRevision);
-
           object.cdoInternalSetRevision(newRevision);
           changeState(object, CDOState.CLEAN);
           object.cdoInternalPostLoad();

@@ -1707,6 +1707,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         formerRevisionKeys.remove(object);
       }
+      
+      for (CDOObject object : commitContext.getDirtyObjects().values())
+      {
+        formerRevisionKeys.remove(object);
+      }
     }
 
     // Reset partial-commit filter

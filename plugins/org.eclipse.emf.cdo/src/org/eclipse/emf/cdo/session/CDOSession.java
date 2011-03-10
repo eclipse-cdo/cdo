@@ -255,6 +255,20 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
   public long refresh();
 
   /**
+   * Equivalent to calling {@link CDOView#waitForUpdate(long)} on each of this session's views. That is, this blocks the
+   * calling thread until all of this session's views have incorporated a commit operation with the given time stamp (or
+   * higher).
+   */
+  public void waitForUpdate(long updateTime);
+
+  /**
+   * Equivalent to calling {@link CDOView#waitForUpdate(long)} on each of this session's views. That is, this blocks the
+   * calling thread until all of this session's views have incorporated a commit operation with the given time stamp (or
+   * higher) or the given total timeout has expired.
+   */
+  public boolean waitForUpdate(long updateTime, long timeoutMillis);
+
+  /**
    * @since 4.0
    */
   public CDOChangeSetData compareRevisions(CDOBranchPoint source, CDOBranchPoint target);
@@ -263,13 +277,6 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
    * Returns the {@link Options options} of this session.
    */
   public Options options();
-
-  /**
-   * Equivalent to calling {@link CDOView#waitForUpdate(long)} on each of this session's views. That is, this blocks the
-   * calling thread until all of this session's views have incorporated a commit operation with the given time stamp (or
-   * higher).
-   */
-  public void waitForUpdate(long updateTime);
 
   /**
    * @author Simon McDuff

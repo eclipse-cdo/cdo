@@ -265,6 +265,13 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
   public Options options();
 
   /**
+   * Equivalent to calling {@link CDOView#waitForUpdate(long)} on each of this session's views. That is, this blocks the
+   * calling thread until all of this session's views have incorporated a commit operation with the given time stamp (or
+   * higher).
+   */
+  public void waitForUpdate(long updateTime);
+
+  /**
    * @author Simon McDuff
    */
   public interface Options extends CDOCommonSession.Options

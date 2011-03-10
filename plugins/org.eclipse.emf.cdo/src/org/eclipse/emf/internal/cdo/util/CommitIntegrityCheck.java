@@ -228,40 +228,43 @@ public class CommitIntegrityCheck
         }
       }
     }
-    else if (containmentOrWithOpposite && featureDelta instanceof CDORemoveFeatureDelta)
+    else if (containmentOrWithOpposite)
     {
-      Object idOrObject = ((CDORemoveFeatureDelta)featureDelta).getValue();
-      CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
-      checkIncluded(id, "removed child/refTarget of", dirtyObject);
-    }
-    else if (containmentOrWithOpposite && featureDelta instanceof CDOClearFeatureDelta)
-    {
-      EStructuralFeature feat = ((CDOClearFeatureDelta)featureDelta).getFeature();
-      InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
-      int n = cleanRev.size(feat);
-      for (int i = 0; i < n; i++)
+      if (featureDelta instanceof CDORemoveFeatureDelta)
       {
-        Object idOrObject = cleanRev.get(feat, i);
+        Object idOrObject = ((CDORemoveFeatureDelta)featureDelta).getValue();
         CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
         checkIncluded(id, "removed child/refTarget of", dirtyObject);
       }
-    }
-    else if (containmentOrWithOpposite && featureDelta instanceof CDOUnsetFeatureDelta)
-    {
-      EStructuralFeature feat = ((CDOUnsetFeatureDelta)featureDelta).getFeature();
-      InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
-      Object idOrObject = cleanRev.getValue(feat);
-      CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
-      checkIncluded(id, "removed child/refTarget of", dirtyObject);
-    }
-    else if (containmentOrWithOpposite && featureDelta instanceof CDOMoveFeatureDelta)
-    {
-      // Nothing to do: a move doesn't affect the child being moved
-      // so that child does not need to be included
-    }
-    else
-    {
-      throw new IllegalArgumentException("Unexpected delta type: " + featureDelta.getClass().getSimpleName());
+      else if (featureDelta instanceof CDOClearFeatureDelta)
+      {
+        EStructuralFeature feat = ((CDOClearFeatureDelta)featureDelta).getFeature();
+        InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
+        int n = cleanRev.size(feat);
+        for (int i = 0; i < n; i++)
+        {
+          Object idOrObject = cleanRev.get(feat, i);
+          CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
+          checkIncluded(id, "removed child/refTarget of", dirtyObject);
+        }
+      }
+      else if (featureDelta instanceof CDOUnsetFeatureDelta)
+      {
+        EStructuralFeature feat = ((CDOUnsetFeatureDelta)featureDelta).getFeature();
+        InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
+        Object idOrObject = cleanRev.getValue(feat);
+        CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
+        checkIncluded(id, "removed child/refTarget of", dirtyObject);
+      }
+      else if (featureDelta instanceof CDOMoveFeatureDelta)
+      {
+        // Nothing to do: a move doesn't affect the child being moved
+        // so that child does not need to be included
+      }
+      else
+      {
+        throw new IllegalArgumentException("Unexpected delta type: " + featureDelta.getClass().getSimpleName());
+      }
     }
   }
 

@@ -21,7 +21,12 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.CommitIntegrityException;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Caspar De Groot
@@ -119,6 +124,41 @@ public class Bugzilla_338884_Test extends AbstractCDOTest
     }
 
     tx.close();
+    session.close();
+  }
+
+  public void test_canHandleUnset() throws CommitException
+  {
+    CDOSession session = openSession();
+    CDOTransaction tx = session.openTransaction();
+    CDOResource resource = tx.createResource(getResourcePath("test"));
+
+    model4Factory factory = getModel4Factory();
+    ContainedElementNoOpposite dummy = factory.createContainedElementNoOpposite();
+    resource.getContents().add(dummy);
+
+    RefSingleNonContainedNPL referencer = factory.createRefSingleNonContainedNPL();
+    resource.getContents().add(referencer);
+
+    ContainedElementNoOpposite referencee = factory.createContainedElementNoOpposite();
+    resource.getContents().add(referencee);
+
+    referencer.setElement(referencee);
+
+    tx.commit();
+
+    EReference ref = getModel4Package().getRefSingleNonContainedNPL_Element();
+    referencer.eUnset(ref);
+
+    // Make the dummy object dirty to make the commit partial
+    dummy.setName("dirty");
+
+    Set<EObject> committables = new HashSet<EObject>();
+    committables.add(referencer);
+    committables.add(referencee);
+    tx.setCommittables(committables);
+    tx.commit();
+
     session.close();
   }
 }

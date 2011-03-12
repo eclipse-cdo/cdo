@@ -205,7 +205,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     initViewer();
 
     viewer.addSelectionChangedListener(selectionListener);
-    getSite().setSelectionProvider(viewer);
+    getSite().setSelectionProvider(this);
     return viewer.getControl();
   }
 

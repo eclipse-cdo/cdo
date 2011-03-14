@@ -3,4 +3,3 @@
 org.eclipse.emf.cdo.ui/debug = true
 
 org.eclipse.emf.cdo.ui/test = false
-org.eclipse.emf.cdo.ui/test.bulk_add = false

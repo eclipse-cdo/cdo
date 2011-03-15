@@ -274,44 +274,44 @@ public class PartialCommitTest extends AbstractCDOTest
     cat.getProducts().remove(product);
 
     assertEquals(true, tx.getDetachedObjects().containsValue(company4));
-    assertEquals(true, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(true, tx.getCleanRevisions().containsKey(company4));
     assertEquals(true, tx.getDetachedObjects().containsValue(po));
-    assertEquals(true, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(true, tx.getCleanRevisions().containsKey(company4));
     assertEquals(true, tx.getDetachedObjects().containsValue(product));
-    assertEquals(true, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(true, tx.getCleanRevisions().containsKey(company4));
     assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(company4, resource1));
     tx.commit();
 
     assertEquals(false, tx.getDetachedObjects().containsValue(company4));
-    assertEquals(false, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(false, tx.getCleanRevisions().containsKey(company4));
     assertEquals(true, tx.getDetachedObjects().containsValue(po));
-    assertEquals(true, tx.getFormerRevisionKeys().containsKey(po));
+    assertEquals(true, tx.getCleanRevisions().containsKey(po));
     assertEquals(true, tx.getDetachedObjects().containsValue(product));
-    assertEquals(true, tx.getFormerRevisionKeys().containsKey(product));
+    assertEquals(true, tx.getCleanRevisions().containsKey(product));
     assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(po, company2));
     tx.commit();
 
     assertEquals(false, tx.getDetachedObjects().containsValue(company4));
-    assertEquals(false, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(false, tx.getCleanRevisions().containsKey(company4));
     assertEquals(false, tx.getDetachedObjects().containsValue(po));
-    assertEquals(false, tx.getFormerRevisionKeys().containsKey(po));
+    assertEquals(false, tx.getCleanRevisions().containsKey(po));
     assertEquals(true, tx.getDetachedObjects().containsValue(product));
-    assertEquals(true, tx.getFormerRevisionKeys().containsKey(product));
+    assertEquals(true, tx.getCleanRevisions().containsKey(product));
     assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(product, cat));
     tx.commit();
 
     assertEquals(false, tx.getDetachedObjects().containsValue(company4));
-    assertEquals(false, tx.getFormerRevisionKeys().containsKey(company4));
+    assertEquals(false, tx.getCleanRevisions().containsKey(company4));
     assertEquals(false, tx.getDetachedObjects().containsValue(po));
-    assertEquals(false, tx.getFormerRevisionKeys().containsKey(po));
+    assertEquals(false, tx.getCleanRevisions().containsKey(po));
     assertEquals(false, tx.getDetachedObjects().containsValue(product));
-    assertEquals(false, tx.getFormerRevisionKeys().containsKey(product));
+    assertEquals(false, tx.getCleanRevisions().containsKey(product));
     assertEquals(true, tx.isDirty());
 
     tx.setCommittables(createSet(company1));

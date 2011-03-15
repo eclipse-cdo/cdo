@@ -200,8 +200,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   private void attachOrReattach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
-    // Bug 283985 (Re-attachment)
-    if (transaction.getFormerRevisionKeys().containsKey(object))
+    // Bug 283985 (Re-attachment):
+    // If the object going through a prepareTransition is present in cleanRevisions,
+    // then it was detached earlier, and so we can infer that it is being re-attached
+    if (transaction.getCleanRevisions().containsKey(object))
     {
       reattachObject(object, transaction);
     }
@@ -517,7 +519,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDOTransaction transaction = transactionAndContents.getElement1();
       List<InternalCDOObject> contents = transactionAndContents.getElement2();
 
-      boolean reattaching = transaction.getFormerRevisionKeys().containsKey(object);
+      // If the object going through a prepareTransition is present in cleanRevisions,
+      // then it was detached earlier, and so we can infer that it is being re-attached
+      boolean reattaching = transaction.getCleanRevisions().containsKey(object);
 
       if (!reattaching)
       {
@@ -652,7 +656,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
       InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-      CDORevisionKey revKey = transaction.getFormerRevisionKeys().get(object);
+      CDORevisionKey revKey = transaction.getCleanRevisions().get(object);
 
       CDOID id = revKey.getID();
       object.cdoInternalSetID(id);

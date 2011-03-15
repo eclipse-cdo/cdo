@@ -197,9 +197,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private String commitComment;
 
-  // Bug 283985 (Re-attachment), queryXRefs()
-  private Map<InternalCDOObject, CDORevisionKey> formerRevisionKeys = new HashMap<InternalCDOObject, CDORevisionKey>();
-
   // Bug 283985 (Re-attachment)
   private final ThreadLocal<Boolean> providingCDOID = new InheritableThreadLocal<Boolean>()
   {
@@ -1302,11 +1299,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     else
     {
       getLastSavepoint().getDetachedObjects().put(id, object);
-      if (!formerRevisionKeys.containsKey(object))
-      {
-        CDORevisionKey revKey = CDORevisionUtil.copyRevisionKey(object.cdoRevision());
-        formerRevisionKeys.put(object, revKey);
-      }
 
       if (!cleanRevisions.containsKey(object))
       {
@@ -1691,9 +1683,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       firstSavepoint.setNextSavepoint(null);
       firstSavepoint.getSharedDetachedObjects().clear();
 
-      // Bug 283985 (Re-attachment)
-      formerRevisionKeys.clear();
-
       cleanRevisions.clear();
       dirty = false;
       conflict = 0;
@@ -1705,12 +1694,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       for (CDOObject object : commitContext.getDetachedObjects().values())
       {
-        formerRevisionKeys.remove(object);
+        cleanRevisions.remove(object);
       }
-      
+
       for (CDOObject object : commitContext.getDirtyObjects().values())
       {
-        formerRevisionKeys.remove(object);
+        cleanRevisions.remove(object);
       }
     }
 
@@ -1970,15 +1959,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return lastSavepoint.getAllDetachedObjects();
   }
 
-  public synchronized Map<InternalCDOObject, CDORevisionKey> getFormerRevisionKeys()
-  {
-    return formerRevisionKeys;
-  }
-
   @Override
   protected synchronized CDOID getXRefTargetID(CDOObject target)
   {
-    CDORevisionKey key = formerRevisionKeys.get(target);
+    CDORevisionKey key = cleanRevisions.get(target);
     if (key != null)
     {
       return key.getID();
@@ -1992,15 +1976,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     CDOID id = super.getID(object, onlyPersistedID);
 
-    // The super implementation will return null for a transient (unattached) object;
-    // but in a tx, an transient object may previously have been attached, so we consult
-    // the formerIDs -- unless this is being called indirectly through provideCDOID.
-    // The latter case occurs when deltas or revisions are being written out to a stream; in
-    // which case null must be returned (for transients) so that the caller will detect a
-    // dangling reference
-    if (!providingCDOID.get().booleanValue() && id == null)
+    // If super returned a good result, return immediately
+    if (id != null)
     {
-      CDORevisionKey revKey = formerRevisionKeys.get(object);
+      return id;
+    }
+
+    // Don't perform the trickery that follows later in this method, if we are being called
+    // indirectly through provideCDOID. This occurs when deltas or revisions are
+    // being written out to a stream; in which case null must be returned (for transients) so that
+    // the caller will detect a dangling reference
+    if (providingCDOID.get())
+    {
+      return null;
+    }
+
+    // The super implementation will return null for a transient (unattached) object;
+    // but in a tx, an transient object may previously have been attached. So we consult
+    // the cleanRevisions if that's the case.
+    if (getDetachedObjects().containsValue(object))
+    {
+      CDORevisionKey revKey = cleanRevisions.get(object);
       if (revKey != null)
       {
         id = revKey.getID();

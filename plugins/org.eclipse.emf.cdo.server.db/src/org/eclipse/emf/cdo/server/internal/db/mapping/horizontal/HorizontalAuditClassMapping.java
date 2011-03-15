@@ -540,6 +540,18 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
         mapping.setDefaultValue(stmt, column++);
       }
 
+      Map<EStructuralFeature, String> listSizeFields = getListSizeFields();
+      if (listSizeFields != null)
+      {
+        // list size columns begin after isSet-columns
+        column = isSetCol;
+
+        for (int i = 0; i < listSizeFields.size(); i++)
+        {
+          stmt.setInt(column++, 0);
+        }
+      }
+
       DBUtil.update(stmt, true);
     }
     catch (SQLException e)

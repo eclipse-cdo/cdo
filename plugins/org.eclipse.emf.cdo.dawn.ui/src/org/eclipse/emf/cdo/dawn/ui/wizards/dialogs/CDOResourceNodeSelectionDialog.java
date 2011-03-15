@@ -67,17 +67,17 @@ public class CDOResourceNodeSelectionDialog extends Dialog
   @Override
   protected Control createButtonBar(Composite parent)
   {
-    Control createButtonBar = super.createButtonBar(parent);
-    GridData gd = new GridData(GridData.FILL_BOTH);
-    createButtonBar.setLayoutData(gd);
+    Control buttonBar = super.createButtonBar(parent);
+    GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_END | GridData.VERTICAL_ALIGN_CENTER);
+    buttonBar.setLayoutData(gd);
     getShell().pack();
-    return createButtonBar;
+    return buttonBar;
   }
 
   @Override
   protected void initializeBounds()
   {
-    getShell().setSize(300, 500);
+    getShell().setSize(300, 400);
   }
 
   public URI getResults()

@@ -289,7 +289,6 @@ public class CDOResourceNodeChooserComposite extends Composite
 
     public void validate()
     {
-
       internalValidate();
       if (validationListener != null)
       {
@@ -324,12 +323,16 @@ public class CDOResourceNodeChooserComposite extends Composite
             if (getResourceValidationType() == VALIDATION_WARN)
             {
               setMessage(Messages.DawnCreateNewResourceWizardPage_11, IMessageProvider.WARNING);
+              setMessageType(IMessageProvider.WARNING);
               setValid(true);
+              return;
             }
             else if (getResourceValidationType() == VALIDATION_ERROR)
             {
               setMessage(Messages.DawnCreateNewResourceWizardPage_12, IMessageProvider.ERROR);
               setValid(false);
+              setMessageType(IMessageProvider.ERROR);
+              return;
             }
           }
         }

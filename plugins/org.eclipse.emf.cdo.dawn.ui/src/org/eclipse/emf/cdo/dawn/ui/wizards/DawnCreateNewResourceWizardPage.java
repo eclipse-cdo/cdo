@@ -35,10 +35,10 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
 
   private final String fileExtension;
 
-  private int resourceValidationType;
+  private int resourceValidationType = ResourceChooserValidator.VALIDATION_ERROR;
 
   /**
-   * left for backward compatibility with the generated editors. This field might sone be removed. Use
+   * left for backward compatibility with the generated editors. This field might soon be removed. Use
    * <b>org.eclipse.emf.cdo.dawn.ui.composites.ResourceChooserValidator.VALIDATION_WARN</b> instead.
    */
   @Deprecated
@@ -117,50 +117,6 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
     }
     setPageComplete(valid);
   }
-
-  // private void validatePage()
-  // {
-  // boolean valid = false;
-  // if (chooserComposite.getResourceName().length() != 0)
-  // {
-  // setPageComplete(true);
-  // valid = true;
-  // }
-  // else
-  // {
-  // setErrorMessage(Messages.DawnCreateNewResourceWizardPage_10);
-  // valid = false;
-  // }
-  // if (view != null && resourceValidationType != VALIDATION_NONE)
-  // {
-  // try
-  // {
-  // if (view.hasResource(getURI().path()))
-  // {
-  // if (resourceValidationType == VALIDATION_WARN)
-  // {
-  // setMessage(Messages.DawnCreateNewResourceWizardPage_11, IMessageProvider.WARNING);
-  // valid = true;
-  // }
-  // else if (resourceValidationType == VALIDATION_ERROR)
-  // {
-  // setErrorMessage(Messages.DawnCreateNewResourceWizardPage_12);
-  // valid = false;
-  // }
-  // }
-  // }
-  // catch (Exception e)
-  // {
-  // setErrorMessage(e.getMessage());
-  // }
-  // }
-  // if (valid)
-  // {
-  // setErrorMessage(null);
-  // }
-  //
-  // setPageComplete(valid);
-  // }
 
   public URI getURI()
   {

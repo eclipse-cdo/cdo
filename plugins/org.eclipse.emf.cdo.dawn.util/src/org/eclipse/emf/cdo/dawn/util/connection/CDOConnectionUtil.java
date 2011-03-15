@@ -171,8 +171,7 @@ public class CDOConnectionUtil
     return session.openView();
   }
 
-  @Deprecated
-  public static CDOTransaction openTransaction(CDOSession session)
+  public CDOTransaction openTransaction(CDOSession session)
   {
     return session.openTransaction();
   }

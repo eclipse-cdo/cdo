@@ -25,6 +25,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 import java.lang.reflect.Field;
@@ -45,17 +46,28 @@ public class DawnEcoreCreationWizardPage extends EcoreCreationWizardPage
   }
 
   @Override
+  public void createControl(Composite parent)
+  {
+    super.createControl(parent);
+    Text nameFd = (Text)getField("nameFd");
+    nameFd.setEnabled(false);
+  }
+
+  @Override
   protected void handleDirectoryChoose()
   {
     CDOResourceNodeSelectionDialog dialog = new CDOResourceNodeSelectionDialog(getShell(), view);
     if (dialog.open() == Window.OK)
     {
-      URI uri = dialog.getResults();
-      if (uri != null)
+      semanticModelURI = dialog.getResults();
+      if (semanticModelURI != null)
       {
-        // modelFd.setText(((IFile)results[0]).getFullPath().toString());
+        Text directoryFd = (Text)getField("directoryFd");
+        directoryFd.setText(semanticModelURI.toString());
 
-        // update the other widgets
+        Text nameFd = (Text)getField("nameFd");
+        nameFd.setText(semanticModelURI.lastSegment());
+
         loadModelFile();
       }
     }
@@ -74,7 +86,6 @@ public class DawnEcoreCreationWizardPage extends EcoreCreationWizardPage
         Text modelFd = (Text)getField("modelFd");
         modelFd.setText(semanticModelURI.toString());
 
-        // update the other widgets
         loadModelFile();
       }
     }
@@ -171,12 +182,6 @@ public class DawnEcoreCreationWizardPage extends EcoreCreationWizardPage
   @Override
   public URI getDiagramModelURI()
   {
-    // if (isNewModel())
-    // {
-    // return URI.createPlatformResourceURI(
-    // directoryFd.getText().concat(File.separator).concat(getFileName()).concat(DIAGRAM_EXT), false);
-    // }
-    // return URI.createPlatformResourceURI(modelFd.getText().concat(DIAGRAM_EXT), false);
     return URI.createURI(semanticModelURI.toString() + "diag");
   }
 }

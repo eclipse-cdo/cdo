@@ -53,7 +53,7 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
     CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
         PreferenceConstants.getServerName());
     CDOSession session = CDOConnectionUtil.instance.openSession();
-    view = CDOConnectionUtil.instance.openView(session);
+    view = session.openTransaction();
   }
 
   @Override
@@ -67,14 +67,11 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
 
         if (diagPage.isNewModel())
         {
-          // case of creating an empty domain/diagram Resources
           diagram = EcoreDiagramEditorUtil.createDiagram(diagPage.getDiagramModelURI(), diagPage.getDomainModelURI(),
               monitor);
         }
         else
         {
-          // case of creating only a diagram Resource (the domain file
-          // already exists)
           diagram = DawnEcoreDiagramEditorUtil.createDiagramOnly(diagPage.getDiagramModelURI(),
               diagPage.getDomainModelURI(), diagPage.getDiagramEObject(), diagPage.isInitialized(), monitor);
         }
@@ -82,8 +79,6 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
         {
           try
           {
-            // try to open the current diagram resource into the
-            // appropriate editor
             DawnEcoreDiagramEditorUtil.openDiagram(diagram);
           }
           catch (PartInitException e)

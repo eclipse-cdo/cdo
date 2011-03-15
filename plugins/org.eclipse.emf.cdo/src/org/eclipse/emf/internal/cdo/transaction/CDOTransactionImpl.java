@@ -1149,7 +1149,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           else
           {
             InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirty.getValue();
-            cleanObject(internalDirtyObject, getRevision(entryDirty.getKey(), true));
+            InternalCDORevision cleanRev = cleanRevisions.get(internalDirtyObject);
+            cleanObject(internalDirtyObject, cleanRev);
           }
         }
       }

@@ -16,6 +16,7 @@
 	<!--
 	<rm:locator pattern="^org\.eclipse\.emf\.(?:compare|transaction|validation|workspace)(?:\..+)?$" searchPathRef="modeling" />
 	<rm:locator pattern="^org\.eclipse\.emf\.mwe2?(?:\..+)?$" searchPathRef="mwe" />
+	<rm:locator pattern="^org\.eclipse\.emf\.ecoretools(?:\..+)?$" searchPathRef="ecoretools" />
 	<rm:locator pattern="^org\.eclipse\.emf\.teneo(?:\..+)?$" searchPathRef="teneo" />
 	<rm:locator pattern="^org\.eclipse\.emf(?:\..+)?$" searchPathRef="emf" />
 	<rm:locator pattern="^org\.eclipse\.gef(?:\..+)?$" searchPathRef="gef" />
@@ -93,6 +94,12 @@
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emft/mwe/updates">
+				<bc:propertyRef key="eclipse.downloads" />
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)">
+			<rm:uri format="{0}/modeling/emft/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>

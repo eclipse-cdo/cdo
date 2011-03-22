@@ -836,7 +836,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
         }
       }
 
-      // TODO FIX bug 265136 Needed to run against a TED.
       Notification notification = setLoaded(true);
       if (notification != null)
       {

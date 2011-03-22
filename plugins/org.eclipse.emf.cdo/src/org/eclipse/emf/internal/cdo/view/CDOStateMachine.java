@@ -921,8 +921,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         policy.handleInvalidObject(object);
       }
 
-      changeState(object, CDOState.CLEAN);
       object.cdoInternalSetRevision(revision);
+      changeState(object, CDOState.CLEAN);
       object.cdoInternalPostLoad();
 
       if (forWrite)

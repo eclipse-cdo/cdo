@@ -300,8 +300,14 @@ public class LoadRevisionsIndication extends CDOReadIndication
             Collection<?> c = (Collection<?>)value;
             for (Object e : c)
             {
-              CDOID id = (CDOID)e;
-              prefetchRevisionChild(depth, id, additionalRevisions, map);
+              // If this revision was loaded with referenceChunk != UNCHUNKED, then
+              // some elements might be uninitialized, i.e. not instanceof CDOID.
+              // (See bug 339313.)
+              if (e instanceof CDOID)
+              {
+                CDOID id = (CDOID)e;
+                prefetchRevisionChild(depth, id, additionalRevisions, map);
+              }
             }
           }
         }

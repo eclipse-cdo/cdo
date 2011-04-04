@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -57,6 +58,8 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
 
   private int nextQuery;
 
+  private boolean allowInterruptRunningQueries = true;
+
   public QueryManager()
   {
   }
@@ -69,6 +72,12 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
   public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
+
+    String value = repository.getProperties().get(IRepository.Props.ALLOW_INTERRUPT_RUNNING_QUERIES);
+    if (value != null)
+    {
+      allowInterruptRunningQueries = Boolean.parseBoolean(value);
+    }
   }
 
   public synchronized ExecutorService getExecutors()
@@ -245,7 +254,7 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
       cancelled = true;
       if (future != null)
       {
-        future.cancel(true);
+        future.cancel(allowInterruptRunningQueries);
       }
 
       if (!started)

@@ -220,5 +220,10 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      * @since 3.0
      */
     public static final String ENSURE_REFERENTIAL_INTEGRITY = "ensureReferentialIntegrity"; //$NON-NLS-1$
+
+    /**
+     * @since 4.0
+     */
+    public static final String ALLOW_INTERRUPT_RUNNING_QUERIES = "allowInterruptRunningQueries"; //$NON-NLS-1$
   }
 }

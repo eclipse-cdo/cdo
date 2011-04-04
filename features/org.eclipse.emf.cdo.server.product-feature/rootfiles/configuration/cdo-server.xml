@@ -17,6 +17,7 @@
     <property name="supportingBranches" value="true"/>
     <property name="supportingEcore" value="true"/>
     <property name="ensureReferentialIntegrity" value="false"/>
+    <property name="allowInterruptRunningQueries" value="true"/>
 
     <!--
     <userManager type="file" description="_database/repo1.users"/>

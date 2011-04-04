@@ -344,7 +344,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     InternalStore store = getStore();
     if (!store.isFirstStart())
     {
-      Map<String, String> map = store.getPropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
+      Map<String, String> map = store.getPersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
       if (!map.containsKey(PROP_GRACEFULLY_SHUT_DOWN))
       {
         setReplicationCountersToLatest();
@@ -355,13 +355,13 @@ public abstract class SynchronizableRepository extends Repository.Default implem
         names.add(PROP_LAST_REPLICATED_BRANCH_ID);
         names.add(PROP_LAST_REPLICATED_COMMIT_TIME);
 
-        map = store.getPropertyValues(names);
+        map = store.getPersistentProperties(names);
         setLastReplicatedBranchID(Integer.valueOf(map.get(PROP_LAST_REPLICATED_BRANCH_ID)));
         setLastReplicatedCommitTime(Long.valueOf(map.get(PROP_LAST_REPLICATED_COMMIT_TIME)));
       }
     }
 
-    store.removePropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
+    store.removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
 
     if (getType() != MASTER)
     {
@@ -380,7 +380,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
 
     InternalStore store = getStore();
-    store.setPropertyValues(map);
+    store.setPersistentProperties(map);
 
     super.doDeactivate();
   }

@@ -126,7 +126,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     this(UNLIMITED);
   }
 
-  public synchronized Map<String, String> getPropertyValues(Set<String> names)
+  public synchronized Map<String, String> getPersistentProperties(Set<String> names)
   {
     if (names == null || names.isEmpty())
     {
@@ -146,12 +146,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
     return result;
   }
 
-  public synchronized void setPropertyValues(Map<String, String> properties)
+  public synchronized void setPersistentProperties(Map<String, String> properties)
   {
     this.properties.putAll(properties);
   }
 
-  public synchronized void removePropertyValues(Set<String> names)
+  public synchronized void removePersistentProperties(Set<String> names)
   {
     for (String name : names)
     {

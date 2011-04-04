@@ -92,6 +92,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   private boolean firstTime;
 
+  private Map<String, String> properties;
+
   // private IIDHandler idHandler = new StringIDHandler(this);
   private IIDHandler idHandler = new LongIDHandler(this);
 
@@ -153,14 +155,24 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     return dbAdapter;
   }
 
-  public IIDHandler getIDHandler()
-  {
-    return idHandler;
-  }
-
   public void setDBAdapter(IDBAdapter dbAdapter)
   {
     this.dbAdapter = dbAdapter;
+  }
+
+  public void setProperties(Map<String, String> properties)
+  {
+    this.properties = properties;
+  }
+
+  public Map<String, String> getProperties()
+  {
+    return properties;
+  }
+
+  public IIDHandler getIDHandler()
+  {
+    return idHandler;
   }
 
   public Connection getConnection()
@@ -224,7 +236,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     return dbSchema;
   }
 
-  public Map<String, String> getPropertyValues(Set<String> names)
+  public Map<String, String> getPersistentProperties(Set<String> names)
   {
     Connection connection = null;
     PreparedStatement selectStmt = null;
@@ -294,7 +306,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     }
   }
 
-  public void setPropertyValues(Map<String, String> properties)
+  public void setPersistentProperties(Map<String, String> properties)
   {
     Connection connection = null;
     PreparedStatement deleteStmt = null;
@@ -337,7 +349,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     }
   }
 
-  public void removePropertyValues(Set<String> names)
+  public void removePersistentProperties(Set<String> names)
   {
     Connection connection = null;
     PreparedStatement deleteStmt = null;
@@ -461,7 +473,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
     Map<String, String> map = new HashMap<String, String>();
     map.put(PROP_REPOSITORY_CREATED, Long.toString(creationTime));
-    setPropertyValues(map);
+    setPersistentProperties(map);
   }
 
   public boolean isFirstStart()
@@ -543,7 +555,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     map.put(PROP_LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
     map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
     map.put(PROP_LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
-    setPropertyValues(map);
+    setPersistentProperties(map);
     readerPool.dispose();
     writerPool.dispose();
 
@@ -563,7 +575,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     Set<String> names = new HashSet<String>();
     names.add(PROP_REPOSITORY_CREATED);
 
-    Map<String, String> map = getPropertyValues(names);
+    Map<String, String> map = getPersistentProperties(names);
     return map.get(PROP_REPOSITORY_CREATED) == null;
   }
 
@@ -581,7 +593,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     names.add(PROP_REPOSITORY_CREATED);
     names.add(PROP_GRACEFULLY_SHUT_DOWN);
 
-    Map<String, String> map = getPropertyValues(names);
+    Map<String, String> map = getPersistentProperties(names);
     creationTime = Long.valueOf(map.get(PROP_REPOSITORY_CREATED));
 
     if (map.containsKey(PROP_GRACEFULLY_SHUT_DOWN))
@@ -593,7 +605,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       names.add(PROP_LAST_LOCAL_BRANCHID);
       names.add(PROP_LAST_COMMITTIME);
       names.add(PROP_LAST_NONLOCAL_COMMITTIME);
-      map = getPropertyValues(names);
+      map = getPersistentProperties(names);
 
       idHandler.setNextLocalObjectID(Store.stringToID(map.get(PROP_NEXT_LOCAL_CDOID)));
       idHandler.setLastObjectID(Store.stringToID(map.get(PROP_LAST_CDOID)));
@@ -607,7 +619,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       repairAfterCrash();
     }
 
-    removePropertyValues(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
+    removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
   }
 
   protected void repairAfterCrash()

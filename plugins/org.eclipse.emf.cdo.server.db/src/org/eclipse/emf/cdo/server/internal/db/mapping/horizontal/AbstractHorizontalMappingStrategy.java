@@ -452,7 +452,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
         if (resultSet.next())
         {
           CDOID id = idHandler.getCDOID(resultSet, 1);
-          if (idHandler.compare(id, min) < 0)
+          if (id != null && idHandler.compare(id, min) < 0)
           {
             min = id;
           }

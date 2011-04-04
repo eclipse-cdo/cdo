@@ -105,7 +105,7 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     return getServerInfo().isFirstTime();
   }
 
-  public Map<String, String> getPropertyValues(Set<String> names)
+  public Map<String, String> getPersistentProperties(Set<String> names)
   {
     if (names == null || names.isEmpty())
     {
@@ -125,14 +125,14 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     return result;
   }
 
-  public void setPropertyValues(Map<String, String> properties)
+  public void setPersistentProperties(Map<String, String> properties)
   {
     ServerInfo serverInfo = getServerInfo();
     serverInfo.getProperties().putAll(properties);
     commitServerInfo(null);
   }
 
-  public void removePropertyValues(Set<String> names)
+  public void removePersistentProperties(Set<String> names)
   {
     ServerInfo serverInfo = getServerInfo();
     Map<String, String> properties = serverInfo.getProperties();

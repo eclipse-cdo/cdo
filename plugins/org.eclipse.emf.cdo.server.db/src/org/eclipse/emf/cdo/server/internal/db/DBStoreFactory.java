@@ -7,7 +7,8 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444  
+ *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
+ *    Caspar De Groot - maintenance  
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -56,6 +57,9 @@ public class DBStoreFactory implements IStoreFactory
     store.setMappingStrategy(mappingStrategy);
     store.setDBAdapter(dbAdapter);
     store.setDbConnectionProvider(connectionProvider);
+
+    Map<String, String> storeProperties = RepositoryConfigurator.getProperties(storeConfig, 1);
+    store.setProperties(storeProperties);
 
     return store;
   }

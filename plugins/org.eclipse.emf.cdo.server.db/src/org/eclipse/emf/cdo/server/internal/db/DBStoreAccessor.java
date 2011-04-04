@@ -10,6 +10,7 @@
  *    Stefan Winkler - bug 259402
  *    Stefan Winkler - 271444: [DB] Multiple refactorings bug 271444
  *    Andre Dietisheim - bug 256649
+ *    Caspar De Groot - maintenance
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -36,6 +37,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
@@ -95,6 +97,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TimerTask;
 
@@ -744,10 +747,22 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
   @Override
   protected void doActivate() throws Exception
   {
-    connection = getStore().getConnection();
+    DBStore store = getStore();
+    connection = store.getConnection();
     connectionKeepAliveTask = new ConnectionKeepAliveTask();
-    getStore().getConnectionKeepAliveTimer().schedule(connectionKeepAliveTask,
-        ConnectionKeepAliveTask.EXECUTION_PERIOD, ConnectionKeepAliveTask.EXECUTION_PERIOD);
+
+    long keepAlivePeriod = ConnectionKeepAliveTask.EXECUTION_PERIOD;
+    Map<String, String> storeProps = store.getProperties();
+    if (storeProps != null)
+    {
+      String value = storeProps.get(IDBStore.Props.CONNECTION_KEEPALIVE_PERIOD);
+      if (value != null)
+      {
+        keepAlivePeriod = Long.parseLong(value) * 60L * 1000L;
+      }
+    }
+
+    store.getConnectionKeepAliveTimer().schedule(connectionKeepAliveTask, keepAlivePeriod, keepAlivePeriod);
 
     // TODO - make this configurable?
     statementCache = CDODBUtil.createStatementCache();
@@ -1283,6 +1298,21 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor
 
         stmt = connection.createStatement();
         stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.PROPERTIES); //$NON-NLS-1$
+      }
+      catch (java.sql.SQLException ex)
+      {
+        OM.LOG.error("DB connection keep-alive failed", ex); //$NON-NLS-1$
+
+        // Assume the connection has failed.
+        try
+        {
+          LifecycleUtil.deactivate(DBStoreAccessor.this);
+          LifecycleUtil.activate(DBStoreAccessor.this);
+        }
+        catch (Exception ex2)
+        {
+          OM.LOG.error("DB connection reconnect failed", ex2); //$NON-NLS-1$
+        }
       }
       catch (Exception ex) // Important: Do not throw any unchecked exceptions to the TimerThread!!!
       {

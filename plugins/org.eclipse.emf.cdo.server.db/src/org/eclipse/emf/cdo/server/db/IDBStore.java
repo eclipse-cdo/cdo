@@ -56,4 +56,12 @@ public interface IDBStore extends IStore, IDBConnectionProvider
    * @since 2.0
    */
   public IDBStoreAccessor getWriter(ITransaction transaction);
+
+  /**
+   * @since 4.0
+   */
+  public interface Props
+  {
+    public static final String CONNECTION_KEEPALIVE_PERIOD = "connectionKeepAlivePeriod"; //$NON-NLS-1$
+  }
 }

@@ -115,19 +115,19 @@ public interface IStore
    * Returns a map filled with the property entries for the requested property <code>names</code> if names is not
    * <code>null</code> and not {@link Collection#isEmpty() empty}, all existing property entries otherwise.
    * 
-   * @since 3.0
+   * @since 4.0
    */
-  public Map<String, String> getPropertyValues(Set<String> names);
+  public Map<String, String> getPersistentProperties(Set<String> names);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void setPropertyValues(Map<String, String> properties);
+  public void setPersistentProperties(Map<String, String> properties);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void removePropertyValues(Set<String> names);
+  public void removePersistentProperties(Set<String> names);
 
   /**
    * Returns a reader that can be used to read from this store in the context of the given session.

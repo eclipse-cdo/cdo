@@ -350,17 +350,17 @@ public class HibernateStore extends Store implements IHibernateStore
     return new HibernateStoreAccessor(this, transaction);
   }
 
-  public Map<String, String> getPropertyValues(Set<String> names)
+  public Map<String, String> getPersistentProperties(Set<String> names)
   {
     return packageHandler.getSystemProperties();
   }
 
-  public void setPropertyValues(Map<String, String> properties)
+  public void setPersistentProperties(Map<String, String> properties)
   {
     packageHandler.setSystemProperties(properties);
   }
 
-  public void removePropertyValues(Set<String> names)
+  public void removePersistentProperties(Set<String> names)
   {
     // TODO: implement HibernateStore.removePropertyValues(names)
     throw new UnsupportedOperationException();

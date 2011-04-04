@@ -356,11 +356,11 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       TRACER.format("Depopulating revision for {0}", this); //$NON-NLS-1$
     }
 
-    super.eSetDirectResource((Resource.Internal)cdoStore().getResource(this));
-
     CDOStore store = cdoStore();
+    super.eSetDirectResource((Resource.Internal)store.getResource(this));
     eContainer = store.getContainer(this);
     eContainerFeatureID = store.getContainingFeatureID(this);
+
     if (eContainer != null && eContainmentFeature().isResolveProxies())
     {
       adjustOppositeReference(this, eContainer, eContainmentFeature());

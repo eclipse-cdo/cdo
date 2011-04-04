@@ -58,9 +58,9 @@ public class RepositoryTest extends AbstractCDOTest
     expected.put("STRING", "Arbitrary text");
 
     InternalStore store = getRepository().getStore();
-    store.setPropertyValues(expected);
+    store.setPersistentProperties(expected);
 
-    Map<String, String> actual = store.getPropertyValues(expected.keySet());
+    Map<String, String> actual = store.getPersistentProperties(expected.keySet());
     assertEquals(expected, actual);
   }
 
@@ -74,16 +74,16 @@ public class RepositoryTest extends AbstractCDOTest
     expected.put("STRING", "Arbitrary text");
 
     InternalStore store = getRepository().getStore();
-    store.setPropertyValues(expected);
+    store.setPersistentProperties(expected);
 
     expected.put("BOOLEAN", "false");
     expected.put("INTEGER", "555555");
     expected.put("LONG", "5555555555555555");
     expected.put("DOUBLE", "555555.555555");
     expected.put("STRING", "Different text");
-    store.setPropertyValues(expected);
+    store.setPersistentProperties(expected);
 
-    Map<String, String> actual = store.getPropertyValues(expected.keySet());
+    Map<String, String> actual = store.getPersistentProperties(expected.keySet());
     assertEquals(expected, actual);
   }
 
@@ -97,17 +97,17 @@ public class RepositoryTest extends AbstractCDOTest
     expected.put("STRING", "Arbitrary text");
 
     InternalStore store = getRepository().getStore();
-    store.setPropertyValues(expected);
+    store.setPersistentProperties(expected);
 
-    Map<String, String> actual = store.getPropertyValues(expected.keySet());
+    Map<String, String> actual = store.getPersistentProperties(expected.keySet());
     assertEquals(expected, actual);
 
     Set<String> names = new HashSet<String>(Arrays.asList(new String[] { "INTEGER", "DOUBLE" }));
-    store.removePropertyValues(names);
+    store.removePersistentProperties(names);
 
     expected.remove("INTEGER");
     expected.remove("DOUBLE");
-    actual = store.getPropertyValues(expected.keySet());
+    actual = store.getPersistentProperties(expected.keySet());
     assertEquals(expected, actual);
   }
 

@@ -183,6 +183,7 @@ public class LoadRevisionsIndication extends CDOReadIndication
     for (int i = 0; i < size; i++)
     {
       RevisionInfo info = infos[i];
+      info.setResult(revisions[i]);
       info.writeResult(out, referenceChunk);
     }
 

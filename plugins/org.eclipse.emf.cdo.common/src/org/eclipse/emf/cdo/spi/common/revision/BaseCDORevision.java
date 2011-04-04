@@ -124,7 +124,25 @@ public abstract class BaseCDORevision extends AbstractCDORevision
    */
   public void read(CDODataInput in) throws IOException
   {
-    READING.start(this);
+    if (READING.isEnabled())
+    {
+      READING.start(this);
+    }
+
+    readSystemValues(in);
+    readValues(in);
+
+    if (READING.isEnabled())
+    {
+      READING.stop(this);
+    }
+  }
+
+  /**
+   * @since 4.0
+   */
+  protected void readSystemValues(CDODataInput in) throws IOException
+  {
     EClassifier classifier = in.readCDOClassifierRefAndResolve();
     CDOClassInfo classInfo = CDOModelUtil.getClassInfo((EClass)classifier);
     setClassInfo(classInfo);
@@ -140,6 +158,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     resourceID = in.readCDOID();
     containerID = in.readCDOID();
     containingFeatureID = in.readInt();
+
     if (TRACER.isEnabled())
     {
       TRACER
@@ -147,15 +166,35 @@ public abstract class BaseCDORevision extends AbstractCDORevision
               "Reading revision: ID={0}, className={1}, version={2}, branchPoint={3}, revised={4}, resource={5}, container={6}, featureID={7}", //$NON-NLS-1$
               id, getEClass().getName(), version, branchPoint, revised, resourceID, containerID, containingFeatureID);
     }
-
-    readValues(in);
-    READING.stop(this);
   }
 
+  /**
+   * @since 4.0
+   */
   public void write(CDODataOutput out, int referenceChunk) throws IOException
+  {
+    if (WRITING.isEnabled())
+    {
+      WRITING.start(this);
+    }
+
+    writeSystemValues(out);
+    writeValues(out, referenceChunk);
+
+    if (WRITING.isEnabled())
+    {
+      WRITING.stop(this);
+    }
+  }
+
+  /**
+   * @since 4.0
+   */
+  protected void writeSystemValues(CDODataOutput out) throws IOException
   {
     EClass eClass = getEClass();
     CDOClassifierRef classRef = new CDOClassifierRef(eClass);
+
     if (TRACER.isEnabled())
     {
       TRACER
@@ -163,8 +202,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
               "Writing revision: ID={0}, className={1}, version={2}, branchPoint={3}, revised={4}, resource={5}, container={6}, featureID={7}", //$NON-NLS-1$
               id, eClass.getName(), getVersion(), branchPoint, revised, resourceID, containerID, containingFeatureID);
     }
-
-    WRITING.start(this);
 
     out.writeCDOClassifierRef(classRef);
     out.writeCDOID(id);
@@ -178,8 +215,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     out.writeCDOID(resourceID);
     out.writeCDOID(out.getIDProvider().provideCDOID(containerID));
     out.writeInt(containingFeatureID);
-    writeValues(out, referenceChunk);
-    WRITING.stop(this);
   }
 
   /**

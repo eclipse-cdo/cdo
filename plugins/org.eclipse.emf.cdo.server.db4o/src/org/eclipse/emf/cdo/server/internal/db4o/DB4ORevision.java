@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.server.internal.db4o;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -22,10 +21,12 @@ import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -282,18 +283,19 @@ public class DB4ORevision
 
   public static InternalCDORevision getCDORevision(IStore store, DB4ORevision primitiveRevision)
   {
+    IRepository repository = store.getRepository();
+    CDORevisionFactory factory = ((InternalCDORevisionManager)repository.getRevisionManager()).getFactory();
+    CDOBranch branch = repository.getBranchManager().getMainBranch();
+
     String nsURI = primitiveRevision.getPackageURI();
     String className = primitiveRevision.getClassName();
-    EPackage ePackage = store.getRepository().getPackageRegistry().getEPackage(nsURI);
+    EPackage ePackage = repository.getPackageRegistry().getEPackage(nsURI);
     EClass eClass = (EClass)ePackage.getEClassifier(className);
-    InternalCDORevision revision = (InternalCDORevision)CDORevisionFactory.DEFAULT.createRevision(eClass);
-
-    CDOBranch branch = store.getRepository().getBranchManager().getMainBranch();
-    CDOBranchPoint point = branch.getPoint(primitiveRevision.getTimeStamp());
+    InternalCDORevision revision = (InternalCDORevision)factory.createRevision(eClass);
 
     revision.setID(getCDOID(primitiveRevision.getID()));
     revision.setVersion(primitiveRevision.getVersion());
-    revision.setBranchPoint(point);
+    revision.setBranchPoint(branch.getPoint(primitiveRevision.getTimeStamp()));
     revision.setRevised(primitiveRevision.getRevised());
     revision.setResourceID(getCDOID(primitiveRevision.getResourceID()));
     revision.setContainerID(getCDOID(primitiveRevision.getContainerID()));

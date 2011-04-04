@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -42,7 +43,6 @@ import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
@@ -1413,7 +1413,10 @@ public class Repository extends Container<Object> implements InternalRepository
     CDOBranchPoint head = branchManager.getMainBranch().getHead();
     CDOIDTemp tempID = CDOIDUtil.createTempObject(1);
 
-    InternalCDORevision rootResource = new CDORevisionImpl(EresourcePackage.Literals.CDO_RESOURCE);
+    CDORevisionFactory factory = getRevisionManager().getFactory();
+    InternalCDORevision rootResource = (InternalCDORevision)factory
+        .createRevision(EresourcePackage.Literals.CDO_RESOURCE);
+
     rootResource.setBranchPoint(head);
     rootResource.setContainerID(CDOID.NULL);
     rootResource.setContainingFeatureID(0);

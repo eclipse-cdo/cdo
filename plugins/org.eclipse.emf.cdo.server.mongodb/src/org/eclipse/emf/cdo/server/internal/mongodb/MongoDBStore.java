@@ -355,17 +355,17 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
     return classes;
   }
 
-  public Map<String, String> getPropertyValues(Set<String> names)
+  public Map<String, String> getPersistentProperties(Set<String> names)
   {
     return props.get(names);
   }
 
-  public void setPropertyValues(Map<String, String> properties)
+  public void setPersistentProperties(Map<String, String> properties)
   {
     props.set(properties);
   }
 
-  public void removePropertyValues(Set<String> names)
+  public void removePersistentProperties(Set<String> names)
   {
     props.remove(names);
   }
@@ -503,7 +503,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
     map.put(Props.LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
     map.put(Props.LAST_COMMITTIME, Long.toString(getLastCommitTime()));
     map.put(Props.LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
-    setPropertyValues(map);
+    setPersistentProperties(map);
 
     LifecycleUtil.deactivate(idHandler);
 
@@ -530,7 +530,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
     names.add(Props.REPOSITORY_CREATED);
     names.add(Props.GRACEFULLY_SHUT_DOWN);
 
-    Map<String, String> map = getPropertyValues(names);
+    Map<String, String> map = getPersistentProperties(names);
     creationTime = Long.valueOf(map.get(Props.REPOSITORY_CREATED));
 
     if (map.containsKey(Props.GRACEFULLY_SHUT_DOWN))
@@ -543,7 +543,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
       names.add(Props.LAST_LOCAL_BRANCHID);
       names.add(Props.LAST_COMMITTIME);
       names.add(Props.LAST_NONLOCAL_COMMITTIME);
-      map = getPropertyValues(names);
+      map = getPersistentProperties(names);
 
       idHandler.setNextLocalObjectID(stringToID(map.get(Props.NEXT_LOCAL_CDOID)));
       idHandler.setLastObjectID(stringToID(map.get(Props.LAST_CDOID)));
@@ -558,7 +558,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, //
       repairAfterCrash();
     }
 
-    removePropertyValues(Collections.singleton(Props.GRACEFULLY_SHUT_DOWN));
+    removePersistentProperties(Collections.singleton(Props.GRACEFULLY_SHUT_DOWN));
   }
 
   protected void repairAfterCrash()

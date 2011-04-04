@@ -69,6 +69,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -202,13 +203,19 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     if (rootResource == null)
     {
       CDOID rootResourceID = getSession().getRepositoryInfo().getRootResourceID();
-      rootResource = (CDOResourceImpl)getObject(rootResourceID);
-      rootResource.setRoot(true);
-      registerObject(rootResource);
-      getResourceSet().getResources().add(rootResource);
+      CDOResourceImpl resource = (CDOResourceImpl)getObject(rootResourceID);
+      setRootResource(resource);
     }
 
     return rootResource;
+  }
+
+  private synchronized void setRootResource(CDOResourceImpl resource)
+  {
+    rootResource = resource;
+    rootResource.setRoot(true);
+    registerObject(rootResource);
+    getResourceSet().getResources().add(rootResource);
   }
 
   protected synchronized void clearRootResource()
@@ -481,7 +488,44 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
   {
     checkActive();
     URI uri = CDOURIUtil.createResourceURI(this, path);
-    return (CDOResource)getResourceSet().getResource(uri, loadInDemand);
+    ResourceSet resourceSet = getResourceSet();
+    ensureURIs(resourceSet); // Bug 337523
+    return (CDOResource)resourceSet.getResource(uri, loadInDemand);
+  }
+
+  /**
+   * Ensures that the URIs of all resources in this resourceSet, can be fetched without triggering the loading of
+   * additional resources. Without calling this first, it is dangerous to iterate over the resources to collect their
+   * URI's, because
+   */
+  private void ensureURIs(ResourceSet resourceSet)
+  {
+    EList<Resource> resources = resourceSet.getResources();
+    Resource[] resourceArr = null;
+
+    int size = 0;
+    int i;
+
+    do
+    {
+      i = size;
+      size = resources.size();
+      if (size == 0)
+      {
+        break;
+      }
+
+      if (resourceArr == null || resourceArr.length < size)
+      {
+        resourceArr = new Resource[size * 2];
+      }
+
+      resourceArr = resources.toArray(resourceArr);
+      for (; i < size; i++)
+      {
+        resourceArr[i].getURI();
+      }
+    } while (resources.size() > size);
   }
 
   public synchronized List<CDOResourceNode> queryResources(CDOResourceFolder folder, String name, boolean exactMatch)
@@ -661,6 +705,10 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       if (!CDOModelUtil.isResource(localLookupObject.eClass()))
       {
         registerObject(localLookupObject);
+      }
+      else if (id.equals(getSession().getRepositoryInfo().getRootResourceID()))
+      {
+        setRootResource((CDOResourceImpl)localLookupObject);
       }
     }
 

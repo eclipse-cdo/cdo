@@ -328,7 +328,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   }
 
-  public Map<String, String> getPropertyValues(Set<String> names)
+  public Map<String, String> getPersistentProperties(Set<String> names)
   {
     if (names == null || names.isEmpty())
     {
@@ -345,7 +345,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     return properties;
   }
 
-  public void setPropertyValues(Map<String, String> properties)
+  public void setPersistentProperties(Map<String, String> properties)
   {
     ObjySession objySession = objyConnection.getWriteSessionFromPool("Main");
     objySession.begin();
@@ -353,7 +353,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     objySession.commit();
   }
 
-  public void removePropertyValues(Set<String> names)
+  public void removePersistentProperties(Set<String> names)
   {
     ObjySession objySession = objyConnection.getWriteSessionFromPool("Main");
     objySession.begin();

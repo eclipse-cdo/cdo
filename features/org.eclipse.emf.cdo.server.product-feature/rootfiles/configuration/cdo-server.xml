@@ -24,6 +24,9 @@
     -->
 
     <store type="db">
+    
+      <!-- Period at which to execute an SQL statement to keep DB connection alive, in minutes -->
+      <property name="connectionKeepAlivePeriod" value="60"/>
 
       <mappingStrategy type="horizontal">
         <property name="qualifiedNames" value="false"/>

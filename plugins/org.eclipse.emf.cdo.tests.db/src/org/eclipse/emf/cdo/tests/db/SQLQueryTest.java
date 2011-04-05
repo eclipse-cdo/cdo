@@ -279,6 +279,31 @@ public class SQLQueryTest extends AbstractCDOTest
     }
   }
 
+  public void testNonCDOObjectQueries_Complex() throws Exception
+  {
+    msg("Opening session");
+    CDOSession session = openSession();
+
+    createTestSet(session);
+
+    msg("Opening transaction for querying");
+    CDOTransaction transaction = session.openTransaction();
+
+    {
+      msg("Query for customer fields");
+      CDOQuery cdoQuery = transaction.createQuery("sql", "SELECT STREET, CITY, NAME FROM MODEL1_CUSTOMER");
+      cdoQuery.setParameter("cdoObjectQuery", false);
+
+      List<Object[]> results = cdoQuery.getResult(Object[].class);
+      for (int i = 0; i < NUM_OF_CUSTOMERS; i++)
+      {
+        assertEquals(true, results.get(i)[0].equals("Street " + i));
+        assertEquals(true, i == 0 ? results.get(i)[1] == null : results.get(i)[1].equals("City " + i));
+        assertEquals(true, results.get(i)[2].equals(i + ""));
+      }
+    }
+  }
+
   private void createTestSet(CDOSession session)
   {
     // disableConsole();

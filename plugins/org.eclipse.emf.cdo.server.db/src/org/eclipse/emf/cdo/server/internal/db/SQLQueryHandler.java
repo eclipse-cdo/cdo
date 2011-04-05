@@ -196,8 +196,22 @@ public class SQLQueryHandler implements IQueryHandler
           }
           else
           {
-            Object result = resultSet.getObject(1);
-            context.addResult(result);
+            int columnCount = resultSet.getMetaData().getColumnCount();
+            if (columnCount == 1)
+            {
+              Object result = resultSet.getObject(1);
+              context.addResult(result);
+            }
+            else
+            {
+              Object[] results = new Object[columnCount];
+              for (int i = 0; i < columnCount; i++)
+              {
+                results[i] = resultSet.getObject(i + 1);
+              }
+
+              context.addResult(results);
+            }
           }
         }
       }

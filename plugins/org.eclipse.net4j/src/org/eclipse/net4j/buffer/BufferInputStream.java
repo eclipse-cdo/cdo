@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.buffer;
 
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOTimeoutException;
@@ -46,7 +47,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   private boolean eos;
 
-  private RuntimeException exception;
+  private RemoteException exception;
 
   private long stopTimeMillis;
 
@@ -85,9 +86,9 @@ public class BufferInputStream extends InputStream implements IBufferHandler
   }
 
   /**
-   * @since 2.0
+   * @since 4.0
    */
-  public void setException(RuntimeException exception)
+  public void setException(RemoteException exception)
   {
     this.exception = exception;
   }
@@ -163,10 +164,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
       {
         while (currentBuffer == null)
         {
-          if (exception != null)
-          {
-            throw exception;
-          }
+          throwRemoteExceptionIfExists();
 
           if (buffers == null)
           {
@@ -182,10 +180,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
         restartTimeout();
         while (currentBuffer == null)
         {
-          if (exception != null)
-          {
-            throw exception;
-          }
+          throwRemoteExceptionIfExists();
 
           if (buffers == null)
           {
@@ -217,5 +212,15 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
     eos = currentBuffer.isEOS();
     return true;
+  }
+
+  private void throwRemoteExceptionIfExists()
+  {
+    if (exception != null)
+    {
+      StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+      exception.setLocalStacktrace(stackTrace);
+      throw exception;
+    }
   }
 }

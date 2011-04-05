@@ -96,6 +96,28 @@ public final class IOUtil
     return System.err;
   }
 
+  /**
+   * @since 3.1
+   */
+  public static void print(StackTraceElement[] elements)
+  {
+    print(elements, System.err);
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static void print(StackTraceElement[] elements, PrintStream stream)
+  {
+    synchronized (stream)
+    {
+      for (int i = 0; i < elements.length; i++)
+      {
+        stream.println("\tat " + elements[i]);
+      }
+    }
+  }
+
   public static void print(Throwable t, PrintStream stream)
   {
     t.printStackTrace(stream);

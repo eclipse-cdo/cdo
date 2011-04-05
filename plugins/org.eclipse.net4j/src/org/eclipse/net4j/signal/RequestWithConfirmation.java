@@ -125,6 +125,17 @@ public abstract class RequestWithConfirmation<RESULT> extends SignalActor
 
   void setRemoteException(Throwable t, boolean responding)
   {
-    getBufferInputStream().setException(new RemoteException(t, responding));
+    RemoteException remoteException = getRemoteException(t, responding);
+    getBufferInputStream().setException(remoteException);
+  }
+
+  private RemoteException getRemoteException(Throwable t, boolean responding)
+  {
+    if (t instanceof RemoteException)
+    {
+      return (RemoteException)t;
+    }
+
+    return new RemoteException(t, this, responding);
   }
 }

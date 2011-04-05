@@ -20,9 +20,17 @@ public class RemoteException extends RuntimeException
 
   private boolean whileResponding;
 
-  public RemoteException(Throwable cause, boolean whileResponding)
+  private transient RequestWithConfirmation<?> localRequest;
+
+  private StackTraceElement[] localStackTrace;
+
+  /**
+   * @since 4.0
+   */
+  public RemoteException(Throwable remoteCause, RequestWithConfirmation<?> localRequest, boolean whileResponding)
   {
-    super(cause);
+    super(remoteCause);
+    this.localRequest = localRequest;
     this.whileResponding = whileResponding;
   }
 
@@ -35,5 +43,32 @@ public class RemoteException extends RuntimeException
   public boolean whileResponding()
   {
     return whileResponding;
+  }
+
+  /**
+   * @since 4.0
+   */
+  public RequestWithConfirmation<?> getLocalRequest()
+  {
+    return localRequest;
+  }
+
+  /**
+   * @since 4.0
+   */
+  public void setLocalStacktrace(StackTraceElement[] stackTrace)
+  {
+    localStackTrace = stackTrace;
+  }
+
+  /**
+   * Returns the local stack as it stood at the time that the <i>remote</i> exception was detected <i>locally</i>. Note
+   * that no local problem occurred at the point in the code identified by this stacktrace.
+   * 
+   * @since 4.0
+   */
+  public StackTraceElement[] getLocalStackTrace()
+  {
+    return localStackTrace;
   }
 }

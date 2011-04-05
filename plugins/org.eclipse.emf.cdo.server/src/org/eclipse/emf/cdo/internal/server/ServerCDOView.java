@@ -708,6 +708,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    public void resolveAllElementProxies(CDORevision revision)
+    {
+      throw new UnsupportedOperationException();
+    }
+
     public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch,
         List<InternalCDOView> branchViews, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
     {

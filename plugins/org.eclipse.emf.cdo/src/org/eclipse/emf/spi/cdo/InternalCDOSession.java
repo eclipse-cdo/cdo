@@ -147,6 +147,11 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex);
 
   /**
+   * @since 4.0
+   */
+  public void resolveAllElementProxies(CDORevision revision);
+
+  /**
    * @since 3.0
    */
   public void handleRepositoryTypeChanged(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType);

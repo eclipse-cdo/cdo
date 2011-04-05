@@ -17,6 +17,7 @@ package org.eclipse.emf.internal.cdo.view;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -48,7 +49,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
-import org.eclipse.emf.spi.cdo.CDOElementProxy;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -548,7 +548,9 @@ public final class CDOStoreImpl implements CDOStore
     {
       if (value instanceof CDOElementProxy)
       {
-        value = ((CDOElementProxy)value).resolve(getView().getSession(), revision, feature, index);
+        // Resolve proxy
+        CDOElementProxy proxy = (CDOElementProxy)value;
+        value = view.getSession().resolveElementProxy(revision, feature, index, proxy.getIndex());
       }
 
       return value;

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevisable;
@@ -314,6 +315,14 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
           ListDifferenceAnalyzer analyzer = new ListDifferenceAnalyzer()
           {
             @Override
+            public void analyzeLists(EList<Object> oldList, EList<?> newList, EList<ListChange> listChanges)
+            {
+              checkNoProxies(oldList);
+              checkNoProxies(newList);
+              super.analyzeLists(oldList, newList, listChanges);
+            }
+
+            @Override
             protected void createAddListChange(EList<Object> oldList, EList<ListChange> listChanges, Object value,
                 int index)
             {
@@ -342,6 +351,17 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
               delta.setValue(oldList.get(index));
               changes.add(delta);
               oldList.move(toIndex, index);
+            }
+
+            private void checkNoProxies(EList<?> list)
+            {
+              for (Object element : list)
+              {
+                if (element instanceof CDOElementProxy)
+                {
+                  throw new IllegalStateException("List contains proxy elements");
+                }
+              }
             }
           };
 

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -48,7 +49,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.spi.cdo.CDOElementProxy;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -597,7 +597,8 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     if (object instanceof CDOElementProxy)
     {
       // Resolve proxy
-      object = ((CDOElementProxy)object).resolve(view.getSession(), revision, feature, index);
+      CDOElementProxy proxy = (CDOElementProxy)object;
+      object = view.getSession().resolveElementProxy(revision, feature, index, proxy.getIndex());
     }
 
     if (object instanceof CDOLegacyWrapper)

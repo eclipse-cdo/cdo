@@ -60,6 +60,7 @@ import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -94,7 +95,6 @@ import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 import org.eclipse.emf.internal.cdo.object.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
-import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
 import org.eclipse.emf.internal.cdo.util.CommitIntegrityCheck;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
@@ -215,7 +215,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * A map to hold a clean (i.e. unmodified) revision for objects that have been modified or detached.
    */
-  private Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new HashMap<InternalCDOObject, InternalCDORevision>();
+  private Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new ResolvingRevisionMap();
 
   public CDOTransactionImpl(CDOBranch branch)
   {
@@ -2197,6 +2197,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return rev;
+  }
+
+  private final class ResolvingRevisionMap extends HashMap<InternalCDOObject, InternalCDORevision>
+  {
+    private static final long serialVersionUID = 1L;
+
+    public ResolvingRevisionMap()
+    {
+    }
+
+    @Override
+    public InternalCDORevision get(Object cdoObject)
+    {
+      InternalCDORevision revision = super.get(cdoObject);
+      if (revision != null)
+      {
+        getSession().resolveAllElementProxies(revision);
+      }
+
+      return revision;
+    }
   }
 
   /**

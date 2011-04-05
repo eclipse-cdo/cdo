@@ -9,14 +9,9 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
  */
-package org.eclipse.emf.internal.cdo.revision;
+package org.eclipse.emf.cdo.internal.common.revision;
 
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.session.CDOSession;
-
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.spi.cdo.CDOElementProxy;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 
 import java.text.MessageFormat;
 
@@ -40,11 +35,6 @@ public final class CDOElementProxyImpl implements CDOElementProxy
   public void setIndex(int index)
   {
     this.index = index;
-  }
-
-  public Object resolve(CDOSession session, CDORevision revision, EStructuralFeature feature, int index)
-  {
-    return ((InternalCDOSession)session).resolveElementProxy(revision, feature, index, getIndex());
   }
 
   @Override

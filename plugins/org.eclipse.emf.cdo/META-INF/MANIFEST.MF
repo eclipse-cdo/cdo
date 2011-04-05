@@ -49,12 +49,6 @@ Export-Package: org.eclipse.emf.cdo;version="4.0.0",
    org.eclipse.emf.cdo.defs,
    org.eclipse.emf.cdo.ui,
    org.eclipse.emf.cdo.tests.objectivity",
- org.eclipse.emf.internal.cdo.revision;version="4.0.0";
-  x-friends:="org.eclipse.emf.cdo.net4j,
-   org.eclipse.emf.cdo.server,
-   org.eclipse.emf.cdo.tests,
-   org.eclipse.emf.cdo.defs,
-   org.eclipse.emf.cdo.ui",
  org.eclipse.emf.internal.cdo.session;version="4.0.0";
   x-friends:="org.eclipse.emf.cdo.net4j,
    org.eclipse.emf.cdo.server,

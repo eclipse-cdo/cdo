@@ -143,8 +143,7 @@ public abstract class AbstractCDORevisionCacheTest extends AbstractOMTest
 
     // fetch older version and check version and ID equality
     CDOID id = company.cdoID();
-    CDORevision fetchedRevision = revisionCache.getRevisionByVersion(id,
-        BRANCH.getVersion(firstRevision.getVersion()));
+    CDORevision fetchedRevision = revisionCache.getRevisionByVersion(id, BRANCH.getVersion(firstRevision.getVersion()));
     assertNotNull(fetchedRevision);
     assertEquals(true, firstRevision.getID().equals(fetchedRevision.getID()));
     assertEquals(true, firstRevision.getVersion() == fetchedRevision.getVersion());

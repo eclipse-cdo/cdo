@@ -27,8 +27,11 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
+import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -102,6 +105,7 @@ import org.eclipse.net4j.util.options.OptionsEvent;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -125,6 +129,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -880,6 +885,34 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   {
     CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
     return policy.resolveProxy(this, revision, feature, accessIndex, serverIndex);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public void resolveAllElementProxies(CDORevision revision)
+  {
+    CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
+    for (EStructuralFeature feature : revision.getEClass().getEAllStructuralFeatures())
+    {
+      if (feature instanceof EReference)
+      {
+        EReference reference = (EReference)feature;
+        if (reference.isMany() && EMFUtil.isPersistent(reference))
+        {
+          CDOList list = ((InternalCDORevision)revision).getList(reference);
+          for (Iterator<Object> it = list.iterator(); it.hasNext();)
+          {
+            Object element = it.next();
+            if (element instanceof CDOElementProxy)
+            {
+              policy.resolveAllProxies(this, revision, reference);
+              break;
+            }
+          }
+        }
+      }
+    }
   }
 
   public void handleRepositoryTypeChanged(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)

@@ -9,24 +9,14 @@
  *    Eike Stepper - initial API and implementation
  *    Simon McDuff - maintenance
  */
-package org.eclipse.emf.spi.cdo;
-
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.session.CDOSession;
-
-import org.eclipse.emf.ecore.EStructuralFeature;
+package org.eclipse.emf.cdo.common.revision;
 
 /**
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
- * @since 2.0
+ * @since 4.0
  */
 public interface CDOElementProxy
 {
   public int getIndex();
-
-  /**
-   * @since 3.0
-   */
-  public Object resolve(CDOSession session, CDORevision revision, EStructuralFeature feature, int index);
 }

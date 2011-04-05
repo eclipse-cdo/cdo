@@ -12,13 +12,12 @@
 package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+
+import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.spi.cdo.CDOElementProxy;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
  * A strategy that specifies which list elememts must be present (loaded) in a {@link CDOID} list of a
@@ -34,32 +33,8 @@ public interface CDOCollectionLoadingPolicy
    * A default collection loading strategy that leads to complete loading of {@link CDOID} lists <b>before</b> any of
    * their elements is accessed.
    */
-  public static final CDOCollectionLoadingPolicy DEFAULT = new CDOCollectionLoadingPolicy()
-  {
-    /**
-     * Returns {@link CDORevision#UNCHUNKED}.
-     */
-    public int getInitialChunkSize()
-    {
-      return CDORevision.UNCHUNKED;
-    }
-
-    /**
-     * Returns {@link CDORevision#UNCHUNKED}.
-     */
-    public int getResolveChunkSize()
-    {
-      return CDORevision.UNCHUNKED;
-    }
-
-    public Object resolveProxy(CDOSession session, CDORevision revision, EStructuralFeature feature, int accessIndex,
-        int serverIndex)
-    {
-      CDOSessionProtocol protocol = ((InternalCDOSession)session).getSessionProtocol();
-      return protocol.loadChunk((InternalCDORevision)revision, feature, accessIndex, serverIndex, accessIndex,
-          accessIndex);
-    }
-  };
+  public static final CDOCollectionLoadingPolicy DEFAULT = new CDOCollectionLoadingPolicyImpl(CDORevision.UNCHUNKED,
+      CDORevision.UNCHUNKED);
 
   /**
    * Returns the maximum number of CDOIDs to be loaded for collections when the owning object is loaded initially, i.e.
@@ -83,4 +58,9 @@ public interface CDOCollectionLoadingPolicy
    */
   public Object resolveProxy(CDOSession session, CDORevision revision, EStructuralFeature feature, int accessIndex,
       int serverIndex);
+
+  /**
+   * @since 4.0
+   */
+  public void resolveAllProxies(CDOSession session, CDORevision revision, EStructuralFeature feature);
 }

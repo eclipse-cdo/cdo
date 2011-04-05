@@ -19,8 +19,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
-
-import org.eclipse.emf.internal.cdo.revision.CDOListWithElementProxiesImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
 
 import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;

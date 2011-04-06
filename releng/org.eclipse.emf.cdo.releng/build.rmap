@@ -12,46 +12,8 @@
 	<rm:locator pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$" searchPathRef="sources" />
 	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="sources" />
 	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="sources" />
+	<rm:locator pattern="^com\.mongodb(?:\..+)?$" searchPathRef="sources" />
 
-	<!--
-	<rm:locator pattern="^org\.eclipse\.emf\.(?:compare|transaction|validation|workspace)(?:\..+)?$" searchPathRef="modeling" />
-	<rm:locator pattern="^org\.eclipse\.emf\.mwe2?(?:\..+)?$" searchPathRef="mwe" />
-	<rm:locator pattern="^org\.eclipse\.emf\.ecoretools(?:\..+)?$" searchPathRef="ecoretools" />
-	<rm:locator pattern="^org\.eclipse\.emf\.teneo(?:\..+)?$" searchPathRef="teneo" />
-	<rm:locator pattern="^org\.eclipse\.emf(?:\..+)?$" searchPathRef="emf" />
-	<rm:locator pattern="^org\.eclipse\.gef(?:\..+)?$" searchPathRef="gef" />
-	<rm:locator pattern="^org\.eclipse\.gmf(?:\..+)?$" searchPathRef="gmf" />
-	<rm:locator pattern="^org\.eclipse\.ocl(?:\..+)?$" searchPathRef="ocl" />
-	<rm:locator pattern="^org\.eclipse\.m2m\.qvt\.oml(?:\..+)?$" searchPathRef="qvtoml" />
-	<rm:locator pattern="^org\.eclipse\.(?:xpand|xtend)(?:\..+)?$" searchPathRef="xpand" />
-	<rm:locator pattern="^org\.eclipse\.swtbot(?:\..+)?$" searchPathRef="swtbot" />
-	<rm:locator pattern="^org\.apache\.xerces(?:\..+)?$" searchPathRef="gmf" />
-	<rm:locator pattern="^org\.w3c\.dom(?:\..+)?$" searchPathRef="gmf" />
-	<rm:locator pattern="^org\.apache\.batik(?:\..+)?$" searchPathRef="gmf" />
-	<rm:locator pattern="^org\.apache(?:\..+)?$" searchPathRef="orbit" failOnError="false" />
-	<rm:locator pattern="^org\.w3c(?:\..+)?$" searchPathRef="orbit" />
-	<rm:locator pattern="^com\.google(?:\..+)?$" searchPathRef="orbit" />
-	<rm:locator pattern="^org\.hamcrest(?:\..+)?$" searchPathRef="orbit" />
-	<rm:locator pattern="^org\.antlr(?:\..+)?$" searchPathRef="orbit" />
-	<rm:locator pattern="^org\.h2(?:\..+)?$" searchPathRef="orbit" />
-	<rm:locator pattern="^javax\.xml$" searchPathRef="orbit" />
-	<rm:locator pattern="^org\.aopalliance$" searchPathRef="orbit" />
-	<rm:locator pattern="^lpg\.runtime\.java$" searchPathRef="orbit" />
-	<rm:locator pattern="^org\.eclipse\.zest(?:\..+)?$" searchPathRef="gef" />
-	<rm:locator pattern="^org\.eclipse\.draw2d$" searchPathRef="gef" />
-
-	<rm:locator pattern="^com\.db4o$" searchPathRef="net4j.plus" />
-	<rm:locator pattern="^com\.mysql\.jdbc$" searchPathRef="net4j.plus" />
-	<rm:locator pattern="^org\.hsqldb$" searchPathRef="net4j.plus" />
-	<rm:locator pattern="^org\.postgresql\.jdbc3$" searchPathRef="net4j.plus" />
-	-->
-
-	<!-- consuming an older hibernate from an alternative location per Martin Taal's request -->
-	<!--
-	<rm:locator pattern="^org\.hibernate$" searchPathRef="elver.org" />
-	<rm:locator pattern="^javax\.persistence$" searchPathRef="elver.org" />
-	<rm:locator pattern="^org\.dom4j$" searchPathRef="elver.org" />
-	-->
 	<rm:locator searchPathRef="platform" />
 
 	<rm:searchPath name="releng">

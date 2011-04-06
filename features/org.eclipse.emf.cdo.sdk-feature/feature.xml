@@ -42,6 +42,7 @@
    <includes id="org.eclipse.emf.cdo" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server.db" version="0.0.0"/>
+   <includes id="org.eclipse.emf.cdo.server.mongodb" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.server.objectivity" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.defs" version="0.0.0"/>
    <includes id="org.eclipse.emf.cdo.doc" version="0.0.0"/>

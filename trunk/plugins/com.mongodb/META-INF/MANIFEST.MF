@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: com.mongodb
+Bundle-Version: 2.4.0.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: com.mongodb;version="2.4.0",
+ com.mongodb.gridfs;version="2.4.0",
+ com.mongodb.io;version="2.4.0",
+ com.mongodb.util;version="2.4.0",
+ org.bson;version="2.4.0",
+ org.bson.io;version="2.4.0",
+ org.bson.types;version="2.4.0",
+ org.bson.util;version="2.4.0"

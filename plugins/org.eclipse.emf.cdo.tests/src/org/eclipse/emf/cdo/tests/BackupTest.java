@@ -200,6 +200,26 @@ public class BackupTest extends AbstractCDOTest
     System.out.println(baos.toString());
   }
 
+  private void useAfterImport(String repoName) throws CommitException
+  {
+    CDOSession session2 = openSession(repoName);
+    CDOTransaction transaction2 = session2.openTransaction();
+  
+    // Read all repo contents
+    TreeIterator<EObject> iter = transaction2.getRootResource().getAllContents();
+    while (iter.hasNext())
+    {
+      iter.next();
+    }
+  
+    // Add content from a new package
+    CDOResource resource = transaction2.createResource("/r1");
+    resource.getContents().add(getModel3Factory().createPolygon());
+    transaction2.commit();
+  
+    session2.close();
+  }
+
   /**
    * TODO
    * {@link org.eclipse.emf.cdo.server.IStoreAccessor.Raw#rawStore(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.net4j.util.om.monitor.OMMonitor)
@@ -237,26 +257,6 @@ public class BackupTest extends AbstractCDOTest
     importer.importRepository(bais);
 
     useAfterImport("repo2");
-  }
-
-  private void useAfterImport(String repoName) throws CommitException
-  {
-    CDOSession session2 = openSession(repoName);
-    CDOTransaction transaction2 = session2.openTransaction();
-
-    // Read all repo contents
-    TreeIterator<EObject> iter = transaction2.getRootResource().getAllContents();
-    while (iter.hasNext())
-    {
-      iter.next();
-    }
-
-    // Add content from a new package
-    CDOResource resource = transaction2.createResource("/r1");
-    resource.getContents().add(getModel3Factory().createPolygon());
-    transaction2.commit();
-
-    session2.close();
   }
 
   public void testImportDate() throws Exception

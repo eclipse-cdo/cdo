@@ -41,7 +41,7 @@ public class MongoDBBrowserPage extends AbstractPage
   public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
   {
     IMongoDBStore store = (IMongoDBStore)repository.getStore();
-    DB db = store.getDB();
+    DB db = (DB)store.getDB();
 
     out.print("<table border=\"0\">\r\n");
     out.print("<tr>\r\n");

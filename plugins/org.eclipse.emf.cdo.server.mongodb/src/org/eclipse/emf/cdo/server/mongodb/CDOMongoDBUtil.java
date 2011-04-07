@@ -33,8 +33,9 @@ public final class CDOMongoDBUtil
     container.registerFactory(new MongoDBBrowserPage.Factory());
   }
 
-  public static IMongoDBStore createStore(MongoURI mongoURI, String dbName)
+  public static IMongoDBStore createStore(String uri, String dbName)
   {
+    MongoURI mongoURI = new MongoURI(uri);
     MongoDBStore store = new MongoDBStore();
     store.setMongoURI(mongoURI);
     store.setDBName(dbName);

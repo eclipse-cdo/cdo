@@ -80,7 +80,7 @@ public class MongoDBStoreRepositoryConfig extends RepositoryConfig
       dropDatabase(mongoURI, repoName);
     }
 
-    return CDOMongoDBUtil.createStore(mongoURI, repoName);
+    return CDOMongoDBUtil.createStore(mongoURI.toString(), repoName);
   }
 
   protected void dropDatabase(MongoURI mongoURI, String repoName)

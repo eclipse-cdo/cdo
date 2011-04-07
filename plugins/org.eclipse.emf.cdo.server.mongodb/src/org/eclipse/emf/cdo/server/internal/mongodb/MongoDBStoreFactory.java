@@ -62,7 +62,7 @@ public class MongoDBStoreFactory implements IStoreFactory
       dropDatabase(mongoURI, dbName);
     }
 
-    return CDOMongoDBUtil.createStore(mongoURI, dbName);
+    return CDOMongoDBUtil.createStore(uri, dbName);
   }
 
   protected void dropDatabase(MongoURI mongoURI, String dbName)

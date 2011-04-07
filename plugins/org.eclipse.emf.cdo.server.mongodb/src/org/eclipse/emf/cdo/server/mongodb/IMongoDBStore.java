@@ -14,12 +14,13 @@ package org.eclipse.emf.cdo.server.mongodb;
 
 import org.eclipse.emf.cdo.server.IStore;
 
-import com.mongodb.DB;
-
 /**
  * @author Eike Stepper
  */
 public interface IMongoDBStore extends IStore
 {
-  public DB getDB();
+  /**
+   * The return value can be cast to {@link com.mongodb.DB}.
+   */
+  public Object getDB();
 }

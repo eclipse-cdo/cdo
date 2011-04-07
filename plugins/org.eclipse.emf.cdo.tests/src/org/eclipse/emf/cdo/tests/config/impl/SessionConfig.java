@@ -29,6 +29,7 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.tcp.ssl.SSLUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -358,7 +359,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       {
         super.setUp();
 
-        final IManagedContainer clientContainer = getCurrentTest().getClientContainer();
+        IManagedContainer clientContainer = getCurrentTest().getClientContainer();
         TCPUtil.prepareContainer(clientContainer);
 
         IManagedContainer serverContainer = getCurrentTest().getServerContainer();
@@ -372,6 +373,70 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       protected CDOViewProvider createViewProvider(final IManagedContainer container)
       {
         return new CDONet4jViewProvider.TCP()
+        {
+          @Override
+          protected IManagedContainer getContainer()
+          {
+            return container;
+          }
+        };
+      }
+    }
+
+    /**
+     * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
+     */
+    public static final class SSL extends SessionConfig.Net4j
+    {
+      public static final String NAME = "SSL";
+
+      public static final SSL INSTANCE = new SSL();
+
+      public static final String CONNECTOR_HOST = "localhost";
+
+      private static final long serialVersionUID = 1L;
+
+      public SSL()
+      {
+        super(NAME);
+      }
+
+      public String getURIPrefix()
+      {
+        return "cdo.net4j.ssl://" + CONNECTOR_HOST;
+      }
+
+      @Override
+      public IAcceptor getAcceptor()
+      {
+        return SSLUtil.getAcceptor(getCurrentTest().getServerContainer(), null);
+      }
+
+      @Override
+      public IConnector getConnector()
+      {
+        return SSLUtil.getConnector(getCurrentTest().getClientContainer(), CONNECTOR_HOST);
+      }
+
+      @Override
+      public void setUp() throws Exception
+      {
+        super.setUp();
+
+        IManagedContainer clientContainer = getCurrentTest().getClientContainer();
+        SSLUtil.prepareContainer(clientContainer);
+
+        IManagedContainer serverContainer = getCurrentTest().getServerContainer();
+        if (serverContainer != clientContainer)
+        {
+          SSLUtil.prepareContainer(serverContainer);
+        }
+      }
+
+      @Override
+      protected CDOViewProvider createViewProvider(final IManagedContainer container)
+      {
+        return new CDONet4jViewProvider.SSL()
         {
           @Override
           protected IManagedContainer getContainer()

@@ -46,6 +46,11 @@ public final class CDONet4jUtil
   /**
    * @since 4.0
    */
+  public static final String PROTOCOL_SSL = "cdo.net4j.ssl";
+
+  /**
+   * @since 4.0
+   */
   public static final String PROTOCOL_JVM = "cdo.net4j.jvm";
 
   static
@@ -60,6 +65,11 @@ public final class CDONet4jUtil
         map.put(PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
       }
 
+      if (!map.containsKey(PROTOCOL_SSL))
+      {
+        map.put(PROTOCOL_SSL, CDOResourceFactory.INSTANCE);
+      }
+
       if (!map.containsKey(PROTOCOL_JVM))
       {
         map.put(PROTOCOL_JVM, CDOResourceFactory.INSTANCE);
@@ -67,6 +77,7 @@ public final class CDONet4jUtil
 
       int priority = CDOViewProvider.DEFAULT_PRIORITY - 100;
       CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.TCP(priority));
+      CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.SSL(priority));
       CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.JVM(priority));
     }
   }

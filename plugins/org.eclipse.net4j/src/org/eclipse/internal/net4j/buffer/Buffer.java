@@ -110,11 +110,6 @@ public class Buffer implements InternalBuffer
 
   public ByteBuffer getByteBuffer()
   {
-    if (state != BufferState.GETTING && state != BufferState.PUTTING)
-    {
-      throw new IllegalStateException(toString());
-    }
-
     return byteBuffer;
   }
 
@@ -424,6 +419,10 @@ public class Buffer implements InternalBuffer
       {
         throw new ClosedChannelException();
       }
+    }
+    catch (ClosedChannelException ex)
+    {
+      throw ex;
     }
     catch (IOException ex)
     {

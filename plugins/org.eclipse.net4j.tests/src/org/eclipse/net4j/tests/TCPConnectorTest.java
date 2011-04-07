@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - SSL    
  */
 package org.eclipse.net4j.tests;
 
@@ -16,8 +17,15 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
+import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.TCPClientConnector;
+import org.eclipse.net4j.internal.tcp.TCPConnector;
+import org.eclipse.net4j.internal.tcp.TCPConnectorFactory;
 import org.eclipse.net4j.internal.tcp.TCPSelector;
+import org.eclipse.net4j.internal.tcp.ssl.SSLAcceptor;
+import org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory;
+import org.eclipse.net4j.internal.tcp.ssl.SSLClientConnector;
+import org.eclipse.net4j.internal.tcp.ssl.SSLConnectorFactory;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.collection.RoundRobinBlockingQueue;
@@ -31,7 +39,6 @@ import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.Randomizer;
 import org.eclipse.net4j.util.security.ResponseNegotiator;
 import org.eclipse.net4j.util.security.UserManager;
-import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.spi.net4j.Channel;
 import org.eclipse.spi.net4j.InternalChannel;
@@ -43,14 +50,17 @@ import java.util.concurrent.Executors;
 
 /**
  * @author Eike Stepper
+ * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
  */
-public class TCPConnectorTest extends AbstractOMTest
+public class TCPConnectorTest extends AbstractTransportTest
 {
   private static final int TIMEOUT = 10000;
 
+  private static final int PORT = 2040;
+
   private static final String USER_ID = "stepper"; //$NON-NLS-1$
 
-  private static final String INVALID_USER_ID = "crap"; //$NON-NLS-1$
+  private static final String INVALID_USER_ID = "invalid"; //$NON-NLS-1$
 
   private static final char[] PASSWORD = "eike2008".toCharArray(); //$NON-NLS-1$
 
@@ -66,7 +76,7 @@ public class TCPConnectorTest extends AbstractOMTest
 
   private TCPAcceptor acceptor;
 
-  private TCPClientConnector connector;
+  private TCPConnector connector;
 
   private Randomizer randomizer;
 
@@ -150,6 +160,63 @@ public class TCPConnectorTest extends AbstractOMTest
     }
   }
 
+  private void provideTransport()
+  {
+    selector = new TCPSelector();
+
+    if (useSSLTransport())
+    {
+      acceptor = new SSLAcceptor();
+      container.putElement(SSLAcceptorFactory.PRODUCT_GROUP, SSLAcceptorFactory.TYPE, null, acceptor);
+
+      // cannot use same container with the acceptor.
+      connector = new SSLClientConnector();
+      separateContainer.putElement(SSLConnectorFactory.PRODUCT_GROUP, SSLConnectorFactory.TYPE, null, acceptor);
+    }
+    else
+    {
+      acceptor = new TCPAcceptor();
+      container.putElement(TCPAcceptorFactory.PRODUCT_GROUP, TCPAcceptorFactory.TYPE, null, acceptor);
+
+      connector = new TCPClientConnector();
+      container.putElement(TCPConnectorFactory.PRODUCT_GROUP, TCPConnectorFactory.TYPE, null, acceptor);
+    }
+  }
+
+  private void provideTransport(final long increaseDelayAcceptor)
+  {
+    selector = new TCPSelector();
+
+    if (useSSLTransport())
+    {
+      acceptor = new SSLAcceptor()
+      {
+        @Override
+        public void handleAccept(ITCPSelector selector, ServerSocketChannel serverSocketChannel)
+        {
+          ConcurrencyUtil.sleep(increaseDelayAcceptor);
+          super.handleAccept(selector, serverSocketChannel);
+        }
+      };
+
+      connector = new SSLClientConnector();
+    }
+    else
+    {
+      acceptor = new TCPAcceptor()
+      {
+        @Override
+        public void handleAccept(ITCPSelector selector, ServerSocketChannel serverSocketChannel)
+        {
+          ConcurrencyUtil.sleep(increaseDelayAcceptor);
+          super.handleAccept(selector, serverSocketChannel);
+        }
+      };
+
+      connector = new TCPClientConnector();
+    }
+  }
+
   public void testDeferredActivation() throws Exception
   {
     final long DELAY = 500L;
@@ -159,18 +226,9 @@ public class TCPConnectorTest extends AbstractOMTest
     bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 
-    selector = new TCPSelector();
-    selector.activate();
+    provideTransport(DELAY);
 
-    acceptor = new TCPAcceptor()
-    {
-      @Override
-      public void handleAccept(ITCPSelector selector, ServerSocketChannel serverSocketChannel)
-      {
-        ConcurrencyUtil.sleep(DELAY);
-        super.handleAccept(selector, serverSocketChannel);
-      }
-    };
+    selector.activate();
 
     acceptor.setStartSynchronously(true);
     acceptor.setSynchronousStartTimeout(TIMEOUT);
@@ -178,15 +236,14 @@ public class TCPConnectorTest extends AbstractOMTest
     acceptor.getConfig().setReceiveExecutor(threadPool);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
-    acceptor.setPort(2036);
+    acceptor.setPort(PORT);
     acceptor.activate();
 
-    connector = new TCPClientConnector();
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.setSelector(selector);
     connector.setHost("localhost"); //$NON-NLS-1$
-    connector.setPort(2036);
+    connector.setPort(PORT);
     connector.activate();
     // Can fail due to timing variations: assertEquals(false, connector.isActive());
 
@@ -232,10 +289,10 @@ public class TCPConnectorTest extends AbstractOMTest
     challengeNegotiator.setUserManager(userManager);
     challengeNegotiator.activate();
 
-    selector = new TCPSelector();
+    provideTransport();
+
     selector.activate();
 
-    acceptor = new TCPAcceptor();
     acceptor.setStartSynchronously(true);
     acceptor.setSynchronousStartTimeout(TIMEOUT);
     acceptor.getConfig().setBufferProvider(bufferPool);
@@ -243,7 +300,7 @@ public class TCPConnectorTest extends AbstractOMTest
     acceptor.getConfig().setNegotiator(challengeNegotiator);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
-    acceptor.setPort(2036);
+    acceptor.setPort(PORT);
     acceptor.activate();
 
     credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
@@ -253,13 +310,12 @@ public class TCPConnectorTest extends AbstractOMTest
     responseNegotiator.setCredentialsProvider(credentialsProvider);
     responseNegotiator.activate();
 
-    connector = new TCPClientConnector();
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.getConfig().setNegotiator(responseNegotiator);
     connector.setSelector(selector);
     connector.setHost("localhost"); //$NON-NLS-1$
-    connector.setPort(2036);
+    connector.setPort(PORT);
     connector.activate();
 
     connector.waitForConnection(DEFAULT_TIMEOUT);
@@ -312,10 +368,10 @@ public class TCPConnectorTest extends AbstractOMTest
     challengeNegotiator.setUserManager(userManager);
     challengeNegotiator.activate();
 
-    selector = new TCPSelector();
+    provideTransport();
+
     selector.activate();
 
-    acceptor = new TCPAcceptor();
     acceptor.setStartSynchronously(true);
     acceptor.setSynchronousStartTimeout(TIMEOUT);
     acceptor.getConfig().setBufferProvider(bufferPool);
@@ -323,7 +379,7 @@ public class TCPConnectorTest extends AbstractOMTest
     acceptor.getConfig().setNegotiator(challengeNegotiator);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
-    acceptor.setPort(2036);
+    acceptor.setPort(PORT);
     acceptor.activate();
 
     credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
@@ -333,13 +389,12 @@ public class TCPConnectorTest extends AbstractOMTest
     responseNegotiator.setCredentialsProvider(credentialsProvider);
     responseNegotiator.activate();
 
-    connector = new TCPClientConnector();
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.getConfig().setNegotiator(responseNegotiator);
     connector.setSelector(selector);
     connector.setHost("localhost"); //$NON-NLS-1$
-    connector.setPort(2036);
+    connector.setPort(PORT);
 
     try
     {
@@ -374,10 +429,10 @@ public class TCPConnectorTest extends AbstractOMTest
     challengeNegotiator.setUserManager(userManager);
     challengeNegotiator.activate();
 
-    selector = new TCPSelector();
+    provideTransport();
+
     selector.activate();
 
-    acceptor = new TCPAcceptor();
     acceptor.setStartSynchronously(true);
     acceptor.setSynchronousStartTimeout(TIMEOUT);
     acceptor.getConfig().setBufferProvider(bufferPool);
@@ -385,7 +440,7 @@ public class TCPConnectorTest extends AbstractOMTest
     acceptor.getConfig().setNegotiator(challengeNegotiator);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
-    acceptor.setPort(2036);
+    acceptor.setPort(PORT);
     acceptor.activate();
 
     credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
@@ -395,13 +450,12 @@ public class TCPConnectorTest extends AbstractOMTest
     responseNegotiator.setCredentialsProvider(credentialsProvider);
     responseNegotiator.activate();
 
-    connector = new TCPClientConnector();
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.getConfig().setNegotiator(responseNegotiator);
     connector.setSelector(selector);
     connector.setHost("localhost"); //$NON-NLS-1$
-    connector.setPort(2036);
+    connector.setPort(PORT);
 
     try
     {
@@ -424,25 +478,24 @@ public class TCPConnectorTest extends AbstractOMTest
     bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 
-    selector = new TCPSelector();
+    provideTransport();
+
     selector.activate();
 
-    acceptor = new TCPAcceptor();
     acceptor.setStartSynchronously(true);
     acceptor.setSynchronousStartTimeout(TIMEOUT);
     acceptor.getConfig().setBufferProvider(bufferPool);
     acceptor.getConfig().setReceiveExecutor(threadPool);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
-    acceptor.setPort(2036);
+    acceptor.setPort(PORT);
     acceptor.activate();
 
-    connector = new TCPClientConnector();
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.setSelector(selector);
     connector.setHost("localhost"); //$NON-NLS-1$
-    connector.setPort(2036);
+    connector.setPort(PORT);
     connector.setUserID("SHOULD_FAIL_LATER"); //$NON-NLS-1$
 
     try
@@ -465,25 +518,24 @@ public class TCPConnectorTest extends AbstractOMTest
     bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 
-    selector = new TCPSelector();
+    provideTransport();
+
     selector.activate();
 
-    acceptor = new TCPAcceptor();
     acceptor.setStartSynchronously(true);
     acceptor.setSynchronousStartTimeout(TIMEOUT);
     acceptor.getConfig().setBufferProvider(bufferPool);
     acceptor.getConfig().setReceiveExecutor(threadPool);
     acceptor.setSelector(selector);
     acceptor.setAddress("0.0.0.0"); //$NON-NLS-1$
-    acceptor.setPort(2036);
+    acceptor.setPort(PORT);
     acceptor.activate();
 
-    connector = new TCPClientConnector();
     connector.getConfig().setBufferProvider(bufferPool);
     connector.getConfig().setReceiveExecutor(threadPool);
     connector.setSelector(selector);
     connector.setHost("localhost"); //$NON-NLS-1$
-    connector.setPort(2036);
+    connector.setPort(PORT);
     connector.connect();
 
     credentialsProvider = new PasswordCredentialsProvider(CREDENTIALS);
@@ -547,4 +599,39 @@ public class TCPConnectorTest extends AbstractOMTest
     assertNull(queue.poll());
   }
 
+  /**
+   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
+   */
+  public static final class TCP extends TCPConnectorTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return false;
+    }
+  }
+
+  /**
+   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
+   */
+  public static final class SSL extends TCPConnectorTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return true;
+    }
+  }
 }

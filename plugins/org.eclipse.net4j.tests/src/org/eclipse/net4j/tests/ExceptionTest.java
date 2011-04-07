@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - SSL
  */
 package org.eclipse.net4j.tests;
 
@@ -125,6 +126,42 @@ public class ExceptionTest extends AbstractProtocolTest
         AlreadyBoundException abe = (AlreadyBoundException)cnfe.getCause();
         assertEquals(TestSignalProtocol.SIMULATED_EXCEPTION, abe.getMessage());
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class TCP extends ExceptionTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return false;
+    }
+  }
+
+  /**
+   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
+   */
+  public static final class SSL extends ExceptionTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return true;
     }
   }
 }

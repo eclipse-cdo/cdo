@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - SSL
  */
 package org.eclipse.net4j.tests;
 
@@ -324,6 +325,12 @@ public abstract class ChannelTest extends AbstractProtocolTest
     {
       return false;
     }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return false;
+    }
   }
 
   /**
@@ -333,6 +340,30 @@ public abstract class ChannelTest extends AbstractProtocolTest
   {
     @Override
     protected boolean useJVMTransport()
+    {
+      return true;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return false;
+    }
+  }
+
+  /**
+   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
+   */
+  public static final class SSL extends ChannelTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
     {
       return true;
     }

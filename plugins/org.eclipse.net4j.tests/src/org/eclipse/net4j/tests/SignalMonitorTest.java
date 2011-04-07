@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - SSL
  */
 package org.eclipse.net4j.tests;
 
@@ -176,6 +177,42 @@ public class SignalMonitorTest extends AbstractTransportTest
     {
       super.worked(work);
       System.out.println("work: " + getWork()); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class TCP extends SignalMonitorTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return false;
+    }
+  }
+
+  /**
+   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
+   */
+  public static final class SSL extends SignalMonitorTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return true;
     }
   }
 }

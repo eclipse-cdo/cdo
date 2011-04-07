@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - SSL
  */
 package org.eclipse.net4j.tests;
 
@@ -134,5 +135,41 @@ public class SignalTest extends AbstractProtocolTest
     Field field = ReflectUtil.getField(TCPConnector.class, "socketChannel");
     SocketChannel socketChannel = (SocketChannel)ReflectUtil.getValue(field, connector);
     socketChannel.close();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class TCP extends SignalTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return false;
+    }
+  }
+
+  /**
+   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
+   */
+  public static final class SSL extends SignalTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return true;
+    }
   }
 }

@@ -3,10 +3,10 @@
 
     <!-- See http://wiki.eclipse.org/CDO/Server_Configuration_Reference -->
 
-  <acceptor type="tcp" listenAddr="0.0.0.0" port="2036">
-  </acceptor>
+  <acceptor type="tcp" listenAddr="0.0.0.0" port="2036"/>
 
   <!--
+  <acceptor type="ssl" listenAddr="0.0.0.0" port="2036"/>
   <acceptor type="http"/>
   -->
 

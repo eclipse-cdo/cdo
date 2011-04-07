@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - SSL
  */
 package org.eclipse.net4j.tests;
 
@@ -22,10 +23,12 @@ import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.spi.net4j.ClientProtocolFactory;
+import org.eclipse.spi.net4j.Connector;
 import org.eclipse.spi.net4j.Protocol;
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
@@ -54,8 +57,53 @@ public abstract class TransportTest extends AbstractProtocolTest
 
   protected IBuffer provideBuffer()
   {
-    IBufferProvider bufferProvider = Net4jUtil.getBufferProvider(container);
-    return bufferProvider.provideBuffer();
+    return provideBuffer(null);
+  }
+
+  protected IBuffer provideBuffer(IConnector iConnector)
+  {
+    IBuffer buffer = null;
+    if (!useJVMTransport() && useSSLTransport())
+    {
+      // cannot use buffer provider from net4j need to use SSL Buffer inside the SSLConnector.
+      buffer = ((Connector)iConnector).provideBuffer();
+    }
+    else
+    {
+      IBufferProvider bufferProvider = Net4jUtil.getBufferProvider(container);
+      buffer = bufferProvider.provideBuffer();
+    }
+
+    return buffer;
+  }
+
+  private void registerClientFactory(IFactory factory)
+  {
+    if (!useJVMTransport() && useSSLTransport())
+    {
+      // need separate container between client and server for SSL.
+      separateContainer.registerFactory(factory);
+    }
+    else
+    {
+      container.registerFactory(factory);
+    }
+  }
+
+  protected IBufferProvider provideBufferProvider(IConnector iConnector)
+  {
+    IBufferProvider bufferProvider = null;
+    if (!useJVMTransport() && useSSLTransport())
+    {
+      // cannot use buffer provider from net4j need to use SSL Buffer inside the SSLConnector.
+      bufferProvider = ((Connector)iConnector).getConfig().getBufferProvider();
+    }
+    else
+    {
+      bufferProvider = Net4jUtil.getBufferProvider(container);
+    }
+
+    return bufferProvider;
   }
 
   public void testConnect() throws Exception
@@ -66,10 +114,12 @@ public abstract class TransportTest extends AbstractProtocolTest
   public void testSendBuffer() throws Exception
   {
     startTransport();
-    IChannel channel = getConnector().openChannel();
+    IConnector iConnecter = getConnector();
+    IChannel channel = iConnecter.openChannel();
     for (int i = 0; i < 3; i++)
     {
-      IBuffer buffer = provideBuffer();
+      IBuffer buffer = provideBuffer(iConnecter);
+
       ByteBuffer byteBuffer = buffer.startPutting(channel.getID());
       byteBuffer.putInt(1970);
       channel.sendBuffer(buffer);
@@ -81,13 +131,14 @@ public abstract class TransportTest extends AbstractProtocolTest
     final int COUNT = 3;
     final CountDownLatch counter = new CountDownLatch(COUNT);
     container.registerFactory(new TestProtocol.ServerFactory(counter));
-    container.registerFactory(new TestProtocol.ClientFactory());
+    // need to handle about separating container between client and server for SSL.
+    registerClientFactory(new TestProtocol.ClientFactory());
     startTransport();
-
-    IChannel channel = getConnector().openChannel(TestProtocol.ClientFactory.TYPE, null);
+    IConnector iConnecter = getConnector();
+    IChannel channel = iConnecter.openChannel(TestProtocol.ClientFactory.TYPE, null);
     for (int i = 0; i < COUNT; i++)
     {
-      IBuffer buffer = provideBuffer();
+      IBuffer buffer = provideBuffer(iConnecter);
       ByteBuffer byteBuffer = buffer.startPutting(channel.getID());
       byteBuffer.putInt(1970);
       channel.sendBuffer(buffer);
@@ -263,7 +314,8 @@ public abstract class TransportTest extends AbstractProtocolTest
       }
     });
 
-    final IChannel channel = getConnector().openChannel();
+    final IConnector iConnector = getConnector();
+    final IChannel channel = iConnector.openChannel();
     assertEquals(true, counter.await(2, TimeUnit.SECONDS));
     assertNotNull(inputStream[0]);
 
@@ -274,7 +326,7 @@ public abstract class TransportTest extends AbstractProtocolTest
       {
         try
         {
-          IBufferProvider bufferProvider = Net4jUtil.getBufferProvider(container);
+          IBufferProvider bufferProvider = provideBufferProvider(iConnector);
           ChannelOutputStream outputStream = new ChannelOutputStream(channel, bufferProvider);
           PrintStream printer = new PrintStream(outputStream);
           StringTokenizer tokenizer = HugeData.getTokenizer();
@@ -436,6 +488,12 @@ public abstract class TransportTest extends AbstractProtocolTest
     {
       return false;
     }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return false;
+    }
   }
 
   /**
@@ -445,6 +503,30 @@ public abstract class TransportTest extends AbstractProtocolTest
   {
     @Override
     protected boolean useJVMTransport()
+    {
+      return true;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return false;
+    }
+  }
+
+  /**
+   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
+   */
+  public static final class SSL extends TransportTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return false;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
     {
       return true;
     }

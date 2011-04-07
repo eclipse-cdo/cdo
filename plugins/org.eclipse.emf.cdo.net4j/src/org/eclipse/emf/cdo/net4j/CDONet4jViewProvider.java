@@ -220,6 +220,23 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   }
 
   /**
+   * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
+   */
+  public static class SSL extends CDONet4jViewProvider
+  {
+    public SSL(int priority)
+    {
+      super("ssl", priority);
+    }
+
+    public SSL()
+    {
+      this(DEFAULT_PRIORITY);
+    }
+
+  }
+
+  /**
    * @author Eike Stepper
    */
   public static class JVM extends CDONet4jViewProvider

@@ -35,7 +35,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLo
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -153,7 +152,6 @@ public abstract class CDOServerImporter
 
     public FlushHandler()
     {
-      accessor = (IStoreAccessor.Raw)repository.getStore().getWriter(null);
     }
 
     public void handleRepository(String name, String uuid, CDOID root, long created, long committed)
@@ -168,8 +166,11 @@ public abstract class CDOServerImporter
       repository.initSystemPackages();
       repository.setRootResourceID(root);
 
-      InternalSession session = repository.getSessionManager().openSession(null);
-      StoreThreadLocal.setSession(session);
+      // InternalSession session = repository.getSessionManager().openSession(null);
+      // StoreThreadLocal.setSession(session);
+
+      accessor = (IStoreAccessor.Raw)repository.getStore().getWriter(null);
+      StoreThreadLocal.setAccessor(accessor);
     }
 
     public InternalCDOPackageUnit handlePackageUnit(String id, Type type, long time, String data)

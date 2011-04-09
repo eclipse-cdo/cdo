@@ -30,11 +30,16 @@ import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -200,23 +205,47 @@ public class BackupTest extends AbstractCDOTest
     System.out.println(baos.toString());
   }
 
+  public void testExportExternalReference() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+
+    ResourceSet resourceSet = transaction.getResourceSet();
+    Customer customer = initExtResource(resourceSet);
+
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setCustomer(customer);
+    resource.getContents().add(salesOrder);
+
+    transaction.commit();
+    session.close();
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+  }
+
   private void useAfterImport(String repoName) throws CommitException
   {
     CDOSession session2 = openSession(repoName);
     CDOTransaction transaction2 = session2.openTransaction();
-  
+
     // Read all repo contents
     TreeIterator<EObject> iter = transaction2.getRootResource().getAllContents();
     while (iter.hasNext())
     {
       iter.next();
     }
-  
+
     // Add content from a new package
     CDOResource resource = transaction2.createResource("/r1");
     resource.getContents().add(getModel3Factory().createPolygon());
     transaction2.commit();
-  
+
     session2.close();
   }
 
@@ -407,6 +436,59 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
+  }
+
+  public void testImportExternalReference() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+
+    ResourceSet resourceSet = transaction.getResourceSet();
+    Customer customer = initExtResource(resourceSet);
+
+    SalesOrder salesOrder = getModel1Factory().createSalesOrder();
+    salesOrder.setCustomer(customer);
+    resource.getContents().add(salesOrder);
+
+    transaction.commit();
+    session.close();
+
+    InternalRepository repo1 = getRepository();
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
+    exporter.exportRepository(baos);
+    System.out.println(baos.toString());
+
+    InternalRepository repo2 = getRepository("repo2", false);
+
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
+    importer.importRepository(bais);
+
+    restartRepository("repo2");
+
+    CDOSession session2 = openSession("repo2");
+    CDOView view2 = session2.openView();
+    CDOResource resource2 = view2.getResource(getResourcePath("/res1"));
+
+    ResourceSet resourceSet2 = view2.getResourceSet();
+    initExtResource(resourceSet2);
+
+    SalesOrder salesOrder2 = (SalesOrder)resource2.getContents().get(0);
+    Customer customer2 = salesOrder2.getCustomer();
+    System.out.println(customer2);
+  }
+
+  private Customer initExtResource(ResourceSet resourceSet)
+  {
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
+    Resource extResource = resourceSet.createResource(URI.createURI("ext.xmi"));
+
+    Customer customer = getModel1Factory().createCustomer();
+    extResource.getContents().add(customer);
+    return customer;
   }
 
   private Customer createCustomer(String name)

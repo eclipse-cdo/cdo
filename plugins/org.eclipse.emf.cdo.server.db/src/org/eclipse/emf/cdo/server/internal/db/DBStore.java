@@ -556,8 +556,16 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
     map.put(PROP_LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
     setPersistentProperties(map);
-    readerPool.dispose();
-    writerPool.dispose();
+
+    if (readerPool != null)
+    {
+      readerPool.dispose();
+    }
+
+    if (writerPool != null)
+    {
+      writerPool.dispose();
+    }
 
     connectionKeepAliveTimer.cancel();
     connectionKeepAliveTimer = null;

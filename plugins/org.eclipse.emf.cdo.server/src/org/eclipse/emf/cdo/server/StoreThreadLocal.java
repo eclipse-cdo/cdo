@@ -60,6 +60,12 @@ public final class StoreThreadLocal
 
   public static void setAccessor(IStoreAccessor accessor)
   {
+    // IStoreAccessor old = ACCESSOR.get();
+    // if (old != null && old != accessor)
+    // {
+    // throw new IllegalStateException("Attempt to overwrite accessor");
+    // }
+
     SESSION.set(accessor == null ? null : accessor.getSession());
     ACCESSOR.set(accessor);
   }

@@ -23,6 +23,7 @@ import java.util.Properties;
 /**
  * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
  * @author Caspar De Groot (No Magic Asia Ltd.)
+ * @since 4.0
  */
 public class SSLProperties
 {

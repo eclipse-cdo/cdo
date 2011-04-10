@@ -48,8 +48,10 @@ import java.security.cert.CertificateException;
  */
 public class SSLUtil
 {
-  // The variable for SSL Engine
-  private static final String protocol = "TLS";
+  /**
+   * The variable for SSL Engine
+   */
+  private static final String PROTOCOL = "TLS";
 
   private static String configFile;
 
@@ -59,10 +61,14 @@ public class SSLUtil
 
   private static String passPhraseVar;
 
-  // default value of handshake timeout is 12 times.
+  /**
+   * Default value of handshake timeout is 12 times.
+   */
   private static int handShakeTimeOutVar = 12;
 
-  // default value of handshake wait time is 60 milliseconds.
+  /**
+   * Default value of handshake wait time is 60 milliseconds.
+   */
   private static int handShakeWaitTimeVar = 60;
 
   public static synchronized void setDefaultSSLConfiguration(String keyPath, String trustPath, String passPhrase)
@@ -90,7 +96,7 @@ public class SSLUtil
   {
     TCPUtil.prepareContainer(container);
 
-    // prepare SSL
+    // Prepare SSL
     container.registerFactory(new SSLAcceptorFactory());
     container.registerFactory(new SSLConnectorFactory());
   }
@@ -110,7 +116,7 @@ public class SSLUtil
       throws NoSuchAlgorithmException, KeyStoreException, CertificateException, FileNotFoundException, IOException,
       UnrecoverableKeyException, KeyManagementException
   {
-    // get values from the system properties.
+    // Get values from the system properties.
     SSLProperties sslProperties = new SSLProperties();
     String keyPath = sslProperties.getKeyPath();
     String trustPath = sslProperties.getTrustPath();
@@ -121,7 +127,7 @@ public class SSLUtil
       sslProperties.load(configFile);
     }
 
-    // in case, the system properties does not have the key path property. it will load from local config file.
+    // In case, the system properties does not have the key path property. It will load from local config file.
     if (keyPath == null)
     {
       keyPath = sslProperties.getKeyPath();
@@ -131,7 +137,7 @@ public class SSLUtil
       }
     }
 
-    // in case, the system properties does not have the trust path property. it will load from local config file.
+    // In case, the system properties does not have the trust path property. It will load from local config file.
     if (trustPath == null)
     {
       trustPath = sslProperties.getTrustPath();
@@ -141,7 +147,7 @@ public class SSLUtil
       }
     }
 
-    // in case, the system properties does not have the passphrase property. it will load from local config file.
+    // In case, the system properties does not have the passphrase property. It will load from local config file.
     if (passPhrase == null)
     {
       passPhrase = sslProperties.getPassPhrase();
@@ -151,7 +157,7 @@ public class SSLUtil
       }
     }
 
-    // handle assign the value of handshake timeout and handshake timewait from local properties or system properties by
+    // Handle assign the value of handshake timeout and handshake timewait from local properties or system properties by
     // giving the value form system properties is high priority.
     String value = sslProperties.getHandShakeTimeOut();
     if (value != null)
@@ -184,7 +190,7 @@ public class SSLUtil
 
     if (client)
     {
-      // initial key material(private key) for the client.
+      // Initial key material(private key) for the client.
       KeyStore ksTrust = KeyStore.getInstance(KeyStore.getDefaultType());
 
       File ksTrustFile = null;
@@ -219,7 +225,7 @@ public class SSLUtil
           }
         }
 
-        // initial the trust manager factory
+        // Initial the trust manager factory
         TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         tmf.init(ksTrust);
 
@@ -232,7 +238,7 @@ public class SSLUtil
     }
     else
     {
-      // initial key material(private key) for the server.
+      // Initial key material (private key) for the server.
       KeyStore ksKeys = KeyStore.getInstance(KeyStore.getDefaultType());
 
       File ksKeysFile = null;
@@ -273,14 +279,14 @@ public class SSLUtil
         throw new KeyStoreException("Key Store cannot be loaded.");
       }
 
-      // initial the key manager factory.
+      // Initial the key manager factory.
       KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
       kmf.init(ksKeys, pass);
 
       keyManagers = kmf.getKeyManagers();
     }
 
-    SSLContext sslContext = SSLContext.getInstance(protocol);
+    SSLContext sslContext = SSLContext.getInstance(PROTOCOL);
     sslContext.init(keyManagers, trustManagers, null);
 
     SSLEngine sslEngine = sslContext.createSSLEngine(host, port);
@@ -297,5 +303,4 @@ public class SSLUtil
   {
     return handShakeWaitTimeVar;
   }
-
 }

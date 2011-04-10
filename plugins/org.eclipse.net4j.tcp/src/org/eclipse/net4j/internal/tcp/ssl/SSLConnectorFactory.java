@@ -21,7 +21,7 @@ import org.eclipse.net4j.internal.tcp.TCPConnectorFactory;
  */
 public class SSLConnectorFactory extends TCPConnectorFactory
 {
-  public static final String TYPE = "ssl"; //$NON-NLS-1$
+  public static final String TYPE = SSLAcceptorFactory.TYPE;
 
   public SSLConnectorFactory()
   {

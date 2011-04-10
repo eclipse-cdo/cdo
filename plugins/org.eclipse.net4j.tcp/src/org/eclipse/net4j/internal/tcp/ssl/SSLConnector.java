@@ -15,7 +15,7 @@ import org.eclipse.net4j.internal.tcp.TCPConnector;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.ssl.SSLUtil;
-import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.nio.channels.SelectionKey;
@@ -70,7 +70,7 @@ public class SSLConnector extends TCPConnector
     super.handleRead(selector, socketChannel);
     checkRehandShake(socketChannel);
 
-    // handle the left data from reading multiple data at once time.
+    // Handle the left data from reading multiple data at once time.
     while (sslEngineManager.getPacketRecvBuf().position() > 0)
     {
       super.handleRead(selector, socketChannel);
@@ -176,26 +176,19 @@ public class SSLConnector extends TCPConnector
 
   private void waitForHandShakeFinish()
   {
-    // wait until handshake finished. if handshake finish, it will not enter this loop.
+    // Wait until handshake finished. If handshake finish it will not enter this loop.
     while (!sslEngineManager.isHandshakeComplete())
     {
       if (isNegotiating())
       {
-        try
-        {
-          Thread.sleep(SSLUtil.getHandShakeWaitTime());
-        }
-        catch (InterruptedException ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
+        ConcurrencyUtil.sleep(SSLUtil.getHandShakeWaitTime());
       }
       else
       {
         Thread.yield();
       }
 
-      // prevent sleeping forever.
+      // Prevent sleeping forever.
       if (!isActive())
       {
         break;

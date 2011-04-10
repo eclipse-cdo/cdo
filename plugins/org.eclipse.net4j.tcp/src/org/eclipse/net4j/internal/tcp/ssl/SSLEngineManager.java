@@ -45,7 +45,6 @@ public class SSLEngineManager
 
   /**
    * An optional executor to be used this class.
-   * <p>
    */
   private Executor executor;
 

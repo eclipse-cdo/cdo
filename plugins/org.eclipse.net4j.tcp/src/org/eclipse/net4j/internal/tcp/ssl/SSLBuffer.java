@@ -130,6 +130,7 @@ public class SSLBuffer extends Buffer
           clear();
           return false;
         }
+
         clear();
         return true;
       }

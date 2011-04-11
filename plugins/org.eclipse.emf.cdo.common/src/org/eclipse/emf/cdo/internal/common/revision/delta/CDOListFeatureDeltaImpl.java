@@ -360,6 +360,13 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
                 }
               }
             }
+
+            // SET
+            else if (fd instanceof CDOSetFeatureDelta)
+            {
+              // Adjusts the feature delta too.
+              ((WithIndex)fd).adjustAfterRemoval(floatingIndex);
+            }
           }
 
           // If the removed delta was ADD so we do not add the REMOVE to the feature deltas.

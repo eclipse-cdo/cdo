@@ -87,10 +87,8 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
 
   public void merge(CDOChangeSetData changeSetData)
   {
-    if (commitData != null)
-    {
-      commitData.merge(changeSetData);
-    }
+    loadCommitDataIfNeeded();
+    commitData.merge(changeSetData);
   }
 
   public synchronized List<CDOPackageUnit> getNewPackageUnits()

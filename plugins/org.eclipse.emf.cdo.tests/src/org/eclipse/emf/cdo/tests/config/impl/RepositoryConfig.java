@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.LeavesCleanRepo;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
 
@@ -65,6 +66,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -269,7 +271,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public void tearDown() throws Exception
   {
     deactivateServerBrowser();
-    if (!isOptimizing())
+    if (!isOptimizing() || leavesCleanRepos())
     {
       deactivateRepositories();
     }
@@ -379,16 +381,25 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       return true;
     }
 
-    String testMethod = getCurrentTest().getName();
+    return hasAnnotation(NeedsCleanRepo.class);
+  }
+
+  protected boolean leavesCleanRepos()
+  {
+    return hasAnnotation(LeavesCleanRepo.class);
+  }
+
+  private <T extends Annotation> boolean hasAnnotation(Class<T> annotationClass)
+  {
     Class<? extends ConfigTest> testClass = getCurrentTest().getClass();
-    boolean needsCleanRepo = testClass.getAnnotation(NeedsCleanRepo.class) != null;
-    if (!needsCleanRepo)
+    String methodName = getCurrentTest().getName();
+    Method method = ReflectUtil.getMethod(testClass, methodName, new Class[0]);
+    if (method.getAnnotation(annotationClass) != null)
     {
-      Method method = ReflectUtil.getMethod(testClass, testMethod, new Class[0]);
-      needsCleanRepo = method.getAnnotation(NeedsCleanRepo.class) != null;
+      return true;
     }
 
-    return needsCleanRepo;
+    return testClass.getAnnotation(annotationClass) != null;
   }
 
   static

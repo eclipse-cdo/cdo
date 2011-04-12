@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.LeavesCleanRepo;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
@@ -46,6 +48,8 @@ import junit.framework.Assert;
 /**
  * @author Egidijus Vaisnora
  */
+@NeedsCleanRepo
+@LeavesCleanRepo
 public class Bugzilla_340961_Test extends AbstractCDOTest
 {
   private PartialReadAccessHandler handler = new PartialReadAccessHandler();
@@ -61,6 +65,7 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
   @Override
   protected void doSetUp() throws Exception
   {
+    // setup RepositoryConfig.PROP_TEST_REVISION_MANAGER is needed for MEM store
     InternalCDORevisionManager internalCDORevisionManager = (InternalCDORevisionManager)getRepositoryConfig()
         .getTestProperty(RepositoryConfig.PROP_TEST_REVISION_MANAGER);
     if (internalCDORevisionManager == null)
@@ -69,17 +74,9 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       getRepositoryConfig().getTestProperties().put(RepositoryConfig.PROP_TEST_REVISION_MANAGER,
           internalCDORevisionManager);
     }
-
     internalCDORevisionManager.setFactory(revisionFactory);
     super.doSetUp();
     getRepository().addHandler(handler);
-  }
-
-  @Override
-  public void tearDown() throws Exception
-  {
-    getRepository().removeHandler(handler);
-    super.tearDown();
   }
 
   /**

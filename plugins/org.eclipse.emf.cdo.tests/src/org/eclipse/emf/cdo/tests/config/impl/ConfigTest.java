@@ -72,6 +72,11 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   {
   }
 
+  @Retention(RetentionPolicy.RUNTIME)
+  public @interface LeavesCleanRepo
+  {
+  }
+
   public ConfigTest()
   {
   }

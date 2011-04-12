@@ -467,8 +467,6 @@ public class BackupTest extends AbstractCDOTest
     CDOServerImporter.XML importer = new CDOServerImporter.XML(repo2);
     importer.importRepository(bais);
 
-    restartRepository("repo2");
-
     CDOSession session2 = openSession("repo2");
     CDOView view2 = session2.openView();
     CDOResource resource2 = view2.getResource(getResourcePath("/res1"));

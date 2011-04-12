@@ -32,8 +32,6 @@ import java.sql.Connection;
  */
 public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMapper
 {
-  public static final int DEFAULT_CACHE_CAPACITY = 10000000;
-
   private IObjectTypeMapper delegate;
 
   public DelegatingObjectTypeMapper()

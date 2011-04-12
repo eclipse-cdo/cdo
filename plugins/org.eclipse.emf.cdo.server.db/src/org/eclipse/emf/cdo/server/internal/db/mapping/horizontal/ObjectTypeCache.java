@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class ObjectTypeCache extends DelegatingObjectTypeMapper
 {
-  public static final int DEFAULT_CACHE_CAPACITY = 10000000;
+  public static final int DEFAULT_CACHE_CAPACITY = 100000;
 
   private Map<CDOID, CDOID> memoryCache;
 

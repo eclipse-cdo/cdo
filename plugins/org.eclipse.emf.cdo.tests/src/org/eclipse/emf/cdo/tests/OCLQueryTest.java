@@ -195,6 +195,39 @@ public class OCLQueryTest extends AbstractCDOTest
     assertEquals(NUM_OF_PRODUCTS, products.size());
   }
 
+  public void testDeletedObject() throws Exception
+  {
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
+
+    List<Product1> products = query.getResult(Product1.class);
+    int numOfProducts = products.size();
+
+    resource.getContents().add(0, getModel1Factory().createProduct1());
+    transaction.commit();
+
+    resource.getContents().remove(0);
+    transaction.commit();
+
+    query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), true);
+
+    products = query.getResult(Product1.class);
+    assertEquals(numOfProducts, products.size());
+  }
+
+  public void testAuditWithDetachedObject() throws Exception
+  {
+    resource.getContents().add(0, getModel1Factory().createProduct1());
+    transaction.commit();
+
+    resource.getContents().remove(0);
+    transaction.commit();
+
+    CDOQuery query = transaction.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1(), false);
+
+    List<Product1> products = query.getResult(Product1.class);
+    assertEquals(NUM_OF_PRODUCTS, products.size());
+  }
+
   private CDOResource createTestSet(CDOTransaction transaction) throws CommitException
   {
     disableConsole();

@@ -106,7 +106,7 @@ public class CDOExtentCreator implements OCLExtentCreator
       }
     }
 
-    accessor.handleRevisions(eClass, branch, timeStamp, true, new CDORevisionHandler()
+    accessor.handleRevisions(eClass, branch, timeStamp, false, new CDORevisionHandler()
     {
       public boolean handleRevision(CDORevision revision)
       {
@@ -248,7 +248,7 @@ public class CDOExtentCreator implements OCLExtentCreator
 
             private void handlePersistentState()
             {
-              accessor.handleRevisions(eClass, branch, timeStamp, true, new CDORevisionHandler()
+              accessor.handleRevisions(eClass, branch, timeStamp, false, new CDORevisionHandler()
               {
                 public boolean handleRevision(CDORevision revision)
                 {

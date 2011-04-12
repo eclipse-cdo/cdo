@@ -400,34 +400,53 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected void validateTable(IDBTable table, Statement statement) throws DBException
   {
-    String sql = null;
+    int maxRows = 1;
 
     try
     {
-      StringBuilder builder = new StringBuilder();
-      builder.append("SELECT "); //$NON-NLS-1$
-      appendFieldNames(builder, table);
-      builder.append(" FROM "); //$NON-NLS-1$
-      builder.append(table);
-      sql = builder.toString();
+      maxRows = statement.getMaxRows();
+      statement.setMaxRows(1);
 
-      if (TRACER.isEnabled())
+      String sql = null;
+
+      try
       {
-        TRACER.format("{0}", sql); //$NON-NLS-1$
+        StringBuilder builder = new StringBuilder();
+        builder.append("SELECT "); //$NON-NLS-1$
+        appendFieldNames(builder, table);
+        builder.append(" FROM "); //$NON-NLS-1$
+        builder.append(table);
+        sql = builder.toString();
+
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("{0}", sql); //$NON-NLS-1$
+        }
+
+        ResultSet resultSet = statement.executeQuery(sql);
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int columnCount = metaData.getColumnCount();
+        if (columnCount != table.getFieldCount())
+        {
+          throw new DBException("DBTable " + table + " has " + columnCount + " columns instead of " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+              + table.getFieldCount());
+        }
       }
-
-      ResultSet resultSet = statement.executeQuery(sql);
-      ResultSetMetaData metaData = resultSet.getMetaData();
-      int columnCount = metaData.getColumnCount();
-      if (columnCount != table.getFieldCount())
+      catch (SQLException ex)
       {
-        throw new DBException("DBTable " + table + " has " + columnCount + " columns instead of " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            + table.getFieldCount());
+        throw new DBException("Problem with table " + table, ex, sql);
+      }
+      finally
+      {
+        if (maxRows != 1)
+        {
+          statement.setMaxRows(1);
+        }
       }
     }
     catch (SQLException ex)
     {
-      throw new DBException("Problem with table " + table, ex, sql);
+      throw new DBException(ex);
     }
   }
 

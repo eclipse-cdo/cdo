@@ -42,6 +42,8 @@ import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
+import org.eclipse.emf.cdo.tests.model6.Model6Factory;
+import org.eclipse.emf.cdo.tests.model6.Model6Package;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -433,6 +435,22 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   public Model5Package getModel5Package()
   {
     return getModelConfig().getModel5Package();
+  }
+
+  /**
+   * @category Model
+   */
+  public Model6Factory getModel6Factory()
+  {
+    return getModelConfig().getModel6Factory();
+  }
+
+  /**
+   * @category Model
+   */
+  public Model6Package getModel6Package()
+  {
+    return getModelConfig().getModel6Package();
   }
 
   // /////////////////////////////////////////////////////////////////////////

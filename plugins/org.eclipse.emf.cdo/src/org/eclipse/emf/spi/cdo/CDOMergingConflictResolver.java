@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.transaction.CDOMerger;
 
 import org.eclipse.net4j.util.CheckUtil;
 
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger.ConflictException;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -55,9 +57,19 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
 
   public void resolveConflicts(Set<CDOObject> conflicts)
   {
-    CDOChangeSet target = getLocalChangeSet();
-    CDOChangeSet source = getRemoteChangeSet();
-    CDOChangeSetData result = merger.merge(target, source);
+    CDOChangeSetData result;
+
+    try
+    {
+      CDOChangeSet target = getLocalChangeSet();
+      CDOChangeSet source = getRemoteChangeSet();
+
+      result = merger.merge(target, source);
+    }
+    catch (ConflictException ex)
+    {
+      result = ex.getMerger().getResult();
+    }
 
     InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
     InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();

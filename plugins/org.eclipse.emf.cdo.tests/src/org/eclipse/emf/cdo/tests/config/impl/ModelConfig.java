@@ -26,6 +26,8 @@ import org.eclipse.emf.cdo.tests.model4.model4Package;
 import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
+import org.eclipse.emf.cdo.tests.model6.Model6Factory;
+import org.eclipse.emf.cdo.tests.model6.Model6Package;
 
 /**
  * @author Eike Stepper
@@ -129,6 +131,16 @@ public abstract class ModelConfig extends Config implements IModelConfig
     {
       return org.eclipse.emf.cdo.tests.model5.Model5Package.eINSTANCE;
     }
+
+    public Model6Factory getModel6Factory()
+    {
+      return org.eclipse.emf.cdo.tests.model6.Model6Factory.eINSTANCE;
+    }
+
+    public Model6Package getModel6Package()
+    {
+      return org.eclipse.emf.cdo.tests.model6.Model6Package.eINSTANCE;
+    }
   }
 
   /**
@@ -220,6 +232,16 @@ public abstract class ModelConfig extends Config implements IModelConfig
     public Model5Package getModel5Package()
     {
       return org.eclipse.emf.cdo.tests.legacy.model5.Model5Package.eINSTANCE;
+    }
+
+    public Model6Factory getModel6Factory()
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model6.Model6Factory.eINSTANCE;
+    }
+
+    public Model6Package getModel6Package()
+    {
+      return org.eclipse.emf.cdo.tests.legacy.model6.Model6Package.eINSTANCE;
     }
   }
 }

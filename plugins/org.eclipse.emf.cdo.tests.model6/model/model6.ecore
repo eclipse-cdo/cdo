@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model6"
+    nsURI="http://www.eclipse.org/emf/CDO/tests/model6/1.0.0" nsPrefix="model6">
+  <eClassifiers xsi:type="ecore:EClass" name="Root">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listA" upperBound="-1"
+        eType="#//BaseObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listB" upperBound="-1"
+        eType="#//BaseObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listC" upperBound="-1"
+        eType="#//BaseObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listD" upperBound="-1"
+        eType="#//BaseObject" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BaseObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeOptional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeRequired" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attributeList" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReferenceObject" eSuperTypes="#//BaseObject">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referenceOptional" eType="#//BaseObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referenceList" upperBound="-1"
+        eType="#//BaseObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ContainmentObject" eSuperTypes="#//BaseObject">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containmentOptional" eType="#//BaseObject"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containmentList" upperBound="-1"
+        eType="#//BaseObject" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Eike Stepper - initial API and implementation"
+    modelDirectory="/org.eclipse.emf.cdo.tests.model6/src" editDirectory="" editorDirectory=""
+    modelPluginID="org.eclipse.emf.cdo.tests.model6" modelName="model6" editPluginClass="org.eclipse.emf.cdo.tests.model6.provider.Model6EditPlugin"
+    editorPluginClass="org.eclipse.emf.cdo.tests.model6.presentation.Model6EditorPlugin"
+    updateClasspath="false" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
+    reflectiveDelegation="true" codeFormatting="true" testsDirectory="" testSuiteClass="org.eclipse.emf.cdo.tests.model6.tests.model6AllTests"
+    importerID="org.eclipse.emf.importer.cdo" featureDelegation="Reflective" complianceLevel="5.0"
+    copyrightFields="false" editPluginID="org.eclipse.emf.cdo.tests.model6.edit">
+  <foreignModel>model6.ecore</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <genPackages prefix="Model6" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"
+      ecorePackage="model6.ecore#/">
+    <genClasses ecoreClass="model6.ecore#//Root">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//Root/listA"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//Root/listB"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//Root/listC"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//Root/listD"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//BaseObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//BaseObject/attributeOptional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//BaseObject/attributeRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model6.ecore#//BaseObject/attributeList"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//ReferenceObject">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model6.ecore#//ReferenceObject/referenceOptional"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model6.ecore#//ReferenceObject/referenceList"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//ContainmentObject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//ContainmentObject/containmentOptional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//ContainmentObject/containmentList"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

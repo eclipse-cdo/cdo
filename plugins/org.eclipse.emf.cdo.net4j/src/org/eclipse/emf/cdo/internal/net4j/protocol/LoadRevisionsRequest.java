@@ -15,8 +15,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
+import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
@@ -103,6 +105,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<InternalCDORevis
     }
 
     CDOFetchRuleManager ruleManager = getSession().getFetchRuleManager();
+    CDOCollectionLoadingPolicy collectionLoadingPolicy = ruleManager.getCollectionLoadingPolicy();
     List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
     if (fetchRules == null || fetchRules.size() <= 0)
     {
@@ -115,7 +118,8 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<InternalCDORevis
       CDOID contextID = ruleManager.getContext();
 
       out.writeInt(fetchSize);
-      out.writeInt(ruleManager.getCollectionLoadingPolicy().getInitialChunkSize());
+      out.writeInt(collectionLoadingPolicy != null ? collectionLoadingPolicy.getInitialChunkSize()
+          : CDORevision.UNCHUNKED);
       out.writeCDOID(contextID);
 
       for (CDOFetchRule fetchRule : fetchRules)

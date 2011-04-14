@@ -180,11 +180,6 @@ public final class CDOUtil
    */
   public static CDOCollectionLoadingPolicy createCollectionLoadingPolicy(int initialChunkSize, int resolveChunkSize)
   {
-    if (initialChunkSize == CDORevision.UNCHUNKED && resolveChunkSize == CDORevision.UNCHUNKED)
-    {
-      return CDOCollectionLoadingPolicy.DEFAULT;
-    }
-
     return new CDOCollectionLoadingPolicyImpl(initialChunkSize, resolveChunkSize);
   }
 

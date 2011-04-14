@@ -29,6 +29,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
  */
 public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolicy
 {
+  private CDOSession session;
+
   private int initialChunkSize;
 
   private int resolveChunkSize;
@@ -37,6 +39,16 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
   {
     this.resolveChunkSize = resolveChunkSize <= 0 ? CDORevision.UNCHUNKED : resolveChunkSize;
     this.initialChunkSize = initialChunkSize < 0 ? resolveChunkSize : initialChunkSize;
+  }
+
+  public CDOSession getSession()
+  {
+    return session;
+  }
+
+  public void setSession(CDOSession session)
+  {
+    this.session = session;
   }
 
   public int getInitialChunkSize()
@@ -49,13 +61,12 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
     return resolveChunkSize;
   }
 
-  public void resolveAllProxies(CDOSession session, CDORevision revision, EStructuralFeature feature)
+  public void resolveAllProxies(CDORevision revision, EStructuralFeature feature)
   {
-    doResolveProxy(session, revision, feature, 0, 0, Integer.MAX_VALUE);
+    doResolveProxy(revision, feature, 0, 0, Integer.MAX_VALUE);
   }
 
-  public Object resolveProxy(CDOSession session, CDORevision rev, EStructuralFeature feature, int accessIndex,
-      int serverIndex)
+  public Object resolveProxy(CDORevision rev, EStructuralFeature feature, int accessIndex, int serverIndex)
   {
     int chunkSize = resolveChunkSize;
     if (chunkSize == CDORevision.UNCHUNKED)
@@ -64,11 +75,11 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
       chunkSize = Integer.MAX_VALUE;
     }
 
-    return doResolveProxy(session, rev, feature, accessIndex, serverIndex, chunkSize);
+    return doResolveProxy(rev, feature, accessIndex, serverIndex, chunkSize);
   }
 
-  private Object doResolveProxy(CDOSession session, CDORevision rev, EStructuralFeature feature, int accessIndex,
-      int serverIndex, int chunkSize)
+  private Object doResolveProxy(CDORevision rev, EStructuralFeature feature, int accessIndex, int serverIndex,
+      int chunkSize)
   {
     // Get proxy values
     InternalCDORevision revision = (InternalCDORevision)rev;

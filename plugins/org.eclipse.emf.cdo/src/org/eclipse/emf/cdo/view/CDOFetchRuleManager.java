@@ -15,8 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 
-import org.eclipse.emf.internal.cdo.analyzer.NOOPFetchRuleManager;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -28,11 +26,6 @@ import java.util.List;
  */
 public interface CDOFetchRuleManager
 {
-  /**
-   * TODO Simon: JavaDoc
-   */
-  public static final CDOFetchRuleManager NOOP = new NOOPFetchRuleManager();
-
   /**
    * TODO Simon: JavaDoc
    */

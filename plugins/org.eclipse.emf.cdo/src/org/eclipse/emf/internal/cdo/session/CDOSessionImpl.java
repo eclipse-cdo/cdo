@@ -71,9 +71,11 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.analyzer.NOOPFetchRuleManager;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
@@ -179,7 +181,13 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private CDORepositoryInfo repositoryInfo;
 
-  private CDOFetchRuleManager ruleManager = CDOFetchRuleManager.NOOP;
+  private CDOFetchRuleManager ruleManager = new NOOPFetchRuleManager()
+  {
+    public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
+    {
+      return options().getCollectionLoadingPolicy();
+    }
+  };
 
   private IRWLockManager<CDOSessionImpl, Object> lockmanager = new RWLockManager<CDOSessionImpl, Object>();
 
@@ -884,7 +892,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex)
   {
     CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
-    return policy.resolveProxy(this, revision, feature, accessIndex, serverIndex);
+    return policy.resolveProxy(revision, feature, accessIndex, serverIndex);
   }
 
   /**
@@ -906,7 +914,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
             Object element = it.next();
             if (element instanceof CDOElementProxy)
             {
-              policy.resolveAllProxies(this, revision, reference);
+              policy.resolveAllProxies(revision, reference);
               break;
             }
           }
@@ -1488,12 +1496,13 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
     private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
 
-    private CDOCollectionLoadingPolicy collectionLoadingPolicy = CDOCollectionLoadingPolicy.DEFAULT;
+    private CDOCollectionLoadingPolicy collectionLoadingPolicy;
 
     private CDOLobStore lobCache = CDOLobStoreImpl.INSTANCE;
 
     public OptionsImpl()
     {
+      setCollectionLoadingPolicy(null); // Init default
     }
 
     public IOptionsContainer getContainer()
@@ -1594,8 +1603,16 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       if (policy == null)
       {
-        policy = CDOCollectionLoadingPolicy.DEFAULT;
+        policy = CDOUtil.createCollectionLoadingPolicy(CDORevision.UNCHUNKED, CDORevision.UNCHUNKED);
       }
+
+      CDOSession oldSession = policy.getSession();
+      if (oldSession != null)
+      {
+        throw new IllegalArgumentException("Policy is already associated with " + oldSession);
+      }
+
+      policy.setSession(CDOSessionImpl.this);
 
       IListener[] listeners = getListeners();
       IEvent event = null;

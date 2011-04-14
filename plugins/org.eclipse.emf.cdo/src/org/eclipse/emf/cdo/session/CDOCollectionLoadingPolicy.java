@@ -13,11 +13,8 @@ package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
+import org.eclipse.emf.cdo.common.revision.CDOListResolver;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-
-import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
-
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * A strategy that specifies which list elememts must be present (loaded) in a {@link CDOID} list of a
@@ -27,14 +24,17 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * @author Simon McDuff
  * @since 2.0
  */
-public interface CDOCollectionLoadingPolicy
+public interface CDOCollectionLoadingPolicy extends CDOListResolver
 {
   /**
-   * A default collection loading strategy that leads to complete loading of {@link CDOID} lists <b>before</b> any of
-   * their elements is accessed.
+   * @since 4.0
    */
-  public static final CDOCollectionLoadingPolicy DEFAULT = new CDOCollectionLoadingPolicyImpl(CDORevision.UNCHUNKED,
-      CDORevision.UNCHUNKED);
+  public CDOSession getSession();
+
+  /**
+   * @since 4.0
+   */
+  public void setSession(CDOSession session);
 
   /**
    * Returns the maximum number of CDOIDs to be loaded for collections when the owning object is loaded initially, i.e.
@@ -50,17 +50,4 @@ public interface CDOCollectionLoadingPolicy
    * @since 4.0
    */
   public int getResolveChunkSize();
-
-  /**
-   * Defines a strategy to be used when the collection needs to resolve one element.
-   * 
-   * @since 3.0
-   */
-  public Object resolveProxy(CDOSession session, CDORevision revision, EStructuralFeature feature, int accessIndex,
-      int serverIndex);
-
-  /**
-   * @since 4.0
-   */
-  public void resolveAllProxies(CDOSession session, CDORevision revision, EStructuralFeature feature);
 }

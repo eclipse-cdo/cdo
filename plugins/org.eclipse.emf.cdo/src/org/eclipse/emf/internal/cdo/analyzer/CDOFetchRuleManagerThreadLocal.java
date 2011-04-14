@@ -30,14 +30,14 @@ public class CDOFetchRuleManagerThreadLocal implements CDOFetchRuleManager
   {
   }
 
-  public static void join(CDOFetchRuleManager fetchRulemanager)
-  {
-    threadLocal.set(fetchRulemanager);
-  }
-
   public static CDOFetchRuleManager getCurrent()
   {
     return threadLocal.get();
+  }
+
+  public static void join(CDOFetchRuleManager fetchRulemanager)
+  {
+    threadLocal.set(fetchRulemanager);
   }
 
   public static void leave()
@@ -60,6 +60,6 @@ public class CDOFetchRuleManagerThreadLocal implements CDOFetchRuleManager
   public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
   {
     CDOFetchRuleManager analyzer = CDOFetchRuleManagerThreadLocal.getCurrent();
-    return analyzer != null ? analyzer.getCollectionLoadingPolicy() : CDOCollectionLoadingPolicy.DEFAULT;
+    return analyzer != null ? analyzer.getCollectionLoadingPolicy() : null;
   }
 }

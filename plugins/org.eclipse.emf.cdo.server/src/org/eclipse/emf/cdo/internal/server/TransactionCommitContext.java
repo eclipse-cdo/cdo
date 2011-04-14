@@ -96,6 +96,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private InternalTransaction transaction;
 
+  private InternalRepository repository;
+
   private TransactionPackageRegistry packageRegistry;
 
   private IStoreAccessor accessor;
@@ -144,7 +146,7 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     this.transaction = transaction;
 
-    InternalRepository repository = transaction.getRepository();
+    repository = transaction.getRepository();
     ensuringReferentialIntegrity = repository.isEnsuringReferentialIntegrity();
 
     packageRegistry = new TransactionPackageRegistry(repository.getPackageRegistry(false));
@@ -322,7 +324,7 @@ public class TransactionCommitContext implements InternalCommitContext
   public void preWrite()
   {
     // Allocate a store writer
-    accessor = transaction.getRepository().getStore().getWriter(transaction);
+    accessor = repository.getStore().getWriter(transaction);
 
     // Make the store writer available in a ThreadLocal variable
     StoreThreadLocal.setAccessor(accessor);
@@ -402,10 +404,7 @@ public class TransactionCommitContext implements InternalCommitContext
       }
 
       detachObjects(monitor.fork());
-
-      InternalRepository repository = transaction.getRepository();
       repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
-
       accessor.write(this, monitor.fork(100));
     }
     catch (Throwable t)
@@ -441,7 +440,7 @@ public class TransactionCommitContext implements InternalCommitContext
     try
     {
       OM.LOG.error(ex);
-      String storeClass = transaction.getRepository().getStore().getClass().getSimpleName();
+      String storeClass = repository.getStore().getClass().getSimpleName();
       rollback("Rollback in " + storeClass + ": " + StringUtil.formatException(ex)); //$NON-NLS-1$ //$NON-NLS-2$
     }
     catch (Exception ex1)
@@ -523,7 +522,6 @@ public class TransactionCommitContext implements InternalCommitContext
       InternalSession sender = transaction.getSession();
       CDOCommitInfo commitInfo = success ? createCommitInfo() : createFailureCommitInfo();
 
-      InternalRepository repository = transaction.getRepository();
       repository.sendCommitNotification(sender, commitInfo);
     }
     catch (Exception ex)
@@ -550,7 +548,7 @@ public class TransactionCommitContext implements InternalCommitContext
     String userID = transaction.getSession().getUserID();
     CDOCommitData commitData = createCommitData();
 
-    InternalCDOCommitInfoManager commitInfoManager = transaction.getRepository().getCommitInfoManager();
+    InternalCDOCommitInfoManager commitInfoManager = repository.getCommitInfoManager();
     return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, commitData);
   }
 
@@ -628,10 +626,10 @@ public class TransactionCommitContext implements InternalCommitContext
 
     try
     {
-      InternalLockManager lockManager = transaction.getRepository().getLockManager();
-      InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+      InternalLockManager lockManager = repository.getLockManager();
+      InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
-      final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
+      final boolean supportingBranches = repository.isSupportingBranches();
 
       CDOFeatureDeltaVisitor deltaTargetLocker = null;
       if (ensuringReferentialIntegrity)
@@ -765,7 +763,7 @@ public class TransactionCommitContext implements InternalCommitContext
       return false;
     }
 
-    final boolean supportingBranches = transaction.getRepository().isSupportingBranches();
+    final boolean supportingBranches = repository.isSupportingBranches();
     Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
 
     DeltaLockWrapper lockWrapper = new DeltaLockWrapper(key, null);
@@ -862,7 +860,7 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     if (!lockedObjects.isEmpty())
     {
-      InternalLockManager lockManager = transaction.getRepository().getLockManager();
+      InternalLockManager lockManager = repository.getLockManager();
       lockManager.unlock(LockType.WRITE, transaction, lockedObjects);
       lockedObjects.clear();
     }
@@ -892,10 +890,9 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private InternalCDORevision computeDirtyObject(InternalCDORevisionDelta delta)
   {
-    InternalRepository repository = transaction.getRepository();
-    InternalCDORevisionManager revisionManager = repository.getRevisionManager();
-
     CDOID id = delta.getID();
+
+    InternalCDORevisionManager revisionManager = repository.getRevisionManager();
     InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
     if (oldRevision == null)
     {
@@ -987,14 +984,12 @@ public class TransactionCommitContext implements InternalCommitContext
       addRevisions(dirtyObjects, monitor.fork());
       reviseDetachedObjects(monitor.fork());
 
-      InternalRepository repository = transaction.getRepository();
-
       unlockObjects();
       monitor.worked();
 
       if (isAutoReleaseLocksEnabled())
       {
-        transaction.getRepository().getLockManager().unlock(transaction);
+        repository.getLockManager().unlock(transaction);
       }
 
       monitor.worked();
@@ -1008,7 +1003,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private void addNewPackageUnits(OMMonitor monitor)
   {
-    InternalRepository repository = transaction.getRepository();
     InternalCDOPackageRegistry repositoryPackageRegistry = repository.getPackageRegistry(false);
     synchronized (repositoryPackageRegistry)
     {
@@ -1034,7 +1028,7 @@ public class TransactionCommitContext implements InternalCommitContext
     try
     {
       monitor.begin(revisions.length);
-      InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+      InternalCDORevisionManager revisionManager = repository.getRevisionManager();
       for (CDORevision revision : revisions)
       {
         if (revision != null)
@@ -1078,7 +1072,7 @@ public class TransactionCommitContext implements InternalCommitContext
     int size = detachedObjects.length;
     detachedRevisions = new InternalCDORevision[size];
 
-    InternalCDORevisionManager revisionManager = transaction.getRepository().getRevisionManager();
+    InternalCDORevisionManager revisionManager = repository.getRevisionManager();
     CDOID[] detachedObjects = getDetachedObjects();
 
     try

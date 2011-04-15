@@ -18,7 +18,6 @@ import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorPlugin;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.CreateEditPoliciesOperation;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvider;
 
@@ -47,7 +46,11 @@ public class DawnEcoreEditPolicyProvider extends AbstractProvider implements IEd
     if (editPart instanceof EPackageEditPart)
     {
       EcoreDiagramEditorPlugin.getInstance().logInfo("Overwriting CANONICAL EDITING POLICY in " + editPart);
-      editPart.installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new DawnECoreRootCanonicalEditPolicy());
+
+      // The Ecore Tools implementation overwrites the generated canonical editing policy. But it does not register it a
+      // "canonical" but as "pseudocanonical". So we need to do the same to overwrite the behavior.
+      editPart.installEditPolicy("PseudoCanonical", new DawnECoreRootCanonicalEditPolicy());
+      // editPart.installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new DawnECoreRootCanonicalEditPolicy());
     }
   }
 }

@@ -69,13 +69,13 @@ public class DawnEcoreDiagramEditor extends EcoreDiagramEditor implements IDawnE
     }
 
     dawnEditorSupport.setView(((DawnEditorInput)input).getView());
-    dawnEditorSupport.registerListeners();
   }
 
   @Override
   protected void initializeGraphicalViewer()
   {
     super.initializeGraphicalViewer();
+    dawnEditorSupport.registerListeners();
   }
 
   @Override

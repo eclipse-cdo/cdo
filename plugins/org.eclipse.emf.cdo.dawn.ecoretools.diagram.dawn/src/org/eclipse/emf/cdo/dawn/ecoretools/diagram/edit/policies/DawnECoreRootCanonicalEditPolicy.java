@@ -19,6 +19,7 @@ import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest.ViewDescrip
 import org.eclipse.gmf.runtime.notation.View;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -64,38 +65,15 @@ public class DawnECoreRootCanonicalEditPolicy extends EPackageCanonicalEditPolic
 
     return new CreateViewRequest(descriptors);
   }
-  // @Override
-  // protected List getSemanticChildrenList()
-  // {
-  // List semanticChildren = super.getSemanticChildrenList();
-  // List<View> viewChildren = getViewChildren();
-  //
-  // //remove all semantic children that do not have a view because the have one in another resource,
-  // //or the child should not have one
-  // semanticChildren.removeAll(cleanCanonicalSemanticChildren(viewChildren, semanticChildren));
-  // return semanticChildren;
-  // }
 
-  // /**
-  // * @generated
-  // */
-  // @Override
-  // public void refreshSemantic()
-  // {
-  // List createdViews = new LinkedList();
-  // // createdViews.addAll(refreshSemanticChildren());
-  // List createdConnectionViews = new LinkedList();
-  // createdConnectionViews.addAll(refreshSemanticConnections());
-  // createdConnectionViews.addAll(refreshConnections());
-  //
-  // if (createdViews.size() > 1)
-  // {
-  // // perform a layout of the container
-  // DeferredLayoutCommand layoutCmd = new DeferredLayoutCommand(host().getEditingDomain(), createdViews, host());
-  // executeCommand(new ICommandProxy(layoutCmd));
-  // }
-  //
-  // createdViews.addAll(createdConnectionViews);
-  // makeViewsImmutable(createdViews);
-  // }
+  @Override
+  protected void refreshSemantic()
+  {
+    deleteOrphanedViews();
+    List createdConnectionViews = new LinkedList();
+    createdConnectionViews.addAll(refreshSemanticConnections());
+    // createdConnectionViews.addAll(refreshConnections());
+
+    makeViewsImmutable(createdConnectionViews);
+  }
 }

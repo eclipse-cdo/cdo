@@ -123,7 +123,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thisObject.setAttributeOptional("this"); //$NON-NLS-1$
     thatObject.setAttributeOptional("that"); //$NON-NLS-1$
 
-    commitAndSync(thisTransaction, thatTransaction);
+    thisTransaction.commit();
 
     try
     {
@@ -152,7 +152,15 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
     thatObject.setAttributeOptional("that"); //$NON-NLS-1$
 
     commitAndSync(thisTransaction, thatTransaction);
-    commitAndSync(thatTransaction, thisTransaction);
+
+    try
+    {
+      commitAndSync(thatTransaction, thisTransaction);
+      fail("CommitException expected");
+    }
+    catch (CommitException expected)
+    {
+    }
   }
 
   // --- single value conflict resolver tests --------------------------
@@ -3756,7 +3764,7 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
   private Root getTestModelRoot(CDOTransaction transaction)
   {
-    CDOResource resource = transaction.getResource(TEST_RESOURCE_NAME);
+    CDOResource resource = transaction.getResource(getResourcePath(TEST_RESOURCE_NAME));
     return (Root)resource.getContents().get(0);
   }
 

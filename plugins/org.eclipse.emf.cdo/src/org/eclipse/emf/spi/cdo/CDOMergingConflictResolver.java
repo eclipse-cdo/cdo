@@ -22,10 +22,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
+import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
 
 import org.eclipse.net4j.util.CheckUtil;
-
-import org.eclipse.emf.spi.cdo.DefaultCDOMerger.ConflictException;
 
 import java.util.Map;
 import java.util.Set;
@@ -68,7 +67,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     }
     catch (ConflictException ex)
     {
-      result = ex.getMerger().getResult();
+      result = ex.getResult();
     }
 
     InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();

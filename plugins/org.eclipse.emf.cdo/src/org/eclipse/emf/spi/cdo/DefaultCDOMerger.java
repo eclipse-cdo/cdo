@@ -105,7 +105,7 @@ public class DefaultCDOMerger implements CDOMerger
 
     if (!conflicts.isEmpty())
     {
-      throw new ConflictException(this);
+      throw new ConflictException("Merger could not resolve all conflicts: " + conflicts, this, result);
     }
 
     return result;
@@ -297,27 +297,6 @@ public class DefaultCDOMerger implements CDOMerger
     }
 
     return true;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class ConflictException extends RuntimeException
-  {
-    private static final long serialVersionUID = 1L;
-
-    private DefaultCDOMerger merger;
-
-    public ConflictException(DefaultCDOMerger merger)
-    {
-      super("Merger could not resolve all conflicts: " + merger.getConflicts());
-      this.merger = merger;
-    }
-
-    public DefaultCDOMerger getMerger()
-    {
-      return merger;
-    }
   }
 
   /**

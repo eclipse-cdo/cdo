@@ -19,5 +19,42 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
  */
 public interface CDOMerger
 {
-  public CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source);
+  public CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws ConflictException;
+
+  /**
+   * @author Eike Stepper
+   * @since 4.0
+   */
+  public static class ConflictException extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+
+    private CDOMerger merger;
+
+    private CDOChangeSetData result;
+
+    public ConflictException(String message, CDOMerger merger, CDOChangeSetData result)
+    {
+      super(message);
+      this.merger = merger;
+      this.result = result;
+    }
+
+    public ConflictException(String message, Throwable cause, CDOMerger merger, CDOChangeSetData result)
+    {
+      super(message, cause);
+      this.merger = merger;
+      this.result = result;
+    }
+
+    public CDOMerger getMerger()
+    {
+      return merger;
+    }
+
+    public CDOChangeSetData getResult()
+    {
+      return result;
+    }
+  }
 }

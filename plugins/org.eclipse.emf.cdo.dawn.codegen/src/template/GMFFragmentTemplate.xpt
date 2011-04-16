@@ -98,7 +98,6 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
     }
     
     dawnEditorSupport.setView(((DawnEditorInput)input).getView());
-    dawnEditorSupport.registerListeners();
   }
 
   «EXPAND generatedComment -»
@@ -106,6 +105,7 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
   protected void initializeGraphicalViewer()
   {
     super.initializeGraphicalViewer();
+    dawnEditorSupport.registerListeners();
   }
 
   «EXPAND generatedComment -»

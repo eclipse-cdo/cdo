@@ -68,13 +68,13 @@ public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnE
     }
 
     dawnEditorSupport.setView(((DawnEditorInput)input).getView());
-    dawnEditorSupport.registerListeners();
   }
 
   @Override
   protected void initializeGraphicalViewer()
   {
     super.initializeGraphicalViewer();
+    dawnEditorSupport.registerListeners();
   }
 
   @Override

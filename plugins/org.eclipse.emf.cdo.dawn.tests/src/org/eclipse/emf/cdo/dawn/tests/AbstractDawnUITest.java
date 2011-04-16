@@ -46,7 +46,9 @@ public abstract class AbstractDawnUITest<T extends SWTWorkbenchBot> extends Abst
     SWTBotPreferences.SCREENSHOTS_DIR = DawnTestPlatform.instance.getTestFolder();
     resetWorkbench();
     DawnSWTBotUtil.initTest(getBot());
-    // getBot().viewByTitle("CDO Sessions").close();
+
+    // TODO Remove this line if bug 323788 is solved.
+    getBot().viewByTitle("CDO Sessions").close();
   }
 
   /**

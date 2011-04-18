@@ -11,10 +11,10 @@
 package org.eclipse.emf.cdo.tests.hibernate;
 
 import org.eclipse.emf.cdo.tests.AllConfigs;
-import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
-import org.eclipse.emf.cdo.tests.BranchingTest;
+import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
+import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.CommitInfoTest;
 import org.eclipse.emf.cdo.tests.ComplexTest;
 import org.eclipse.emf.cdo.tests.ContainmentTest;
@@ -280,14 +280,6 @@ public class AllTestsHibernate extends AllConfigs
 
   public static class Hibernate_ContainmentTest extends ContainmentTest
   {
-    // this testcase is overridden because it uses an ereference which should be
-    // annotated with @External, but which can't be mapped like that because it is
-    // also used non-externally by other testcases
-    @Override
-    public void testObjectNotSameResourceThanItsContainerCDOANDXMI() throws Exception
-    {
-    }
-
     // see:
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330207#c1
     @Override

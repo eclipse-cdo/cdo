@@ -39,9 +39,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
 /**
  * @author Eike Stepper
  */
@@ -344,68 +341,6 @@ public class ContainmentTest extends AbstractCDOTest
     assertTransient(address);
     assertContent(resource, order);
     assertNull(order.getShippingAddress());
-  }
-
-  public void testObjectNotSameResourceThanItsContainerCDOANDXMI() throws Exception
-  {
-    skipExternalReferences();
-
-    byte[] data = null;
-    {
-      CDOSession session = openSession();
-      ResourceSet resourceSet = new ResourceSetImpl();
-      resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
-
-      CDOTransaction transaction = session.openTransaction(resourceSet);
-      Resource resource1 = resourceSet.createResource(URI.createURI("test://1"));
-      Resource resource2 = transaction.createResource(getResourcePath("test"));
-
-      EPackage packageObject = createDynamicEPackage();
-      EClass eClass = (EClass)packageObject.getEClassifier("SchoolBook");
-
-      EObject container = packageObject.getEFactoryInstance().create(eClass);
-      Order contained = getModel1Factory().createPurchaseOrder();
-
-      resource1.getContents().add(container);
-      resource2.getContents().add(contained);
-
-      container.eSet(container.eClass().getEStructuralFeature("proxyElement"), contained);
-
-      assertEquals(resource1, container.eResource());
-      assertEquals(resource2, contained.eResource());
-
-      // If the relationship is define has resolveProxy this is true if not.. this is false.
-      assertEquals(container, contained.eContainer());
-      ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-      resource1.save(outputStream, null);
-      data = outputStream.toByteArray();
-      transaction.commit();
-    }
-
-    clearCache(getRepository().getRevisionManager());
-    EPackage packageObject = createDynamicEPackage();
-
-    ResourceSet resourceSet = new ResourceSetImpl();
-    CDOSession session = openSession();
-    session.getPackageRegistry().putEPackage(packageObject);
-    CDOTransaction transaction = session.openTransaction(resourceSet);
-
-    resourceSet.getPackageRegistry().put(packageObject.getNsURI(), packageObject);
-    resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
-
-    Resource resource1 = resourceSet.createResource(URI.createURI("test://1"));
-    resource1.load(new ByteArrayInputStream(data), null);
-    Resource resource2 = transaction.getResource(getResourcePath("test"));
-
-    EObject container = resource1.getContents().get(0);
-    Order order = (Order)resource2.getContents().get(0);
-
-    assertEquals(resource1.getContents().get(0), order.eContainer());
-    resource2.getContents().remove(order);
-
-    Order order2 = (Order)CDOUtil.getEObject((EObject)container.eGet(container.eClass().getEStructuralFeature(
-        "proxyElement")));
-    assertSame(order, order2);
   }
 
   public void testObjectNotSameResourceThanItsContainerCDO() throws Exception

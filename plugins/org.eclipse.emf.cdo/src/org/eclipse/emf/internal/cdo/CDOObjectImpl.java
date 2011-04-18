@@ -361,15 +361,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     eContainer = store.getContainer(this);
     eContainerFeatureID = store.getContainingFeatureID(this);
 
-    if (eContainer != null)
-    {
-      EReference containmentFeature = eContainmentFeature();
-      if (containmentFeature.isResolveProxies())
-      {
-        adjustOppositeReference(this, eContainer, containmentFeature);
-      }
-    }
-
     // Ensure that the internal eSettings array is initialized;
     resetSettings();
 

@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecoretools.diagram.edit.policies.EPackageCanonicalEditPolicy;
 import org.eclipse.emf.ecoretools.diagram.part.EcoreDiagramEditorPlugin;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest.ViewDescriptor;
 import org.eclipse.gmf.runtime.notation.View;
@@ -70,7 +71,7 @@ public class DawnECoreRootCanonicalEditPolicy extends EPackageCanonicalEditPolic
   protected void refreshSemantic()
   {
     deleteOrphanedViews();
-    List createdConnectionViews = new LinkedList();
+    List<IAdaptable> createdConnectionViews = new LinkedList<IAdaptable>();
     createdConnectionViews.addAll(refreshSemanticConnections());
     // createdConnectionViews.addAll(refreshConnections());
 

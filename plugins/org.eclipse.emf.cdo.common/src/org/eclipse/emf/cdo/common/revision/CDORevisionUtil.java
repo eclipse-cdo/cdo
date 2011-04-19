@@ -31,9 +31,11 @@ import org.eclipse.emf.cdo.internal.common.revision.CDORevisionKeyImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
@@ -261,6 +263,42 @@ public final class CDORevisionUtil
   public static Object remapID(Object value, Map<CDOID, CDOID> idMappings, boolean allowUnmappedTempIDs)
   {
     return CDORevisionImpl.remapID(value, idMappings, allowUnmappedTempIDs);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static String getResourceNodePath(CDORevision revision, CDORevisionProvider provider)
+  {
+    EAttribute nameFeature = (EAttribute)revision.getEClass().getEStructuralFeature("name");
+
+    StringBuilder builder = new StringBuilder();
+    getResourceNodePath((InternalCDORevision)revision, provider, nameFeature, builder);
+
+    builder.insert(0, "/");
+    return builder.toString();
+  }
+
+  private static void getResourceNodePath(InternalCDORevision revision, CDORevisionProvider provider,
+      EAttribute nameFeature, StringBuilder result)
+  {
+    String name = (String)revision.get(nameFeature, 0);
+    if (name != null)
+    {
+      if (result.length() != 0)
+      {
+        result.insert(0, "/");
+      }
+
+      result.insert(0, name);
+    }
+
+    CDOID folder = (CDOID)revision.getContainerID();
+    if (!CDOIDUtil.isNull(folder))
+    {
+      InternalCDORevision container = (InternalCDORevision)provider.getRevision(folder);
+      getResourceNodePath(container, provider, nameFeature, result);
+    }
   }
 
   /**

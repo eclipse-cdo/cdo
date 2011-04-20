@@ -74,7 +74,10 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
 
   public CDOIDTemp getNextTemporaryID();
 
-  public void registerNew(InternalCDOObject object);
+  /**
+   * @since 4.0
+   */
+  public void registerAttached(InternalCDOObject object, boolean isNew);
 
   public void registerDirty(InternalCDOObject object, CDOFeatureDelta featureDelta);
 

@@ -545,8 +545,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
         // Register object
         transaction.registerObject(object);
-        transaction.registerNew(object);
       }
+
+      transaction.registerAttached(object, !reattaching);
 
       // Prepare content tree
       for (Iterator<InternalCDOObject> it = getProperContents(object, transaction); it.hasNext();)

@@ -566,7 +566,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         object.cdoInternalPostLoad();
 
         registerObject(object);
-        registerNew(object);
+        registerAttached(object, true);
         result.add(revision);
         dirty = true;
       }
@@ -1486,14 +1486,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return "CDOTransaction"; //$NON-NLS-1$
   }
 
-  public synchronized void registerNew(InternalCDOObject object)
+  public synchronized void registerAttached(InternalCDOObject object, boolean isNew)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Registering new object {0}", object); //$NON-NLS-1$
     }
 
-    registerNewPackage(object.eClass().getEPackage());
+    if (isNew)
+    {
+      registerNewPackage(object.eClass().getEPackage());
+    }
 
     CDOTransactionHandler1[] handlers = getTransactionHandlers1();
     if (handlers != null)
@@ -1505,7 +1508,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    registerNew(lastSavepoint.getNewObjects(), object);
+    if (isNew)
+    {
+      registerNew(lastSavepoint.getNewObjects(), object);
+    }
   }
 
   private void registerNewPackage(EPackage ePackage)
@@ -1860,7 +1866,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           InternalCDOObject object = newInstance(revision);
           registerObject(object);
-          registerNew(object);
+          registerAttached(object, true);
         }
 
         // Apply deltas

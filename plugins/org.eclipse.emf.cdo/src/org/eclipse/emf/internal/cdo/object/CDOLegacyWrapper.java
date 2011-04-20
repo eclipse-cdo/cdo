@@ -195,13 +195,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
     EClass eClass = revision.getEClass();
 
-    CDOStore store = view.getStore();
-    InternalEObject eContainer = store.getContainer(this);
-    if (eContainer != null && eContainmentFeature().isResolveProxies())
-    {
-      adjustOppositeReference(this, eContainer, eContainmentFeature());
-    }
-
     // This loop adjusts the opposite wrapper objects to support dangling references. See Bugzilla_251263_Test
     for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(eClass))
     {
@@ -959,25 +952,27 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     return wrapperRegistry.get().containsKey(wrapper.cdoID());
   }
 
-  private void adjustOppositeReference(InternalCDOObject cdoObject, EObject oppositeObject, EReference oppositeReference)
-  {
-    if (oppositeObject != null)
-    {
-      InternalCDOObject oppositeCDOObject = (InternalCDOObject)CDOUtil.getCDOObject(oppositeObject);
-
-      if (!FSMUtil.isTransient(oppositeCDOObject) && !EMFUtil.isPersistent(oppositeReference))
-      {
-        adjustPersistentOppositeReference(cdoObject, oppositeObject, oppositeReference);
-      }
-      else
-      {
-        if (oppositeReference.isResolveProxies())
-        {
-          adjustTransientOppositeReference(instance, (InternalEObject)oppositeObject, oppositeReference);
-        }
-      }
-    }
-  }
+  // TODO: Remove this method if it is ensured that ist is not needed anymore
+  // private void adjustOppositeReference(InternalCDOObject cdoObject, EObject oppositeObject, EReference
+  // oppositeReference)
+  // {
+  // if (oppositeObject != null)
+  // {
+  // InternalCDOObject oppositeCDOObject = (InternalCDOObject)CDOUtil.getCDOObject(oppositeObject);
+  //
+  // if (!FSMUtil.isTransient(oppositeCDOObject) && !EMFUtil.isPersistent(oppositeReference))
+  // {
+  // adjustPersistentOppositeReference(cdoObject, oppositeObject, oppositeReference);
+  // }
+  // else
+  // {
+  // if (oppositeReference.isResolveProxies())
+  // {
+  // adjustTransientOppositeReference(instance, (InternalEObject)oppositeObject, oppositeReference);
+  // }
+  // }
+  // }
+  // }
 
   private void adjustPersistentOppositeReference(InternalCDOObject cdoObject, EObject oppositeObject,
       EReference oppositeReference)

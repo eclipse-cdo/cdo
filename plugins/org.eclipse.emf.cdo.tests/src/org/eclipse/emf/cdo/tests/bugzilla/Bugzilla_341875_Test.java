@@ -29,6 +29,24 @@ public class Bugzilla_341875_Test extends AbstractCDOTest
 {
   private final model4Factory factory = getModel4Factory();
 
+  private EReference ref_elToPar = getModel4Package().getSingleContainedElement_Parent();
+
+  private EReference ref_parToEl = getModel4Package().getRefSingleContained_Element();
+
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    ref_parToEl.setResolveProxies(true);
+    super.doSetUp();
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    ref_parToEl.setResolveProxies(false);
+    super.doTearDown();
+  }
+
   public void test()
   {
     SingleContainedElement element = factory.createSingleContainedElement();
@@ -43,10 +61,6 @@ public class Bugzilla_341875_Test extends AbstractCDOTest
 
     assertEquals(CDOState.NEW, CDOUtil.getCDOObject(parent).cdoState());
     assertEquals(CDOState.NEW, CDOUtil.getCDOObject(element).cdoState());
-
-    EReference ref_elToPar = getModel4Package().getSingleContainedElement_Parent();
-    EReference ref_parToEl = getModel4Package().getRefSingleContained_Element();
-    ref_parToEl.setResolveProxies(true);
 
     element.eUnset(ref_elToPar);
     assertNull(parent.eGet(ref_parToEl));

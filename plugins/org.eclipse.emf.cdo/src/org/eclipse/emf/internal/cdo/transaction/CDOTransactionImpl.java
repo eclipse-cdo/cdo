@@ -2099,9 +2099,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private void removeCrossReferences(Collection<CDOObject> referencers, Set<CDOID> referencedOIDs)
   {
+    List<Pair<Setting, EObject>> objectsToBeRemoved = new LinkedList<Pair<Setting, EObject>>();
     for (CDOObject referencer : referencers)
     {
-      List<Pair<Setting, EObject>> objectsToBeRemoved = new LinkedList<Pair<Setting, EObject>>();
       EContentsEList.FeatureIterator<EObject> it = (EContentsEList.FeatureIterator<EObject>)referencer
           .eCrossReferences().iterator();
       while (it.hasNext())
@@ -2143,11 +2143,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           objectsToBeRemoved.add(new Pair<Setting, EObject>(setting, referencedObject));
         }
       }
+    }
 
-      for (Pair<Setting, EObject> pair : objectsToBeRemoved)
-      {
-        EcoreUtil.remove(pair.getElement1(), pair.getElement2());
-      }
+    for (Pair<Setting, EObject> pair : objectsToBeRemoved)
+    {
+      EcoreUtil.remove(pair.getElement1(), pair.getElement2());
     }
   }
 

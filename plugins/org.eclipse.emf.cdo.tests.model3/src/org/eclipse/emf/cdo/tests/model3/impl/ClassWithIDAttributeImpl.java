@@ -18,23 +18,22 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.ecore.EClass;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Class With ID Attribute</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Class With ID Attribute</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.ClassWithIDAttributeImpl#getId <em>Id</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.ClassWithIDAttributeImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ClassWithIDAttributeImpl extends CDOObjectImpl implements ClassWithIDAttribute
 {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected ClassWithIDAttributeImpl()
@@ -43,8 +42,8 @@ public class ClassWithIDAttributeImpl extends CDOObjectImpl implements ClassWith
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -54,8 +53,8 @@ public class ClassWithIDAttributeImpl extends CDOObjectImpl implements ClassWith
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -65,8 +64,8 @@ public class ClassWithIDAttributeImpl extends CDOObjectImpl implements ClassWith
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getId()
@@ -75,8 +74,8 @@ public class ClassWithIDAttributeImpl extends CDOObjectImpl implements ClassWith
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setId(String newId)
@@ -84,4 +83,4 @@ public class ClassWithIDAttributeImpl extends CDOObjectImpl implements ClassWith
     eSet(Model3Package.eINSTANCE.getClassWithIDAttribute_Id(), newId);
   }
 
-} //ClassWithIDAttributeImpl
+} // ClassWithIDAttributeImpl

@@ -24,16 +24,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.subpackage.impl.Class2Impl#getClass1 <em>Class1</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.subpackage.impl.Class2Impl#getClass1 <em>Class1</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class Class2Impl extends CDOObjectImpl implements Class2
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected Class2Impl()
@@ -43,6 +44,7 @@ public class Class2Impl extends CDOObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -53,6 +55,7 @@ public class Class2Impl extends CDOObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -63,6 +66,7 @@ public class Class2Impl extends CDOObjectImpl implements Class2
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

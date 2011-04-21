@@ -23,20 +23,21 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getChildren <em>Children</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getOtherNodes <em>Other Nodes</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getOppositeNodes <em>Opposite Nodes</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getParent <em>Parent</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getOtherNodes <em>Other Nodes</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getOppositeNodes <em>Opposite Nodes</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class NodeCImpl extends CDOObjectImpl implements NodeC
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected NodeCImpl()
@@ -46,6 +47,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -56,6 +58,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -66,6 +69,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -76,6 +80,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public NodeC getParent()
@@ -85,6 +90,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setParent(NodeC newParent)
@@ -94,6 +100,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -103,6 +110,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -112,6 +120,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -122,6 +131,7 @@ public class NodeCImpl extends CDOObjectImpl implements NodeC
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

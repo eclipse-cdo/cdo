@@ -23,18 +23,19 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl#getChildren <em>Children</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl#getOtherNodes <em>Other Nodes</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl#getOtherNodes <em>Other Nodes</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class NodeAImpl extends CDOObjectImpl implements NodeA
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected NodeAImpl()
@@ -44,6 +45,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -54,6 +56,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -64,6 +67,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -74,6 +78,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -83,6 +88,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -92,6 +98,7 @@ public class NodeAImpl extends CDOObjectImpl implements NodeA
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

@@ -26,20 +26,20 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEClassRef <em>EClass Ref</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEReferenceRef <em>EReference Ref</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEClassRef <em>EClass Ref</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.MetaRefImpl#getEReferenceRef <em>EReference Ref</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class MetaRefImpl extends EObjectImpl implements MetaRef
 {
   /**
-   * The cached value of the '{@link #getEPackageRef() <em>EPackage Ref</em>}' reference.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getEPackageRef() <em>EPackage Ref</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getEPackageRef()
    * @generated
    * @ordered
@@ -47,9 +47,9 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   protected EPackage ePackageRef;
 
   /**
-   * The cached value of the '{@link #getEClassRef() <em>EClass Ref</em>}' reference.
-   * <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getEClassRef() <em>EClass Ref</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
+   * 
    * @see #getEClassRef()
    * @generated
    * @ordered
@@ -57,9 +57,9 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
   protected EClass eClassRef;
 
   /**
-   * The cached value of the '{@link #getEReferenceRef() <em>EReference Ref</em>}' reference.
-   * <!-- begin-user-doc -->
+   * The cached value of the '{@link #getEReferenceRef() <em>EReference Ref</em>}' reference. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @see #getEReferenceRef()
    * @generated
    * @ordered
@@ -68,6 +68,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected MetaRefImpl()
@@ -77,6 +78,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -87,6 +89,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EPackage getEPackageRef()
@@ -107,6 +110,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EPackage basicGetEPackageRef()
@@ -116,6 +120,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEPackageRef(EPackage newEPackageRef)
@@ -129,6 +134,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getEClassRef()
@@ -149,6 +155,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass basicGetEClassRef()
@@ -158,6 +165,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEClassRef(EClass newEClassRef)
@@ -170,6 +178,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getEReferenceRef()
@@ -190,6 +199,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference basicGetEReferenceRef()
@@ -199,6 +209,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEReferenceRef(EReference newEReferenceRef)
@@ -212,6 +223,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -237,6 +249,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -259,6 +272,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -281,6 +295,7 @@ public class MetaRefImpl extends EObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

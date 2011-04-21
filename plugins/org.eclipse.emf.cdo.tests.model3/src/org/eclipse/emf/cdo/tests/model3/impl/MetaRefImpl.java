@@ -35,6 +35,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected MetaRefImpl()
@@ -44,6 +45,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -54,6 +56,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -64,6 +67,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EPackage getEPackageRef()
@@ -73,6 +77,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEPackageRef(EPackage newEPackageRef)
@@ -82,6 +87,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EClass getEClassRef()
@@ -91,6 +97,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEClassRef(EClass newEClassRef)
@@ -100,6 +107,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public EReference getEReferenceRef()
@@ -109,6 +117,7 @@ public class MetaRefImpl extends CDOObjectImpl implements MetaRef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setEReferenceRef(EReference newEReferenceRef)

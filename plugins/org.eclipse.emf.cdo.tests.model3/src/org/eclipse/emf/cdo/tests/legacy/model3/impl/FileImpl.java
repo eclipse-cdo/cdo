@@ -24,11 +24,11 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.FileImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.FileImpl#getData <em>Data</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.FileImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.FileImpl#getData <em>Data</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class FileImpl extends EObjectImpl implements File
@@ -44,8 +44,8 @@ public class FileImpl extends EObjectImpl implements File
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -63,8 +63,8 @@ public class FileImpl extends EObjectImpl implements File
   protected static final CDOClob DATA_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getData() <em>Data</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getData() <em>Data</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getData()
    * @generated
    * @ordered
@@ -73,6 +73,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected FileImpl()
@@ -82,6 +83,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -92,6 +94,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public String getName()
@@ -101,6 +104,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setName(String newName)
@@ -113,6 +117,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public CDOClob getData()
@@ -122,6 +127,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public void setData(CDOClob newData)
@@ -134,6 +140,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -151,6 +158,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -170,6 +178,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -189,6 +198,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -206,6 +216,7 @@ public class FileImpl extends EObjectImpl implements File
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

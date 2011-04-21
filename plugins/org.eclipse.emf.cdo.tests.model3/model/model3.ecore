@@ -66,6 +66,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="data" eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//Clob"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClassWithIDAttribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"
+        iD="true"/>
+  </eClassifiers>
   <eSubpackages name="subpackage" nsURI="http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0"
       nsPrefix="subpackage">
     <eClassifiers xsi:type="ecore:EClass" name="Class2">

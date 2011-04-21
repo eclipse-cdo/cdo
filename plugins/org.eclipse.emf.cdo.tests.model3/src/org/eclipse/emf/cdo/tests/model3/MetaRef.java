@@ -53,13 +53,13 @@ public interface MetaRef extends EObject
   void setEPackageRef(EPackage value);
 
   /**
-   * Returns the value of the '<em><b>EClass Ref</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>EClass Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>EClass Ref</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>EClass Ref</em>' reference.
    * @see #setEClassRef(EClass)
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getMetaRef_EClassRef()
@@ -69,24 +69,22 @@ public interface MetaRef extends EObject
   EClass getEClassRef();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.MetaRef#getEClassRef <em>EClass Ref</em>}'
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>EClass Ref</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.MetaRef#getEClassRef <em>EClass Ref</em>}' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>EClass Ref</em>' reference.
    * @see #getEClassRef()
    * @generated
    */
   void setEClassRef(EClass value);
 
   /**
-   * Returns the value of the '<em><b>EReference Ref</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>EReference Ref</b></em>' reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>EReference Ref</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>EReference Ref</em>' reference.
    * @see #setEReferenceRef(EReference)
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getMetaRef_EReferenceRef()
@@ -96,11 +94,9 @@ public interface MetaRef extends EObject
   EReference getEReferenceRef();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.MetaRef#getEReferenceRef <em>EReference Ref</em>}'
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>EReference Ref</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model3.MetaRef#getEReferenceRef <em>EReference Ref</em>}' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>EReference Ref</em>' reference.
    * @see #getEReferenceRef()
    * @generated
    */

@@ -16,14 +16,15 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>File</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model3.File#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model3.File#getData <em>Data</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.File#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model3.File#getData <em>Data</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getFile()
  * @model
  * @generated
@@ -31,12 +32,12 @@ import org.eclipse.emf.ecore.EObject;
 public interface File extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getFile_Name()
@@ -57,12 +58,12 @@ public interface File extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Data</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Data</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Data</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Data</em>' attribute.
    * @see #setData(CDOClob)
    * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getFile_Data()

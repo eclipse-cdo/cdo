@@ -27,18 +27,18 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl#getPoints <em>Points</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.PolygonWithDuplicatesImpl#getPoints <em>Points</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWithDuplicates
 {
   /**
-   * The cached value of the '{@link #getPoints() <em>Points</em>}' attribute list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getPoints() <em>Points</em>}' attribute list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getPoints()
    * @generated
    * @ordered
@@ -47,7 +47,6 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected PolygonWithDuplicatesImpl()
@@ -57,7 +56,6 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -68,7 +66,6 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<Point> getPoints()
@@ -82,7 +79,6 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -98,7 +94,6 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -117,7 +112,6 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -134,7 +128,6 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -150,7 +143,6 @@ public class PolygonWithDuplicatesImpl extends EObjectImpl implements PolygonWit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

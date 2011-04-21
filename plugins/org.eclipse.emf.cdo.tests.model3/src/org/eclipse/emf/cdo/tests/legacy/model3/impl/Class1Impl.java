@@ -30,18 +30,18 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl#getClass2 <em>Class2</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model3.impl.Class1Impl#getClass2 <em>Class2</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class Class1Impl extends EObjectImpl implements Class1
 {
   /**
-   * The cached value of the '{@link #getClass2() <em>Class2</em>}' reference list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getClass2() <em>Class2</em>}' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getClass2()
    * @generated
    * @ordered
@@ -50,7 +50,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected Class1Impl()
@@ -60,7 +59,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -71,7 +69,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<Class2> getClass2()
@@ -86,7 +83,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetClass2()
@@ -97,7 +93,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetClass2()
@@ -107,7 +102,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -124,7 +118,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -140,7 +133,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -156,7 +148,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -175,7 +166,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -192,7 +182,6 @@ public class Class1Impl extends EObjectImpl implements Class1
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

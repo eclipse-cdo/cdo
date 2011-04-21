@@ -86,7 +86,7 @@ public class CommitIntegrityCheck
     {
       CDOObject newObject = transaction.getObject(newID);
       checkContainerIncluded(newObject, "new");
-      checkCurrentBidiRefTargetsIncluded(newObject, "new");
+      checkCurrentRefTargetsIncluded(newObject, "new");
     }
 
     // For detached objects: ensure that their former container is included,
@@ -338,18 +338,18 @@ public class CommitIntegrityCheck
     }
   }
 
-  private void checkCurrentBidiRefTargetsIncluded(CDOObject referencer, String msgFrag) throws CommitIntegrityException
+  private void checkCurrentRefTargetsIncluded(CDOObject referencer, String msgFrag) throws CommitIntegrityException
   {
     for (EReference eRef : referencer.eClass().getEAllReferences())
     {
-      if (EMFUtil.isPersistent(eRef) && hasPersistentOpposite(eRef))
+      if (EMFUtil.isPersistent(eRef))
       {
         if (eRef.isMany())
         {
           EList<?> list = (EList<?>)referencer.eGet(eRef);
-          for (Object element : list)
+          for (Object refTarget : list)
           {
-            checkBidiRefTargetIncluded(element, referencer, eRef.getName(), msgFrag);
+            checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, eRef, refTarget, msgFrag);
           }
         }
         else
@@ -357,10 +357,25 @@ public class CommitIntegrityCheck
           Object refTarget = referencer.eGet(eRef);
           if (refTarget != null)
           {
-            checkBidiRefTargetIncluded(refTarget, referencer, eRef.getName(), msgFrag);
+            checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, eRef, refTarget, msgFrag);
           }
         }
       }
+    }
+  }
+
+  private void checkBidiRefTargetOrNewNonBidiTargetIncluded(CDOObject referencer, EReference eRef, Object refTarget,
+      String msgFrag) throws CommitIntegrityException
+  {
+    if (hasPersistentOpposite(eRef))
+    {
+      // It's a bi-di ref; the target must definitely be included
+      checkBidiRefTargetIncluded(refTarget, referencer, eRef.getName(), msgFrag);
+    }
+    else if (isNew(refTarget))
+    {
+      // It's a non-bidi ref; the target doesn't have to be included unless it's NEW
+      checkIncluded(refTarget, "target of reference '" + eRef.getName() + "' of " + msgFrag, referencer);
     }
   }
 

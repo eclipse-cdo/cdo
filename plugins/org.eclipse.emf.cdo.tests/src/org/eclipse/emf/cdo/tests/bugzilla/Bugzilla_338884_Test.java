@@ -14,16 +14,21 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
+import org.eclipse.emf.cdo.tests.model4.RefMultiContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL;
+import org.eclipse.emf.cdo.tests.model4.RefSingleContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.RefSingleNonContainedNPL;
 import org.eclipse.emf.cdo.tests.model4.model4Factory;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.CommitIntegrityException;
 
+import org.eclipse.net4j.util.transaction.TransactionException;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -158,6 +163,82 @@ public class Bugzilla_338884_Test extends AbstractCDOTest
     committables.add(referencee);
     tx.setCommittables(committables);
     tx.commit();
+
+    session.close();
+  }
+
+  public void test_nonBidiMultiRef_newTarget() throws CommitException
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    model4Factory factory = getModel4Factory();
+
+    CDOResource resource = transaction.createResource(getResourcePath("test"));
+    transaction.commit();
+
+    RefMultiContainedNPL parent = factory.createRefMultiContainedNPL();
+    resource.getContents().add(parent);
+
+    ContainedElementNoOpposite child = factory.createContainedElementNoOpposite();
+    parent.getElements().add(child);
+
+    transaction.setCommittables(new HashSet<EObject>(Arrays.asList(new EObject[] { resource, parent })));
+    try
+    {
+      transaction.commit();
+      fail("Should have thrown an exception");
+    }
+    catch (CommitException e)
+    {
+      Throwable c = e.getCause();
+      if (c instanceof TransactionException && c.getCause() instanceof CommitIntegrityException)
+      {
+        // Good
+      }
+      else
+      {
+        throw e;
+      }
+    }
+
+    session.close();
+  }
+
+  public void test_nonBidiSingleRef_newTarget() throws CommitException
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+
+    model4Factory factory = getModel4Factory();
+
+    CDOResource resource = transaction.createResource(getResourcePath("test"));
+    transaction.commit();
+
+    RefSingleContainedNPL parent = factory.createRefSingleContainedNPL();
+    resource.getContents().add(parent);
+
+    ContainedElementNoOpposite child = factory.createContainedElementNoOpposite();
+    parent.setElement(child);
+
+    transaction.setCommittables(new HashSet<EObject>(Arrays.asList(new EObject[] { resource, parent })));
+    try
+    {
+      transaction.commit();
+      fail("Should have thrown an exception");
+    }
+    catch (CommitException e)
+    {
+      Throwable c = e.getCause();
+      if (c instanceof TransactionException && c.getCause() instanceof CommitIntegrityException)
+      {
+        // Good
+      }
+      else
+      {
+        throw e;
+      }
+    }
 
     session.close();
   }

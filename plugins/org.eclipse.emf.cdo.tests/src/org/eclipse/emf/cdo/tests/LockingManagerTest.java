@@ -578,7 +578,7 @@ public class LockingManagerTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     CDOTransaction transaction2 = session.openTransaction();
-    CDOResource res = transaction1.getOrCreateResource("/res1");
+    CDOResource res = transaction1.getOrCreateResource(getResourcePath("/res1"));
     res.getContents().add(company1);
     res.getContents().add(company2);
     transaction1.commit();

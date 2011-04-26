@@ -563,7 +563,7 @@ public class ContainmentTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getOrCreateResource("res1");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("res1"));
 
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);

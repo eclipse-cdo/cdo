@@ -38,7 +38,7 @@ public class Bugzilla_336382_Test extends AbstractCDOTest
 
     {
       CDOTransaction tx = session.openTransaction(sourceBranch);
-      CDOResource res = tx.createResource("/test");
+      CDOResource res = tx.createResource(getResourcePath("/test"));
 
       Company company = getModel1Factory().createCompany();
       company.setName("Foo");

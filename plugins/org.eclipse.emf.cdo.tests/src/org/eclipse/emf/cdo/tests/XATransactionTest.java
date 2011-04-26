@@ -160,8 +160,8 @@ public class XATransactionTest extends AbstractCDOTest
       CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
       CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
 
-      CDOResource resA = transactionA1.createResource("/resA");
-      CDOResource resB = transactionB1.createResource("/resB");
+      CDOResource resA = transactionA1.createResource(getResourcePath("/resA"));
+      CDOResource resB = transactionB1.createResource(getResourcePath("/resB"));
 
       ((InternalCDOTransaction)transactionA1).setTransactionStrategy(null);
       GenRefSingleNonContained objectFromResA = getModel4Factory().createGenRefSingleNonContained();
@@ -208,8 +208,8 @@ public class XATransactionTest extends AbstractCDOTest
       CDOTransaction transactionA = sessionA.openTransaction(resourceSet);
       CDOTransaction transactionB = sessionB.openTransaction(resourceSet);
 
-      CDOResource resA = transactionA.createResource("/resA");
-      CDOResource resB = transactionB.createResource("/resB");
+      CDOResource resA = transactionA.createResource(getResourcePath("/resA"));
+      CDOResource resB = transactionB.createResource(getResourcePath("/resB"));
       GenRefSingleNonContained objectFromResA = getModel4Factory().createGenRefSingleNonContained();
       GenRefSingleNonContained objectFromResB = getModel4Factory().createGenRefSingleNonContained();
 
@@ -253,8 +253,8 @@ public class XATransactionTest extends AbstractCDOTest
     CDOTransaction transactionA1 = sessionA.openTransaction(resourceSet);
     CDOTransaction transactionB1 = sessionB.openTransaction(resourceSet);
 
-    CDOResource resA = transactionA1.createResource("/resA");
-    CDOResource resB = transactionB1.createResource("/resB");
+    CDOResource resA = transactionA1.createResource(getResourcePath("/resA"));
+    CDOResource resB = transactionB1.createResource(getResourcePath("/resB"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();

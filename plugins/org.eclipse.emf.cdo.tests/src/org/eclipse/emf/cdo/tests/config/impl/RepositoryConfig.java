@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.server.ocl.OCLQueryHandler;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -100,6 +101,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   private transient String lastRepoProps;
 
   private transient CDOServerBrowser serverBrowser;
+
+  private transient IRepository.WriteAccessHandler resourcePathChecker;
 
   public RepositoryConfig(String name)
   {
@@ -178,6 +181,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         LifecycleUtil.activate(repository);
       }
     }
+
+    addResourcePathChecker(repository);
 
     return repository;
   }
@@ -275,6 +280,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       deactivateRepositories();
     }
+    else
+    {
+      removeResourcePathChecker();
+    }
 
     super.tearDown();
   }
@@ -310,6 +319,62 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     repositories = null;
 
     StoreThreadLocal.release();
+  }
+
+  protected void addResourcePathChecker(InternalRepository repository)
+  {
+    if (resourcePathChecker == null)
+    {
+      resourcePathChecker = new IRepository.WriteAccessHandler()
+      {
+        public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext,
+            OMMonitor monitor) throws RuntimeException
+        {
+          for (InternalCDORevision revision : commitContext.getNewObjects())
+          {
+            if (revision.isResource())
+            {
+              String path = CDORevisionUtil.getResourceNodePath(revision, commitContext);
+              ConfigTest test = getCurrentTest();
+              String prefix = test.getResourcePath("");
+              if (!path.startsWith(prefix) && !hasAnnotation(NeedsCleanRepo.class))
+              {
+                throw new RuntimeException("Test case " + test.getClass().getName() + '.' + test.getName()
+                    + " does not use getResourcePath() for resource " + path + ", nor does it declare @"
+                    + NeedsCleanRepo.class.getSimpleName());
+              }
+            }
+          }
+        }
+
+        public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
+            OMMonitor monitor)
+        {
+          // Do nothing
+        }
+      };
+    }
+
+    repository.addHandler(resourcePathChecker);
+  }
+
+  protected void removeResourcePathChecker()
+  {
+    if (resourcePathChecker != null)
+    {
+      InternalRepository[] array;
+      synchronized (repositories)
+      {
+        array = repositories.values().toArray(new InternalRepository[repositories.size()]);
+      }
+
+      for (InternalRepository repository : array)
+      {
+        repository.removeHandler(resourcePathChecker);
+      }
+
+      resourcePathChecker = null;
+    }
   }
 
   protected InternalRepository createRepository(String name)

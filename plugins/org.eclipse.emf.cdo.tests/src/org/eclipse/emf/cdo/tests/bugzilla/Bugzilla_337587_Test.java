@@ -41,7 +41,7 @@ public class Bugzilla_337587_Test extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.createResource("test1");
+      CDOResource resource = transaction.createResource(getResourcePath("test1"));
 
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
@@ -66,7 +66,7 @@ public class Bugzilla_337587_Test extends AbstractCDOTest
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 2));
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource("test1");
+    CDOResource resource = transaction.getResource(getResourcePath("test1"));
 
     Customer customer = (Customer)resource.getContents().get(0);
     EList<SalesOrder> salesOrders = customer.getSalesOrders();

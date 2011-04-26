@@ -545,21 +545,25 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
+  @NeedsCleanRepo
   public void testChangePathFromDepth0ToDepth0() throws Exception
   {
     changePath(0, 0);
   }
 
+  @NeedsCleanRepo
   public void testChangePathFromDepth0ToDepth1() throws Exception
   {
     changePath(0, 1);
   }
 
+  @NeedsCleanRepo
   public void testChangePathFromDepth0ToDepth2() throws Exception
   {
     changePath(0, 2);
   }
 
+  @NeedsCleanRepo
   public void testChangePathFromDepth0ToDepth3() throws Exception
   {
     changePath(0, 3);

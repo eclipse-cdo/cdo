@@ -38,7 +38,7 @@ public class SavePointTest extends AbstractCDOTest
 
     CDOTransaction transaction1 = session.openTransaction();
     // Client1
-    CDOResource resource1 = transaction1.createResource("/test1");
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/test1"));
 
     Company company1 = getModel1Factory().createCompany();
     resource1.getContents().add(company1);

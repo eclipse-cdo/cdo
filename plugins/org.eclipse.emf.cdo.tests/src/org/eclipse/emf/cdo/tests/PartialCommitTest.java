@@ -110,6 +110,7 @@ public class PartialCommitTest extends AbstractCDOTest
     super.doTearDown();
   }
 
+  @NeedsCleanRepo
   public void testNewTopLevelResource() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");

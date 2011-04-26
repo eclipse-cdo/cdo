@@ -122,7 +122,7 @@ public class FeatureMapTest extends AbstractCDOTest
 
     session = openSession();
     tx = session.openTransaction();
-    resource = tx.getOrCreateResource("/test/" + System.currentTimeMillis());
+    resource = tx.getOrCreateResource(getResourcePath("/test/" + System.currentTimeMillis()));
     session.getPackageRegistry().putEPackage(pkg);
     resource.getContents().add(dummyObj);
     tx.commit();

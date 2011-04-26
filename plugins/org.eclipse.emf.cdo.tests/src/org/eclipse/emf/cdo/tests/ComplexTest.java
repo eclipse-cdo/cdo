@@ -82,8 +82,8 @@ public class ComplexTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    String path1 = "/resources/folder1/" + uniqueCounter;
-    String path2 = "/resources/folder2/" + uniqueCounter;
+    String path1 = getResourcePath("/resources/folder1/" + uniqueCounter);
+    String path2 = getResourcePath("/resources/folder2/" + uniqueCounter);
     ++uniqueCounter;
 
     init(path1, path2);

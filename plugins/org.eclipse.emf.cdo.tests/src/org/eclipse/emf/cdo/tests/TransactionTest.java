@@ -91,7 +91,7 @@ public class TransactionTest extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getOrCreateResource("/test1");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
     resource.getContents().add(getModel1Factory().createCompany());
 
     long timeStamp = transaction.commit().getTimeStamp();

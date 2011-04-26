@@ -754,7 +754,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       List<InternalCDOView> branchViews, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
   {
     Map<CDOID, InternalCDORevision> oldRevisions = viewedRevisions.get(branch);
-    Map<CDOID, Pair<InternalCDORevision, InternalCDORevision>> newRevisions = null;
 
     List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
     for (InternalCDORevision newRevision : result.getChangedObjects(branch))
@@ -764,13 +763,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       InternalCDORevision oldRevision = oldRevisions.get(newRevision.getID());
       InternalCDORevisionDelta delta = newRevision.compare(oldRevision);
       changedObjects.add(delta);
-
-      if (newRevisions == null)
-      {
-        newRevisions = new HashMap<CDOID, Pair<InternalCDORevision, InternalCDORevision>>();
-      }
-
-      newRevisions.put(delta.getID(), new Pair<InternalCDORevision, InternalCDORevision>(oldRevision, newRevision));
     }
 
     List<CDOIDAndVersion> detachedObjects = result.getDetachedObjects(branch);

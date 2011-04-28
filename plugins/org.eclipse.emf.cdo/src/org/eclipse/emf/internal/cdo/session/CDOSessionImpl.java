@@ -1316,6 +1316,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
       if (revision != null)
       {
+        resolveAllElementProxies(revision);
         info.addRevision(revision);
       }
     }

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
@@ -589,6 +590,11 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   protected void skipUnlessBranching()
   {
     skipTest(!getRepository().isSupportingBranches());
+  }
+
+  protected void skipMEM()
+  {
+    skipTest(getRepository().getStore() instanceof IMEMStore);
   }
 
   protected void skipMongo()

@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
-import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
@@ -132,7 +131,7 @@ public class RepositoryTest extends AbstractCDOTest
    */
   public void testLastCommitTime() throws Exception
   {
-    skipTest(getRepository().getStore() instanceof IMEMStore);
+    skipMEM();
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

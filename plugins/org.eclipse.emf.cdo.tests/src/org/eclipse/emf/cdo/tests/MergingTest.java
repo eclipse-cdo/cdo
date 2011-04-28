@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -642,7 +641,7 @@ public class MergingTest extends AbstractCDOTest
   @SuppressWarnings("unused")
   public void test_Bugzilla_309467_ServerRestart() throws Exception
   {
-    skipTest(getRepository().getStore() instanceof IMEMStore);
+    skipMEM();
 
     {
       CDOSession session = openSession();

@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
@@ -1316,8 +1317,9 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
   private IStoreChunkReader createBaseChunkReader(IDBStoreAccessor accessor, CDOID id, int branchID)
   {
-    CDOBranchPoint base = accessor.getStore().getRepository().getBranchManager().getBranch(branchID).getBase();
-    InternalCDORevision baseRevision = (InternalCDORevision)accessor.getStore().getRepository().getRevisionManager()
+    IRepository repository = accessor.getStore().getRepository();
+    CDOBranchPoint base = repository.getBranchManager().getBranch(branchID).getBase();
+    InternalCDORevision baseRevision = (InternalCDORevision)repository.getRevisionManager()
         .getRevision(id, base, /* referenceChunk = */0, /* prefetchDepth = */CDORevision.DEPTH_NONE, true);
     IStoreChunkReader chunkReader = accessor.createChunkReader(baseRevision, getFeature());
     return chunkReader;

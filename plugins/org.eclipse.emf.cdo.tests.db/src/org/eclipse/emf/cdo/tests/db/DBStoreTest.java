@@ -46,7 +46,7 @@ public class DBStoreTest extends AbstractCDOTest
   {
     CDOSession s = openSession();
     CDOTransaction t = s.openTransaction();
-    CDOResource r = t.createResource("/dbStoreTest");
+    CDOResource r = t.createResource(getResourcePath("/dbStoreTest"));
 
     Company c = Model1Factory.eINSTANCE.createCompany();
     c.setName(null);

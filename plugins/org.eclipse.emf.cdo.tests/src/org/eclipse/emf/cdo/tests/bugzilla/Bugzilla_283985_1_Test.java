@@ -378,7 +378,7 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
     order2.getOrderDetails().add(detail1);
     contains = order2.getOrderDetails().contains(detail1);
     assertEquals(true, contains);
-    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
+    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.CLEAN);
 
     order2.getOrderDetails().remove(detail1);
     assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);

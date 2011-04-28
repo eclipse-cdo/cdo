@@ -677,9 +677,16 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       // Compute a revision delta and register it with the tx
       CDORevision cleanRevision = revisionManager.getRevisionByVersion(id, revKey, -1, true);
       CDORevisionDelta revisionDelta = revision.compare(cleanRevision);
-      transaction.registerRevisionDelta(revisionDelta);
-      transaction.registerDirty(object, null);
-      changeState(object, CDOState.DIRTY);
+      if (!revisionDelta.isEmpty())
+      {
+        transaction.registerRevisionDelta(revisionDelta);
+        transaction.registerDirty(object, (CDOFeatureDelta)null);
+        changeState(object, CDOState.DIRTY);
+      }
+      else
+      {
+        changeState(object, CDOState.CLEAN);
+      }
 
       // Add the object to the set of reattached objects
       transaction.getLastSavepoint().getReattachedObjects().put(id, object);

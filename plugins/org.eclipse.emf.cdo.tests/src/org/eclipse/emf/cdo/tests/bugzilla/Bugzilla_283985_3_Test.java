@@ -84,7 +84,7 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
 
     transaction.setSavepoint();
     order1.getOrderDetails().add(detail1);
-    assertDirty(detail1, transaction);
+    assertClean(detail1, transaction);
 
     transaction.commit();
     assertEquals(id, CDOUtil.getCDOObject(detail1).cdoID());
@@ -105,7 +105,7 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
 
     order1.getOrderDetails().add(detail1);
     assertEquals(true, sp.getReattachedObjects().containsValue(CDOUtil.getCDOObject(detail1)));
-    assertDirty(detail1, transaction);
+    assertClean(detail1, transaction);
 
     sp.rollback();
     System.out.println(CDOUtil.getCDOObject(detail1).cdoState());
@@ -128,13 +128,13 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
 
     order1.getOrderDetails().add(detail1);
     transaction.setSavepoint();
-    assertDirty(detail1, transaction);
+    assertClean(detail1, transaction);
 
     order1.getOrderDetails().remove(detail1);
     assertTransient(detail1);
 
     transaction.getLastSavepoint().rollback();
-    assertDirty(detail1, transaction);
+    assertClean(detail1, transaction);
 
     transaction.commit();
 

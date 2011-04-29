@@ -13,7 +13,6 @@ package org.eclipse.net4j.tcp.ssl;
 
 import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.TCPConnectorFactory;
-import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.ssl.SSLConnectorFactory;
 import org.eclipse.net4j.internal.tcp.ssl.SSLProperties;
@@ -21,6 +20,7 @@ import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -29,10 +29,8 @@ import javax.net.ssl.SSLEngine;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -113,8 +111,8 @@ public class SSLUtil
   }
 
   public static synchronized SSLEngine createSSLEngine(boolean client, String host, int port)
-      throws NoSuchAlgorithmException, KeyStoreException, CertificateException, FileNotFoundException, IOException,
-      UnrecoverableKeyException, KeyManagementException
+      throws NoSuchAlgorithmException, KeyStoreException, CertificateException, IOException, UnrecoverableKeyException,
+      KeyManagementException
   {
     // Get values from the system properties.
     SSLProperties sslProperties = new SSLProperties();
@@ -193,90 +191,38 @@ public class SSLUtil
       // Initial key material(private key) for the client.
       KeyStore ksTrust = KeyStore.getInstance(KeyStore.getDefaultType());
 
-      File ksTrustFile = null;
-      FileInputStream ksTrustInputStream = null;
+      InputStream in = null;
 
       try
       {
-        ksTrustFile = new File(new URL(trustPath).toURI());
+        in = new URL(trustPath).openStream();
+        ksTrust.load(in, pass);
       }
-      catch (Exception ex)
+      finally
       {
-        OM.LOG.warn(ex.getMessage() + ",so try to load with the normal path", ex);
-        ksTrustFile = new File(trustPath);
+        IOUtil.close(in);
       }
 
-      if (ksTrustFile.exists())
-      {
-        try
-        {
-          ksTrustInputStream = new FileInputStream(ksTrustFile);
-        }
-        catch (FileNotFoundException ex)
-        {
-          throw ex;
-        }
-        finally
-        {
-          if (ksTrustInputStream != null)
-          {
-            ksTrust.load(ksTrustInputStream, pass);
-            ksTrustInputStream.close();
-          }
-        }
+      // Initial the trust manager factory
+      TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+      tmf.init(ksTrust);
 
-        // Initial the trust manager factory
-        TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-        tmf.init(ksTrust);
-
-        trustManagers = tmf.getTrustManagers();
-      }
-      else
-      {
-        throw new KeyStoreException("Trust Store cannot be loaded.");
-      }
+      trustManagers = tmf.getTrustManagers();
     }
     else
     {
       // Initial key material (private key) for the server.
       KeyStore ksKeys = KeyStore.getInstance(KeyStore.getDefaultType());
-
-      File ksKeysFile = null;
-      FileInputStream ksKeysInputStream = null;
+      InputStream in = null;
 
       try
       {
-        ksKeysFile = new File(new URL(keyPath).toURI());
+        in = new URL(keyPath).openStream();
+        ksKeys.load(in, pass);
       }
-      catch (Exception ex)
+      finally
       {
-        OM.LOG.warn(ex.getMessage() + ",so try to load with the normal path", ex);
-        ksKeysFile = new File(keyPath);
-      }
-
-      if (ksKeysFile.exists())
-      {
-        try
-        {
-          ksKeysInputStream = new FileInputStream(ksKeysFile);
-        }
-        catch (FileNotFoundException ex)
-        {
-          throw ex;
-        }
-        finally
-        {
-          if (ksKeysInputStream != null)
-          {
-            ksKeys.load(ksKeysInputStream, pass);
-            ksKeysInputStream.close();
-          }
-        }
-
-      }
-      else
-      {
-        throw new KeyStoreException("Key Store cannot be loaded.");
+        IOUtil.close(in);
       }
 
       // Initial the key manager factory.
@@ -294,12 +240,12 @@ public class SSLUtil
     return sslEngine;
   }
 
-  public static int getHandShakeTimeOut()
+  public static synchronized int getHandShakeTimeOut()
   {
     return handShakeTimeOutVar;
   }
 
-  public static int getHandShakeWaitTime()
+  public static synchronized int getHandShakeWaitTime()
   {
     return handShakeWaitTimeVar;
   }

@@ -183,15 +183,26 @@ public class SSLConnector extends TCPConnector
       {
         ConcurrencyUtil.sleep(SSLUtil.getHandShakeWaitTime());
       }
+      else if (!isNegotiating() && !isActive())
+      {
+        // Prevent sleeping and reading forever.
+        break;
+      }
       else
       {
         Thread.yield();
       }
+    }
 
-      // Prevent sleeping forever.
-      if (!isActive())
+    if (!isNegotiating() && !isActive())
+    {
+      try
       {
-        break;
+        deactivateAsync();
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.warn(ex);
       }
     }
   }

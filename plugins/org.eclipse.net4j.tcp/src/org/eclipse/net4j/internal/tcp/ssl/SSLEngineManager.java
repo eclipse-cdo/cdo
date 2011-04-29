@@ -22,7 +22,6 @@ import javax.net.ssl.SSLEngineResult.Status;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
@@ -71,8 +70,7 @@ public class SSLEngineManager
   private Object writeLock = new WriteLock();
 
   public SSLEngineManager(boolean client, String host, int port, Executor executor) throws NoSuchAlgorithmException,
-      KeyStoreException, CertificateException, FileNotFoundException, IOException, UnrecoverableKeyException,
-      KeyManagementException
+      KeyStoreException, CertificateException, IOException, UnrecoverableKeyException, KeyManagementException
   {
     this.executor = executor;
 

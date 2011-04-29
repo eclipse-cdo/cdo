@@ -11,12 +11,12 @@
  */
 package org.eclipse.net4j.internal.tcp.ssl;
 
-import org.eclipse.net4j.internal.tcp.bundle.OM;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
@@ -45,40 +45,27 @@ public class SSLProperties
 
   public void load(String localConfigPath) throws IOException
   {
-    // Loading SSL config from local property file is optional.
+    // Loading SSL config from local property is optional.
     localProperties = new Properties();
-    File localConfigFile = null;
+
+    InputStream in = null;
 
     try
     {
-      localConfigFile = new File(new URL(localConfigPath).toURI());
+      in = new URL(localConfigPath).openStream();
+      localProperties.load(in);
+    }
+    catch (IOException ex)
+    {
+      throw ex;
     }
     catch (Exception ex)
     {
-      OM.LOG.info(ex.getMessage() + ",so try to load with the normal path", ex);
-
-      localConfigFile = new File(localConfigPath);
+      throw WrappedException.wrap(ex, "SSL config cannot be loaded");
     }
-
-    if (localConfigFile.exists())
+    finally
     {
-      FileInputStream localPropInputStream = null;
-      try
-      {
-        localPropInputStream = new FileInputStream(localConfigFile);
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.info("SSL config file cannot be loaded.");
-      }
-      finally
-      {
-        if (localPropInputStream != null)
-        {
-          localProperties.load(localPropInputStream);
-          localPropInputStream.close();
-        }
-      }
+      IOUtil.close(in);
     }
   }
 
@@ -91,7 +78,6 @@ public class SSLProperties
     }
 
     return keyPath;
-
   }
 
   public String getTrustPath()

@@ -15,7 +15,7 @@
 <stringAttribute key="location" value="${workspace_loc}/../ide.rt"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl}"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.eclipse.net4j.tcp.ssl.passphrase=ab987c -Dorg.eclipse.net4j.tcp.ssl.trust=sslKey/testTrust -Dorg.eclipse.net4j.tcp.ssl.key=sslKey/testKeys"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.eclipse.net4j.tcp.ssl.passphrase=ab987c -Dorg.eclipse.net4j.tcp.ssl.trust=file:///${workspace_loc:org.eclipse.net4j.examples}/sslKey/testTrust -Dorg.eclipse.net4j.tcp.ssl.key=file:///${workspace_loc:org.eclipse.net4j.examples}/sslKey/testKeys"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.sdk.ide"/>
 <stringAttribute key="selectedPlugin" value="org.eclipse.net4j"/>

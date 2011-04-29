@@ -8,5 +8,5 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.net4j.examples.transfer.UploadServer"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.net4j.examples"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.eclipse.net4j.tcp.ssl.passphrase=ab987c -Dorg.eclipse.net4j.tcp.ssl.trust=sslKey/testTrust -Dorg.eclipse.net4j.tcp.ssl.key=sslKey/testKeys"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dorg.eclipse.net4j.tcp.ssl.passphrase=ab987c -Dorg.eclipse.net4j.tcp.ssl.trust=file:///${workspace_loc:org.eclipse.net4j.examples}/sslKey/testTrust -Dorg.eclipse.net4j.tcp.ssl.key=file:///${workspace_loc:org.eclipse.net4j.examples}/sslKey/testKeys"/>
 </launchConfiguration>

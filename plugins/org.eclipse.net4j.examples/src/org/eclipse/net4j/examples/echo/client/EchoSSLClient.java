@@ -36,7 +36,6 @@ public class EchoSSLClient
     // Use this container to create and wire the components
     IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container);
-    SSLUtil.setDefaultSSLConfiguration("./sslKey/testKeys", "./sslKey/testTrust", "ab987c");
     SSLUtil.prepareContainer(container);
     container.activate();
 

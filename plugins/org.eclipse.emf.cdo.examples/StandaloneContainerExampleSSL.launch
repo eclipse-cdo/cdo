@@ -8,5 +8,5 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.examples.StandaloneContainerExampleSSL"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.examples"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Ddebug=true -Dorg.eclipse.net4j.tcp.ssl.passphrase=ab987c -Dorg.eclipse.net4j.tcp.ssl.trust=sslKey/testTrust -Dorg.eclipse.net4j.tcp.ssl.key=sslKey/testKeys"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Ddebug=true -Dorg.eclipse.net4j.tcp.ssl.passphrase=ab987c -Dorg.eclipse.net4j.tcp.ssl.trust=file:///${workspace_loc:org.eclipse.emf.cdo.examples}/sslKey/testTrust  -Dorg.eclipse.net4j.tcp.ssl.key=file:///${workspace_loc:org.eclipse.emf.cdo.examples}/sslKey/testKeys"/>
 </launchConfiguration>

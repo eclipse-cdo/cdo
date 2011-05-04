@@ -1,8 +1,8 @@
 #!/bin/sh
 
 stream=4.0
-milestone=S201104061003
-buildID=1275
+milestone=M7
+buildID=1319
 
 mkdir promote.tmp
 pushd promote.tmp

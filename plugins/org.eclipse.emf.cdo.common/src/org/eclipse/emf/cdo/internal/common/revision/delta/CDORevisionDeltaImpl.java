@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -109,11 +110,18 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
 
     CDORevisionData originData = sourceRevision.data();
     CDORevisionData dirtyData = targetRevision.data();
-    if (!compare(originData.getContainerID(), dirtyData.getContainerID())
+
+    Object dirtyContainerID = dirtyData.getContainerID();
+    if (dirtyContainerID instanceof CDOWithID)
+    {
+      dirtyContainerID = ((CDOWithID)dirtyContainerID).cdoID();
+    }
+
+    if (!compare(originData.getContainerID(), dirtyContainerID)
         || !compare(originData.getContainingFeatureID(), dirtyData.getContainingFeatureID())
         || !compare(originData.getResourceID(), dirtyData.getResourceID()))
     {
-      addFeatureDelta(new CDOContainerFeatureDeltaImpl(dirtyData.getResourceID(), dirtyData.getContainerID(),
+      addFeatureDelta(new CDOContainerFeatureDeltaImpl(dirtyData.getResourceID(), dirtyContainerID,
           dirtyData.getContainingFeatureID()));
     }
   }

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -29,7 +30,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
  * 
  * @author Eike Stepper
  */
-public interface CDOObject extends EObject
+public interface CDOObject extends EObject, CDOWithID
 {
   /**
    * Returns the <em>technical</em> object identifier of this object, or <code>null</code> if the {@link #cdoState()

@@ -363,49 +363,41 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
     tx.commit();
 
     order2.getOrderDetails().remove(detail1);
-    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
-
-    boolean contains;
+    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(detail1).cdoState());
 
     order1.getOrderDetails().add(detail1);
-    contains = order1.getOrderDetails().contains(detail1);
-    assertEquals(true, contains);
-    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
+    assertEquals(true, order1.getOrderDetails().contains(detail1));
+    assertEquals(CDOState.DIRTY, CDOUtil.getCDOObject(detail1).cdoState());
 
     order1.getOrderDetails().remove(detail1);
-    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
+    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(detail1).cdoState());
 
     order2.getOrderDetails().add(detail1);
-    contains = order2.getOrderDetails().contains(detail1);
-    assertEquals(true, contains);
-    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.CLEAN);
+    assertEquals(true, order2.getOrderDetails().contains(detail1));
+    assertEquals(CDOState.CLEAN, CDOUtil.getCDOObject(detail1).cdoState());
 
     order2.getOrderDetails().remove(detail1);
-    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
+    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(detail1).cdoState());
 
     order1.getOrderDetails().add(detail1);
-    contains = order1.getOrderDetails().contains(detail1);
-    assertEquals(true, contains);
-    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.DIRTY);
+    assertEquals(true, order1.getOrderDetails().contains(detail1));
+    assertEquals(CDOState.DIRTY, CDOUtil.getCDOObject(detail1).cdoState());
 
     order1.getOrderDetails().remove(detail1);
-    assertEquals(true, CDOUtil.getCDOObject(detail1).cdoState() == CDOState.TRANSIENT);
+    assertEquals(CDOState.TRANSIENT, CDOUtil.getCDOObject(detail1).cdoState());
 
     tx.commit();
 
     order1.getOrderDetails().add(detail1);
-    contains = order1.getOrderDetails().contains(detail1);
-    assertEquals(true, contains);
+    assertEquals(true, order1.getOrderDetails().contains(detail1));
     order1.getOrderDetails().remove(detail1);
 
     order2.getOrderDetails().add(detail1);
-    contains = order2.getOrderDetails().contains(detail1);
-    assertEquals(true, contains);
+    assertEquals(true, order2.getOrderDetails().contains(detail1));
     order2.getOrderDetails().remove(detail1);
 
     order1.getOrderDetails().add(detail1);
-    contains = order1.getOrderDetails().contains(detail1);
-    assertEquals(true, contains);
+    assertEquals(true, order1.getOrderDetails().contains(detail1));
     order1.getOrderDetails().remove(detail1);
 
     tx.close();

@@ -71,7 +71,11 @@ public class OSGiApplication implements IApplication
       throw ex;
     }
 
-    context.applicationRunning();
+    if (context != null)
+    {
+      context.applicationRunning();
+    }
+
     stopLatch = new CountDownLatch(1);
     stopLatch.await();
     stopLatch = null;

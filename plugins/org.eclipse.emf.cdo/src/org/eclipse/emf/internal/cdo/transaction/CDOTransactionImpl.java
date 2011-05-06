@@ -2769,7 +2769,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       try
       {
-        for (CDOConflictResolver resolver : getConflictResolvers())
+        // Do not call getConflictResolvers() because that method may block!
+        CDOConflictResolver[] array = conflictResolvers.toArray(new CDOConflictResolver[conflictResolvers.size()]);
+        for (CDOConflictResolver resolver : array)
         {
           try
           {

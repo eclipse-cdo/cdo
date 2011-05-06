@@ -1462,6 +1462,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   }
 
   /**
+   * A separate class for better monitor debugging.
+   * 
    * @author Eike Stepper
    */
   private static final class LastUpdateTimeLock

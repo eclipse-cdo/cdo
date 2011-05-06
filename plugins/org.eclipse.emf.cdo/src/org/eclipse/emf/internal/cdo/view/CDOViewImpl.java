@@ -114,12 +114,12 @@ public class CDOViewImpl extends AbstractCDOView
   private long lastUpdateTime;
 
   @ExcludeFromDump
-  private Object lastUpdateTimeLock = new Object();
+  private LastUpdateTimeLock lastUpdateTimeLock = new LastUpdateTimeLock();
 
   private QueueRunner invalidationRunner;
 
   @ExcludeFromDump
-  private Object invalidationRunnerLock = new Object();
+  private InvalidationRunnerLock invalidationRunnerLock = new InvalidationRunnerLock();
 
   private volatile boolean invalidationRunnerActive;
 
@@ -1127,6 +1127,24 @@ public class CDOViewImpl extends AbstractCDOView
     {
       this.count = count;
     }
+  }
+
+  /**
+   * A separate class for better monitor debugging.
+   * 
+   * @author Eike Stepper
+   */
+  private static final class LastUpdateTimeLock
+  {
+  }
+
+  /**
+   * A separate class for better monitor debugging.
+   * 
+   * @author Eike Stepper
+   */
+  private static final class InvalidationRunnerLock
+  {
   }
 
   /**

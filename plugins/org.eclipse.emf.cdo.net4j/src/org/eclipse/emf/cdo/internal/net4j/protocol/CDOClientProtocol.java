@@ -29,7 +29,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -214,7 +213,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     }
   }
 
-  public CDOException lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
+  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
       LockType lockType, long timeout) throws InterruptedException
   {
     InterruptedException interruptedException = null;

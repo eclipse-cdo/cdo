@@ -12,18 +12,18 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.util.LockTimeoutException;
-import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Eike Stepper, Caspar De Groot
  */
-public class LockObjectsRequest extends CDOClientRequest<CDOException>
+public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
 {
   private int viewID;
 
@@ -74,18 +74,25 @@ public class LockObjectsRequest extends CDOClientRequest<CDOException>
   }
 
   @Override
-  protected CDOException confirming(CDODataInput in) throws IOException
+  protected LockObjectsResult confirming(CDODataInput in) throws IOException
   {
-    boolean success = in.readBoolean();
-    if (success)
+    boolean succesful = in.readBoolean();
+    if (succesful)
     {
-      return null;
+      boolean clientMustWait = in.readBoolean();
+      long requiredTimestamp = CDOBranchPoint.UNSPECIFIED_DATE;
+      if (clientMustWait)
+      {
+        requiredTimestamp = in.readLong();
+      }
+
+      return new LockObjectsResult(true, false, clientMustWait, requiredTimestamp, null);
     }
 
     boolean timedOut = in.readBoolean();
     if (timedOut)
     {
-      return new LockTimeoutException();
+      return new LockObjectsResult(false, true, false, 0, null);
     }
 
     int nStaleRevisions = in.readInt();
@@ -95,6 +102,6 @@ public class LockObjectsRequest extends CDOClientRequest<CDOException>
       staleRevisions[i] = in.readCDORevisionKey();
     }
 
-    return new StaleRevisionLockException(staleRevisions);
+    return new LockObjectsResult(false, false, false, 0, staleRevisions);
   }
 }

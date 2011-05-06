@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
-import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
@@ -126,7 +125,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 4.0
    */
-  public CDOException lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
+  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
       LockType lockType, long timeout) throws InterruptedException;
 
   /**
@@ -705,6 +704,57 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
         return idMapper.adjustReference(id, feature, index);
       }
+    }
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static final class LockObjectsResult
+  {
+    private boolean successful;
+
+    private boolean timedOut;
+
+    private boolean waitForUpdate;
+
+    private long requiredTimestamp;
+
+    private CDORevisionKey[] staleRevisions;
+
+    public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp,
+        CDORevisionKey[] staleRevisions)
+    {
+      this.successful = successful;
+      this.timedOut = timedOut;
+      this.waitForUpdate = waitForUpdate;
+      this.requiredTimestamp = requiredTimestamp;
+      this.staleRevisions = staleRevisions;
+    }
+
+    public boolean isSuccessful()
+    {
+      return successful;
+    }
+
+    public boolean isTimedOut()
+    {
+      return timedOut;
+    }
+
+    public boolean isWaitForUpdate()
+    {
+      return waitForUpdate;
+    }
+
+    public long getRequiredTimestamp()
+    {
+      return requiredTimestamp;
+    }
+
+    public CDORevisionKey[] getStaleRevisions()
+    {
+      return staleRevisions;
     }
   }
 }

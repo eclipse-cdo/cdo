@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -38,11 +39,15 @@ import java.util.List;
  */
 public class LockObjectsIndication extends CDOReadIndication
 {
-  private List<Object> objectsToBeLocked = new ArrayList<Object>();
-
   private List<CDORevisionKey> staleRevisions = new LinkedList<CDORevisionKey>();
 
   private boolean timedOut;
+
+  private boolean passiveUpdatesEnabled;
+
+  private long requiredTimestamp;
+
+  private boolean staleNoUpdate;
 
   public LockObjectsIndication(CDOServerProtocol protocol)
   {
@@ -52,6 +57,9 @@ public class LockObjectsIndication extends CDOReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
+    InternalSession session = getSession();
+    passiveUpdatesEnabled = session.isPassiveUpdateEnabled();
+
     int viewID = in.readInt();
     LockType lockType = in.readCDOLockType();
     long timeout = in.readLong();
@@ -62,16 +70,24 @@ public class LockObjectsIndication extends CDOReadIndication
     for (int i = 0; i < nRevisions; i++)
     {
       revKeys[i] = in.readCDORevisionKey();
-      handleViewedRevision(viewedBranch, revKeys[i]);
     }
 
-    if (staleRevisions.size() > 0)
+    List<Object> objectsToBeLocked = new ArrayList<Object>();
+    boolean isSupportingBranches = getRepository().isSupportingBranches();
+    for (CDORevisionKey revKey : revKeys)
     {
-      // If we have 1 or more stale revisions, we should not lock
-      return;
+      CDOID id = revKey.getID();
+      if (isSupportingBranches)
+      {
+        objectsToBeLocked.add(CDOIDUtil.createIDAndBranch(id, viewedBranch));
+      }
+      else
+      {
+        objectsToBeLocked.add(id);
+      }
     }
 
-    IView view = getSession().getView(viewID);
+    IView view = session.getView(viewID);
     InternalLockManager lockManager = getRepository().getLockManager();
     try
     {
@@ -80,14 +96,65 @@ public class LockObjectsIndication extends CDOReadIndication
     catch (TimeoutRuntimeException ex)
     {
       timedOut = true;
+      return;
     }
     catch (InterruptedException ex)
     {
       throw WrappedException.wrap(ex);
     }
+
+    try
+    {
+      for (CDORevisionKey revKey : revKeys)
+      {
+        checkStale(viewedBranch, revKey);
+      }
+    }
+    catch (IllegalArgumentException ex)
+    {
+      lockManager.unlock(lockType, view, objectsToBeLocked);
+      throw ex;
+    }
+
+    // If some of the clients' revisions are stale and it has passiveUpdates disabled,
+    // then the locks are useless so we release them and report the stale revisions (later)
+    staleNoUpdate = staleRevisions.size() > 0 && !passiveUpdatesEnabled;
+    if (staleNoUpdate)
+    {
+      lockManager.unlock(lockType, view, objectsToBeLocked);
+    }
   }
 
-  private void handleViewedRevision(CDOBranch viewedBranch, CDORevisionKey revKey)
+  @Override
+  protected void responding(CDODataOutput out) throws IOException
+  {
+    boolean lockSuccesful = !timedOut && !staleNoUpdate;
+    out.writeBoolean(lockSuccesful);
+  
+    if (lockSuccesful)
+    {
+      boolean clientMustWait = staleRevisions.size() > 0;
+      out.writeBoolean(clientMustWait);
+      if (clientMustWait)
+      {
+        out.writeLong(requiredTimestamp);
+      }
+    }
+    else
+    {
+      out.writeBoolean(timedOut);
+      if (!timedOut)
+      {
+        out.writeInt(staleRevisions.size());
+        for (CDORevisionKey staleRevision : staleRevisions)
+        {
+          out.writeCDORevisionKey(staleRevision);
+        }
+      }
+    }
+  }
+
+  private void checkStale(CDOBranch viewedBranch, CDORevisionKey revKey)
   {
     CDOID id = revKey.getID();
     InternalCDORevision rev = getRepository().getRevisionManager().getRevision(id, viewedBranch.getHead(),
@@ -102,39 +169,7 @@ public class LockObjectsIndication extends CDOReadIndication
     if (!revKey.equals(rev))
     {
       staleRevisions.add(revKey);
-
-      // If we have 1 or more stale revisions, the locking won't proceed for sure,
-      // so we can return early
-      return;
-    }
-
-    if (getRepository().isSupportingBranches())
-    {
-      objectsToBeLocked.add(CDOIDUtil.createIDAndBranch(id, viewedBranch));
-    }
-    else
-    {
-      objectsToBeLocked.add(id);
-    }
-  }
-
-  @Override
-  protected void responding(CDODataOutput out) throws IOException
-  {
-    boolean success = !timedOut && staleRevisions.size() == 0;
-    out.writeBoolean(success);
-
-    if (!success)
-    {
-      out.writeBoolean(timedOut);
-      if (!timedOut)
-      {
-        out.writeInt(staleRevisions.size());
-        for (CDORevisionKey staleRevision : staleRevisions)
-        {
-          out.writeCDORevisionKey(staleRevision);
-        }
-      }
+      requiredTimestamp = Math.max(requiredTimestamp, rev.getTimeStamp());
     }
   }
 }

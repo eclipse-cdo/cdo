@@ -29,7 +29,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.LockTimeoutException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
+import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
@@ -70,6 +72,7 @@ import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -263,10 +266,34 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    CDOException exception = sessionProtocol.lockObjects(revisions, viewID, getBranch(), lockType, timeout);
-    if (exception != null)
+    LockObjectsResult result = sessionProtocol.lockObjects(revisions, viewID, getBranch(), lockType, timeout);
+
+    if (!result.isSuccessful())
     {
-      throw exception;
+      if (result.isTimedOut())
+      {
+        throw new LockTimeoutException();
+      }
+
+      CDORevisionKey[] staleRevisions = result.getStaleRevisions();
+      if (staleRevisions != null)
+      {
+        throw new StaleRevisionLockException(staleRevisions);
+      }
+
+      throw new AssertionError("Unexpected lock result state");
+    }
+
+    if (result.isWaitForUpdate())
+    {
+      if (!getSession().options().isPassiveUpdateEnabled())
+      {
+        throw new AssertionError(
+            "Lock result requires client to wait, but client does not have passiveUpdates enabled.");
+      }
+
+      long requiredTimestamp = result.getRequiredTimestamp();
+      getSession().waitForUpdate(requiredTimestamp);
     }
   }
 

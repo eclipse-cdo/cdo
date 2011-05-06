@@ -347,6 +347,8 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
 
   public void testAddRemoveSequence() throws CommitException
   {
+    skipConfig(LEGACY); // TODO Fix bug 344072
+
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.getOrCreateResource(getResourcePath("/r1"));

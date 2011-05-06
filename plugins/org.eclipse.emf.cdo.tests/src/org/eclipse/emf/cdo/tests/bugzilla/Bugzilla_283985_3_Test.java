@@ -77,6 +77,8 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
 
   public void test1() throws CommitException
   {
+    skipConfig(LEGACY); // TODO Fix bug 344072
+
     CDOID id = CDOUtil.getCDOObject(detail1).cdoID();
 
     order1.getOrderDetails().remove(detail1);
@@ -94,6 +96,8 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
 
   public void test2() throws CommitException
   {
+    skipConfig(LEGACY); // TODO Fix bug 344072
+
     InternalCDOSavepoint sp = (InternalCDOSavepoint)transaction.setSavepoint();
     order1.getOrderDetails().remove(detail1);
     assertTransient(detail1);
@@ -117,6 +121,8 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
 
   public void test3() throws CommitException
   {
+    skipConfig(LEGACY); // TODO Fix bug 344072
+
     CDOID id = CDOUtil.getCDOObject(detail1).cdoID();
 
     transaction.setSavepoint();

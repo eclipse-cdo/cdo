@@ -69,7 +69,7 @@ import org.eclipse.ui.IFileEditorInput;
 «EXPAND generatedComment -»
 public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.className» implements  IDawnEditor
 {
-  public static String ID = "«this.GMFGenEditorGenerator.editor.packageName».«this.dawnEditorClassName» ";
+  public static String ID = "«this.GMFGenEditorGenerator.editor.packageName».«this.dawnEditorClassName»";
 
   private IDawnEditorSupport dawnEditorSupport;
 

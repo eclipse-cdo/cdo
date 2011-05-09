@@ -33,11 +33,11 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
-   <requires>
-      <import plugin="org.eclipse.emf.codegen.ecore"/>
-   </requires>
+  <!--  <requires>
+      <import plugin="org.eclipse.emf.ecoretools.diagram"/>
+   </requires>-->
 
-   <plugin
+  <plugin
          id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn"
          download-size="0"
          install-size="0"

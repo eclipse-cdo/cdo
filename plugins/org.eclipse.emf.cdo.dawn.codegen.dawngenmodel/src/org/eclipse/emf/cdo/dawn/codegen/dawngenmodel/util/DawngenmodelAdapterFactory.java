@@ -4,15 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
 package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.util;
 
-import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator;
-import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage;
 
@@ -99,18 +97,6 @@ public class DawngenmodelAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseDawnGMFGenerator(DawnGMFGenerator object)
-    {
-      return createDawnGMFGeneratorAdapter();
-    }
-
-    @Override
-    public Adapter caseDawnEMFGenerator(DawnEMFGenerator object)
-    {
-      return createDawnEMFGeneratorAdapter();
-    }
-
-    @Override
     public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -134,12 +120,12 @@ public class DawngenmodelAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator
    * <em>Dawn Generator</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
-   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
    * 
-   * @since 1.0 <!-- end-user-doc -->
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator
    * @generated
+   * @since 1.0
    */
   public Adapter createDawnGeneratorAdapter()
   {
@@ -150,45 +136,14 @@ public class DawngenmodelAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '
    * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator <em>Dawn Fragment Generator</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-   * ignore a case when inheritance will catch all the cases anyway.
-   * 
-   * @since 1.0 <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator
-   * @generated
-   */
-  public Adapter createDawnFragmentGeneratorAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator <em>Dawn GMF Generator</em>}'. <!--
-   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
    * 
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator
+   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator
    * @generated
+   * @since 1.0
    */
-  public Adapter createDawnGMFGeneratorAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '
-   * {@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator <em>Dawn EMF Generator</em>}'. <!--
-   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
-   * ignore a case when inheritance will catch all the cases anyway.
-   * 
-   * @since 1.0 <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator
-   * @generated
-   */
-  public Adapter createDawnEMFGeneratorAdapter()
+  public Adapter createDawnFragmentGeneratorAdapter()
   {
     return null;
   }

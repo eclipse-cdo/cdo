@@ -13,21 +13,21 @@ package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Dawn Generator</b></em>'.
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Dawn Generator</b></em>'. <!-- end-user-doc -->
+ * <p>
+ * The following features are supported:
+ * <ul>
+ * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getConflictColor <em>Conflict Color</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getLocalLockColor <em>Local Lock Color</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getRemoteLockColor <em>Remote Lock Color</em>}
+ * </li>
+ * </ul>
+ * </p>
  * 
- * @since 1.0 <!-- end-user-doc -->
- *        <p>
- *        The following features are supported:
- *        <ul>
- *        <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getEmfFragmentgenerator <em>Emf
- *        Fragmentgenerator</em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getGmfFragmentgenerator <em>Gmf
- *        Fragmentgenerator</em>}</li>
- *        </ul>
- *        </p>
  * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnGenerator()
  * @model
  * @generated
+ * @since 1.0
  */
 public interface DawnGenerator extends EObject
 {
@@ -39,57 +39,84 @@ public interface DawnGenerator extends EObject
   String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Martin Fluegge - initial API and implementation";
 
   /**
-   * Returns the value of the '<em><b>Emf Fragmentgenerator</b></em>' containment reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Conflict Color</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Emf Fragmentgenerator</em>' containment reference isn't clear, there really should be
-   * more of a description here...
+   * If the meaning of the '<em>Conflict Color</em>' attribute isn't clear, there really should be more of a description
+   * here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Emf Fragmentgenerator</em>' containment reference.
-   * @see #setEmfFragmentgenerator(DawnEMFGenerator)
-   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnGenerator_EmfFragmentgenerator()
-   * @model containment="true"
+   * @return the value of the '<em>Conflict Color</em>' attribute.
+   * @see #setConflictColor(String)
+   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnGenerator_ConflictColor()
+   * @model
    * @generated
    */
-  DawnEMFGenerator getEmfFragmentgenerator();
+  String getConflictColor();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getEmfFragmentgenerator
-   * <em>Emf Fragmentgenerator</em>}' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getConflictColor
+   * <em>Conflict Color</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
-   *          the new value of the '<em>Emf Fragmentgenerator</em>' containment reference.
-   * @see #getEmfFragmentgenerator()
+   *          the new value of the '<em>Conflict Color</em>' attribute.
+   * @see #getConflictColor()
    * @generated
    */
-  void setEmfFragmentgenerator(DawnEMFGenerator value);
+  void setConflictColor(String value);
 
   /**
-   * Returns the value of the '<em><b>Gmf Fragmentgenerator</b></em>' containment reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Local Lock Color</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Gmf Fragmentgenerator</em>' containment reference isn't clear, there really should be
-   * more of a description here...
+   * If the meaning of the '<em>Local Lock Color</em>' attribute isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Gmf Fragmentgenerator</em>' containment reference.
-   * @see #setGmfFragmentgenerator(DawnGMFGenerator)
-   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnGenerator_GmfFragmentgenerator()
-   * @model containment="true"
+   * @return the value of the '<em>Local Lock Color</em>' attribute.
+   * @see #setLocalLockColor(String)
+   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnGenerator_LocalLockColor()
+   * @model
    * @generated
    */
-  DawnGMFGenerator getGmfFragmentgenerator();
+  String getLocalLockColor();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getGmfFragmentgenerator
-   * <em>Gmf Fragmentgenerator</em>}' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getLocalLockColor
+   * <em>Local Lock Color</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
-   *          the new value of the '<em>Gmf Fragmentgenerator</em>' containment reference.
-   * @see #getGmfFragmentgenerator()
+   *          the new value of the '<em>Local Lock Color</em>' attribute.
+   * @see #getLocalLockColor()
    * @generated
    */
-  void setGmfFragmentgenerator(DawnGMFGenerator value);
+  void setLocalLockColor(String value);
+
+  /**
+   * Returns the value of the '<em><b>Remote Lock Color</b></em>' attribute. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Remote Lock Color</em>' attribute isn't clear, there really should be more of a
+   * description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Remote Lock Color</em>' attribute.
+   * @see #setRemoteLockColor(String)
+   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnGenerator_RemoteLockColor()
+   * @model
+   * @generated
+   */
+  String getRemoteLockColor();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator#getRemoteLockColor
+   * <em>Remote Lock Color</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Remote Lock Color</em>' attribute.
+   * @see #getRemoteLockColor()
+   * @generated
+   */
+  void setRemoteLockColor(String value);
 
 } // DawnGenerator

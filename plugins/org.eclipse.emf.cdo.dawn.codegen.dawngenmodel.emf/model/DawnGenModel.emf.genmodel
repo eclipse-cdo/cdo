@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Martin Fluegge - initial API and implementation"
+    modelDirectory="/org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf/src-gen" editorDirectory="/org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui/src-gen"
+    modelPluginID="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf" modelName="DawnGenModel"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" editorPluginID="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui"
+    usedGenPackages="../../org.eclipse.emf.cdo.dawn.codegen.dawngenmodel/model/DawnCodeGen.genmodel#//dawngenmodel platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
+  <foreignModel>DawnGenModel.emf.ecore</foreignModel>
+  <genPackages prefix="DawnEmfGenmodel" basePackage="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf"
+      disposableProviderFactory="true" ecorePackage="DawnGenModel.emf.ecore#/">
+    <genClasses ecoreClass="DawnGenModel.emf.ecore#//DawnEMFGenerator"/>
+  </genPackages>
+</genmodel:GenModel>

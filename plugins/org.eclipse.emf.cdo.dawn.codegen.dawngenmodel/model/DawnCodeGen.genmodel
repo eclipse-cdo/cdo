@@ -4,22 +4,18 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Martin Fluegge - initial API and implementation"
     modelDirectory="/org.eclipse.emf.cdo.dawn.codegen.dawngenmodel/src" modelPluginID="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel"
     modelName="DawnCodeGen" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
-    usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel#//genmodel platform:/plugin/org.eclipse.gmf.codegen/models/gmfgen.genmodel#//gmfgen">
+    usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>DawnCodeGen.ecore</foreignModel>
   <genPackages prefix="Dawngenmodel" basePackage="org.eclipse.emf.cdo.dawn.codegen"
       disposableProviderFactory="true" ecorePackage="DawnCodeGen.ecore#/">
-    <genClasses ecoreClass="DawnCodeGen.ecore#//DawnGMFGenerator">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGMFGenerator/fragmentName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGMFGenerator/dawnEditorClassName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGMFGenerator/dawnDocumentProviderClassName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGMFGenerator/dawnEditorUtilClassName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGMFGenerator/dawnCreationWizardClassName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGMFGenerator/dawnCanonicalEditingPolicyClassName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGMFGenerator/dawnDiagramEditPartClassName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGMFGenerator/dawnEditPartFactoryClassName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGMFGenerator/dawnEditPartProviderClassName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGMFGenerator/dawnEditPolicyProviderClassName"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference DawnCodeGen.ecore#//DawnGMFGenerator/GMFGenEditorGenerator"/>
+    <genClasses ecoreClass="DawnCodeGen.ecore#//DawnGenerator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGenerator/conflictColor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGenerator/localLockColor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGenerator/remoteLockColor"/>
+    </genClasses>
+    <genClasses ecoreClass="DawnCodeGen.ecore#//DawnFragmentGenerator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnFragmentGenerator/fragmentName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnFragmentGenerator/dawnEditorClassName"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

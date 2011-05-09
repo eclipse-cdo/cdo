@@ -10,12 +10,12 @@
  */
 package org.eclipse.emf.cdo.dawn.tests.common;
 
-import org.eclipse.emf.cdo.dawn.codegen.creators.impl.GMFFragmentCreator;
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui.creators.GMFFragmentCreator;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.DawnAcoreDiagramEditor;
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnTest;
 import org.eclipse.emf.cdo.dawn.tests.DawnTestPlatform;
 
-import org.eclipse.emf.mwe.core.WorkflowRunner;
+import org.eclipse.emf.mwe.core.WorkflowEngine;
 import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 
 import java.io.BufferedReader;
@@ -44,11 +44,10 @@ public class DawnCodeGenGMFFragmentTest extends AbstractDawnTest
     properties.put("model", dawnGenFile.toURI().toString());
     properties.put("src-gen", ouputFolder);
 
-    WorkflowRunner workflowRunner = new WorkflowRunner();
     String workflowPath = getWorkflowPath("workflow/gmfFragmentGenerator.oaw");// FileLocator.toFileURL(workFlowURL).getFile();
     System.out.println(workflowPath);
 
-    workflowRunner.run(workflowPath, new NullProgressMonitor(), properties, slotMap);
+    new WorkflowEngine().run(workflowPath, new NullProgressMonitor(), properties, slotMap);
 
     String outputFolder = DawnTestPlatform.instance.getTestFolder();
     String diagramFolder = ouputFolder + "/" + "src/org/eclipse/emf/cdo/dawn/examples/acore/diagram";

@@ -4,22 +4,19 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
 package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.util;
 
-import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator;
-import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
-import java.util.List;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.Switch;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -30,7 +27,7 @@ import java.util.List;
  * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage
  * @generated
  */
-public class DawngenmodelSwitch<T>
+public class DawngenmodelSwitch<T> extends Switch<T>
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -60,15 +57,16 @@ public class DawngenmodelSwitch<T>
   }
 
   /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Checks whether this is a switch for the given package. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * @parameter ePackage the package in question.
+   * @return whether this is a switch for the given package.
    * @generated
    */
-  public T doSwitch(EObject theEObject)
+  @Override
+  protected boolean isSwitchFor(EPackage ePackage)
   {
-    return doSwitch(theEObject.eClass(), theEObject);
+    return ePackage == modelPackage;
   }
 
   /**
@@ -78,23 +76,7 @@ public class DawngenmodelSwitch<T>
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  protected T doSwitch(EClass theEClass, EObject theEObject)
-  {
-    if (theEClass.eContainer() == modelPackage)
-    {
-      return doSwitch(theEClass.getClassifierID(), theEObject);
-    }
-    List<EClass> eSuperTypes = theEClass.getESuperTypes();
-    return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
-  }
-
-  /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the first non-null result returned by a <code>caseXXX</code> call.
-   * @generated
-   */
+  @Override
   protected T doSwitch(int classifierID, EObject theEObject)
   {
     switch (classifierID)
@@ -119,34 +101,6 @@ public class DawngenmodelSwitch<T>
       }
       return result;
     }
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR:
-    {
-      DawnGMFGenerator dawnGMFGenerator = (DawnGMFGenerator)theEObject;
-      T result = caseDawnGMFGenerator(dawnGMFGenerator);
-      if (result == null)
-      {
-        result = caseDawnFragmentGenerator(dawnGMFGenerator);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case DawngenmodelPackage.DAWN_EMF_GENERATOR:
-    {
-      DawnEMFGenerator dawnEMFGenerator = (DawnEMFGenerator)theEObject;
-      T result = caseDawnEMFGenerator(dawnEMFGenerator);
-      if (result == null)
-      {
-        result = caseDawnFragmentGenerator(dawnEMFGenerator);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
     default:
       return defaultCase(theEObject);
     }
@@ -154,14 +108,14 @@ public class DawngenmodelSwitch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Dawn Generator</em>'. <!-- begin-user-doc -->
-   * This implementation returns null; returning a non-null result will terminate the switch.
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
    * 
-   * @since 1.0 <!-- end-user-doc -->
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Dawn Generator</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
+   * @since 1.0
    */
   public T caseDawnGenerator(DawnGenerator object)
   {
@@ -170,47 +124,17 @@ public class DawngenmodelSwitch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>Dawn Fragment Generator</em>'. <!--
-   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch.
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
    * 
-   * @since 1.0<!-- end-user-doc -->
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Dawn Fragment Generator</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
+   * @since 1.0
    */
   public T caseDawnFragmentGenerator(DawnFragmentGenerator object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Dawn GMF Generator</em>'. <!-- begin-user-doc
-   * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Dawn GMF Generator</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDawnGMFGenerator(DawnGMFGenerator object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Dawn EMF Generator</em>'. <!-- begin-user-doc
-   * --> This implementation returns null; returning a non-null result will terminate the switch.
-   * 
-   * @since 1.0 <!-- end-user-doc -->
-   * @param object
-   *          the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Dawn EMF Generator</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDawnEMFGenerator(DawnEMFGenerator object)
   {
     return null;
   }
@@ -226,6 +150,7 @@ public class DawngenmodelSwitch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated
    */
+  @Override
   public T defaultCase(EObject object)
   {
     return null;

@@ -4,15 +4,13 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
 package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl;
 
-import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator;
-import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelFactory;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage;
@@ -84,10 +82,6 @@ public class DawngenmodelFactoryImpl extends EFactoryImpl implements Dawngenmode
       return createDawnGenerator();
     case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR:
       return createDawnFragmentGenerator();
-    case DawngenmodelPackage.DAWN_GMF_GENERATOR:
-      return createDawnGMFGenerator();
-    case DawngenmodelPackage.DAWN_EMF_GENERATOR:
-      return createDawnEMFGenerator();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -97,6 +91,7 @@ public class DawngenmodelFactoryImpl extends EFactoryImpl implements Dawngenmode
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 1.0
    */
   public DawnGenerator createDawnGenerator()
   {
@@ -108,33 +103,12 @@ public class DawngenmodelFactoryImpl extends EFactoryImpl implements Dawngenmode
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 1.0
    */
   public DawnFragmentGenerator createDawnFragmentGenerator()
   {
     DawnFragmentGeneratorImpl dawnFragmentGenerator = new DawnFragmentGeneratorImpl();
     return dawnFragmentGenerator;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public DawnGMFGenerator createDawnGMFGenerator()
-  {
-    DawnGMFGeneratorImpl dawnGMFGenerator = new DawnGMFGeneratorImpl();
-    return dawnGMFGenerator;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public DawnEMFGenerator createDawnEMFGenerator()
-  {
-    DawnEMFGeneratorImpl dawnEMFGenerator = new DawnEMFGeneratorImpl();
-    return dawnEMFGenerator;
   }
 
   /**

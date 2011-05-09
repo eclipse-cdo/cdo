@@ -11,9 +11,9 @@
 package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl;
 
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator;
+import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage;
 
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -30,12 +30,13 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * Name</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl#getDawnEditorClassName <em>
  * Dawn Editor Class Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl#getEmfGenModel <em>Emf Gen
- * Model</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawnFragmentGeneratorImpl#getDawnGenerator <em>Dawn
+ * Generator</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
+ * @since 1.0
  */
 public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragmentGenerator
 {
@@ -87,14 +88,14 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
   protected String dawnEditorClassName = DAWN_EDITOR_CLASS_NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getEmfGenModel() <em>Emf Gen Model</em>}' reference. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The cached value of the '{@link #getDawnGenerator() <em>Dawn Generator</em>}' reference. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * 
-   * @see #getEmfGenModel()
+   * @see #getDawnGenerator()
    * @generated
    * @ordered
    */
-  protected GenModel emfGenModel;
+  protected DawnGenerator dawnGenerator;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -137,8 +138,10 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
     String oldFragmentName = fragmentName;
     fragmentName = newFragmentName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__FRAGMENT_NAME,
           oldFragmentName, fragmentName));
+    }
   }
 
   /**
@@ -161,9 +164,11 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
     String oldDawnEditorClassName = dawnEditorClassName;
     dawnEditorClassName = newDawnEditorClassName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME, oldDawnEditorClassName,
           dawnEditorClassName));
+    }
   }
 
   /**
@@ -171,20 +176,22 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
    * 
    * @generated
    */
-  public GenModel getEmfGenModel()
+  public DawnGenerator getDawnGenerator()
   {
-    if (emfGenModel != null && emfGenModel.eIsProxy())
+    if (dawnGenerator != null && dawnGenerator.eIsProxy())
     {
-      InternalEObject oldEmfGenModel = (InternalEObject)emfGenModel;
-      emfGenModel = (GenModel)eResolveProxy(oldEmfGenModel);
-      if (emfGenModel != oldEmfGenModel)
+      InternalEObject oldDawnGenerator = (InternalEObject)dawnGenerator;
+      dawnGenerator = (DawnGenerator)eResolveProxy(oldDawnGenerator);
+      if (dawnGenerator != oldDawnGenerator)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL, oldEmfGenModel, emfGenModel));
+              DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR, oldDawnGenerator, dawnGenerator));
+        }
       }
     }
-    return emfGenModel;
+    return dawnGenerator;
   }
 
   /**
@@ -192,9 +199,9 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
    * 
    * @generated
    */
-  public GenModel basicGetEmfGenModel()
+  public DawnGenerator basicGetDawnGenerator()
   {
-    return emfGenModel;
+    return dawnGenerator;
   }
 
   /**
@@ -202,13 +209,15 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
    * 
    * @generated
    */
-  public void setEmfGenModel(GenModel newEmfGenModel)
+  public void setDawnGenerator(DawnGenerator newDawnGenerator)
   {
-    GenModel oldEmfGenModel = emfGenModel;
-    emfGenModel = newEmfGenModel;
+    DawnGenerator oldDawnGenerator = dawnGenerator;
+    dawnGenerator = newDawnGenerator;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL,
-          oldEmfGenModel, emfGenModel));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET,
+          DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR, oldDawnGenerator, dawnGenerator));
+    }
   }
 
   /**
@@ -225,10 +234,12 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
       return getFragmentName();
     case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME:
       return getDawnEditorClassName();
-    case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL:
+    case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR:
       if (resolve)
-        return getEmfGenModel();
-      return basicGetEmfGenModel();
+      {
+        return getDawnGenerator();
+      }
+      return basicGetDawnGenerator();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -249,8 +260,8 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
     case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME:
       setDawnEditorClassName((String)newValue);
       return;
-    case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL:
-      setEmfGenModel((GenModel)newValue);
+    case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR:
+      setDawnGenerator((DawnGenerator)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -272,8 +283,8 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
     case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME:
       setDawnEditorClassName(DAWN_EDITOR_CLASS_NAME_EDEFAULT);
       return;
-    case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL:
-      setEmfGenModel((GenModel)null);
+    case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR:
+      setDawnGenerator((DawnGenerator)null);
       return;
     }
     super.eUnset(featureID);
@@ -294,8 +305,8 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
     case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME:
       return DAWN_EDITOR_CLASS_NAME_EDEFAULT == null ? dawnEditorClassName != null : !DAWN_EDITOR_CLASS_NAME_EDEFAULT
           .equals(dawnEditorClassName);
-    case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL:
-      return emfGenModel != null;
+    case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR:
+      return dawnGenerator != null;
     }
     return super.eIsSet(featureID);
   }
@@ -309,7 +320,9 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (fragmentName: ");

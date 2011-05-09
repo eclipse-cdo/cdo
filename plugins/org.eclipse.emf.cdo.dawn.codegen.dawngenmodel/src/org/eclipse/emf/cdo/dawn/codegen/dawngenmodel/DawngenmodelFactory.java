@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -36,39 +36,22 @@ public interface DawngenmodelFactory extends EFactory
   DawngenmodelFactory eINSTANCE = org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl.DawngenmodelFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Dawn Generator</em>'. <!-- begin-user-doc -->
+   * Returns a new object of class '<em>Dawn Generator</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 1.0<!-- end-user-doc -->
    * @return a new object of class '<em>Dawn Generator</em>'.
    * @generated
+   * @since 1.0
    */
   DawnGenerator createDawnGenerator();
 
   /**
-   * Returns a new object of class '<em>Dawn Fragment Generator</em>'. <!-- begin-user-doc -->
+   * Returns a new object of class '<em>Dawn Fragment Generator</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 1.0<!-- end-user-doc -->
    * @return a new object of class '<em>Dawn Fragment Generator</em>'.
    * @generated
+   * @since 1.0
    */
   DawnFragmentGenerator createDawnFragmentGenerator();
-
-  /**
-   * Returns a new object of class '<em>Dawn GMF Generator</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return a new object of class '<em>Dawn GMF Generator</em>'.
-   * @generated
-   */
-  DawnGMFGenerator createDawnGMFGenerator();
-
-  /**
-   * Returns a new object of class '<em>Dawn EMF Generator</em>'. <!-- begin-user-doc -->
-   * 
-   * @since 1.0 <!-- end-user-doc -->
-   * @return a new object of class '<em>Dawn EMF Generator</em>'.
-   * @generated
-   */
-  DawnEMFGenerator createDawnEMFGenerator();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

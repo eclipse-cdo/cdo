@@ -14,7 +14,7 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * @author Martin Fluegge
- * @since 0.3
+ * @since 1.0
  */
 public class Messages extends NLS
 {

@@ -33,9 +33,74 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
-   <plugin id="org.eclipse.emf.cdo.dawn.codegen" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   <plugin id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   <plugin  id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   <plugin id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.codegen"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

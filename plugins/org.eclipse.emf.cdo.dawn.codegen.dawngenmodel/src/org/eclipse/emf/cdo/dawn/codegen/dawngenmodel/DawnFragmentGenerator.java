@@ -10,27 +10,27 @@
  */
 package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel;
 
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>Dawn Fragment Generator</b></em>'.
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Dawn Fragment Generator</b></em>'. <!--
+ * end-user-doc -->
+ * <p>
+ * The following features are supported:
+ * <ul>
+ * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getFragmentName <em>Fragment Name
+ * </em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnEditorClassName <em>Dawn Editor
+ * Class Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnGenerator <em>Dawn Generator
+ * </em>}</li>
+ * </ul>
+ * </p>
  * 
- * @since 1.0 <!-- end-user-doc -->
- *        <p>
- *        The following features are supported:
- *        <ul>
- *        <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getFragmentName <em>Fragment
- *        Name </em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnEditorClassName <em>Dawn
- *        Editor Class Name</em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getEmfGenModel <em>Emf Gen
- *        Model</em>}</li>
- *        </ul>
- *        </p>
  * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnFragmentGenerator()
  * @model
  * @generated
+ * @since 1.0
  */
 public interface DawnFragmentGenerator extends EObject
 {
@@ -97,30 +97,30 @@ public interface DawnFragmentGenerator extends EObject
   void setDawnEditorClassName(String value);
 
   /**
-   * Returns the value of the '<em><b>Emf Gen Model</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Dawn Generator</b></em>' reference. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Emf Gen Model</em>' reference isn't clear, there really should be more of a description
+   * If the meaning of the '<em>Dawn Generator</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Emf Gen Model</em>' reference.
-   * @see #setEmfGenModel(GenModel)
-   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnFragmentGenerator_EmfGenModel()
+   * @return the value of the '<em>Dawn Generator</em>' reference.
+   * @see #setDawnGenerator(DawnGenerator)
+   * @see org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage#getDawnFragmentGenerator_DawnGenerator()
    * @model
    * @generated
    */
-  GenModel getEmfGenModel();
+  DawnGenerator getDawnGenerator();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getEmfGenModel
-   * <em>Emf Gen Model</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator#getDawnGenerator
+   * <em>Dawn Generator</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
-   *          the new value of the '<em>Emf Gen Model</em>' reference.
-   * @see #getEmfGenModel()
+   *          the new value of the '<em>Dawn Generator</em>' reference.
+   * @see #getDawnGenerator()
    * @generated
    */
-  void setEmfGenModel(GenModel value);
+  void setDawnGenerator(DawnGenerator value);
 
 } // DawnFragmentGenerator

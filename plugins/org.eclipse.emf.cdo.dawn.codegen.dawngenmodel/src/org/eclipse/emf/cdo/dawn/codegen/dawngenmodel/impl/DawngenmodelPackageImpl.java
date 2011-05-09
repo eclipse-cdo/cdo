@@ -4,28 +4,23 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
 package org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.impl;
 
-import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnEMFGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnFragmentGenerator;
-import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGMFGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawnGenerator;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelFactory;
 import org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage;
 
-import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import org.eclipse.gmf.codegen.gmfgen.GMFGenPackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
@@ -54,20 +49,6 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
    * @generated
    */
   private EClass dawnFragmentGeneratorEClass = null;
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  private EClass dawnGMFGeneratorEClass = null;
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  private EClass dawnEMFGeneratorEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -109,7 +90,9 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
   public static DawngenmodelPackage init()
   {
     if (isInited)
+    {
       return (DawngenmodelPackage)EPackage.Registry.INSTANCE.getEPackage(DawngenmodelPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     DawngenmodelPackageImpl theDawngenmodelPackage = (DawngenmodelPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof DawngenmodelPackageImpl ? EPackage.Registry.INSTANCE
@@ -118,7 +101,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
     isInited = true;
 
     // Initialize simple dependencies
-    GMFGenPackage.eINSTANCE.eClass();
+    EcorePackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theDawngenmodelPackage.createPackageContents();
@@ -138,6 +121,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 1.0
    */
   public EClass getDawnGenerator()
   {
@@ -148,26 +132,40 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 1.0
    */
-  public EReference getDawnGenerator_EmfFragmentgenerator()
+  public EAttribute getDawnGenerator_ConflictColor()
   {
-    return (EReference)dawnGeneratorEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)dawnGeneratorEClass.getEStructuralFeatures().get(0);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 1.0
    */
-  public EReference getDawnGenerator_GmfFragmentgenerator()
+  public EAttribute getDawnGenerator_LocalLockColor()
   {
-    return (EReference)dawnGeneratorEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)dawnGeneratorEClass.getEStructuralFeatures().get(1);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 1.0
+   */
+  public EAttribute getDawnGenerator_RemoteLockColor()
+  {
+    return (EAttribute)dawnGeneratorEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @since 1.0
    */
   public EClass getDawnFragmentGenerator()
   {
@@ -178,6 +176,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 1.0
    */
   public EAttribute getDawnFragmentGenerator_FragmentName()
   {
@@ -188,6 +187,7 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 1.0
    */
   public EAttribute getDawnFragmentGenerator_DawnEditorClassName()
   {
@@ -198,120 +198,11 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
+   * @since 1.0
    */
-  public EReference getDawnFragmentGenerator_EmfGenModel()
+  public EReference getDawnFragmentGenerator_DawnGenerator()
   {
     return (EReference)dawnFragmentGeneratorEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EClass getDawnGMFGenerator()
-  {
-    return dawnGMFGeneratorEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getDawnGMFGenerator_DawnDocumentProviderClassName()
-  {
-    return (EAttribute)dawnGMFGeneratorEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getDawnGMFGenerator_DawnEditorUtilClassName()
-  {
-    return (EAttribute)dawnGMFGeneratorEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getDawnGMFGenerator_DawnCreationWizardClassName()
-  {
-    return (EAttribute)dawnGMFGeneratorEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getDawnGMFGenerator_DawnCanonicalEditingPolicyClassName()
-  {
-    return (EAttribute)dawnGMFGeneratorEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getDawnGMFGenerator_DawnDiagramEditPartClassName()
-  {
-    return (EAttribute)dawnGMFGeneratorEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getDawnGMFGenerator_DawnEditPartFactoryClassName()
-  {
-    return (EAttribute)dawnGMFGeneratorEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getDawnGMFGenerator_DawnEditPartProviderClassName()
-  {
-    return (EAttribute)dawnGMFGeneratorEClass.getEStructuralFeatures().get(6);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getDawnGMFGenerator_DawnEditPolicyProviderClassName()
-  {
-    return (EAttribute)dawnGMFGeneratorEClass.getEStructuralFeatures().get(7);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EReference getDawnGMFGenerator_GMFGenEditorGenerator()
-  {
-    return (EReference)dawnGMFGeneratorEClass.getEStructuralFeatures().get(8);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EClass getDawnEMFGenerator()
-  {
-    return dawnEMFGeneratorEClass;
   }
 
   /**
@@ -340,31 +231,21 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
     dawnGeneratorEClass = createEClass(DAWN_GENERATOR);
-    createEReference(dawnGeneratorEClass, DAWN_GENERATOR__EMF_FRAGMENTGENERATOR);
-    createEReference(dawnGeneratorEClass, DAWN_GENERATOR__GMF_FRAGMENTGENERATOR);
+    createEAttribute(dawnGeneratorEClass, DAWN_GENERATOR__CONFLICT_COLOR);
+    createEAttribute(dawnGeneratorEClass, DAWN_GENERATOR__LOCAL_LOCK_COLOR);
+    createEAttribute(dawnGeneratorEClass, DAWN_GENERATOR__REMOTE_LOCK_COLOR);
 
     dawnFragmentGeneratorEClass = createEClass(DAWN_FRAGMENT_GENERATOR);
     createEAttribute(dawnFragmentGeneratorEClass, DAWN_FRAGMENT_GENERATOR__FRAGMENT_NAME);
     createEAttribute(dawnFragmentGeneratorEClass, DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME);
-    createEReference(dawnFragmentGeneratorEClass, DAWN_FRAGMENT_GENERATOR__EMF_GEN_MODEL);
-
-    dawnGMFGeneratorEClass = createEClass(DAWN_GMF_GENERATOR);
-    createEAttribute(dawnGMFGeneratorEClass, DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME);
-    createEAttribute(dawnGMFGeneratorEClass, DAWN_GMF_GENERATOR__DAWN_EDITOR_UTIL_CLASS_NAME);
-    createEAttribute(dawnGMFGeneratorEClass, DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME);
-    createEAttribute(dawnGMFGeneratorEClass, DAWN_GMF_GENERATOR__DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME);
-    createEAttribute(dawnGMFGeneratorEClass, DAWN_GMF_GENERATOR__DAWN_DIAGRAM_EDIT_PART_CLASS_NAME);
-    createEAttribute(dawnGMFGeneratorEClass, DAWN_GMF_GENERATOR__DAWN_EDIT_PART_FACTORY_CLASS_NAME);
-    createEAttribute(dawnGMFGeneratorEClass, DAWN_GMF_GENERATOR__DAWN_EDIT_PART_PROVIDER_CLASS_NAME);
-    createEAttribute(dawnGMFGeneratorEClass, DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME);
-    createEReference(dawnGMFGeneratorEClass, DAWN_GMF_GENERATOR__GMF_GEN_EDITOR_GENERATOR);
-
-    dawnEMFGeneratorEClass = createEClass(DAWN_EMF_GENERATOR);
+    createEReference(dawnFragmentGeneratorEClass, DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR);
   }
 
   /**
@@ -383,7 +264,9 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -393,27 +276,25 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
 
     // Obtain other dependent packages
     EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
-    GenModelPackage theGenModelPackage = (GenModelPackage)EPackage.Registry.INSTANCE
-        .getEPackage(GenModelPackage.eNS_URI);
-    GMFGenPackage theGMFGenPackage = (GMFGenPackage)EPackage.Registry.INSTANCE.getEPackage(GMFGenPackage.eNS_URI);
 
     // Create type parameters
 
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    dawnGMFGeneratorEClass.getESuperTypes().add(this.getDawnFragmentGenerator());
-    dawnEMFGeneratorEClass.getESuperTypes().add(this.getDawnFragmentGenerator());
 
     // Initialize classes and features; add operations and parameters
     initEClass(dawnGeneratorEClass, DawnGenerator.class, "DawnGenerator", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDawnGenerator_EmfFragmentgenerator(), this.getDawnEMFGenerator(), null, "emfFragmentgenerator",
-        null, 0, 1, DawnGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDawnGenerator_GmfFragmentgenerator(), this.getDawnGMFGenerator(), null, "gmfFragmentgenerator",
-        null, 0, 1, DawnGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGenerator_ConflictColor(), theEcorePackage.getEString(), "conflictColor", null, 0, 1,
+        DawnGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGenerator_LocalLockColor(), theEcorePackage.getEString(), "localLockColor", null, 0, 1,
+        DawnGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDawnGenerator_RemoteLockColor(), theEcorePackage.getEString(), "remoteLockColor", null, 0, 1,
+        DawnGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(dawnFragmentGeneratorEClass, DawnFragmentGenerator.class, "DawnFragmentGenerator", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -423,42 +304,9 @@ public class DawngenmodelPackageImpl extends EPackageImpl implements Dawngenmode
     initEAttribute(getDawnFragmentGenerator_DawnEditorClassName(), theEcorePackage.getEString(), "dawnEditorClassName",
         null, 0, 1, DawnFragmentGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDawnFragmentGenerator_EmfGenModel(), theGenModelPackage.getGenModel(), null, "emfGenModel", null,
-        0, 1, DawnFragmentGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(dawnGMFGeneratorEClass, DawnGMFGenerator.class, "DawnGMFGenerator", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getDawnGMFGenerator_DawnDocumentProviderClassName(), theEcorePackage.getEString(),
-        "dawnDocumentProviderClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnEditorUtilClassName(), theEcorePackage.getEString(),
-        "dawnEditorUtilClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnCreationWizardClassName(), theEcorePackage.getEString(),
-        "dawnCreationWizardClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnCanonicalEditingPolicyClassName(), theEcorePackage.getEString(),
-        "dawnCanonicalEditingPolicyClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnDiagramEditPartClassName(), theEcorePackage.getEString(),
-        "dawnDiagramEditPartClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnEditPartFactoryClassName(), theEcorePackage.getEString(),
-        "dawnEditPartFactoryClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnEditPartProviderClassName(), theEcorePackage.getEString(),
-        "dawnEditPartProviderClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDawnGMFGenerator_DawnEditPolicyProviderClassName(), theEcorePackage.getEString(),
-        "dawnEditPolicyProviderClassName", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDawnGMFGenerator_GMFGenEditorGenerator(), theGMFGenPackage.getGenEditorGenerator(), null,
-        "GMFGenEditorGenerator", null, 0, 1, DawnGMFGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(dawnEMFGeneratorEClass, DawnEMFGenerator.class, "DawnEMFGenerator", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDawnFragmentGenerator_DawnGenerator(), getDawnGenerator(), null, "dawnGenerator", null, 0, 1,
+        DawnFragmentGenerator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

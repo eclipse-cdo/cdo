@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+	Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Martin Fluegge - initial API and implementation
+-->
+
+<workflow>
+
+	<!--<property name="model" value="file:/D:/Development/INSTANCES/Dawn_Instance1/org.eclipse.emf.cdo.dawn.examples.acore/model/acore.dawngenmodel" />-->
+    <property name="model" value="file:/D:/Development/CDO_Bugzillas/_instances/Dawn_Instance1/org.eclipse.emf.cdo.dawn.examples.acore/model/acore.dawngenmodel.emf" />
+
+	<property name="src-gen" value="d:/temp/source" />
+
+	<!-- set up EMF for standalone execution -->
+    <bean class="org.eclipse.emf.mwe.utils.StandaloneSetup" >
+		<platformUri value=".."/>
+	</bean>
+
+	<!-- load model and store it in slot 'model' -->
+	<component class="org.eclipse.emf.mwe.utils.Reader">
+		<uri value="${model}" />
+		<modelSlot value="model" />
+	</component>
+
+	<!-- check model -->
+	<!--loads different metamodels-->
+	<component class="org.eclipse.xtend.check.CheckComponent">
+		<metaModel id="ecore" class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<metaModelPackage value="org.eclipse.emf.ecore.EcorePackage"/>
+		</metaModel>
+
+		<metaModel id="genmodel" class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<metaModelPackage value="org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage"/>
+		</metaModel>
+
+		<metaModel id="dawngenmodel" class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<metaModelPackage value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage"/>
+		</metaModel>
+		
+		<metaModel id="dawnEmfGenmodel" class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<metaModelPackage value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEmfGenmodelPackage"/>
+		</metaModel>
+
+		<checkFile value="metamodel::Checks" />
+		<emfAllChildrenSlot value="model" />
+	</component>
+
+	<!--  generate code for the meta specified templates -->
+	<component class="org.eclipse.xpand2.Generator">
+
+		<metaModel id="ecore" class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<metaModelPackage value="org.eclipse.emf.ecore.EcorePackage"/>
+		</metaModel>
+
+		<metaModel id="genmodel" class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<metaModelPackage value="org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage"/>
+		</metaModel>
+
+		<metaModel id="dawngenmodel" class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<metaModelPackage value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.DawngenmodelPackage"/>
+		</metaModel>
+
+	    <metaModel id="dawnEmfGenmodel" class="org.eclipse.xtend.typesystem.emf.EmfMetaModel">
+			<metaModelPackage value="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.DawnEmfGenmodelPackage"/>
+		</metaModel>
+
+		<expand	value="templates::EMFFragmentTemplate::main FOR model" />
+		<outlet path="${src-gen}" >
+			<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+		</outlet>
+
+		<!--<prSrcPaths value="${src-gen}"/>
+		<prExcludes value=", *.xml, *.hbm"/>-->
+	</component>
+</workflow>

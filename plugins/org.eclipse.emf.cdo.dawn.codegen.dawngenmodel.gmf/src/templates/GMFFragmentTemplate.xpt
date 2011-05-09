@@ -1,0 +1,1046 @@
+«REM»
+ Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+
+ Contributors:
+     Martin Fluegge - initial API and implementation
+
+«ENDREM»
+
+«IMPORT gmfgen»
+«IMPORT gmfgraph»
+«IMPORT emf»
+«IMPORT genmodel»
+«IMPORT ecore»
+«IMPORT dawngenmodel»
+«IMPORT dawnGmfGenmodel»
+
+«EXTENSION org::eclipse::emf::cdo::dawn::codegen::util::Utils»
+
+«DEFINE main FOR DawnGMFGenerator»
+ «setDiagramPackage(this.GMFGenEditorGenerator.packageNamePrefix)»
+
+ «EXPAND dawnEditor FOR this»
+ «EXPAND dawnEditPart FOR this»
+ «EXPAND dawnEditPartFactory FOR this»
+ «EXPAND dawnCanonicalEditingPolicy FOR this»
+ «EXPAND dawnCreationWizard FOR this»
+ «EXPAND dawnEditorUtil FOR this»
+ «EXPAND dawnDocumentProvider FOR this»
+ «EXPAND dawnEditPartProvider FOR this»
+ «EXPAND fragmentXML FOR this»
+ «EXPAND dawnEditPolicyProvider FOR this»
+ «EXPAND manifestMF FOR this»
+ «EXPAND buildPROPERTIES FOR this.GMFGenEditorGenerator»
+ «EXPAND classpath FOR this.GMFGenEditorGenerator»
+
+«ENDDEFINE»
+
+«REM»############################################  Extended Editor ##################################################################«ENDREM»
+«DEFINE dawnEditor FOR DawnGMFGenerator»
+«FILE "src/"+getDiagramPackagePath()+"/part/"+this.dawnEditorClassName+".java"»
+
+package  «this.GMFGenEditorGenerator.editor.packageName»;
+
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
+import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
+import org.eclipse.emf.cdo.dawn.editors.impl.DawnGMFEditorSupport;
+import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
+import org.eclipse.emf.cdo.ui.CDOEditorInput;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.transaction.TransactionException;
+
+import org.eclipse.emf.common.ui.URIEditorInput;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.AbstractDocumentProvider;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IFileEditorInput;
+
+«EXPAND generatedComment -»
+public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.className» implements  IDawnEditor
+{
+  public static String ID = "«this.GMFGenEditorGenerator.editor.packageName».«this.dawnEditorClassName» ";
+
+  private IDawnEditorSupport dawnEditorSupport;
+
+  «EXPAND generatedComment -»
+  public «this.dawnEditorClassName» ()
+  {
+    super();
+    setDocumentProvider(new «this.dawnDocumentProviderClassName»());
+    setDawnEditorSupport(new DawnGMFEditorSupport(this));
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  public void setInput(IEditorInput input)
+  {
+    try
+    {
+      doSetInput(input, true);
+    }
+    catch (CoreException x)
+    {
+      x.printStackTrace(System.err);
+      String title = x.getMessage();
+      String msg = x.getMessage();
+      Shell shell = getSite().getShell();
+      ErrorDialog.openError(shell, title, msg, x.getStatus());
+    }
+    
+    dawnEditorSupport.setView(((DawnEditorInput)input).getView());
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  protected void initializeGraphicalViewer()
+  {
+    super.initializeGraphicalViewer();
+    dawnEditorSupport.registerListeners();
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  public void doSave(IProgressMonitor monitor)
+  {
+    try
+    {
+      dawnEditorSupport.setDirty(false);
+      updateState(getEditorInput());
+      validateState(getEditorInput());
+      performSave(false, monitor);
+    }
+    catch (TransactionException e)
+    {
+      if (e.getMessage().contains("conflict"))
+      {
+        MessageDialog.openError(Display.getDefault().getActiveShell(), "conflict",
+            "Your Resource is in conflict and cannot be committed");
+      }
+      else
+      {
+        throw e;
+      }
+    }
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  public boolean isDirty()
+  {
+    return dawnEditorSupport.isDirty();
+  }
+
+  «EXPAND generatedComment -»
+  public String getContributorID()
+  {
+      return ID;
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  protected void setDocumentProvider(IEditorInput input)
+  {
+    if (input instanceof IFileEditorInput || input instanceof URIEditorInput || input instanceof CDOEditorInput)
+    {
+      setDocumentProvider(getDocumentProvider());
+    }
+    else
+    {
+      super.setDocumentProvider(input);
+    }
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  public void dispose()
+  {
+    try
+    {
+      super.dispose();
+    }
+    finally
+    {
+      dawnEditorSupport.close();
+    }
+  }
+
+  «EXPAND generatedComment -»
+  public CDOView getView()
+  {
+    return dawnEditorSupport.getView();
+  }
+
+  «EXPAND generatedComment -»
+  public void setDirty()
+  {
+    dawnEditorSupport.setDirty(true);
+    ((AbstractDocumentProvider)getDocumentProvider()).changed(getEditorInput());
+  }
+  
+  public void setDawnEditorSupport(IDawnEditorSupport dawnEditorSupport)
+  {
+    this.dawnEditorSupport = dawnEditorSupport;
+  }
+
+  public IDawnEditorSupport getDawnEditorSupport()
+  {
+    return dawnEditorSupport;
+  }
+}
+
+«ENDFILE»
+«ENDDEFINE»
+
+
+«REM»############################################  DawnXXXEditPart ##################################################################«ENDREM»
+«DEFINE dawnEditPart FOR DawnGMFGenerator»
+«FILE "src/"+getDiagramPackagePath()+"/edit/parts/"+this.dawnDiagramEditPartClassName+".java"»
+package «this.GMFGenEditorGenerator.diagram.editPartsPackageName»;
+
+import org.eclipse.emf.cdo.dawn.synchronize.DawnConflictHelper;
+
+import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.notation.View;
+
+«EXPAND generatedComment -»
+public class «this.dawnDiagramEditPartClassName» extends «this.GMFGenEditorGenerator.diagram.editPartClassName»
+{
+
+  «EXPAND generatedComment -»
+  public «this.dawnDiagramEditPartClassName»(View view)
+  {
+    super(view);
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  protected void removeChild(EditPart child)
+  {
+    if (DawnConflictHelper.isConflicted((EObject)child.getModel()))
+    {
+      return;
+    }
+    super.removeChild(child);
+  }
+}
+«ENDFILE»
+«ENDDEFINE»
+
+
+«REM»############################################  DawnXXXEditPartFactory ##################################################################«ENDREM»
+«DEFINE dawnEditPartFactory FOR DawnGMFGenerator»
+«FILE "src/"+getDiagramPackagePath()+"/edit/parts/"+this.dawnEditPartFactoryClassName+".java"»
+package «this.GMFGenEditorGenerator.diagram.editPartsPackageName»;
+
+
+import «this.GMFGenEditorGenerator.editor.packageName».«this.GMFGenEditorGenerator.diagram.visualIDRegistryClassName»;
+
+import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.notation.View;
+
+«EXPAND generatedComment -»
+public class «this.dawnEditPartFactoryClassName» extends «this.GMFGenEditorGenerator.diagram.editPartFactoryClassName»
+{
+  «EXPAND generatedComment -»
+  public «this.dawnEditPartFactoryClassName»()
+  {
+    super();
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  public EditPart createEditPart(EditPart context, Object model)
+  {
+    if (model instanceof View)
+    {
+      View view = (View)model;
+      switch («this.GMFGenEditorGenerator.diagram.visualIDRegistryClassName».getVisualID(view))
+      {
+      case  «this.dawnDiagramEditPartClassName».VISUAL_ID:
+        return new «this.dawnDiagramEditPartClassName»(view);
+      }
+    }
+
+    return super.createEditPart(context, model);
+  }
+}
+
+«ENDFILE»
+«ENDDEFINE»
+
+
+«REM»############################################  DawnXXXCanonicalEditingPolicy ##################################################################«ENDREM»
+«DEFINE dawnCanonicalEditingPolicy FOR DawnGMFGenerator»
+«FILE "src/"+getDiagramPackagePath()+"/edit/policies/"+this.dawnCanonicalEditingPolicyClassName+".java"»
+package «this.GMFGenEditorGenerator.diagram.editPoliciesPackageName»;
+
+
+import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest;
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest.ViewDescriptor;
+import org.eclipse.gmf.runtime.notation.View;
+
+import java.util.ArrayList;
+import java.util.List;
+
+«EXPAND generatedComment -»
+public class «this.dawnCanonicalEditingPolicyClassName» extends «this.GMFGenEditorGenerator.diagram.canonicalEditPolicyClassName»
+{
+  «EXPAND generatedComment -»
+  public «this.dawnCanonicalEditingPolicyClassName»()
+  {
+    super();
+  }
+  
+  @Override
+  protected CreateViewRequest getCreateViewRequest(List<ViewDescriptor> descriptors)
+  {
+    List<View> viewChildren = getViewChildren();
+
+    List<ViewDescriptor> tbr = new ArrayList<CreateViewRequest.ViewDescriptor>();
+
+    for (ViewDescriptor desc : descriptors)
+    {
+      EObject obj = (EObject)((CanonicalElementAdapter)desc.getElementAdapter()).getRealObject();
+
+      boolean found = false;
+
+      for (View view : viewChildren)
+      {
+        if (view.getElement().equals(obj))
+        {
+          found = true;
+          break;
+        }
+      }
+      if (!found)
+      {
+        tbr.add(desc);
+      }
+    }
+
+    descriptors.removeAll(tbr);
+
+    return new CreateViewRequest(descriptors);
+  }
+}
+«ENDFILE»
+«ENDDEFINE»
+
+«REM»############################################  DawnXXXCreationWizard ##################################################################«ENDREM»
+«DEFINE dawnCreationWizard FOR DawnGMFGenerator»
+«FILE "src/"+getDiagramPackagePath()+"/part/"+this.dawnCreationWizardClassName+".java"»
+package  «this.GMFGenEditorGenerator.editor.packageName»;
+
+import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
+import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewDiagramResourceWizardPage;
+import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewResourceWizardPage;
+import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.common.util.URI;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.actions.WorkspaceModifyOperation;
+
+import java.lang.reflect.InvocationTargetException;
+
+«EXPAND generatedComment -»
+public class «this.dawnCreationWizardClassName» extends «this.GMFGenEditorGenerator.diagram.creationWizardClassName»
+{
+  private CDOView view;
+
+  private DawnCreateNewDiagramResourceWizardPage dawnDiagramModelFilePage;
+
+  private DawnCreateNewResourceWizardPage dawnDomainModelFilePage;
+
+  «EXPAND generatedComment -»
+  public «this.dawnCreationWizardClassName»()
+  {
+    super();
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
+        PreferenceConstants.getServerName());
+    CDOSession session = CDOConnectionUtil.instance.openSession();
+    view = CDOConnectionUtil.instance.openView(session);
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  public boolean performFinish()
+  {
+    IRunnableWithProgress op = new WorkspaceModifyOperation(null)
+    {
+      @Override
+      protected void execute(IProgressMonitor monitor) throws CoreException, InterruptedException
+      {
+        URI diagramResourceURI = dawnDiagramModelFilePage.getURI();
+        URI domainModelResourceURI = dawnDomainModelFilePage.getURI();
+
+        diagram = «this.dawnEditorUtilClassName».createDiagram(diagramResourceURI, domainModelResourceURI, monitor);
+
+        if (isOpenNewlyCreatedDiagramEditor() && diagram != null)
+        {
+          try
+          {
+            «this.dawnEditorUtilClassName».openDiagram(diagram);
+          }
+          catch (PartInitException e)
+          {
+            ErrorDialog.openError(getContainer().getShell(), Messages.«this.GMFGenEditorGenerator.diagram.creationWizardClassName»OpenEditorError, null,
+                e.getStatus());
+          }
+        }
+      }
+    };
+    try
+    {
+      getContainer().run(false, true, op);
+    }
+    catch (InterruptedException e)
+    {
+      return false;
+    }
+    catch (InvocationTargetException e)
+    {
+      if (e.getTargetException() instanceof CoreException)
+      {
+        ErrorDialog.openError(getContainer().getShell(), Messages.«this.GMFGenEditorGenerator.diagram.creationWizardClassName»CreationError, null,
+            ((CoreException)e.getTargetException()).getStatus());
+      }
+      else
+      {
+      «this.GMFGenEditorGenerator.plugin.activatorClassName».getInstance().logError("Error creating diagram", e.getTargetException()); //$NON-NLS-1$
+      }
+      return false;
+    }
+    return diagram != null;
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  public void addPages()
+  {
+
+    dawnDiagramModelFilePage = new DawnCreateNewDiagramResourceWizardPage("«this.GMFGenEditorGenerator.diagramFileExtension»", false, view);
+    dawnDiagramModelFilePage.setTitle(Messages.«this.GMFGenEditorGenerator.diagram.creationWizardClassName»_DiagramModelFilePageTitle);
+    dawnDiagramModelFilePage.setDescription(Messages.«this.GMFGenEditorGenerator.diagram.creationWizardClassName»_DiagramModelFilePageDescription);
+    dawnDiagramModelFilePage.setCreateAutomaticResourceName(true);
+    addPage(dawnDiagramModelFilePage);
+
+    dawnDomainModelFilePage = new DawnCreateNewResourceWizardPage("«this.GMFGenEditorGenerator.domainFileExtension»", true, view)
+    {
+      @Override
+      public void setVisible(boolean visible)
+      {
+        if (visible)
+        {
+          URI uri = dawnDiagramModelFilePage.getURI();
+          String fileName = uri.lastSegment();
+          fileName = fileName.substring(0, fileName.length() - ".«this.GMFGenEditorGenerator.diagramFileExtension»".length()); //$NON-NLS-1$
+          fileName += ".«this.GMFGenEditorGenerator.domainFileExtension»";
+          dawnDomainModelFilePage.setResourceNamePrefix(fileName);
+          dawnDomainModelFilePage.setResourcePath(dawnDiagramModelFilePage.getResourcePath());
+        }
+        super.setVisible(visible);
+      }
+    };
+    dawnDomainModelFilePage.setTitle(Messages.«this.GMFGenEditorGenerator.diagram.creationWizardClassName»_DomainModelFilePageTitle);
+    dawnDomainModelFilePage.setDescription(Messages.«this.GMFGenEditorGenerator.diagram.creationWizardClassName»_DomainModelFilePageDescription);
+
+    dawnDomainModelFilePage.setResourceValidationType(DawnCreateNewResourceWizardPage.VALIDATION_WARN);
+    addPage(dawnDomainModelFilePage);
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  public void dispose()
+  {
+    view.close();
+  }
+}
+«ENDFILE»
+«ENDDEFINE»
+
+«REM»############################################  DawnXXXEditorUtil ##################################################################«ENDREM»
+«DEFINE dawnEditorUtil FOR DawnGMFGenerator»
+«FILE "src/"+getDiagramPackagePath()+"/part/"+this.dawnEditorUtilClassName+".java"»
+package  «this.GMFGenEditorGenerator.editor.packageName»;
+
+import org.eclipse.emf.cdo.dawn.commands.CreateSemanticResourceRecordingCommand;
+import «this.GMFGenEditorGenerator.diagram.domainDiagramElement.genPackage.basePackage».«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.ePackage.name».«this.GMFGenEditorGenerator.domainGenModel.modelName»Factory;
+
+
+import «this.GMFGenEditorGenerator.diagram.editPartsPackageName».«this.dawnDiagramEditPartClassName»;
+import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
+import org.eclipse.emf.cdo.dawn.transaction.DawnGMFEditingDomainFactory;
+import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
+import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
+
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.operations.OperationHistoryFactory;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.gmf.runtime.common.core.command.CommandResult;
+import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
+import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
+import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+
+import java.io.IOException;
+import java.util.Collections;
+
+«EXPAND generatedComment -»
+public class «this.dawnEditorUtilClassName» extends «this.GMFGenEditorGenerator.diagram.diagramEditorUtilClassName»
+{
+
+  «EXPAND generatedComment -»
+  public static boolean openDiagram(Resource diagram) throws PartInitException
+  {
+    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+    return null != page.openEditor(new DawnEditorInput(diagram.getURI()), «this.dawnEditorClassName».ID);
+  }
+
+  «EXPAND generatedComment -»
+  public static void runWizard(Shell shell, Wizard wizard, String settingsKey)
+  {
+    IDialogSettings pluginDialogSettings = «this.GMFGenEditorGenerator.plugin.activatorClassName».getInstance().getDialogSettings();
+    IDialogSettings wizardDialogSettings = pluginDialogSettings.getSection(settingsKey);
+    if (wizardDialogSettings == null)
+    {
+      wizardDialogSettings = pluginDialogSettings.addNewSection(settingsKey);
+    }
+    wizard.setDialogSettings(wizardDialogSettings);
+    WizardDialog dialog = new WizardDialog(shell, wizard);
+    dialog.create();
+    dialog.getShell().setSize(Math.max(500, dialog.getShell().getSize().x), 500);
+    dialog.open();
+  }
+
+  «EXPAND generatedComment -»
+  public static Resource createDiagram(URI diagramURI, URI modelURI, IProgressMonitor progressMonitor)
+  {
+    TransactionalEditingDomain editingDomain = DawnGMFEditingDomainFactory.getInstance().createEditingDomain();
+
+    progressMonitor.beginTask(Messages.«this.GMFGenEditorGenerator.diagram.diagramEditorUtilClassName»_CreateDiagramProgressTask, 3);
+
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
+        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.openSession();
+    ResourceSet resourceSet = editingDomain.getResourceSet();
+
+    CDOTransaction transaction = CDOConnectionUtil.instance.openCurrentTransaction(resourceSet, diagramURI.toString());
+
+    final Resource diagramResource = resourceSet.createResource(diagramURI);
+
+
+    CreateSemanticResourceRecordingCommand createSemanticResourceCommand = new CreateSemanticResourceRecordingCommand(
+        editingDomain, transaction, modelURI.path());
+
+    editingDomain.getCommandStack().execute(createSemanticResourceCommand);
+    final Resource modelResource = createSemanticResourceCommand.getResource();
+
+    final String diagramName = diagramURI.lastSegment();
+    AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
+        Messages.«this.GMFGenEditorGenerator.diagram.diagramEditorUtilClassName»_CreateDiagramCommandLabel, Collections.EMPTY_LIST)
+    {
+      @Override
+      protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
+      {
+        EObject model = null;
+        if (modelResource.getContents().size() > 0)
+        {
+          model = modelResource.getContents().get(0);
+        }
+        else
+        {
+          model = createInitialModel();
+          attachModelToResource(model, modelResource);
+        }
+
+        Diagram diagram = ViewService.createDiagram(model, «this.dawnDiagramEditPartClassName».MODEL_ID,
+            «this.GMFGenEditorGenerator.plugin.activatorClassName».DIAGRAM_PREFERENCES_HINT);
+        if (diagram != null)
+        {
+          diagramResource.getContents().add(diagram);
+          diagram.setName(diagramName);
+          diagram.setElement(model);
+        }
+
+        try
+        {
+          modelResource.save(Collections.EMPTY_MAP);
+          diagramResource.save(Collections.EMPTY_MAP);
+        }
+        catch (IOException e)
+        {
+          «this.GMFGenEditorGenerator.plugin.activatorClassName».getInstance().logError("Unable to store model and diagram resources", e); //$NON-NLS-1$
+        }
+
+        return CommandResult.newOKCommandResult();
+      }
+    };
+    try
+    {
+      OperationHistoryFactory.getOperationHistory().execute(command, new SubProgressMonitor(progressMonitor, 1), null);
+    }
+    catch (ExecutionException e)
+    {
+     «this.GMFGenEditorGenerator.plugin.activatorClassName».getInstance().logError("Unable to create model and diagram", e); //$NON-NLS-1$
+    }
+    setCharset(WorkspaceSynchronizer.getFile(modelResource));
+    setCharset(WorkspaceSynchronizer.getFile(diagramResource));
+    return diagramResource;
+  }
+
+  «EXPAND generatedComment -»
+  private static EObject createInitialModel()
+  {
+    return «this.GMFGenEditorGenerator.domainGenModel.modelName»Factory.eINSTANCE.create«this.GMFGenEditorGenerator.diagram.domainDiagramElement.ecoreClass.name»();
+  }
+
+  «EXPAND generatedComment -»
+  private static void attachModelToResource(EObject model, Resource resource)
+  {
+    resource.getContents().add(model);
+  }
+}
+
+
+«ENDFILE»
+«ENDDEFINE»
+
+«REM»############################################  DawnXXXDocumentProvider ##################################################################«ENDREM»
+«DEFINE dawnDocumentProvider FOR DawnGMFGenerator»
+«FILE "src/"+getDiagramPackagePath()+"/part/"+this.dawnDocumentProviderClassName+".java"»
+package  «this.GMFGenEditorGenerator.editor.packageName»;
+
+import org.eclipse.emf.cdo.dawn.transaction.DawnDiagramEditingDomainFactory;
+import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
+import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.transaction.NotificationFilter;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+
+import org.eclipse.core.resources.IStorage;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.DiagramDocument;
+import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument;
+import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocument;
+import org.eclipse.gmf.runtime.diagram.ui.resources.editor.internal.util.DiagramIOUtil;
+import org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory;
+import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.part.FileEditorInput;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+«EXPAND generatedComment -»
+public class «this.dawnDocumentProviderClassName» extends «this.GMFGenEditorGenerator.diagram.documentProviderClassName»
+{
+
+  «EXPAND generatedComment -»
+  public «this.dawnDocumentProviderClassName» ()
+  {
+    super();
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  protected IDocument createEmptyDocument()
+  {
+    DiagramDocument document = new DiagramDocument();
+    document.setEditingDomain(createEditingDomain());
+    return document;
+  }
+
+  «EXPAND generatedComment -»
+  private TransactionalEditingDomain createEditingDomain()
+  {
+    TransactionalEditingDomain editingDomain = DawnDiagramEditingDomainFactory.getInstance().createEditingDomain();
+    
+    editingDomain.setID("«this.GMFGenEditorGenerator.diagram.editingDomainID»"); //$NON-NLS-1$
+    final NotificationFilter diagramResourceModifiedFilter = NotificationFilter.createNotifierFilter(
+        editingDomain.getResourceSet()).and(NotificationFilter.createEventTypeFilter(Notification.ADD)).and(
+        NotificationFilter.createFeatureFilter(ResourceSet.class, ResourceSet.RESOURCE_SET__RESOURCES));
+    editingDomain.getResourceSet().eAdapters().add(new Adapter()
+    {
+      private Notifier myTarger;
+
+      public Notifier getTarget()
+      {
+        return myTarger;
+      }
+
+      public boolean isAdapterForType(Object type)
+      {
+        return false;
+      }
+
+      public void notifyChanged(Notification notification)
+      {
+        if (diagramResourceModifiedFilter.matches(notification))
+        {
+          Object value = notification.getNewValue();
+          if (value instanceof Resource)
+          {
+            ((Resource)value).setTrackingModification(true);
+          }
+        }
+      }
+
+      public void setTarget(Notifier newTarget)
+      {
+        myTarger = newTarget;
+      }
+    });
+
+    return editingDomain;
+  }
+
+
+  «EXPAND generatedComment -»
+  @Override
+  protected void setDocumentContent(IDocument document, IEditorInput element) throws CoreException
+  {
+    IDiagramDocument diagramDocument = (IDiagramDocument)document;
+    TransactionalEditingDomain domain = diagramDocument.getEditingDomain();
+    if (element instanceof FileEditorInput)
+    {
+      IStorage storage = ((FileEditorInput)element).getStorage();
+      Diagram diagram = DiagramIOUtil.load(domain, storage, true, getProgressMonitor());
+      document.setContent(diagram);
+    }
+    else if (element instanceof URIEditorInput)
+    {
+      URIEditorInput editorInput = (URIEditorInput)element;
+
+      URI uri = editorInput.getURI();
+      Resource resource = null;
+      try
+      {
+        URI dawnURI = URI.createURI(uri.toString().replace("cdo", "dawn"));
+        resource = domain.getResourceSet().getResource(dawnURI, false);
+        if (resource == null)
+        {
+          resource = domain.getResourceSet().getResource(dawnURI, true);
+        }
+
+        if (editorInput instanceof DawnEditorInput)
+        {
+          ((DawnEditorInput)editorInput).setResource((CDOResource)resource);
+        }
+        if (!resource.isLoaded())
+        {
+          try
+          {
+            Map options = new HashMap(GMFResourceFactory.getDefaultLoadOptions());
+            resource.load(options);
+          }
+          catch (IOException e)
+          {
+            resource.unload();
+            throw e;
+          }
+        }
+        if (uri.fragment() != null)
+        {
+          EObject rootElement = resource.getEObject(uri.fragment());
+          if (rootElement instanceof Diagram)
+          {
+            Diagram diagram = (Diagram)rootElement;
+            DawnDiagramUpdater.initializeElement(diagram);
+            document.setContent(diagram);
+
+            return;
+          }
+        }
+        else
+        {
+          for (Iterator<?> it = resource.getContents().iterator(); it.hasNext();)
+          {
+            Object rootElement = it.next();
+            if (rootElement instanceof Diagram)
+            {
+              Diagram diagram = (Diagram)rootElement;
+              DawnDiagramUpdater.initializeElement(diagram);
+              document.setContent(diagram);
+
+              return;
+            }
+          }
+        }
+        throw new RuntimeException(Messages.«this.GMFGenEditorGenerator.diagram.documentProviderClassName»_NoDiagramInResourceError);
+      }
+      catch (Exception e)
+      {
+        CoreException thrownExcp = null;
+        if (e instanceof CoreException)
+        {
+          thrownExcp = (CoreException)e;
+        }
+        else
+        {
+          String msg = e.getLocalizedMessage();
+          thrownExcp = new CoreException(new Status(IStatus.ERROR,   «this.GMFGenEditorGenerator.plugin.activatorClassName».ID, 0,
+              msg != null ? msg : Messages.«this.GMFGenEditorGenerator.diagram.documentProviderClassName»_DiagramLoadingError, e));
+        }
+        throw thrownExcp;
+      }
+    }
+    else
+    {
+      throw new CoreException(new Status(IStatus.ERROR, «this.GMFGenEditorGenerator.plugin.activatorClassName».ID, 0, NLS.bind(
+          Messages.«this.GMFGenEditorGenerator.diagram.documentProviderClassName»_IncorrectInputError, new Object[] { element,
+              "org.eclipse.ui.part.FileEditorInput", "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$ //$NON-NLS-2$
+          null));
+    }
+  }
+
+  «EXPAND generatedComment -»
+  @Override
+  public void changed(Object element)
+  {
+    if (element instanceof IEditorInput)
+    {
+      fireElementDirtyStateChanged(element, true);
+    }
+  }
+}
+«ENDFILE»
+«ENDDEFINE»
+
+
+«REM»############################################ DawnXXXEditPartProvider ##################################################################«ENDREM»
+«DEFINE dawnEditPartProvider FOR DawnGMFGenerator»
+«FILE "src/"+getDiagramPackagePath()+"/providers/"+this.dawnEditPartProviderClassName+".java"»
+package «this.GMFGenEditorGenerator.diagram.providersPackageName»;
+
+import «this.GMFGenEditorGenerator.diagram.editPartsPackageName».«this.dawnEditPartFactoryClassName»;
+import «this.GMFGenEditorGenerator.editor.packageName».«this.GMFGenEditorGenerator.plugin.activatorClassName»;
+
+«EXPAND generatedComment -»
+public class «this.dawnEditPartProviderClassName» extends «this.GMFGenEditorGenerator.diagram.editPartProviderClassName»
+{
+
+  «EXPAND generatedComment -»
+  public «this.dawnEditPartProviderClassName»()
+  {
+    super();
+    setFactory(new «this.dawnEditPartFactoryClassName»());
+  }
+}
+
+
+«ENDFILE»
+«ENDDEFINE»
+
+«REM»############################################  DawnXXXEditPolicyProvider ##################################################################«ENDREM»
+«DEFINE dawnEditPolicyProvider FOR DawnGMFGenerator»
+«FILE "src/"+getDiagramPackagePath()+"/providers/"+dawnEditPolicyProviderClassName+".java"»
+package «this.GMFGenEditorGenerator.diagram.providersPackageName»;
+
+import «this.GMFGenEditorGenerator.diagram.editPartsPackageName».«this.GMFGenEditorGenerator.diagram.editPartClassName»;
+import «this.GMFGenEditorGenerator.diagram.editPoliciesPackageName».«this.dawnCanonicalEditingPolicyClassName»;
+import «this.GMFGenEditorGenerator.editor.packageName».«this.GMFGenEditorGenerator.plugin.activatorClassName»;
+
+import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
+import org.eclipse.gmf.runtime.common.core.service.IOperation;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
+import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.CreateEditPoliciesOperation;
+import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvider;
+
+«EXPAND generatedComment -»
+public class «dawnEditPolicyProviderClassName» extends AbstractProvider implements IEditPolicyProvider
+{
+  public static String ID = "«this.GMFGenEditorGenerator.diagram.providersPackageName».«this.dawnEditPolicyProviderClassName»";
+
+  «EXPAND generatedComment -»
+  public boolean provides(IOperation operation)
+  {
+    if (operation instanceof CreateEditPoliciesOperation)
+    {
+      CreateEditPoliciesOperation editPoliciesOperation = (CreateEditPoliciesOperation)operation;
+      if (editPoliciesOperation.getEditPart() instanceof «this.GMFGenEditorGenerator.diagram.editPartClassName»)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  «EXPAND generatedComment -»
+  public void createEditPolicies(EditPart editPart)
+  {
+    if (editPart instanceof «this.GMFGenEditorGenerator.diagram.editPartClassName»)
+    {
+        editPart.installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new «this.dawnCanonicalEditingPolicyClassName»());
+    }
+  }
+}
+
+«ENDFILE»
+«ENDDEFINE»
+
+«REM»########################################## fragment.xml ####################################################################«ENDREM»
+«DEFINE fragmentXML FOR DawnGMFGenerator»
+«FILE "fragment.xml"»<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+<extension
+         point="org.eclipse.ui.editors">
+      <editor
+
+            class="«this.GMFGenEditorGenerator.editor.packageName».«this.dawnEditorClassName»"
+            contributorClass="«this.GMFGenEditorGenerator.editor.packageName».«this.GMFGenEditorGenerator.editor.actionBarContributorClassName»"
+            default="true"
+	            extensions="«this.GMFGenEditorGenerator.diagramFileExtension»"
+	            icon="«this.GMFGenEditorGenerator.editor.iconPath»"
+	            id="«this.GMFGenEditorGenerator.editor.packageName».«this.dawnEditorClassName»"
+	            matchingStrategy="«this.GMFGenEditorGenerator.editor.packageName».«this.GMFGenEditorGenerator.diagram.matchingStrategyClassName»"
+	            name="Dawn «this.GMFGenEditorGenerator.modelID» Diagram">
+	      </editor>
+	   </extension>
+	       <extension
+          point="org.eclipse.ui.newWizards">
+       <wizard
+             category="org.eclipse.ui.Examples"
+             class="«this.GMFGenEditorGenerator.editor.packageName».«this.dawnCreationWizardClassName»"
+             icon="«this.GMFGenEditorGenerator.editor.iconPath»"
+             id="«this.GMFGenEditorGenerator.editor.packageName».«this.dawnCreationWizardClassName»"
+             name="Dawn «this.GMFGenEditorGenerator.modelID» Diagram">
+          <description>
+             description body text
+          </description>
+       </wizard>
+
+    </extension>
+        <extension
+              point="org.eclipse.gmf.runtime.diagram.ui.resources.editor.documentProviders">
+           <provider
+                 class="«this.GMFGenEditorGenerator.editor.packageName».«this.dawnDocumentProviderClassName»"
+                 documentType="org.eclipse.gmf.runtime.diagram.ui.editor.IDocument"
+                 id="«this.GMFGenEditorGenerator.editor.packageName».«this.dawnDocumentProviderClassName»"
+                 inputTypes="org.eclipse.emf.common.ui.URIEditorInput">
+           </provider>
+        </extension>
+       <extension
+             point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
+          <editpolicyProvider
+                class="«this.GMFGenEditorGenerator.diagram.providersPackageName».«this.dawnEditPolicyProviderClassName»">
+             <Priority
+                   name="Low">
+             </Priority>
+          </editpolicyProvider>
+       </extension>
+      <extension point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders" id="ep-provider">
+      <?gmfgen generated="true"?>
+      <editpartProvider class="«this.GMFGenEditorGenerator.diagram.providersPackageName».«this.dawnEditPartProviderClassName»">
+         <Priority name="Medium"/>
+         <object class="org.eclipse.gmf.runtime.notation.Diagram" id="generated-diagram">
+            <method name="getType()" value="«this.GMFGenEditorGenerator.modelID»"/>
+         </object>
+         <context views="generated-diagram"/>
+      </editpartProvider>
+     </extension>
+</fragment>
+
+«ENDFILE»
+«ENDDEFINE»
+
+
+
+«REM»##############################################################################################################«ENDREM»
+«DEFINE manifestMF FOR DawnGMFGenerator»
+«FILE "META-INF/MANIFEST.MF"»Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Dawn «this.GMFGenEditorGenerator.plugin.name» 
+Bundle-SymbolicName: «this.fragmentName»;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: «this.GMFGenEditorGenerator.plugin.iD»;bundle-version="0.2.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.emf.cdo.dawn;bundle-version="0.2.0",
+ org.eclipse.emf.cdo.dawn.util;bundle-version="0.0",
+ org.eclipse.emf.cdo.ui;bundle-version="3.0.0",
+ org.eclipse.emf.cdo.dawn.ui;bundle-version="0.2.0"
+
+«ENDFILE»
+«ENDDEFINE»
+
+
+«DEFINE buildPROPERTIES FOR GenEditorGenerator»
+«FILE "build.properties"»source.. = src/
+output.. = bin/
+bin.includes = META-INF/,\
+               .,\
+               fragment.xml
+«ENDFILE»
+«ENDDEFINE»
+«REM»################################### . classpath ###########################################################################«ENDREM»
+
+«DEFINE classpath FOR GenEditorGenerator»
+«FILE ".classpath"»<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
+«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE generatedComment FOR Object-»
+«REM»/**
+ *@generated
+ */«ENDREM»
+ «ENDDEFINE»
+

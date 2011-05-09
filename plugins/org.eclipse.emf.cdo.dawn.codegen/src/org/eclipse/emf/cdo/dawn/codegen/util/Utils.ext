@@ -8,8 +8,6 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-import gmfgraph;
-import gmfgen;
 import emf;
 import genmodel;
 import ecore;
@@ -17,9 +15,6 @@ import ecore;
 String timestamp() :
   JAVA org.eclipse.emf.cdo.dawn.codegen.util.Utils.timestamp();
  
- String setGlobals( Canvas e ) :
-   JAVA org.eclipse.emf.cdo.dawn.codegen.util.Utils.setGlobals(org.eclipse.gmf.gmfgraph.Canvas);
-  
  String getPackagePath() :
   JAVA org.eclipse.emf.cdo.dawn.codegen.util.Utils.getPackagePath();
   

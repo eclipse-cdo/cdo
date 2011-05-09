@@ -37,6 +37,8 @@
 		<cs:dependency name="org.eclipse.gmf.source" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.mwe.core" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.mwe2.runtime.sdk" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.emf.ecoretools" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.emf.ecoretools.source" componentType="eclipse.feature"/>
 
 		<cs:dependency name="org.eclipse.swtbot" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.swtbot.eclipse" componentType="eclipse.feature"/>

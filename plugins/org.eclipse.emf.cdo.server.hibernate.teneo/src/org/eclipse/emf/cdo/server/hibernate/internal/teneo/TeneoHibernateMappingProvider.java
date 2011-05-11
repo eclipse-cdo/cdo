@@ -108,7 +108,7 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     while (iterator.hasNext())
     {
       final EPackage epack = iterator.next();
-      if (CDOModelUtil.isSystemPackage(epack))
+      if (CDOModelUtil.isSystemPackage(epack) && epack != EtypesPackage.eINSTANCE)
       {
         iterator.remove();
       }
@@ -133,6 +133,8 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     String hbm = mappingGenerator.generateMapping(ePackageArray, properties);
     // to solve an issue with older versions of teneo
     hbm = hbm.replaceAll("_cont", "cont"); //$NON-NLS-1$ //$NON-NLS-2$
+
+    // System.err.println(hbm);
 
     return hbm;
   }

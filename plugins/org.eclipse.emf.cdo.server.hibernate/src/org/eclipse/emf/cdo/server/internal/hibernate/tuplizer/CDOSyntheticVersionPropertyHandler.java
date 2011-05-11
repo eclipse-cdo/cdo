@@ -22,6 +22,7 @@ import org.hibernate.property.Getter;
 import org.hibernate.property.PropertyAccessor;
 import org.hibernate.property.Setter;
 
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -71,6 +72,11 @@ public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, Prope
   }
 
   public Method getMethod()
+  {
+    return null;
+  }
+
+  public Member getMember()
   {
     return null;
   }

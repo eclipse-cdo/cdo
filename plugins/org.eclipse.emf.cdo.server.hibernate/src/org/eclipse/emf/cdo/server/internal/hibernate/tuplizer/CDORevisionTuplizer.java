@@ -294,7 +294,8 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
   @Override
   protected ProxyFactory buildProxyFactory(PersistentClass mappingInfo, Getter idGetter, Setter idSetter)
   {
-    ProxyFactory pf = new CDORevisionProxyFactory();
+    CDORevisionProxyFactory pf = new CDORevisionProxyFactory();
+    pf.setEntityName(getEntityName());
 
     try
     {

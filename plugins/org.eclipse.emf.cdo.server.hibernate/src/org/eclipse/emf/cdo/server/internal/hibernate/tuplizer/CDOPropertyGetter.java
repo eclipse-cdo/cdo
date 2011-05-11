@@ -22,6 +22,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.property.Getter;
 
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -119,6 +120,11 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
   }
 
   public String getMethodName()
+  {
+    return null;
+  }
+
+  public Member getMember()
   {
     return null;
   }

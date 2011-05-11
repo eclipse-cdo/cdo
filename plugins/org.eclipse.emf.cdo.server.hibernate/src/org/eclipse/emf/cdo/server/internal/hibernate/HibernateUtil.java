@@ -50,7 +50,13 @@ import org.eclipse.core.runtime.Platform;
 import org.hibernate.Session;
 import org.hibernate.proxy.HibernateProxy;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
 
@@ -73,23 +79,29 @@ public class HibernateUtil
 
   private static final String CLASS = "class"; //$NON-NLS-1$
 
-  /**
-   * @return the global singleton instance
-   */
-  public static HibernateUtil getInstance()
+  // Local copy of the datatype factory
+  private DatatypeFactory dataTypeFactory;
+
+  public HibernateUtil()
   {
-    return instance;
+    try
+    {
+      dataTypeFactory = DatatypeFactory.newInstance();
+    }
+    catch (DatatypeConfigurationException ex)
+    {
+      throw new IllegalStateException("Exception ", ex);
+    }
   }
 
-  /**
-   * Sets the singleton used by the Hibernate store.
-   * 
-   * @param instance
-   *          the instance to set
-   */
-  public static void setInstance(HibernateUtil instance)
+  public DatatypeFactory getDataTypeFactory()
   {
-    HibernateUtil.instance = instance;
+    return dataTypeFactory;
+  }
+
+  public void setDataTypeFactory(DatatypeFactory dataTypeFactory)
+  {
+    this.dataTypeFactory = dataTypeFactory;
   }
 
   /**
@@ -623,4 +635,48 @@ public class HibernateUtil
     final HibernateStoreAccessor accessor = HibernateThreadContext.getCurrentStoreAccessor();
     return accessor.getStore().getEntityName(classifierRef);
   }
+
+  /**
+   * Create a {@link XMLGregorianCalendar} from a {@link Date} instance.
+   */
+  public XMLGregorianCalendar getXMLGregorianCalendarDate(Date date, boolean dateTime)
+  {
+    final XMLGregorianCalendar gregCalendar = dataTypeFactory.newXMLGregorianCalendar();
+    final Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+
+    gregCalendar.setYear(calendar.get(Calendar.YEAR));
+    gregCalendar.setMonth(calendar.get(Calendar.MONTH) + 1); // correct with 1 on purpose
+    gregCalendar.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+
+    if (dateTime)
+    {
+      gregCalendar.setHour(calendar.get(Calendar.HOUR_OF_DAY));
+      gregCalendar.setMinute(calendar.get(Calendar.MINUTE));
+      gregCalendar.setSecond(calendar.get(Calendar.SECOND));
+      gregCalendar.setMillisecond(calendar.get(Calendar.MILLISECOND));
+    }
+
+    return gregCalendar;
+  }
+
+  /**
+   * @return the global singleton instance
+   */
+  public static HibernateUtil getInstance()
+  {
+    return instance;
+  }
+
+  /**
+   * Sets the singleton used by the Hibernate store.
+   * 
+   * @param instance
+   *          the instance to set
+   */
+  public static void setInstance(HibernateUtil instance)
+  {
+    HibernateUtil.instance = instance;
+  }
+
 }

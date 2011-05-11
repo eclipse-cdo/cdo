@@ -27,6 +27,7 @@ import org.hibernate.property.Getter;
 import org.hibernate.property.PropertyAccessor;
 import org.hibernate.property.Setter;
 
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -52,6 +53,11 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
   public Setter getSetter(Class theClass, String propertyName) throws PropertyNotFoundException
   {
     return this;
+  }
+
+  public Member getMember()
+  {
+    return null;
   }
 
   public Object get(Object owner) throws HibernateException

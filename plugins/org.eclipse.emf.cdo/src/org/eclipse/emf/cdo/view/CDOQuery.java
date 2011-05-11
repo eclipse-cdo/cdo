@@ -42,6 +42,13 @@ public interface CDOQuery extends CDOQueryInfo
   public <T> CloseableIterator<T> getResultAsync(Class<T> classObject);
 
   /**
+   * Same as {@link #getResultAsync(Class)} but tries to infer the return type from the static context.
+   * 
+   * @since 4.0
+   */
+  public <T> CloseableIterator<T> getResultAsync();
+
+  /**
    * Sends this query to the server and returns a typed {@link List list} containing the query result.
    * <p>
    * As opposed to the {@link #getResultAsync(Class)} method, this method <b>synchronously</b> communicates with the
@@ -49,6 +56,13 @@ public interface CDOQuery extends CDOQueryInfo
    * client.
    */
   public <T> List<T> getResult(Class<T> classObject);
+
+  /**
+   * Same as {@link #getResult(Class)} but tries to infer the return type from the static context.
+   * 
+   * @since 4.0
+   */
+  public <T> List<T> getResult();
 
   /**
    * Sets the maximum number of results to retrieve from the server.

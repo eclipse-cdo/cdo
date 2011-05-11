@@ -72,7 +72,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
   protected <T> AbstractQueryIterator<T> createQueryResult(Class<T> classObject)
   {
     CDOQueryInfoImpl queryInfo = createQueryInfo();
-    if (classObject.equals(CDOID.class))
+    if (CDOID.class.equals(classObject))
     {
       return new CDOQueryCDOIDIteratorImpl<T>(view, queryInfo);
     }
@@ -85,6 +85,11 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     AbstractQueryIterator<T> queryResult = createQueryResult(classObject);
     view.getSession().getSessionProtocol().query(view, queryResult);
     return queryResult.asList();
+  }
+
+  public <T> List<T> getResult()
+  {
+    return getResult(null);
   }
 
   public <T> BlockingCloseableIterator<T> getResultAsync(Class<T> classObject)
@@ -125,6 +130,11 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     }
 
     return queryResult;
+  }
+
+  public <T> BlockingCloseableIterator<T> getResultAsync()
+  {
+    return getResultAsync(null);
   }
 
   protected CDOQueryInfoImpl createQueryInfo()

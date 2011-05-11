@@ -190,7 +190,7 @@ public class HibernateQueryHandler implements IQueryHandler
       revision.getClassInfo().getFeatureIndex(featureID);
       return true;
     }
-    catch (IllegalArgumentException e)
+    catch (IllegalArgumentException ex)
     {
       return false;
     }

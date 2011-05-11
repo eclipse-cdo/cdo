@@ -9,6 +9,7 @@
  *    Kai Schlamp - initial API and implementation
  *    Eike Stepper - maintenance
  *    Kai Schlamp - Bug 284812: [DB] Query non CDO object fails
+ *    Erdal Karaca - added cdoObjectResultAsMap parameter to return Map<String,Object> in result
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
@@ -42,6 +43,8 @@ public class SQLQueryHandler implements IQueryHandler
   public static final String FIRST_RESULT = "firstResult";
 
   public static final String CDO_OBJECT_QUERY = "cdoObjectQuery";
+
+  public static final String MAP_QUERY = "mapQuery";
 
   public static final String QUERY_STATEMENT = "queryStatement";
 
@@ -101,6 +104,7 @@ public class SQLQueryHandler implements IQueryHandler
       int firstResult = -1;
       boolean queryStatement = true;
       boolean objectQuery = true;
+      boolean mapQuery = false;
 
       HashMap<String, List<Integer>> paramMap = new HashMap<String, List<Integer>>();
       query = parse(query, paramMap);
@@ -119,7 +123,7 @@ public class SQLQueryHandler implements IQueryHandler
             }
             catch (ClassCastException ex)
             {
-              throw new IllegalArgumentException("Parameter firstResult must be an integer but it is a " + o
+              throw new IllegalArgumentException("Parameter " + FIRST_RESULT + " must be an integer but it is a " + o
                   + " class " + o.getClass().getName(), ex);
             }
           }
@@ -135,8 +139,8 @@ public class SQLQueryHandler implements IQueryHandler
             }
             catch (ClassCastException ex)
             {
-              throw new IllegalArgumentException("Parameter queryStatement must be an boolean but it is a " + o
-                  + " class " + o.getClass().getName(), ex);
+              throw new IllegalArgumentException("Parameter " + QUERY_STATEMENT + " must be an boolean but it is a "
+                  + o + " class " + o.getClass().getName(), ex);
             }
           }
         }
@@ -151,7 +155,23 @@ public class SQLQueryHandler implements IQueryHandler
             }
             catch (ClassCastException ex)
             {
-              throw new IllegalArgumentException("Parameter cdoObjectQuery must be a boolean but it is a " + o
+              throw new IllegalArgumentException("Parameter " + CDO_OBJECT_QUERY + " must be a boolean but it is a "
+                  + o + " class " + o.getClass().getName(), ex);
+            }
+          }
+        }
+        else if (MAP_QUERY.equalsIgnoreCase(key))
+        {
+          final Object o = info.getParameters().get(key);
+          if (o != null)
+          {
+            try
+            {
+              mapQuery = (Boolean)o;
+            }
+            catch (ClassCastException ex)
+            {
+              throw new IllegalArgumentException("Parameter " + MAP_QUERY + " must be a boolean but it is a " + o
                   + " class " + o.getClass().getName(), ex);
             }
           }
@@ -180,8 +200,19 @@ public class SQLQueryHandler implements IQueryHandler
           resultSet.absolute(firstResult);
         }
 
+        String[] columnNames = null;
+        if (mapQuery)
+        {
+          columnNames = new String[resultSet.getMetaData().getColumnCount()];
+          for (int i = 1; i <= columnNames.length; i++)
+          {
+            columnNames[i - 1] = resultSet.getMetaData().getColumnName(i);
+          }
+        }
+        
         int maxResults = info.getMaxResults();
         int counter = 0;
+
         while (resultSet.next())
         {
           if (maxResults != CDOQueryInfo.UNLIMITED_RESULTS && counter++ >= maxResults)
@@ -200,7 +231,7 @@ public class SQLQueryHandler implements IQueryHandler
             if (columnCount == 1)
             {
               Object result = resultSet.getObject(1);
-              context.addResult(result);
+              context.addResult(mapQuery ? toMap(columnNames, new Object[] { result }) : result);
             }
             else
             {
@@ -210,7 +241,7 @@ public class SQLQueryHandler implements IQueryHandler
                 results[i] = resultSet.getObject(i + 1);
               }
 
-              context.addResult(results);
+              context.addResult(mapQuery ? toMap(columnNames, results) : results);
             }
           }
         }
@@ -230,6 +261,19 @@ public class SQLQueryHandler implements IQueryHandler
       DBUtil.close(resultSet);
       DBUtil.close(statement);
     }
+  }
+
+  private Map<String, Object> toMap(String[] columnNames, Object[] results)
+  {
+    Map<String, Object> ret = new HashMap<String, Object>();
+
+    for (int i = 0; i < columnNames.length; i++)
+    {
+      String columnName = columnNames[i];
+      ret.put(columnName, results[i]);
+    }
+
+    return ret;
   }
 
   private String parse(String query, Map<String, List<Integer>> paramMap)

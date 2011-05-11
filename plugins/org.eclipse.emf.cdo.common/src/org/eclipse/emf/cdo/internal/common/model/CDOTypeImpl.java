@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - Bug 299194: unsettable features inconsistent between revisions
+ *    Erdal Karaca - added support for HASHMAP CDO Type
  */
 package org.eclipse.emf.cdo.internal.common.model;
 
@@ -42,6 +43,9 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -700,86 +704,11 @@ public abstract class CDOTypeImpl implements CDOType
     @Override
     protected void doWriteValue(CDODataOutput out, Object value) throws IOException
     {
-      final Object[] objects = (Object[])value;
+      Object[] objects = (Object[])value;
       out.writeInt(objects.length);
       for (Object object : objects)
       {
-        final CDOType cdoType;
-        if (object instanceof BigDecimal)
-        {
-          cdoType = CDOType.BIG_DECIMAL;
-        }
-        else if (object instanceof BigInteger)
-        {
-          cdoType = CDOType.BIG_INTEGER;
-        }
-        else if (object instanceof Boolean)
-        {
-          cdoType = CDOType.BOOLEAN_OBJECT;
-        }
-        else if (object instanceof Byte)
-        {
-          cdoType = CDOType.BYTE_OBJECT;
-        }
-        else if (object instanceof byte[])
-        {
-          cdoType = CDOType.BYTE_ARRAY;
-        }
-        else if (object instanceof Character)
-        {
-          cdoType = CDOType.CHARACTER_OBJECT;
-        }
-        else if (object instanceof Date)
-        {
-          cdoType = CDOType.DATE;
-        }
-        else if (object instanceof Double)
-        {
-          cdoType = CDOType.DOUBLE_OBJECT;
-        }
-        else if (object instanceof EEnumLiteral)
-        {
-          cdoType = CDOType.ENUM_LITERAL;
-        }
-        else if (object instanceof FeatureMap.Entry)
-        {
-          cdoType = CDOType.FEATURE_MAP_ENTRY;
-        }
-        else if (object instanceof Float)
-        {
-          cdoType = CDOType.FLOAT_OBJECT;
-        }
-        else if (object instanceof Integer)
-        {
-          cdoType = CDOType.INTEGER_OBJECT;
-        }
-        else if (object instanceof Long)
-        {
-          cdoType = CDOType.LONG_OBJECT;
-        }
-        else if (object instanceof Short)
-        {
-          cdoType = CDOType.SHORT_OBJECT;
-        }
-        else if (object instanceof String)
-        {
-          cdoType = CDOType.STRING;
-        }
-        else if (object instanceof CDOID || object instanceof CDORevision)
-        {
-          cdoType = CDOType.OBJECT;
-        }
-        else if (object == null)
-        {
-          cdoType = CDOType.OBJECT;
-        }
-        else
-        {
-          throw new IllegalArgumentException("Object type " + object.getClass().getName() + " is not supported.");
-        }
-
-        out.writeByte(cdoType.getTypeID());
-        cdoType.writeValue(out, object);
+        writeTypeAndValue(out, object);
       }
     }
 
@@ -787,12 +716,10 @@ public abstract class CDOTypeImpl implements CDOType
     protected Object[] doReadValue(CDODataInput in) throws IOException
     {
       int size = in.readInt();
-      final Object[] objects = new Object[size];
+      Object[] objects = new Object[size];
       for (int i = 0; i < size; i++)
       {
-        byte typeID = in.readByte();
-        CDOType cdoType = CDOModelUtil.getType(typeID);
-        objects[i] = cdoType.readValue(in);
+        objects[i] = readTypeAndValue(in);
       }
 
       return objects;
@@ -818,6 +745,38 @@ public abstract class CDOTypeImpl implements CDOType
       }
 
       return objects;
+    }
+  };
+
+  public static final CDOType MAP = new ObjectType("MAP", -6) //$NON-NLS-1$
+  {
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void doWriteValue(CDODataOutput out, Object value) throws IOException
+    {
+      Map<Object, Object> map = (Map<Object, Object>)value;
+      out.writeInt(map.size());
+
+      for (Entry<Object, Object> entry : map.entrySet())
+      {
+        writeTypeAndValue(out, entry.getKey());
+        writeTypeAndValue(out, entry.getValue());
+      }
+    }
+
+    @Override
+    protected Map<Object, Object> doReadValue(CDODataInput in) throws IOException
+    {
+      Map<Object, Object> result = new HashMap<Object, Object>();
+      int size = in.readInt();
+      for (int i = 0; i < size; i++)
+      {
+        Object key = readTypeAndValue(in);
+        Object value = readTypeAndValue(in);
+        result.put(key, value == CDOID.NULL ? null : value);
+      }
+
+      return result;
     }
   };
 
@@ -916,6 +875,20 @@ public abstract class CDOTypeImpl implements CDOType
   public Object convertToCDO(EClassifier feature, Object value)
   {
     return value;
+  }
+
+  protected void writeTypeAndValue(CDODataOutput out, Object object) throws IOException
+  {
+    CDOType cdoType = CDOModelUtil.getTypeOfObject(object);
+    out.writeByte(cdoType.getTypeID());
+    cdoType.writeValue(out, object);
+  }
+
+  protected Object readTypeAndValue(CDODataInput in) throws IOException
+  {
+    byte typeID = in.readByte();
+    CDOType cdoType = CDOModelUtil.getType(typeID);
+    return cdoType.readValue(in);
   }
 
   public static CDOType getType(byte typeID)

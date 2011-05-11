@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - Bug 332912 - Caching subtype-relationships in the CDOPackageRegistry
+ *    Erdal Karaca - added support for HASHMAP CDO Type
  */
 package org.eclipse.emf.cdo.common.model;
 
@@ -365,6 +366,11 @@ public final class CDOModelUtil
     if (EEnumLiteral.class.isAssignableFrom(primitiveType) || Enumerator.class.isAssignableFrom(primitiveType))
     {
       return CDOType.ENUM_LITERAL;
+    }
+
+    if (Map.class.isAssignableFrom(primitiveType))
+    {
+      return CDOType.MAP;
     }
 
     throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOModelUtil.7"), primitiveType)); //$NON-NLS-1$

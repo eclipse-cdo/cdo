@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Erdal Karaca - added support for MAP Type
  */
 package org.eclipse.emf.cdo.common.model;
 
@@ -70,6 +71,11 @@ public interface CDOType
    * @since 3.0
    */
   public static final CDOType OBJECT_ARRAY = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.OBJECT_ARRAY;
+
+  /**
+   * @since 4.0
+   */
+  public static final CDOType MAP = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.MAP;
 
   /**
    * @since 2.0

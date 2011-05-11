@@ -86,7 +86,6 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -161,11 +160,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private List<CDOCommitInfoHandler> commitInfoHandlers = new ArrayList<CDOCommitInfoHandler>();
 
-  @ExcludeFromDump
-  private transient long lastCommitTimeStamp;
-
-  @ExcludeFromDump
-  private transient Object lastCommitTimeStampLock = new Object();
+  // Bugzilla 297940
+  private TimeStampAuthority timeStampAuthority = new TimeStampAuthority(this);
 
   @ExcludeFromDump
   private transient Object createBranchLock = new Object();
@@ -758,68 +754,37 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public long getLastCommitTimeStamp()
   {
-    synchronized (lastCommitTimeStampLock)
-    {
-      return lastCommitTimeStamp;
-    }
+    return timeStampAuthority.getLastFinishedTimeStamp();
   }
 
   public void setLastCommitTimeStamp(long lastCommitTimeStamp)
   {
-    synchronized (lastCommitTimeStampLock)
-    {
-      if (this.lastCommitTimeStamp < lastCommitTimeStamp)
-      {
-        this.lastCommitTimeStamp = lastCommitTimeStamp;
-        lastCommitTimeStampLock.notifyAll();
-      }
-    }
+    timeStampAuthority.setLastFinishedTimeStamp(lastCommitTimeStamp);
   }
 
   public long waitForCommit(long timeout)
   {
-    synchronized (lastCommitTimeStampLock)
-    {
-      try
-      {
-        lastCommitTimeStampLock.wait(timeout);
-      }
-      catch (Exception ignore)
-      {
-      }
-
-      return lastCommitTimeStamp;
-    }
+    return timeStampAuthority.waitForCommit(timeout);
   }
 
   public long[] createCommitTimeStamp(OMMonitor monitor)
   {
-    monitor.begin();
+    return timeStampAuthority.startCommit(CDOBranchPoint.UNSPECIFIED_DATE, monitor);
+  }
 
-    try
-    {
-      long now = getTimeStamp();
-      synchronized (lastCommitTimeStampLock)
-      {
-        if (lastCommitTimeStamp != 0)
-        {
-          while (lastCommitTimeStamp >= now)
-          {
-            ConcurrencyUtil.sleep(1L);
-            now = getTimeStamp();
-            monitor.checkCanceled();
-          }
-        }
+  public long[] forceCommitTimeStamp(long override, OMMonitor monitor)
+  {
+    return timeStampAuthority.startCommit(override, monitor);
+  }
 
-        long previousTimeStamp = lastCommitTimeStamp;
-        lastCommitTimeStamp = now;
-        return new long[] { now, previousTimeStamp };
-      }
-    }
-    finally
-    {
-      monitor.done();
-    }
+  public void endCommit(long timestamp)
+  {
+    timeStampAuthority.endCommit(timestamp);
+  }
+
+  public void failCommit(long timestamp)
+  {
+    timeStampAuthority.failCommit(timestamp);
   }
 
   /**
@@ -1430,7 +1395,8 @@ public class Repository extends Container<Object> implements InternalRepository
       @Override
       protected long[] createTimeStamp(OMMonitor monitor)
       {
-        return new long[] { store.getCreationTime(), CDOBranchPoint.UNSPECIFIED_DATE };
+        InternalRepository repository = getTransaction().getSession().getManager().getRepository();
+        return repository.forceCommitTimeStamp(store.getCreationTime(), monitor);
       }
 
       @Override
@@ -1555,7 +1521,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
     if (!skipInitialization)
     {
-      lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
+      long lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
+      timeStampAuthority.setLastFinishedTimeStamp(lastCommitTimeStamp);
       initMainBranch(branchManager, lastCommitTimeStamp);
 
       if (store.isFirstStart())

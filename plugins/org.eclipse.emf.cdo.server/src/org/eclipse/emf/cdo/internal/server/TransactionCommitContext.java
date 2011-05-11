@@ -165,7 +165,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public String getUserID()
   {
-    return getTransaction().getSession().getUserID();
+    return transaction.getSession().getUserID();
   }
 
   public String getCommitComment()
@@ -424,6 +424,9 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.begin(101);
       accessor.commit(monitor.fork(100));
       updateInfraStructure(monitor.fork());
+
+      // Bugzilla 297940
+      repository.endCommit(timeStamp);
     }
     catch (Throwable ex)
     {
@@ -964,6 +967,10 @@ public class TransactionCommitContext implements InternalCommitContext
         catch (RuntimeException ex)
         {
           OM.LOG.warn("Problem while rolling back  the transaction", ex); //$NON-NLS-1$
+        }
+        finally
+        {
+          repository.failCommit(timeStamp);
         }
       }
     }

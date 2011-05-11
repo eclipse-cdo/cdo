@@ -107,6 +107,31 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   public long[] createCommitTimeStamp(OMMonitor monitor);
 
   /**
+   * Like {@link #createCommitTimeStamp(OMMonitor)}, but forces the repository to use the timestamp value passed in as
+   * the argument. This should be called only to force the timestamp of the first commit of a new repository to be equal
+   * to its creation time.
+   * 
+   * @since 4.0
+   */
+  public long[] forceCommitTimeStamp(long timestamp, OMMonitor monitor);
+
+  /**
+   * Notifies the repository of the completion of a commit. The value passed in must be a value obtained earlier through
+   * {@link #createCommitTimeStamp(OMMonitor)}
+   * 
+   * @since 4.0
+   */
+  public void endCommit(long timeStamp);
+
+  /**
+   * Notifies the repository of the failure of a commit. The value passed in must be a value obtained earlier through
+   * {@link #createCommitTimeStamp(OMMonitor)}
+   * 
+   * @since 4.0
+   */
+  public void failCommit(long timeStamp);
+
+  /**
    * @since 4.0
    */
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo);

@@ -79,6 +79,25 @@ public class HibernateUtil
 
   private static final String CLASS = "class"; //$NON-NLS-1$
 
+  /**
+   * @return the global singleton instance
+   */
+  public static HibernateUtil getInstance()
+  {
+    return instance;
+  }
+
+  /**
+   * Sets the singleton used by the Hibernate store.
+   * 
+   * @param instance
+   *          the instance to set
+   */
+  public static void setInstance(HibernateUtil instance)
+  {
+    HibernateUtil.instance = instance;
+  }
+
   // Local copy of the datatype factory
   private DatatypeFactory dataTypeFactory;
 
@@ -658,25 +677,6 @@ public class HibernateUtil
     }
 
     return gregCalendar;
-  }
-
-  /**
-   * @return the global singleton instance
-   */
-  public static HibernateUtil getInstance()
-  {
-    return instance;
-  }
-
-  /**
-   * Sets the singleton used by the Hibernate store.
-   * 
-   * @param instance
-   *          the instance to set
-   */
-  public static void setInstance(HibernateUtil instance)
-  {
-    HibernateUtil.instance = instance;
   }
 
 }

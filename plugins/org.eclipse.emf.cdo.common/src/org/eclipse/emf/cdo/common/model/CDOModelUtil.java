@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOClassInfoImpl;
@@ -38,9 +40,12 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -363,6 +368,99 @@ public final class CDOModelUtil
     }
 
     throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOModelUtil.7"), primitiveType)); //$NON-NLS-1$
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static CDOType getTypeOfObject(Object object)
+  {
+    if (object instanceof BigDecimal)
+    {
+      return CDOType.BIG_DECIMAL;
+    }
+
+    if (object instanceof BigInteger)
+    {
+      return CDOType.BIG_INTEGER;
+    }
+
+    if (object instanceof Boolean)
+    {
+      return CDOType.BOOLEAN_OBJECT;
+    }
+
+    if (object instanceof Byte)
+    {
+      return CDOType.BYTE_OBJECT;
+    }
+
+    if (object instanceof byte[])
+    {
+      return CDOType.BYTE_ARRAY;
+    }
+
+    if (object instanceof Character)
+    {
+      return CDOType.CHARACTER_OBJECT;
+    }
+
+    if (object instanceof Date)
+    {
+      return CDOType.DATE;
+    }
+
+    if (object instanceof Double)
+    {
+      return CDOType.DOUBLE_OBJECT;
+    }
+
+    if (object instanceof EEnumLiteral)
+    {
+      return CDOType.ENUM_LITERAL;
+    }
+
+    if (object instanceof FeatureMap.Entry)
+    {
+      return CDOType.FEATURE_MAP_ENTRY;
+    }
+
+    if (object instanceof Float)
+    {
+      return CDOType.FLOAT_OBJECT;
+    }
+
+    if (object instanceof Integer)
+    {
+      return CDOType.INTEGER_OBJECT;
+    }
+
+    if (object instanceof Long)
+    {
+      return CDOType.LONG_OBJECT;
+    }
+
+    if (object instanceof Short)
+    {
+      return CDOType.SHORT_OBJECT;
+    }
+
+    if (object instanceof String)
+    {
+      return CDOType.STRING;
+    }
+
+    if (object instanceof CDOID || object instanceof CDORevision)
+    {
+      return CDOType.OBJECT;
+    }
+
+    if (object == null)
+    {
+      return CDOType.OBJECT;
+    }
+
+    throw new IllegalArgumentException("Object type " + object.getClass().getName() + " is not supported.");
   }
 
   /**

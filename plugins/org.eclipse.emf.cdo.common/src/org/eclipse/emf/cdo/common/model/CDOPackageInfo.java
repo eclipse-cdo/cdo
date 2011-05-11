@@ -14,16 +14,17 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Descriptor;
 
 /**
  * Describes a single {@link EPackage package } instance of the nested package tree strucure represented by the
  * containing {@link CDOPackageUnit package unit}.
  * <p>
  * While the containing package unit is in the {@link CDOPackageUnit.State#PROXY PROXY} state this package info acts as
- * a {@link EPackage.Descriptor package descriptor} in the associated {@link CDOPackageRegistry package registry}. When
- * that package unit is loaded all contained package infos/descriptors are resolved and replaced by their actual
- * packages. At the same time the describing package info objects are attached as adapters to the resolved packages.
- * This way the descriptive information is available before and after loading the packages.
+ * a {@link Descriptor package descriptor} in the associated {@link CDOPackageRegistry package registry}. When that
+ * package unit is loaded all contained package infos/descriptors are resolved and replaced by their actual packages. At
+ * the same time the describing package info objects are attached as adapters to the resolved packages. This way the
+ * descriptive information is available before and after loading the packages.
  * 
  * @author Eike Stepper
  */

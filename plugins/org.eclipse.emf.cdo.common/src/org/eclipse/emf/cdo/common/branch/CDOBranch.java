@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.common.branch;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
@@ -60,9 +61,10 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
   /**
    * Returns <code>true</code> if this branch is a local branch, <code>false</code> otherwise.
    * <p>
-   * Local branches are created on the fly when committing to a {@link CDOCommonRepository.Type#CLONE clone} repository
-   * while it is in {@link CDOCommonRepository.State#OFFLINE offline} state and they do not participate in repository
-   * replication. They can not be created manually and they have negative {@link #getID() IDs}.
+   * Local branches are created on the fly when committing to a
+   * {@link org.eclipse.emf.cdo.common.CDOCommonRepository.Type#CLONE clone} repository while it is in
+   * {@link State#OFFLINE offline} state and they do not participate in repository replication. They can not be created
+   * manually and they have negative {@link #getID() IDs}.
    */
   public boolean isLocal();
 

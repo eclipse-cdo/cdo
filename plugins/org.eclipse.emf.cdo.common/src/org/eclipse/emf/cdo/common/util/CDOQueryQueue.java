@@ -28,8 +28,6 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class CDOQueryQueue<E> implements Queue<E>, Closeable
 {
-  private static final long serialVersionUID = 1L;
-
   // Static not allowed due to <E>
   private final QueueEntry<E> QUEUE_CLOSED = new QueueEntry<E>();
 

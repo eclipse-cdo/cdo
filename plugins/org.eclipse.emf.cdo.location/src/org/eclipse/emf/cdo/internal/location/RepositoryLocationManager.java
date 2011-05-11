@@ -25,8 +25,6 @@ import java.util.List;
  */
 public class RepositoryLocationManager extends Container<IRepositoryLocation> implements IRepositoryLocationManager
 {
-  private static final long serialVersionUID = 1L;
-
   private List<RepositoryLocation> repositoryLocations = new ArrayList<RepositoryLocation>();
 
   public RepositoryLocationManager()

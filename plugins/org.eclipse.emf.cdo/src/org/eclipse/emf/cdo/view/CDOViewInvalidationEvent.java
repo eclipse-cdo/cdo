@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSession.Options;
 
 import org.eclipse.net4j.util.event.IListener;
 
@@ -23,7 +23,7 @@ import java.util.Set;
 
 /**
  * An event that is emitted to registered {@link IListener listeners} of a {@link CDOView} if
- * {@link CDOSession.Options#setPassiveUpdateEnabled(boolean) passive update} is enabled for the session.
+ * {@link Options#setPassiveUpdateEnabled(boolean) passive update} is enabled for the session.
  * 
  * @author Simon McDuff
  * @see CDOInvalidationNotification

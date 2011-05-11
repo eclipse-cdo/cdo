@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 
 /**
  * Represents a tree structure of nested {@link EPackage packages} that are registered with a {@link CDOPackageRegistry
@@ -124,8 +125,8 @@ public interface CDOPackageUnit extends Comparable<CDOPackageUnit>
 
     /**
      * The state of a {@link CDOPackageUnit package unit} after the described {@link EPackage packages} are loaded or
-     * wired from the {@link EPackage.Registry#INSTANCE global package registry}. A {@link #LOADED} package unit can
-     * only transition to {@link #DISPOSED}.
+     * wired from the {@link Registry#INSTANCE global package registry}. A {@link #LOADED} package unit can only
+     * transition to {@link #DISPOSED}.
      */
     LOADED,
 

@@ -10,19 +10,19 @@
  */
 package org.eclipse.net4j.connector;
 
-import org.eclipse.net4j.ILocationAware;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.security.IUserAware;
+import org.eclipse.net4j.ILocationAware.Location;
 
 /**
  * One endpoint of a physical connection of arbitrary nature between two communicating parties. A {@link IConnector}
- * encapsulates the process of establishing and closing such connections and has a {@link ILocationAware.Location
- * location} of {@link ILocationAware.Location#CLIENT CLIENT} or {@link ILocationAware.Location#SERVER SERVER} with
- * respect to this process. Once a connection is established either party can use its connector to open multiple
- * {@link IChannel}s to asynchronously exchange {@link IBuffer}s.
+ * encapsulates the process of establishing and closing such connections and has a {@link Location location} of
+ * {@link Location#CLIENT CLIENT} or {@link Location#SERVER SERVER} with respect to this process. Once a connection is
+ * established either party can use its connector to open multiple {@link IChannel}s to asynchronously exchange
+ * {@link IBuffer}s.
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients. Providers of connectors for new physical
  * connection types have to implement org.eclipse.internal.net4j.connector.InternalConnector.

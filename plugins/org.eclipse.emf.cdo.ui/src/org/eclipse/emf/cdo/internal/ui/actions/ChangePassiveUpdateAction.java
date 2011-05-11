@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSession.Options;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -19,7 +20,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * Changes the state of the {@link CDOSession.Options#isPassiveUpdateEnabled() passive update} option for a given
+ * Changes the state of the {@link Options#isPassiveUpdateEnabled() passive update} option for a given
  * {@link CDOSession session}.
  * 
  * @author Victor Roldan Betancort
@@ -57,7 +58,7 @@ public class ChangePassiveUpdateAction extends EditingDomainAction
   {
     if (session != null)
     {
-      session.options().setPassiveUpdateEnabled((!session.options().isPassiveUpdateEnabled()));
+      session.options().setPassiveUpdateEnabled(!session.options().isPassiveUpdateEnabled());
     }
 
     update();

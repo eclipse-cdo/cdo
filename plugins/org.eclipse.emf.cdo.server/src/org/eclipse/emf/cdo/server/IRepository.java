@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
-import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 
 import java.util.List;
 import java.util.Map;
@@ -40,7 +40,7 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   public Map<String, String> getProperties();
 
   /**
-   * Returns the EMF {@link EPackage.Registry package registry} that is used by this repository.
+   * Returns the EMF {@link Registry package registry} that is used by this repository.
    * 
    * @since 2.0
    */

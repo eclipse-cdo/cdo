@@ -35,6 +35,7 @@ import org.eclipse.net4j.util.options.IOptionsEvent;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
@@ -66,7 +67,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
   public CDORepositoryInfo getRepositoryInfo();
 
   /**
-   * Returns the EMF {@link EPackage.Registry package registry} that is used by all {@link EObject objects} of all
+   * Returns the EMF {@link Registry package registry} that is used by all {@link EObject objects} of all
    * {@link CDOView views} of this session.
    * <p>
    * This registry is managed by the {@link CDOPackageUnit package unit manager} of this session. All {@link EPackage

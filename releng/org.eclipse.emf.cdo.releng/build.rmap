@@ -2,7 +2,7 @@
 <rm:rmap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0"
 	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
 
-	<rm:property key="orbit.version" mutable="true" value="S20110422041657" />
+	<rm:property key="orbit.version" mutable="true" value="S20110507152510" />
 	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo" />
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
 	<rm:property key="resolve.target.platform" mutable="true" value="true" />

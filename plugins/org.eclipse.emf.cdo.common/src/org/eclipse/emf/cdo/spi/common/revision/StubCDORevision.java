@@ -255,6 +255,14 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException(getExceptionMessage());
   }
 
+  /**
+   * @since 4.0
+   */
+  public void freeze()
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
   private String getExceptionMessage()
   {
     return "Unsupported operation in " + this;

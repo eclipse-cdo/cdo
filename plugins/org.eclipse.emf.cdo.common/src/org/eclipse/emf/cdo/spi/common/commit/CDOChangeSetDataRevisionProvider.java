@@ -152,7 +152,7 @@ public class CDOChangeSetDataRevisionProvider implements CDORevisionProvider, CD
   private CDORevision applyDelta(CDORevisionDelta revisionDelta)
   {
     CDOID id = revisionDelta.getID();
-    CDORevision changedObject = delegate.getRevision(id);
+    CDORevision changedObject = delegate.getRevision(id).copy();
     revisionDelta.apply(changedObject);
     cachedRevisions.put(id, changedObject);
     return changedObject;

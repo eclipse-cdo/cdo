@@ -752,6 +752,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       // Adjust revision
       revision.adjustForCommit(transaction.getBranch(), data.getTimeStamp());
       revision.adjustReferences(data.getReferenceAdjuster());
+      revision.freeze();
 
       InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
       revisionManager.addRevision(revision);

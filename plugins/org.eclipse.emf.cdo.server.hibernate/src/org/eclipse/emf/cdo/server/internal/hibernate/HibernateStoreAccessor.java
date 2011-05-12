@@ -467,7 +467,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    return readRevision(id, branchVersion.getBranch().getPoint(System.currentTimeMillis()), listChunk, cache);
+    InternalCDORevision revision = readRevision(id, branchVersion.getBranch().getPoint(System.currentTimeMillis()),
+        listChunk, cache);
+    if (revision != null)
+    {
+      revision.freeze();
+    }
+
+    return revision;
   }
 
   /**

@@ -37,4 +37,14 @@ public interface InternalCDOList extends CDOList
    * Clones the list.
    */
   public InternalCDOList clone(EClassifier classifier);
+
+  /**
+   * @since 4.0
+   */
+  public void freeze();
+
+  /**
+   * @since 4.0
+   */
+  public void setWithoutFrozenCheck(int i, Object value);
 }

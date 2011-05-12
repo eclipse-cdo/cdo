@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -182,6 +183,9 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
       List<Object> list = (List<Object>)oldValue;
       if (!list.isEmpty())
       {
+        list = new ArrayList<Object>(list); // Copy the list so that it.set() does not change the frozen oldRevision
+        boolean changed = false;
+
         for (ListIterator<Object> it = list.listIterator(); it.hasNext();)
         {
           Object element = it.next();
@@ -192,8 +196,14 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
             if (oldObject != null)
             {
               it.set(oldObject);
+              changed = true;
             }
           }
+        }
+
+        if (changed)
+        {
+          oldValue = list;
         }
       }
     }

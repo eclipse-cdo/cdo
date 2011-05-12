@@ -23,6 +23,8 @@ import org.eclipse.net4j.util.collection.MoveableArrayList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.util.Collection;
+
 /**
  * @author Simon McDuff
  */
@@ -37,6 +39,8 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
   };
 
   private static final long serialVersionUID = 1L;
+
+  private boolean frozen;
 
   public CDOListImpl(int initialCapacity, int size)
   {
@@ -91,5 +95,93 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
 
   protected void handleAdjustReference(int index, Object element)
   {
+  }
+
+  public void freeze()
+  {
+    frozen = true;
+  }
+
+  private void checkFrozen()
+  {
+    if (frozen)
+    {
+      throw new IllegalStateException("Cannot modify a frozen list");
+    }
+  }
+
+  @Override
+  public boolean add(Object o)
+  {
+    checkFrozen();
+    return super.add(o);
+  }
+
+  @Override
+  public boolean remove(Object o)
+  {
+    checkFrozen();
+    return super.remove(o);
+  }
+
+  @Override
+  public boolean addAll(Collection<? extends Object> c)
+  {
+    checkFrozen();
+    return super.addAll(c);
+  }
+
+  @Override
+  public boolean addAll(int index, Collection<? extends Object> c)
+  {
+    checkFrozen();
+    return super.addAll(index, c);
+  }
+
+  @Override
+  public boolean removeAll(Collection<?> c)
+  {
+    checkFrozen();
+    return super.removeAll(c);
+  }
+
+  @Override
+  public boolean retainAll(Collection<?> c)
+  {
+    checkFrozen();
+    return super.retainAll(c);
+  }
+
+  @Override
+  public void clear()
+  {
+    checkFrozen();
+    super.clear();
+  }
+
+  @Override
+  public Object set(int index, Object element)
+  {
+    checkFrozen();
+    return super.set(index, element);
+  }
+
+  @Override
+  public void add(int index, Object element)
+  {
+    checkFrozen();
+    super.add(index, element);
+  }
+
+  @Override
+  public Object remove(int index)
+  {
+    checkFrozen();
+    return super.remove(index);
+  }
+
+  public void setWithoutFrozenCheck(int index, Object element)
+  {
+    super.set(index, element);
   }
 }

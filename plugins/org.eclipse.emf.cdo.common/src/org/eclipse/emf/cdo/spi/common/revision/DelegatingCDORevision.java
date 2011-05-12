@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Caspar De Groot - bug 341081
  */
 package org.eclipse.emf.cdo.spi.common.revision;
 
@@ -312,5 +313,13 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   public void convertEObjects(CDOIDProvider oidProvider)
   {
     getDelegate().convertEObjects(oidProvider);
+  }
+
+  /**
+   * @since 4.0
+   */
+  public void freeze()
+  {
+    getDelegate().freeze();
   }
 }

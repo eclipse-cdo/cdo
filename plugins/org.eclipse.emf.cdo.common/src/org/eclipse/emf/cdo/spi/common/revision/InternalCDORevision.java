@@ -114,4 +114,9 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    * @since 3.0
    */
   public InternalCDORevision copy();
+
+  /**
+   * @since 4.0
+   */
+  public void freeze();
 }

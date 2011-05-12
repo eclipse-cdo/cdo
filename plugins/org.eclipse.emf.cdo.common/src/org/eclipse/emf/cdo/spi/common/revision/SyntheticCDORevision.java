@@ -61,4 +61,10 @@ public abstract class SyntheticCDORevision extends StubCDORevision
   {
     return branch;
   }
+
+  @Override
+  public void freeze()
+  {
+    // Do nothing
+  }
 }

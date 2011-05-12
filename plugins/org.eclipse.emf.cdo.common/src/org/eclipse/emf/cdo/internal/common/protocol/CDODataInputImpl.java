@@ -370,6 +370,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     {
       InternalCDORevision revision = (InternalCDORevision)getRevisionFactory().createRevision(null);
       revision.read(this);
+      revision.freeze();
       return revision;
     }
 

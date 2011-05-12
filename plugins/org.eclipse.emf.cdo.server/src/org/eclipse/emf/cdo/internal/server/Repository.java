@@ -465,6 +465,7 @@ public class Repository extends Container<Object> implements InternalRepository
       }
       else
       {
+        revision.freeze();
         info.setResult(revision);
       }
     }
@@ -484,6 +485,7 @@ public class Repository extends Container<Object> implements InternalRepository
       InternalCDORevision revision = accessor.readRevision(id, branchPoint, referenceChunk, revisionManager);
       if (revision != null)
       {
+        revision.freeze();
         return revision;
       }
     }

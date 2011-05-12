@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
-import org.hibernate.Hibernate;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
@@ -74,7 +74,7 @@ public class CDOIDUserType implements UserType
 
   public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
   {
-    final String value = (String)Hibernate.STRING.nullSafeGet(rs, names[0]);
+    final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[0]);
     if (rs.wasNull())
     {
       return null;

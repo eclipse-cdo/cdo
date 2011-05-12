@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.net4j.util.WrappedException;
 
-import org.hibernate.Hibernate;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
@@ -79,7 +79,7 @@ public class CDOIDAnyUserType implements UserType
 
   public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
   {
-    final String value = (String)Hibernate.STRING.nullSafeGet(rs, names[0]);
+    final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[0]);
     if (rs.wasNull())
     {
       return null;

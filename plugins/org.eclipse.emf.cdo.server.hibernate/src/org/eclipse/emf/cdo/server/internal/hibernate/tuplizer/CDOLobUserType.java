@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLob;
 
 import org.eclipse.net4j.util.HexUtil;
 
-import org.hibernate.Hibernate;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
 
@@ -79,7 +79,7 @@ public abstract class CDOLobUserType implements UserType, ParameterizedType
   {
     try
     {
-      final String value = (String)Hibernate.STRING.nullSafeGet(rs, names[0]);
+      final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[0]);
       if (rs.wasNull())
       {
         return null;

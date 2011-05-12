@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.hibernate.Hibernate;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
 
@@ -72,7 +72,7 @@ public class CDOCustomTypeUserType implements UserType, ParameterizedType
   {
     try
     {
-      final String value = (String)Hibernate.STRING.nullSafeGet(rs, names[0]);
+      final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[0]);
       if (rs.wasNull())
       {
         return null;

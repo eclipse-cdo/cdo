@@ -14,7 +14,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.ProxyFactory;
-import org.hibernate.type.AbstractComponentType;
 import org.hibernate.type.CompositeType;
 
 import java.io.Serializable;
@@ -34,7 +33,7 @@ public class CDORevisionProxyFactory implements ProxyFactory
 
   @SuppressWarnings("rawtypes")
   public void postInstantiate(String entityName, Class persistentClass, Set interfaces, Method getIdentifierMethod,
-      Method setIdentifierMethod, AbstractComponentType componentIdType) throws HibernateException
+      Method setIdentifierMethod, CompositeType componentIdType) throws HibernateException
   {
     this.entityName = entityName;
   }
@@ -42,11 +41,6 @@ public class CDORevisionProxyFactory implements ProxyFactory
   public HibernateProxy getProxy(Serializable id, SessionImplementor session) throws HibernateException
   {
     return new CDORevisionProxyHibernate(new CDORevisionLazyInitializer(entityName, id, session));
-  }
-
-  public void postInstantiate(String arg0, Class arg1, Set arg2, Method arg3, Method arg4, CompositeType arg5)
-      throws HibernateException
-  {
   }
 
   public String getEntityName()

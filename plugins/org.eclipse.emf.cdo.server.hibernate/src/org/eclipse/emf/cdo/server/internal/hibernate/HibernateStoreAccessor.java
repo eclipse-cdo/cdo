@@ -56,6 +56,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -75,7 +76,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -401,7 +404,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     // TODO: implement HibernateStoreAccessor.loadCommitInfos(branch, startTime, endTime, handler)
-    throw new UnsupportedOperationException();
+    // throw new UnsupportedOperationException();
   }
 
   public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
@@ -413,8 +416,48 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
       CDORevisionHandler handler)
   {
-    // TODO: implement HibernateStoreAccessor.handleRevisions(eClass, branch, timeStamp, exactTime, handler)
-    throw new UnsupportedOperationException();
+    if (eClass != null)
+    {
+      handleRevisionsByEClass(eClass, handler);
+    }
+    else
+    {
+      for (EPackage ePackage : getStore().getPackageHandler().getEPackages())
+      {
+        for (EClassifier eClassifier : ePackage.getEClassifiers())
+        {
+          if (eClassifier instanceof EClass)
+          {
+            final EClass eClazz = (EClass)eClassifier;
+            try
+            {
+              getStore().getEntityName(eClazz);
+            }
+            catch (IllegalArgumentException ex)
+            {
+              // a non-mapped eclass
+              continue;
+            }
+            handleRevisionsByEClass(eClazz, handler);
+          }
+        }
+      }
+    }
+  }
+
+  private void handleRevisionsByEClass(EClass eClass, CDORevisionHandler handler)
+  {
+    // get a transaction, the hibernateStoreAccessor is placed in a threadlocal
+    // so all db access uses the same session.
+    final Session session = getHibernateSession();
+
+    // create the query
+    final Query query = session.createQuery("select e from " + getStore().getEntityName(eClass) + " e");
+    for (Object o : query.list())
+    {
+      handler.handleRevision((CDORevision)o);
+    }
+    session.clear();
   }
 
   /**
@@ -724,7 +767,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id)); //$NON-NLS-1$
       if (qry.executeUpdate() != 1)
       {
-        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
+        OM.LOG.error("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
+        //        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
   }
@@ -743,7 +787,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id)); //$NON-NLS-1$
       if (qry.executeUpdate() != 1)
       {
-        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
+        OM.LOG.error("Not able to update resources ids of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
+        //        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
   }
@@ -828,8 +873,53 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
-    // TODO: implement HibernateStoreAccessor.enclosing_method(enclosing_method_arguments)
-    throw new UnsupportedOperationException();
+    final Session session = getHibernateSession();
+    final Query qry = session.createQuery("select c from " + HibernateStoreLob.class.getName() + " as c");
+
+    try
+    {
+      for (Object o : qry.list())
+      {
+        final HibernateStoreLob lob = (HibernateStoreLob)o;
+        if (lob.getBlob() != null)
+        {
+          final OutputStream out = handler.handleBlob(HexUtil.hexToBytes(lob.getId()), lob.getSize());
+          if (out != null)
+          {
+            final InputStream in = lob.getBlob().getBinaryStream();
+            try
+            {
+              IOUtil.copyBinary(in, out, lob.getSize());
+            }
+            finally
+            {
+              IOUtil.close(out);
+            }
+          }
+        }
+        else
+        {
+          final Clob clob = lob.getClob();
+          Reader in = clob.getCharacterStream();
+          Writer out = handler.handleClob(HexUtil.hexToBytes(lob.getId()), lob.getSize());
+          if (out != null)
+          {
+            try
+            {
+              IOUtil.copyCharacter(in, out, lob.getSize());
+            }
+            finally
+            {
+              IOUtil.close(out);
+            }
+          }
+        }
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new IllegalStateException(ex);
+    }
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
@@ -864,6 +954,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
@@ -874,6 +965,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
     else
     {
+      // deprecated usage, non-deprecated api uses a session
+      // TODO: research which session to use
       lob.setBlob(Hibernate.createBlob(inputStream, (int)size));
       lob.setSize((int)size);
       lob.setClob(null);
@@ -881,6 +974,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
@@ -891,6 +985,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
     else
     {
+      // deprecated usage, non-deprecated api uses a session
+      // TODO: research which session to use
       lob.setClob(Hibernate.createClob(reader, (int)size));
       lob.setSize((int)size);
       lob.setBlob(null);

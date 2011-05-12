@@ -31,11 +31,12 @@ public class CDOExampleUUIDHexGenerator extends UUIDHexGenerator
   public Serializable generate(SessionImplementor session, Object obj)
   {
     final EntityPersister entityPersister = session.getEntityPersister(null, obj);
-    final Serializable id = entityPersister.getIdentifier(obj, session.getEntityMode());
+    final Serializable id = entityPersister.getIdentifier(obj, session);
     if (id != null)
     {
       return id;
     }
+    
     return super.generate(session, obj);
   }
 }

@@ -35,12 +35,12 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.type.StandardBasicTypes;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -324,11 +324,11 @@ public class HibernateStore extends Store implements IHibernateStore
     }
 
     final String idTypeStr = typeEAnnotation.getDetails().get(ID_TYPE_EANNOTATION_KEY);
-    if (Hibernate.STRING.getName().equals(idTypeStr))
+    if (StandardBasicTypes.STRING.getName().equals(idTypeStr))
     {
       return HibernateUtil.getInstance().createCDOID(classifierRef, idPart);
     }
-    else if (Hibernate.LONG.getName().equals(idTypeStr))
+    else if (StandardBasicTypes.LONG.getName().equals(idTypeStr))
     {
       return HibernateUtil.getInstance().createCDOID(classifierRef, new Long(idPart));
     }
@@ -352,7 +352,20 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public Map<String, String> getPersistentProperties(Set<String> names)
   {
-    return packageHandler.getSystemProperties();
+    final Map<String, String> result = packageHandler.getSystemProperties();
+    if (names == null || names.isEmpty())
+    {
+      return result;
+    }
+    final Map<String, String> filteredResult = new HashMap<String, String>();
+    for (String name : names)
+    {
+      if (result.containsKey(name))
+      {
+        filteredResult.put(name, result.get(name));
+      }
+    }
+    return filteredResult;
   }
 
   public void setPersistentProperties(Map<String, String> properties)
@@ -362,8 +375,12 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public void removePersistentProperties(Set<String> names)
   {
-    // TODO: implement HibernateStore.removePropertyValues(names)
-    throw new UnsupportedOperationException();
+    final Map<String, String> props = getPersistentProperties(null);
+    for (String name : names)
+    {
+      props.remove(name);
+    }
+    setPersistentProperties(props);
   }
 
   public synchronized int getNextPackageID()

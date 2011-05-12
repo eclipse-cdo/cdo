@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 
-import org.hibernate.Hibernate;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.UserType;
 
 import java.io.Serializable;
@@ -71,7 +71,7 @@ public class CDOTypeUserType implements UserType
 
   public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
   {
-    Integer value = (Integer)Hibernate.INTEGER.nullSafeGet(rs, names[0]);
+    Integer value = StandardBasicTypes.INTEGER.nullSafeGet(rs, names[0]);
     if (rs.wasNull())
     {
       return null;

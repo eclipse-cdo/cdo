@@ -127,8 +127,11 @@ public class HibernateCDOPackageUnitDTO
     }
   }
 
+  @SuppressWarnings("deprecation")
   public Blob getEPackageBlob()
   {
+    // deprecated usage, non-deprecated api uses a session
+    // TODO: research which session to use
     return Hibernate.createBlob(getEPackageByteArray());
   }
 

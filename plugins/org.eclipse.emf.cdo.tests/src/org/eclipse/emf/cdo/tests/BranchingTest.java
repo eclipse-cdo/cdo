@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionCacheImpl;
+import org.eclipse.emf.cdo.internal.common.revision.AbstractCDORevisionCache;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -58,14 +58,14 @@ public class BranchingTest extends AbstractCDOTest
     super.doSetUp();
     skipUnlessBranching();
 
-    Field disableGC = ReflectUtil.getField(CDORevisionCacheImpl.class, "disableGC");
+    Field disableGC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, true);
   }
 
   @Override
   protected void doTearDown() throws Exception
   {
-    Field disableGC = ReflectUtil.getField(CDORevisionCacheImpl.class, "disableGC");
+    Field disableGC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, false);
     super.doTearDown();
   }

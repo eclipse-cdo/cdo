@@ -30,6 +30,16 @@ import java.util.List;
  */
 public interface InternalCDORevisionManager extends CDORevisionManager, CDORevisionCacheAdder, ILifecycle
 {
+  /**
+   * @since 4.0
+   */
+  public boolean isSupportingAudits();
+
+  /**
+   * @since 4.0
+   */
+  public void setSupportingAudits(boolean on);
+
   public boolean isSupportingBranches();
 
   public void setSupportingBranches(boolean on);

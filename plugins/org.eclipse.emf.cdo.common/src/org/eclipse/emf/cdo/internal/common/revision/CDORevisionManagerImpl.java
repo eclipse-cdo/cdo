@@ -49,6 +49,8 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, CDORevisionManagerImpl.class);
 
+  private boolean supportingAudits;
+
   private boolean supportingBranches;
 
   private RevisionLoader revisionLoader;
@@ -81,6 +83,17 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
   public CDORevisionManagerImpl()
   {
+  }
+
+  public boolean isSupportingAudits()
+  {
+    return supportingAudits;
+  }
+
+  public void setSupportingAudits(boolean on)
+  {
+    checkInactive();
+    supportingAudits = on;
   }
 
   public boolean isSupportingBranches()
@@ -420,7 +433,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
     if (cache == null)
     {
-      cache = (InternalCDORevisionCache)CDORevisionUtil.createRevisionCache();
+      cache = (InternalCDORevisionCache)CDORevisionUtil.createRevisionCache(supportingAudits, supportingBranches);
     }
   }
 

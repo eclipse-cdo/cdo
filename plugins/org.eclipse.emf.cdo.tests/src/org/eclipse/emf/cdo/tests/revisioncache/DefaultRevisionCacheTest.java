@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests.revisioncache;
 
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
@@ -23,6 +24,10 @@ public class DefaultRevisionCacheTest extends AbstractCDORevisionCacheTest
   @Override
   protected InternalCDORevisionCache createRevisionCache(CDOSession session) throws Exception
   {
-    return (InternalCDORevisionCache)CDORevisionUtil.createRevisionCache();
+    CDORepositoryInfo repositoryInfo = session.getRepositoryInfo();
+    boolean supportingAudits = repositoryInfo.isSupportingAudits();
+    boolean supportingBranches = repositoryInfo.isSupportingBranches();
+
+    return (InternalCDORevisionCache)CDORevisionUtil.createRevisionCache(supportingAudits, supportingBranches);
   }
 }

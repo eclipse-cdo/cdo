@@ -55,6 +55,8 @@ public class Bugzilla_330052_Test extends AbstractCDOTest
    */
   public void test_auditView() throws CommitException
   {
+    skipUnlessAuditing();
+
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction = session.openTransaction();

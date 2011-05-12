@@ -2131,11 +2131,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           // should we remove it. If this is not the case (i.e. it is dirty in a different
           // way), we skip it. (If the reference is not persistent, then this exception
           // doesn't apply: it must be removed for sure.)
-          //
           if (referencer.cdoState() == CDOState.DIRTY && EMFUtil.isPersistent(reference))
           {
-            InternalCDORevision cleanRevision = getSession().getRevisionManager().getRevisionByVersion(
-                referencer.cdoID(), referencer.cdoRevision(), CDORevision.UNCHUNKED, true);
+            InternalCDORevision cleanRevision = cleanRevisions.get(referencer);
+
             Object value = cleanRevision.get(reference, EStore.NO_INDEX);
             if (value instanceof CDOObject && value == referencedObject || //
                 value instanceof CDOID && value.equals(referencedOID) || //

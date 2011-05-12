@@ -77,6 +77,22 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
     getDelegate().setRevisionLocker(revisionLocker);
   }
 
+  /**
+   * @since 4.0
+   */
+  public boolean isSupportingAudits()
+  {
+    return getDelegate().isSupportingAudits();
+  }
+
+  /**
+   * @since 4.0
+   */
+  public void setSupportingAudits(boolean on)
+  {
+    getDelegate().setSupportingAudits(on);
+  }
+
   public boolean isSupportingBranches()
   {
     return getDelegate().isSupportingBranches();

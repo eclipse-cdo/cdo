@@ -1506,6 +1506,7 @@ public class Repository extends Container<Object> implements InternalRepository
         : IStore.RevisionTemporality.NONE);
     store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING
         : IStore.RevisionParallelism.NONE);
+    revisionManager.setSupportingAudits(supportingAudits);
     revisionManager.setSupportingBranches(supportingBranches);
 
     LifecycleUtil.activate(store);

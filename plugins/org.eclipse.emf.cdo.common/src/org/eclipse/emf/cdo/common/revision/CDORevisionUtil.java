@@ -25,7 +25,9 @@ import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOFeatureMapEntryImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisableImpl;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionCacheImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionCacheAuditing;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionCacheBranching;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionCacheNonAuditing;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionKeyImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
@@ -61,13 +63,23 @@ public final class CDORevisionUtil
   }
 
   /**
-   * Creates and returns a new memory sensitive revision cache that supports branches.
+   * Creates and returns a new memory sensitive revision cache.
    * 
    * @since 4.0
    */
-  public static CDORevisionCache createRevisionCache()
+  public static CDORevisionCache createRevisionCache(boolean supportingAudits, boolean supportingBranches)
   {
-    return new CDORevisionCacheImpl();
+    if (supportingBranches)
+    {
+      return new CDORevisionCacheBranching();
+    }
+
+    if (supportingAudits)
+    {
+      return new CDORevisionCacheAuditing();
+    }
+
+    return new CDORevisionCacheNonAuditing();
   }
 
   /**

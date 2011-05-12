@@ -90,9 +90,9 @@ public class RevisionManagerTest extends AbstractCDOTest
   @Override
   protected void doSetUp() throws Exception
   {
-    skipUnlessMEM();
     super.doSetUp();
     skipUnlessBranching();
+    skipUnlessMEM();
 
     Field disableGC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, true);

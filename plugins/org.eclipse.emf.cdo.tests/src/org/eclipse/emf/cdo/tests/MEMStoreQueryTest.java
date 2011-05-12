@@ -35,7 +35,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
 {
   public void testMEMStoreBasicQuery() throws Exception
   {
-    skipUnlessConfig(MEM);
+    skipUnlessMEM();
 
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openSession();

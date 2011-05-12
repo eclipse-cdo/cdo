@@ -90,7 +90,7 @@ public class RevisionManagerTest extends AbstractCDOTest
   @Override
   protected void doSetUp() throws Exception
   {
-    skipUnlessConfig(MEM);
+    skipUnlessMEM();
     super.doSetUp();
     skipUnlessBranching();
 

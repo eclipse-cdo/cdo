@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	
 	<epackage namespace-uri="http://www.eclipse.org/emf/CDO/examples/company/1.0.0">
-		<eclass name="Address">
+		<eclass name="Addressable">
 			<table name="theAddressTable"/>
 		</eclass>
 	</epackage>

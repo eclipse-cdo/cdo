@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 
 import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -181,16 +180,18 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
       if (ref != null)
       {
         InternalCDORevision revision = ref.get();
-        if (revision != null && ObjectUtil.equals(revision.getBranch(), branchVersion.getBranch())
-            && revision.getVersion() == branchVersion.getVersion())
+        if (revision != null)
+        {
+          if (revision.getVersion() == branchVersion.getVersion()) // No branch check needed in non-auditing
+          {
+            revisions.remove(id);
+            return revision;
+          }
+        }
+        else
         {
           revisions.remove(id);
-          return revision;
         }
-      }
-      else
-      {
-        revisions.remove(id);
       }
     }
 

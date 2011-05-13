@@ -71,6 +71,7 @@ import java.util.StringTokenizer;
 /**
  * This is a simple wizard for creating a new model file. <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
+ * @author Martin Fluegge
  * @generated
  */
 public class DawngenmodelModelWizard extends Wizard implements INewWizard

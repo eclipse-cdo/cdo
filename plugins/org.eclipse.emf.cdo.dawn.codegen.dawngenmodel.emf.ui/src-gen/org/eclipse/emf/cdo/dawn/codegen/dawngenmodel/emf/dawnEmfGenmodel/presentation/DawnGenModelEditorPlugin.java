@@ -20,8 +20,8 @@ import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 /**
  * This is the central singleton for the DawnGenModel editor plugin. <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
- * @generated
  * @author Martin Fluegge
+ * @generated
  */
 public final class DawnGenModelEditorPlugin extends EMFPlugin
 {

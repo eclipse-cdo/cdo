@@ -15,15 +15,12 @@
 <plugin>
 
    <extension point="org.eclipse.ui.newWizards">
-      <category
-            id="org.eclipse.emf.ecore.Wizard.category.ID"
-            name="%_UI_Wizard_category"/>
       <wizard
             id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.presentation.DawnEmfGenmodelModelWizardID"
             name="%_UI_DawnEmfGenmodelModelWizard_label"
             class="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.presentation.DawnEmfGenmodelModelWizard"
-            category="org.eclipse.emf.ecore.Wizard.category.ID"
-            icon="icons/full/obj16/DawnEmfGenmodelModelFile.gif">
+            category="org.eclipse.emf.cdo.dawn.ui.category.dawn"
+            icon="icons/full/obj16/dawn_gemodel_emf_16x16.gif">
          <description>%_UI_DawnEmfGenmodelModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>
       </wizard>
@@ -33,8 +30,8 @@
       <editor
             id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.presentation.DawnEmfGenmodelEditorID"
             name="%_UI_DawnEmfGenmodelEditor_label"
-            icon="icons/full/obj16/DawnEmfGenmodelModelFile.gif"
-            extensions="dawngenmodel.emf"
+            icon="icons/full/obj16/dawn_gemodel_emf_16x16.gif"
+            extensions="dawngenmodel_emf"
             class="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.presentation.DawnEmfGenmodelEditor"
             contributorClass="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.presentation.DawnEmfGenmodelActionBarContributor">
       </editor>
@@ -45,7 +42,7 @@
       <objectContribution
             adaptable="false"
             id="org.eclipse.emf.cdo.dawn.codegen.generate"
-            nameFilter="*.dawngenmodel.emf"
+            nameFilter="*.dawngenmodel_emf"
             objectClass="org.eclipse.core.resources.IFile">
          <action
                class="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui.actions.GenerateEMFFragmentAction"
@@ -66,6 +63,11 @@
          </action>
       </objectContribution>
    </extension>
-   
-
+   <extension
+         point="org.eclipse.emf.cdo.dawn.genmodel.ui.editors">
+      <editor
+            file_extension="_emf"
+            editor="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.presentation.DawnEmfGenmodelEditor">
+      </editor>
+   </extension>
 </plugin>

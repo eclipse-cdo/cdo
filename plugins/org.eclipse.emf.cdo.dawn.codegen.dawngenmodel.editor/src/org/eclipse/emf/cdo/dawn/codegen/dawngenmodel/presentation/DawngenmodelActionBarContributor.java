@@ -46,6 +46,7 @@ import java.util.Collection;
 /**
  * This is the action bar contributor for the Dawngenmodel model editor. <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
+ * @author Martin Fluegge
  * @generated
  */
 public class DawngenmodelActionBarContributor extends EditingDomainActionBarContributor implements

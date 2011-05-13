@@ -23,8 +23,8 @@ import org.eclipse.gmf.codegen.gmfgen.presentation.EditorPlugin;
 /**
  * This is the central singleton for the DawnCodeGen editor plugin. <!-- begin-user-doc --> <!-- end-user-doc -->
  * 
- * @generated
  * @author Martin Fluegge
+ * @generated
  */
 public final class DawnCodeGenEditorPlugin extends EMFPlugin
 {

@@ -1,13 +1,237 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Martin Fluegge - initial API and implementation"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Martin Fluegge - initial API and implementation"
     modelDirectory="/org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf/src-gen" editorDirectory="/org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui/src-gen"
     modelPluginID="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf" modelName="DawnGenModel"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" editorPluginID="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui"
     usedGenPackages="../../org.eclipse.emf.cdo.dawn.codegen.dawngenmodel/model/DawnCodeGen.genmodel#//dawngenmodel platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>DawnGenModel.emf.ecore</foreignModel>
   <genPackages prefix="DawnEmfGenmodel" basePackage="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf"
-      disposableProviderFactory="true" ecorePackage="DawnGenModel.emf.ecore#/">
-    <genClasses ecoreClass="DawnGenModel.emf.ecore#//DawnEMFGenerator"/>
+      disposableProviderFactory="true" multipleEditorPages="false" generateModelWizard="false"
+      ecorePackage="DawnGenModel.emf.ecore#/">
+    <genClasses ecoreClass="DawnGenModel.emf.ecore#//DawnEMFGenerator">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference DawnGenModel.emf.ecore#//DawnEMFGenerator/emfGenModel"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Genmodel" ecorePackage="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenProviderKind">
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenProviderKind/Singleton"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenProviderKind/Stateful"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenProviderKind/None"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPropertyKind">
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPropertyKind/Editable"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPropertyKind/Readonly"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPropertyKind/None"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenResourceKind">
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenResourceKind/None"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenResourceKind/Basic"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenResourceKind/XMI"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenResourceKind/XML"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenDelegationKind">
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenDelegationKind/None"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenDelegationKind/Reflective"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenDelegationKind/Virtual"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenDelegationKind/Dynamic"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenJDKLevel">
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenJDKLevel/JDK14"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenJDKLevel/JDK50"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenJDKLevel/JDK60"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimeVersion">
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimeVersion/EMF22"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimeVersion/EMF23"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimeVersion/EMF24"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimeVersion/EMF25"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimeVersion/EMF26"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimeVersion/EMF27"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimePlatform">
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimePlatform/IDE"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimePlatform/RCP"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimePlatform/RAP"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenRuntimePlatform/GWT"/>
+    </genEnums>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/copyrightText"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/modelDirectory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/creationCommands"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/creationIcons"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/creationSubmenus"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/editDirectory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/editorDirectory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/modelPluginID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/templateDirectory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/runtimeJar"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/foreignModel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/dynamicTemplates"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/redirection"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/forceOverwrite"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/nonExternalizedStringTag"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/modelName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/modelPluginClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/editPluginClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/editorPluginClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/updateClasspath"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/generateSchema"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/nonNLSMarkers"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/staticPackages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/modelPluginVariables"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/rootExtendsInterface"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/rootExtendsClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/rootImplementsInterface"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/suppressEMFTypes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/suppressEMFMetaData"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/suppressEMFModelTags"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/suppressInterfaces"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/featureMapWrapperInterface"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/featureMapWrapperInternalInterface"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/featureMapWrapperClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/runtimeCompatibility"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/richClientPlatform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/reflectiveDelegation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/codeFormatting"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/testsDirectory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/testSuiteClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/booleanFlagsField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/booleanFlagsReservedBits"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/importerID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/bundleManifest"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/featureDelegation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/containmentProxies"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/minimalReflectiveMethods"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/suppressContainment"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/suppressNotification"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/arrayAccessors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/suppressUnsettable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/facadeHelperClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/complianceLevel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/suppressGenModelAnnotations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/copyrightFields"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/binaryCompatibleReflectiveMethods"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/publicConstructors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/templatePluginVariables"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/providerRootExtendsClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/editPluginID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/editPluginVariables"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/editorPluginID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/editorPluginVariables"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/testsPluginID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/testsPluginVariables"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/optimizedHasChildren"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/tableProviders"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/colorProviders"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/fontProviders"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/runtimeVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/language"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/packedEnums"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/genPackages"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/usedGenPackages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/interfaceNamePattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/classNamePattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/operationReflection"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/richAjaxPlatform"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel/runtimePlatform"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/prefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/basePackage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/resource"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/disposableProviderFactory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/adapterFactory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/loadInitialization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/interfacePackageSuffix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/metaDataPackageSuffix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/classPackageSuffix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/utilityPackageSuffix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/providerPackageSuffix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/presentationPackageSuffix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/testsPackageSuffix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/generateExampleClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/literalsInterface"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/dataTypeConverters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/multipleEditorPages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/generateModelWizard"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/extensibleProviderFactory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/childCreationExtenders"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/contentTypeIdentifier"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/fileExtensions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/ecorePackage"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/genModel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/genEnums"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/genDataTypes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/genClasses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/nestedGenPackages"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenPackage/genClassifiers"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClass">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClass/provider"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClass/image"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClass/dynamic"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClass/ecoreClass"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClass/genFeatures"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClass/genOperations"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClass/labelFeature"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/notify"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/children"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/createChild"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/propertyCategory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/propertyFilterFlags"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/propertyDescription"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/propertyMultiLine"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/propertySortChoices"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/genClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenFeature/ecoreFeature"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenBase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenBase/genAnnotations"/>
+      <genOperations ecoreOperation="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenBase/getGenAnnotation">
+        <genParameters ecoreParameter="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenBase/getGenAnnotation/source"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenEnum">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenEnum/typeSafeEnumCompatible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenEnum/ecoreEnum"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenEnum/genEnumLiterals"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenEnumLiteral">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenEnumLiteral/genEnum"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenEnumLiteral/ecoreEnumLiteral"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClassifier">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClassifier/genPackage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenClassifier/genTypeParameters"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenDataType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenDataType/ecoreDataType"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenOperation">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenOperation/genClass"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenOperation/ecoreOperation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenOperation/genParameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenOperation/genTypeParameters"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenParameter">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenParameter/genOperation"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenParameter/ecoreParameter"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenTypedElement"/>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenAnnotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenAnnotation/source"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenAnnotation/details"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenAnnotation/genBase"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenAnnotation/references"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenAnnotation/contents"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenTypeParameter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenTypeParameter/ecoreTypeParameter"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

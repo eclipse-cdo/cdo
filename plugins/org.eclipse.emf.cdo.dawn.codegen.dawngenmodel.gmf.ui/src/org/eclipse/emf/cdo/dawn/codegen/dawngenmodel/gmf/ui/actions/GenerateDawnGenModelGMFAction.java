@@ -88,6 +88,6 @@ public class GenerateDawnGenModelGMFAction extends GenerateDawnGenModelAction
   @Override
   protected Resource getDawnFragmentModelResource(String path, String modelname, ResourceSet resourceSet)
   {
-    return getResource(path, modelname, resourceSet, dawngenmodelFileExtension + "." + gmfGenmodelFileExtension);
+    return getResource(path, modelname, resourceSet, dawngenmodelFileExtension + "_" + gmfGenmodelFileExtension);
   }
 }

@@ -12,6 +12,7 @@
 -->
 
 <plugin>
+   <extension-point id="org.eclipse.emf.cdo.dawn.genmodel.ui.editors" name="Dawn GenModel Extension Editor" schema="schema/org.eclipse.emf.cdo.dawn.genmodel.ui.editors.exsd"/>
 
    <extension point="org.eclipse.ui.newWizards">
       <wizard
@@ -29,7 +30,7 @@
       <editor
             id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelEditorID"
             name="%_UI_DawngenmodelEditor_label"
-            icon="icons/full/obj16/DawngenmodelModelFile.gif"
+            icon="icons/full/obj16/dawn_16x16.gif"
             extensions="dawngenmodel"
             class="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelEditor"
             contributorClass="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.presentation.DawngenmodelActionBarContributor">

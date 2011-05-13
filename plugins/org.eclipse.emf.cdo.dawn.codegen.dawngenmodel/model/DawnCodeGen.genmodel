@@ -7,7 +7,7 @@
     usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>DawnCodeGen.ecore</foreignModel>
   <genPackages prefix="Dawngenmodel" basePackage="org.eclipse.emf.cdo.dawn.codegen"
-      disposableProviderFactory="true" ecorePackage="DawnCodeGen.ecore#/">
+      disposableProviderFactory="true" multipleEditorPages="false" ecorePackage="DawnCodeGen.ecore#/">
     <genClasses ecoreClass="DawnCodeGen.ecore#//DawnGenerator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGenerator/conflictColor"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnGenerator/localLockColor"/>
@@ -16,6 +16,7 @@
     <genClasses ecoreClass="DawnCodeGen.ecore#//DawnFragmentGenerator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnFragmentGenerator/fragmentName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DawnCodeGen.ecore#//DawnFragmentGenerator/dawnEditorClassName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference DawnCodeGen.ecore#//DawnFragmentGenerator/dawnGenerator"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

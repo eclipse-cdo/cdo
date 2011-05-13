@@ -113,9 +113,6 @@ public class CDOViewImpl extends AbstractCDOView
 
   private long lastUpdateTime;
 
-  @ExcludeFromDump
-  private LastUpdateTimeLock lastUpdateTimeLock = new LastUpdateTimeLock();
-
   private QueueRunner invalidationRunner;
 
   @ExcludeFromDump
@@ -293,7 +290,7 @@ public class CDOViewImpl extends AbstractCDOView
       }
 
       long requiredTimestamp = result.getRequiredTimestamp();
-      getSession().waitForUpdate(requiredTimestamp);
+      waitForUpdate(requiredTimestamp);
     }
   }
 
@@ -747,25 +744,19 @@ public class CDOViewImpl extends AbstractCDOView
     super.doDeactivate();
   }
 
-  public long getLastUpdateTime()
+  public synchronized long getLastUpdateTime()
   {
-    synchronized (lastUpdateTimeLock)
-    {
-      return lastUpdateTime;
-    }
+    return lastUpdateTime;
   }
 
-  public void setLastUpdateTime(long lastUpdateTime)
+  public synchronized void setLastUpdateTime(long lastUpdateTime)
   {
-    synchronized (lastUpdateTimeLock)
+    if (this.lastUpdateTime < lastUpdateTime)
     {
-      if (this.lastUpdateTime < lastUpdateTime)
-      {
-        this.lastUpdateTime = lastUpdateTime;
-      }
-
-      lastUpdateTimeLock.notifyAll();
+      this.lastUpdateTime = lastUpdateTime;
     }
+
+    notifyAll();
   }
 
   public boolean waitForUpdate(long updateTime, long timeoutMillis)
@@ -773,7 +764,7 @@ public class CDOViewImpl extends AbstractCDOView
     long end = timeoutMillis == NO_TIMEOUT ? Long.MAX_VALUE : System.currentTimeMillis() + timeoutMillis;
     for (;;)
     {
-      synchronized (lastUpdateTimeLock)
+      synchronized (this)
       {
         if (lastUpdateTime >= updateTime)
         {
@@ -788,7 +779,7 @@ public class CDOViewImpl extends AbstractCDOView
 
         try
         {
-          lastUpdateTimeLock.wait(end - now);
+          wait(end - now);
         }
         catch (InterruptedException ex)
         {
@@ -1127,15 +1118,6 @@ public class CDOViewImpl extends AbstractCDOView
     {
       this.count = count;
     }
-  }
-
-  /**
-   * A separate class for better monitor debugging.
-   * 
-   * @author Eike Stepper
-   */
-  private static final class LastUpdateTimeLock
-  {
   }
 
   /**

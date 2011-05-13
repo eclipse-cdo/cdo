@@ -28,10 +28,6 @@
       %license
    </license>
 
-   <url>
-      <update url="http://www.eclipse.org/downloads/download.php?file=/modeling/emf/cdo/updates/3.0-releases/&amp;protocol=http&amp;format=xml"/>
-   </url>
-
    <includes
          id="org.eclipse.net4j.sdk"
          version="0.0.0"/>

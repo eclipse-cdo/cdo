@@ -10,8 +10,8 @@
 	  Martin Fluegge - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.dawn.codegen.emf.feature"
-       label="%featureName"
+      id="org.eclipse.emf.cdo.dawn.codegen.emf"
+      label="%featureName"
       version="1.0.0.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg">
@@ -32,8 +32,7 @@
       <update label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
-   
-   
+
    <plugin
          id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf"
          download-size="0"

@@ -34,7 +34,7 @@
    </url>
 
    <includes
-         id="org.eclipse.emf.cdo.dawn.codegen.emf.feature"
+         id="org.eclipse.emf.cdo.dawn.codegen.emf"
          version="0.0.0"/>
 
    <plugin

@@ -10,8 +10,8 @@
 	  Martin Fluegge - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.dawn.codegen"
-      label="%featureName"
+      id="org.eclipse.emf.cdo.dawn.codegen.gmf.feature"
+       label="%featureName"
       version="1.0.0.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg">
@@ -32,34 +32,24 @@
       <update label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
-
-   <includes
-         id="org.eclipse.emf.cdo.dawn.codegen.emf.feature"
-         version="0.0.0"/>
-
+   
+   
    <plugin
-         id="org.eclipse.emf.cdo.dawn.codegen"
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel"
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.edit"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor"
+         id="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -59,7 +59,7 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     synchronized (revisionLists)
     {
       RevisionList revisionList = revisionLists.get(id);
-      if (revisionList != null)
+      if (revisionList != null && !revisionList.isEmpty())
       {
         Reference<InternalCDORevision> ref = revisionList.getFirst();
         InternalCDORevision revision = ref.get();

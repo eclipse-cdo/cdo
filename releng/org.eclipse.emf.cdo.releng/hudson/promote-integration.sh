@@ -23,13 +23,11 @@ if [ -n "$PROBLEM_BUNDLES" ]; then
  exit 2
 fi
 
-jar xf content.jar
-sed -i "/<property name='p2\.compressed'/a \ \ \ \ <property name='p2.mirrorsURL' value='http://www.eclipse.org/downloads/download.php?file=/modeling/emf/cdo/updates/$stream/$stream-$label&amp;protocol=http&amp;format=xml'/>'>" content.xml
-jar cvf content.jar content.xml
-
-jar xf artifacts.jar
-sed -i "/<property name='p2\.compressed'/a \ \ \ \ <property name='p2.mirrorsURL' value='http://www.eclipse.org/downloads/download.php?file=/modeling/emf/cdo/updates/$stream/$stream-$label&amp;protocol=http&amp;format=xml'/>'>" artifacts.xml
-jar cvf artifacts.jar artifacts.xml
+for F in artifacts content; do
+	jar xf $F.jar
+	sed -i "/<property name='p2\.compressed'/a \ \ \ \ <property name='p2.mirrorsURL' value='http://www.eclipse.org/downloads/download.php?file=/modeling/emf/cdo/updates/$stream/$stream-$label&amp;protocol=http&amp;format=xml'/>'>" $F.xml
+	jar cvf $F.jar $F.xml
+done
 
 cp -R . /home/data/httpd/download.eclipse.org/modeling/emf/cdo/updates/$stream/$stream-$label
 

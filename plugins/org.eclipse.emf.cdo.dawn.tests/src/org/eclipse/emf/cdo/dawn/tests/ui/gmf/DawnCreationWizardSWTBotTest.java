@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.dawn.tests.ui.gmf;
 
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnGEFTest;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.common.util.URI;
@@ -34,6 +35,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Martin Fluegge
  */
+@NeedsCleanRepo
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
 {

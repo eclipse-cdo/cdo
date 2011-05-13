@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.dawn.tests.ui.emf;
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnEMFTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.common.util.URI;
@@ -36,6 +37,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Martin Fluegge
  */
+@NeedsCleanRepo
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
 {
@@ -118,9 +120,10 @@ public class DawnEMFCreationWizardTest extends AbstractDawnEMFTest
     SWTBotPreferences.KEYBOARD_LAYOUT = "EN_US";
     Keyboard keyboard = KeyboardFactory.getDefaultKeyboard(fileSemanticNameLabel.widget, null);
     fileSemanticNameLabel.setFocus();
-    fileSemanticNameLabel.typeText("x", 500);
-
+    fileSemanticNameLabel.setText("x");
+    // fileSemanticNameLabel.typeText("x", 500);
     keyboard.pressShortcut(Keystrokes.BS);
+
     assertEquals(false, getBot().button("Next >").isEnabled());
     getBot().button("Cancel").click();
   }

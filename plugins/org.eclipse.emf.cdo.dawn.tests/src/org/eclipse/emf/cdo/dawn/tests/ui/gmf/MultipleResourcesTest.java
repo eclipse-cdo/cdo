@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnAcoreTestUtil;
 import org.eclipse.emf.cdo.dawn.tests.ui.util.DawnSWTBotUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -49,6 +50,7 @@ import java.util.List;
 /**
  * @author Martin Fluegge
  */
+@NeedsCleanRepo
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class MultipleResourcesTest extends AbstractDawnGEFTest
 {

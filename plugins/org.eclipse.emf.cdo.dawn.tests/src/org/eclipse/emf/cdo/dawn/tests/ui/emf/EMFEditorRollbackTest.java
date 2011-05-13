@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.dawn.tests.ui.emf;
 
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnEMFTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
 
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 
@@ -20,6 +21,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Martin Fluegge
  */
+@NeedsCleanRepo
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class EMFEditorRollbackTest extends AbstractDawnEMFTest
 {

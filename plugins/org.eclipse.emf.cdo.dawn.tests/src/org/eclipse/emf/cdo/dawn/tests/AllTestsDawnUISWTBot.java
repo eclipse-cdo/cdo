@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.dawn.tests.ui.emf.EMFEditorRollbackTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.ConflictTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnCreationWizardSWTBotTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.MultipleResourcesTest;
-import org.eclipse.emf.cdo.dawn.tests.ui.gmf.RollbackTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.SimpleDiagramTest;
 import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
@@ -31,6 +30,9 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+/**
+ * @author Martin Fluegge
+ */
 public class AllTestsDawnUISWTBot extends ConfigTestSuite
 {
   public static Test suite()
@@ -58,8 +60,8 @@ public class AllTestsDawnUISWTBot extends ConfigTestSuite
     testClasses.add(SimpleDiagramTest.class);
     testClasses.add(MultipleResourcesTest.class);
     testClasses.add(DawnProjectExplorerTest.class);
-    testClasses.add(RollbackTest.class);
-    testClasses.add(ConflictTest.class);
+    // testClasses.add(RollbackTest.class);
+    // testClasses.add(ConflictTest.class);
 
     /******************** EMF **********************/
     testClasses.add(DawnEMFCreationWizardTest.class);

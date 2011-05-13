@@ -20,7 +20,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * @author Eike Stepper
+ * @author Martin Fluegge
  */
 public class TCPConfigStarter extends AllConfigs
 {

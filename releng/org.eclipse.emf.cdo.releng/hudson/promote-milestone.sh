@@ -35,9 +35,8 @@ popd
 
 rm -rf promote.tmp
 
-echo ""
-echo "After testing http://download.eclipse.org/modeling/emf/cdo/updates/$stream/$stream-$milestone-$label execute:"
-echo ""
-echo "pushd /home/data/httpd/download.eclipse.org/modeling/emf/cdo/updates/$stream; cp -R $stream-$milestone-$label staging.tmp; mv staging staging.old; mv staging.tmp staging; rm -rf staging.old; popd"
-echo ""
-echo "svn cp  -m \"Tagging trunk as $stream-$milestone\" https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/trunk https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/tags/$stream-$milestone"
+svn cp -m "Tagging trunk as $stream-$milestone" https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/trunk https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/tags/$stream-$milestone
+
+
+# ONLY FOR RELEASE TRAIN CONTRIBUTIONS:
+pushd /home/data/httpd/download.eclipse.org/modeling/emf/cdo/updates/$stream; cp -R $stream-$milestone-$label staging.tmp; mv staging staging.old; mv staging.tmp staging; rm -rf staging.old; popd

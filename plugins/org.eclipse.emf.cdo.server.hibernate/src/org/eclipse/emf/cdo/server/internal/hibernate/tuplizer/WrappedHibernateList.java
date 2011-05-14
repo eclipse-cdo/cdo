@@ -43,8 +43,6 @@ public class WrappedHibernateList implements InternalCDOList
 {
   private List<Object> delegate;
 
-  private boolean frozen;
-
   public WrappedHibernateList()
   {
   }
@@ -468,15 +466,6 @@ public class WrappedHibernateList implements InternalCDOList
 
   public void freeze()
   {
-    frozen = true;
-  }
-
-  private void checkFrozen()
-  {
-    if (frozen)
-    {
-      throw new IllegalStateException("Cannot modify a frozen list");
-    }
   }
 
   public void setWithoutFrozenCheck(int i, Object value)

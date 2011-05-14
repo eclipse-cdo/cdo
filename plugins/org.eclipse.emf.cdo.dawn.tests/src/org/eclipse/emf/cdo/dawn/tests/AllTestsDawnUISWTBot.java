@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.dawn.tests.ui.DawnProjectExplorerTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnEMFCreationWizardTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnEMFHandleEditorTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.emf.EMFEditorRollbackTest;
-import org.eclipse.emf.cdo.dawn.tests.ui.gmf.ConflictTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnCreationWizardSWTBotTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.MultipleResourcesTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.SimpleDiagramTest;

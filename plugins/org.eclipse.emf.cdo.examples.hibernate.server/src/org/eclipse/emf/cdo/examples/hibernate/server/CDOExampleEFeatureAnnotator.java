@@ -27,7 +27,7 @@ public class CDOExampleEFeatureAnnotator extends CDOEFeatureAnnotator
   @Override
   public void annotate(PAnnotatedEStructuralFeature aStructuralFeature)
   {
-    IOUtil.ERR().println("This method should be called"); //$NON-NLS-1$
+    IOUtil.ERR().println("CDOExampleEFeatureAnnotator: this method is called as expected"); //$NON-NLS-1$
     super.annotate(aStructuralFeature);
   }
 }

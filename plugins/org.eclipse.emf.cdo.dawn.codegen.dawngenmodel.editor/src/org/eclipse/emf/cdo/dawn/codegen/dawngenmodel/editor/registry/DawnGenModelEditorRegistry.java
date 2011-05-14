@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * @author Martin Fluegge
+ * @since 1.0
  */
 public class DawnGenModelEditorRegistry
 {

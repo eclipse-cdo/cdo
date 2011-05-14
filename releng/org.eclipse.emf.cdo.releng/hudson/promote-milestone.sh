@@ -2,6 +2,7 @@ stream=4.0
 milestone=M7a
 buildID=1320
 
+rm -rf promote.tmp
 mkdir promote.tmp
 pushd promote.tmp
 
@@ -24,6 +25,11 @@ if [ -n "$PROBLEM_BUNDLES" ]; then
  exit 2
 fi
 
+for F in artifacts content; do
+	/shared/common/jdk-1.5.0-22.x86_64/bin/jar xf $F.jar
+	sed -i "/<property name='p2\.compressed'/a \ \ \ \ <property name='p2.mirrorsURL' value='http://www.eclipse.org/downloads/download.php?file=/modeling/emf/cdo/updates/$stream/$stream-$milestone-$label&amp;protocol=http&amp;format=xml'/>'>" $F.xml
+	/shared/common/jdk-1.5.0-22.x86_64/bin/jar cvf $F.jar $F.xml
+done
 cp -R . /home/data/httpd/download.eclipse.org/modeling/emf/cdo/updates/$stream/$stream-$milestone-$label
 
 popd
@@ -35,7 +41,7 @@ popd
 
 rm -rf promote.tmp
 
-svn cp -m "Tagging trunk as $stream-$milestone" https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/trunk https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/tags/$stream-$milestone
+svn cp -m "Tagging trunk as $stream-$label" https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/trunk https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/tags/$stream-$label
 
 
 # ONLY FOR RELEASE TRAIN CONTRIBUTIONS:

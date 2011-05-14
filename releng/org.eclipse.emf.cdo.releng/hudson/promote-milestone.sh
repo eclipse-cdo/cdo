@@ -30,6 +30,7 @@ for F in artifacts content; do
 	sed -i "/<property name='p2\.compressed'/a \ \ \ \ <property name='p2.mirrorsURL' value='http://www.eclipse.org/downloads/download.php?file=/modeling/emf/cdo/updates/$stream/$stream-$milestone-$label&amp;protocol=http&amp;format=xml'/>'>" $F.xml
 	/shared/common/jdk-1.5.0-22.x86_64/bin/jar cvf $F.jar $F.xml
 done
+
 cp -R . /home/data/httpd/download.eclipse.org/modeling/emf/cdo/updates/$stream/$stream-$milestone-$label
 
 popd

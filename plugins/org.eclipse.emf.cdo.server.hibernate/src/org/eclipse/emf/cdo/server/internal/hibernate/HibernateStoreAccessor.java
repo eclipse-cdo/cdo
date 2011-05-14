@@ -774,8 +774,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id)); //$NON-NLS-1$
       if (qry.executeUpdate() != 1)
       {
-        OM.LOG.error("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
-        //        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
+        //        OM.LOG.error("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
+        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
   }
@@ -794,8 +794,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id)); //$NON-NLS-1$
       if (qry.executeUpdate() != 1)
       {
-        OM.LOG.error("Not able to update resources ids of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
-        //        throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
+        //        OM.LOG.error("Not able to update resource ids of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
+        throw new IllegalStateException("Not able to update resource ids of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
   }

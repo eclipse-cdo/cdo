@@ -247,6 +247,10 @@ public class HibernateStore extends Store implements IHibernateStore
       {
         initConfiguration();
 
+        // this has to be done before the classmapping is iterated
+        // otherwise it is not initialized
+        hibernateSessionFactory = hibernateConfiguration.buildSessionFactory();
+
         final Iterator<?> iterator = hibernateConfiguration.getClassMappings();
         while (iterator.hasNext())
         {
@@ -259,8 +263,6 @@ public class HibernateStore extends Store implements IHibernateStore
 
           identifierPropertyNameByEntity.put(pc.getEntityName(), pc.getIdentifierProperty().getName());
         }
-
-        hibernateSessionFactory = hibernateConfiguration.buildSessionFactory();
       }
       finally
       {

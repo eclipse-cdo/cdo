@@ -22,7 +22,7 @@
 			<p>
 				<em>For information about installing or updating software, see the
 					<a
-						href="http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
+						href="http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
 						Eclipse Platform Help</a>.
 					<br/> Some plugins require third party drivers from
 					<a href="http://net4j.sourceforge.net/update/">Net4j and CDO Plus</a>. </em>

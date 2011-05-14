@@ -54,21 +54,19 @@ public class Bugzilla_251752_Test extends AbstractCDOTest
     assertEquals(1, res.cdoRevision().getVersion());
   }
 
-  /**
-   * TODO Deadlocks in rare situations...
-   */
-  public void _testBug_251752_XA() throws Exception
+  public void testBug_251752_XA() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction1 = session.openTransaction();
     CDOXATransaction xaTransaction = CDOUtil.createXATransaction();
     xaTransaction.add(CDOUtil.getViewSet(transaction1.getResourceSet()));
-    CDOResource res = transaction1.createResource("/test1");
+
+    CDOResource res = transaction1.createResource(getResourcePath("/test1"));
     res.getContents().add(getModel1Factory().createCompany());
     transaction1.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
-    CDOResource res2 = transaction2.getResource("/test1");
+    CDOResource res2 = transaction2.getResource(getResourcePath("/test1"));
     res.getContents().add(getModel1Factory().createCompany());
     res2.getContents().add(getModel1Factory().createCompany());
     transaction2.commit();

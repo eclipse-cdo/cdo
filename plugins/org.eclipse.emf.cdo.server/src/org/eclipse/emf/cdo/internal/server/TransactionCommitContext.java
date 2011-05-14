@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -754,6 +755,13 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     CDOID id = delta.getID();
     InternalCDORevision revision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
+    if (revision == null)
+    {
+      // Can happen with non-auditing cache
+      throw new ConcurrentModificationException("Attempt by " + transaction + " to modify historical revision: "
+          + CDORevisionUtil.copyRevisionKey(delta));
+    }
+
     return isContainerLocked(revision, revisionManager, lockManager);
   }
 

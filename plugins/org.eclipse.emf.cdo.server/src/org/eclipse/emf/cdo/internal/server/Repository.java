@@ -160,6 +160,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private List<CDOCommitInfoHandler> commitInfoHandlers = new ArrayList<CDOCommitInfoHandler>();
 
+  private EPackage[] initialPackages;
+
   // Bugzilla 297940
   private TimeStampAuthority timeStampAuthority = new TimeStampAuthority(this);
 
@@ -1069,6 +1071,12 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
+  public void setInitialPackages(EPackage... initialPackages)
+  {
+    checkInactive();
+    this.initialPackages = initialPackages;
+  }
+
   public CDOReplicationInfo replicateRaw(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
       throws IOException
   {
@@ -1345,11 +1353,23 @@ public class Repository extends Container<Object> implements InternalRepository
 
     try
     {
-      InternalCDOPackageUnit ecoreUnit = initSystemPackage(EcorePackage.eINSTANCE);
-      InternalCDOPackageUnit eresourceUnit = initSystemPackage(EresourcePackage.eINSTANCE);
-      InternalCDOPackageUnit etypesUnit = initSystemPackage(EtypesPackage.eINSTANCE);
+      List<InternalCDOPackageUnit> units = new ArrayList<InternalCDOPackageUnit>();
+      units.add(initSystemPackage(EcorePackage.eINSTANCE));
+      units.add(initSystemPackage(EresourcePackage.eINSTANCE));
+      units.add(initSystemPackage(EtypesPackage.eINSTANCE));
 
-      InternalCDOPackageUnit[] systemUnits = { ecoreUnit, eresourceUnit, etypesUnit };
+      if (initialPackages != null)
+      {
+        for (EPackage initialPackage : initialPackages)
+        {
+          if (!packageRegistry.containsKey(initialPackage.getNsURI()))
+          {
+            units.add(initSystemPackage(initialPackage));
+          }
+        }
+      }
+
+      InternalCDOPackageUnit[] systemUnits = units.toArray(new InternalCDOPackageUnit[units.size()]);
       writer.writePackageUnits(systemUnits, new Monitor());
       writer.commit(new Monitor());
     }

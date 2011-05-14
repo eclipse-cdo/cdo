@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 
 import java.util.List;
@@ -107,6 +108,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
    * @since 2.0
    */
   public void removeHandler(Handler handler);
+
+  /**
+   * @since 4.0
+   */
+  public void setInitialPackages(EPackage... initialPackages);
 
   /**
    * A marker interface to indicate valid arguments to {@link IRepository#addHandler(Handler)} and

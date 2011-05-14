@@ -25,6 +25,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.IUserManager;
 
+import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -163,6 +165,12 @@ public class RepositoryConfigurator
       }
     }
 
+    EPackage[] initialPackages = getInitialPackages(repositoryConfig);
+    if (initialPackages.length != 0)
+    {
+      repository.setInitialPackages(initialPackages);
+    }
+
     return repository;
   }
 
@@ -202,14 +210,40 @@ public class RepositoryConfigurator
     return userManager;
   }
 
+  protected EPackage[] getInitialPackages(Element repositoryConfig)
+  {
+    List<EPackage> result = new ArrayList<EPackage>();
+
+    NodeList initialPackagesConfig = repositoryConfig.getElementsByTagName("initialPackage"); //$NON-NLS-1$
+    for (int i = 0; i < initialPackagesConfig.getLength(); i++)
+    {
+      Element initialPackageConfig = (Element)initialPackagesConfig.item(i);
+      String nsURI = initialPackageConfig.getAttribute("nsURI"); //$NON-NLS-1$
+      if (nsURI == null)
+      {
+        throw new IllegalStateException("nsURI missing for initialPackage element"); //$NON-NLS-1$
+      }
+
+      EPackage initialPackage = EPackage.Registry.INSTANCE.getEPackage(nsURI);
+      if (initialPackage == null)
+      {
+        throw new IllegalStateException("Initial package not found in global package registry: " + nsURI); //$NON-NLS-1$
+      }
+
+      result.add(initialPackage);
+    }
+
+    return result.toArray(new EPackage[result.size()]);
+  }
+
   protected Element getStoreConfig(Element repositoryConfig)
   {
     NodeList storeConfigs = repositoryConfig.getElementsByTagName("store"); //$NON-NLS-1$
-    // if (storeConfigs.getLength() != 1)
-    // {
-    //      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
-    //      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName); //$NON-NLS-1$
-    // }
+    if (storeConfigs.getLength() == 0)
+    {
+      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+      throw new IllegalStateException("A store must be configured for repository " + repositoryName); //$NON-NLS-1$
+    }
 
     return (Element)storeConfigs.item(0);
   }

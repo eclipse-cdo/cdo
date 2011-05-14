@@ -139,9 +139,12 @@ class TimeStampAuthority
 
   synchronized void failCommit(long timeStamp)
   {
-    if (!runningTransactions.remove(timeStamp))
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE) // Exclude problems before TransactionCommitContext.setTimeStamp()
     {
-      throw new IllegalArgumentException("Cannot fail transaction with unknown timestamp " + timeStamp);
+      if (!runningTransactions.remove(timeStamp))
+      {
+        throw new IllegalArgumentException("Cannot fail transaction with unknown timestamp " + timeStamp);
+      }
     }
 
     if (strictOrdering)

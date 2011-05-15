@@ -44,7 +44,7 @@ public class HibernateBugzilla_301104_Test extends AbstractCDOTest
       final CDOSession session = openSession();
       final CDOTransaction transaction = session.openTransaction();
 
-      final CDOResource resource = transaction.createResource("/test1");
+      final CDOResource resource = transaction.createResource(getResourcePath("/test1"));
       category1 = getModel1Factory().createCategory();
       category1.setName(uuid);
       resource.getContents().add(category1);
@@ -54,7 +54,7 @@ public class HibernateBugzilla_301104_Test extends AbstractCDOTest
     {
       final CDOSession session = openSession();
       final CDOTransaction transaction = session.openTransaction();
-      final CDOResource resource = transaction.getResource("/test1");
+      final CDOResource resource = transaction.getResource(getResourcePath("/test1"));
       final Category category2 = (Category)resource.getContents().get(0);
       assertNotSame(category1, category2);
       assertEquals(uuid, category2.getName());

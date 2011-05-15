@@ -13,8 +13,10 @@ package org.eclipse.emf.cdo.tests.hibernate;
 import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
 import org.eclipse.emf.cdo.tests.AuditTest;
+import org.eclipse.emf.cdo.tests.BackupTest;
 import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
 import org.eclipse.emf.cdo.tests.BranchingTest;
+import org.eclipse.emf.cdo.tests.BranchingWithCacheClearTest;
 import org.eclipse.emf.cdo.tests.CommitInfoTest;
 import org.eclipse.emf.cdo.tests.ComplexTest;
 import org.eclipse.emf.cdo.tests.ContainmentTest;
@@ -28,6 +30,8 @@ import org.eclipse.emf.cdo.tests.OCLQueryTest;
 import org.eclipse.emf.cdo.tests.PartialCommitTest;
 import org.eclipse.emf.cdo.tests.RepositoryTest;
 import org.eclipse.emf.cdo.tests.ResourceTest;
+import org.eclipse.emf.cdo.tests.RevisionManagerClientSideTest;
+import org.eclipse.emf.cdo.tests.RevisionManagerTest;
 import org.eclipse.emf.cdo.tests.SetFeatureTest;
 import org.eclipse.emf.cdo.tests.UnsetTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
@@ -73,6 +77,12 @@ public class AllTestsHibernate extends AllConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
+    // testClasses.clear();
+    // testClasses.add(Hibernate_ResourceTest.class);
+    // if (true)
+    // {
+    // return;
+    // }
     testClasses.add(XRefTest.class);
     testClasses.add(LobTest.class);
     testClasses.add(RepositoryTest.class);
@@ -122,10 +132,17 @@ public class AllTestsHibernate extends AllConfigs
     // OCL querying not supported
     testClasses.remove(OCLQueryTest.class);
 
+    // Backup not yet supported
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=339492
+    testClasses.remove(BackupTest.class);
+
     // Branching not supported
     testClasses.remove(BranchingTest.class);
     testClasses.remove(MergingTest.class);
     testClasses.remove(BranchingSameSessionTest.class);
+    testClasses.remove(BranchingWithCacheClearTest.class);
+    testClasses.remove(RevisionManagerTest.class);
+    testClasses.remove(RevisionManagerClientSideTest.class);
 
     // Commit info not supported
     testClasses.remove(CommitInfoTest.class);

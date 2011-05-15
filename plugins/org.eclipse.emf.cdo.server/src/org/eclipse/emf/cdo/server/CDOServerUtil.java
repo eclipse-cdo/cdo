@@ -209,7 +209,7 @@ public final class CDOServerUtil
   public static Element getRepositoryConfig(String repositoryName) throws ParserConfigurationException, SAXException,
       IOException
   {
-    File configFile = OMPlatform.INSTANCE.getConfigFile("cdo.server.xml"); //$NON-NLS-1$
+    File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml"); //$NON-NLS-1$
 
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     DocumentBuilder builder = factory.newDocumentBuilder();
@@ -229,7 +229,7 @@ public final class CDOServerUtil
       }
     }
 
-    throw new IllegalStateException("CDORepositoryInfo config not found: " + repositoryName); //$NON-NLS-1$
+    throw new IllegalStateException("Repository config not found: " + repositoryName); //$NON-NLS-1$
   }
 
   /**

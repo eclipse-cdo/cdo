@@ -21,21 +21,18 @@ import org.eclipse.emf.cdo.tests.CommitInfoTest;
 import org.eclipse.emf.cdo.tests.ComplexTest;
 import org.eclipse.emf.cdo.tests.ContainmentTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
-import org.eclipse.emf.cdo.tests.LobTest;
 import org.eclipse.emf.cdo.tests.LockingManagerTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.MultiValuedOfAttributeTest;
 import org.eclipse.emf.cdo.tests.OCLQueryTest;
 import org.eclipse.emf.cdo.tests.PartialCommitTest;
-import org.eclipse.emf.cdo.tests.RepositoryTest;
 import org.eclipse.emf.cdo.tests.ResourceTest;
 import org.eclipse.emf.cdo.tests.RevisionManagerClientSideTest;
 import org.eclipse.emf.cdo.tests.RevisionManagerTest;
 import org.eclipse.emf.cdo.tests.SetFeatureTest;
 import org.eclipse.emf.cdo.tests.UnsetTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
-import org.eclipse.emf.cdo.tests.XRefTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_272861_Test;
@@ -78,14 +75,11 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     // testClasses.clear();
-    // testClasses.add(Hibernate_ResourceTest.class);
+    // testClasses.add(XRefTest.class);
     // if (true)
     // {
     // return;
     // }
-    testClasses.add(XRefTest.class);
-    testClasses.add(LobTest.class);
-    testClasses.add(RepositoryTest.class);
 
     testClasses.add(Hibernate_Bugzilla_279982_Test.class);
     testClasses.add(Hibernate_ContainmentTest.class);

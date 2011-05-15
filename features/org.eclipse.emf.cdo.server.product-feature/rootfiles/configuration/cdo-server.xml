@@ -25,6 +25,10 @@
 	<userManager type="file" description="_database/repo1.users"/>
     -->
 	  
+	<!-- Example (see https://bugs.eclipse.org/bugs/show_bug.cgi?id=345835):
+	<userManager type="TestRepository" description="repo1"/>
+    -->
+	  
 	<!-- Example (see https://bugs.eclipse.org/bugs/show_bug.cgi?id=345431):
 	<initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
     -->

@@ -59,6 +59,10 @@ public class RepositoryConfigurator
 
   private IManagedContainer container;
 
+  private Map<String, IRepositoryFactory> repositoryFactories = new HashMap<String, IRepositoryFactory>();
+
+  private Map<String, IStoreFactory> storeFactories = new HashMap<String, IStoreFactory>();
+
   public RepositoryConfigurator()
   {
     this(null);
@@ -72,6 +76,16 @@ public class RepositoryConfigurator
   public IManagedContainer getContainer()
   {
     return container;
+  }
+
+  public Map<String, IRepositoryFactory> getRepositoryFactories()
+  {
+    return repositoryFactories;
+  }
+
+  public Map<String, IStoreFactory> getStoreFactories()
+  {
+    return storeFactories;
   }
 
   public IRepository[] configure(File configFile) throws ParserConfigurationException, SAXException, IOException,
@@ -109,8 +123,13 @@ public class RepositoryConfigurator
 
   protected IRepositoryFactory getRepositoryFactory(String type) throws CoreException
   {
-    IRepositoryFactory factory = (IRepositoryFactory)createExecutableExtension("repositoryFactories", //$NON-NLS-1$
-        "repositoryFactory", "repositoryType", type); //$NON-NLS-1$ //$NON-NLS-2$
+    IRepositoryFactory factory = repositoryFactories.get(type);
+    if (factory == null)
+    {
+      factory = createExecutableExtension("repositoryFactories", "repositoryFactory", //$NON-NLS-1$ //$NON-NLS-2$ 
+          "repositoryType", type); //$NON-NLS-1$
+    }
+
     if (factory == null)
     {
       throw new IllegalStateException("CDORepositoryInfo factory not found: " + type); //$NON-NLS-1$
@@ -250,8 +269,12 @@ public class RepositoryConfigurator
 
   protected IStoreFactory getStoreFactory(String type) throws CoreException
   {
-    IStoreFactory factory = (IStoreFactory)createExecutableExtension("storeFactories", "storeFactory", "storeType", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        type);
+    IStoreFactory factory = storeFactories.get(type);
+    if (factory == null)
+    {
+      factory = createExecutableExtension("storeFactories", "storeFactory", "storeType", type); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    }
+
     if (factory == null)
     {
       throw new IllegalStateException("Store factory not found: " + type); //$NON-NLS-1$
@@ -299,7 +322,7 @@ public class RepositoryConfigurator
     }
   }
 
-  private static Object createExecutableExtension(String extPointName, String elementName, String attributeName,
+  private static <T> T createExecutableExtension(String extPointName, String elementName, String attributeName,
       String type) throws CoreException
   {
     IExtensionRegistry registry = Platform.getExtensionRegistry();
@@ -311,7 +334,9 @@ public class RepositoryConfigurator
         String storeType = element.getAttribute(attributeName);
         if (ObjectUtil.equals(storeType, type))
         {
-          return element.createExecutableExtension("class"); //$NON-NLS-1$
+          @SuppressWarnings("unchecked")
+          T result = (T)element.createExecutableExtension("class"); //$NON-NLS-1$
+          return result;
         }
       }
     }

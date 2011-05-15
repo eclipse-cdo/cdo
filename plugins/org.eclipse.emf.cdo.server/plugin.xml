@@ -13,58 +13,50 @@
 
 <plugin>
 
-   <extension-point id="storeFactories" name="%extension-point.name" schema="schema/storeFactories.exsd"/>
-   <extension-point id="repositoryFactories" name="%extension-point.name.0" schema="schema/repositoryFactories.exsd"/>
-   <extension-point id="appExtensions" name="%extension-point.name.1" schema="schema/appExtensions.exsd"/>
+   	<extension-point id="storeFactories" name="%extension-point.name" schema="schema/storeFactories.exsd"/>
+   	<extension-point id="repositoryFactories" name="%extension-point.name.0" schema="schema/repositoryFactories.exsd"/>
+   	<extension-point id="appExtensions" name="%extension-point.name.1" schema="schema/appExtensions.exsd"/>
 
-	<extension
-		point="org.eclipse.net4j.util.factories">
+		<extension point="org.eclipse.net4j.util.factories">
       	<factory
-            type="challenge"
             productGroup="org.eclipse.net4j.Negotiators"
+            type="challenge"
             class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>
       	<factory
-            type="default"
             productGroup="org.eclipse.emf.cdo.server.browsers"
+            type="default"
             class="org.eclipse.emf.cdo.server.CDOServerBrowser$ContainerBased$Factory"/>
    	</extension>
 
-	<extension
-		point="org.eclipse.net4j.util.elementProcessors">
-		<elementProcessor class="org.eclipse.net4j.util.security.ChallengeNegotiatorConfigurer"/>
-    </extension>
+		<extension point="org.eclipse.net4j.util.elementProcessors">
+				<elementProcessor class="org.eclipse.net4j.util.security.ChallengeNegotiatorConfigurer"/>
+				<elementProcessor class="org.eclipse.emf.cdo.spi.server.RepositoryUserManager$RepositoryInjector"/>
+  	</extension>
 
-   	<extension
-   		point="org.eclipse.emf.cdo.server.repositoryFactories">
+  	<extension point="org.eclipse.emf.cdo.server.repositoryFactories">
       	<repositoryFactory
         	class="org.eclipse.emf.cdo.spi.server.RepositoryFactory"
-            repositoryType="default"/>
-	</extension>
+          repositoryType="default"/>
+		</extension>
 
-   	<extension
-   		point="org.eclipse.emf.cdo.server.storeFactories">
+  	<extension point="org.eclipse.emf.cdo.server.storeFactories">
       	<storeFactory
         	class="org.eclipse.emf.cdo.internal.server.mem.MEMStoreFactory"
-            storeType="mem"/>
+          storeType="mem"/>
    	</extension>
 
-    <extension
-		id="app"
-		point="org.eclipse.core.runtime.applications"
-		name="%extension.name">
-		<application cardinality="1" thread="any">
-			<run class="org.eclipse.emf.cdo.internal.server.bundle.CDOServerApplication"/>
- 		</application>
-	</extension>
+    <extension id="app" point="org.eclipse.core.runtime.applications" name="%extension.name">
+				<application cardinality="1" thread="any">
+					<run class="org.eclipse.emf.cdo.internal.server.bundle.CDOServerApplication"/>
+ 				</application>
+		</extension>
 
-   	<extension
-        id="product"
-        point="org.eclipse.core.runtime.products">
+   	<extension id="product" point="org.eclipse.core.runtime.products">
       	<product
         	name="%product.name"
-            description="%product.description"
-            application="org.eclipse.emf.cdo.server.app">
-         	<property name="appName" value="CDO Server"/>
+          description="%product.description"
+          application="org.eclipse.emf.cdo.server.app">
+        		<property name="appName" value="CDO Server"/>
       	</product>
    	</extension>
 

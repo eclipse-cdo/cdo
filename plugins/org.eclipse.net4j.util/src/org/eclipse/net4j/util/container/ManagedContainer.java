@@ -136,7 +136,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   public void addPostProcessor(IElementProcessor postProcessor)
   {
-    getPostProcessors().add(postProcessor);
+    addPostProcessor(postProcessor, false);
   }
 
   public void removePostProcessor(IElementProcessor postProcessor)

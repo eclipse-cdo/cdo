@@ -105,7 +105,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
   private CDOBranchPoint branchPoint;
 
-  private CDOURIHandler uriHandler = new CDOURIHandler(this);
+  private final CDOURIHandler uriHandler = new CDOURIHandler(this);
 
   private InternalCDOViewSet viewSet;
 
@@ -115,7 +115,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
   private CDOResourceImpl rootResource;
 
-  private FastList<CDOObjectHandler> objectHandlers = new FastList<CDOObjectHandler>()
+  private final FastList<CDOObjectHandler> objectHandlers = new FastList<CDOObjectHandler>()
   {
     @Override
     protected CDOObjectHandler[] newArray(int length)
@@ -668,9 +668,6 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     return getObject(id, true);
   }
 
-  /**
-   * Support recursivity and concurrency.
-   */
   public synchronized InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
     checkActive();

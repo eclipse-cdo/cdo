@@ -14,17 +14,19 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
-import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
  * @author Eike Stepper
  */
-public class AuthenticationIndication extends IndicationWithResponse
+public class AuthenticationIndication extends IndicationWithMonitoring
 {
   private byte[] randomToken;
 
@@ -45,14 +47,17 @@ public class AuthenticationIndication extends IndicationWithResponse
   }
 
   @Override
-  protected void indicating(ExtendedDataInputStream in) throws Exception
+  protected void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
     randomToken = in.readByteArray();
   }
 
   @Override
-  protected void responding(ExtendedDataOutputStream out) throws Exception
+  protected void responding(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
   {
+    monitor.begin();
+    Async async = monitor.forkAsync();
+
     try
     {
       CDOAuthenticator authenticator = getSession().getAuthenticator();
@@ -86,6 +91,11 @@ public class AuthenticationIndication extends IndicationWithResponse
     {
       out.writeBoolean(false);
       throw ex;
+    }
+    finally
+    {
+      async.stop();
+      monitor.done();
     }
   }
 }

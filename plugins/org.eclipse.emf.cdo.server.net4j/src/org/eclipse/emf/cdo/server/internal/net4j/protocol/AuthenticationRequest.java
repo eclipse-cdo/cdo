@@ -13,14 +13,15 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
-import org.eclipse.net4j.signal.RequestWithConfirmation;
+import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 /**
  * @author Eike Stepper
  */
-public class AuthenticationRequest extends RequestWithConfirmation<CDOAuthenticationResult>
+public class AuthenticationRequest extends RequestWithMonitoring<CDOAuthenticationResult>
 {
   private byte[] randomToken;
 
@@ -31,13 +32,13 @@ public class AuthenticationRequest extends RequestWithConfirmation<CDOAuthentica
   }
 
   @Override
-  protected void requesting(ExtendedDataOutputStream out) throws Exception
+  protected void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
   {
     out.writeByteArray(randomToken);
   }
 
   @Override
-  protected CDOAuthenticationResult confirming(ExtendedDataInputStream in) throws Exception
+  protected CDOAuthenticationResult confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
     boolean authenticated = in.readBoolean();
     if (!authenticated)

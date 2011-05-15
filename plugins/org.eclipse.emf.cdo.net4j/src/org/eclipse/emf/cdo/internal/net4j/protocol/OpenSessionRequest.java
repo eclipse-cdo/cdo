@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
@@ -34,7 +35,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
+public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessionResult>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionRequest.class);
 
@@ -56,9 +57,8 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
   }
 
   @Override
-  protected void requesting(CDODataOutput out) throws IOException
+  protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
-    super.requesting(out);
     if (TRACER.isEnabled())
     {
       TRACER.format("Writing repositoryName: {0}", repositoryName); //$NON-NLS-1$
@@ -82,7 +82,7 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
   }
 
   @Override
-  protected OpenSessionResult confirming(CDODataInput in) throws IOException
+  protected OpenSessionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
     int sessionID = in.readInt();
     if (TRACER.isEnabled())
@@ -185,8 +185,6 @@ public class OpenSessionRequest extends CDOTimeRequest<OpenSessionResult>
       result.getPackageUnits().add((InternalCDOPackageUnit)packageUnits[i]);
     }
 
-    super.confirming(in);
-    result.setRepositoryTimeResult(getRepositoryTimeResult());
     return result;
   }
 }

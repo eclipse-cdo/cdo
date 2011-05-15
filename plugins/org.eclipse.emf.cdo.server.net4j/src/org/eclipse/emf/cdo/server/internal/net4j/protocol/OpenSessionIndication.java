@@ -23,15 +23,16 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import java.io.IOException;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class OpenSessionIndication extends RepositoryTimeIndication
+public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, OpenSessionIndication.class);
 
@@ -63,9 +64,8 @@ public class OpenSessionIndication extends RepositoryTimeIndication
   }
 
   @Override
-  protected void indicating(CDODataInput in) throws IOException
+  protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
-    super.indicating(in);
     repositoryName = in.readString();
     if (TRACER.isEnabled())
     {
@@ -86,63 +86,72 @@ public class OpenSessionIndication extends RepositoryTimeIndication
   }
 
   @Override
-  protected void responding(CDODataOutput out) throws IOException
+  protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
-    CDOServerProtocol protocol = getProtocol();
-    IRepositoryProvider repositoryProvider = protocol.getRepositoryProvider();
-    repository = (InternalRepository)repositoryProvider.getRepository(repositoryName);
-    if (repository == null)
+    monitor.begin();
+    Async async = monitor.forkAsync();
+
+    try
     {
-      throw new RepositoryNotFoundException(repositoryName);
+      CDOServerProtocol protocol = getProtocol();
+      IRepositoryProvider repositoryProvider = protocol.getRepositoryProvider();
+      repository = (InternalRepository)repositoryProvider.getRepository(repositoryName);
+      if (repository == null)
+      {
+        throw new RepositoryNotFoundException(repositoryName);
+      }
+
+      InternalSessionManager sessionManager = repository.getSessionManager();
+      session = sessionManager.openSession(protocol);
+      session.setPassiveUpdateEnabled(passiveUpdateEnabled);
+      session.setPassiveUpdateMode(passiveUpdateMode);
+
+      protocol.setInfraStructure(session);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing sessionID: {0}", session.getSessionID()); //$NON-NLS-1$
+      }
+
+      out.writeInt(session.getSessionID());
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing userID: {0}", session.getUserID()); //$NON-NLS-1$
+      }
+
+      out.writeString(session.getUserID());
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing repositoryUUID: {0}", repository.getUUID()); //$NON-NLS-1$
+      }
+
+      out.writeString(repository.getUUID());
+      out.writeEnum(repository.getType());
+      out.writeEnum(repository.getState());
+      out.writeString(repository.getStoreType());
+
+      Set<CDOID.ObjectType> objectIDTypes = repository.getObjectIDTypes();
+      int types = objectIDTypes.size();
+      out.writeInt(types);
+      for (CDOID.ObjectType objectIDType : objectIDTypes)
+      {
+        out.writeEnum(objectIDType);
+      }
+
+      out.writeLong(repository.getCreationTime());
+      out.writeLong(repository.getLastCommitTimeStamp());
+      out.writeCDOID(repository.getRootResourceID());
+      out.writeBoolean(repository.isSupportingAudits());
+      out.writeBoolean(repository.isSupportingBranches());
+      out.writeBoolean(repository.isSupportingEcore());
+      out.writeBoolean(repository.isEnsuringReferentialIntegrity());
+
+      CDOPackageUnit[] packageUnits = repository.getPackageRegistry().getPackageUnits();
+      out.writeCDOPackageUnits(packageUnits);
     }
-
-    InternalSessionManager sessionManager = repository.getSessionManager();
-    session = sessionManager.openSession(protocol);
-    session.setPassiveUpdateEnabled(passiveUpdateEnabled);
-    session.setPassiveUpdateMode(passiveUpdateMode);
-
-    protocol.setInfraStructure(session);
-    if (TRACER.isEnabled())
+    finally
     {
-      TRACER.format("Writing sessionID: {0}", session.getSessionID()); //$NON-NLS-1$
+      async.stop();
+      monitor.done();
     }
-
-    out.writeInt(session.getSessionID());
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing userID: {0}", session.getUserID()); //$NON-NLS-1$
-    }
-
-    out.writeString(session.getUserID());
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing repositoryUUID: {0}", repository.getUUID()); //$NON-NLS-1$
-    }
-
-    out.writeString(repository.getUUID());
-    out.writeEnum(repository.getType());
-    out.writeEnum(repository.getState());
-    out.writeString(repository.getStoreType());
-
-    Set<CDOID.ObjectType> objectIDTypes = repository.getObjectIDTypes();
-    int types = objectIDTypes.size();
-    out.writeInt(types);
-    for (CDOID.ObjectType objectIDType : objectIDTypes)
-    {
-      out.writeEnum(objectIDType);
-    }
-
-    out.writeLong(repository.getCreationTime());
-    out.writeLong(repository.getLastCommitTimeStamp());
-    out.writeCDOID(repository.getRootResourceID());
-    out.writeBoolean(repository.isSupportingAudits());
-    out.writeBoolean(repository.isSupportingBranches());
-    out.writeBoolean(repository.isSupportingEcore());
-    out.writeBoolean(repository.isEnsuringReferentialIntegrity());
-
-    CDOPackageUnit[] packageUnits = repository.getPackageRegistry().getPackageUnits();
-    out.writeCDOPackageUnits(packageUnits);
-
-    super.responding(out);
   }
 }

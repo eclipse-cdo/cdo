@@ -43,17 +43,21 @@ public class WrappedHibernateList implements InternalCDOList
 {
   private List<Object> delegate;
 
+  private boolean frozen;
+
   public WrappedHibernateList()
   {
   }
 
   public void move(int newPosition, Object object)
   {
+    checkFrozen();
     move(newPosition, indexOf(object));
   }
 
   public Object move(int targetIndex, int sourceIndex)
   {
+    checkFrozen();
     int size = size();
     if (sourceIndex >= size)
     {
@@ -203,26 +207,31 @@ public class WrappedHibernateList implements InternalCDOList
 
   public void add(int index, Object element)
   {
+    checkFrozen();
     getDelegate().add(index, getCDOID(element));
   }
 
   public boolean add(Object o)
   {
+    checkFrozen();
     return getDelegate().add(getCDOID(o));
   }
 
   public boolean addAll(Collection<? extends Object> c)
   {
+    checkFrozen();
     return getDelegate().addAll(getCDOIDs(c));
   }
 
   public boolean addAll(int index, Collection<? extends Object> c)
   {
+    checkFrozen();
     return getDelegate().addAll(index, getCDOIDs(c));
   }
 
   public void clear()
   {
+    checkFrozen();
     getDelegate().clear();
   }
 
@@ -287,26 +296,29 @@ public class WrappedHibernateList implements InternalCDOList
 
   public ListIterator<Object> listIterator()
   {
-    return new CDOHibernateListIterator(getDelegate().listIterator());
+    return new CDOHibernateListIterator(this, getDelegate().listIterator());
   }
 
   public ListIterator<Object> listIterator(int index)
   {
-    return new CDOHibernateListIterator(getDelegate().listIterator(index));
+    return new CDOHibernateListIterator(this, getDelegate().listIterator(index));
   }
 
   public Object remove(int index)
   {
+    checkFrozen();
     return getDelegate().remove(index);
   }
 
   public boolean remove(Object o)
   {
+    checkFrozen();
     return getDelegate().remove(getCDOID(o));
   }
 
   public boolean removeAll(Collection<?> c)
   {
+    checkFrozen();
     return getDelegate().removeAll(getCDOIDs(c));
   }
 
@@ -317,6 +329,7 @@ public class WrappedHibernateList implements InternalCDOList
 
   public Object set(int index, Object element)
   {
+    checkFrozen();
     if (element instanceof CDOID)
     {
       return getDelegate().set(index, element);
@@ -401,13 +414,18 @@ public class WrappedHibernateList implements InternalCDOList
   {
     private final ListIterator<Object> delegate;
 
-    public CDOHibernateListIterator(ListIterator<Object> delegate)
+    private final WrappedHibernateList owner;
+
+    public CDOHibernateListIterator(WrappedHibernateList owner, ListIterator<Object> delegate)
     {
       this.delegate = delegate;
+      this.owner = owner;
     }
 
     public void add(Object o)
     {
+      owner.checkFrozen();
+
       delegate.add(HibernateUtil.getInstance().getCDOID(o));
     }
 
@@ -455,17 +473,28 @@ public class WrappedHibernateList implements InternalCDOList
 
     public void remove()
     {
+      owner.checkFrozen();
       delegate.remove();
     }
 
     public void set(Object o)
     {
+      owner.checkFrozen();
       delegate.set(HibernateUtil.getInstance().getCDOID(o));
     }
   }
 
   public void freeze()
   {
+    frozen = true;
+  }
+
+  private void checkFrozen()
+  {
+    if (frozen)
+    {
+      throw new IllegalStateException("Cannot modify a frozen list");
+    }
   }
 
   public void setWithoutFrozenCheck(int i, Object value)

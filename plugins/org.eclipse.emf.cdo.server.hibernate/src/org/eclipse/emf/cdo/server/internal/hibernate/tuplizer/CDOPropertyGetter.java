@@ -90,12 +90,12 @@ public class CDOPropertyGetter extends CDOPropertyHandler implements Getter
       }
       else
       {
-        return getEStructuralFeature().getDefaultValue();
+        return null;
       }
     }
 
     // hibernate sees eenums, CDO sees int
-    if (isEEnum)
+    if (isEEnum && value != null)
     {
       if (value instanceof Enumerator)
       {

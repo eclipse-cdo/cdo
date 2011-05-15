@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -79,52 +80,69 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
 
     // handle a special case: the byte array.
     // hibernate will pass a Byte[] while CDO wants a byte[] (object vs. primitive array)
-
+    final Object newValue;
     if (value instanceof Byte[] && convertByteArray)
     {
       final Byte[] objectArray = (Byte[])value;
-      final byte[] newValue = new byte[objectArray.length];
+      final byte[] newByteValue = new byte[objectArray.length];
       int i = 0;
       for (byte b : objectArray)
       {
-        newValue[i++] = b;
+        newByteValue[i++] = b;
       }
-
-      revision.setValue(getEStructuralFeature(), newValue);
+      newValue = newByteValue;
     }
     else
     {
       // hibernate sees enums, cdo sees int's
       if (value instanceof Enumerator)
       {
-        revision.setValue(getEStructuralFeature(), ((Enumerator)value).getValue());
+        newValue = ((Enumerator)value).getValue();
       }
       else if (value instanceof EEnumLiteral)
       {
-        revision.setValue(getEStructuralFeature(), ((EEnumLiteral)value).getValue());
+        newValue = ((EEnumLiteral)value).getValue();
       }
       else if (value == null)
       {
         final Object defaultValue = getEStructuralFeature().getDefaultValue();
         if (defaultValue == null)
         {
-          revision.setValue(getEStructuralFeature(), null);
+          newValue = null;
         }
         else if (getEStructuralFeature().isUnsettable())
         {
-          revision.setValue(getEStructuralFeature(), null);
+          newValue = null;
         }
         else
         {
           // there was a default value so was explicitly set to null
           // otherwise the default value would be in the db
-          revision.setValue(getEStructuralFeature(), CDORevisionData.NIL);
+          newValue = CDORevisionData.NIL;
         }
       }
       else
       {
-        revision.setValue(getEStructuralFeature(), value);
+        newValue = value;
       }
     }
+    final Object currentValue = revision.getValue(getEStructuralFeature());
+    final boolean notChanged = currentValue == newValue || currentValue == null && newValue == CDORevisionData.NIL
+        || isEenumDefaultValue(value) || currentValue != null && newValue != null && currentValue.equals(newValue);
+    final boolean hasChanged = !notChanged;
+    if (hasChanged)
+    {
+      revision.setValue(getEStructuralFeature(), newValue);
+    }
+  }
+
+  private boolean isEenumDefaultValue(Object value)
+  {
+    if (getEStructuralFeature().getEType() instanceof EEnum)
+    {
+      final Object defaultValue = getEStructuralFeature().getDefaultValue();
+      return defaultValue == value;
+    }
+    return false;
   }
 }

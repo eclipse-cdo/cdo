@@ -33,4 +33,6 @@ Import-Package: org.hibernate;version="[3.6.0,4.0.0)",
  org.hibernate.tuple.component;version="[3.6.0,4.0.0)",
  org.hibernate.tuple.entity;version="[3.6.0,4.0.0)",
  org.hibernate.type;version="[3.6.0,4.0.0)",
- org.hibernate.usertype;version="[3.6.0,4.0.0)"
+ org.hibernate.usertype;version="[3.6.0,4.0.0)",
+ org.hibernate.event;version="[3.6.0,4.0.0)",
+ org.hibernate.event.def;version="[3.6.0,4.0.0)"

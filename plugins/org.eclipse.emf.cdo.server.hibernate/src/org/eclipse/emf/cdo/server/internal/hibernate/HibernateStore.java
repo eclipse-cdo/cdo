@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateStore;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOInterceptor;
+import org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOMergeEventListener;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
+import org.hibernate.event.MergeEventListener;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.type.StandardBasicTypes;
@@ -104,6 +106,8 @@ public class HibernateStore extends Store implements IHibernateStore
 
   // is initialized on get
   private CDOBranchPoint mainBranchHead;
+
+  private String mappingXml = null;
 
   public HibernateStore(IHibernateMappingProvider mappingProvider)
   {
@@ -506,7 +510,8 @@ public class HibernateStore extends Store implements IHibernateStore
       if (mappingProvider != null)
       {
         mappingProvider.setHibernateStore(this);
-        hibernateConfiguration.addXML(mappingProvider.getMapping());
+        mappingXml = mappingProvider.getMapping();
+        hibernateConfiguration.addXML(mappingXml);
       }
 
       if (TRACER.isEnabled())
@@ -517,6 +522,9 @@ public class HibernateStore extends Store implements IHibernateStore
       in = OM.BUNDLE.getInputStream(RESOURCE_HBM_PATH);
       hibernateConfiguration.addInputStream(in);
       hibernateConfiguration.setInterceptor(new CDOInterceptor());
+
+      hibernateConfiguration.getEventListeners().setMergeEventListeners(
+          new MergeEventListener[] { new CDOMergeEventListener() });
 
       // make a local copy as it is adapted in the next if-statement
       // and we want to keep the original one untouched, if not

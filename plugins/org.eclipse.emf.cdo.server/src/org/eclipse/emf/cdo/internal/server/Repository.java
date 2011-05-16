@@ -606,6 +606,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
     if (chunkReader != null)
     {
+      InternalCDOList cdoList = list instanceof InternalCDOList ? (InternalCDOList)list : null;
+
       List<Chunk> chunks = chunkReader.executeRead();
       for (Chunk chunk : chunks)
       {
@@ -613,7 +615,14 @@ public class Repository extends Container<Object> implements InternalRepository
         for (int indexInChunk = 0; indexInChunk < chunk.size(); indexInChunk++)
         {
           Object id = chunk.get(indexInChunk);
-          list.set(startIndex + indexInChunk, id);
+          if (cdoList != null)
+          {
+            cdoList.setWithoutFrozenCheck(startIndex + indexInChunk, id);
+          }
+          else
+          {
+            list.set(startIndex + indexInChunk, id);
+          }
         }
       }
     }

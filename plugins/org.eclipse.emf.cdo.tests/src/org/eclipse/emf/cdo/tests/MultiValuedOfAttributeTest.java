@@ -147,6 +147,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     }
 
     clearCache(getRepository().getRevisionManager());
+
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();

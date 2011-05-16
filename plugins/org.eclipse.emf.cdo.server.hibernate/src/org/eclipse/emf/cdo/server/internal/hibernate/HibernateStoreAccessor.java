@@ -535,12 +535,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final CDORevision revision = HibernateUtil.getInstance().getCDORevision(targetCdoId);
       final EClass targetEClass = context.getTargetObjects().get(targetCdoId);
       final String targetEntityName = getStore().getEntityName(targetEClass);
-      final Map<EClass, List<EReference>> sourceReferences = getStore().getPackageHandler().getSourceCandidates(
-          targetEClass);
-      for (EClass sourceEClass : sourceReferences.keySet())
+      final Map<EClass, List<EReference>> sourceCandidates = context.getSourceCandidates();
+      for (EClass sourceEClass : sourceCandidates.keySet())
       {
         final String sourceEntityName = getStore().getEntityName(sourceEClass);
-        for (EReference eref : sourceReferences.get(sourceEClass))
+        for (EReference eref : sourceCandidates.get(sourceEClass))
         {
           final String hql;
           if (eref.isMany())

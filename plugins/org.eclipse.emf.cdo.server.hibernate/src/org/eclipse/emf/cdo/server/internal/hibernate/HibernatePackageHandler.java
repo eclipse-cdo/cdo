@@ -12,9 +12,7 @@
 package org.eclipse.emf.cdo.server.internal.hibernate;
 
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
-import org.eclipse.emf.cdo.internal.server.XRefsQueryHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.internal.hibernate.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -26,10 +24,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.hibernate.Criteria;
@@ -44,7 +39,6 @@ import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,8 +144,6 @@ public class HibernatePackageHandler extends Lifecycle
 
   private boolean doDropSchema;
 
-  private Map<EClass, Map<EClass, List<EReference>>> sourceCandidates = new HashMap<EClass, Map<EClass, List<EReference>>>();
-
   /**
    * TODO Necessary to pass/store/dump the properties from the store?
    */
@@ -209,7 +201,6 @@ public class HibernatePackageHandler extends Lifecycle
     {
       reset();
       hibernateStore.reInitialize();
-      sourceCandidates = null;
     }
   }
 
@@ -217,55 +208,6 @@ public class HibernatePackageHandler extends Lifecycle
   {
     readPackageUnits();
     return packageUnits;
-  }
-
-  public Map<EClass, List<EReference>> getSourceCandidates(EClass targetEClass)
-  {
-    if (sourceCandidates == null)
-    {
-      computeSourceCandidates();
-    }
-
-    final Map<EClass, List<EReference>> sourceCandidateList = sourceCandidates.get(targetEClass);
-    if (sourceCandidateList == null)
-    {
-      return new HashMap<EClass, List<EReference>>();
-    }
-
-    return sourceCandidateList;
-  }
-
-  private synchronized void computeSourceCandidates()
-  {
-    if (sourceCandidates != null)
-    {
-      return;
-    }
-
-    sourceCandidates = new HashMap<EClass, Map<EClass, List<EReference>>>();
-
-    for (EPackage ePackage : getEPackages())
-    {
-      for (EClassifier eClassifier : ePackage.getEClassifiers())
-      {
-        if (eClassifier instanceof EClass)
-        {
-          sourceCandidates.put((EClass)eClassifier, computeSourceCandidatesByEClass((EClass)eClassifier));
-        }
-      }
-    }
-  }
-
-  private Map<EClass, List<EReference>> computeSourceCandidatesByEClass(EClass targetType)
-  {
-    final Map<EClass, List<EReference>> localSourceCandidates = new HashMap<EClass, List<EReference>>();
-    final Collection<EClass> targetTypes = Collections.singletonList(targetType);
-    for (CDOPackageInfo packageInfo : hibernateStore.getRepository().getPackageRegistry(false).getPackageInfos())
-    {
-      XRefsQueryHandler.collectSourceCandidates(packageInfo, targetTypes, localSourceCandidates);
-    }
-
-    return localSourceCandidates;
   }
 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)

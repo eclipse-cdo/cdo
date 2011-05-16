@@ -22,15 +22,18 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.internal.server.LockManager;
 import org.eclipse.emf.cdo.server.IMEMStore;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -43,6 +46,7 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
+import org.eclipse.emf.cdo.spi.server.DurableLockArea;
 import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
@@ -50,6 +54,7 @@ import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -69,6 +74,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -80,7 +86,7 @@ import java.util.Set;
 /**
  * @author Simon McDuff
  */
-public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
+public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, DurableLocking
 {
   public static final String TYPE = "mem"; //$NON-NLS-1$
 
@@ -99,6 +105,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
   private List<CommitInfo> commitInfos = new ArrayList<CommitInfo>();
 
   private Map<CDOID, EClass> objectTypes = new HashMap<CDOID, EClass>();
+
+  private Map<String, LockArea> lockAreas = new HashMap<String, LockArea>();
 
   private Map<String, Object> lobs = new HashMap<String, Object>();
 
@@ -696,6 +704,101 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader
         }
       }
     }
+  }
+
+  public synchronized LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
+      Map<CDOID, LockGrade> locks)
+  {
+    String durableLockingID;
+
+    do
+    {
+      durableLockingID = DurableLockArea.createDurableLockingID();
+    } while (lockAreas.containsKey(durableLockingID));
+
+    LockArea area = new DurableLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
+    lockAreas.put(durableLockingID, area);
+    return area;
+  }
+
+  public synchronized LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
+  {
+    LockArea area = lockAreas.get(durableLockingID);
+    if (area == null)
+    {
+      throw new LockAreaNotFoundException(durableLockingID);
+    }
+
+    return area;
+  }
+
+  public synchronized void getLockAreas(String userIDPrefix, Handler handler)
+  {
+    for (LockArea area : lockAreas.values())
+    {
+      String userID = area.getUserID();
+      if (userID != null && userID.startsWith(userIDPrefix))
+      {
+        if (!handler.handleLockArea(area))
+        {
+          return;
+        }
+      }
+    }
+  }
+
+  public synchronized void deleteLockArea(String durableLockingID)
+  {
+    lockAreas.remove(durableLockingID);
+  }
+
+  public synchronized void lock(String durableLockingID, LockType type, Collection<? extends Object> objectsToLock)
+  {
+    LockArea area = getLockArea(durableLockingID);
+    Map<CDOID, LockGrade> locks = area.getLocks();
+
+    for (Object objectToLock : objectsToLock)
+    {
+      CDOID id = LockManager.getIDToLock(objectToLock);
+      LockGrade grade = locks.get(id);
+      if (grade != null)
+      {
+        grade = grade.getUpdated(type, true);
+      }
+      else
+      {
+        grade = LockGrade.get(type);
+      }
+
+      locks.put(id, grade);
+    }
+  }
+
+  public synchronized void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
+  {
+    LockArea area = getLockArea(durableLockingID);
+    Map<CDOID, LockGrade> locks = area.getLocks();
+
+    for (Object objectToUnlock : objectsToUnlock)
+    {
+      CDOID id = LockManager.getIDToLock(objectToUnlock);
+      LockGrade grade = locks.get(id);
+      if (grade != null)
+      {
+        grade = grade.getUpdated(type, false);
+        if (grade == LockGrade.NONE)
+        {
+          locks.remove(id);
+        }
+      }
+    }
+  }
+
+  public synchronized void unlock(String durableLockingID)
+  {
+    LockArea area = getLockArea(durableLockingID);
+    Map<CDOID, LockGrade> locks = area.getLocks();
+    locks.clear();
   }
 
   public synchronized void queryLobs(List<byte[]> ids)

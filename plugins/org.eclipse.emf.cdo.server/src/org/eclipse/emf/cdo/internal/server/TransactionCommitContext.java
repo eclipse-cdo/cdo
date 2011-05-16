@@ -99,6 +99,10 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private InternalRepository repository;
 
+  private InternalCDORevisionManager revisionManager;
+
+  private InternalLockManager lockManager;
+
   private TransactionPackageRegistry packageRegistry;
 
   private IStoreAccessor accessor;
@@ -148,6 +152,8 @@ public class TransactionCommitContext implements InternalCommitContext
     this.transaction = transaction;
 
     repository = transaction.getRepository();
+    revisionManager = repository.getRevisionManager();
+    lockManager = repository.getLockManager();
     ensuringReferentialIntegrity = repository.isEnsuringReferentialIntegrity();
 
     packageRegistry = new TransactionPackageRegistry(repository.getPackageRegistry(false));
@@ -630,8 +636,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
     try
     {
-      InternalLockManager lockManager = repository.getLockManager();
-      InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
       final boolean supportingBranches = repository.isSupportingBranches();
 
@@ -685,12 +689,12 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         InternalCDORevisionDelta delta = dirtyObjectDeltas[i];
         CDOID id = delta.getID();
-        Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
+        Object key = lockManager.getLockKey(id, transaction.getBranch());
         lockedObjects.add(new DeltaLockWrapper(key, delta));
 
         if (hasContainmentChanges(delta))
         {
-          if (isContainerLocked(delta, revisionManager, lockManager))
+          if (isContainerLocked(delta))
           {
             throw new ContainmentCycleDetectedException("Parent (" + key
                 + ") is already locked for containment changes");
@@ -710,7 +714,7 @@ public class TransactionCommitContext implements InternalCommitContext
       for (int i = 0; i < detachedObjects.length; i++)
       {
         CDOID id = detachedObjects[i];
-        Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
+        Object key = lockManager.getLockKey(id, transaction.getBranch());
         lockedObjects.add(key);
       }
 
@@ -750,8 +754,7 @@ public class TransactionCommitContext implements InternalCommitContext
    * 
    * @return <code>true</code> if any parent is locked, <code>false</code> otherwise.
    */
-  private boolean isContainerLocked(InternalCDORevisionDelta delta, InternalCDORevisionManager revisionManager,
-      InternalLockManager lockManager)
+  private boolean isContainerLocked(InternalCDORevisionDelta delta)
   {
     CDOID id = delta.getID();
     InternalCDORevision revision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
@@ -762,11 +765,10 @@ public class TransactionCommitContext implements InternalCommitContext
           + CDORevisionUtil.copyRevisionKey(delta));
     }
 
-    return isContainerLocked(revision, revisionManager, lockManager);
+    return isContainerLocked(revision);
   }
 
-  private boolean isContainerLocked(InternalCDORevision revision, InternalCDORevisionManager revisionManager,
-      InternalLockManager lockManager)
+  private boolean isContainerLocked(InternalCDORevision revision)
   {
     CDOID id = (CDOID)revision.getContainerID();
     if (CDOIDUtil.isNull(id))
@@ -774,10 +776,9 @@ public class TransactionCommitContext implements InternalCommitContext
       return false;
     }
 
-    final boolean supportingBranches = repository.isSupportingBranches();
-    Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
-
+    Object key = lockManager.getLockKey(id, transaction.getBranch());
     DeltaLockWrapper lockWrapper = new DeltaLockWrapper(key, null);
+
     if (lockManager.hasLockByOthers(LockType.WRITE, transaction, lockWrapper))
     {
       Object object = lockManager.getLockEntryObject(lockWrapper);
@@ -796,7 +797,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
     if (parent != null)
     {
-      return isContainerLocked(parent, revisionManager, lockManager);
+      return isContainerLocked(parent);
     }
 
     return false;
@@ -841,7 +842,7 @@ public class TransactionCommitContext implements InternalCommitContext
       }
 
       // Let this object be locked
-      Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, transaction.getBranch()) : id;
+      Object key = lockManager.getLockKey(id, transaction.getBranch());
       lockedObjects.add(key);
 
       // Let this object be checked for existance after it has been locked
@@ -871,7 +872,6 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     if (!lockedObjects.isEmpty())
     {
-      InternalLockManager lockManager = repository.getLockManager();
       lockManager.unlock(LockType.WRITE, transaction, lockedObjects);
       lockedObjects.clear();
     }
@@ -903,7 +903,6 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     CDOID id = delta.getID();
 
-    InternalCDORevisionManager revisionManager = repository.getRevisionManager();
     InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
     if (oldRevision == null)
     {
@@ -1043,7 +1042,6 @@ public class TransactionCommitContext implements InternalCommitContext
     try
     {
       monitor.begin(revisions.length);
-      InternalCDORevisionManager revisionManager = repository.getRevisionManager();
       for (CDORevision revision : revisions)
       {
         if (revision != null)
@@ -1087,7 +1085,6 @@ public class TransactionCommitContext implements InternalCommitContext
     int size = detachedObjects.length;
     detachedRevisions = new InternalCDORevision[size];
 
-    InternalCDORevisionManager revisionManager = repository.getRevisionManager();
     CDOID[] detachedObjects = getDetachedObjects();
 
     try

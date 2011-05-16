@@ -87,11 +87,12 @@ public class LockObjectsIndication extends CDOReadIndication
       }
     }
 
-    IView view = session.getView(viewID);
+    IView view = getSession().getView(viewID);
     InternalLockManager lockManager = getRepository().getLockManager();
+
     try
     {
-      lockManager.lock(lockType, view, objectsToBeLocked, timeout);
+      lockManager.lock(true, lockType, view, objectsToBeLocked, timeout);
     }
     catch (TimeoutRuntimeException ex)
     {
@@ -130,7 +131,7 @@ public class LockObjectsIndication extends CDOReadIndication
   {
     boolean lockSuccesful = !timedOut && !staleNoUpdate;
     out.writeBoolean(lockSuccesful);
-  
+
     if (lockSuccesful)
     {
       boolean clientMustWait = staleRevisions.size() > 0;

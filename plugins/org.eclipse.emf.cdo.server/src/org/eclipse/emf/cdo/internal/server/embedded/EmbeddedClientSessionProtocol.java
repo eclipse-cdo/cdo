@@ -218,7 +218,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
-  public void openView(int viewID, CDOBranchPoint branchPoint, boolean readOnly)
+  public void openView(int viewID, boolean readOnly, CDOBranchPoint branchPoint)
   {
     InternalSession session = serverSessionProtocol.getSession();
     if (readOnly)
@@ -229,6 +229,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     {
       session.openTransaction(viewID, branchPoint);
     }
+  }
+
+  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID)
+  {
+    throw new UnsupportedOperationException();
   }
 
   public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
@@ -331,6 +336,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   }
 
   public void unlockObjects(CDOView view, Collection<? extends CDOObject> objects, LockType lockType)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public String changeLockArea(CDOView view, boolean create)
   {
     throw new UnsupportedOperationException();
   }

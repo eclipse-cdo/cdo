@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
@@ -27,7 +28,8 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking;
+import org.eclipse.emf.cdo.server.IStoreAccessor.Raw;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -38,6 +40,7 @@ import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -53,12 +56,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Simon McDuff
  */
-public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAccessor.Raw
+public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, DurableLocking
 {
   private final IQueryHandler testQueryHandler = new IQueryHandler()
   {
@@ -393,6 +397,42 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements IStoreAcces
   public void rawCommit(double commitWork, OMMonitor monitor)
   {
     // Do nothing
+  }
+
+  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
+      Map<CDOID, LockGrade> locks)
+  {
+    return getStore().createLockArea(userID, branchPoint, readOnly, locks);
+  }
+
+  public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
+  {
+    return getStore().getLockArea(durableLockingID);
+  }
+
+  public void getLockAreas(String userIDPrefix, Handler handler)
+  {
+    getStore().getLockAreas(userIDPrefix, handler);
+  }
+
+  public void deleteLockArea(String durableLockingID)
+  {
+    getStore().deleteLockArea(durableLockingID);
+  }
+
+  public void lock(String durableLockingID, LockType type, Collection<? extends Object> objectsToLock)
+  {
+    getStore().lock(durableLockingID, type, objectsToLock);
+  }
+
+  public void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
+  {
+    getStore().unlock(durableLockingID, type, objectsToUnlock);
+  }
+
+  public void unlock(String durableLockingID)
+  {
+    getStore().unlock(durableLockingID);
   }
 
   public void queryLobs(List<byte[]> ids)

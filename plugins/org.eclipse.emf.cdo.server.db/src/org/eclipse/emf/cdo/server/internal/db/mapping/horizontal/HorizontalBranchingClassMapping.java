@@ -520,7 +520,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
     else
     {
-      builder.append(exactMatch ? " =? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
+      builder.append(exactMatch ? " =?" : " LIKE ?"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     builder.append(" AND ("); //$NON-NLS-1$

@@ -20,6 +20,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -51,6 +54,27 @@ public final class UIUtil
 
   private UIUtil()
   {
+  }
+
+  /**
+   * @since 3.1
+   */
+  public static void copyToClipboard(Display display, String text)
+  {
+    Clipboard clipboard = null;
+
+    try
+    {
+      clipboard = new Clipboard(display);
+      clipboard.setContents(new Object[] { text }, new Transfer[] { TextTransfer.getInstance() });
+    }
+    finally
+    {
+      if (clipboard != null)
+      {
+        clipboard.dispose();
+      }
+    }
   }
 
   public static void dispose(Font font)

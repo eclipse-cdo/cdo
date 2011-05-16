@@ -487,6 +487,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getTimeStamp();
   }
 
+  /**
+   * @since 4.0
+   */
+  public String getDurableLockingID()
+  {
+    return delegate.getDurableLockingID();
+  }
+
   public CDOTransactionHandler[] getTransactionHandlers()
   {
     return delegate.getTransactionHandlers();
@@ -633,10 +641,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     delegate.unlockObjects(objects, lockType);
   }
 
-  public static File createTempFile(CDOTransaction transaction) throws IOException
+  /**
+   * @since 4.0
+   */
+  public String enableDurableLocking(boolean enable)
   {
-    String prefix = "cdo_tx_" + transaction.getSession().getSessionID() + "_" + transaction.getViewID() + "__";
-    return File.createTempFile(prefix, null);
+    return delegate.enableDurableLocking(enable);
   }
 
   public boolean isReadOnly()
@@ -698,5 +708,11 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public Set<? extends EObject> getCommittables()
   {
     return delegate.getCommittables();
+  }
+
+  public static File createTempFile(CDOTransaction transaction) throws IOException
+  {
+    String prefix = "cdo_tx_" + transaction.getSession().getSessionID() + "_" + transaction.getViewID() + "__";
+    return File.createTempFile(prefix, null);
   }
 }

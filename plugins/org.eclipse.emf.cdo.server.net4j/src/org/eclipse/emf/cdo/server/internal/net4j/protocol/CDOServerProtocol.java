@@ -254,6 +254,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_OBJECT_LOCKED:
       return new ObjectLockedIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_LOCK_AREA:
+      return new LockAreaIndication(this);
+
     case CDOProtocolConstants.SIGNAL_GET_REMOTE_SESSIONS:
       return new GetRemoteSessionsIndication(this);
 

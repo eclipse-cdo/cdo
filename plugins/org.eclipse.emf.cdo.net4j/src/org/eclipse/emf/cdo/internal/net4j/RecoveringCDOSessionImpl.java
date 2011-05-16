@@ -278,7 +278,7 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
 
     public void run(CDOSessionProtocol sessionProtocol)
     {
-      sessionProtocol.openView(viewID, branchPoint, !transaction);
+      sessionProtocol.openView(viewID, !transaction, branchPoint);
     }
   }
 

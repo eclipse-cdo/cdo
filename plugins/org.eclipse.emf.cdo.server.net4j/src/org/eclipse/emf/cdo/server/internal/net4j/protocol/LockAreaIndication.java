@@ -10,39 +10,53 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class CloseViewIndication extends CDOReadIndication
+public class LockAreaIndication extends CDOReadIndication
 {
-  public CloseViewIndication(CDOServerProtocol protocol)
+  private String result;
+
+  public LockAreaIndication(CDOServerProtocol protocol)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_CLOSE_VIEW);
+    super(protocol, CDOProtocolConstants.SIGNAL_LOCK_AREA);
   }
 
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
+    InternalLockManager lockManager = getRepository().getLockManager();
+
     int viewID = in.readInt();
-    InternalSession session = getSession();
-    IView view = session.getView(viewID);
-    if (view != null)
+    InternalView view = getSession().getView(viewID);
+
+    boolean create = in.readBoolean();
+    if (create)
     {
-      view.close();
+      LockArea area = lockManager.createLockArea(view);
+
+      result = area.getDurableLockingID();
+      view.setDurableLockingID(result);
+    }
+    else
+    {
+      String durableLockingID = view.getDurableLockingID();
+      lockManager.deleteLockArea(durableLockingID);
     }
   }
 
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeBoolean(true);
+    out.writeString(result);
   }
 }

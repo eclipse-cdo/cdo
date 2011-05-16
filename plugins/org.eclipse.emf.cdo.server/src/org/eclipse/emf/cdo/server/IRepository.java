@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -60,6 +61,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   public CDORevisionManager getRevisionManager();
 
   public ISessionManager getSessionManager();
+
+  /**
+   * @since 4.0
+   */
+  public IDurableLockingManager getLockManager();
 
   /**
    * @since 2.0

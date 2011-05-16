@@ -335,6 +335,11 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
   public void unlockObjects();
 
   /**
+   * @since 4.0
+   */
+  public String enableDurableLocking(boolean enable);
+
+  /**
    * @since 3.0
    */
   public void addObjectHandler(CDOObjectHandler handler);

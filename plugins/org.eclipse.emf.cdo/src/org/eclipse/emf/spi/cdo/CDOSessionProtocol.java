@@ -103,9 +103,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       int fromIndex, int toIndex);
 
   /**
-   * @since 3.0
+   * @since 4.0
    */
-  public void openView(int viewID, CDOBranchPoint branchPoint, boolean readOnly);
+  public void openView(int viewID, boolean readOnly, CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.0
+   */
+  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID);
 
   /**
    * @since 4.0
@@ -139,6 +144,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @since 3.0
    */
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers);
+
+  /**
+   * @since 4.0
+   */
+  public String changeLockArea(CDOView view, boolean create);
 
   /**
    * @since 4.0

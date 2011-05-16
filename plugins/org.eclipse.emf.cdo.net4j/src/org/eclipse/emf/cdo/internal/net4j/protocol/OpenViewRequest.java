@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundException;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -20,33 +21,69 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class OpenViewRequest extends CDOClientRequest<Boolean>
+public class OpenViewRequest extends CDOClientRequest<CDOBranchPoint>
 {
   private int viewID;
 
-  private CDOBranchPoint branchPoint;
-
   private boolean readOnly;
 
-  public OpenViewRequest(CDOClientProtocol protocol, int viewID, CDOBranchPoint branchPoint, boolean readOnly)
+  private CDOBranchPoint branchPoint;
+
+  private String durableLockingID;
+
+  public OpenViewRequest(CDOClientProtocol protocol, int viewID, boolean readOnly, CDOBranchPoint branchPoint)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OPEN_VIEW);
     this.viewID = viewID;
-    this.branchPoint = branchPoint;
     this.readOnly = readOnly;
+    this.branchPoint = branchPoint;
+  }
+
+  public OpenViewRequest(CDOClientProtocol protocol, int viewID, boolean readOnly, String durableLockingID)
+  {
+    super(protocol, CDOProtocolConstants.SIGNAL_OPEN_VIEW);
+    this.viewID = viewID;
+    this.readOnly = readOnly;
+    this.durableLockingID = durableLockingID;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeBoolean(readOnly);
     out.writeInt(viewID);
-    out.writeCDOBranchPoint(branchPoint);
+    out.writeBoolean(readOnly);
+
+    if (branchPoint != null)
+    {
+      out.writeBoolean(true);
+      out.writeCDOBranchPoint(branchPoint);
+    }
+    else
+    {
+      out.writeBoolean(false);
+      out.writeString(durableLockingID);
+    }
   }
 
   @Override
-  protected Boolean confirming(CDODataInput in) throws IOException
+  protected CDOBranchPoint confirming(CDODataInput in) throws IOException
   {
-    return in.readBoolean();
+    if (in.readBoolean())
+    {
+      return in.readCDOBranchPoint();
+    }
+
+    if (durableLockingID != null)
+    {
+      String message = in.readString();
+      if (message != null)
+      {
+        throw new IllegalStateException(message);
+      }
+
+      throw new LockAreaNotFoundException(durableLockingID);
+    }
+
+    return null;
   }
 }

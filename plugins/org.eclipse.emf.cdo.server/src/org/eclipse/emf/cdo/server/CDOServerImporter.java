@@ -282,7 +282,7 @@ public abstract class CDOServerImporter
 
     public void flush()
     {
-      accessor.rawCommit(1, monitor);
+      accessor.rawCommit(1.0, monitor);
     }
 
     private void collectPackageInfos()

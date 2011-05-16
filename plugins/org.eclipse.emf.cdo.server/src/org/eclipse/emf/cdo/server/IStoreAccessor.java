@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -40,6 +41,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -682,5 +684,18 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @see #rawStore(CDOBranch, long, long, String, String, OMMonitor)
      */
     public void rawCommit(double commitWork, OMMonitor monitor);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.0
+   */
+  public interface DurableLocking extends IDurableLockingManager
+  {
+    public void lock(String durableLockingID, LockType type, Collection<? extends Object> objectsToLock);
+
+    public void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock);
+
+    public void unlock(String durableLockingID);
   }
 }

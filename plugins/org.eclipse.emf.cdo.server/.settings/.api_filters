@@ -9,6 +9,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/LockManager.java" type="org.eclipse.emf.cdo.internal.server.LockManager$DurableView">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="IView"/>
+                <message_argument value="CDOCommonView"/>
+                <message_argument value="DurableView"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/ServerCDOView.java" type="org.eclipse.emf.cdo.internal.server.ServerCDOView$ServerCDOSession">
         <filter id="574619656">
             <message_arguments>

@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
@@ -42,14 +44,17 @@ public class UnlockObjectsIndication extends CDOReadIndication
     LockType lockType = in.readCDOLockType();
     int size = in.readInt();
 
+    InternalRepository repository = getRepository();
+    InternalLockManager lockManager = repository.getLockManager();
     IView view = getSession().getView(viewID);
+
     if (size == CDOProtocolConstants.RELEASE_ALL_LOCKS)
     {
-      getRepository().getLockManager().unlock(view);
+      lockManager.unlock(true, view);
     }
     else
     {
-      boolean supportingBranches = getRepository().isSupportingBranches();
+      boolean supportingBranches = repository.isSupportingBranches();
       CDOBranch branch = view.getBranch();
 
       List<Object> keys = new ArrayList<Object>(size);
@@ -60,7 +65,7 @@ public class UnlockObjectsIndication extends CDOReadIndication
         keys.add(key);
       }
 
-      getRepository().getLockManager().unlock(lockType, view, keys);
+      lockManager.unlock(true, lockType, view, keys);
     }
   }
 

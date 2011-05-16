@@ -114,101 +114,106 @@ public interface CDOProtocolConstants
 
   public static final short SIGNAL_OBJECT_LOCKED = 26;
 
-  public static final short SIGNAL_GET_REMOTE_SESSIONS = 27;
+  /**
+   * @since 4.0
+   */
+  public static final short SIGNAL_LOCK_AREA = 27;
+
+  public static final short SIGNAL_GET_REMOTE_SESSIONS = 28;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REMOTE_MESSAGE = 28;
+  public static final short SIGNAL_REMOTE_MESSAGE = 29;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REMOTE_MESSAGE_NOTIFICATION = 29;
+  public static final short SIGNAL_REMOTE_MESSAGE_NOTIFICATION = 30;
 
-  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 30;
+  public static final short SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS = 31;
 
-  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 31;
-
-  /**
-   * @since 3.0
-   */
-  public static final short SIGNAL_CREATE_BRANCH = 32;
+  public static final short SIGNAL_REMOTE_SESSION_NOTIFICATION = 32;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_BRANCH = 33;
+  public static final short SIGNAL_CREATE_BRANCH = 33;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_SUB_BRANCHES = 34;
+  public static final short SIGNAL_LOAD_BRANCH = 34;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_BRANCHES = 35;
+  public static final short SIGNAL_LOAD_SUB_BRANCHES = 35;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REPOSITORY_TYPE_NOTIFICATION = 36;
+  public static final short SIGNAL_LOAD_BRANCHES = 36;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REPOSITORY_STATE_NOTIFICATION = 37;
+  public static final short SIGNAL_REPOSITORY_TYPE_NOTIFICATION = 37;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_BRANCH_NOTIFICATION = 38;
+  public static final short SIGNAL_REPOSITORY_STATE_NOTIFICATION = 38;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_COMMIT_INFOS = 39;
+  public static final short SIGNAL_BRANCH_NOTIFICATION = 39;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_COMMIT_DATA = 40;
+  public static final short SIGNAL_LOAD_COMMIT_INFOS = 40;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REPLICATE_REPOSITORY = 41;
+  public static final short SIGNAL_LOAD_COMMIT_DATA = 41;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_REPLICATE_REPOSITORY_RAW = 42;
+  public static final short SIGNAL_REPLICATE_REPOSITORY = 42;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_CHANGE_SETS = 43;
+  public static final short SIGNAL_REPLICATE_REPOSITORY_RAW = 43;
 
   /**
    * @since 3.0
    */
-  public static final short SIGNAL_LOAD_MERGE_DATA = 44;
+  public static final short SIGNAL_LOAD_CHANGE_SETS = 44;
+
+  /**
+   * @since 3.0
+   */
+  public static final short SIGNAL_LOAD_MERGE_DATA = 45;
 
   /**
    * @since 4.0
    */
-  public static final short SIGNAL_QUERY_LOBS = 45;
+  public static final short SIGNAL_QUERY_LOBS = 46;
 
   /**
    * @since 4.0
    */
-  public static final short SIGNAL_LOAD_LOB = 46;
+  public static final short SIGNAL_LOAD_LOB = 47;
 
   /**
    * @since 4.0
    */
-  public static final short SIGNAL_HANDLE_REVISIONS = 47;
+  public static final short SIGNAL_HANDLE_REVISIONS = 48;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh

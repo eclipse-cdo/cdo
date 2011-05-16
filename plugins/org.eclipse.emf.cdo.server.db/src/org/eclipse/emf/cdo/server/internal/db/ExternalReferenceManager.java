@@ -107,12 +107,13 @@ public class ExternalReferenceManager extends Lifecycle
 
   public String unmapURI(IDBStoreAccessor accessor, long mappedId)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
     ResultSet resultSet = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlSelectByLongID, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlSelectByLongID, ReuseProbability.HIGH);
       stmt.setLong(1, mappedId);
       resultSet = stmt.executeQuery();
 
@@ -131,7 +132,7 @@ public class ExternalReferenceManager extends Lifecycle
     finally
     {
       DBUtil.close(resultSet);
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
@@ -232,11 +233,13 @@ public class ExternalReferenceManager extends Lifecycle
   private long insertNew(IDBStoreAccessor accessor, String uri, long commitTime)
   {
     long newMappedID = lastMappedID.decrementAndGet();
+
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlInsert, ReuseProbability.MEDIUM);
+      stmt = statementCache.getPreparedStatement(sqlInsert, ReuseProbability.MEDIUM);
       stmt.setLong(1, newMappedID);
       stmt.setString(2, uri);
       stmt.setLong(3, commitTime);
@@ -250,7 +253,7 @@ public class ExternalReferenceManager extends Lifecycle
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 

@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewDurabilityChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -103,6 +104,8 @@ public class CDOViewImpl extends AbstractCDOView
 
   private InternalCDOSession session;
 
+  private String durableLockingID;
+
   private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
 
   private ChangeSubscriptionManager changeSubscriptionManager = new ChangeSubscriptionManager();
@@ -126,6 +129,13 @@ public class CDOViewImpl extends AbstractCDOView
   public CDOViewImpl(CDOBranch branch, long timeStamp)
   {
     super(branch.getPoint(timeStamp), CDOUtil.isLegacyModeDefault());
+    options = createOptions();
+  }
+
+  public CDOViewImpl(String durableLockingID)
+  {
+    super(CDOUtil.isLegacyModeDefault());
+    this.durableLockingID = durableLockingID;
     options = createOptions();
   }
 
@@ -320,6 +330,64 @@ public class CDOViewImpl extends AbstractCDOView
     checkActive();
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
     return sessionProtocol.isObjectLocked(this, object, lockType, byOthers);
+  }
+
+  public synchronized String getDurableLockingID()
+  {
+    return durableLockingID;
+  }
+
+  public String enableDurableLocking(boolean enable)
+  {
+    final String oldID = durableLockingID;
+
+    try
+    {
+      synchronized (this)
+      {
+        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+        if (enable)
+        {
+          if (durableLockingID == null)
+          {
+            durableLockingID = sessionProtocol.changeLockArea(this, true);
+          }
+
+          return durableLockingID;
+        }
+
+        if (durableLockingID != null)
+        {
+          sessionProtocol.changeLockArea(this, false);
+          durableLockingID = null;
+        }
+
+        return oldID;
+      }
+    }
+    finally
+    {
+      if (!ObjectUtil.equals(oldID, durableLockingID))
+      {
+        fireEvent(new CDOViewDurabilityChangedEvent()
+        {
+          public CDOView getSource()
+          {
+            return CDOViewImpl.this;
+          }
+
+          public String getOldDurableLockingID()
+          {
+            return oldID;
+          }
+
+          public String getNewDurableLockingID()
+          {
+            return durableLockingID;
+          }
+        });
+      }
+    }
   }
 
   /**
@@ -701,7 +769,15 @@ public class CDOViewImpl extends AbstractCDOView
   protected void doActivate() throws Exception
   {
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    sessionProtocol.openView(viewID, this, isReadOnly());
+    if (durableLockingID != null)
+    {
+      CDOBranchPoint branchPoint = sessionProtocol.openView(viewID, isReadOnly(), durableLockingID);
+      basicSetBranchPoint(branchPoint);
+    }
+    else
+    {
+      sessionProtocol.openView(viewID, isReadOnly(), this);
+    }
   }
 
   /**

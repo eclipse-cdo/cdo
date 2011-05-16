@@ -222,6 +222,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     super(branch, UNSPECIFIED_DATE);
   }
 
+  public CDOTransactionImpl(String durableLockingID)
+  {
+    super(durableLockingID);
+  }
+
   /**
    * @since 2.0
    */

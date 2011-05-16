@@ -25,11 +25,14 @@ import org.eclipse.emf.cdo.internal.ui.actions.CloseViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CommitTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateBranchAction;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateResourceNodeAction;
+import org.eclipse.emf.cdo.internal.ui.actions.DisableViewDurabilityAction;
+import org.eclipse.emf.cdo.internal.ui.actions.EnableViewDurabilityAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ExportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.LoadResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenDurableViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenResourceEditorAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewAction;
@@ -312,6 +315,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     manager.add(new OpenTransactionAction(page, session));
     manager.add(new OpenViewAction(page, session));
     manager.add(new OpenAuditAction(page, session));
+    manager.add(new OpenDurableViewAction(page, session));
     manager.add(new Separator());
     manager.add(new ManagePackagesAction(page, session));
 
@@ -410,6 +414,15 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     }
 
     manager.add(new ReloadViewAction(page, view));
+    if (view.getDurableLockingID() == null)
+    {
+      manager.add(new EnableViewDurabilityAction(page, view));
+    }
+    else
+    {
+      manager.add(new DisableViewDurabilityAction(page, view));
+    }
+
     manager.add(new Separator());
     manager.add(new CloseViewAction(page, view));
   }

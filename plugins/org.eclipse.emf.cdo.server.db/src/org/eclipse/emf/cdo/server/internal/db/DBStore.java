@@ -99,6 +99,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   private IMetaDataManager metaDataManager = new MetaDataManager(this);
 
+  private DurableLockingManager durableLockingManager = new DurableLockingManager(this);
+
   private IMappingStrategy mappingStrategy;
 
   private IDBSchema dbSchema;
@@ -208,6 +210,11 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   public IMetaDataManager getMetaDataManager()
   {
     return metaDataManager;
+  }
+
+  public DurableLockingManager getDurableLockingManager()
+  {
+    return durableLockingManager;
   }
 
   public Timer getConnectionKeepAliveTimer()
@@ -523,6 +530,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
     LifecycleUtil.activate(idHandler);
     LifecycleUtil.activate(metaDataManager);
+    LifecycleUtil.activate(durableLockingManager);
     LifecycleUtil.activate(mappingStrategy);
 
     setRevisionTemporality(mappingStrategy.hasAuditSupport() ? RevisionTemporality.AUDITING : RevisionTemporality.NONE);
@@ -543,6 +551,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   protected void doDeactivate() throws Exception
   {
     LifecycleUtil.deactivate(mappingStrategy);
+    LifecycleUtil.deactivate(durableLockingManager);
     LifecycleUtil.deactivate(metaDataManager);
     LifecycleUtil.deactivate(idHandler);
 

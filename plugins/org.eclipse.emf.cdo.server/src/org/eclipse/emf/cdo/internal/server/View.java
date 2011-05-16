@@ -41,6 +41,8 @@ public class View extends Lifecycle implements InternalView
 
   private CDOBranchPoint branchPoint;
 
+  private String durableLockingID;
+
   private InternalRepository repository;
 
   private Set<CDOID> changeSubscriptionIDs = new HashSet<CDOID>();
@@ -80,6 +82,11 @@ public class View extends Lifecycle implements InternalView
   public boolean isReadOnly()
   {
     return true;
+  }
+
+  public String getDurableLockingID()
+  {
+    return durableLockingID;
   }
 
   /**
@@ -142,6 +149,11 @@ public class View extends Lifecycle implements InternalView
     {
       repository.validateTimeStamp(timeStamp);
     }
+  }
+
+  public void setDurableLockingID(String durableLockingID)
+  {
+    this.durableLockingID = durableLockingID;
   }
 
   /**

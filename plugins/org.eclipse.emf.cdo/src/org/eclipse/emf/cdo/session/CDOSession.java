@@ -166,6 +166,28 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
   public CDOTransaction openTransaction();
 
   /**
+   * Opens and returns a {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set} by resuming a
+   * transaction that has previously been made durable by calling {@link CDOTransaction#enableDurableLocking(boolean)
+   * CDOTransaction.enableDurableLocking(true)}.
+   * <p>
+   * Same as calling <code>openTransaction(durableLockingID, new ResourceSetImpl())</code>.
+   * 
+   * @see #openTransaction(String,ResourceSet)
+   * @since 4.0
+   */
+  public CDOTransaction openTransaction(String durableLockingID);
+
+  /**
+   * Opens and returns a {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set} by
+   * resuming a transaction that has previously been made durable by calling
+   * {@link CDOTransaction#enableDurableLocking(boolean) CDOTransaction.enableDurableLocking(true)}.
+   * 
+   * @see #openTransaction(String)
+   * @since 4.0
+   */
+  public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet);
+
+  /**
    * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
    * 
    * @see #openView()
@@ -235,6 +257,28 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
    * @see #openView(CDOBranch, long, ResourceSet)
    */
   public CDOView openView();
+
+  /**
+   * Opens and returns a {@link CDOView view} on a new EMF {@link ResourceSet resource set} by resuming a view that has
+   * previously been made durable by calling {@link CDOView#enableDurableLocking(boolean)
+   * CDOView.enableDurableLocking(true)}.
+   * <p>
+   * Same as calling <code>openView(durableLockingID, new ResourceSetImpl())</code>.
+   * 
+   * @see #openView(String,ResourceSet)
+   * @since 4.0
+   */
+  public CDOView openView(String durableLockingID);
+
+  /**
+   * Opens and returns a {@link CDOView view} on the given EMF {@link ResourceSet resource set} by resuming a view that
+   * has previously been made durable by calling {@link CDOView#enableDurableLocking(boolean)
+   * CDOView.enableDurableLocking(true)}.
+   * 
+   * @see #openView(String)
+   * @since 4.0
+   */
+  public CDOView openView(String durableLockingID, ResourceSet resourceSet);
 
   /**
    * Returns an array of all open {@link CDOView views} and {@link CDOTransaction transactions} of this session.

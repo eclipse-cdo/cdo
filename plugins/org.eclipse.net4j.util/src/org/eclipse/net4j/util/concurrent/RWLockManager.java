@@ -11,6 +11,7 @@
  */
 package org.eclipse.net4j.util.concurrent;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -104,7 +105,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
   private Map<OBJECT, LockEntry<OBJECT, CONTEXT>> lockEntries = new HashMap<OBJECT, LockEntry<OBJECT, CONTEXT>>();
 
-  private Object lockChanged = new Object();
+  private LockChanged lockChanged = new LockChanged();
 
   /**
    * @since 3.0
@@ -200,6 +201,26 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @since 3.1
    */
+  protected void handleLockEntries(CONTEXT context, LockEntryHandler<OBJECT, CONTEXT> handler)
+  {
+    synchronized (lockChanged)
+    {
+      for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntries.values())
+      {
+        if (context == null || lockEntry.hasContext(context))
+        {
+          if (!handler.handleLockEntry(lockEntry))
+          {
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * @since 3.1
+   */
   protected LockEntry<OBJECT, CONTEXT> getLockEntry(OBJECT objectToLock)
   {
     synchronized (lockChanged)
@@ -224,6 +245,20 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     }
 
     throw new IllegalArgumentException("Invalid lock type: " + type);
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected void changeContext(CONTEXT oldContext, CONTEXT newContext)
+  {
+    synchronized (lockChanged)
+    {
+      for (LockEntry<OBJECT, CONTEXT> lockEntry : lockEntries.values())
+      {
+        lockEntry.changeContext(oldContext, newContext);
+      }
+    }
   }
 
   /**
@@ -393,6 +428,25 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
     public LockEntry<OBJECT, CONTEXT> writeUnlock(CONTEXT context);
 
     public LockEntry<OBJECT, CONTEXT> clearLock(CONTEXT context);
+
+    /**
+     * @since 3.1
+     */
+    public void changeContext(CONTEXT oldContext, CONTEXT newContext);
+
+    /**
+     * @since 3.1
+     */
+    public boolean hasContext(CONTEXT context);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.1
+   */
+  protected interface LockEntryHandler<OBJECT, CONTEXT>
+  {
+    public boolean handleLockEntry(LockEntry<OBJECT, CONTEXT> lockEntry);
   }
 
   /**
@@ -481,6 +535,19 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       return contexts.isEmpty() ? null : this;
     }
 
+    public void changeContext(CONTEXT oldContext, CONTEXT newContext)
+    {
+      if (contexts.remove(oldContext))
+      {
+        contexts.add(newContext);
+      }
+    }
+
+    public boolean hasContext(CONTEXT context)
+    {
+      return contexts.contains(context);
+    }
+
     @Override
     public String toString()
     {
@@ -521,7 +588,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
     public boolean isWriteLock(CONTEXT context)
     {
-      return context == this.context;
+      return ObjectUtil.equals(this.context, context);
     }
 
     public boolean isReadLockByOthers(CONTEXT context)
@@ -536,12 +603,12 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
     public boolean canObtainWriteLock(CONTEXT context)
     {
-      return context == this.context;
+      return ObjectUtil.equals(this.context, context);
     }
 
     public boolean canObtainReadLock(CONTEXT context)
     {
-      return context == this.context;
+      return ObjectUtil.equals(this.context, context);
     }
 
     public LockEntry<OBJECT, CONTEXT> readLock(CONTEXT context)
@@ -587,7 +654,20 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
         }
       }
 
-      return this.context == context ? readLock : this;
+      return ObjectUtil.equals(this.context, context) ? readLock : this;
+    }
+
+    public void changeContext(CONTEXT oldContext, CONTEXT newContext)
+    {
+      if (ObjectUtil.equals(context, oldContext))
+      {
+        context = newContext;
+      }
+    }
+
+    public boolean hasContext(CONTEXT context)
+    {
+      return ObjectUtil.equals(this.context, context);
     }
 
     @Override
@@ -679,10 +759,27 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
       throw new UnsupportedOperationException();
     }
 
+    public void changeContext(CONTEXT oldContext, CONTEXT newContext)
+    {
+      // Do nothing
+    }
+
+    public boolean hasContext(CONTEXT context)
+    {
+      return false;
+    }
+
     @Override
     public String toString()
     {
       return MessageFormat.format("NoLockEntry[object={0}]", object);
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LockChanged
+  {
   }
 }

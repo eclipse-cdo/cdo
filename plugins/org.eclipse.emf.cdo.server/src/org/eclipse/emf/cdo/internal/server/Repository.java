@@ -1549,7 +1549,6 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.activate(commitInfoManager);
     LifecycleUtil.activate(commitManager);
     LifecycleUtil.activate(queryHandlerProvider);
-    LifecycleUtil.activate(lockManager);
 
     if (!skipInitialization)
     {
@@ -1574,6 +1573,8 @@ public class Repository extends Container<Object> implements InternalRepository
       // throw new IllegalStateException("Root resource ID is null");
       // }
     }
+
+    LifecycleUtil.activate(lockManager); // Needs an initialized main branch / branch manager
   }
 
   @Override

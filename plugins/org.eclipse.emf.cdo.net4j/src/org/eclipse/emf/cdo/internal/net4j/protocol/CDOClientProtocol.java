@@ -174,9 +174,14 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     return send(new RefreshSessionRequest(this, lastUpdateTime, viewedRevisions, initialChunkSize, enablePassiveUpdates));
   }
 
-  public void openView(int viewID, CDOBranchPoint branchPoint, boolean readOnly)
+  public void openView(int viewID, boolean readOnly, CDOBranchPoint branchPoint)
   {
-    send(new OpenViewRequest(this, viewID, branchPoint, readOnly));
+    send(new OpenViewRequest(this, viewID, readOnly, branchPoint));
+  }
+
+  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID)
+  {
+    return send(new OpenViewRequest(this, viewID, readOnly, durableLockingID));
   }
 
   public void switchTarget(int viewID, CDOBranchPoint branchPoint, List<InternalCDOObject> invalidObjects,
@@ -259,6 +264,11 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers)
   {
     return send(new ObjectLockedRequest(this, view, object, lockType, byOthers));
+  }
+
+  public String changeLockArea(CDOView view, boolean create)
+  {
+    return send(new LockAreaRequest(this, view, create));
   }
 
   public List<byte[]> queryLobs(Set<byte[]> ids)

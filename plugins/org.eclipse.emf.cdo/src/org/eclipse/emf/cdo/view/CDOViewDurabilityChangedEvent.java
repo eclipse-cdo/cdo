@@ -8,32 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common;
-
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
-
-import org.eclipse.net4j.util.collection.Closeable;
+package org.eclipse.emf.cdo.view;
 
 /**
+ * Notifies about a change of the branch point of the view.
+ * 
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, Closeable
+public interface CDOViewDurabilityChangedEvent extends CDOViewEvent
 {
-  public int getViewID();
+  public String getOldDurableLockingID();
 
-  /**
-   * @since 3.0
-   */
-  public boolean isReadOnly();
-
-  public CDOCommonSession getSession();
-
-  /**
-   * @since 4.0
-   */
-  public String getDurableLockingID();
+  public String getNewDurableLockingID();
 }

@@ -178,6 +178,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
+  public String getDurableLockingID()
+  {
+    return null;
+  }
+
+  public String enableDurableLocking(boolean enable)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public CDOFeatureAnalyzer getFeatureAnalyzer()
   {
     return CDOFeatureAnalyzer.NOOP;
@@ -578,6 +588,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    public CDOView openView(String durableLockingID)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOView openView(String durableLockingID, ResourceSet resourceSet)
+    {
+      throw new UnsupportedOperationException();
+    }
+
     public CDOView openView()
     {
       throw new UnsupportedOperationException();
@@ -624,6 +644,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     public CDOView openView(CDOBranchPoint target)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOTransaction openTransaction(String durableLockingID)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet)
     {
       throw new UnsupportedOperationException();
     }

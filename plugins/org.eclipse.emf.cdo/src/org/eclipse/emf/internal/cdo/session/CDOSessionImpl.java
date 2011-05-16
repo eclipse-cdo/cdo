@@ -101,7 +101,6 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 
@@ -142,8 +141,6 @@ import java.util.Set;
  */
 public abstract class CDOSessionImpl extends Container<CDOView> implements InternalCDOSession
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
-
   private ExceptionHandler exceptionHandler;
 
   private InternalCDOPackageRegistry packageRegistry;
@@ -576,12 +573,33 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return openTransaction(getBranchManager().getMainBranch());
   }
 
+  public CDOTransaction openTransaction(String durableLockingID)
+  {
+    return openTransaction(durableLockingID, createResourceSet());
+  }
+
+  public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet)
+  {
+    checkActive();
+    InternalCDOTransaction transaction = createTransaction(durableLockingID);
+    initView(transaction, resourceSet);
+    return transaction;
+  }
+
   /**
    * @since 2.0
    */
   protected InternalCDOTransaction createTransaction(CDOBranch branch)
   {
     return new CDOTransactionImpl(branch);
+  }
+
+  /**
+   * @since 4.0
+   */
+  protected InternalCDOTransaction createTransaction(String durableLockingID)
+  {
+    return new CDOTransactionImpl(durableLockingID);
   }
 
   public CDOView openView(CDOBranchPoint target, ResourceSet resourceSet)
@@ -630,12 +648,33 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     return openView(CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
+  public CDOView openView(String durableLockingID)
+  {
+    return openView(durableLockingID, createResourceSet());
+  }
+
+  public CDOView openView(String durableLockingID, ResourceSet resourceSet)
+  {
+    checkActive();
+    InternalCDOView view = createView(durableLockingID);
+    initView(view, resourceSet);
+    return view;
+  }
+
   /**
    * @since 2.0
    */
   protected InternalCDOView createView(CDOBranch branch, long timeStamp)
   {
     return new CDOViewImpl(branch, timeStamp);
+  }
+
+  /**
+   * @since 4.0
+   */
+  protected InternalCDOView createView(String durableLockingID)
+  {
+    return new CDOViewImpl(durableLockingID);
   }
 
   /**
@@ -1359,13 +1398,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
    */
   protected void initView(InternalCDOView view, ResourceSet resourceSet)
   {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Initializing new {0} view", //$NON-NLS-1$
-          view.isReadOnly() ? (view.getTimeStamp() != CDOView.UNSPECIFIED_DATE ? "historical" : "read-only") //$NON-NLS-1$ //$NON-NLS-2$
-              : "transactional"); //$NON-NLS-1$
-    }
-
     InternalCDOViewSet viewSet = SessionUtil.prepareResourceSet(resourceSet);
     synchronized (views)
     {

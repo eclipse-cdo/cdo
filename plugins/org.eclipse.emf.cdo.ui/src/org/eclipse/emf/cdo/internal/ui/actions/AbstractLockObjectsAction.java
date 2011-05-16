@@ -77,15 +77,16 @@ public abstract class AbstractLockObjectsAction extends EditingDomainAction
       InternalCDOObject[] array = objects.toArray(new InternalCDOObject[objects.size()]);
       for (InternalCDOObject object : lockObjects)
       {
+        CDOLock cdoLock = getLock(object);
         if (lock)
         {
-          getLock(object).unlock();
+          cdoLock.unlock();
         }
         else
         {
-          if (!getLock(object).tryLock())
+          if (!cdoLock.tryLock())
           {
-            getDisplay().asyncExec(new Runnable()
+            getDisplay().syncExec(new Runnable()
             {
               public void run()
               {

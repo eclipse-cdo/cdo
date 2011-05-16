@@ -149,15 +149,31 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public void openView(int viewID, CDOBranchPoint branchPoint, boolean readOnly)
+  public void openView(int viewID, boolean readOnly, CDOBranchPoint branchPoint)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        delegate.openView(viewID, branchPoint, readOnly);
+        delegate.openView(viewID, readOnly, branchPoint);
         return;
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.openView(viewID, readOnly, durableLockingID);
       }
       catch (Exception ex)
       {
@@ -376,6 +392,22 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.isObjectLocked(view, object, lockType, byOthers);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public String changeLockArea(CDOView view, boolean create)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.changeLockArea(view, create);
       }
       catch (Exception ex)
       {

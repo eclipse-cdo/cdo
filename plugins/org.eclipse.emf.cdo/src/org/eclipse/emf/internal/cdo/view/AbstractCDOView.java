@@ -132,7 +132,12 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
   public AbstractCDOView(CDOBranchPoint branchPoint, boolean legacyModeEnabled)
   {
-    this.branchPoint = branchPoint;
+    this(legacyModeEnabled);
+    basicSetBranchPoint(branchPoint);
+  }
+
+  public AbstractCDOView(boolean legacyModeEnabled)
+  {
     this.legacyModeEnabled = legacyModeEnabled;
   }
 
@@ -1304,33 +1309,36 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     builder.append(" "); //$NON-NLS-1$
     builder.append(getViewID());
 
-    boolean brackets = false;
-    if (getSession().getRepositoryInfo().isSupportingBranches())
+    if (branchPoint != null)
     {
-      brackets = true;
-      builder.append(" ["); //$NON-NLS-1$
-      builder.append(branchPoint.getBranch().getPathName()); // Do not synchronize on this view!
-    }
+      boolean brackets = false;
+      if (getSession().getRepositoryInfo().isSupportingBranches())
+      {
+        brackets = true;
+        builder.append(" ["); //$NON-NLS-1$
+        builder.append(branchPoint.getBranch().getPathName()); // Do not synchronize on this view!
+      }
 
-    long timeStamp = branchPoint.getTimeStamp(); // Do not synchronize on this view!
-    if (timeStamp != CDOView.UNSPECIFIED_DATE)
-    {
+      long timeStamp = branchPoint.getTimeStamp(); // Do not synchronize on this view!
+      if (timeStamp != CDOView.UNSPECIFIED_DATE)
+      {
+        if (brackets)
+        {
+          builder.append(", "); //$NON-NLS-1$
+        }
+        else
+        {
+          builder.append(" ["); //$NON-NLS-1$
+          brackets = true;
+        }
+
+        builder.append(CDOCommonUtil.formatTimeStamp(timeStamp));
+      }
+
       if (brackets)
       {
-        builder.append(", "); //$NON-NLS-1$
+        builder.append("]"); //$NON-NLS-1$
       }
-      else
-      {
-        builder.append(" ["); //$NON-NLS-1$
-        brackets = true;
-      }
-
-      builder.append(CDOCommonUtil.formatTimeStamp(timeStamp));
-    }
-
-    if (brackets)
-    {
-      builder.append("]"); //$NON-NLS-1$
     }
 
     return builder.toString();

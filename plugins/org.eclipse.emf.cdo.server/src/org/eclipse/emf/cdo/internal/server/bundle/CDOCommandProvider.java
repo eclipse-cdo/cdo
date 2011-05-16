@@ -10,10 +10,15 @@
  */
 package org.eclipse.emf.cdo.internal.server.bundle;
 
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -45,6 +50,8 @@ import java.io.OutputStream;
  */
 public class CDOCommandProvider implements CommandProvider
 {
+  private static final String INDENT = "  ";
+
   public CDOCommandProvider(BundleContext bundleContext)
   {
     bundleContext.registerService(CommandProvider.class.getName(), this, null);
@@ -62,6 +69,8 @@ public class CDOCommandProvider implements CommandProvider
     buffer.append("\tcdo sessions - dump the sessions of a repository\n");
     buffer.append("\tcdo packages - dump the packages of a repository\n");
     buffer.append("\tcdo branches - dump the branches of a repository\n");
+    buffer.append("\tcdo locks - dump the durable locking areas of a repository\n");
+    buffer.append("\tcdo deletelocks - delete a durable locking area of a repository\n");
     return buffer.toString();
   }
 
@@ -115,6 +124,18 @@ public class CDOCommandProvider implements CommandProvider
       if ("branches".equals(cmd))
       {
         branches(interpreter);
+        return null;
+      }
+
+      if ("locks".equals(cmd))
+      {
+        locks(interpreter);
+        return null;
+      }
+
+      if ("deletelocks".equals(cmd))
+      {
+        deleteLocks(interpreter);
         return null;
       }
 
@@ -226,7 +247,7 @@ public class CDOCommandProvider implements CommandProvider
       interpreter.println(session);
       for (InternalView view : session.getViews())
       {
-        interpreter.println("  " + view);
+        interpreter.println(INDENT + view);
       }
     }
   }
@@ -240,7 +261,7 @@ public class CDOCommandProvider implements CommandProvider
       interpreter.println(packageUnit);
       for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())
       {
-        interpreter.println("  " + packageInfo);
+        interpreter.println(INDENT + packageInfo);
       }
     }
   }
@@ -251,10 +272,54 @@ public class CDOCommandProvider implements CommandProvider
     branches(interpreter, repository.getBranchManager().getMainBranch(), "");
   }
 
+  protected void locks(final CommandInterpreter interpreter)
+  {
+    final InternalRepository repository = getRepository(interpreter,
+        "Syntax: cdo locks <repository-name> [<username-prefix>]");
+    final String userIDPrefix = nextArgument(interpreter, null);
+
+    new WithAccessor()
+    {
+      @Override
+      protected void doExecute(IStoreAccessor accessor)
+      {
+        repository.getLockManager().getLockAreas(userIDPrefix, new IDurableLockingManager.LockArea.Handler()
+        {
+          public boolean handleLockArea(LockArea area)
+          {
+            interpreter.println(area.getDurableLockingID());
+            interpreter.println(INDENT + "userID = " + area.getUserID());
+            interpreter.println(INDENT + "branch = " + area.getBranch());
+            interpreter.println(INDENT + "timeStamp = " + CDOCommonUtil.formatTimeStamp(area.getTimeStamp()));
+            interpreter.println(INDENT + "readOnly = " + area.isReadOnly());
+            interpreter.println(INDENT + "locks = " + area.getLocks());
+            return true;
+          }
+        });
+      }
+    }.execute(repository);
+  }
+
+  protected void deleteLocks(CommandInterpreter interpreter)
+  {
+    String syntax = "Syntax: cdo deletelocks <repository-name> <area-id>";
+    final InternalRepository repository = getRepository(interpreter, syntax);
+    final String durableLockingID = nextArgument(interpreter, syntax);
+
+    new WithAccessor()
+    {
+      @Override
+      protected void doExecute(IStoreAccessor accessor)
+      {
+        repository.getLockManager().deleteLockArea(durableLockingID);
+      }
+    }.execute(repository);
+  }
+
   private void branches(CommandInterpreter interpreter, InternalCDOBranch branch, String prefix)
   {
     interpreter.println(prefix + branch);
-    prefix += "  ";
+    prefix += INDENT;
     for (InternalCDOBranch child : branch.getBranches())
     {
       branches(interpreter, child, prefix);
@@ -264,7 +329,7 @@ public class CDOCommandProvider implements CommandProvider
   private String nextArgument(CommandInterpreter interpreter, String syntax)
   {
     String argument = interpreter.nextArgument();
-    if (argument == null)
+    if (argument == null && syntax != null)
     {
       throw new CommandException(syntax);
     }
@@ -300,6 +365,29 @@ public class CDOCommandProvider implements CommandProvider
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected static abstract class WithAccessor
+  {
+    public void execute(InternalRepository repository)
+    {
+      IStoreAccessor accessor = repository.getStore().getReader(null);
+      StoreThreadLocal.setAccessor(accessor);
+
+      try
+      {
+        doExecute(accessor);
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+    }
+
+    protected abstract void doExecute(IStoreAccessor accessor);
   }
 
   /**

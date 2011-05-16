@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
@@ -33,15 +34,21 @@ public class Bugzilla_342130_Test extends AbstractCDOTest
     Category cat = factory.createCategory();
 
     // List length must be 1 to reproduce problem
-    cat.getProducts().add(factory.createProduct1());
+    Product1 product1 = factory.createProduct1();
+    product1.setName("product1");
+    cat.getProducts().add(product1);
     resource.getContents().add(cat);
     tx.commit();
 
     // Add 0 (makes list length 2)
-    cat.getProducts().add(0, factory.createProduct1());
+    Product1 product2 = factory.createProduct1();
+    product2.setName("product2");
+    cat.getProducts().add(0, product2);
 
     // Set 1 (leaves list length 2)
-    cat.getProducts().set(1, factory.createProduct1());
+    Product1 product3 = factory.createProduct1();
+    product3.setName("product3");
+    cat.getProducts().set(1, product3);
 
     // Remove 0 (makes list length 1)
     cat.getProducts().remove(0);

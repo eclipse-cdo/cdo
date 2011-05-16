@@ -132,6 +132,9 @@ public class RepositoryTest extends AbstractCDOTest
   public void testLastCommitTime() throws Exception
   {
     skipMEM();
+    // hibernate will recreate the systeminfo table at repository
+    // restart (this is due to test settings)
+    skipHibernate();
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

@@ -607,6 +607,11 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     skipConfig("MongoDBStore");
   }
 
+  protected void skipHibernate()
+  {
+    skipConfig("Hibernate");
+  }
+
   protected void skipExternalReferences()
   {
     skipTest(getRepository().getStore() instanceof NoExternalReferences);

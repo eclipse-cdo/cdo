@@ -56,7 +56,9 @@ public class Bugzilla_335772_Test extends AbstractCDOTest
 
     customer = factory.createCustomer();
     product1 = factory.createProduct1();
+    product1.setName("product1");
     product2 = factory.createProduct1();
+    product2.setName("product2");
     order1 = factory.createSalesOrder();
     order1.setId(1);
     order2 = factory.createSalesOrder();

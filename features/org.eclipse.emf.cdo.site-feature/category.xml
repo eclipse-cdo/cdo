@@ -54,6 +54,9 @@
    <feature id="org.eclipse.emf.cdo.dawn.examples" version="0.0.0">
       <category name="org.eclipse.emf.cdo.dawn"/>
    </feature>
+   <feature id="org.eclipse.emf.cdo.dawn.tests" version="0.0.0">
+      <category name="org.eclipse.emf.cdo.dawn"/>
+   </feature>
    <feature id="org.eclipse.emf.cdo.dawn.sdk" version="0.0.0">
       <category name="org.eclipse.emf.cdo.dawn"/>
    </feature>

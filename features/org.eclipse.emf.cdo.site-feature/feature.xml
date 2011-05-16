@@ -104,6 +104,10 @@
          id="org.eclipse.emf.cdo.dawn.codegen.gmf"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.emf.cdo.dawn.tests"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.emf.cdo.examples.server"
          download-size="0"
@@ -112,3 +116,4 @@
          unpack="false"/>
 
 </feature>
+

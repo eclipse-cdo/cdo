@@ -117,6 +117,9 @@
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
+			<!-- ################################################################################################## -->
+			<!-- ## Do not forget to adjust discovery URL in /org.eclipse.emf.cdo.dawn.tests-feature/feature.xml ## -->
+			<!-- ################################################################################################## -->
 			<rm:uri format="{0}/technology/swtbot/helios/dev-build/update-site">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>

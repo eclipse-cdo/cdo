@@ -18,6 +18,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/Repository.java" type="org.eclipse.emf.cdo.internal.server.Repository">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="InternalRepository"/>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="Repository"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/ServerCDOView.java" type="org.eclipse.emf.cdo.internal.server.ServerCDOView$ServerCDOSession">
         <filter id="574619656">
             <message_arguments>
@@ -99,6 +108,24 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/mem/MEMStore.java" type="org.eclipse.emf.cdo.internal.server.mem.MEMStore">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="DurableLocking"/>
+                <message_argument value="IDurableLockingManager"/>
+                <message_argument value="MEMStore"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/mem/MEMStoreAccessor.java" type="org.eclipse.emf.cdo.internal.server.mem.MEMStoreAccessor">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="DurableLocking"/>
+                <message_argument value="IDurableLockingManager"/>
+                <message_argument value="MEMStoreAccessor"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/syncing/OfflineClone.java" type="org.eclipse.emf.cdo.internal.server.syncing.OfflineClone$CommitContextData">
         <filter id="574619656">
             <message_arguments>
@@ -120,6 +147,14 @@
             <message_arguments>
                 <message_argument value="CDOCommonSession"/>
                 <message_argument value="ISession"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IStoreAccessor.java" type="org.eclipse.emf.cdo.server.IStoreAccessor$DurableLocking">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="IDurableLockingManager"/>
+                <message_argument value="DurableLocking"/>
             </message_arguments>
         </filter>
     </resource>
@@ -155,11 +190,27 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/server/DurableLockArea.java" type="org.eclipse.emf.cdo.spi.server.DurableLockArea">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="LockArea"/>
+                <message_argument value="DurableLockArea"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/server/ISessionProtocol.java" type="org.eclipse.emf.cdo.spi.server.ISessionProtocol">
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOProtocol"/>
                 <message_argument value="ISessionProtocol"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/server/InternalLockManager.java" type="org.eclipse.emf.cdo.spi.server.InternalLockManager">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IDurableLockingManager"/>
+                <message_argument value="InternalLockManager"/>
             </message_arguments>
         </filter>
     </resource>

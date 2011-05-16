@@ -42,6 +42,7 @@ import org.eclipse.spi.net4j.Acceptor;
  * COORDS="64,516,444,596" HREF="ConnectorState.html#NEGOTIATING"> </MAP>
  * 
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IAcceptor extends IContainer<IConnector>, Closeable
 {

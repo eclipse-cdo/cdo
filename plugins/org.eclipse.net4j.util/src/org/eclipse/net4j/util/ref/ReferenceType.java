@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.ref;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  */
 public enum ReferenceType
 {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.server.net4j" version="2">
+    <resource path="src/org/eclipse/emf/cdo/server/internal/net4j/protocol/CDOServerProtocol.java" type="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocol">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="ISessionProtocol"/>
+                <message_argument value="CDOServerProtocol"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

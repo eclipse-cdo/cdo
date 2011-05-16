@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 
 /**
  * @author Eike Stepper
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class FactoryDescriptor extends Factory
 {

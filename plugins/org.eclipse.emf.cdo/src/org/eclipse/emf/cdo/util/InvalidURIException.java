@@ -21,6 +21,8 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  * @since 2.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noinstantiate This class is not intended to be instantiated by clients.
  */
 public class InvalidURIException extends CDOException
 {

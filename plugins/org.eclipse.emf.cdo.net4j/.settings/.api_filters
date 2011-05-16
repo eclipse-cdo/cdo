@@ -1,10 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.net4j" version="2">
+    <resource path="src/org/eclipse/emf/cdo/internal/net4j/CDONet4jSessionConfigurationImpl.java" type="org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl$RepositoryInfo">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDORepositoryInfo"/>
+                <message_argument value="RepositoryInfo"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/net4j/CDOSessionRecoveryEventImpl.java" type="org.eclipse.emf.cdo.internal.net4j.CDOSessionRecoveryEventImpl">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="CDOSessionRecoveryEvent"/>
+                <message_argument value="CDOSessionEvent"/>
+                <message_argument value="CDOSessionRecoveryEventImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/CDOClientProtocol.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOSessionProtocol"/>
+                <message_argument value="CDOClientProtocol"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/OpenSessionRequest.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.OpenSessionRequest">
         <filter id="572522506">
             <message_arguments>
                 <message_argument value="OpenSessionResult"/>
                 <message_argument value="OpenSessionRequest"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/net4j/CDOSession.java" type="org.eclipse.emf.cdo.net4j.CDOSession">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOSession"/>
+                <message_argument value="CDOSession"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.java" type="org.eclipse.emf.cdo.net4j.CDOSessionConfiguration">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOSessionConfiguration"/>
+                <message_argument value="CDOSessionConfiguration"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/net4j/CDOSessionRecoveryEvent.java" type="org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOSessionEvent"/>
+                <message_argument value="CDOSessionRecoveryEvent"/>
             </message_arguments>
         </filter>
     </resource>

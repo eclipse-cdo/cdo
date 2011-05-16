@@ -58,53 +58,8 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 2.0
  */
-public final class CDOModelUtil
+public final class CDOModelUtil implements CDOModelConstants
 {
-  /**
-   * @since 2.0
-   */
-  public static final String CORE_PACKAGE_URI = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
-
-  /**
-   * @since 2.0
-   */
-  public static final String ROOT_CLASS_NAME = "EObject"; //$NON-NLS-1$
-
-  /**
-   * @since 2.0
-   */
-  public static final String RESOURCE_PACKAGE_URI = "http://www.eclipse.org/emf/CDO/Eresource/4.0.0"; //$NON-NLS-1$
-
-  /**
-   * @since 2.0
-   */
-  public static final String RESOURCE_NODE_CLASS_NAME = "CDOResourceNode"; //$NON-NLS-1$
-
-  /**
-   * @since 2.0
-   */
-  public static final String RESOURCE_FOLDER_CLASS_NAME = "CDOResourceFolder"; //$NON-NLS-1$
-
-  /**
-   * @since 2.0
-   */
-  public static final String RESOURCE_CLASS_NAME = "CDOResource"; //$NON-NLS-1$
-
-  /**
-   * @since 4.0
-   */
-  public static final String TYPES_PACKAGE_URI = "http://www.eclipse.org/emf/CDO/Etypes/4.0.0"; //$NON-NLS-1$
-
-  /**
-   * @since 4.0
-   */
-  public static final String BLOB_CLASS_NAME = "Blob"; //$NON-NLS-1$
-
-  /**
-   * @since 4.0
-   */
-  public static final String CLOB_CLASS_NAME = "Clob"; //$NON-NLS-1$
-
   private static CDOType[] coreTypes;
 
   static
@@ -156,7 +111,7 @@ public final class CDOModelUtil
    */
   public static boolean isCorePackage(EPackage ePackage)
   {
-    return CORE_PACKAGE_URI.equals(ePackage.getNsURI());
+    return CDOModelConstants.CORE_PACKAGE_URI.equals(ePackage.getNsURI());
   }
 
   /**
@@ -164,7 +119,7 @@ public final class CDOModelUtil
    */
   public static boolean isRoot(EClass eClass)
   {
-    return isCorePackage(eClass.getEPackage()) && ROOT_CLASS_NAME.equals(eClass.getName());
+    return isCorePackage(eClass.getEPackage()) && CDOModelConstants.ROOT_CLASS_NAME.equals(eClass.getName());
   }
 
   /**
@@ -172,7 +127,7 @@ public final class CDOModelUtil
    */
   public static boolean isResourcePackage(EPackage ePackage)
   {
-    return RESOURCE_PACKAGE_URI.equals(ePackage.getNsURI());
+    return CDOModelConstants.RESOURCE_PACKAGE_URI.equals(ePackage.getNsURI());
   }
 
   /**
@@ -180,7 +135,7 @@ public final class CDOModelUtil
    */
   public static boolean isResource(EClass eClass)
   {
-    return isResourcePackage(eClass.getEPackage()) && RESOURCE_CLASS_NAME.equals(eClass.getName());
+    return isResourcePackage(eClass.getEPackage()) && CDOModelConstants.RESOURCE_CLASS_NAME.equals(eClass.getName());
   }
 
   /**
@@ -188,7 +143,7 @@ public final class CDOModelUtil
    */
   public static boolean isResourceFolder(EClass eClass)
   {
-    return isResourcePackage(eClass.getEPackage()) && RESOURCE_FOLDER_CLASS_NAME.equals(eClass.getName());
+    return isResourcePackage(eClass.getEPackage()) && CDOModelConstants.RESOURCE_FOLDER_CLASS_NAME.equals(eClass.getName());
   }
 
   /**
@@ -197,7 +152,7 @@ public final class CDOModelUtil
   public static boolean isResourceNode(EClass eClass)
   {
     return isResourcePackage(eClass.getEPackage())
-        && (RESOURCE_NODE_CLASS_NAME.equals(eClass.getName()) || RESOURCE_CLASS_NAME.equals(eClass.getName()) || RESOURCE_FOLDER_CLASS_NAME
+        && (CDOModelConstants.RESOURCE_NODE_CLASS_NAME.equals(eClass.getName()) || CDOModelConstants.RESOURCE_CLASS_NAME.equals(eClass.getName()) || CDOModelConstants.RESOURCE_FOLDER_CLASS_NAME
             .equals(eClass.getName()));
   }
 
@@ -206,7 +161,7 @@ public final class CDOModelUtil
    */
   public static boolean isTypesPackage(EPackage ePackage)
   {
-    return TYPES_PACKAGE_URI.equals(ePackage.getNsURI());
+    return CDOModelConstants.TYPES_PACKAGE_URI.equals(ePackage.getNsURI());
   }
 
   /**
@@ -223,7 +178,7 @@ public final class CDOModelUtil
   public static boolean isLob(EClassifier eClassifier)
   {
     return isTypesPackage(eClassifier.getEPackage())
-        && (BLOB_CLASS_NAME.equals(eClassifier.getName()) || CLOB_CLASS_NAME.equals(eClassifier.getName()));
+        && (CDOModelConstants.BLOB_CLASS_NAME.equals(eClassifier.getName()) || CDOModelConstants.CLOB_CLASS_NAME.equals(eClassifier.getName()));
   }
 
   /**
@@ -276,12 +231,12 @@ public final class CDOModelUtil
     else if (isTypesPackage(ePackage))
     {
       String name = eDataType.getName();
-      if (BLOB_CLASS_NAME.equals(name))
+      if (CDOModelConstants.BLOB_CLASS_NAME.equals(name))
       {
         return CDOType.BLOB;
       }
 
-      if (CLOB_CLASS_NAME.equals(name))
+      if (CDOModelConstants.CLOB_CLASS_NAME.equals(name))
       {
         return CDOType.CLOB;
       }

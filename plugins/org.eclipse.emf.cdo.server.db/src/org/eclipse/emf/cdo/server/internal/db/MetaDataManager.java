@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -146,9 +147,9 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       throws IOException
   {
     // Export package units
-    String where = " WHERE p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.CORE_PACKAGE_URI + //
-        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.RESOURCE_PACKAGE_URI + //
-        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.TYPES_PACKAGE_URI + //
+    String where = " WHERE p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + //
+        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + //
+        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + //
         "' AND p_u." + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_UNITS, "p_u", where);
 
@@ -362,9 +363,9 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     String where = null;
     if (fromCommitTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      where = CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.CORE_PACKAGE_URI + "' AND "
-          + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.RESOURCE_PACKAGE_URI + "' AND "
-          + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelUtil.TYPES_PACKAGE_URI + "' AND "
+      where = CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + "' AND "
+          + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + "' AND "
+          + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + "' AND "
           + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     }
 

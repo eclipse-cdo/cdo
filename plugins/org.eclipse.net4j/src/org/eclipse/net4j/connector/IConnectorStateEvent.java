@@ -14,6 +14,7 @@ package org.eclipse.net4j.connector;
  * An event that is fired by an {@link IConnector} to indicate that its state has changed.
  * 
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IConnectorStateEvent extends IConnectorEvent

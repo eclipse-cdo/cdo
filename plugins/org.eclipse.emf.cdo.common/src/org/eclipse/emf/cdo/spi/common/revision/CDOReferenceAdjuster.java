@@ -9,16 +9,18 @@
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.common.revision;
+package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Simon McDuff
- * @since 2.0
+ * @since 4.0
  */
 public interface CDOReferenceAdjuster
 {
@@ -27,8 +29,6 @@ public interface CDOReferenceAdjuster
    * transaction. {@link CDORevision} must replace {@link CDOIDTemp} for non-temporary {@link CDOID} with a mapped ID.
    * Only the internal structure knows how to do these modifications. This is important to consider using different
    * implementation of {@link CDOList}.
-   * 
-   * @since 4.0
    */
   public Object adjustReference(Object id, EStructuralFeature feature, int index);
 }

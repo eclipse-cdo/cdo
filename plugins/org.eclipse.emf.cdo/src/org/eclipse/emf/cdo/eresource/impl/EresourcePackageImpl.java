@@ -28,8 +28,9 @@ import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Package</b>.
  * 
+ * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  * @generated
  */
 public class EresourcePackageImpl extends EPackageImpl implements EresourcePackage
@@ -116,7 +117,9 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
   public static EresourcePackage init()
   {
     if (isInited)
+    {
       return (EresourcePackage)EPackage.Registry.INSTANCE.getEPackage(EresourcePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     EresourcePackageImpl theEresourcePackage = (EresourcePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof EresourcePackageImpl ? EPackage.Registry.INSTANCE
@@ -363,7 +366,9 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -408,7 +413,9 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -424,16 +431,16 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    cdoResourceFolderEClass.getESuperTypes().add(this.getCDOResourceNode());
-    cdoResourceEClass.getESuperTypes().add(this.getCDOResourceNode());
+    cdoResourceFolderEClass.getESuperTypes().add(getCDOResourceNode());
+    cdoResourceEClass.getESuperTypes().add(getCDOResourceNode());
 
     // Initialize classes and features; add operations and parameters
     initEClass(cdoResourceNodeEClass, CDOResourceNode.class,
         "CDOResourceNode", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEReference(
         getCDOResourceNode_Folder(),
-        this.getCDOResourceFolder(),
-        this.getCDOResourceFolder_Nodes(),
+        getCDOResourceFolder(),
+        getCDOResourceFolder_Nodes(),
         "folder", null, 0, 1, CDOResourceNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEAttribute(
         getCDOResourceNode_Name(),
@@ -448,26 +455,26 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
         "CDOResourceFolder", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEReference(
         getCDOResourceFolder_Nodes(),
-        this.getCDOResourceNode(),
-        this.getCDOResourceNode_Folder(),
+        getCDOResourceNode(),
+        getCDOResourceNode_Folder(),
         "nodes", null, 0, -1, CDOResourceFolder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-    EOperation op = addEOperation(cdoResourceFolderEClass, this.getCDOResourceFolder(),
+    EOperation op = addEOperation(cdoResourceFolderEClass, getCDOResourceFolder(),
         "addResourceFolder", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
     addEParameter(op, theEcorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-    op = addEOperation(cdoResourceFolderEClass, this.getCDOResource(), "addResource", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+    op = addEOperation(cdoResourceFolderEClass, getCDOResource(), "addResource", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
     addEParameter(op, theEcorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
     initEClass(cdoResourceEClass, CDOResource.class,
         "CDOResource", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEAttribute(
         getCDOResource_ResourceSet(),
-        this.getResourceSet(),
+        getResourceSet(),
         "resourceSet", null, 0, 1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEAttribute(
         getCDOResource_URI(),
-        this.getURI(),
+        getURI(),
         "uRI", null, 0, 1, CDOResource.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
         getCDOResource_Contents(),
@@ -488,11 +495,11 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
         "trackingModification", null, 0, 1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEAttribute(
         getCDOResource_Errors(),
-        this.getDiagnostic(),
+        getDiagnostic(),
         "errors", null, 0, -1, CDOResource.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEAttribute(
         getCDOResource_Warnings(),
-        this.getDiagnostic(),
+        getDiagnostic(),
         "warnings", null, 0, -1, CDOResource.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEAttribute(
         getCDOResource_TimeStamp(),

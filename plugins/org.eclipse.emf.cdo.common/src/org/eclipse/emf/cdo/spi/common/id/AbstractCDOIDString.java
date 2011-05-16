@@ -20,6 +20,7 @@ import java.io.IOException;
 /**
  * @author Martin Taal
  * @since 3.0
+ * @noextend This interface is not intended to be extended by clients.
  */
 public abstract class AbstractCDOIDString extends AbstractCDOID
 {

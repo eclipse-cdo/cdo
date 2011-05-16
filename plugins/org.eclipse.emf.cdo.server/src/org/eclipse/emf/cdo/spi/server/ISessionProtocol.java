@@ -12,17 +12,22 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 
 /**
  * @author Eike Stepper
  * @since 3.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISessionProtocol extends CDOProtocol
 {
+  /**
+   * @since 4.0
+   */
   public CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception;
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)

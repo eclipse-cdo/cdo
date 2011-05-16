@@ -17,6 +17,7 @@ import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class SingleDeltaContainerEvent<E> extends Event implements IContainerEvent<E>
 {

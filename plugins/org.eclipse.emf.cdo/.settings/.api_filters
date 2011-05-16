@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo" version="2">
+    <resource path="src/org/eclipse/emf/cdo/CDOIDDangling.java" type="org.eclipse.emf.cdo.CDOIDDangling">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOID"/>
+                <message_argument value="CDOIDDangling"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/CDOObjectReference.java" type="org.eclipse.emf.cdo.CDOObjectReference">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOReference&lt;OBJECT&gt;"/>
+                <message_argument value="CDOObjectReference"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/session/CDORepositoryInfo.java" type="org.eclipse.emf.cdo.session.CDORepositoryInfo">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="CDORepositoryInfo"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/session/CDOSession.java" type="org.eclipse.emf.cdo.session.CDOSession">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOCommonSession"/>
+                <message_argument value="CDOSession"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.java" type="org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOCommitInfo"/>
+                <message_argument value="CDOSessionInvalidationEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/transaction/CDOPushTransaction.java" type="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="CDOTransaction"/>
+                <message_argument value="CDOCommonView"/>
+                <message_argument value="CDOPushTransaction"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/transaction/CDOTransaction.java" type="org.eclipse.emf.cdo.transaction.CDOTransaction">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOCommonTransaction"/>
+                <message_argument value="CDOTransaction"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOQuery.java" type="org.eclipse.emf.cdo.view.CDOQuery">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOQueryInfo"/>
+                <message_argument value="CDOQuery"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOView.java" type="org.eclipse.emf.cdo.view.CDOView">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOCommonView"/>
+                <message_argument value="CDOView"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/object/CDOIDDanglingImpl.java" type="org.eclipse.emf.internal.cdo.object.CDOIDDanglingImpl">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="AbstractCDOID"/>
+                <message_argument value="CDOIDDanglingImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/object/CDOObjectReferenceImpl.java" type="org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="CDOObjectReference"/>
+                <message_argument value="CDOReference"/>
+                <message_argument value="CDOObjectReferenceImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/session/CDOSessionImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOSessionImpl">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="InternalCDOSession"/>
+                <message_argument value="CDOCommonSession"/>
+                <message_argument value="CDOSessionImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/session/DelegatingSessionProtocol.java" type="org.eclipse.emf.internal.cdo.session.DelegatingSessionProtocol">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="CDOSessionProtocol"/>
+                <message_argument value="CDOProtocol"/>
+                <message_argument value="DelegatingSessionProtocol"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/view/AbstractCDOView.java" type="org.eclipse.emf.internal.cdo.view.AbstractCDOView">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="InternalCDOView"/>
+                <message_argument value="CDOCommonView"/>
+                <message_argument value="AbstractCDOView"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/CDOSessionProtocol.java" type="org.eclipse.emf.spi.cdo.CDOSessionProtocol">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOProtocol"/>
+                <message_argument value="CDOSessionProtocol"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOObject.java" type="org.eclipse.emf.spi.cdo.InternalCDOObject">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOObjectMarker"/>
+                <message_argument value="InternalCDOObject"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

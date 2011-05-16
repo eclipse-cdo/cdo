@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.protocol;
 
+import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
+
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 /**
@@ -36,5 +38,8 @@ public interface CDOAuthenticator
 
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider);
 
+  /**
+   * @since 4.0
+   */
   public CDOAuthenticationResult authenticate(byte[] randomToken);
 }

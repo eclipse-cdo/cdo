@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.common.protocol;
+package org.eclipse.emf.cdo.spi.common;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -20,7 +20,7 @@ import java.io.Serializable;
  * The result of an authentication operation. Carries a userID and a crypted token.
  * 
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.0
  */
 public final class CDOAuthenticationResult implements Serializable
 {

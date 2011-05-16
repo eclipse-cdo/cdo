@@ -18,6 +18,8 @@ import org.eclipse.emf.common.notify.Notification;
  * 
  * @since 2.0
  * @author Simon McDuff
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDONotification extends Notification
 {

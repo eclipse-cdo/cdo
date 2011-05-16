@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 /**
  * @author Andre Dietisheim
  * @since 3.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOCommitInfoManager
 {

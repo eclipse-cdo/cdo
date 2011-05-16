@@ -25,8 +25,9 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>.
  * 
+ * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  * @generated
  */
 public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFactory

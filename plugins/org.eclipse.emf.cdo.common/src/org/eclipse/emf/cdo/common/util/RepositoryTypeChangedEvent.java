@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.event.INotifier;
 /**
  * @author Eike Stepper
  * @since 3.0
+ * @noextend This interface is not intended to be extended by clients.
  */
 public class RepositoryTypeChangedEvent extends Event implements CDOCommonRepository.TypeChangedEvent
 {

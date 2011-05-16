@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  */
 public class CDOResourceFactoryImpl implements CDOResourceFactory
 {

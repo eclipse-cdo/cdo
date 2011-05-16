@@ -15,12 +15,13 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.security.IUserAware;
-import org.eclipse.net4j.ILocationAware.Location;
 
 /**
  * One endpoint of a physical connection of arbitrary nature between two communicating parties. A {@link IConnector}
- * encapsulates the process of establishing and closing such connections and has a {@link Location location} of
- * {@link Location#CLIENT CLIENT} or {@link Location#SERVER SERVER} with respect to this process. Once a connection is
+ * encapsulates the process of establishing and closing such connections and has a
+ * {@link org.eclipse.net4j.ILocationAware.Location location} of
+ * {@link org.eclipse.net4j.ILocationAware.Location#CLIENT CLIENT} or
+ * {@link org.eclipse.net4j.ILocationAware.Location#SERVER SERVER} with respect to this process. Once a connection is
  * established either party can use its connector to open multiple {@link IChannel}s to asynchronously exchange
  * {@link IBuffer}s.
  * <p>
@@ -44,6 +45,7 @@ import org.eclipse.net4j.ILocationAware.Location;
  * HREF="IProtocol.html"> </MAP>
  * 
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
 {

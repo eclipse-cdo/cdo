@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.transaction;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  */
 public class TransactionException extends RuntimeException
 {

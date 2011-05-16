@@ -19,6 +19,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 /**
  * @since 2.0
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOSession extends org.eclipse.emf.cdo.session.CDOSession

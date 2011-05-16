@@ -8,11 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.server.embedded;
-
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+package org.eclipse.emf.cdo.spi.common.model;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -25,6 +21,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @since 4.0
  */
 @Deprecated
 public abstract class DelegatingCDOPackageRegistry extends Lifecycle implements InternalCDOPackageRegistry

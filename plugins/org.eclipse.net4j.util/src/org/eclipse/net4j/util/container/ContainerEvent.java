@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class ContainerEvent<E> extends Event implements IContainerEvent<E>
 {

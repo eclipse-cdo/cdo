@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.event.Event;
 /**
  * @author Eike Stepper
  * @since 3.0
+ * @noextend This interface is not intended to be extended by clients.
  */
 public class SignalFinishedEvent<INFRA_STRUCTURE> extends Event
 {

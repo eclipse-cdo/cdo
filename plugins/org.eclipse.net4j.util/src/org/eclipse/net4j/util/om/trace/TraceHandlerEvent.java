@@ -14,6 +14,7 @@ import java.io.Serializable;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  */
 public class TraceHandlerEvent implements OMTraceHandlerEvent, Serializable
 {

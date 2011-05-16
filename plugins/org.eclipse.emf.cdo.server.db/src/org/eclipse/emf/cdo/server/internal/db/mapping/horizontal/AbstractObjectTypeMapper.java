@@ -14,8 +14,8 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
-import org.eclipse.emf.cdo.server.db.IObjectTypeMapper;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 

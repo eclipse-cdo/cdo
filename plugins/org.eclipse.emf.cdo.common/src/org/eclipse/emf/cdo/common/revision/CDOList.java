@@ -18,6 +18,8 @@ import org.eclipse.emf.common.util.EList;
 /**
  * @author Simon McDuff
  * @since 2.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOList extends MoveableList<Object>, EList<Object>
 {

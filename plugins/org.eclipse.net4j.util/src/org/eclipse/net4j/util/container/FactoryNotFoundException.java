@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.container;
 
 /**
  * @author Eike Stepper
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class FactoryNotFoundException extends RuntimeException
 {

@@ -17,6 +17,8 @@ import java.util.List;
 /**
  * @author Eike Stepper
  * @since 4.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noinstantiate This class is not intended to be instantiated by clients.
  */
 public class ReferentialIntegrityException extends CommitException
 {

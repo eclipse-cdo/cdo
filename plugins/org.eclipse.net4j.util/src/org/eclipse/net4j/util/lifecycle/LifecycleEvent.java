@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.event.Event;
 
 /**
  * @author Eike Stepper
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class LifecycleEvent extends Event implements ILifecycleEvent
 {

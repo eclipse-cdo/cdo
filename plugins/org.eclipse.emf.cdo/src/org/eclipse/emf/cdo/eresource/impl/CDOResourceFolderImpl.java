@@ -27,13 +27,14 @@ import java.util.Map;
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource Folder</b></em>'.
  * 
- * @since 2.0<!-- end-user-doc -->
- *        <p>
- *        The following features are implemented:
- *        <ul>
- *        <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl#getNodes <em>Nodes</em>}</li>
- *        </ul>
- *        </p>
+ * @since 2.0
+ * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
+ *           <p>
+ *           The following features are implemented:
+ *           <ul>
+ *           <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl#getNodes <em>Nodes</em>}</li>
+ *           </ul>
+ *           </p>
  * @generated
  */
 public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDOResourceFolder

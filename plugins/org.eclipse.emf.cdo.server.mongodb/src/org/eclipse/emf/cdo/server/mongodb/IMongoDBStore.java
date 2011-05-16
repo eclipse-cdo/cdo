@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.server.IStore;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IMongoDBStore extends IStore
 {

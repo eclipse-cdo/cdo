@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.security.INegotiator;
  * 
  * @see IConnector#getState()
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  */
 public enum ConnectorState
 {

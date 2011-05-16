@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
-import org.eclipse.emf.cdo.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -40,6 +39,7 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.Commit
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
+import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -65,6 +65,8 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  * @since 2.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader, RevisionLoader, CommitInfoLoader
 {
@@ -605,6 +607,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       this.previousTimeStamp = previousTimeStamp;
     }
 
+    /**
+     * @since 4.0
+     */
     public CDOReferenceAdjuster getReferenceAdjuster()
     {
       if (referenceAdjuster == null)
@@ -615,6 +620,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       return referenceAdjuster;
     }
 
+    /**
+     * @since 4.0
+     */
     public void setReferenceAdjuster(CDOReferenceAdjuster referenceAdjuster)
     {
       this.referenceAdjuster = referenceAdjuster;

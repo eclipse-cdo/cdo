@@ -27,6 +27,8 @@ import org.eclipse.emf.ecore.EPackage.Descriptor;
  * descriptive information is available before and after loading the packages.
  * 
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOPackageInfo extends Adapter, EPackage.Descriptor, Comparable<CDOPackageInfo>
 {

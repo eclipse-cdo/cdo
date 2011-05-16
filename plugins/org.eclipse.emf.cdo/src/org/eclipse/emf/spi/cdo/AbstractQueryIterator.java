@@ -21,6 +21,7 @@ import java.util.List;
 /**
  * @author Simon McDuff
  * @since 2.0
+ * @noextend This interface is not intended to be extended by clients.
  */
 public abstract class AbstractQueryIterator<T> extends AbstractQueryResult<T>
 {

@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.event;
 /**
  * @author Eike Stepper
  * @since 3.1
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class ValueEvent<VALUE> extends Event
 {

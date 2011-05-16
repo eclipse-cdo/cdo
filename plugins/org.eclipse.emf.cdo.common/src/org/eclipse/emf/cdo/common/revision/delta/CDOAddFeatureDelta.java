@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision.delta;
 
 /**
  * @author Simon McDuff
+ * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOAddFeatureDelta extends CDOFeatureDelta

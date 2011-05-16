@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.event.IEvent;
 /**
  * @author Eike Stepper
  * @since 2.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDORemoteSessionEvent extends IEvent
 {
@@ -27,6 +29,8 @@ public interface CDORemoteSessionEvent extends IEvent
 
   /**
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface SubscriptionChanged extends CDORemoteSessionEvent
   {
@@ -36,6 +40,8 @@ public interface CDORemoteSessionEvent extends IEvent
   /**
    * @author Eike Stepper
    * @since 3.0
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface MessageReceived extends CDORemoteSessionEvent
   {

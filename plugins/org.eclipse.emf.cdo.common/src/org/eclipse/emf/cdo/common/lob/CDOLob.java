@@ -18,6 +18,8 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  * @since 4.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public abstract class CDOLob<IO> extends CDOLobInfo
 {

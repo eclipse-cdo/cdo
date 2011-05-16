@@ -19,6 +19,8 @@ import org.hibernate.Session;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IHibernateStoreAccessor extends IStoreAccessor
 {

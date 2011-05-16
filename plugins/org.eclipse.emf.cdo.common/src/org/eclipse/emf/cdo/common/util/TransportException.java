@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.util;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  */
 public class TransportException extends CDOException
 {

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  */
 public enum CDOState
 {

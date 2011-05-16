@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.util.CDOException;
 /**
  * @author Caspar De Groot
  * @since 4.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noinstantiate This class is not intended to be instantiated by clients.
  */
 public class LockTimeoutException extends CDOException
 {

@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.util.CDOException;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noinstantiate This class is not intended to be instantiated by clients.
  */
 public class ServerException extends CDOException
 {

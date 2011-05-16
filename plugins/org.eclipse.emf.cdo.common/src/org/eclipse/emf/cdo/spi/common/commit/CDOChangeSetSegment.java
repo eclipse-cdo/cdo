@@ -22,6 +22,7 @@ import java.util.LinkedList;
 /**
  * @author Eike Stepper
  * @since 3.0
+ * @noextend This interface is not intended to be extended by clients.
  */
 public class CDOChangeSetSegment implements CDOBranchPoint
 {

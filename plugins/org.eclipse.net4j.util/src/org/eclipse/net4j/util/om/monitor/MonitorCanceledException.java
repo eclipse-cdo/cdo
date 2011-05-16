@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.om.monitor;
 /**
  * @author Eike Stepper
  * @since 2.0
+ * @noextend This interface is not intended to be extended by clients.
  */
 public class MonitorCanceledException extends RuntimeException
 {

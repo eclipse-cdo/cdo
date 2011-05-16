@@ -22,17 +22,18 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Annotation</b></em>'.
  * 
- * @since 4.0 <!-- end-user-doc -->
- *        <p>
- *        The following features are implemented:
- *        <ul>
- *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getSource <em>Source</em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getDetails <em>Details</em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getModelElement <em>Model Element</em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getContents <em>Contents</em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getReferences <em>References</em>}</li>
- *        </ul>
- *        </p>
+ * @since 4.0
+ * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
+ *           <p>
+ *           The following features are implemented:
+ *           <ul>
+ *           <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getSource <em>Source</em>}</li>
+ *           <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getDetails <em>Details</em>}</li>
+ *           <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getModelElement <em>Model Element</em>}</li>
+ *           <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getContents <em>Contents</em>}</li>
+ *           <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getReferences <em>References</em>}</li>
+ *           </ul>
+ *           </p>
  * @generated
  */
 public class AnnotationImpl extends ModelElementImpl implements Annotation

@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.session.CDOSessionEvent;
 /**
  * @author Eike Stepper
  * @since 4.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOSessionRecoveryEvent extends CDOSessionEvent
 {
@@ -23,6 +25,7 @@ public interface CDOSessionRecoveryEvent extends CDOSessionEvent
 
   /**
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
    */
   public enum Type
   {

@@ -22,6 +22,7 @@ import java.util.Collection;
 
 /**
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IChannelMultiplexer extends ILocationAware, IContainer<IChannel>
 {

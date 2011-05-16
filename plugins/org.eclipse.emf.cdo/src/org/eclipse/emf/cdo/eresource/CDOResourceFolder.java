@@ -13,9 +13,10 @@ package org.eclipse.emf.cdo.eresource;
 import org.eclipse.emf.common.util.EList;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource Folder</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource Folder</b></em>'.
  * 
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceFolder()
  * @model
  * @generated

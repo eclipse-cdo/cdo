@@ -18,17 +18,18 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource Node</b></em>'. <!-- end-user-doc
- * -->
- * <p>
- * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder <em>Folder</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getPath <em>Path</em>}</li>
- * </ul>
- * </p>
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource Node</b></em>'.
  * 
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
+ *              <p>
+ *              The following features are supported:
+ *              <ul>
+ *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder <em>Folder</em>}</li>
+ *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getName <em>Name</em>}</li>
+ *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getPath <em>Path</em>}</li>
+ *              </ul>
+ *              </p>
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceNode()
  * @model abstract="true"
  * @generated

@@ -1,20 +1,156 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server" version="2">
-    <resource path="src/org/eclipse/emf/cdo/internal/server/ServerCDOView.java" type="org.eclipse.emf.cdo.internal.server.ServerCDOView$ServerCDOSession">
+    <resource path="src/org/eclipse/emf/cdo/internal/server/DelegatingRepository.java" type="org.eclipse.emf.cdo.internal.server.DelegatingRepository">
         <filter id="574660632">
             <message_arguments>
+                <message_argument value="InternalRepository"/>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="DelegatingRepository"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/ServerCDOView.java" type="org.eclipse.emf.cdo.internal.server.ServerCDOView$ServerCDOSession">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDORepositoryInfo"/>
+                <message_argument value="ServerCDOSession"/>
+            </message_arguments>
+        </filter>
+        <filter id="574619656">
+            <message_arguments>
                 <message_argument value="InternalCDOSession"/>
-                <message_argument value="CDOSession"/>
                 <message_argument value="ServerCDOSession"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/syncing/OfflineClone.java" type="org.eclipse.emf.cdo.internal.server.syncing.OfflineClone$CommitContextData">
+    <resource path="src/org/eclipse/emf/cdo/internal/server/Session.java" type="org.eclipse.emf.cdo.internal.server.Session">
         <filter id="574660632">
             <message_arguments>
+                <message_argument value="InternalSession"/>
+                <message_argument value="CDOCommonSession"/>
+                <message_argument value="Session"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/TransactionCommitContext.java" type="org.eclipse.emf.cdo.internal.server.TransactionCommitContext$DeltaLockWrapper">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOIDAndBranch"/>
+                <message_argument value="DeltaLockWrapper"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/TransactionCommitContext.java" type="org.eclipse.emf.cdo.internal.server.TransactionCommitContext$XRefContext">
+        <filter id="572522506">
+            <message_arguments>
+                <message_argument value="CDOIDReference"/>
+                <message_argument value="XRefContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/View.java" type="org.eclipse.emf.cdo.internal.server.View">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="InternalView"/>
+                <message_argument value="CDOCommonView"/>
+                <message_argument value="View"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/XRefsQueryHandler.java" type="org.eclipse.emf.cdo.internal.server.XRefsQueryHandler$QueryContext">
+        <filter id="572522506">
+            <message_arguments>
+                <message_argument value="CDOIDReference"/>
+                <message_argument value="QueryContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/embedded/EmbeddedClientSessionConfiguration.java" type="org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration$RepositoryInfo">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDORepositoryInfo"/>
+                <message_argument value="RepositoryInfo"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/embedded/EmbeddedClientSessionProtocol.java" type="org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionProtocol">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOSessionProtocol"/>
+                <message_argument value="EmbeddedClientSessionProtocol"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/embedded/EmbeddedServerSessionProtocol.java" type="org.eclipse.emf.cdo.internal.server.embedded.EmbeddedServerSessionProtocol">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="ISessionProtocol"/>
+                <message_argument value="CDOProtocol"/>
+                <message_argument value="EmbeddedServerSessionProtocol"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/syncing/OfflineClone.java" type="org.eclipse.emf.cdo.internal.server.syncing.OfflineClone$CommitContextData">
+        <filter id="574619656">
+            <message_arguments>
                 <message_argument value="CDOCommitData"/>
-                <message_argument value="CDOChangeSetData"/>
                 <message_argument value="CommitContextData"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IRepository.java" type="org.eclipse.emf.cdo.server.IRepository">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="IRepository"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/ISession.java" type="org.eclipse.emf.cdo.server.ISession">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOCommonSession"/>
+                <message_argument value="ISession"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/ITransaction.java" type="org.eclipse.emf.cdo.server.ITransaction">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOCommonTransaction"/>
+                <message_argument value="ITransaction"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IView.java" type="org.eclipse.emf.cdo.server.IView">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOCommonView"/>
+                <message_argument value="IView"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/embedded/CDOSession.java" type="org.eclipse.emf.cdo.server.embedded.CDOSession">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOSession"/>
+                <message_argument value="CDOSession"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.java" type="org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOSessionConfiguration"/>
+                <message_argument value="CDOSessionConfiguration"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/server/ISessionProtocol.java" type="org.eclipse.emf.cdo.spi.server.ISessionProtocol">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOProtocol"/>
+                <message_argument value="ISessionProtocol"/>
             </message_arguments>
         </filter>
     </resource>

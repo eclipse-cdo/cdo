@@ -24,8 +24,9 @@ import org.eclipse.emf.ecore.EReference;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * <!-- end-user-doc -->
  * 
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.eresource.EresourceFactory
  * @model kind="package"
  * @generated

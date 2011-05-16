@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.container.IContainer;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISessionManager extends IContainer<ISession>

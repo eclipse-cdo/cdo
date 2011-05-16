@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
 
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -128,7 +129,7 @@ public class RevisionManagerTest extends AbstractCDOTest
   protected void doTearDown() throws Exception
   {
     StoreThreadLocal.release();
-    session.close();
+    IOUtil.close(session);
 
     Field disableGC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, false);

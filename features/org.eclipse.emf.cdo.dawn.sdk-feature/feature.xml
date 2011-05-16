@@ -38,6 +38,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.dawn.codegen.gmf.source"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.dawn"
          version="0.0.0"/>
 

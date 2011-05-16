@@ -34,7 +34,6 @@ import java.util.Map;
  */
 public class Bugzilla_335772_Test extends AbstractCDOTest
 {
-
   private Model1Factory factory;
 
   private Customer customer;

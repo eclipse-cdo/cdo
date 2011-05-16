@@ -20,12 +20,13 @@
 				<xsl:value-of select="@name"/>
 			</h1>
 			<p>
-				<em>For information about installing or updating software, see the
+				<em>For information about CDO or Net4j, see their <a href="http://www.eclipse.org/cdo">homepage</a> or <a href="http://wiki.eclipse.org/CDO">wiki</a>.
+					<br/> For information about installing or updating Eclipse software, see the
 					<a
 						href="http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
 						Eclipse Platform Help</a>.
 					<br/> Some plugins require third party drivers from
-					<a href="http://net4j.sourceforge.net/update/">Net4j and CDO Plus</a>. </em>
+					<a href="http://net4j.sourceforge.net/update/">Net4j and CDO Plus</a> or <a href="http://www.elver.org/eclipse/update/">EMF Teneo Dependencies</a>.</em>
 
 			</p>
 			<table border="0">

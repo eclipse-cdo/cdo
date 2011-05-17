@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.cdo.license"
-      label="%featureName"
+      label="CDO License"
       version="4.0.0.qualifier"
-      provider-name="%providerName"
+      provider-name="Eclipse Modeling Project"
       image="eclipse_update_120.jpg">
 
    <description>
-      %description
+      Contains the shared license for all CDO and Net4j features.
    </description>
 
    <copyright url="http://www.eclipse.org/legal/epl-v10.html">

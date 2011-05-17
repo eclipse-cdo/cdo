@@ -185,7 +185,7 @@
 	</target>
 
 	<target name="init.workspace" unless="workspace.exists">
-		<mkdir dir="${workspace}" />
+		<!-- Do nothing because the workspace.zip will be unpacked later -->
 	</target>
 
 	<target name="set.build.type.from.environment" unless="build.type">

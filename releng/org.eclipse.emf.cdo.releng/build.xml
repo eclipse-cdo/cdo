@@ -178,6 +178,7 @@
 				<arg value="org.eclipse.buckminster.emma.headless.feature.feature.group" />
 			</args>
 		</eclipse.launch>
+		<delete file="${tools}/buckminster/plugins/org.eclipse.pde.api.tools*" />
 	</target>
 
 	<target name="init.workspace" unless="workspace.exists">

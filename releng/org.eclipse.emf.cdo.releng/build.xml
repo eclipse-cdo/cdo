@@ -180,17 +180,25 @@
 				<arg value="org.eclipse.buckminster.subversive.headless.feature.feature.group" />
 				<arg value="-i" />
 				<arg value="org.eclipse.buckminster.emma.headless.feature.feature.group" />
-				<!--
-				<arg value="-u" />
-				<arg value="org.eclipse.pde.api.tools" />
-				-->
 			</args>
 		</eclipse.launch>
+		<eclipse.launch app="director">
+			<args>
+				<arg value="-d" />
+				<arg value="${tools}/buckminster" />
+				<arg value="-p" />
+				<arg value="Buckminster" />
+				<arg value="-u" />
+				<arg value="org.eclipse.pde.api.tools" />
+			</args>
+		</eclipse.launch>
+		<!--
 		<delete>
 			<fileset dir="${tools}/buckminster/plugins">
 				<filename name="org.eclipse.pde.api.tools*" />
 			</fileset>
 		</delete>
+		-->
 	</target>
 
 	<target name="init.workspace" unless="workspace.exists">

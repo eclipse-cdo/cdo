@@ -10,7 +10,7 @@
 	  Martin Fluegge - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.dawn.ecoretools"
+      id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn"
       label="%featureName"
       version="1.0.0.qualifier"
       provider-name="%providerName"
@@ -33,11 +33,7 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
-  <!--  <requires>
-      <import plugin="org.eclipse.emf.ecoretools.diagram"/>
-   </requires>-->
-
-  <plugin
+   <plugin
          id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn"
          download-size="0"
          install-size="0"

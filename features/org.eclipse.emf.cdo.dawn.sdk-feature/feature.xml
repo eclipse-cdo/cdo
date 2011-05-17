@@ -65,7 +65,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.dawn.ecoretools"
+         id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn"
          version="0.0.0"/>
 
    <plugin

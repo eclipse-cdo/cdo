@@ -338,10 +338,13 @@ public class LockManager extends RWLockManager<Object, IView> implements Interna
     try
     {
       reader = store.getReader(null);
-      StoreThreadLocal.setAccessor(reader);
+      if (reader instanceof DurableLocking)
+      {
+        StoreThreadLocal.setAccessor(reader);
 
-      DurableLockLoader handler = new DurableLockLoader();
-      getLockAreas(null, handler);
+        DurableLockLoader handler = new DurableLockLoader();
+        getLockAreas(null, handler);
+      }
     }
     finally
     {

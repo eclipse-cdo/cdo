@@ -43,8 +43,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.LeavesCleanRepo;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -337,11 +337,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
               String path = CDORevisionUtil.getResourceNodePath(revision, commitContext);
               ConfigTest test = getCurrentTest();
               String prefix = test.getResourcePath("");
-              if (!path.startsWith(prefix) && !hasAnnotation(NeedsCleanRepo.class))
+              if (!path.startsWith(prefix) && !hasAnnotation(CleanRepositoriesBefore.class))
               {
                 throw new RuntimeException("Test case " + test.getClass().getName() + '.' + test.getName()
                     + " does not use getResourcePath() for resource " + path + ", nor does it declare @"
-                    + NeedsCleanRepo.class.getSimpleName());
+                    + CleanRepositoriesBefore.class.getSimpleName());
               }
             }
           }
@@ -446,12 +446,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       return true;
     }
 
-    return hasAnnotation(NeedsCleanRepo.class);
+    return hasAnnotation(CleanRepositoriesBefore.class);
   }
 
   protected boolean leavesCleanRepos()
   {
-    return hasAnnotation(LeavesCleanRepo.class);
+    return hasAnnotation(CleanRepositoriesAfter.class);
   }
 
   private <T extends Annotation> boolean hasAnnotation(Class<T> annotationClass)

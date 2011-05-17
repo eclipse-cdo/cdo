@@ -37,7 +37,7 @@ import java.util.Map;
  */
 public class Bugzilla_303466_Test extends AbstractCDOTest
 {
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void test_missingDependency() throws Exception
   {
     CDOSession session = openSession();

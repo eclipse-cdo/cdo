@@ -190,43 +190,43 @@ public class ResourceTest extends AbstractCDOTest
     // TODO assertEquals(xmiString, cdoString);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testAttachDetachResourceDepth1_Delete() throws Exception
   {
     attachDetachResourceDepth1(1, true, 0);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testAttachDetachResourceDepth1_Remove() throws Exception
   {
     attachDetachResourceDepth1(1, false, 0);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testAttachDetachResourceDepth2_Delete() throws Exception
   {
     attachDetachResourceDepth1(2, true, 1);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testAttachDetachResourceDepth2_Remove() throws Exception
   {
     attachDetachResourceDepth1(2, false, 1);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testAttachDetachResourceDepth3_Delete() throws Exception
   {
     attachDetachResourceDepth1(3, true, 2);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testAttachDetachResourceDepth3_Remove() throws Exception
   {
     attachDetachResourceDepth1(3, false, 2);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testAttachDetachResourceDepth3_Remove_Tree() throws Exception
   {
     attachDetachResourceDepth1(3, false, 1);
@@ -265,7 +265,7 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testCreateResource_FromResourceSet() throws Exception
   {
     CDOSession session = openSession();
@@ -545,49 +545,49 @@ public class ResourceTest extends AbstractCDOTest
     session.close();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testChangePathFromDepth0ToDepth0() throws Exception
   {
     changePath(0, 0);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testChangePathFromDepth0ToDepth1() throws Exception
   {
     changePath(0, 1);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testChangePathFromDepth0ToDepth2() throws Exception
   {
     changePath(0, 2);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testChangePathFromDepth0ToDepth3() throws Exception
   {
     changePath(0, 3);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testChangePathFromDepth3ToDepth3() throws Exception
   {
     changePath(3, 3);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testChangePathFromDepth3ToDepth2() throws Exception
   {
     changePath(3, 2);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testChangePathFromDepth3ToDepth1() throws Exception
   {
     changePath(3, 1);
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testChangePathFromDepth3ToDepth0() throws Exception
   {
     changePath(3, 0);
@@ -618,7 +618,7 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(true, transaction.hasResource("/renamed"));
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testChangeResourceFolderURI() throws Exception
   {
     {

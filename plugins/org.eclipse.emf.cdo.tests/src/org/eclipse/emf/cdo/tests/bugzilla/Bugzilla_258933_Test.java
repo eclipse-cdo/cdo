@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * 
  * @author Simon McDuff
  */
-@NeedsCleanRepo
+@CleanRepositoriesBefore
 public class Bugzilla_258933_Test extends AbstractCDOTest
 {
   private static final String TOP_PACKAGE_URI = "http:///www.elver.org/toppackage";

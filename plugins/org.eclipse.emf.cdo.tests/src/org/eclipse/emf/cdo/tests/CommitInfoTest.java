@@ -122,7 +122,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(comment, commitInfo.getComment());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testServerTimestamp() throws Exception
   {
     skipMongo();
@@ -146,7 +146,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testServerBranch() throws Exception
   {
     skipMongo();
@@ -170,7 +170,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testServerSubBranch() throws Exception
   {
     skipUnlessBranching();
@@ -194,7 +194,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testServerUser() throws Exception
   {
     skipMongo();
@@ -227,7 +227,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testServerComment() throws Exception
   {
     skipMongo();
@@ -253,7 +253,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testServerTimestampWithBranch() throws Exception
   {
     skipMongo();
@@ -277,7 +277,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testServerBranchWithBranch() throws Exception
   {
     skipMongo();
@@ -325,7 +325,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testServerUserWithBranch() throws Exception
   {
     skipMongo();
@@ -359,7 +359,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testServerCommentWithBranch() throws Exception
   {
     skipMongo();
@@ -510,7 +510,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testClientTimestamp() throws Exception
   {
     CDOSession session = openSession();
@@ -529,7 +529,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testClientBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -548,7 +548,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testClientSubBranch() throws Exception
   {
     skipUnlessBranching();
@@ -570,7 +570,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testClientUser() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -599,7 +599,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testClientComment() throws Exception
   {
     CDOSession session = openSession();
@@ -621,7 +621,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testClientTimestampWithBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -640,7 +640,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testClientBranchWithBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -680,7 +680,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testClientUserWithBranch() throws Exception
   {
     UserManager userManager = new UserManager();
@@ -709,7 +709,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testClientCommentWithBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -845,7 +845,7 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testMultipleEntries() throws Exception
   {
     CDOSession session = openSession();

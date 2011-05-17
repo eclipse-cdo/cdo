@@ -130,7 +130,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     session.close();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testCommitNestedPackages() throws Exception
   {
     CDOSession session = openSession();
@@ -142,7 +142,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     session.close();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testCommitTopLevelPackages() throws Exception
   {
     CDOSession session = openSession();
@@ -378,7 +378,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testDynamicPackageFactory() throws Exception
   {
     // -Dorg.eclipse.emf.ecore.EPackage.Registry.INSTANCE=org.eclipse.emf.ecore.impl.CDOPackageRegistryImpl
@@ -418,7 +418,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     session.close();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testDynamicPackageNewInstance() throws Exception
   {
     {
@@ -452,7 +452,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     session.close();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testDuplicatePackageRegistration() throws Exception
   {
     CDOSession session1 = openSession();
@@ -495,7 +495,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testReuseCommittedPackage() throws Exception
   {
     final long timeStamp;
@@ -540,7 +540,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testConcurrentPackageRegistration() throws Exception
   {
     CDOSession session1 = openSession();
@@ -585,7 +585,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testPopulator() throws Exception
   {
     String nsURI = "http://dynamic";
@@ -624,7 +624,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     assertEquals("Eike", company.getName());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testPopulatorGlobal() throws Exception
   {
     String nsURI = "http://dynamic";
@@ -670,7 +670,7 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testLaziness() throws Exception
   {
     {

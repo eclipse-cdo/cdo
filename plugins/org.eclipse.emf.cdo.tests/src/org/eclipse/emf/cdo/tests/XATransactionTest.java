@@ -80,7 +80,7 @@ public class XATransactionTest extends AbstractCDOTest
     xaTransaction.commit();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testRollback_AfterSetpoint() throws Exception
   {
     skipExternalReferences();

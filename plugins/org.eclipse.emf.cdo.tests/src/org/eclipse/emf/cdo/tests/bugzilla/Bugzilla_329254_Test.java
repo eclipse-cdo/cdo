@@ -201,7 +201,7 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
 
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testCommitTimeStampUpdateLongRunningCommitSameType() throws Exception
   {
     disableConsole();
@@ -300,7 +300,7 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
     assertEquals(company4a.getName(), company1a.getName());
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testCommitTimeStampUpdateLongRunningCommitDifferentType() throws Exception
   {
     disableConsole();

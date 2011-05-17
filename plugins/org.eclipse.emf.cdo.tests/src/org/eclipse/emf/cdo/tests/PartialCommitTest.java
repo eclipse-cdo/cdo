@@ -110,7 +110,7 @@ public class PartialCommitTest extends AbstractCDOTest
     super.doTearDown();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testNewTopLevelResource() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -122,7 +122,7 @@ public class PartialCommitTest extends AbstractCDOTest
     goodAll();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testNewTopLevelResource_rootResourceNotIncluded() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -134,7 +134,7 @@ public class PartialCommitTest extends AbstractCDOTest
     badAll(createSet(tx.getRootResource()));
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testNewNestedResource() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -146,7 +146,7 @@ public class PartialCommitTest extends AbstractCDOTest
     goodAll();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testNewNestedResource_rootResourceNotIncluded() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -158,7 +158,7 @@ public class PartialCommitTest extends AbstractCDOTest
     badAll(createSet(tx.getRootResource()));
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testNewNestedResource_resourceFolderNotIncluded() throws CommitException
   {
     CDOResource topResource1 = tx.createResource("/top1");
@@ -369,7 +369,7 @@ public class PartialCommitTest extends AbstractCDOTest
     badAll(createSet(po));
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testDetach() throws CommitException
   {
     skipQueryXRefs();

@@ -28,7 +28,7 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  */
 public class Bugzilla_313326_Test extends AbstractCDOTest
 {
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testNotificationBuilderBranch() throws Exception
   {
     skipUnlessBranching();

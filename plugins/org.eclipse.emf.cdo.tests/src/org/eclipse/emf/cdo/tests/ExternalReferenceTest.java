@@ -59,7 +59,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
 {
   final static public String REPOSITORY_B_NAME = "repo2";
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testExternalWithDynamicEObject() throws Exception
   {
     skipExternalReferences();
@@ -362,7 +362,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
     }
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testUsingObjectsBetweenSameTransaction() throws Exception
   {
     CDOSession session = openSession();

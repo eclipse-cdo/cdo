@@ -98,7 +98,7 @@ public class SQLQueryTest extends AbstractCDOTest
     enableConsole();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testFunctions() throws Exception
   {
     msg("Opening session");
@@ -138,7 +138,7 @@ public class SQLQueryTest extends AbstractCDOTest
     enableConsole();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testComplexQuerySalesOrderJoinCustomerProduct() throws Exception
   {
     msg("Opening session");

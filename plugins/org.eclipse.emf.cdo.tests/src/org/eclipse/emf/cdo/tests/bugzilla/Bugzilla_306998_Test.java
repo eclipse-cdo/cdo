@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class Bugzilla_306998_Test extends AbstractCDOTest
 {
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testValidEENumLiteral() throws CommitException
   {
     EPackage pkg = EMFUtil.createEPackage("pkg", "pkg", "http://cdo.eclipse.org/Bugzilla_306998_Test_1.ecore");
@@ -70,7 +70,7 @@ public class Bugzilla_306998_Test extends AbstractCDOTest
     }
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testInalidEENumLiteral() throws CommitException
   {
     // does not affect MemStore!

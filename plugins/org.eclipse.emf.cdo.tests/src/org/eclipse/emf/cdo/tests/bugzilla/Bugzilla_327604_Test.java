@@ -134,7 +134,7 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
     super.doTearDown();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testReadObjects() throws Exception
   {
     skipHandleRevisions();

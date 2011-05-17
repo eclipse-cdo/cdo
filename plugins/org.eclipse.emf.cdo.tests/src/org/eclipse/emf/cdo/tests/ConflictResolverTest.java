@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 /**
  * @author Simon McDuff
  */
-@NeedsCleanRepo
+@CleanRepositoriesBefore
 public class ConflictResolverTest extends AbstractCDOTest
 {
   public void testMergeLocalChangesPerFeature_Basic() throws Exception

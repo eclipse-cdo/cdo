@@ -32,7 +32,7 @@ import java.util.Collection;
  */
 public class Bugzilla_267050_Test extends AbstractCDOTest
 {
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   @SuppressWarnings("unchecked")
   public void testBugzilla_267050() throws Exception
   {

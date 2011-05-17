@@ -210,7 +210,7 @@ public class ViewTest extends AbstractCDOTest
     session.close();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testContextifyDifferentRepository() throws Exception
   {
     CDOSession session = openSession();

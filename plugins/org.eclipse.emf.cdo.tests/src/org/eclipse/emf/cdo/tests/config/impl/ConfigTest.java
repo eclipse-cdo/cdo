@@ -71,12 +71,12 @@ import junit.framework.TestResult;
 public abstract class ConfigTest extends AbstractOMTest implements IConstants
 {
   @Retention(RetentionPolicy.RUNTIME)
-  public @interface NeedsCleanRepo
+  public @interface CleanRepositoriesBefore
   {
   }
 
   @Retention(RetentionPolicy.RUNTIME)
-  public @interface LeavesCleanRepo
+  public @interface CleanRepositoriesAfter
   {
   }
 

@@ -255,7 +255,7 @@ public class XRefTest extends AbstractCDOTest
     session2.close();
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testXRefsToOne() throws Exception
   {
     // create model

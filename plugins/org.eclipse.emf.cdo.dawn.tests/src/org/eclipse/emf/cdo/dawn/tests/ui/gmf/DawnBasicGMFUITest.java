@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.common.util.URI;
@@ -30,7 +30,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * @author Martin Fluegge
  */
-@NeedsCleanRepo
+@CleanRepositoriesBefore
 public class DawnBasicGMFUITest extends AbstractCDOTest
 {
   @Override

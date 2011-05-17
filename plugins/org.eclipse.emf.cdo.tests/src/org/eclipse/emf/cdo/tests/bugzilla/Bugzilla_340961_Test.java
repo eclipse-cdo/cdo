@@ -25,8 +25,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.LeavesCleanRepo;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.NeedsCleanRepo;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
@@ -48,8 +48,8 @@ import junit.framework.Assert;
 /**
  * @author Egidijus Vaisnora
  */
-@NeedsCleanRepo
-@LeavesCleanRepo
+@CleanRepositoriesBefore
+@CleanRepositoriesAfter
 public class Bugzilla_340961_Test extends AbstractCDOTest
 {
   private PartialReadAccessHandler handler = new PartialReadAccessHandler();

@@ -209,7 +209,7 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testBigDecimalAndBigInteger() throws Exception
   {
     BigDecimal bigDecimal = new BigDecimal(10);
@@ -257,7 +257,7 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
-  @NeedsCleanRepo
+  @CleanRepositoriesBefore
   public void testBigDecimalAndBigIntegerNull() throws Exception
   {
     BigDecimal bigDecimal = null;

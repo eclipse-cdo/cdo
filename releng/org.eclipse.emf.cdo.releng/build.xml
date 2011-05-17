@@ -176,9 +176,10 @@
 				<arg value="org.eclipse.buckminster.subversive.headless.feature.feature.group" />
 				<arg value="-i" />
 				<arg value="org.eclipse.buckminster.emma.headless.feature.feature.group" />
+				<arg value="-u" />
+				<arg value="org.eclipse.pde.api.tools" />
 			</args>
 		</eclipse.launch>
-		<delete file="${tools}/buckminster/plugins/org.eclipse.pde.api.tools*" />
 	</target>
 
 	<target name="init.workspace" unless="workspace.exists">

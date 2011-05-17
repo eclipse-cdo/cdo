@@ -61,7 +61,7 @@
          unpack="false"/>
          
    <includes
-         id="org.eclipse.emf.cdo.dawn.ecore.editor"
+         id="org.eclipse.emf.cdo.dawn.ecore.editor.dawn"
          version="0.0.0"/>
 
    <includes

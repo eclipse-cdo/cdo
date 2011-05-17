@@ -10,7 +10,7 @@
 	  Martin Fluegge - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.dawn.ecore.editor"
+      id="org.eclipse.emf.cdo.dawn.ecore.editor.dawn"
       label="%featureName"
       version="1.0.0.qualifier"
       provider-name="%providerName"

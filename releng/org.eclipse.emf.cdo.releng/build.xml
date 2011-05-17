@@ -291,11 +291,13 @@
 
 	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">
 		<echo message="Importing projects into workspace ${workspace} and binaries into target platform ${targetPlatformPath}" />
+		<!--
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="targetPlatformPath=${targetPlatformPath}" />
 			</cmdargs>
 		</buckminster>
+		-->
 
 		<buckminster command="import">
 			<cmdargs>

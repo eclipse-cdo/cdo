@@ -299,10 +299,11 @@
 
 		<buckminster command="import">
 			<cmdargs>
+				<arg value="-T" />
+				<arg value="${workspace}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
 				<arg value="-P" />
 				<arg value="${basedir}/${properties.file}" />
 				<arg value="${basedir}/${mspec.file}" />
-				<arg value="${workspace}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
 			</cmdargs>
 		</buckminster>
 	</target>

@@ -311,7 +311,7 @@
 		<buckminster command="setpref">
 			<cmdargs>
 				<arg value="targetPlatformPath=${targetPlatformPath}" />
-				<arg value="org.eclipse.pde.api.tools.missing_default_api_profile=Ignore" />
+				<arg value="org.eclipse.pde.api.tools/missing_default_api_profile=Ignore" />
 			</cmdargs>
 		</buckminster>
 

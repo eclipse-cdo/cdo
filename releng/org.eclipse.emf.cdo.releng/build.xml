@@ -193,12 +193,12 @@
 				<arg value="org.eclipse.pde.api.tools" />
 			</args>
 		</eclipse.launch>
-		-->
 		<delete>
 			<fileset dir="${tools}/buckminster/plugins">
 				<filename name="org.eclipse.pde.api.tools*" />
 			</fileset>
 		</delete>
+		-->
 	</target>
 
 	<target name="init.workspace" unless="workspace.exists">

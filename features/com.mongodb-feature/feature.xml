@@ -3,7 +3,8 @@
       id="com.mongodb"
       label="%featureName"
       version="2.4.0.qualifier"
-      provider-name="%providerName">
+      provider-name="%providerName"
+      image="eclipse_update_120.jpg">
 
    <description url="http://www.mongodb.org">
       MongoDB (from &quot;humongous&quot;) is a scalable, high-performance, open source, document-oriented database.

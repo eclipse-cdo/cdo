@@ -3,6 +3,7 @@
 	componentType="buckminster" version="4.0.0.qualifier">
 	<cs:dependencies>
 		<cs:dependency name="org.eclipse.emf.cdo.site" componentType="eclipse.feature"/>
+		<cs:dependency name="org.eclipse.emf.cdo.license" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.cdo.server.product" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.cdo.examples.server" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.efs" componentType="osgi.bundle"/>

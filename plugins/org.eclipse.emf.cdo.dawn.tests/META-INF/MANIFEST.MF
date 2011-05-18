@@ -47,3 +47,5 @@ Export-Package: org.eclipse.emf.cdo.dawn.tests;version="1.0.0",
  org.eclipse.emf.cdo.dawn.tests.ui.util;version="1.0.0"
 Import-Package: org.antlr.runtime;version="3.0.0",
  org.eclipse.emf.cdo.dawn.examples.acore.provider;version="[0.2.0,1.0.1)"
+Bundle-Localization: plugin
+ 

@@ -85,13 +85,34 @@ public class DawnAcoreTestUtil
 
   public static SWTBotGefEditor openNewAcoreGMFEditor(String diagramResourceName, SWTGefBot bot)
   {
+    return openNewAcoreGMFEditor(diagramResourceName, diagramResourceName.replace("_diagram", ""), bot);
+  }
+
+  public static SWTBotGefEditor openNewAcoreGMFEditor(String diagramResourceName, String semanticResource, SWTGefBot bot)
+  {
     bot.menu("File").menu("New").menu("Other...").click();
 
     SWTBotShell shell = bot.shell("New");
     shell.activate();
     bot.tree().expandNode("Dawn Examples").select("Dawn Acore Diagram");
     bot.button("Next >").click();
+
+    shell.activate();
+
+    SWTBotText fileNameLabel = bot.textWithLabel(resourceFieldLabel);
+    fileNameLabel.setText(diagramResourceName);
+
+    bot.button("Next >").click();
+
+    SWTBotText fileSemanticNameLabel = bot.textWithLabel(resourceFieldLabel);
+
+    fileSemanticNameLabel = bot.textWithLabel(resourceFieldLabel);
+    fileSemanticNameLabel.setText(semanticResource);
+
+    fileSemanticNameLabel = bot.textWithLabel(resourceFieldLabel);
+
     bot.button("Finish").click();
+
     SWTBotGefEditor editor = bot.gefEditor(diagramResourceName);
     return editor;
   }

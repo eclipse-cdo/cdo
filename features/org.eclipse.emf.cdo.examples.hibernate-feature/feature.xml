@@ -36,55 +36,22 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
+   <includes
+         id="org.eclipse.emf.cdo.examples.hibernate.source"
+         version="0.0.0"/>
+
    <plugin
-         id="org.eclipse.emf.cdo.dawn.examples"
+         id="org.eclipse.emf.cdo.examples.hibernate.client"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.examples.acore"
+         id="org.eclipse.emf.cdo.examples.hibernate.server"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.dawn.examples.acore.diagram"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.dawn.examples.acore.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.dawn.examples.acore.editor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.dawn.examples.acore.editor.dawn"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
          unpack="false"/>
 
 </feature>

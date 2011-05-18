@@ -34,14 +34,13 @@
    </url>
 
    <includes
-         id="org.eclipse.emf.cdo.dawn.tests.source"
+         id="org.eclipse.emf.cdo.tests.hibernate.source"
          version="0.0.0"/>
 
    <plugin
-         id="org.eclipse.emf.cdo.dawn.tests"
+         id="org.eclipse.emf.cdo.tests.hibernate"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>

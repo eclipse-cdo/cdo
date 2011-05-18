@@ -53,13 +53,6 @@
          id="org.eclipse.emf.cdo.dawn.examples"
          version="0.0.0"/>
 
-   <plugin
-         id="org.eclipse.emf.cdo.dawn.sdk"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-         
    <includes
          id="org.eclipse.emf.cdo.dawn.ecore.editor.dawn"
          version="0.0.0"/>
@@ -68,6 +61,13 @@
          id="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn"
          version="0.0.0"/>
 
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.sdk"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
    <plugin
          id="org.apache.commons.lang.source"
          download-size="0"

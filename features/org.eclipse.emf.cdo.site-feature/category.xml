@@ -25,7 +25,13 @@
       <category name="org.eclipse.emf.cdo"/>
    </feature>
    <feature id="org.eclipse.emf.cdo.server.hibernate" version="0.0.0">
-      <category name="org.eclipse.emf.cdo"/>
+      <category name="org.eclipse.emf.cdo.hibernate"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.tests.hibernate" version="0.0.0">
+      <category name="org.eclipse.emf.cdo.hibernate"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.examples.hibernate" version="0.0.0">
+      <category name="org.eclipse.emf.cdo.hibernate"/>
    </feature>
    <feature id="org.eclipse.emf.cdo.server.objectivity" version="0.0.0">
       <category name="org.eclipse.emf.cdo"/>
@@ -97,6 +103,7 @@
       <category name="org.eclipse.net4j.db"/>
    </feature>
    <category-def name="org.eclipse.emf.cdo" label="CDO Model Repository"/>
+   <category-def name="org.eclipse.emf.cdo.hibernate" label="CDO Model Repository Hibernate (optional)"/>
    <category-def name="org.eclipse.emf.cdo.dawn" label="CDO Dawn"/>
    <category-def name="org.eclipse.net4j" label="Net4j Signalling Platform"/>
    <category-def name="org.eclipse.net4j.db" label="Net4j DB Framework"/>

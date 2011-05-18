@@ -1,6 +1,6 @@
 stream=4.0
-milestone=M7a
-buildID=1320
+milestone=RC1
+buildID=1426
 
 rm -rf promote.tmp
 mkdir promote.tmp
@@ -25,10 +25,12 @@ if [ -n "$PROBLEM_BUNDLES" ]; then
  exit 2
 fi
 
-for F in artifacts content; do
-	/shared/common/jdk-1.5.0-22.x86_64/bin/jar xf $F.jar
+JAR=/shared/common/jdk-1.5.0-22.x86_64/bin/jar  
+for F in artifacts content
+do
+	$JAR xf $F.jar
 	sed -i "/<property name='p2\.compressed'/a \ \ \ \ <property name='p2.mirrorsURL' value='http://www.eclipse.org/downloads/download.php?file=/modeling/emf/cdo/updates/$stream/$stream-$milestone-$label&amp;protocol=http&amp;format=xml'/>'>" $F.xml
-	/shared/common/jdk-1.5.0-22.x86_64/bin/jar cvf $F.jar $F.xml
+	$JAR cf $F.jar $F.xml
 done
 
 cp -R . /home/data/httpd/download.eclipse.org/modeling/emf/cdo/updates/$stream/$stream-$milestone-$label

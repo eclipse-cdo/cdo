@@ -17,20 +17,28 @@ import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecoretools.diagram.edit.parts.EClassEditPart;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
+import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
+import org.eclipse.swtbot.swt.finder.matchers.AbstractMatcher;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+
+import org.hamcrest.Description;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Martin Fluegge
@@ -41,18 +49,40 @@ public class DawnEcoreTestUtil
 
   public static final String CREATION_WIZARD_NAME_EMF = "Dawn Ecore Model";
 
+  public static final String E_CLASS = "EClass";
+
+  public static final String E_REFERENCE = "EReference";
+
+  public static final String E_ATTRIBUTE = "EAttribute";
+
+  public static final String E_OPERATION = "EOperation";
+
+  public static final String INHERITANCE = "Inheritance";
+
+  public static final String E_DATATYPE = "EDataType";
+
+  public static final String E_PACKAGE = "EPackage";
+
+  public static final String E_ANNOTATION = "EAnnotation";
+
+  public static final String E_ENUM = "EEnum";
+
+  public static final String E_ANNOTATION_LINK = "EAnnotation link";
+
+  public static final String DETAILS_ENTRY = "Details Entry";
+
   private static String resourceFieldLabel = org.eclipse.emf.cdo.dawn.ui.messages.Messages.DawnCreateNewResourceWizardPage_6;
 
-  public static SWTBotGefEditor openNewEcoreGMFEditor(String diagramResourceName, SWTGefBot bot)
+  public static SWTBotGefEditor openNewEcoreToolsEditor(String diagramResourceName, SWTGefBot bot)
   {
     bot.menu("File").menu("New").menu("Other...").click();
 
     SWTBotShell shell = bot.shell("New");
     shell.activate();
-    bot.tree().expandNode("Dawn Examples").select(CREATION_WIZARD_NAME_GMF);
+    bot.tree().expandNode("Dawn Examples").select(DawnEcoreTestUtil.CREATION_WIZARD_NAME_GMF);
     bot.button("Next >").click();
     bot.button("Finish").click();
-    SWTBotGefEditor editor = bot.gefEditor(diagramResourceName);
+    SWTBotGefEditor editor = bot.gefEditor("default");
     return editor;
   }
 
@@ -147,5 +177,95 @@ public class DawnEcoreTestUtil
       return ((LineBorder)figure.getBorder()).getColor().equals(DawnAppearancer.COLOR_DELETE_CONFLICT);
     }
     return false;
+  }
+
+  public static List<SWTBotGefEditPart> getAllConnections(final SWTBotGefEditor editor)
+  {
+    List<SWTBotGefEditPart> aClassEditParts = editor.editParts(new AbstractMatcher<AClassEditPart>()
+    {
+      @Override
+      protected boolean doMatch(Object item)
+      {
+        if (item instanceof EClassEditPart)
+        {
+          return true;
+        }
+        return false;
+      }
+
+      public void describeTo(Description description)
+      {
+      }
+    });
+
+    List<SWTBotGefEditPart> ret = new ArrayList<SWTBotGefEditPart>();
+    for (SWTBotGefEditPart editPart : aClassEditParts)
+    {
+      ret.addAll(editPart.sourceConnections());
+    }
+
+    for (SWTBotGefEditPart editPart : aClassEditParts)
+    {
+      ret.addAll(editPart.targetConnections());
+    }
+
+    return ret;
+  }
+
+  public static List<SWTBotGefEditPart> getAllSourceConnections(final SWTBotGefEditor editor)
+  {
+    List<SWTBotGefEditPart> aClassEditParts = editor.editParts(new AbstractMatcher<AClassEditPart>()
+    {
+      @Override
+      protected boolean doMatch(Object item)
+      {
+        if (item instanceof EClassEditPart)
+        {
+          return true;
+        }
+        return false;
+      }
+
+      public void describeTo(Description description)
+      {
+      }
+    });
+
+    List<SWTBotGefEditPart> ret = new ArrayList<SWTBotGefEditPart>();
+    for (SWTBotGefEditPart editPart : aClassEditParts)
+    {
+      ret.addAll(editPart.sourceConnections());
+    }
+
+    return ret;
+  }
+
+  public static List<SWTBotGefEditPart> getAllTargetConnections(final SWTBotGefEditor editor)
+  {
+    List<SWTBotGefEditPart> aClassEditParts = editor.editParts(new AbstractMatcher<AClassEditPart>()
+    {
+      @Override
+      protected boolean doMatch(Object item)
+      {
+        if (item instanceof EClassEditPart)
+        {
+          return true;
+        }
+        return false;
+      }
+
+      public void describeTo(Description description)
+      {
+      }
+    });
+
+    List<SWTBotGefEditPart> ret = new ArrayList<SWTBotGefEditPart>();
+
+    for (SWTBotGefEditPart editPart : aClassEditParts)
+    {
+      ret.addAll(editPart.targetConnections());
+    }
+
+    return ret;
   }
 }

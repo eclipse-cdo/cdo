@@ -89,12 +89,19 @@ public abstract class AbstractDawnUITest<T extends SWTWorkbenchBot> extends Abst
 
   protected boolean resourceExists(String resourcePath)
   {
-    CDOSession session = openSession();
-    CDOView view = session.openView();
+    try
+    {
+      CDOSession session = openSession();
+      CDOView view = session.openView();
 
-    CDOResource resource = view.getResource(resourcePath);
+      CDOResource resource = view.getResource(resourcePath);
 
-    return resource != null ? true : false;
+      return resource != null ? true : false;
+    }
+    catch (Exception ex)
+    {
+      return false;
+    }
   }
 
   protected void createNode(String type, int xPosition, int yPosition, SWTGefBot bot, SWTBotGefEditor editor)

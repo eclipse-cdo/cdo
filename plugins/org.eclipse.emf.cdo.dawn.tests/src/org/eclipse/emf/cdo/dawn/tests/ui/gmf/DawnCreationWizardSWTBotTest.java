@@ -133,8 +133,8 @@ public class DawnCreationWizardSWTBotTest extends AbstractDawnGEFTest
     SWTBotText fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     assertEquals("notational.acore", fileSemanticNameLabel.getText());
 
-    fileNameLabel = getBot().textWithLabel(resourceFieldLabel);
-    fileNameLabel.setText("semantic.acore");
+    fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
+    fileSemanticNameLabel.setText("semantic.acore");
 
     fileSemanticNameLabel = getBot().textWithLabel(resourceFieldLabel);
     assertEquals("semantic.acore", fileSemanticNameLabel.getText());

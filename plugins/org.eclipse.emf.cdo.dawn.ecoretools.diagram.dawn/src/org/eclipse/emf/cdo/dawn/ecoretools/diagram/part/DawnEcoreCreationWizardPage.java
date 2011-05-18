@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.ecoretools.diagram.part;
 
+import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.dawn.ui.wizards.dialogs.CDOResourceNodeSelectionDialog;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -25,6 +26,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
@@ -49,8 +52,21 @@ public class DawnEcoreCreationWizardPage extends EcoreCreationWizardPage
   public void createControl(Composite parent)
   {
     super.createControl(parent);
-    Text nameFd = (Text)getField("nameFd");
-    nameFd.setEnabled(false);
+    final Text nameFd = (Text)getField("nameFd");
+    // nameFd.setEnabled(false);
+
+    nameFd.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        Text directoryFd = (Text)getField("directoryFd");
+        semanticModelURI = URI.createURI(directoryFd.getText() + nameFd.getText());
+        setPageComplete(validatePage());
+      }
+    });
+
+    URI domainModelURI = getDomainModelURI();
+    setModelURI(domainModelURI);
   }
 
   @Override
@@ -62,15 +78,20 @@ public class DawnEcoreCreationWizardPage extends EcoreCreationWizardPage
       semanticModelURI = dialog.getResults();
       if (semanticModelURI != null)
       {
-        Text directoryFd = (Text)getField("directoryFd");
-        directoryFd.setText(semanticModelURI.toString());
-
-        Text nameFd = (Text)getField("nameFd");
-        nameFd.setText(semanticModelURI.lastSegment());
+        setModelURI(semanticModelURI);
 
         loadModelFile();
       }
     }
+  }
+
+  private void setModelURI(URI semanticModelURI)
+  {
+    Text directoryFd = (Text)getField("directoryFd");
+    directoryFd.setText(semanticModelURI.toString().replace(semanticModelURI.lastSegment(), ""));
+
+    Text nameFd = (Text)getField("nameFd");
+    nameFd.setText(semanticModelURI.lastSegment());
   }
 
   @Override
@@ -128,7 +149,7 @@ public class DawnEcoreCreationWizardPage extends EcoreCreationWizardPage
     return view.getResourceSet();
   }
 
-  Object getField(String name)
+  private Object getField(String name)
   {
     final Field fields[] = this.getClass().getSuperclass().getDeclaredFields();
     for (int i = 0; i < fields.length; ++i)
@@ -157,6 +178,12 @@ public class DawnEcoreCreationWizardPage extends EcoreCreationWizardPage
     setMessage(null);
     setErrorMessage(null);
 
+    if (view.hasResource(getDomainModelURI().path()))
+    {
+      setErrorMessage("Resource already exists");
+      return false;
+    }
+
     // if (isNewModel())
     // {
     // return validateNewModelGroup();
@@ -171,6 +198,18 @@ public class DawnEcoreCreationWizardPage extends EcoreCreationWizardPage
   @Override
   public URI getDomainModelURI()
   {
+    if (semanticModelURI == null)
+    {
+      String authority = PreferenceConstants.getRepositoryName();
+      semanticModelURI = URI.createURI("cdo://" + authority + "/default.ecore");
+
+      int i = 2;
+      while (i < 30 && view.hasResource(semanticModelURI.path()))
+      {
+        semanticModelURI = URI.createURI("cdo://" + authority + "/" + "default" + i + ".ecore");
+        i++;
+      }
+    }
     return semanticModelURI;
   }
 

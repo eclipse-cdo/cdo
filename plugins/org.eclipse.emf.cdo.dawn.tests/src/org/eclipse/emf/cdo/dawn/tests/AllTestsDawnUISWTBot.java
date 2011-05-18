@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.dawn.tests;
 
 import org.eclipse.emf.cdo.dawn.tests.bugzillas.Bugzilla_321024_Test;
+import org.eclipse.emf.cdo.dawn.tests.bugzillas.Bugzilla_333187_Test;
 import org.eclipse.emf.cdo.dawn.tests.bugzillas.Bugzilla_333291_Test;
 import org.eclipse.emf.cdo.dawn.tests.ui.DawnPreferencesTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.DawnProjectExplorerTest;
@@ -45,14 +46,15 @@ public class AllTestsDawnUISWTBot extends ConfigTestSuite
   protected void initConfigSuites(TestSuite parent)
   {
     addScenario(parent, COMBINED, MEM, TCP, NATIVE);
-    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
-    addScenario(parent, COMBINED, MEM, TCP, LEGACY);
-    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, LEGACY);
+    // addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
+    // addScenario(parent, COMBINED, MEM, TCP, LEGACY);
+    // addScenario(parent, COMBINED, MEM_BRANCHES, TCP, LEGACY);
   }
 
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
+
     /******************** GMF **********************/
     testClasses.add(DawnPreferencesTest.class);
     testClasses.add(DawnCreationWizardSWTBotTest.class);
@@ -70,5 +72,7 @@ public class AllTestsDawnUISWTBot extends ConfigTestSuite
     /******************** Bugzilla **********************/
     testClasses.add(Bugzilla_321024_Test.class);
     testClasses.add(Bugzilla_333291_Test.class);
+    testClasses.add(Bugzilla_333187_Test.class);
+    // testClasses.add(Bugzilla_345858_Test.class);
   }
 }

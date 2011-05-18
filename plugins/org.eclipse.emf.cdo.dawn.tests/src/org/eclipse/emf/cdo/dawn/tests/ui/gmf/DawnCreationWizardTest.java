@@ -38,10 +38,8 @@ import java.lang.reflect.Method;
  */
 public class DawnCreationWizardTest extends AbstractCDOTest
 {
-
   public void testCreationWizardSetWrongDiagramName() throws Exception
   {
-
     CDOSession session = openSession();
     CDOConnectionUtil.instance.openView(session);
 

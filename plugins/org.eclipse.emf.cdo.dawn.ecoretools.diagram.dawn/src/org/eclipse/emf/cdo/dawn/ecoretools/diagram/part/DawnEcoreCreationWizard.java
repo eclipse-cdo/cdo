@@ -64,7 +64,6 @@ public class DawnEcoreCreationWizard extends EcoreCreationWizard
       @Override
       protected void execute(IProgressMonitor monitor) throws CoreException, InterruptedException
       {
-
         if (diagPage.isNewModel())
         {
           diagram = EcoreDiagramEditorUtil.createDiagram(diagPage.getDiagramModelURI(), diagPage.getDomainModelURI(),

@@ -117,9 +117,9 @@
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<!-- ################################################################################################## -->
-			<!-- ## Do not forget to adjust discovery URL in /org.eclipse.emf.cdo.dawn.tests-feature/feature.xml ## -->
-			<!-- ################################################################################################## -->
+			<!-- ################################################################ -->
+			<!-- ## Do not forget to adjust dawn tests feature.properties (1x) ## -->
+			<!-- ################################################################ -->
 			<rm:uri format="{0}/technology/swtbot/helios/dev-build/update-site">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
@@ -139,6 +139,9 @@
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
+			<!-- ############################################################### -->
+			<!-- ## Do not forget to adjust hibernate feature.properties (3x) ## -->
+			<!-- ############################################################### -->
 			<rm:uri format="http://www.elver.org/eclipse/update" />
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"

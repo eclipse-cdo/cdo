@@ -612,6 +612,11 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     skipConfig("Hibernate");
   }
 
+  protected void skipLegacy()
+  {
+    skipTest(getModelConfig() instanceof ModelConfig.Legacy);
+  }
+
   protected void skipExternalReferences()
   {
     skipTest(getRepository().getStore() instanceof NoExternalReferences);

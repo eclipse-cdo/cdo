@@ -156,11 +156,46 @@ public class CommitIntegrityCheck
       EStructuralFeature feat = featureDelta.getFeature();
       if (feat == CDOContainerFeatureDelta.CONTAINER_FEATURE)
       {
-        // Object is dirty with respect to its container; this means it was moved;
-        // We must ensure that both the old and new containers are included
-        checkContainerIncluded(dirtyObject, "moved");
-        CDOID containerOrResourceID = getContainerOrResourceID(cleanRev);
-        checkIncluded(containerOrResourceID, "former container (or resource) of moved", dirtyObject);
+        // Three possibilities here:
+        // 1. Object's container has changed
+        // 2. Object's containment feature has changed
+        // 3. Object's resource has changed
+        // (or several of the above)
+
+        // @1
+        CDOID currentContainerID = (CDOID)transaction.convertObjectToID(dirtyRev.getContainerID());
+        CDOID cleanContainerID = (CDOID)transaction.convertObjectToID(cleanRev.getContainerID());
+        if (currentContainerID != cleanContainerID)
+        {
+          if (currentContainerID != CDOID.NULL)
+          {
+            checkIncluded(currentContainerID, "container of moved", dirtyObject);
+          }
+
+          if (cleanContainerID != CDOID.NULL)
+          {
+            checkIncluded(cleanContainerID, "former container of moved", dirtyObject);
+          }
+        }
+
+        // @2
+        // Nothing to be done. (I think...)
+
+        // @3
+        CDOID currentResourceID = (CDOID)transaction.convertObjectToID(dirtyRev.getResourceID());
+        CDOID cleanResourceID = (CDOID)transaction.convertObjectToID(cleanRev.getResourceID());
+        if (currentResourceID != cleanResourceID)
+        {
+          if (currentResourceID != CDOID.NULL)
+          {
+            checkIncluded(currentResourceID, "resource of moved", dirtyObject);
+          }
+
+          if (cleanResourceID != CDOID.NULL)
+          {
+            checkIncluded(cleanResourceID, "former resource of moved", dirtyObject);
+          }
+        }
       }
       else if (feat instanceof EReference)
       {

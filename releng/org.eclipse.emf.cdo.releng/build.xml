@@ -299,7 +299,7 @@
 		</buckminster>
 		-->
 
-		<mkdir dir="${targetPlatformPath}" failonerror="false" />
+		<mkdir dir="${targetPlatformPath}" />
 		<buckminster command="import">
 			<cmdargs>
 				<arg value="-T" />

@@ -657,9 +657,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
       InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-      CDORevisionKey revKey = transaction.getCleanRevisions().get(object);
+      CDORevision cleanRevision = transaction.getCleanRevisions().get(object);
 
-      CDOID id = revKey.getID();
+      CDOID id = cleanRevision.getID();
       object.cdoInternalSetID(id);
       object.cdoInternalSetView(transaction);
 
@@ -667,15 +667,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDORevisionFactory factory = revisionManager.getFactory();
       InternalCDORevision revision = (InternalCDORevision)factory.createRevision(object.eClass());
       revision.setID(id);
-      revision.setBranchPoint(revKey.getBranch().getHead());
-      revision.setVersion(revKey.getVersion());
+      revision.setBranchPoint(cleanRevision.getBranch().getHead());
+      revision.setVersion(cleanRevision.getVersion());
 
       // Populate the revision based on the values in the CDOObject
       object.cdoInternalSetRevision(revision);
       object.cdoInternalPostAttach();
 
       // Compute a revision delta and register it with the tx
-      CDORevision cleanRevision = revisionManager.getRevisionByVersion(id, revKey, -1, true);
       CDORevisionDelta revisionDelta = revision.compare(cleanRevision);
       if (revisionDelta.isEmpty())
       {

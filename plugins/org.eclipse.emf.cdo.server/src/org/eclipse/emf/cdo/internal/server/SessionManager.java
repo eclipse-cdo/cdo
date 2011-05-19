@@ -40,6 +40,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eike Stepper
@@ -67,9 +68,9 @@ public class SessionManager extends Container<ISession> implements InternalSessi
 
   private IUserManager userManager;
 
-  private Map<Integer, InternalSession> sessions = new HashMap<Integer, InternalSession>();
+  private final Map<Integer, InternalSession> sessions = new HashMap<Integer, InternalSession>();
 
-  private int lastSessionID;
+  private final AtomicInteger lastSessionID = new AtomicInteger();
 
   /**
    * @since 2.0
@@ -199,7 +200,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
    */
   public InternalSession openSession(ISessionProtocol sessionProtocol)
   {
-    int id = ++lastSessionID;
+    int id = lastSessionID.incrementAndGet();
     if (TRACER.isEnabled())
     {
       TRACER.trace("Opening session " + id); //$NON-NLS-1$

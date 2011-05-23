@@ -125,7 +125,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private InternalCDORevision[] dirtyObjects = new InternalCDORevision[0];
 
-  private InternalCDORevision[] detachedRevisions = new InternalCDORevision[0];
+  private InternalCDORevision[] cachedDetachedRevisions = new InternalCDORevision[0];
 
   private Map<CDOID, InternalCDORevision> cachedRevisions;
 
@@ -227,7 +227,16 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public InternalCDORevision[] getDetachedRevisions()
   {
-    return detachedRevisions;
+    // TODO This array can contain null values as they only come from the cache
+    for (InternalCDORevision cachedDetachedRevision : cachedDetachedRevisions)
+    {
+      if (cachedDetachedRevision == null)
+      {
+        throw new AssertionError("Detached revisions are incomplete");
+      }
+    }
+
+    return cachedDetachedRevisions;
   }
 
   public InternalCDORevisionDelta[] getDirtyObjectDeltas()
@@ -601,13 +610,18 @@ public class TransactionCommitContext implements InternalCommitContext
       @Override
       public CDOIDAndVersion get(int i)
       {
-        return detachedRevisions[i];
+        if (cachedDetachedRevisions[i] != null)
+        {
+          return cachedDetachedRevisions[i];
+        }
+
+        return CDOIDUtil.createIDAndVersion(detachedObjects[i], CDORevision.UNSPECIFIED_VERSION);
       }
 
       @Override
       public int size()
       {
-        return detachedRevisions.length;
+        return detachedObjects.length;
       }
     };
 
@@ -1062,9 +1076,9 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     try
     {
-      monitor.begin(detachedRevisions.length);
+      monitor.begin(cachedDetachedRevisions.length);
       long revised = getBranchPoint().getTimeStamp() - 1;
-      for (InternalCDORevision revision : detachedRevisions)
+      for (InternalCDORevision revision : cachedDetachedRevisions)
       {
         if (revision != null)
         {
@@ -1083,7 +1097,7 @@ public class TransactionCommitContext implements InternalCommitContext
   private void detachObjects(OMMonitor monitor)
   {
     int size = detachedObjects.length;
-    detachedRevisions = new InternalCDORevision[size];
+    cachedDetachedRevisions = new InternalCDORevision[size];
 
     CDOID[] detachedObjects = getDetachedObjects();
 
@@ -1093,12 +1107,9 @@ public class TransactionCommitContext implements InternalCommitContext
       for (int i = 0; i < size; i++)
       {
         CDOID id = detachedObjects[i];
-        InternalCDORevision revision = (InternalCDORevision)revisionManager.getCache().getRevision(id, transaction);
-        if (revision != null)
-        {
-          detachedRevisions[i] = revision;
-        }
 
+        // Remember the cached revision that must be revised after successful commit through updateInfraStructure
+        cachedDetachedRevisions[i] = (InternalCDORevision)revisionManager.getCache().getRevision(id, transaction);
         monitor.worked();
       }
     }

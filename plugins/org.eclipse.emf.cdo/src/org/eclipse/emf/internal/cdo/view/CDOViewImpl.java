@@ -221,7 +221,6 @@ public class CDOViewImpl extends AbstractCDOView
     basicSetBranchPoint(branchPoint);
     doInvalidate(branchPoint.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, allChangedObjects, allDetachedObjects,
         oldRevisions);
-    clearRootResource();
 
     IListener[] listeners = getListeners();
     if (listeners != null)

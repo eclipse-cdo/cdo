@@ -223,16 +223,6 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     getResourceSet().getResources().add(rootResource);
   }
 
-  protected synchronized void clearRootResource()
-  {
-    if (rootResource != null)
-    {
-      getResourceSet().getResources().remove(rootResource);
-      deregisterObject(rootResource);
-      rootResource = null;
-    }
-  }
-
   public CDOURIHandler getURIHandler()
   {
     return uriHandler;

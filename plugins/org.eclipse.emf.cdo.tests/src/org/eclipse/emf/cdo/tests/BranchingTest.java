@@ -531,7 +531,7 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
-  public void _testDetachExisting() throws Exception
+  public void testDetachExisting() throws Exception
   {
     CDOSession session = openSession1();
     CDOBranchManager branchManager = session.getBranchManager();
@@ -647,7 +647,7 @@ public class BranchingTest extends AbstractCDOTest
 
     try
     {
-      check(session, subBranch, commitTime3, 0, "CDO");
+      check(session, subBranch, commitTime3, 0, "CDO", 1);
       fail("IndexOutOfBoundsException expected");
     }
     catch (IndexOutOfBoundsException expected)
@@ -661,11 +661,12 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
-  private void check(CDOSession session, CDOBranch branch, long timeStamp, float price, String name)
+  private void check(CDOSession session, CDOBranch branch, long timeStamp, float price, String name,
+      int expectedContentsSize)
   {
     CDOView view = session.openView(branch, timeStamp);
     CDOResource resource = view.getResource(getResourcePath("/res"));
-    assertEquals(2, resource.getContents().size());
+    assertEquals(expectedContentsSize, resource.getContents().size());
 
     dumpAll(session);
     OrderDetail orderDetail = (OrderDetail)resource.getContents().get(1);
@@ -678,6 +679,11 @@ public class BranchingTest extends AbstractCDOTest
     assertEquals(name, product.getName());
 
     view.close();
+  }
+
+  private void check(CDOSession session, CDOBranch branch, long timeStamp, float price, String name)
+  {
+    check(session, branch, timeStamp, price, name, 2);
   }
 
   private void check(CDOSession session, CDOBranch branch, long timeStamp, float price, float price2, String name)

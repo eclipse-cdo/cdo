@@ -46,6 +46,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
+import org.eclipse.emf.cdo.tests.util.TestSessionManager;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
@@ -81,6 +82,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public static final String PROP_TEST_REPOSITORY = "test.repository";
 
   public static final String PROP_TEST_REVISION_MANAGER = "test.repository.RevisionManager";
+
+  public static final String PROP_TEST_SESSION_MANAGER = "test.repository.SessionManager";
 
   public static final String PROP_TEST_USER_MANAGER = "test.repository.UserManager";
 
@@ -389,13 +392,18 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       revisionManager = new TestRevisionManager();
     }
-
     repository.setRevisionManager(revisionManager);
+
+    InternalSessionManager sessionManager = getTestSessionManager();
+    if (sessionManager == null)
+    {
+      sessionManager = new TestSessionManager();
+    }
+    repository.setSessionManager(sessionManager);
 
     IUserManager userManager = getTestUserManager();
     if (userManager != null)
     {
-      InternalSessionManager sessionManager = (InternalSessionManager)CDOServerUtil.createSessionManager();
       sessionManager.setUserManager(userManager);
       repository.setSessionManager(sessionManager);
     }
@@ -419,6 +427,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected InternalCDORevisionManager getTestRevisionManager()
   {
     return (InternalCDORevisionManager)getTestProperty(PROP_TEST_REVISION_MANAGER);
+  }
+
+  protected InternalSessionManager getTestSessionManager()
+  {
+    return (InternalSessionManager)getTestProperty(PROP_TEST_SESSION_MANAGER);
   }
 
   protected IUserManager getTestUserManager()

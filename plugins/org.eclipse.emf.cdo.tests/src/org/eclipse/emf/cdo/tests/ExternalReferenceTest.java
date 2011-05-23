@@ -186,14 +186,14 @@ public class ExternalReferenceTest extends AbstractCDOTest
       CDOResource resB = transactionB1.createResource(getResourcePath("/resB"));
 
       EList<Resource> resources = resourceSet.getResources();
-      assertEquals(4, resources.size());
+      assertEquals(2, resources.size());// Bug 346636
 
       CDOResource resC = transactionA1.createResource(getResourcePath("/resC"));
       assertNotNull(resC);
-      assertEquals(5, resources.size());
+      assertEquals(3, resources.size());// Bug 346636
 
       Resource resD = resourceSet.createResource(URI.createURI("test://1"));
-      assertEquals(6, resources.size());
+      assertEquals(4, resources.size());// Bug 346636
       assertEquals(false, resD instanceof CDOResource);
 
       Company companyA = getModel1Factory().createCompany();

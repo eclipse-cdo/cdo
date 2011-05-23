@@ -220,7 +220,6 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     rootResource = resource;
     rootResource.setRoot(true);
     registerObject(rootResource);
-    getResourceSet().getResources().add(rootResource);
   }
 
   public CDOURIHandler getURIHandler()

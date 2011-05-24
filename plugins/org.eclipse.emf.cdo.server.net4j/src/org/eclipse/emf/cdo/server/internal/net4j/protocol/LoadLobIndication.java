@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadLobIndication extends CDOReadIndication
+public class LoadLobIndication extends CDOServerReadIndication
 {
   private byte[] id;
 

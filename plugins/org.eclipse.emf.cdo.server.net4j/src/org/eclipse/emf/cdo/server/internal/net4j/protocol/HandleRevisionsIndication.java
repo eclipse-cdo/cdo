@@ -28,7 +28,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class HandleRevisionsIndication extends CDOReadIndication
+public class HandleRevisionsIndication extends CDOServerReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, HandleRevisionsIndication.class);
 

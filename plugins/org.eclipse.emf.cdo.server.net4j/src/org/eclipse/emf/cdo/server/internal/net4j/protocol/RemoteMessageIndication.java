@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class RemoteMessageIndication extends CDOReadIndication
+public class RemoteMessageIndication extends CDOServerReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, RemoteMessageIndication.class);
 

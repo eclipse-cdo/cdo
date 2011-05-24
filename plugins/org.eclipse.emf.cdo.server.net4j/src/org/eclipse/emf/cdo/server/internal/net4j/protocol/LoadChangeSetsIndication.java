@@ -24,7 +24,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadChangeSetsIndication extends CDOReadIndication
+public class LoadChangeSetsIndication extends CDOServerReadIndication
 {
   private CDOBranchPointRange[] ranges;
 

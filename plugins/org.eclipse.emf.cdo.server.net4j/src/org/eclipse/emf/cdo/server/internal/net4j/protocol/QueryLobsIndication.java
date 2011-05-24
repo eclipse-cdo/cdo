@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class QueryLobsIndication extends CDOReadIndication
+public class QueryLobsIndication extends CDOServerReadIndication
 {
   private List<byte[]> ids = new ArrayList<byte[]>();
 

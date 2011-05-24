@@ -24,7 +24,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class ReplicateRepositoryIndication extends CDOReadIndication
+public class ReplicateRepositoryIndication extends CDOServerReadIndication
 {
   private int lastReplicatedBranchID;
 

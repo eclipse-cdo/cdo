@@ -25,7 +25,7 @@ import java.io.IOException;
 /**
  * @author Simon McDuff
  */
-public class ChangeSubscriptionIndication extends CDOReadIndication
+public class ChangeSubscriptionIndication extends CDOServerReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ChangeSubscriptionIndication.class);
 

@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LockAreaIndication extends CDOReadIndication
+public class LockAreaIndication extends CDOServerWriteIndication
 {
   private String result;
 

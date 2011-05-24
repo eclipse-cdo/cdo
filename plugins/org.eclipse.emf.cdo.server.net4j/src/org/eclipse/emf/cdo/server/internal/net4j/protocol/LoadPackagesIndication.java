@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadPackagesIndication extends CDOReadIndication
+public class LoadPackagesIndication extends CDOServerReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadPackagesIndication.class);
 

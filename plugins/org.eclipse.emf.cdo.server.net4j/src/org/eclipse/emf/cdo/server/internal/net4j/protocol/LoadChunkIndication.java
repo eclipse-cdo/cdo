@@ -34,7 +34,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadChunkIndication extends CDOReadIndication
+public class LoadChunkIndication extends CDOServerReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadChunkIndication.class);
 

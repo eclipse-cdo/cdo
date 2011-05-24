@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class OpenViewIndication extends CDOReadIndication
+public class OpenViewIndication extends CDOServerReadIndication
 {
   private CDOBranchPoint result;
 

@@ -38,7 +38,7 @@ import java.util.Map.Entry;
 /**
  * @author Simon McDuff
  */
-public class RefreshSessionIndication extends CDOReadIndication
+public class RefreshSessionIndication extends CDOServerReadIndication
 {
   private Map<CDOBranch, List<CDORevisionKey>> viewedRevisions = new HashMap<CDOBranch, List<CDORevisionKey>>();
 

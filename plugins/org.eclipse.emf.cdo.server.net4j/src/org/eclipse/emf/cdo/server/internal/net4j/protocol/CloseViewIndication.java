@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class CloseViewIndication extends CDOReadIndication
+public class CloseViewIndication extends CDOServerReadIndication
 {
   public CloseViewIndication(CDOServerProtocol protocol)
   {

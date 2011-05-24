@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class CreateBranchIndication extends CDOReadIndication
+public class CreateBranchIndication extends CDOServerWriteIndication
 {
   private int branchID;
 

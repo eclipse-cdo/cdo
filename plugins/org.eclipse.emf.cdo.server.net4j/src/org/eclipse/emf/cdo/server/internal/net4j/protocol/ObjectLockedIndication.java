@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * @author Simon McDuff
  */
-public class ObjectLockedIndication extends CDOReadIndication
+public class ObjectLockedIndication extends CDOServerReadIndication
 {
   private boolean isLocked;
 

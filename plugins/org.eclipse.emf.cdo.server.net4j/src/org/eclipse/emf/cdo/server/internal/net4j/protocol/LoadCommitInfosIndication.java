@@ -25,7 +25,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadCommitInfosIndication extends CDOReadIndication
+public class LoadCommitInfosIndication extends CDOServerReadIndication
 {
   private CDOBranch branch;
 

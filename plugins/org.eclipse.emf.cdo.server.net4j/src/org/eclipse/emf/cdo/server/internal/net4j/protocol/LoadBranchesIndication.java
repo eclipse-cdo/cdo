@@ -24,7 +24,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadBranchesIndication extends CDOReadIndication
+public class LoadBranchesIndication extends CDOServerReadIndication
 {
   private int startID;
 

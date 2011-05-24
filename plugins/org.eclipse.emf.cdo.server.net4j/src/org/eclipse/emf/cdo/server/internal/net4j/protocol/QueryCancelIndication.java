@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * @author Simon McDuff
  */
-public class QueryCancelIndication extends CDOReadIndication
+public class QueryCancelIndication extends CDOServerReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, QueryCancelIndication.class);
 

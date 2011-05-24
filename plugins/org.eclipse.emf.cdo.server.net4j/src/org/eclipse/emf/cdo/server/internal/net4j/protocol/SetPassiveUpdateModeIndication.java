@@ -21,7 +21,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class SetPassiveUpdateModeIndication extends CDOReadIndication
+public class SetPassiveUpdateModeIndication extends CDOServerReadIndication
 {
   public SetPassiveUpdateModeIndication(CDOServerProtocol protocol)
   {

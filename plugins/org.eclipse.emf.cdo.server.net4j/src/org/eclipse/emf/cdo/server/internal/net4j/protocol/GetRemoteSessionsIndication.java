@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class GetRemoteSessionsIndication extends CDOReadIndication
+public class GetRemoteSessionsIndication extends CDOServerReadIndication
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, GetRemoteSessionsIndication.class);
 

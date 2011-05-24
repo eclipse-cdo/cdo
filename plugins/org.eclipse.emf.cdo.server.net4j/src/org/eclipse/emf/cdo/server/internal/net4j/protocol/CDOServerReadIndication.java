@@ -19,9 +19,9 @@ import org.eclipse.net4j.buffer.BufferOutputStream;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOReadIndication extends CDOServerIndication
+public abstract class CDOServerReadIndication extends CDOServerIndication
 {
-  public CDOReadIndication(CDOServerProtocol protocol, short signalID)
+  public CDOServerReadIndication(CDOServerProtocol protocol, short signalID)
   {
     super(protocol, signalID);
   }

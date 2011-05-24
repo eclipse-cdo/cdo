@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * @author Simon McDuff
  */
-public class LockObjectsIndication extends CDOReadIndication
+public class LockObjectsIndication extends CDOServerWriteIndication
 {
   private List<CDORevisionKey> staleRevisions = new LinkedList<CDORevisionKey>();
 

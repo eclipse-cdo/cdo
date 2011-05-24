@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * @author Simon McDuff
  */
-public class UnlockObjectsIndication extends CDOReadIndication
+public class UnlockObjectsIndication extends CDOServerWriteIndication
 {
   public UnlockObjectsIndication(CDOServerProtocol protocol)
   {

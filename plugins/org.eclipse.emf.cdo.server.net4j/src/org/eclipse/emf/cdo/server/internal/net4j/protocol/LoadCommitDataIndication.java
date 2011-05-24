@@ -20,7 +20,7 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LoadCommitDataIndication extends CDOReadIndication
+public class LoadCommitDataIndication extends CDOServerReadIndication
 {
   private long timeStamp;
 

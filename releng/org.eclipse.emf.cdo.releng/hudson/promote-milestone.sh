@@ -1,6 +1,6 @@
 stream=4.0
-milestone=RC1
-buildID=1426
+milestone=RC2
+buildID=1445
 
 rm -rf promote.tmp
 mkdir promote.tmp

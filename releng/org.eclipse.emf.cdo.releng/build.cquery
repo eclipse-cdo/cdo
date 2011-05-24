@@ -7,6 +7,10 @@
     <cq:advisorNode namePattern="org\.eclipse\.net4j.*\.source" skipComponent="true"/>
     <cq:advisorNode namePattern="org\.gastro.*\.source" skipComponent="true"/>
     <cq:advisorNode namePattern="com\.mongodb.*\.source" skipComponent="true"/>
+	
+		<!-- For unknown reasons source 1.0.4 gets included for 1.1.1 -->
+    <cq:advisorNode namePattern="org\.apache\.commons\.logging\.source" skipComponent="true"/>
+	
     <cq:advisorNode namePattern="^org\.eclipse\.swt\.(?:gtk\.(?:linux\.s390x|aix\.ppc(?:64)?)|motif\.solaris\.sparc|photon\.qnx\.x86)\.source$" skipComponent="true"/>
     <cq:advisorNode namePattern="^org\.eclipse\.swt\.(?:gtk\.aix\.ppc(?:64)?|motif\.solaris\.sparc|photon\.qnx\.x86)$" skipComponent="true"/>
     <cq:advisorNode namePattern="^org\.eclipse\.equinox\.launcher\.gtk\.aix\.ppc(?:64)?$" skipComponent="true"/>

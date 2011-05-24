@@ -305,14 +305,12 @@
 				<arg value="-T" />
 				<arg value="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
 				<arg value="-B" />
-				<arg value="${site.p2.dir}/bom.xml" />
+				<arg value="${result}/bom.xml" />
 				<arg value="-P" />
 				<arg value="${basedir}/${properties.file}" />
 				<arg value="${basedir}/${mspec.file}" />
 			</cmdargs>
 		</buckminster>
-
-		<xslt style="xsl/content2xml.xsl" in="${site.p2.dir}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />
 	</target>
 
 	<target name="site.p2" depends="provision">
@@ -329,6 +327,9 @@
 				<arg value="org.eclipse.emf.cdo.site#site.p2" />
 			</cmdargs>
 		</buckminster>
+
+		<echo message="Creating bookmarks.tmp" />
+		<xslt style="xsl/content2xml.xsl" in="${result}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />
 
 		<echo message="Creating human readable index.html" />
 		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />

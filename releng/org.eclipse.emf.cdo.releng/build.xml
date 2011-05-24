@@ -131,10 +131,6 @@
 	</target>
 
 	<target name="init.checks" depends="init.clean.tools,init.clean.tp,init.clean.workspace,init.clean.output">
-		<delete file="${result}/build-info.xml" failonerror="false" quiet="true" />
-		<delete file="${result}/coverageReport.xml" failonerror="false" quiet="true" />
-		<delete file="${result}/testReport.xml" failonerror="false" quiet="true" />
-		
 		<echo message="Sourcing ${properties.file}" />
 		<available file="${tools}/director/director" property="director.exists" />
 		<available file="${tools}/buckminster/buckminster" property="buckminster.exists" />

@@ -333,7 +333,7 @@
 		</buckminster>
 
 		<echo message="Creating bookmarks.tmp" />
-		<xslt style="xsl/content2xml.xsl" in="${result}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />
+		<xslt style="xsl/bom2bookmarks.xsl" in="${result}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />
 
 		<echo message="Creating human readable index.html" />
 		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />

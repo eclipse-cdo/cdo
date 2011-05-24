@@ -304,11 +304,11 @@
 			<cmdargs>
 				<arg value="-T" />
 				<arg value="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
+				<arg value="-B" />
+				<arg value="${site.p2.dir}/bom.xml" />
 				<arg value="-P" />
 				<arg value="${basedir}/${properties.file}" />
 				<arg value="${basedir}/${mspec.file}" />
-				<arg value="-B" />
-				<arg value="${site.p2.dir}/bom.xml" />
 			</cmdargs>
 		</buckminster>
 

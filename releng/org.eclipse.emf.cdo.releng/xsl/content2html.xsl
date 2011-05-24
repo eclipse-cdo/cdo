@@ -25,8 +25,8 @@
 					<a
 						href="http://help.eclipse.org/helios/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
 						Eclipse Platform Help</a>.
-					<br/> Some plugins require third party drivers from
-					<a href="http://net4j.sourceforge.net/update/">Net4j and CDO Plus</a> or <a href="http://www.elver.org/eclipse/update/">EMF Teneo Dependencies</a>.</em>
+					<br/> Some plugins require third party software from p2 repositories listed in this 
+					<a href="bookmarks.xml">bookmarks.xml</a> file.</em>
 
 			</p>
 			<table border="0">

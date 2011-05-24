@@ -56,6 +56,7 @@ import org.eclipse.net4j.util.tests.AbstractOMTest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.text.MessageFormat;
@@ -70,11 +71,13 @@ import junit.framework.TestResult;
  */
 public abstract class ConfigTest extends AbstractOMTest implements IConstants
 {
+  @Inherited
   @Retention(RetentionPolicy.RUNTIME)
   public @interface CleanRepositoriesBefore
   {
   }
 
+  @Inherited
   @Retention(RetentionPolicy.RUNTIME)
   public @interface CleanRepositoriesAfter
   {

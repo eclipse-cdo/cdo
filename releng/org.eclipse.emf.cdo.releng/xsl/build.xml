@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <project name="Test" default="default">
 
-	<target name="default" >
+	<target name="default">
+		<xslt style="bom2bookmarks.xsl" in="bom.xml" out="bom-bookmarks.xml" />
+
+		<!--
+		<xslt style="rmap2bookmarks.xsl" in="../build.rmap" out="cdo-bookmarks.xml" />
 		<xslt style="content2xml.xsl" in="content.xml" out="index.xml" />
+		-->
 	</target>
 
 </project>

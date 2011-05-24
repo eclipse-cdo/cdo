@@ -307,8 +307,12 @@
 				<arg value="-P" />
 				<arg value="${basedir}/${properties.file}" />
 				<arg value="${basedir}/${mspec.file}" />
+				<arg value="-B" />
+				<arg value="${site.p2.dir}/bom.xml" />
 			</cmdargs>
 		</buckminster>
+
+		<xslt style="xsl/content2xml.xsl" in="${site.p2.dir}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />
 	</target>
 
 	<target name="site.p2" depends="provision">

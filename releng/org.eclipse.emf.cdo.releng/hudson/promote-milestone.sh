@@ -44,7 +44,7 @@ popd
 
 rm -rf promote.tmp
 
-svn cp -m "Tagging trunk as $stream-$label" https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/trunk https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/tags/$stream-$label
+svn cp -m "Tagging trunk as $stream-$label-$milestone" https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/trunk https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/tags/$stream-$label-$milestone
 
 
 # ONLY FOR RELEASE TRAIN CONTRIBUTIONS:

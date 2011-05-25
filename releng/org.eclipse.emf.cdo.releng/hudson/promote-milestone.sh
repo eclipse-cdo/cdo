@@ -1,6 +1,6 @@
 stream=4.0
-milestone=RC2
-buildID=1445
+milestone=RC2a
+buildID=1454
 
 rm -rf promote.tmp
 mkdir promote.tmp
@@ -22,7 +22,7 @@ PROBLEM_BUNDLES="$(
 if [ -n "$PROBLEM_BUNDLES" ]; then
  echo "Problems encountered unpacking the following bundles:"
  echo "$PROBLEM_BUNDLES"
- exit 2
+# exit 2
 fi
 
 JAR=/shared/common/jdk-1.5.0-22.x86_64/bin/jar  

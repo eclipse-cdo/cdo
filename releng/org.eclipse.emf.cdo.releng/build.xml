@@ -330,6 +330,8 @@
 
 		<echo message="Creating bookmarks.tmp" />
 		<xslt style="xsl/bom2bookmarks.xsl" in="${result}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />
+		<replace file="${site.p2.dir}/bookmarks.tmp" token="http://dev.eclipse.org" value="file://to-be-removed" />
+		<replace file="${site.p2.dir}/bookmarks.tmp" token="file:/home/data/httpd/" value="http://" />
 
 		<echo message="Creating human readable index.html" />
 		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />

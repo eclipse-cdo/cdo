@@ -131,9 +131,17 @@
 	</target>
 
 	<target name="init.checks" depends="init.clean.tools,init.clean.tp,init.clean.workspace,init.clean.output">
-		<echo message="Sourcing ${properties.file}" />
 		<available file="${tools}/director/director" property="director.exists" />
 		<available file="${tools}/buckminster/buckminster" property="buckminster.exists" />
+
+		<delete failonerror="false">
+			<fileset dir="${result}">
+				<include name="bom.xml" />
+				<include name="coverageReport.xml" />
+				<include name="testReport.xml" />
+			</fileset>
+		</delete>
+
 	</target>
 
 	<target name="get.director" unless="director.exists">
@@ -291,6 +299,12 @@
 		</echoproperties>
 	</target>
 
+	<target name="fake.test.report">
+		<echo message="Creating a fake test report to make Hudson happy" />
+		<copy file="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/testReportEmpty.xml"
+		      tofile="${site.p2.dir}/testReport.xml" />
+	</target>
+
 	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">
 		<echo message="Importing projects into workspace ${workspace} and binaries into target platform ${targetPlatformPath}" />
 		<!--
@@ -315,7 +329,7 @@
 		</buckminster>
 	</target>
 
-	<target name="site.p2" depends="provision">
+	<target name="site.p2" depends="provision,fake.test.report">
 		<echo message="Building all projects in workspace ${workspace}" />
 		<buckminster command="build">
 			<cmdargs>

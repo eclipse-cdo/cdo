@@ -392,6 +392,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       revisionManager = new TestRevisionManager();
     }
+
     repository.setRevisionManager(revisionManager);
 
     InternalSessionManager sessionManager = getTestSessionManager();
@@ -399,6 +400,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       sessionManager = new TestSessionManager();
     }
+
     repository.setSessionManager(sessionManager);
 
     IUserManager userManager = getTestUserManager();

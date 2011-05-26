@@ -302,7 +302,7 @@
 	<target name="fake.test.report">
 		<echo message="Creating a fake test report to make Hudson happy" />
 		<copy file="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/testReportEmpty.xml"
-		      tofile="${site.p2.dir}/testReport.xml" />
+		      tofile="${result}/testReport.xml" />
 	</target>
 
 	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">

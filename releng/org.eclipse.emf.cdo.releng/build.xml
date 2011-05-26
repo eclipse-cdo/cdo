@@ -366,8 +366,6 @@
 				<arg value="${result}/testReport.xml" />
 				<arg value="--terseXML" />
 				<arg value="--flatXML" />
-				<arg value="--xml" />
-				<arg value="${result}/coverageReport.xml" />
 			</cmdargs>
 		</buckminster>
 	</target>

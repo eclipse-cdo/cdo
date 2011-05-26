@@ -32,6 +32,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/session/CDOSession.java" type="org.eclipse.emf.cdo.session.CDOSession$Options">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="Options"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.java" type="org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent">
         <filter id="571473929">
             <message_arguments>
@@ -96,6 +104,15 @@
                 <message_argument value="InternalCDOSession"/>
                 <message_argument value="CDOCommonSession"/>
                 <message_argument value="CDOSessionImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/session/CDOSessionImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOSessionImpl$OptionsImpl">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="Options"/>
+                <message_argument value="OptionsImpl"/>
             </message_arguments>
         </filter>
     </resource>

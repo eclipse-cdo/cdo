@@ -27,6 +27,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/ServerCDOView.java" type="org.eclipse.emf.cdo.internal.server.ServerCDOView">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="ServerCDOView"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/ServerCDOView.java" type="org.eclipse.emf.cdo.internal.server.ServerCDOView$ServerCDOSession">
         <filter id="574619656">
             <message_arguments>
@@ -211,6 +219,14 @@
             <message_arguments>
                 <message_argument value="IDurableLockingManager"/>
                 <message_argument value="InternalLockManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/server/InternalSession.java" type="org.eclipse.emf.cdo.spi.server.InternalSession">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="InternalSession"/>
             </message_arguments>
         </filter>
     </resource>

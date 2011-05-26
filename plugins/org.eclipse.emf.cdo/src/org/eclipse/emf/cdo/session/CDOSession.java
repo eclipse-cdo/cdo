@@ -326,6 +326,8 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
 
   /**
    * @author Simon McDuff
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Options extends CDOCommonSession.Options
   {
@@ -373,6 +375,8 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
 
     /**
      * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface GeneratedPackageEmulationEvent extends IOptionsEvent
     {
@@ -380,6 +384,8 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
 
     /**
      * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface CollectionLoadingPolicyEvent extends IOptionsEvent
     {
@@ -388,6 +394,8 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
     /**
      * @author Eike Stepper
      * @since 4.0
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface LobCacheEvent extends IOptionsEvent
     {

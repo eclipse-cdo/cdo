@@ -393,6 +393,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
 
   /**
    * @author Simon McDuff
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Options extends IOptions
   {
@@ -542,6 +544,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
 
     /**
      * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface CacheReferenceTypeEvent extends IOptionsEvent
     {
@@ -549,6 +553,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
 
     /**
      * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface ReferencePolicyEvent extends IOptionsEvent
     {
@@ -556,6 +562,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
 
     /**
      * @since 3.0
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface StaleReferencePolicyEvent extends IOptionsEvent
     {
@@ -563,6 +571,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
 
     /**
      * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface ChangeSubscriptionPoliciesEvent extends IOptionsEvent
     {
@@ -571,6 +581,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
     /**
      * @author Eike Stepper
      * @since 3.0
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface InvalidationPolicyEvent extends IOptionsEvent
     {
@@ -578,6 +590,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
 
     /**
      * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface InvalidationNotificationEvent extends IOptionsEvent
     {
@@ -585,6 +599,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
 
     /**
      * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface RevisionPrefetchingPolicyEvent extends IOptionsEvent
     {

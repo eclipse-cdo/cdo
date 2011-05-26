@@ -91,6 +91,7 @@ public interface CDOCommonRepository extends CDOTimeProvider
 
   /**
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
    */
   public enum Type
   {
@@ -99,6 +100,7 @@ public interface CDOCommonRepository extends CDOTimeProvider
 
   /**
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
    */
   public static enum State
   {
@@ -112,6 +114,8 @@ public interface CDOCommonRepository extends CDOTimeProvider
 
   /**
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface TypeChangedEvent extends IEvent
   {
@@ -122,6 +126,8 @@ public interface CDOCommonRepository extends CDOTimeProvider
 
   /**
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface StateChangedEvent extends IEvent
   {

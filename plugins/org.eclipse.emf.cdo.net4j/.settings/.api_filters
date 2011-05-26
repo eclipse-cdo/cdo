@@ -41,6 +41,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/net4j/CDOSession.java" type="org.eclipse.emf.cdo.net4j.CDOSession$Options">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="Options"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.java" type="org.eclipse.emf.cdo.net4j.CDOSessionConfiguration">
         <filter id="571473929">
             <message_arguments>

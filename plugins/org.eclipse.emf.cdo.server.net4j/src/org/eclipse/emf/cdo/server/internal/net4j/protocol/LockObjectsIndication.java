@@ -113,7 +113,7 @@ public class LockObjectsIndication extends CDOServerWriteIndication
     }
     catch (IllegalArgumentException ex)
     {
-      lockManager.unlock(lockType, view, objectsToBeLocked);
+      lockManager.unlock(true, lockType, view, objectsToBeLocked);
       throw ex;
     }
 
@@ -122,7 +122,7 @@ public class LockObjectsIndication extends CDOServerWriteIndication
     staleNoUpdate = staleRevisions.size() > 0 && !passiveUpdatesEnabled;
     if (staleNoUpdate)
     {
-      lockManager.unlock(lockType, view, objectsToBeLocked);
+      lockManager.unlock(true, lockType, view, objectsToBeLocked);
     }
   }
 

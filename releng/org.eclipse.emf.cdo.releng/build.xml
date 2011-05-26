@@ -320,10 +320,14 @@
 			<cmdargs>
 				<arg value="-T" />
 				<arg value="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
+
 				<arg value="-B" />
 				<arg value="${result}/bom.xml" />
+
 				<arg value="-P" />
 				<arg value="${basedir}/${properties.file}" />
+
+				<!-- Last arg: -->
 				<arg value="${basedir}/${mspec.file}" />
 			</cmdargs>
 		</buckminster>
@@ -334,6 +338,13 @@
 		<buckminster command="build">
 			<cmdargs>
 				<arg value="--thorough" />
+			</cmdargs>
+		</buckminster>
+
+		<echo message="Performing org.eclipse.emf.cdo.doc#build.javadoc" />
+		<buckminster command="perform">
+			<cmdargs>
+				<arg value="org.eclipse.emf.cdo.doc#build.javadoc" />
 			</cmdargs>
 		</buckminster>
 

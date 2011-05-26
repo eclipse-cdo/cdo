@@ -335,6 +335,15 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
   public void unlockObjects();
 
   /**
+   * Enables or disables the storage of all information that's needed to {@link CDOSession#openView(String) reopen} this
+   * view at a later point in time. This information includes the {@link CDOBranchPoint branch point}, the user ID of
+   * the {@link CDOSession session}, whether it's a read-only view or a {@link CDOTransaction transaction} and all the
+   * locks that are acquired or will be acquired while durable locking is enabled.
+   * 
+   * @see CDOSession#openView(String)
+   * @see CDOSession#openView(String, ResourceSet)
+   * @see CDOSession#openTransaction(String)
+   * @see CDOSession#openTransaction(String, ResourceSet)
    * @since 4.0
    */
   public String enableDurableLocking(boolean enable);

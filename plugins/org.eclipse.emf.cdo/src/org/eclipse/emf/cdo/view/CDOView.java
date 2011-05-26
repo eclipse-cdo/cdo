@@ -344,6 +344,11 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
    * @see CDOSession#openView(String, ResourceSet)
    * @see CDOSession#openTransaction(String)
    * @see CDOSession#openTransaction(String, ResourceSet)
+   * @see CDOView#lockObjects(Collection, LockType, long)
+   * @see CDOView#unlockObjects(Collection, LockType)
+   * @see CDOView#unlockObjects()
+   * @see CDOObject#cdoReadLock()
+   * @see CDOObject#cdoWriteLock()
    * @since 4.0
    */
   public String enableDurableLocking(boolean enable);

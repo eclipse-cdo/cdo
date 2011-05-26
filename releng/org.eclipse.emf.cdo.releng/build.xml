@@ -341,12 +341,17 @@
 			</cmdargs>
 		</buckminster>
 
+		<!--
 		<echo message="Performing org.eclipse.emf.cdo.doc#build.javadoc" />
 		<buckminster command="perform">
 			<cmdargs>
 				<arg value="org.eclipse.emf.cdo.doc#build.javadoc" />
 			</cmdargs>
 		</buckminster>
+-->
+		
+		<echo message="Generating JavaDoc in workspace ${workspace}" />
+		<antcall target="build.javadoc" />
 
 		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
 		<buckminster command="perform">
@@ -412,5 +417,48 @@
 	</target>
 
 	<target name="clean.all" depends="clean.tools,clean.workspace,clean.tp,clean.output" />
+
+	<path id="javadoc-classpath">
+		<fileset dir="${targetPlatformPath}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="build.javadoc">
+		<javadoc destdir="../org.eclipse.emf.cdo.doc/javadoc"
+		         Encoding="ISO-8859-1"
+		         classpathref="javadoc-classpath"
+		         maxmemory="1024m"
+		         source="1.5"
+		         useexternalfile="true"
+		         author="true"
+		         version="true"
+		         use="true"
+		         windowtitle="CDO Documentation">
+
+			<fileset dir="${workspace}/plugins" defaultexcludes="yes">
+				<include name="org/eclipse/emf/cdo/**/*.java" />
+				<include name="org/eclipse/net4j/**/*.java" />
+				<exclude name="**/internal/**" />
+				<exclude name="**/examples/**" />
+				<exclude name="**/tests/**" />
+				<exclude name="**/defs/**" />
+				<include name="**/*.java" />
+			</fileset>
+
+			<tag name="generated" description="Generated" />
+			<tag name="model" description="Model" />
+			<tag name="ordered" description="Ordered" />
+
+			<link href="http://developer.java.sun.com/developer/products/xml/docs/api/" />
+
+			<doctitle>
+				<![CDATA[<h1>CDO Documentation</h1>]]></doctitle>
+
+		<bottom>
+			<![CDATA[<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>]]></bottom>
+
+</javadoc>
+</target>
 
 </project>

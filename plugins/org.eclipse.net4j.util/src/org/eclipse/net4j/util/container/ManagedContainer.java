@@ -279,19 +279,16 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       if (element == null)
       {
         element = createElement(productGroup, factoryType, description);
-        element = postProcessElement(productGroup, factoryType, description, element);
-        if (activate)
-        {
-          LifecycleUtil.activate(element);
-        }
-
-        putElement(key, element);
+        putElement(key, element, activate);
       }
     }
 
     return element;
   }
 
+  /**
+   * @since 3.1
+   */
   public Object putElement(String productGroup, String factoryType, String description, Object element)
   {
     checkActive();
@@ -301,6 +298,20 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   protected Object putElement(ElementKey key, Object element)
   {
+    return putElement(key, element, false);
+  }
+
+  /**
+   * @since 3.1
+   */
+  protected Object putElement(ElementKey key, Object element, boolean activate)
+  {
+    element = postProcessElement(key.getProductGroup(), key.getFactoryType(), key.getDescription(), element);
+    if (activate)
+    {
+      LifecycleUtil.activate(element);
+    }
+
     ContainerEvent<Object> event = new ContainerEvent<Object>(this);
     Object oldElement;
     synchronized (elementRegistry)

@@ -446,14 +446,14 @@
 			<fileset dir="${workspace}/plugins" defaultexcludes="yes">
 				<exclude name="**/internal/**" />
 
-				<include name="org.eclipse.net4j/src/**/*" />
-				<include name="org.eclipse.net4j.util/src/**/*" />
-				<include name="org.eclipse.net4j.tcp/src/**/*" />
-				<include name="org.eclipse.net4j.jvm/src/**/*" />
-				<include name="org.eclipse.net4j.http/src/**/*" />
-				<include name="org.eclipse.net4j.http.common/src/**/*" />
-				<include name="org.eclipse.net4j.http.server/src/**/*" />
-				<include name="org.eclipse.net4j.db/src/**/*" />
+				<include name="org.eclipse.net4j/**/*.java" />
+				<include name="org.eclipse.net4j.util/**/*.java" />
+				<include name="org.eclipse.net4j.tcp/**/*.java" />
+				<include name="org.eclipse.net4j.jvm/**/*.java" />
+				<include name="org.eclipse.net4j.http/**/*.java" />
+				<include name="org.eclipse.net4j.http.common/**/*.java" />
+				<include name="org.eclipse.net4j.http.server/**/*.java" />
+				<include name="org.eclipse.net4j.db/**/*.java" />
 			</fileset>
 
 			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />
@@ -496,20 +496,20 @@
 			<fileset dir="${workspace}/plugins" defaultexcludes="yes">
 				<exclude name="**/internal/**" />
 
-				<include name="org.eclipse.emf.cdo/src/**/*" />
-				<include name="org.eclipse.emf.cdo.edit/src/**/*" />
-				<include name="org.eclipse.emf.cdo.common/src/**/*" />
-				<include name="org.eclipse.emf.cdo.net4j/src/**/*" />
-				<include name="org.eclipse.emf.cdo.location/src/**/*" />
-				<include name="org.eclipse.emf.cdo.workspace/src/**/*" />
-				<include name="org.eclipse.emf.cdo.server/src/**/*" />
-				<include name="org.eclipse.emf.cdo.server.net4j/src/**/*" />
-				<include name="org.eclipse.emf.cdo.server.ocl/src/**/*" />
-				<include name="org.eclipse.emf.cdo.server.db/src/**/*" />
-				<include name="org.eclipse.emf.cdo.server.db4o/src/**/*" />
-				<include name="org.eclipse.emf.cdo.server.hibernate/src/**/*" />
-				<include name="org.eclipse.emf.cdo.server.mongodb/src/**/*" />
-				<include name="org.eclipse.emf.cdo.server.objectivity/src/**/*" />
+				<include name="org.eclipse.emf.cdo/**/*.java" />
+				<include name="org.eclipse.emf.cdo.edit/**/*.java" />
+				<include name="org.eclipse.emf.cdo.common/**/*.java" />
+				<include name="org.eclipse.emf.cdo.net4j/**/*.java" />
+				<include name="org.eclipse.emf.cdo.location/**/*.java" />
+				<include name="org.eclipse.emf.cdo.workspace/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.net4j/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.ocl/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.db/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.db4o/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.hibernate/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.mongodb/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.objectivity/**/*.java" />
 			</fileset>
 
 			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />

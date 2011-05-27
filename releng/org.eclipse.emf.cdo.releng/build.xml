@@ -439,8 +439,8 @@
 		         author="true"
 		         version="true"
 		         use="true"
-		         windowtitle="Net4j Documentation"
-		         doctitle="&lt;h1>Net4j Documentation&lt;/h1>"
+		         windowtitle="Net4j API Specification"
+		         doctitle="&lt;h1>Net4j API Specification&lt;/h1>"
 		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
 			<fileset dir="${workspace}/plugins" defaultexcludes="yes">
@@ -485,8 +485,8 @@
 		         author="true"
 		         version="true"
 		         use="true"
-		         windowtitle="CDO Documentation"
-		         doctitle="&lt;h1>CDO Documentation&lt;/h1>"
+		         windowtitle="CDO API Specification"
+		         doctitle="&lt;h1>CDO API Specification&lt;/h1>"
 		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
 			<fileset dir="${workspace}/plugins">
@@ -515,7 +515,7 @@
 			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />
 			<link href="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api" />
 			<link href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0" />
-			<link href="../plugins/org.eclipse.net4j.doc/javadoc" resolveLink="false" />
+			<link href="../../org.eclipse.net4j.doc/javadoc" resolveLink="false" />
 
 			<tag name="generated" description="Generated" />
 			<tag name="extends" description="Extends" />

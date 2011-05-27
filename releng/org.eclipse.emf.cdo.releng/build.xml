@@ -341,15 +341,6 @@
 			</cmdargs>
 		</buckminster>
 
-		<!--
-		<echo message="Performing org.eclipse.emf.cdo.doc#build.javadoc" />
-		<buckminster command="perform">
-			<cmdargs>
-				<arg value="org.eclipse.emf.cdo.doc#build.javadoc" />
-			</cmdargs>
-		</buckminster>
--->
-		
 		<echo message="Generating JavaDoc in workspace ${workspace}" />
 		<antcall target="build.javadoc" />
 
@@ -424,8 +415,21 @@
 		</fileset>
 	</path>
 
+
+	<path id="javadoc-classpath">
+		<fileset dir="${targetPlatformPath}">
+			<include name="**/*.jar" />
+		</fileset>
+		<dirset dir="${workspace}/plugins/com.mongodb/bin" />
+		<fileset dir="${workspace}/plugins/org.eclipse.emf.cdo.server.objectivity.stub">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
 	<target name="build.javadoc">
-		<javadoc destdir="../org.eclipse.emf.cdo.doc/javadoc"
+		<property name="destdir" value="${workspace}/plugins/org.eclipse.emf.cdo.doc/javadoc" />
+		<mkdir dir="${destdir}" />
+		<javadoc destdir="${destdir}"
 		         Encoding="ISO-8859-1"
 		         classpathref="javadoc-classpath"
 		         maxmemory="1024m"
@@ -434,31 +438,56 @@
 		         author="true"
 		         version="true"
 		         use="true"
-		         windowtitle="CDO Documentation">
+		         windowtitle="CDO Documentation"
+		         doctitle="&lt;h1>CDO Documentation&lt;/h1>"
+		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
-			<fileset dir="${workspace}/plugins" defaultexcludes="yes">
-				<include name="org/eclipse/emf/cdo/**/*.java" />
-				<include name="org/eclipse/net4j/**/*.java" />
-				<exclude name="**/internal/**" />
-				<exclude name="**/examples/**" />
-				<exclude name="**/tests/**" />
-				<exclude name="**/defs/**" />
-				<include name="**/*.java" />
+			<fileset dir="${workspace}/plugins">
+				<include name="org.eclipse.emf.cdo/**/CDOObjectImpl.java" />
 			</fileset>
 
+			<fileset dir="${workspace}/plugins" defaultexcludes="yes">
+				<exclude name="**/internal/**" />
+
+				<include name="org.eclipse.emf.cdo/**/*.java" />
+				<include name="org.eclipse.emf.cdo.edit/**/*.java" />
+				<include name="org.eclipse.emf.cdo.common/**/*.java" />
+				<include name="org.eclipse.emf.cdo.net4j/**/*.java" />
+				<include name="org.eclipse.emf.cdo.location/**/*.java" />
+				<include name="org.eclipse.emf.cdo.workspace/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.net4j/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.ocl/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.db/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.db4o/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.hibernate/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.mongodb/**/*.java" />
+				<include name="org.eclipse.emf.cdo.server.objectivity/**/*.java" />
+				<include name="org.eclipse.net4j/**/*.java" />
+				<include name="org.eclipse.net4j.util/**/*.java" />
+				<include name="org.eclipse.net4j.tcp/**/*.java" />
+				<include name="org.eclipse.net4j.jvm/**/*.java" />
+				<include name="org.eclipse.net4j.http/**/*.java" />
+				<include name="org.eclipse.net4j.http.common/**/*.java" />
+				<include name="org.eclipse.net4j.http.server/**/*.java" />
+				<include name="org.eclipse.net4j.db/**/*.java" />
+			</fileset>
+
+			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />
+			<link href="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api" />
+			<link href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0" />
+
 			<tag name="generated" description="Generated" />
+			<tag name="extends" description="Extends" />
 			<tag name="model" description="Model" />
 			<tag name="ordered" description="Ordered" />
-
-			<link href="http://developer.java.sun.com/developer/products/xml/docs/api/" />
-
-			<doctitle>
-				<![CDATA[<h1>CDO Documentation</h1>]]></doctitle>
-
-		<bottom>
-			<![CDATA[<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>]]></bottom>
-
-</javadoc>
-</target>
+			<tag name="ADDED" description="Added" />
+			<tag name="category" description="Category" />
+			<tag name="noimplement" description="No Implement" />
+			<tag name="noextend" description="No Extend" />
+			<tag name="noinstantiate" description="No Instantiate" />
+			<tag name="noreference" description="No Reference" />
+		</javadoc>
+	</target>
 
 </project>

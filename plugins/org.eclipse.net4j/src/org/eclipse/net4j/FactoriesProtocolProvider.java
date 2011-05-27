@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 /**
+ * Factory-based {@link IProtocolProvider protocol provider}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

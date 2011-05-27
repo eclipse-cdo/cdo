@@ -17,7 +17,6 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBSchema;
-import org.eclipse.net4j.spi.db.DBSchemaElement;
 
 import java.util.ArrayList;
 import java.util.List;

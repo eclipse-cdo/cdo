@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A utility class with various static factory and convenience methods.
+ * 
  * @author Eike Stepper
  */
 public final class DBUtil

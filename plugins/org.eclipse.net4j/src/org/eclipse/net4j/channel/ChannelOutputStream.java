@@ -14,7 +14,12 @@ import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 
+import java.io.OutputStream;
+
 /**
+ * An {@link OutputStream output stream} that fragments the written byte sequence into fixed-sized {@link IBuffer
+ * buffers} and passes them to configured {@link IChannel channel}.
+ * 
  * @author Eike Stepper
  */
 public class ChannelOutputStream extends BufferOutputStream

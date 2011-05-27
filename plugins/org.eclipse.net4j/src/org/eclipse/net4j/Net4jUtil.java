@@ -33,6 +33,8 @@ import org.eclipse.spi.net4j.ConnectorFactory;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * A utility class with various static factory and convenience methods.
+ * 
  * @author Eike Stepper
  */
 public final class Net4jUtil

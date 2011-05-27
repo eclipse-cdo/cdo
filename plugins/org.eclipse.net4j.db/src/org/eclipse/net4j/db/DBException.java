@@ -12,8 +12,11 @@ package org.eclipse.net4j.db;
 
 import org.eclipse.net4j.util.StringUtil;
 
+import java.sql.SQLException;
+
 /**
- * TODO Provide consistent exception hierarchy
+ * A {@link RuntimeException runtime exception} thrown to indicate problems with a database, frequently used to wrap
+ * checked {@link SQLException SQL exceptions}.
  * 
  * @author Eike Stepper
  */

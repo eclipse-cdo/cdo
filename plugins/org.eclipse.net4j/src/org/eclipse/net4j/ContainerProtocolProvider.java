@@ -19,6 +19,8 @@ import org.eclipse.spi.net4j.ClientProtocolFactory;
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 /**
+ * Base class for container-based {@link IProtocolProvider protocol providers} like {@link Client} or {@link Server}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */
@@ -52,6 +54,9 @@ public abstract class ContainerProtocolProvider implements IProtocolProvider
   }
 
   /**
+   * Container-based {@link IProtocolProvider protocol provider} for {@link ILocationAware.Location#CLIENT client}
+   * protocols.
+   * 
    * @author Eike Stepper
    */
   public static class Client extends ContainerProtocolProvider
@@ -63,6 +68,9 @@ public abstract class ContainerProtocolProvider implements IProtocolProvider
   }
 
   /**
+   * Container-based {@link IProtocolProvider protocol provider} for {@link ILocationAware.Location#SERVER server}
+   * protocols.
+   * 
    * @author Eike Stepper
    */
   public static class Server extends ContainerProtocolProvider

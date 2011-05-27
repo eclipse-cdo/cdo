@@ -10,12 +10,19 @@
  */
 package org.eclipse.net4j.db;
 
+import javax.sql.DataSource;
+
 import java.sql.Connection;
 
 /**
+ * Provides a database {@link Connection connection}, roughly comparable with a {@link DataSource data source}.
+ * 
  * @author Eike Stepper
  */
 public interface IDBConnectionProvider
 {
+  /**
+   * Returns a connection.
+   */
   public Connection getConnection() throws DBException;
 }

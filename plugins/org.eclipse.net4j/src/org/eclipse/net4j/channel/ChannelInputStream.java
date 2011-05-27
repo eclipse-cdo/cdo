@@ -11,8 +11,14 @@
 package org.eclipse.net4j.channel;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
+import org.eclipse.net4j.buffer.IBuffer;
+
+import java.io.InputStream;
 
 /**
+ * An {@link InputStream input stream} that provides the {@link IBuffer buffers} which arrive at a {@link IChannel
+ * channel} as a continuous byte sequence.
+ * 
  * @author Eike Stepper
  */
 public class ChannelInputStream extends BufferInputStream
@@ -32,7 +38,7 @@ public class ChannelInputStream extends BufferInputStream
   {
     this.channel = channel;
     this.millisBeforeTimeout = millisBeforeTimeout;
-    
+
     channel.setReceiveHandler(this);
   }
 

@@ -25,6 +25,8 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
+ * Abstracts all aspects of a database that are vendor-specific.
+ * 
  * @author Eike Stepper
  */
 public interface IDBAdapter

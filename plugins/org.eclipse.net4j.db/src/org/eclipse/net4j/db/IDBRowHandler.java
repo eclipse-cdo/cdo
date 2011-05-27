@@ -11,6 +11,9 @@
 package org.eclipse.net4j.db;
 
 /**
+ * Call-back that handles the values of, for example, a row in a database table.
+ * 
+ * @see DBUtil#select(java.sql.Connection, IDBRowHandler, String, org.eclipse.net4j.db.ddl.IDBField...)
  * @author Eike Stepper
  */
 public interface IDBRowHandler

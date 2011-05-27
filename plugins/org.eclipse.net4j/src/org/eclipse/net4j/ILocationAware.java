@@ -11,11 +11,17 @@
 package org.eclipse.net4j;
 
 /**
+ * A concept that has a {@link Location location} in a {@link Location#CLIENT client}/{@link Location#SERVER server}
+ * scenario.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */
 public interface ILocationAware
 {
+  /**
+   * Returns the location of this object in a {@link Location#CLIENT client}/{@link Location#SERVER server} scenario.
+   */
   public Location getLocation();
 
   /**
@@ -29,6 +35,8 @@ public interface ILocationAware
   public boolean isServer();
 
   /**
+   * A {@link Location location} in a {@link Location#CLIENT client}/{@link Location#SERVER server} scenario.
+   * 
    * @author Eike Stepper
    * @since 2.0
    */

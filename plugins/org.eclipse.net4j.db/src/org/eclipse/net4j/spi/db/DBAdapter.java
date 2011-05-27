@@ -34,6 +34,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * A useful base class for implementing custom {@link IDBAdapter DB adapters}.
+ * 
  * @author Eike Stepper
  */
 public abstract class DBAdapter implements IDBAdapter

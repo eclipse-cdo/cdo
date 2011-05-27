@@ -27,6 +27,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * A {@link IBufferHandler buffer handler} that defragments the passed {@link IBuffer buffers} into a continuous byte
+ * sequence which is exposed as an {@link InputStream input stream}.
+ * 
  * @author Eike Stepper
  */
 public class BufferInputStream extends InputStream implements IBufferHandler

@@ -27,6 +27,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * Enumerates the SQL data types that are compatible with the DB framework.
+ * 
  * @author Eike Stepper
  */
 public enum DBType

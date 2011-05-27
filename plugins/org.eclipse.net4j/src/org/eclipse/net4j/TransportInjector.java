@@ -10,7 +10,9 @@
  */
 package org.eclipse.net4j;
 
+import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -23,6 +25,9 @@ import org.eclipse.spi.net4j.InternalConnector;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * An element post processor that injects a {@link ITransportConfig transport configuration} into the {@link IConnector
+ * connectors} and {@link IAcceptor acceptors} of a {@link IManagedContainer managed container}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

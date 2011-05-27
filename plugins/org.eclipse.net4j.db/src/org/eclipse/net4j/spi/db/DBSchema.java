@@ -17,6 +17,7 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.ddl.DBSchemaElement;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 
 import javax.sql.DataSource;
@@ -29,6 +30,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * A useful base class for implementing custom {@link IDBSchema DB schemas}.
+ * 
  * @author Eike Stepper
  */
 public class DBSchema extends DBSchemaElement implements IDBSchema

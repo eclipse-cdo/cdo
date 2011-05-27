@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Reads an XML config file and creates, wires and starts the configured {@link IAcceptor acceptors}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

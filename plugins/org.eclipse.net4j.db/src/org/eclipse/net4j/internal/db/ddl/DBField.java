@@ -13,7 +13,6 @@ package org.eclipse.net4j.internal.db.ddl;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
-import org.eclipse.net4j.spi.db.DBSchemaElement;
 
 /**
  * @author Eike Stepper

@@ -518,15 +518,15 @@
 			<link href="../../org.eclipse.net4j.doc/javadoc" />
 
 			<tag name="generated" description="Generated" />
-			<tag name="extends" description="Extends" />
 			<tag name="model" description="Model" />
 			<tag name="ordered" description="Ordered" />
 			<tag name="ADDED" description="Added" />
-			<tag name="category" description="Category" />
-			<tag name="noimplement" description="No Implement" />
-			<tag name="noextend" description="No Extend" />
-			<tag name="noinstantiate" description="No Instantiate" />
-			<tag name="noreference" description="No Reference" />
+			<tag name="category" description="Category:" />
+			<tag name="extends" description="Extends:" />
+			<tag name="noimplement" description="No Implement:" />
+			<tag name="noextend" description="No Extend:" />
+			<tag name="noinstantiate" description="No Instantiate:" />
+			<tag name="noreference" description="No Reference:" />
 		</javadoc>
 	</target>
 

@@ -25,6 +25,9 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
 /**
+ * An {@link OutputStream output stream} that fragments the written byte sequence into fixed-sized {@link IBuffer
+ * buffers} and passes them to configured {@link IBufferHandler buffer handler}.
+ * 
  * @author Eike Stepper
  */
 public class BufferOutputStream extends OutputStream

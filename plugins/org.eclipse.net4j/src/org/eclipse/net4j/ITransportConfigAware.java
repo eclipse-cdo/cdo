@@ -10,7 +10,14 @@
  */
 package org.eclipse.net4j;
 
+import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.channel.IChannelMultiplexer;
+import org.eclipse.net4j.connector.IConnector;
+
 /**
+ * A concept that has a {@link ITransportConfig transport configuration}, typically a {@link IChannelMultiplexer channel
+ * multiplexer}, {@link IConnector connector} or {@link IAcceptor acceptor}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

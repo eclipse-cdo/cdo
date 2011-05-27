@@ -15,8 +15,11 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 
 /**
+ * Specifies an SQL statement with zero or more {@link IDBParameter parameters}.
+ * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface IDBStatement
 {

@@ -17,6 +17,8 @@ import org.eclipse.net4j.internal.tcp.TCPSelectorInjector;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
+ * A utility class with static convenience methods.
+ * 
  * @author Eike Stepper
  */
 public final class TCPUtil

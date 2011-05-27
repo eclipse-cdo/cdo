@@ -40,6 +40,8 @@ import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 /**
+ * A utility class with various static factory and convenience methods for SSL transport.
+ * 
  * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
  * @author Caspar De Groot (No Magic Asia Ltd.)
  * @since 4.0

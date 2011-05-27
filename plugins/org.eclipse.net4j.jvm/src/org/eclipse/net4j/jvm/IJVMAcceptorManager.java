@@ -14,6 +14,8 @@ import org.eclipse.net4j.internal.jvm.JVMAcceptorManager;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 /**
+ * A singleton that manages all {@link IJVMAcceptor JVM acceptors} in the current JVM.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

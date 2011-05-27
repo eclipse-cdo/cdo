@@ -13,6 +13,8 @@ package org.eclipse.net4j.tcp;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
 /**
+ * A {@link INegotiationContext negotiation context} that is used in TCP transport.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

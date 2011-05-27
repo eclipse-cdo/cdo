@@ -15,6 +15,8 @@ import org.eclipse.net4j.http.internal.server.RandomizerInjector;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
+ * A utility class with static convenience methods.
+ * 
  * @author Eike Stepper
  */
 public final class HTTPServerUtil

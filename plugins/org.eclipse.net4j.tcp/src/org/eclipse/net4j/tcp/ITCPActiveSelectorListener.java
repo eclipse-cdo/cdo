@@ -10,10 +10,17 @@
  */
 package org.eclipse.net4j.tcp;
 
+import org.eclipse.net4j.connector.IConnector;
+
 import java.nio.channels.SocketChannel;
 
 /**
+ * Call-back that handles the possible calls from a {@link ITCPSelector selector} to an active consumer, usually a
+ * {@link IConnector connector}.
+ * 
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface ITCPActiveSelectorListener
 {

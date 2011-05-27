@@ -21,6 +21,9 @@ import java.sql.Connection;
 import java.util.Set;
 
 /**
+ * Specifies a number of {@link IDBTable DB tables} that can be created in or dropped from a database through a
+ * {@link IDBAdapter DB adapter}.
+ * 
  * @author Eike Stepper
  */
 public interface IDBSchema extends IDBSchemaElement

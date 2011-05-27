@@ -13,8 +13,11 @@ package org.eclipse.net4j.db.ddl;
 import org.eclipse.net4j.db.DBType;
 
 /**
+ * A table specification in a {@link IDBSchema DB schema}.
+ * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface IDBTable extends IDBSchemaElement
 {

@@ -11,8 +11,11 @@
 package org.eclipse.net4j.db.ddl;
 
 /**
+ * An index specification in a {@link IDBTable DB table}.
+ * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface IDBIndex extends IDBSchemaElement
 {
@@ -29,7 +32,10 @@ public interface IDBIndex extends IDBSchemaElement
   public int getPosition();
 
   /**
+   * The type of an {@link IDBIndex index} specification in a {@link IDBTable DB table}.
+   * 
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
    */
   public enum Type
   {

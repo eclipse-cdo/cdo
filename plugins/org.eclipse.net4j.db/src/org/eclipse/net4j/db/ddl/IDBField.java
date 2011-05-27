@@ -13,8 +13,11 @@ package org.eclipse.net4j.db.ddl;
 import org.eclipse.net4j.db.DBType;
 
 /**
+ * A field (column) specification in a {@link IDBTable DB table}.
+ * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface IDBField extends IDBSchemaElement
 {

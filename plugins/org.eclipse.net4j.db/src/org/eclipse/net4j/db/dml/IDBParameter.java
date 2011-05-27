@@ -13,8 +13,11 @@ package org.eclipse.net4j.db.dml;
 import org.eclipse.net4j.db.DBType;
 
 /**
+ * A parameter specification in a {@link IDBStatement DB statement}.
+ * 
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface IDBParameter
 {

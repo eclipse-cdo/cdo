@@ -13,6 +13,8 @@ package org.eclipse.net4j.jvm;
 import org.eclipse.net4j.connector.IConnector;
 
 /**
+ * A {@link IConnector connector} that implements JVM-embedded transport.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

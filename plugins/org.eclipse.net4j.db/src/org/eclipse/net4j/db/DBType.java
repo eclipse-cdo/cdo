@@ -30,6 +30,7 @@ import java.sql.SQLException;
  * Enumerates the SQL data types that are compatible with the DB framework.
  * 
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
  */
 public enum DBType
 {

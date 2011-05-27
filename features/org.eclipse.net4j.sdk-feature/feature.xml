@@ -50,6 +50,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.net4j.doc"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.net4j.sdk.source"
          version="0.0.0"/>
 

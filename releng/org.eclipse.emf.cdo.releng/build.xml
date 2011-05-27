@@ -515,7 +515,7 @@
 			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />
 			<link href="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api" />
 			<link href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0" />
-			<link href="../plugins/org.eclipse.net4j.doc/javadoc" resolveLink="true" />
+			<link href="../plugins/org.eclipse.net4j.doc/javadoc" resolveLink="false" />
 
 			<tag name="generated" description="Generated" />
 			<tag name="extends" description="Extends" />

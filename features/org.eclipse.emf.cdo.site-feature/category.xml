@@ -72,6 +72,9 @@
    <feature id="org.eclipse.net4j.defs" version="0.0.0">
       <category name="org.eclipse.net4j"/>
    </feature>
+   <feature id="org.eclipse.net4j.doc" version="0.0.0">
+      <category name="org.eclipse.net4j"/>
+   </feature>
    <feature id="org.eclipse.net4j.examples" version="0.0.0">
       <category name="org.eclipse.net4j"/>
    </feature>

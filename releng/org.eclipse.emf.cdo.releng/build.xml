@@ -342,7 +342,8 @@
 		</buckminster>
 
 		<echo message="Generating JavaDoc in workspace ${workspace}" />
-		<antcall target="build.javadoc" />
+		<antcall target="build.cdo.javadoc" />
+		<antcall target="build.net4j.javadoc" />
 
 		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
 		<buckminster command="perform">
@@ -426,7 +427,7 @@
 		</fileset>
 	</path>
 
-	<target name="build.javadoc">
+	<target name="build.cdo.javadoc">
 		<property name="destdir" value="${workspace}/plugins/org.eclipse.emf.cdo.doc/javadoc" />
 		<mkdir dir="${destdir}" />
 		<javadoc destdir="${destdir}"
@@ -463,6 +464,44 @@
 				<include name="org.eclipse.emf.cdo.server.hibernate/**/*.java" />
 				<include name="org.eclipse.emf.cdo.server.mongodb/**/*.java" />
 				<include name="org.eclipse.emf.cdo.server.objectivity/**/*.java" />
+			</fileset>
+
+			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />
+			<link href="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api" />
+			<link href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0" />
+
+			<tag name="generated" description="Generated" />
+			<tag name="extends" description="Extends" />
+			<tag name="model" description="Model" />
+			<tag name="ordered" description="Ordered" />
+			<tag name="ADDED" description="Added" />
+			<tag name="category" description="Category" />
+			<tag name="noimplement" description="No Implement" />
+			<tag name="noextend" description="No Extend" />
+			<tag name="noinstantiate" description="No Instantiate" />
+			<tag name="noreference" description="No Reference" />
+		</javadoc>
+	</target>
+
+	<target name="build.net4j.javadoc">
+		<property name="destdir" value="${workspace}/plugins/org.eclipse.net4j.doc/javadoc" />
+		<mkdir dir="${destdir}" />
+		<javadoc destdir="${destdir}"
+		         Encoding="ISO-8859-1"
+		         classpathref="javadoc-classpath"
+		         maxmemory="1024m"
+		         source="1.5"
+		         useexternalfile="true"
+		         author="true"
+		         version="true"
+		         use="true"
+		         windowtitle="Net4j Documentation"
+		         doctitle="&lt;h1>Net4j Documentation&lt;/h1>"
+		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
+
+			<fileset dir="${workspace}/plugins" defaultexcludes="yes">
+				<exclude name="**/internal/**" />
+
 				<include name="org.eclipse.net4j/**/*.java" />
 				<include name="org.eclipse.net4j.util/**/*.java" />
 				<include name="org.eclipse.net4j.tcp/**/*.java" />

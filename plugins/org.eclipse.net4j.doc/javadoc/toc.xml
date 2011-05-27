@@ -2,6 +2,6 @@
 
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Net4j Signalling Platform Documentation" topic="javadoc/index.html">
-	<topic label="API Reference" href="javadoc/index.html"/>
+<toc label="Net4j Signalling Platform Documentation" topic="javadoc/overview-summary.html">
+	<topic label="API Reference" href="javadoc/overview-summary.html"/>
 </toc>

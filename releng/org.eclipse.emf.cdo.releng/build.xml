@@ -414,13 +414,6 @@
 		<fileset dir="${targetPlatformPath}">
 			<include name="**/*.jar" />
 		</fileset>
-	</path>
-
-
-	<path id="javadoc-classpath">
-		<fileset dir="${targetPlatformPath}">
-			<include name="**/*.jar" />
-		</fileset>
 		<dirset dir="${workspace}/plugins/com.mongodb/bin" />
 		<fileset dir="${workspace}/plugins/org.eclipse.emf.cdo.server.objectivity.stub">
 			<include name="**/*.jar" />

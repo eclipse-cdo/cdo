@@ -14,7 +14,7 @@
 <plugin>
 
    <extension point="org.eclipse.help.toc">
-      <toc file="help/toc.xml" primary="true"/>
+      <toc file="javadoc/toc.xml" primary="true"/>
       <index path="index"/>
    </extension>
 

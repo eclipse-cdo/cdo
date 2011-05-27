@@ -2,10 +2,7 @@
 
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="CDO Documentation" topic="../javadoc/index.html">
-	<!--
+<toc label="CDO Model Repository Documentation" topic="help/concepts/object_identity.html">
 	<topic label="Object Identity" href="help/concepts/object_identity.html"/>
 	<topic label="Developing Custom CDO Stores" href="help/extenders/developing_custom_stores.html"/>
-	-->
-	<topic label="API Reference" href="../javadoc/index.html"/>
 </toc>

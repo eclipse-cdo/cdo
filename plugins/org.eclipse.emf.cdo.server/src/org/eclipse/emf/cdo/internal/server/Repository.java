@@ -1307,7 +1307,7 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDORepositoryInfo[{0}]", name); //$NON-NLS-1$
+    return MessageFormat.format("Repository[{0}]", name); //$NON-NLS-1$
   }
 
   public boolean isSkipInitialization()

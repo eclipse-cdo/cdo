@@ -10,13 +10,6 @@
  */
 package org.eclipse.emf.cdo.server;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-
-import org.eclipse.emf.ecore.EClass;
 
 /**
  * A simple in-memory store.
@@ -25,30 +18,9 @@ import org.eclipse.emf.ecore.EClass;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @deprecated Use {@link org.eclipse.emf.cdo.server.mem.IMEMStore}
  */
-public interface IMEMStore extends IStore, CDOAllRevisionsProvider
+@Deprecated
+public interface IMEMStore extends org.eclipse.emf.cdo.server.mem.IMEMStore
 {
-  public static final int UNLIMITED = -1;
-
-  /**
-   * Returns the number of {@link CDORevision revisions} per {@link CDOID} that are stored.
-   */
-  public int getListLimit();
-
-  /**
-   * Limits the number of {@link CDORevision revisions} per {@link CDOID} to the given value.
-   * <p>
-   * A value of 2, for example, stores the current and the immediately preceding revisions whereas older revisions are
-   * dropped from thids store. A value of 1 only stores the current revisions. A value of {@link #UNLIMITED} does not
-   * limit the number of revisions to be stored for any id.
-   * <p>
-   * The list limit can be set and enforced at any time before or after the {@link LifecycleUtil#activate(Object)
-   * activation} of this store.
-   */
-  public void setListLimit(int listLimit);
-
-  /**
-   * @since 3.0
-   */
-  public EClass getObjectType(CDOID id);
 }

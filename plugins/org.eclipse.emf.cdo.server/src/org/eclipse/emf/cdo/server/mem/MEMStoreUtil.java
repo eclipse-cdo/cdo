@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server.mem;
 
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
-import org.eclipse.emf.cdo.server.IMEMStore;
 
 /**
  * @author Eike Stepper
@@ -23,6 +22,9 @@ public final class MEMStoreUtil
   {
   }
 
+  /**
+   * @since 4.0
+   */
   public static IMEMStore createMEMStore()
   {
     return new MEMStore();

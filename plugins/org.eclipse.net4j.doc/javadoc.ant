@@ -83,62 +83,62 @@
 				<include name="org.eclipse.net4j/src/org/eclipse/spi/net4j/*.java" />
 			</fileset>
 
-			<group title="Net4j Signalling Platform Transport HTTP Common>
-				<package name="org.eclipse.net4j.http.common />
+			<group title="Net4j DB Framework">
+				<package name="org.eclipse.net4j.db.ddl" />
+				<package name="org.eclipse.net4j.spi.db" />
+				<package name="org.eclipse.net4j.db.dml" />
+				<package name="org.eclipse.net4j.db" />
 			</group>
-			<group title="Net4j Signalling Platform Transport HTTP>
-				<package name="org.eclipse.net4j.http />
+			<group title="Net4j Signalling Platform Transport">
+				<package name="org.eclipse.net4j.signal" />
+				<package name="org.eclipse.net4j.connector" />
+				<package name="org.eclipse.net4j.protocol" />
+				<package name="org.eclipse.net4j.channel" />
+				<package name="org.eclipse.net4j.buffer" />
+				<package name="org.eclipse.net4j" />
+				<package name="org.eclipse.spi.net4j" />
+				<package name="org.eclipse.net4j.acceptor" />
+				<package name="org.eclipse.net4j.signal.wrapping" />
+				<package name="org.eclipse.net4j.signal.heartbeat" />
 			</group>
-			<group title="Net4j Signalling Platform Transport JVM>
-				<package name="org.eclipse.net4j.jvm />
+			<group title="Net4j Signalling Platform Transport HTTP">
+				<package name="org.eclipse.net4j.http" />
 			</group>
-			<group title="Net4j Signalling Platform Utilities>
-				<package name="org.eclipse.net4j.util.container />
-				<package name="org.eclipse.net4j.util.registry />
-				<package name="org.eclipse.net4j.util.cache />
-				<package name="org.eclipse.net4j.util.container.delegate />
-				<package name="org.eclipse.net4j.util.om />
-				<package name="org.eclipse.net4j.util.collection />
-				<package name="org.eclipse.net4j.util.om.trace />
-				<package name="org.eclipse.net4j.util.om.pref />
-				<package name="org.eclipse.net4j.util.fsm />
-				<package name="org.eclipse.net4j.util.io />
-				<package name="org.eclipse.net4j.util.transaction />
-				<package name="org.eclipse.net4j.util.event />
-				<package name="org.eclipse.net4j.util.concurrent />
-				<package name="org.eclipse.net4j.util.options />
-				<package name="org.eclipse.net4j.util.om.monitor />
-				<package name="org.eclipse.net4j.util.om.log />
-				<package name="org.eclipse.net4j.util.security />
-				<package name="org.eclipse.net4j.util.ref />
-				<package name="org.eclipse.net4j.util />
-				<package name="org.eclipse.net4j.util.lifecycle />
-				<package name="org.eclipse.net4j.util.factory />
+			<group title="Net4j Signalling Platform Transport HTTP Common">
+				<package name="org.eclipse.net4j.http.common" />
 			</group>
-			<group title="Net4j Signalling Platform Transport HTTP Server>
-				<package name="org.eclipse.net4j.http.server />
+			<group title="Net4j Signalling Platform Transport HTTP Server">
+				<package name="org.eclipse.net4j.http.server" />
 			</group>
-			<group title="Net4j DB Framework>
-				<package name="org.eclipse.net4j.db.ddl />
-				<package name="org.eclipse.net4j.spi.db />
-				<package name="org.eclipse.net4j.db.dml />
-				<package name="org.eclipse.net4j.db />
+			<group title="Net4j Signalling Platform Transport JVM">
+				<package name="org.eclipse.net4j.jvm" />
 			</group>
-			<group title="Net4j Signalling Platform Transport TCP>
-				<package name="org.eclipse.net4j.tcp.ssl />
-				<package name="org.eclipse.net4j.tcp />
+			<group title="Net4j Signalling Platform Transport TCP">
+				<package name="org.eclipse.net4j.tcp.ssl" />
+				<package name="org.eclipse.net4j.tcp" />
 			</group>
-			<group title="Net4j Signalling Platform Transport>
-				<package name="org.eclipse.net4j.signal />
-				<package name="org.eclipse.net4j.connector />
-				<package name="org.eclipse.net4j.protocol />
-				<package name="org.eclipse.net4j.channel />
-				<package name="org.eclipse.net4j.buffer />
-				<package name="org.eclipse.net4j />
-				<package name="org.eclipse.spi.net4j />
-				<package name="org.eclipse.net4j.acceptor />
-				<package name="org.eclipse.net4j.signal.wrapping />
-				<package name="org.eclipse.net4j.signal.heartbeat />
+			<group title="Net4j Signalling Platform Utilities">
+				<package name="org.eclipse.net4j.util.container" />
+				<package name="org.eclipse.net4j.util.registry" />
+				<package name="org.eclipse.net4j.util.cache" />
+				<package name="org.eclipse.net4j.util.container.delegate" />
+				<package name="org.eclipse.net4j.util.om" />
+				<package name="org.eclipse.net4j.util.collection" />
+				<package name="org.eclipse.net4j.util.om.trace" />
+				<package name="org.eclipse.net4j.util.om.pref" />
+				<package name="org.eclipse.net4j.util.fsm" />
+				<package name="org.eclipse.net4j.util.io" />
+				<package name="org.eclipse.net4j.util.transaction" />
+				<package name="org.eclipse.net4j.util.event" />
+				<package name="org.eclipse.net4j.util.concurrent" />
+				<package name="org.eclipse.net4j.util.options" />
+				<package name="org.eclipse.net4j.util.om.monitor" />
+				<package name="org.eclipse.net4j.util.om.log" />
+				<package name="org.eclipse.net4j.util.security" />
+				<package name="org.eclipse.net4j.util.ref" />
+				<package name="org.eclipse.net4j.util" />
+				<package name="org.eclipse.net4j.util.lifecycle" />
+				<package name="org.eclipse.net4j.util.factory" />
 			</group>
 
 			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />

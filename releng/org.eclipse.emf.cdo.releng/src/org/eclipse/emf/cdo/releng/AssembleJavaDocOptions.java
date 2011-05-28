@@ -296,7 +296,7 @@ public class AssembleJavaDocOptions
   /**
    * @author Eike Stepper
    */
-  private static class SourcePlugin
+  private static class SourcePlugin implements Comparable<SourcePlugin>
   {
     private String projectName;
 
@@ -328,6 +328,11 @@ public class AssembleJavaDocOptions
     public Set<String> getPackageNames()
     {
       return packageNames;
+    }
+
+    public int compareTo(SourcePlugin o)
+    {
+      return getLabel().compareTo(o.getLabel());
     }
   }
 
@@ -464,13 +469,16 @@ public class AssembleJavaDocOptions
             }
             else if ("<!-- GROUPS -->".equals(id))
             {
-              for (SourcePlugin sourcePlugin : getSourcePlugins())
+              List<SourcePlugin> sorted = new ArrayList<SourcePlugin>(getSourcePlugins());
+              Collections.sort(sorted);
+
+              for (SourcePlugin sourcePlugin : sorted)
               {
-                writer.write("\t\t\t<group title=\"" + sourcePlugin.getLabel() + ">\n");
+                writer.write("\t\t\t<group title=\"" + sourcePlugin.getLabel() + "\">\n");
 
                 for (String packageName : sourcePlugin.getPackageNames())
                 {
-                  writer.write("\t\t\t\t<package name=\"" + packageName + " />\n");
+                  writer.write("\t\t\t\t<package name=\"" + packageName + "\" />\n");
                 }
 
                 writer.write("\t\t\t</group>\n");

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project name="JavaDoc" default="build.clean" basedir="..">
+
+	<property name="releng.project" value="org.eclipse.emf.cdo.releng" />
+
+	<target name="assemble.options">
+		<java classname="org.eclipse.emf.cdo.releng.AssembleJavaDocOptions">
+			<classpath path="org.eclipse.emf.cdo.releng/bin" />
+			<classpath>
+			<fileset dir="_target/plugins">
+				<include name="**/*.jar" />
+			</fileset>
+			</classpath>
+		</java>
+	</target>
+
+	<target name="clean" depends="assemble.options">
+		<ant antfile="${releng.project}/javadocLib.ant" target="delegate">
+			<property name="delegate.target" value="clean" />
+		</ant>
+	</target>
+
+	<target name="build" depends="assemble.options">
+		<ant antfile="${releng.project}/javadocLib.ant" target="delegate">
+			<property name="delegate.target" value="build" />
+		</ant>
+	</target>
+
+	<target name="build.clean" depends="assemble.options">
+		<ant antfile="${releng.project}/javadocLib.ant" target="delegate">
+			<property name="delegate.target" value="build.clean" />
+		</ant>
+	</target>
+
+</project>

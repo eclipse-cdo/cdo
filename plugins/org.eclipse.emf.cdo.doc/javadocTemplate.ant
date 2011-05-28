@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<project name="JavaDoc" default="build.clean" basedir="../..">
+
+	<property name="javadoc.name" value="CDO" />
+	<property name="javadoc.project" value="plugins/org.eclipse.emf.cdo.doc" />
+	<property name="destdir" value="${javadoc.project}/javadoc" />
+
+	<path id="javadoc.classpath">
+		<fileset dir="_target/plugins">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="plugins">
+			<include name="**/*.jar" />
+		</fileset>
+		<dirset dir="plugins">
+			<include name="*/bin" />
+		</dirset>
+	</path>
+
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${destdir}">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="build">
+		<javadoc destdir="${destdir}"
+		         Encoding="ISO-8859-1"
+		         classpathref="javadoc.classpath"
+		         maxmemory="1024m"
+		         source="1.5"
+		         useexternalfile="true"
+		         author="true"
+		         version="true"
+		         use="true"
+		         windowtitle="${javadoc.name} API Specification"
+		         doctitle="&lt;h1>${javadoc.name} API Specification&lt;/h1>"
+		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
+
+			<fileset dir="plugins" defaultexcludes="yes">
+				<!-- SOURCE FOLDERS -->
+			</fileset>
+
+			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />
+			<link href="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api" />
+			<link href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0" />
+			<!-- DEPENDENCIES -->
+
+			<tag name="Singleton" description="Singleton" />
+			<tag name="generated" description="Generated" />
+			<tag name="extends" description="Extends" />
+			<tag name="model" description="Model" />
+			<tag name="ordered" description="Ordered" />
+			<tag name="ADDED" description="Added" />
+			<tag name="category" description="Category" />
+			<tag name="noimplement" description="No Implement" />
+			<tag name="noextend" description="No Extend" />
+			<tag name="noinstantiate" description="No Instantiate" />
+			<tag name="noreference" description="No Reference" />
+		</javadoc>
+	</target>
+
+	<target name="build.clean" depends="clean,build" />
+
+</project>

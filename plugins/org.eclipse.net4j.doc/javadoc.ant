@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<project name="JavaDoc" default="build.clean" basedir="../..">
+
+	<property name="javadoc.name" value="Net4j" />
+	<property name="javadoc.project" value="plugins/org.eclipse.net4j.doc" />
+	<property name="destdir" value="${javadoc.project}/javadoc" />
+
+	<path id="javadoc.classpath">
+		<fileset dir="_target/plugins">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="plugins">
+			<include name="**/*.jar" />
+		</fileset>
+		<dirset dir="plugins">
+			<include name="*/bin" />
+		</dirset>
+	</path>
+
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${destdir}">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="build">
+		<javadoc destdir="${destdir}"
+		         Encoding="ISO-8859-1"
+		         classpathref="javadoc.classpath"
+		         maxmemory="1024m"
+		         source="1.5"
+		         useexternalfile="true"
+		         author="true"
+		         version="true"
+		         use="true"
+		         windowtitle="${javadoc.name} API Specification"
+		         doctitle="&lt;h1>${javadoc.name} API Specification&lt;/h1>"
+		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
+
+			<fileset dir="plugins" defaultexcludes="yes">
+				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/*.java" />
+				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/ddl/*.java" />
+				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/dml/*.java" />
+				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/spi/db/*.java" />
+				<include name="org.eclipse.net4j.http.common/src/org/eclipse/net4j/http/common/*.java" />
+				<include name="org.eclipse.net4j.http.server/src/org/eclipse/net4j/http/server/*.java" />
+				<include name="org.eclipse.net4j.http/src/org/eclipse/net4j/http/*.java" />
+				<include name="org.eclipse.net4j.jvm/src/org/eclipse/net4j/jvm/*.java" />
+				<include name="org.eclipse.net4j.tcp/src/org/eclipse/net4j/tcp/*.java" />
+				<include name="org.eclipse.net4j.tcp/src/org/eclipse/net4j/tcp/ssl/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/cache/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/collection/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/concurrent/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/container/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/container/delegate/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/event/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/factory/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/fsm/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/io/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/lifecycle/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/log/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/monitor/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/pref/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/trace/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/options/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/ref/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/registry/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/security/*.java" />
+				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/transaction/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/acceptor/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/buffer/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/channel/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/connector/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/protocol/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/heartbeat/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/net4j/signal/wrapping/*.java" />
+				<include name="org.eclipse.net4j/src/org/eclipse/spi/net4j/*.java" />
+			</fileset>
+
+			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />
+			<link href="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api" />
+			<link href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0" />
+
+			<tag name="Singleton" description="Singleton" />
+			<tag name="generated" description="Generated" />
+			<tag name="extends" description="Extends" />
+			<tag name="model" description="Model" />
+			<tag name="ordered" description="Ordered" />
+			<tag name="ADDED" description="Added" />
+			<tag name="category" description="Category" />
+			<tag name="noimplement" description="No Implement" />
+			<tag name="noextend" description="No Extend" />
+			<tag name="noinstantiate" description="No Instantiate" />
+			<tag name="noreference" description="No Reference" />
+		</javadoc>
+	</target>
+
+	<target name="build.clean" depends="clean,build" />
+
+</project>

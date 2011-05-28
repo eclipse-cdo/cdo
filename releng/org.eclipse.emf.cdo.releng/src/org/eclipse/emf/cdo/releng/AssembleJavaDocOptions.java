@@ -79,22 +79,31 @@ public class AssembleJavaDocOptions
 
   private static void assembleJavaDocOptions(File plugin, String javadocProject) throws IOException, BundleException
   {
+    SourcePlugin sourcePlugin = ANTLIB.getSourcePlugin(plugin.getName());
+
     JavaDoc javaDoc = ANTLIB.getJavaDoc(javadocProject);
+    javaDoc.getSourcePlugins().add(sourcePlugin);
 
     Manifest manifest = getManifest(plugin);
     for (ManifestElement manifestElement : getManifestElements(manifest))
     {
       String packageName = manifestElement.getValue().trim();
-      if (manifestElement.getDirective("x-internal") == null && manifestElement.getDirective("x-friends") == null)
+      if (isPublic(manifestElement))
       {
         javaDoc.getSourceFolders().add(plugin.getName() + "/src/" + packageName.replace('.', '/'));
         javaDoc.getPackageNames().add(packageName);
+        sourcePlugin.getPackageNames().add(packageName);
       }
       else
       {
         javaDoc.getPackageExcludes().add(packageName);
       }
     }
+  }
+
+  private static boolean isPublic(ManifestElement manifestElement)
+  {
+    return manifestElement.getDirective("x-internal") == null && manifestElement.getDirective("x-friends") == null;
   }
 
   private static ManifestElement[] getManifestElements(Manifest manifest) throws BundleException
@@ -162,10 +171,24 @@ public class AssembleJavaDocOptions
    */
   private static class AntLib
   {
+    private Map<String, SourcePlugin> sourcePlugins = new HashMap<String, SourcePlugin>();
+
     private Map<String, JavaDoc> javaDocs = new HashMap<String, JavaDoc>();
 
     public AntLib()
     {
+    }
+
+    public SourcePlugin getSourcePlugin(String projectName) throws IOException
+    {
+      SourcePlugin sourcePlugin = sourcePlugins.get(projectName);
+      if (sourcePlugin == null)
+      {
+        sourcePlugin = new SourcePlugin(projectName);
+        sourcePlugins.put(projectName, sourcePlugin);
+      }
+
+      return sourcePlugin;
     }
 
     public Collection<JavaDoc> getJavaDocs()
@@ -273,11 +296,51 @@ public class AssembleJavaDocOptions
   /**
    * @author Eike Stepper
    */
+  private static class SourcePlugin
+  {
+    private String projectName;
+
+    private String label;
+
+    private Set<String> packageNames = new HashSet<String>();
+
+    public SourcePlugin(String projectName) throws IOException
+    {
+      this.projectName = projectName;
+      Properties pluginProperties = getProperties(new File(getProject(), "plugin.properties"));
+      label = pluginProperties.getProperty("pluginName");
+      if (label == null)
+      {
+        label = "Plugin " + projectName;
+      }
+    }
+
+    public File getProject()
+    {
+      return new File(plugins, projectName);
+    }
+
+    public String getLabel()
+    {
+      return label;
+    }
+
+    public Set<String> getPackageNames()
+    {
+      return packageNames;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private static class JavaDoc
   {
     private String projectName;
 
     private Set<String> dependencies = new HashSet<String>();
+
+    private Set<SourcePlugin> sourcePlugins = new HashSet<SourcePlugin>();
 
     private List<String> sourceFolders = new ArrayList<String>();
 
@@ -317,6 +380,11 @@ public class AssembleJavaDocOptions
           recurseDependencies(child, result);
         }
       }
+    }
+
+    public Set<SourcePlugin> getSourcePlugins()
+    {
+      return sourcePlugins;
     }
 
     public List<String> getSourceFolders()
@@ -390,8 +458,22 @@ public class AssembleJavaDocOptions
             {
               for (String dependency : sort(getAllDependencies()))
               {
-                writer.write("\t\t\t<link href=\"../../" + dependency
+                writer.write("\t\t\t<link href=\"MAKE-RELATIVE/" + dependency
                     + "/javadoc\" offline=\"true\" packagelistloc=\"plugins/" + dependency + "/javadoc\" />\n");
+              }
+            }
+            else if ("<!-- GROUPS -->".equals(id))
+            {
+              for (SourcePlugin sourcePlugin : getSourcePlugins())
+              {
+                writer.write("\t\t\t<group title=\"" + sourcePlugin.getLabel() + ">\n");
+
+                for (String packageName : sourcePlugin.getPackageNames())
+                {
+                  writer.write("\t\t\t\t<package name=\"" + packageName + " />\n");
+                }
+
+                writer.write("\t\t\t</group>\n");
               }
             }
             else

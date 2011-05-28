@@ -7,9 +7,9 @@
 		<java classname="org.eclipse.emf.cdo.releng.AssembleJavaDocOptions">
 			<classpath path="org.eclipse.emf.cdo.releng/bin" />
 			<classpath>
-			<fileset dir="_target/plugins">
-				<include name="**/*.jar" />
-			</fileset>
+				<fileset dir="_target/plugins">
+					<include name="**/*.jar" />
+				</fileset>
 			</classpath>
 		</java>
 	</target>

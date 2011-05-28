@@ -92,14 +92,14 @@ org.eclipse.emf.cdo.session.remote</FONT>
 <BR>
 Interface CDORemoteSessionManager</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</A>&gt;, <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</A>&gt;, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSessionManager</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public interface <B>CDORemoteSessionManager</B><DT>extends <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</A>&gt;</DL>
+<DT><PRE>public interface <B>CDORemoteSessionManager</B><DT>extends <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</A>&gt;</DL>
 </PRE>
 
 <P>
@@ -107,13 +107,13 @@ Provides collaborative access to the <A HREF="../../../../../../org/eclipse/emf/
  repository as the <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#getLocalSession()"><CODE>local session</CODE></A>. A CDORemoteSessionManager can be subscribed or
  unsubscribed to changes in the set of remote sessions. It is subscribed if at least one is true:
  <ol>
- <li>At least one <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is registered with this remote session manager.
+ <li>At least one <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is registered with this remote session manager.
  <li><A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#isForceSubscription()"><CODE>Force subscription</CODE></A> is <code>true</code>.
  </ol>
- If this remote session manager is subscribed it eventually fires the following <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>events</CODE></A> to
- <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><CODE>registered</CODE></A> listeners:
+ If this remote session manager is subscribed it eventually fires the following <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>events</CODE></A> to
+ <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><CODE>registered</CODE></A> listeners:
  <ul>
- <li> <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainerEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container"><CODE>IContainerEvent</CODE></A> with <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote"><CODE>CDORemoteSession</CODE></A> as generic type argument to reflect opened or closed remote
+ <li> <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainerEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container"><CODE>IContainerEvent</CODE></A> with <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote"><CODE>CDORemoteSession</CODE></A> as generic type argument to reflect opened or closed remote
  sessions.
  <li> <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionEvent.SubscriptionChanged.html" title="interface in org.eclipse.emf.cdo.session.remote"><CODE>CDORemoteSessionEvent.SubscriptionChanged</CODE></A> to reflect the ability of the remote session to receive and
  possibly handle remote messages from other sessions.
@@ -158,7 +158,7 @@ Provides collaborative access to the <A HREF="../../../../../../org/eclipse/emf/
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.LocalSubscriptionChangedEvent.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager.LocalSubscriptionChangedEvent</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> that is fired by a <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.LocalSubscriptionChangedEvent.html#getSource()"><CODE>remote session manager</CODE></A> after the
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> that is fired by a <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.LocalSubscriptionChangedEvent.html#getSource()"><CODE>remote session manager</CODE></A> after the
  <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#isSubscribed()"><CODE>subscription mode</CODE></A> of the
  <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#getLocalSession()"><CODE>local session</CODE></A> changed.</TD>
 </TR>
@@ -166,10 +166,10 @@ Provides collaborative access to the <A HREF="../../../../../../org/eclipse/emf/
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.container.<A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</A>&lt;<A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</A>&gt;</CODE></TD>
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</A>&lt;<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</A>&gt;</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -206,7 +206,7 @@ Provides collaborative access to the <A HREF="../../../../../../org/eclipse/emf/
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <code>true</code> if this CDORemoteSessionManager shall be subscribed to changes in the set of remote
- sessions and delivers <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionEvent.MessageReceived.html" title="interface in org.eclipse.emf.cdo.session.remote"><CODE>custom data events</CODE></A> even if no <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is
+ sessions and delivers <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionEvent.MessageReceived.html" title="interface in org.eclipse.emf.cdo.session.remote"><CODE>custom data events</CODE></A> even if no <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is
  registered, <code>false</code> otherwise.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -242,26 +242,26 @@ Provides collaborative access to the <A HREF="../../../../../../org/eclipse/emf/
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#setForceSubscription(boolean)">setForceSubscription</A></B>(boolean&nbsp;forceSubscription)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enables or disables subscription to changes in the set of remote sessions even if no <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enables or disables subscription to changes in the set of remote sessions even if no <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is
  registered.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.container.<A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</A>, <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</A>, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -320,7 +320,7 @@ boolean <B>isSubscribed</B>()</PRE>
  and delivers <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionEvent.MessageReceived.html" title="interface in org.eclipse.emf.cdo.session.remote"><CODE>custom data events</CODE></A>, <code>false</code> otherwise. It is subscribed if at least
  one is true:
  <ol>
- <li>At least one <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is registered with this remote session manager.
+ <li>At least one <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is registered with this remote session manager.
  <li><A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#isForceSubscription()"><CODE>Force subscription</CODE></A> is <code>true</code>.
  </ol>
 <P>
@@ -328,7 +328,7 @@ boolean <B>isSubscribed</B>()</PRE>
 </DL>
 </DD>
 <DD><DL>
-<DT><B>See Also:</B><DD><A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><CODE>INotifier.addListener(IListener)</CODE></A>, 
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><CODE>INotifier.addListener(IListener)</CODE></A>, 
 <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#setForceSubscription(boolean)"><CODE>setForceSubscription(boolean)</CODE></A></DL>
 </DD>
 </DL>
@@ -340,14 +340,14 @@ isForceSubscription</H3>
 boolean <B>isForceSubscription</B>()</PRE>
 <DL>
 <DD>Returns <code>true</code> if this CDORemoteSessionManager shall be subscribed to changes in the set of remote
- sessions and delivers <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionEvent.MessageReceived.html" title="interface in org.eclipse.emf.cdo.session.remote"><CODE>custom data events</CODE></A> even if no <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is
+ sessions and delivers <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionEvent.MessageReceived.html" title="interface in org.eclipse.emf.cdo.session.remote"><CODE>custom data events</CODE></A> even if no <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is
  registered, <code>false</code> otherwise.
 <P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
-<DT><B>See Also:</B><DD><A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><CODE>INotifier.addListener(IListener)</CODE></A>, 
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><CODE>INotifier.addListener(IListener)</CODE></A>, 
 <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#setForceSubscription(boolean)"><CODE>setForceSubscription(boolean)</CODE></A></DL>
 </DD>
 </DL>
@@ -358,14 +358,14 @@ setForceSubscription</H3>
 <PRE>
 void <B>setForceSubscription</B>(boolean&nbsp;forceSubscription)</PRE>
 <DL>
-<DD>Enables or disables subscription to changes in the set of remote sessions even if no <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is
+<DD>Enables or disables subscription to changes in the set of remote sessions even if no <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listener</CODE></A> is
  registered.
 <P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
-<DT><B>See Also:</B><DD><A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><CODE>INotifier.addListener(IListener)</CODE></A>, 
+<DT><B>See Also:</B><DD><A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><CODE>INotifier.addListener(IListener)</CODE></A>, 
 <A HREF="../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#setForceSubscription(boolean)"><CODE>setForceSubscription(boolean)</CODE></A></DL>
 </DD>
 </DL>

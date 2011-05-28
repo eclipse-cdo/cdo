@@ -202,7 +202,7 @@ Represents the state of a single, logical commit operation which is driven throu
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataInputStream</A></CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataInputStream</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLobs()">getLobs</A></B>()</CODE>
 
 <BR>
@@ -534,7 +534,7 @@ getDetachedObjectTypes</H3>
 <A NAME="getLobs()"><!-- --></A><H3>
 getLobs</H3>
 <PRE>
-<A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataInputStream</A> <B>getLobs</B>()</PRE>
+<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataInputStream</A> <B>getLobs</B>()</PRE>
 <DL>
 <DD>Returns a stream that all <A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob"><CODE>lobs</CODE></A> can be read from. The format of the data delivered through the
  stream is:
@@ -543,14 +543,14 @@ getLobs</H3>
  <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInputStream.html?is-external=true#readInt()" title="class or interface in java.io"><CODE>int</CODE></A>: the number of lobs to be read from the stream.
  <li>The following data can be read from the stream in a loop with one iteration per lob in the stream:
  <ol>
- <li> <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html?is-external=true#readByteArray()" title="class or interface in org.eclipse.net4j.util.io"><CODE>int + byte[]</CODE></A>: the id of the lob (prepended by the size of the
+ <li> <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html?is-external=true#readByteArray()" title="class or interface in org.eclipse.net4j.util.io"><CODE>int + byte[]</CODE></A>: the id of the lob (prepended by the size of the
  id).
  <li> <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInputStream.html?is-external=true#readLong()" title="class or interface in java.io"><CODE>long</CODE></A>: the size of the lob. The foollowing interpretation applies:
  <ul>
  <li>A positive size indicates a <A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="class in org.eclipse.emf.cdo.common.lob"><CODE>blob</CODE></A> and means the number of bytes that can be
- <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/io/IOUtil.html?is-external=true#copyBinary(java.io.InputStream, java.io.OutputStream)" title="class or interface in org.eclipse.net4j.util.io"><CODE>read</CODE></A>.
+ <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/io/IOUtil.html?is-external=true#copyBinary(java.io.InputStream, java.io.OutputStream)" title="class or interface in org.eclipse.net4j.util.io"><CODE>read</CODE></A>.
  <li>A negative size indicates a <A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html" title="class in org.eclipse.emf.cdo.common.lob"><CODE>clob</CODE></A> and means the number of characters that can be
- <A HREF="../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/io/IOUtil.html?is-external=true#copyCharacter(java.io.Reader, java.io.Writer)" title="class or interface in org.eclipse.net4j.util.io"><CODE>read</CODE></A>.
+ <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/io/IOUtil.html?is-external=true#copyCharacter(java.io.Reader, java.io.Writer)" title="class or interface in org.eclipse.net4j.util.io"><CODE>read</CODE></A>.
  </ul>
  </ol>
  </ol>

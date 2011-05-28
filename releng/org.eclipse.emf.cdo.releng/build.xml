@@ -341,10 +341,6 @@
 			</cmdargs>
 		</buckminster>
 
-		<echo message="Generating JavaDoc in workspace ${workspace}" />
-		<antcall target="build.net4j.javadoc" />
-		<antcall target="build.cdo.javadoc" />
-
 		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
 		<buckminster command="perform">
 			<cmdargs>

@@ -67,7 +67,7 @@
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emft/ecoretools/updates">
+			<rm:uri format="{0}/modeling/amalgam/temp/ecoretools-1.0.0">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
@@ -79,7 +79,7 @@
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/tools/gef/updates/releases">
+			<rm:uri format="{0}/tools/gef/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>

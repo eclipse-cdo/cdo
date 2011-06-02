@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.examples.acore.diagram.dawn;single
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: org.eclipse.emf.cdo.dawn.examples.acore.diagram;bundle-version="1.0.0.qualifier"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Bundle-Localization: fragment
+Bundle-Localization: plugin
 Require-Bundle: org.eclipse.emf.cdo.dawn;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.cdo.dawn.util;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.cdo.ui;bundle-version="[4.0.0,5.0.0)",

@@ -44,6 +44,16 @@ public class ObjyObjectManager
 
   private ObjyPlacementManager globalPlacementManager = null;
 
+  public static int newObjCount = 0;
+
+  public static int newInternalObjCount = 0;
+
+  public static long getObjectTime = 0;
+
+  public static long updateObjectTime = 0;
+
+  public static long resourceCheckAndUpdateTime = 0;
+
   public ObjyObjectManager(ObjyPlacementManager placementManager)
   {
     globalPlacementManager = placementManager;
@@ -73,6 +83,10 @@ public class ObjyObjectManager
     Class_Object newClassObject = newClassObject(eClass, nearObject);
     ObjyObject objyObject = new ObjyObject(newClassObject);
     idToObjyObjectMap.put(OBJYCDOIDUtil.getLong(objyObject.ooId()), objyObject);
+    if (TRACER_DEBUG.isEnabled())
+    {
+      newObjCount++;
+    }
     return objyObject;
   }
 
@@ -101,6 +115,10 @@ public class ObjyObjectManager
     // .getStoreString() : null));
 
     Class_Object newClassObject = Class_Object.new_persistent_object(objyClass.getASClass(), nearObject, false);
+    if (TRACER_DEBUG.isEnabled())
+    {
+      ObjyObjectManager.newInternalObjCount++;
+    }
 
     // if (init != null)
     // {
@@ -252,8 +270,7 @@ public class ObjyObjectManager
       TRACER_DEBUG.trace("ObjyObjectManager.copyRevision(" + objyObject.ooId().getStoreString() + ")");
     }
     EClass eClass = ObjySchema.getEClass(storeAccessor.getStore(), objyObject.objyClass());
-    ObjyObject newObjyRevision = objyObject.copy(eClass);
-    objyObject.addToRevisions(newObjyRevision);
+    ObjyObject newObjyRevision = objyObject.copy(eClass, this);
     return newObjyRevision;
   }
 

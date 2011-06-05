@@ -45,11 +45,14 @@ public class ByteArrayTypeMapper extends BasicTypeMapper implements ISingleTypeM
 
   public Object getValue(ObjyObject objyObject, EStructuralFeature feature)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    VArray_Object vArray = objyObject.get_varray(position);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
 
-    Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
-    boolean isNull = objyObject.get_numeric(nullPosition).booleanValue();
+    VArray_Object vArray = objyObject.get_varray(attributeName/* position */);
+
+    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
+    boolean isNull = objyObject.get_numeric(nullAttributeName/* nullPosition */).booleanValue();
 
     if (isNull)
     {
@@ -68,13 +71,17 @@ public class ByteArrayTypeMapper extends BasicTypeMapper implements ISingleTypeM
 
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    VArray_Object vArray = objyObject.get_varray(position);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
 
-    Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    VArray_Object vArray = objyObject.get_varray(attributeName/* position */);
+
+    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
+
     Numeric_Value isNullValue = newValue == null ? numericTrue : numericFalse;
 
-    objyObject.set_numeric(nullPosition, isNullValue);
+    objyObject.set_numeric(nullAttributeName /* nullPosition */, isNullValue);
 
     // System.out.println("OID: " + objyObject.ooId().getStoreString() + " - START work");
     if (newValue == null)

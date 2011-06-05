@@ -28,6 +28,7 @@ import com.objy.as.app.d_Class;
 import com.objy.db.ObjyRuntimeException;
 import com.objy.db.app.ooId;
 import com.objy.db.app.ooObj;
+import com.objy.db.util.ooTreeListX;
 
 /**
  * @author Simon McDuff
@@ -93,21 +94,21 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
   {
     ObjyArrayListId list = getList(internal, feature);
 
-    if (list != null)
+    try
     {
-      list.set(index, TypeConvert.toOoId(newValue));
-    }
-    else
-    {
-      try
+      if (list != null)
+      {
+        list.set(index, TypeConvert.toOoId(newValue));
+      }
+      else
       {
         throw new Exception("Trying to setValue for object while the list is null.");
       }
-      catch (Exception e)
-      {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+    }
+    catch (Exception e)
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
 
   }
@@ -115,18 +116,20 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
   public ObjyArrayListId getList(ObjyObject objyObject, EStructuralFeature feature)
   {
     // System.out.println("getList() for : " + objyObject.ooId().getStoreString() + " feature: " + feature.getName());
-    Class_Position position = getAttributePosition(objyObject, feature);
-    ObjyArrayListId list = (ObjyArrayListId)objyObject.getFeatureList(position);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+    ObjyArrayListId list = (ObjyArrayListId)objyObject.getFeatureList(attributeName/* position */);
     if (list == null)
     {
       try
       {
-        ooId oid = objyObject.get_ooId(position);
+        ooId oid = objyObject.get_ooId(attributeName/* position */);
         if (!oid.isNull())
         {
           list = new ObjyArrayListId(Class_Object.class_object_from_oid(oid));
-          objyObject.setFeatureList(position, list);
+          objyObject.setFeatureList(attributeName/* position */, list);
         }
+        // System.out.println("... getList() -> gotOID: " + oid.getStoreString());
       }
       catch (ObjyRuntimeException e)
       {
@@ -198,22 +201,28 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
   public void initialize(Class_Object classObject, EStructuralFeature feature)
   {
     Class_Position position = classObject.position_in_class(getAttributeName(feature));
-    Class_Object newClassObject = Class_Object
-        .new_persistent_object(getArrayListClass(), classObject.objectID(), false);
-    classObject.set_ooId(position, newClassObject.objectID());
-    ObjyArrayListId.initObject(newClassObject);
+    // Class_Object newClassObject = Class_Object
+    // .new_persistent_object(getArrayListClass(), classObject.objectID(), false);
+    ooTreeListX list = new ooTreeListX(2, false);
+    // ObjyObjectManager.newInternalObjCount++;
+    ooObj anObj = ooObj.create_ooObj(classObject.objectID());
+    anObj.cluster(list);
+    classObject.set_ooId(position, list.getOid());
+    // classObject.set_ooId(position, newClassObject.objectID());
+    // ObjyArrayListId.initObject(newClassObject);
   }
 
   public void delete(ObjyObject objyObject, EStructuralFeature feature)
   {
     // System.out.println("delete() for : " + objyObject.ooId().getStoreString() + " feature: " + feature.getName());
-    Class_Position position = getAttributePosition(objyObject, feature);
-    ooId tobeDeleted = objyObject.get_ooId(position);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+    ooId tobeDeleted = objyObject.get_ooId(attributeName/* position */);
     ooObj objectToDelete = ooObj.create_ooObj(tobeDeleted);
     objectToDelete.delete();
     // set the reference to null.
-    objyObject.set_ooId(position, null);
-    objyObject.setFeatureList(position, null);
+    objyObject.set_ooId(getAttributeName(feature)/* position */, null);
+    objyObject.setFeatureList(attributeName/* position */, null);
   }
 
   public void clear(ObjyObject objyObject, EStructuralFeature feature)

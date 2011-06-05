@@ -29,9 +29,9 @@ public class ObjyScope
 {
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyScope.class);
 
-  private ooContObj contObj;
+  private ooContObj contObj = null;
 
-  private ooDBObj dbObj;
+  private ooDBObj dbObj = null;
 
   private String dbName;
 
@@ -76,10 +76,24 @@ public class ObjyScope
   {
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace(" DB: " + dbName + " - CT: " + contName);
+      TRACER_DEBUG.trace("ObjyScope - DB: " + dbName + " - CT: " + contName);
     }
     this.dbName = dbName;
     this.contName = contName;
+    init();
+  }
+
+  // optimized version that takes an ooDBObj.
+  public ObjyScope(ooDBObj dbObj, String contName)
+  {
+    dbName = dbObj.getName();
+    this.contName = contName;
+    this.dbObj = dbObj;
+
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.trace("ObjyScope - DB: " + dbObj.getName() + " - CT: " + contName);
+    }
     init();
   }
 

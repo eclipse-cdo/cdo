@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * @author Ibrahim Sallam
  */
-public interface IObjectivityStoreAccessor extends IStoreAccessor
+public interface IObjectivityStoreAccessor extends IStoreAccessor.Raw
 {
   public IObjectivityStore getStore();
 

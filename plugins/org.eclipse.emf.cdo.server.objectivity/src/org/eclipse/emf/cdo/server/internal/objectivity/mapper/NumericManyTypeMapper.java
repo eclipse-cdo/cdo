@@ -20,7 +20,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Numeric_Value;
 import com.objy.as.app.Proposed_Basic_Attribute;
 import com.objy.as.app.Proposed_Class;
@@ -378,8 +377,9 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
 
   protected VArray_Object getArray(ObjyObject objyObject, EStructuralFeature feature)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    return objyObject.get_varray(position);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+    return objyObject.get_varray(attributeName/* position */);
   }
 
   // ------------------------------------------------------------------------

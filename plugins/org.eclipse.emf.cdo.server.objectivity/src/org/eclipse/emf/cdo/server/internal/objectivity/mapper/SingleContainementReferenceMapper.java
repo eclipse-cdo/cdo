@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Attribute;
@@ -49,22 +48,25 @@ public class SingleContainementReferenceMapper extends BasicTypeMapper implement
 
   public Object getValue(ObjyObject objyObject, EStructuralFeature feature)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
 
     // TODO Auto-generated method stub
-    ooId id2 = objyObject.get_ooId(position);
+    ooId id2 = objyObject.get_ooId(attributeName/* position */);
     if (id2 == null || id2.isNull())
     {
       return null;
     }
-    Class_Object childObject = objyObject.get_class_obj(position);
+    Class_Object childObject = objyObject.get_class_obj(attributeName/* position */);
     return childObject;
   }
 
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    objyObject.set_ooId(position, (ooId)newValue);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+
+    objyObject.set_ooId(attributeName/* position */, (ooId)newValue);
   }
 
   public boolean validate(d_Attribute ooAttribute, EStructuralFeature feature)

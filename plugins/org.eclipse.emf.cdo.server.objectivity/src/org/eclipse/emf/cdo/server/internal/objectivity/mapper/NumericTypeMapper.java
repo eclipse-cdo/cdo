@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Basic_Type;
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Numeric_Value;
 import com.objy.as.app.Proposed_Basic_Attribute;
 import com.objy.as.app.Proposed_Class;
@@ -148,17 +147,19 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
   public Object getValue(ObjyObject objyObject, EStructuralFeature feature)
   {
     Numeric_Value numericValue = null;
-    Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
 
-    boolean isNull = objyObject.get_numeric(nullPosition).booleanValue();
+    boolean isNull = objyObject.get_numeric(nullAttributeName/* nullPosition */).booleanValue();
 
     // if (isNull && feature.isUnsettable())
     // return CDORevisionData.NIL;
 
     if (!isNull)
     {
-      Class_Position position = getAttributePosition(objyObject, feature);
-      numericValue = objyObject.get_numeric(position);
+      // Class_Position position = getAttributePosition(objyObject, feature);
+      String attributeName = getAttributeName(feature);
+      numericValue = objyObject.get_numeric(attributeName/* position */);
     }
 
     return fromNumericValue(numericValue, isNull);
@@ -168,16 +169,18 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
   {
     boolean isNull = newValue == null || newValue == CDORevisionData.NIL;
     Numeric_Value isNullValue = isNull ? numericTrue : numericFalse;
-    Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
 
     if (!isNull)
     {
-      Class_Position position = getAttributePosition(objyObject, feature);
+      // Class_Position position = getAttributePosition(objyObject, feature);
+      String attributeName = getAttributeName(feature);
       Numeric_Value numericValue = toNumericValue(newValue);
-      objyObject.set_numeric(position, numericValue);
+      objyObject.set_numeric(attributeName/* position */, numericValue);
     }
 
-    objyObject.set_numeric(nullPosition, isNullValue);
+    objyObject.set_numeric(nullAttributeName/* nullPosition */, isNullValue);
   }
 
   public Object remove(ObjyObject objyObject, EStructuralFeature feature)
@@ -189,14 +192,15 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
   {
     // throw new UnsupportedOperationException("Implement me!!");
     // we just set the numeric _null to "true"
-    Class_Position position = getNullAttributePosition(objyObject, feature);
-    objyObject.set_numeric(position, numericTrue);
+    // Class_Position position = getNullAttributePosition(objyObject, feature);
+    // String nullAttributeName = getNullAttributeName(feature);
+    objyObject.set_numeric(getNullAttributeName(feature)/* position */, numericTrue);
   }
 
   public void initialize(Class_Object classObject, EStructuralFeature feature)
   {
-    Class_Position position = classObject.type_of().position_in_class(getNullAttributeName(feature));
-    classObject.set_numeric(position, numericTrue);
+    // Class_Position position = classObject.type_of().position_in_class(getNullAttributeName(feature));
+    classObject.nset_numeric(getNullAttributeName(feature) /* position */, numericTrue);
   }
 
   // various numeric types....

@@ -131,7 +131,10 @@ public class ObjyClassProposed
       }
     }
 
-    TRACER_DEBUG.trace("ECLASS " + eClass.getName() + " -> " + className + " -- DONE");
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.trace("ECLASS " + eClass.getName() + " -> " + className + " -- DONE");
+    }
 
     for (EClass classifier : toBeProcessed)
     {
@@ -221,7 +224,7 @@ public class ObjyClassProposed
       }
     }
 
-    TRACER_DEBUG.trace("ECLASS " + eClass.getName() + " -> " + className + " -- DONE");
+    TRACER_DEBUG.trace("evolve ECLASS " + eClass.getName() + " -> " + className + " -- DONE");
 
     for (EClass classifier : toBeEvolve)
     {

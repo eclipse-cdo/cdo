@@ -30,7 +30,7 @@ public class ObjyPlacementManagerImpl implements ObjyPlacementManager
   private String genContName = "Cont";
 
   /**
-   * TODO - For now we'll have a hard coded values... later we'll pick the pieces from the old design.
+   * Only used when we can't figure out a near object, so we'll end up putting the object in a default location.
    */
   public ooId getNearObject(ObjyObject parent, EStructuralFeature feature, EClass newClassObject)
   {

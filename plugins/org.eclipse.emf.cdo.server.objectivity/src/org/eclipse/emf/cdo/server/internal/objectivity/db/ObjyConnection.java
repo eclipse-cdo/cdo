@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.db;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManager;
 import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManagerImpl;
+import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreConfig;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -65,10 +66,18 @@ public class ObjyConnection
 
   private int sessionMaxCacheSize = 1000;
 
+  private final int minInactiveSessions = 5;
+
+  private int sessionCount = 0;
+
+  private String logDirPath = null;
+
+  private int logOption = oo.LogNone;
+
   public ObjyConnection()
   {
-    readPool = new ConcurrentHashMap<String, ObjySession>(20);
-    writePool = new ConcurrentHashMap<String, ObjySession>(20);
+    readPool = new ConcurrentHashMap<String, ObjySession>(5);
+    writePool = new ConcurrentHashMap<String, ObjySession>(5);
   }
 
   /***
@@ -76,12 +85,25 @@ public class ObjyConnection
    * 
    * @param fdName
    */
-  synchronized public void connect(String fdName)
+  synchronized public void connect(IObjectivityStoreConfig storeConfig)
+  {
+    /****
+     * If
+     */
+    fdName = storeConfig.getFdName();
+    logDirPath = storeConfig.getLogPath();
+    logOption = storeConfig.getLogOption();
+    connect();
+    // this.store = store;
+  }
+
+  synchronized public void connect(String fdName, int logOption)
   {
     /****
      * If
      */
     this.fdName = fdName;
+    this.logOption = logOption;
     connect();
     // this.store = store;
   }
@@ -101,19 +123,20 @@ public class ObjyConnection
       {
         if (Connection.current() == null)
         {
-          int options = oo.LogNone; // oo.LogAll;
-          Connection.setLoggingOptions(options, true, // boolean logToFiles
-              true, // boolean appendLogFiles,
-              "c:\\data", // String logDirPath,
-              "MainLog.txt"// String mainLogFileName
-          );
+          if (logOption != oo.LogNone)
+          {
+            Connection.setLoggingOptions(logOption, true, // boolean logToFiles
+                true, // boolean appendLogFiles,
+                logDirPath, // String logDirPath,
+                "MainLog.txt"// String mainLogFileName
+            );
+          }
           if (TRACER_DEBUG.isEnabled())
           {
             TRACER_DEBUG.trace(" creating new Connection");
           }
           connection = Connection.open(fdName, oo.openReadWrite);
           connection.useContextClassLoader(true);
-
         }
         else
         {
@@ -147,42 +170,48 @@ public class ObjyConnection
 
   public ObjySession getWriteSessionFromPool(String sessionName)
   {
-    synchronized (syncObject)
-    {
-      // return connection.getSessionFromPool(getSessionPoolNameWrite(), sessionName);
-      ObjySession session = writePool.get(sessionName);
-      if (session == null)
-      {
-        session = new ObjySession(sessionName, writePool, this);
-        writePool.put(sessionName, session);
-      }
-      session.join();
-      return session;
-    }
+    return getSessionFromPool(sessionName);
   }
 
   public ObjySession getReadSessionFromPool(String sessionName)
   {
-    synchronized (syncObject)
-    {
-      // return connection.getSessionFromPool(getSessionPoolNameRead(), sessionName);
-      ObjySession session = readPool.get(sessionName);
-      if (session == null)
-      {
-        session = new ObjySession(sessionName, writePool, this);
-        readPool.put(sessionName, session);
-      }
-      session.join();
-      return session;
-    }
+    return getSessionFromPool(sessionName);
   }
 
-  public void returnSessionToPool(ObjySession session)
+  protected ObjySession getSessionFromPool(String sessionName)
   {
     synchronized (syncObject)
     {
-      // TODO Auto-generated method stub
-      session.leave();
+      // return connection.getSessionFromPool(getSessionPoolNameWrite(), sessionName);
+      ObjySession session = readPool.get(sessionName);
+      if (session == null)
+      {
+        if (sessionCount >= minInactiveSessions)
+        {
+          // look for an inactive one, rename it and use it.
+          for (ObjySession objySession : readPool.values())
+          {
+            if (objySession.isAvailable())
+            {
+              objySession.setName(sessionName);
+              session = objySession;
+              break;
+            }
+          }
+        }
+
+        // we are forced to create one.
+        if (session == null)
+        {
+          session = new ObjySession(sessionName, readPool, this);
+          ++sessionCount;
+          // System.out.println(">>> IS: creating new session: " + sessionName + " - total: " + sessionCount);
+          readPool.put(sessionName, session);
+        }
+      }
+      session.join();
+      session.setAvailable(false);
+      return session;
     }
   }
 
@@ -212,6 +241,8 @@ public class ObjyConnection
       cleanupSessionPool(readPool);
       // TRACER_DEBUG.trace("ObjyConnection.disconnect() -- cleanup writePool. ");
       cleanupSessionPool(writePool);
+
+      sessionCount = 0;
 
       // TRACER_DEBUG.trace("ObjyConnection.disconnect() -- cleanup any other sessions. ");
       // for testing we need to find out if there are any open sessions.

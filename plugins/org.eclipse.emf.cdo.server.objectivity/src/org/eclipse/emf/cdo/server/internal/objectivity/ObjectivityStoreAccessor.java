@@ -18,14 +18,19 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.clustering.ObjyPlacementManagerLocal;
@@ -38,6 +43,7 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranch;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranchManager;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyCommitInfo;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyLockAreaManager;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.SmartLock;
@@ -59,14 +65,18 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import com.objy.db.LockNotGrantedException;
 import com.objy.db.app.oo;
 import com.objy.db.app.ooId;
 import com.objy.db.app.ooObj;
@@ -77,9 +87,11 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -87,11 +99,9 @@ import java.util.SortedSet;
  * @author Simon McDuff
  * @author Ibrahim Sallam
  */
-public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectivityStoreAccessor
+public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectivityStoreAccessor, DurableLocking
 {
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjectivityStoreAccessor.class);
-
-  private static final ContextTracer TRACER_ERROR = new ContextTracer(OM.ERROR, ObjectivityStoreAccessor.class);
 
   private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjectivityStoreAccessor.class);
 
@@ -104,6 +114,12 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   protected int sessionID = 0; // used to tag the Objy session in the session pool
 
   boolean zipped = true; // TODO - might make this configurable...
+
+  private HashMap<CDOID, ObjyObject> newObjyObjectsMap = new HashMap<CDOID, ObjyObject>();
+
+  private long readRevisionTime = 0;
+
+  private int readRevisionCount = 0;
 
   protected ObjectivityStoreAccessor(ObjectivityStore store, ISession cdoSession)
   {
@@ -155,6 +171,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   {
     ensureSessionBegin();
 
+    // System.out.println(">>>>IS:<<< detachObjects() " + this + " - objy session: " + objySession.toString());
+    // objySession.addToLog("IS:>>>", "detachObjects - begin");
+
     try
     {
       monitor.begin(detachedObjects.length);
@@ -165,10 +184,11 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         ooId containerID = OBJYCDOIDUtil.getContainerId(id);
         containerToLocks.add(containerID);
       }
-      lockContainers(containerToLocks);
+      objySession.lockContainers(containerToLocks);
 
       InternalCDORevisionManager revisionManager = getStore().getRepository().getRevisionManager();
 
+      long tStart = System.currentTimeMillis();
       for (CDOID id : detachedObjects)
       {
 
@@ -179,11 +199,20 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
         detachObject(id, version, branch, timeStamp);
       }
+      // objySession.addToLog("IS:>>>", "detachObjects - end");
+      long tDiff = System.currentTimeMillis() - tStart;
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.trace("detach objects: " + detachedObjects.length + " - time: " + tDiff);
+      }
+
     }
     finally
     {
       monitor.done();
     }
+
+    // System.out.println(">>>>IS:<<< detachObjects() DONE " + this + " - objy session: " + objySession.toString());
   }
 
   /***
@@ -194,20 +223,30 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
    */
   private void detachObject(CDOID id, int version, CDOBranch branch, long timeStamp)
   {
-    ensureSessionBegin();
+    // ensureSessionBegin();
 
     ObjyObject objyObject = getObject(id);
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("Detaching id " + objyObject.ooId().getStoreString());
+      TRACER_DEBUG.trace("Detaching id " + id + " - OID: " + objyObject.ooId().getStoreString() + " verions: "
+          + version + " in Branch: " + branch.getID() + " and timeStamp: " + timeStamp);
     }
 
-    if (getStore().isRequiredToSupportAudits() || getStore().isRequiredToSupportBranches())
+    if (getStore().isRequiredToSupportAudits())
     {
-      // pick the proper version.
-      ObjyObject objyRevision = objyObject.getRevisionByVersion(version);
-      objyRevision.setRevisedTime(timeStamp - 1);
+      if (version > CDOBranchVersion.FIRST_VERSION)
+      {
+        // pick the proper version of that branch to revise it. Otherwise, the detached version will
+        // be in a different branch.
+        ObjyObject objyRevision = objyObject.getRevisionByVersion(version, branch.getID(),
+            objySession.getObjectManager());
+        if (objyRevision.getVersion() < 0)
+        {
+          TRACER_DEBUG.trace("... OBJ is already detached...");
+        }
+        objyRevision.setRevisedTime(timeStamp - 1);
+      }
       objyObject.detach(version, branch, timeStamp);
     }
     else
@@ -234,43 +273,92 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     // getObjySession();
   }
 
-  private void getObjySession()
+  public ObjySession getObjySession()
   {
-    // ISession cdoSession = getSession();
-    // System.out.println(">>>>IS:<<< context's session: " + (cdoSession == null ? "null" : cdoSession.toString()));
+    int currSessionID = sessionID;
 
-    if (objySession != null)
+    if (!isReader())
     {
-      return;
+      // The only reason we do this is because there was a switching of context in the middle
+      // of a transaction, and we want to ensure that we continue with the proper session that
+      // is holding the data.
+      ITransaction cdoTrx = getTransaction();
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG
+            .trace("getObjySession() - context's transaction: " + (cdoTrx == null ? "null" : cdoTrx.toString()));
+      }
+      if (cdoTrx != null)
+      {
+        sessionID = cdoTrx.getSession().getSessionID();
+      }
+    }
+
+    if (objySession != null && currSessionID == sessionID)
+    {
+      return objySession;
     }
 
     // get a session name.
     String sessionName = "Session_" + sessionID;
 
-    if (isRead && objySession == null)
+    if (objySession != null)
     {
-      objySession = getStore().getConnection().getReadSessionFromPool(sessionName);
-      // System.out.println(">>>>IS:<<<< Getting from Read Pool [name: " + sessionName + " - session:" + objySession +
-      // "]");
+      objySession.returnSessionToPool();
     }
-    else if (objySession == null)
+    if (isReader())
     {
-      objySession = getStore().getConnection().getWriteSessionFromPool(sessionName);
-      // System.out.println(">>>>IS:<<<< Getting from Write Pool [name: " + sessionName + " - session:" + objySession +
-      // "]");
+      objySession = getStore().getConnection().getReadSessionFromPool(sessionName + "_" + getRepositoryName());
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.trace("  getObjySession from read pool, session: " + objySession.toString() + " - isOpen: "
+            + objySession.isOpen() + " - sessionName:" + objySession.getName());
+      }
     }
+    else
+    {
+      objySession = getStore().getConnection().getWriteSessionFromPool(sessionName + "_" + getRepositoryName());
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.trace("  getObjySession from write pool, session: " + objySession.toString() + " - isOpen: "
+            + objySession.isOpen() + " - sessionName:" + objySession.getName());
+      }
+    }
+
     if (!objySession.isOpen())
     {
       objySession.setMrowMode(oo.MROW);
       objySession.setWaitOption(45000);
       objySession.setAllowUnregisterableTypes(true);
+      if (isRead)
+      {
+        objySession.setOpenMode(oo.openReadOnly);
+      }
+      else
+      {
+        objySession.setOpenMode(oo.openReadWrite);
+      }
       objySession.begin();
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.trace("     calling session.begin() for " + objySession.toString() + " - isRead: " + isRead);
+      }
     }
+    else
+    {
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.trace("     session " + objySession.toString() + " already open.");
+      }
+    }
+
+    return objySession;
   }
 
   private void returnObjySession()
   {
-    // System.out.println(">>>>IS:<<<< Returning to pool, session: " + objySession);
+    // System.out.println(">>>>IS:<<<< Returning to pool, session: " + objySession + " - name: " +
+    // objySession.getName());
     ensureSessionJoin();
     // testDetachWithoutRevision_CheckMainBranch() is crashing because objySession is null.
     // TBD: verify this case!!!
@@ -281,10 +369,10 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (objySession.isOpen())
     {
+      // System.out.println(">>>>IS:<<<< commiting session: " + objySession + " - name: " + objySession.getName());
       objySession.commit(); // IS: we might need to abort instead.
     }
-    // objySession.returnSessionToPool();
-    getStore().getConnection().returnSessionToPool(objySession);
+    objySession.returnSessionToPool();
     objySession = null;
   }
 
@@ -306,7 +394,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   protected void doUnpassivate() throws Exception
   {
     // System.out.println(">>>>IS:<<<< StoreAccessor.doUnpassivate() " + this);
-    getObjySession();
+    // IS: don't call this now, in case we don't have a context.
+    // getObjySession();
   }
 
   // @Override
@@ -348,6 +437,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   protected void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
       OMMonitor monitor)
   {
+    // System.out.println(">>>>IS:<<< writeRevisionDeltas() " + this + " - objy session: " + objySession.toString());
+    long start = System.nanoTime();
     ensureSessionBegin();
 
     try
@@ -360,7 +451,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         ooId containerID = OBJYCDOIDUtil.getContainerId(delta.getID());
         containerToLocks.add(containerID);
       }
-      lockContainers(containerToLocks);
+      objySession.lockContainers(containerToLocks);
 
       for (InternalCDORevisionDelta revisionDelta : revisionDeltas)
       {
@@ -371,6 +462,118 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       monitor.done();
     }
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.trace(" writeRevisionDeltas: " + revisionDeltas.length + " - time: " + (System.nanoTime() - start)
+          / 1000000.0);
+    }
+  }
+
+  /**
+   * Called for each revision delta.
+   * 
+   * @param delta
+   * @param created
+   * @param branch
+   */
+  private void writeRevisionDelta2(InternalCDORevisionDelta delta, CDOBranch branch, long created)
+  {
+    // ensureSessionBegin();
+
+    int deltaVersion = delta.getVersion();
+    int newVersion = CDOBranchVersion.FIRST_VERSION;
+
+    ObjyObject objyObject = getObject(delta.getID());
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.format("writingRevisionDelta getting Object: {0}, v:{1} - BranchId:{2}", objyObject.ooId()
+          .getStoreString(), deltaVersion, delta.getBranch().getID());
+    }
+    ObjyObject objyOriginalRevision = objyObject.getRevisionByVersion(deltaVersion, delta.getBranch().getID(),
+        objySession.getObjectManager());
+
+    if (branch.getID() == delta.getBranch().getID())
+    {
+      // Same branch, increase version
+      newVersion = deltaVersion + 1;
+    }
+
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.format("Writing revision delta: {0}, v:{1} - OID:{2}, v:{3} - BranchId:{4}", delta, deltaVersion,
+          objyObject.ooId().getStoreString(), objyOriginalRevision.getVersion(), objyOriginalRevision.getBranchId());
+      TRACER_DEBUG.format("... delta branch ID: {0} - revision branch ID: {1}", branch.getID(),
+          objyOriginalRevision.getBranchId());
+    }
+    // System.out.println(">>>IS: Delta Writing: " + delta.getID() + " - oid: " + objyObject.ooId().getStoreString());
+    // System.out.println("\t - old version : " + delta.getVersion());
+    // System.out.println("\t - created     : " + created);
+    // System.out.println("\t - delta.branch: " + delta.getBranch().toString());
+    // System.out.println("\t - branch      : " + branch.toString());
+    // System.out.println("\t - branch TS   : " + branch.getPoint(created).getTimeStamp());
+    // System.out.println("\t - delta       : " + delta.toString());
+    // for debugging...
+
+    if (objyOriginalRevision.getVersion() != deltaVersion)
+    {
+      throw new RuntimeException("ObjecitivityStoreAccessor : Dirty write");
+    }
+
+    ObjyObject objyNewRevision = null;
+
+    if (getStore().isRequiredToSupportAudits())
+    {
+      // newObjyRevision = objySession.getObjectManager().copyRevision(this, objyRevision);
+      // objyRevision.setRevisedBranchId(branch.getID();
+      // InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager()
+      // .getRevisionByVersion(delta.getID(), delta, 0, true);
+      InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager()
+          .getRevisionByVersion(delta.getID(), delta.getBranch().getVersion(deltaVersion), 0, true);
+
+      // 100917-IS: KISS - InternalCDORevision newRevision = originalRevision.copy();
+
+      // 100917-IS: KISS - newRevision.setVersion(deltaVersion + 1);
+      // 100917-IS: KISS - newRevision.setBranchPoint(delta.getBranch().getPoint(created));
+      // 100917-IS: KISS - newObjyRevision = objySession.getObjectManager().newObject(newRevision.getEClass(),
+      // objyRevision.ooId());
+      // 100917-IS: KISS - objyNewRevision.update(this, newRevision);
+
+      // create a new object, fill it with the original revision data, then
+      // modify the creation and the branch ID accordingly.
+      objyNewRevision = objySession.getObjectManager().newObject(originalRevision.getEClass(),
+          objyOriginalRevision.ooId());
+      objyNewRevision.update(this, originalRevision);
+      objyNewRevision.setBranchId(delta.getBranch().getID());
+      // the following are done at the end.
+      // objyNewRevision.setVersion(deltaVersion + 1);
+      // objyNewRevision.setCreationTime(created);
+
+      objyObject.addToRevisions(objyNewRevision);
+
+      if (getStore().isRequiredToSupportBranches() /* && branch.getID() != CDOBranch.MAIN_BRANCH_ID */)
+      {
+        // add the newObjyRevision to the proper branch.
+        ObjyBranch objyBranch = objySession.getBranchManager(getRepositoryName()).getBranch(branch.getID());
+        ooObj anObj = ooObj.create_ooObj(objyNewRevision.ooId());
+        objyBranch.addRevision(anObj);
+      }
+      if (newVersion > CDORevision.FIRST_VERSION)
+      {
+        // revise the original revision last, otherwise we can end up with the revised date in the new revision.
+        objyOriginalRevision.setRevisedTime(branch.getPoint(created).getTimeStamp() - 1);
+      }
+    }
+    else
+    {
+      objyNewRevision = objyOriginalRevision;
+    }
+
+    ObjectivityFeatureDeltaWriter visitor = new ObjectivityFeatureDeltaWriter(objyNewRevision);
+
+    delta.accept(visitor);
+
+    objyNewRevision.setCreationTime(branch.getPoint(created).getTimeStamp());
+    objyNewRevision.setVersion(newVersion); // TODO - verify with Eike if this is true!!!
   }
 
   /**
@@ -382,19 +585,29 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
    */
   private void writeRevisionDelta(InternalCDORevisionDelta delta, CDOBranch branch, long created)
   {
-    ensureSessionBegin();
+    // ensureSessionBegin();
 
     int deltaVersion = delta.getVersion();
+    int newVersion = CDOBranchVersion.FIRST_VERSION;
 
     ObjyObject objyObject = getObject(delta.getID());
-    ObjyObject objyRevision = objyObject.getRevisionByVersion(deltaVersion);
+    TRACER_DEBUG.format("writingRevisionDelta getting Object: {0}, v:{1} - BranchId:{2}", objyObject.ooId()
+        .getStoreString(), deltaVersion, delta.getBranch().getID());
+    ObjyObject objyOriginalRevision = objyObject.getRevisionByVersion(deltaVersion, delta.getBranch().getID(),
+        objySession.getObjectManager());
+
+    if (branch.getID() == delta.getBranch().getID())
+    {
+      // Same branch, increase version
+      newVersion = deltaVersion + 1;
+    }
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.format("Writing revision delta: {0}, v:{1} - OID:{2}, v: {3}", delta, deltaVersion, objyObject
-          .ooId().getStoreString(), objyRevision.getVersion());
+      TRACER_DEBUG.format("Writing revision delta: {0}, v:{1} - OID:{2}, v:{3} - BranchId:{4}", delta, deltaVersion,
+          objyObject.ooId().getStoreString(), objyOriginalRevision.getVersion(), objyOriginalRevision.getBranchId());
       TRACER_DEBUG.format("... delta branch ID: {0} - revision branch ID: {1}", branch.getID(),
-          objyRevision.getBranchId());
+          objyOriginalRevision.getBranchId());
     }
     // System.out.println(">>>IS: Delta Writing: " + delta.getID() + " - oid: " + objyObject.ooId().getStoreString());
     // System.out.println("\t - old version : " + delta.getVersion());
@@ -405,48 +618,72 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     // System.out.println("\t - delta       : " + delta.toString());
     // for debugging...
 
-    if (objyRevision.getVersion() != deltaVersion)
+    if (objyOriginalRevision.getVersion() != deltaVersion)
     {
       throw new RuntimeException("ObjecitivityStoreAccessor : Dirty write");
     }
 
-    ObjyObject newObjyRevision = null;
+    ObjyObject objyNewRevision = null;
 
     if (getStore().isRequiredToSupportAudits())
     {
-      // newObjyRevision = objySession.getObjectManager().copyRevision(this, objyRevision);
-      objyRevision.setRevisedTime(branch.getPoint(created).getTimeStamp() - 1);
-      // objyRevision.setRevisedBranchId(branch.getID();
-      InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager()
-          .getRevisionByVersion(delta.getID(), delta, 0, true);
 
-      InternalCDORevision newRevision = originalRevision.copy();
+      ObjyObject objyObjectCopy = objySession.getObjectManager().copyRevision(this, objyOriginalRevision);
+      TRACER_DEBUG.format("  created new object:{0} by copying object:{1} - v:{2} - newBranch:{3}", objyObjectCopy
+          .ooId().getStoreString(), objyOriginalRevision.ooId().getStoreString(), objyOriginalRevision.getVersion(),
+          branch.getID());
 
-      newRevision.setVersion(deltaVersion + 1);
-      newRevision.setBranchPoint(delta.getBranch().getPoint(created));
-      newObjyRevision = objySession.getObjectManager().newObject(newRevision.getEClass(), objyRevision.ooId());
-      newObjyRevision.update(this, newRevision);
-      objyObject.addToRevisions(newObjyRevision);
+      // // newObjyRevision = objySession.getObjectManager().copyRevision(this, objyRevision);
+      // // objyRevision.setRevisedBranchId(branch.getID();
+      // InternalCDORevision originalRevision = getStore().getRepository().getRevisionManager()
+      // .getRevisionByVersion(delta.getID(), delta, CDORevision.UNCHUNKED, true);
+      //
+      // // 100917-IS: KISS - InternalCDORevision newRevision = originalRevision.copy();
+      //
+      // // 100917-IS: KISS - newRevision.setVersion(deltaVersion + 1);
+      // // 100917-IS: KISS - newRevision.setBranchPoint(delta.getBranch().getPoint(created));
+      // // 100917-IS: KISS - objyNewRevision = objySession.getObjectManager().newObject(newRevision.getEClass(),
+      // // objyOriginalRevision.ooId());
+      // // 100917-IS: KISS - objyNewRevision.update(this, newRevision);
+      //
+      // // create a new object, fill it with the original revision data, then
+      // // modify the creation and the branch ID accordingly.
+      // objyNewRevision = objySession.getObjectManager().newObject(originalRevision.getEClass(),
+      // objyOriginalRevision.ooId());
+      // objyNewRevision.update(this, originalRevision);
+      objyNewRevision = objyObjectCopy;
+      objyNewRevision.setBranchId(branch.getID());
+      // the following are done at the end.
+      // objyNewRevision.setVersion(deltaVersion + 1);
+      // objyNewRevision.setCreationTime(created);
+
+      objyObject.addToRevisions(objyNewRevision);
 
       if (getStore().isRequiredToSupportBranches() /* && branch.getID() != CDOBranch.MAIN_BRANCH_ID */)
       {
         // add the newObjyRevision to the proper branch.
         ObjyBranch objyBranch = objySession.getBranchManager(getRepositoryName()).getBranch(branch.getID());
-        ooObj anObj = ooObj.create_ooObj(newObjyRevision.ooId());
+        ooObj anObj = ooObj.create_ooObj(objyNewRevision.ooId());
         objyBranch.addRevision(anObj);
+      }
+      // revise the original revision last, otherwise we can end up with the revised date in the new revision.
+      // IS: it seems that in CDO 4.0 we don't need to do that anymore!!
+      if (newVersion > CDORevision.FIRST_VERSION)
+      {
+        objyOriginalRevision.setRevisedTime(branch.getPoint(created).getTimeStamp() - 1);
       }
     }
     else
     {
-      newObjyRevision = objyRevision;
+      objyNewRevision = objyOriginalRevision;
     }
 
-    ObjectivityFeatureDeltaWriter visitor = new ObjectivityFeatureDeltaWriter(newObjyRevision);
+    ObjectivityFeatureDeltaWriter visitor = new ObjectivityFeatureDeltaWriter(objyNewRevision);
 
     delta.accept(visitor);
 
-    newObjyRevision.setCreationTime(branch.getPoint(created).getTimeStamp());
-    newObjyRevision.setVersion(deltaVersion + 1); // TODO - verify with Eike if this is true!!!
+    objyNewRevision.setCreationTime(branch.getPoint(created).getTimeStamp());
+    objyNewRevision.setVersion(newVersion); // TODO - verify with Eike if this is true!!!
   }
 
   @Override
@@ -461,9 +698,15 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   @Override
   protected void writeRevisions(InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor)
   {
-    long start = System.currentTimeMillis();
+    if (TRACER_DEBUG.isEnabled())
+    {
+      ObjyObjectManager.getObjectTime = 0;
+      ObjyObjectManager.updateObjectTime = 0;
+      ObjyObjectManager.resourceCheckAndUpdateTime = 0;
+    }
+    long start = System.nanoTime();
     ensureSessionBegin();
-
+    // objySession.addToLog("IS:>>>", "writeRevisions - begin");
     try
     {
       monitor.begin(revisions.length);
@@ -476,19 +719,31 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       }
       // containersToLock.add(objySession.getBranchManager(getRepositoryName()).getContainer().getOid());
       // lockContainers(containersToLock);
-
+      // long tStart = System.currentTimeMillis();
       for (InternalCDORevision revision : revisions)
       {
         writeRevision(revision, monitor.fork());
       }
+      // long tDiff = System.currentTimeMillis() - tStart;
+      // System.out.println(">>> IS: writing revisions: " + revisions.length + " - time: " + tDiff);
     }
     finally
     {
+      newObjyObjectsMap.clear();
       monitor.done();
     }
+    // objySession.addToLog("IS:>>>", "writeRevisions - end");
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("\t writeRevisions time: " + (System.currentTimeMillis() - start));
+      TRACER_DEBUG
+          .trace(" writeRevisions: " + revisions.length + " - time: " + (System.nanoTime() - start) / 1000000.0);
+      // TRACER_DEBUG.trace("   getObjectTime: " + ObjyObjectManager.getObjectTime / 1000000.0);
+      // TRACER_DEBUG.trace("   updateObjectTime: " + ObjyObjectManager.updateObjectTime / 1000000.0);
+      // TRACER_DEBUG.trace("   resourceCheckAndUpdateTime: " + ObjyObjectManager.resourceCheckAndUpdateTime /
+      // 1000000.0);
+      // ObjyObjectManager.getObjectTime = 0;
+      // ObjyObjectManager.updateObjectTime = 0;
+      // ObjyObjectManager.resourceCheckAndUpdateTime = 0;
     }
 
   }
@@ -501,153 +756,207 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     return objySession.getObjectManager().getObject(id);
   }
 
-  private void lockContainers(Set<ooId> containerToLocks)
-  {
-    // Locks all containers for modified objects
-    if (!containerToLocks.isEmpty())
-    {
-      ooId idsToLock[] = containerToLocks.toArray(new ooId[containerToLocks.size()]);
-      while (true)
-      {
-        try
-        {
-          objySession.openContainers(idsToLock, oo.openReadWrite);
-          break;
-        }
-        catch (Exception e)
-        {
-          TRACER_INFO.trace("Locking problem try again : " + e.getMessage());
-          // this.ensureNewBeginSession();
-          if (!objySession.isOpen())
-          {
-            TRACER_INFO.trace("Objy session is not open");
-            // System.exit(-1); // TODO - this is temporary for debugging...
-          }
-        }
-      }
-    }
-  }
-
   /*****
    * Use this code for heart beat. Async async = null; try { monitor.begin(getListMappings().size() + 1); async =
    * monitor.forkAsync(); reviseObject(accessor, id, timeStamp); } finally { async.stop(); monitor.done(); } [10:07:02
    * AM] Eike Stepper: that one takes care that the heartbeat goes on [10:07:13 AM] Eike Stepper: for indefinite time
    */
 
-  private void writeRevision(InternalCDORevision revision, OMMonitor fork)
+  private void writeRevision(InternalCDORevision revision, OMMonitor monitor)
   {
-    // EClass eClass = revision.getEClass();
-    ObjyObject objyObject = getObject(revision.getID());
+    Async async = null;
 
-    if (TRACER_DEBUG.isEnabled())
+    try
     {
-      TRACER_DEBUG.format("Writing revision: {0} - OID: {1}", revision, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+      monitor.begin(1000); // IS: experimental.
+      async = monitor.forkAsync();
+
+      // EClass eClass = revision.getEClass();
+      long __start = System.nanoTime();
+      // ObjyObject objyObject = getObject(revision.getID());
+      ObjyObject objyObject = newObjyObjectsMap.get(revision.getID());
+      if (objyObject == null)
+      {
+        objyObject = getObject(revision.getID()); // we shouldn't need to come here.
+      }
+      ObjyObjectManager.getObjectTime += System.nanoTime() - __start;
+
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.format("Writing revision: {0} - OID: {1}", revision, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+      }
+
+      // System.out.println(">>>IS: Writing: " + revision.getID() + " - oid: " + objyObject.ooId().getStoreString());
+      // System.out.println("\t - version    : " + revision.getVersion());
+      // System.out.println("\t - timestamp  : " + revision.getTimeStamp());
+      // System.out.println("\t - revised    : " + revision.getRevised());
+      // System.out.println("\t - resourceId : " + revision.getResourceID());
+      // System.out.println("\t - containerId: " + revision.getContainerID());
+      // System.out.println("\t - branch     : " + revision.getBranch().toString());
+      // System.out.println("\t - revision   : " + revision.toString());
+
+      ObjyObject newObjyRevision = objyObject;
+
+      if (revision.getVersion() > CDOBranchVersion.FIRST_VERSION) // we're updating other versions...
+      {
+        // TRACER_DEBUG.format("...Updating other revisions using writeRevision()...");
+        ObjyObject oldObjyRevision = objyObject.getRevisionByVersion(revision.getVersion() - 1, revision.getBranch()
+            .getID(), objySession.getObjectManager());
+
+        if (oldObjyRevision == null)
+        {
+          new IllegalStateException("Revision with version: " + (revision.getVersion() - 1) + " is not in the store."); //$NON-NLS-1$
+        }
+        if (getStore().isRequiredToSupportAudits())
+        {
+          // if we allow versioning, then create a new one here.
+          // IS: I'm not sure if we'll be called here we always go to the writeRevisionDelta call.
+          newObjyRevision = objySession.getObjectManager().newObject(revision.getEClass(), oldObjyRevision.ooId());
+          objyObject.addToRevisions(newObjyRevision);
+
+        }
+        else
+        {
+          newObjyRevision = oldObjyRevision;
+        }
+      }
+
+      if (getStore().isRequiredToSupportBranches())
+      {
+        // add the newObjyRevision to the proper branch.
+        ObjyBranch objyBranch = objySession.getBranchManager(getRepositoryName()).getBranch(
+            revision.getBranch().getID());
+        ooObj anObj = ooObj.create_ooObj(newObjyRevision.ooId());
+        try
+        {
+          objyBranch.addRevision(anObj);
+        }
+        catch (LockNotGrantedException ex)
+        {
+          ex.printStackTrace();
+        }
+      }
+
+      __start = System.nanoTime();
+      newObjyRevision.update(this, revision);
+      ObjyObjectManager.updateObjectTime += System.nanoTime() - __start;
+
+      // if it's a resource, collect it.
+      if (revision.isResourceNode())
+      {
+        __start = System.nanoTime();
+        // TODO - this is temp solution to lock the common resource list
+        // Add resource to the list
+        ObjyResourceList resourceList = objySession.getResourceList(getRepositoryName());
+        ooObj anObj = (ooObj)objySession.getFD().objectFrom(resourceList.ooId());
+        SmartLock.lock(anObj.getContainer());
+
+        // before we update the data into the object we need to check
+        // if it's a resource and we're trying to add a duplicate.
+        // TODO - do we need to check for Folder and resouce, or is the isResourceNode()
+        // check is enough?!!!
+        if (revision.isResourceFolder() || revision.isResource())
+        {
+          // this call will throw exception if we have a duplicate resource we trying to add.
+          resourceList.checkDuplicateResources(this, revision);
+        }
+        SmartLock.lock(newObjyRevision);
+        try
+        {
+          resourceList.add(newObjyRevision);
+        }
+        catch (LockNotGrantedException ex)
+        {
+          ex.printStackTrace();
+        }
+        ObjyObjectManager.resourceCheckAndUpdateTime += System.nanoTime() - __start;
+      }
     }
-
-    // System.out.println(">>>IS: Writing: " + revision.getID() + " - oid: " + objyObject.ooId().getStoreString());
-    // System.out.println("\t - version    : " + revision.getVersion());
-    // System.out.println("\t - timestamp  : " + revision.getTimeStamp());
-    // System.out.println("\t - revised    : " + revision.getRevised());
-    // System.out.println("\t - resourceId : " + revision.getResourceID());
-    // System.out.println("\t - containerId: " + revision.getContainerID());
-    // System.out.println("\t - branch     : " + revision.getBranch().toString());
-    // System.out.println("\t - revision   : " + revision.toString());
-
-    ObjyObject newObjyRevision = objyObject;
-
-    if (revision.getVersion() > CDOBranchVersion.FIRST_VERSION) // we're updating other versions...
+    finally
     {
-      ObjyObject oldObjyRevision = objyObject.getRevisionByVersion(revision.getVersion() - 1);
-
-      if (oldObjyRevision == null)
-      {
-        new IllegalStateException("Revision with version: " + (revision.getVersion() - 1) + " is not in the store."); //$NON-NLS-1$
-      }
-      if (getStore().isRequiredToSupportAudits())
-      {
-        // if we allow versioning, then create a new one here.
-        // IS: I'm not sure if we'll be called here we always go to the writeRevisionDelta call.
-        newObjyRevision = objySession.getObjectManager().newObject(revision.getEClass(), oldObjyRevision.ooId());
-        objyObject.addToRevisions(newObjyRevision);
-
-      }
-      else
-      {
-        newObjyRevision = oldObjyRevision;
-      }
-    }
-
-    if (getStore().isRequiredToSupportBranches())
-    {
-      // add the newObjyRevision to the proper branch.
-      ObjyBranch objyBranch = objySession.getBranchManager(getRepositoryName()).getBranch(revision.getBranch().getID());
-      ooObj anObj = ooObj.create_ooObj(newObjyRevision.ooId());
-      objyBranch.addRevision(anObj);
-    }
-
-    newObjyRevision.update(this, revision);
-
-    // if it's a resource, collect it.
-    if (revision.isResourceNode())
-    {
-      // Add resource to the list
-      ObjyResourceList resourceList = objySession.getResourceList(getRepositoryName());
-
-      // before we update the data into the object we need to check
-      // if it's a resource and we're trying to add a duplicate.
-      // TODO - do we need to check for Folder and resouce, or is the isResourceNode()
-      // check is enough?!!!
-      if (revision.isResourceFolder() || revision.isResource())
-      {
-        // this call will throw exception if we have a duplicate resource we trying to add.
-        resourceList.checkDuplicateResources(this, revision);
-      }
-      SmartLock.lock(newObjyRevision);
-      resourceList.add(newObjyRevision);
+      async.stop();
+      monitor.done();
     }
   }
 
   @Override
   protected void doCommit(OMMonitor monitor)
   {
-    // ISession cdoSession = getSession();
-    // System.out.println(">>>>IS:<<< doCommit() " + this + " - context's session: "
-    // + (cdoSession == null ? "null" : cdoSession.toString()));
+    // System.out.println(">>>>IS:<<< doCommit() " + this + " - objy session: " + objySession.toString());
 
     long start = System.currentTimeMillis();
+    Async async = null;
+    monitor.begin();
+
     try
     {
-      // The commit request might come from a different thread.
-      ensureSessionJoin();
+      try
+      {
+        async = monitor.forkAsync();
+        // The commit request might come from a different thread.
+        ensureSessionJoin();
 
-      if (TRACER_DEBUG.isEnabled())
-      {
-        TRACER_DEBUG.trace("Committing ..." + objySession + " nc:" + objySession.nestCount());
-      }
-      if (objySession.isOpen() == true)
-      {
-        objySession.commit();
-      }
-      else
-      {
-        TRACER_DEBUG.trace("Error: calling objySession.commit() without having an open trx.");
-      }
+        if (TRACER_DEBUG.isEnabled())
+        {
+          TRACER_DEBUG.trace("Committing ..." + objySession + " nc:" + objySession.nestCount());
+        }
+        if (objySession.isOpen() == true)
+        {
+          objySession.commit();
+        }
+        else
+        {
+          TRACER_DEBUG.trace("Error: calling objySession.commit() without having an open trx.");
+        }
 
-      if (TRACER_DEBUG.isEnabled())
+        if (TRACER_DEBUG.isEnabled())
+        {
+          TRACER_DEBUG.trace("Committed");
+        }
+      }
+      finally
       {
-        TRACER_DEBUG.trace("Committed");
+        if (async != null)
+        {
+          async.stop();
+        }
       }
     }
     catch (RuntimeException exception)
     {
-      TRACER_ERROR.trace(exception.getMessage(), exception);
+      TRACER_INFO.trace(exception.getMessage(), exception);
       exception.printStackTrace();
       throw exception;
     }
+    finally
+    {
+      monitor.done();
+    }
+
+    // 100920 - IS: for debugging
     if (TRACER_DEBUG.isEnabled())
     {
+      // TRACER_DEBUG.trace("doCommit() - new objects created: " + ObjyObjectManager.newObjCount + " - Internal: "
+      // + ObjyObjectManager.newInternalObjCount);
+      // ObjyObjectManager.newObjCount = 0;
+      // ObjyObjectManager.newInternalObjCount = 0;
+      TRACER_DEBUG.trace(" readRvisions: " + readRevisionCount + " - time: " + readRevisionTime / 1000000.0);
+      TRACER_DEBUG.trace(" fetchCount: " + ObjyObject.fetchCount + " - updateCount: " + ObjyObject.updateCount);
       TRACER_DEBUG.trace("\t commit time: " + (System.currentTimeMillis() - start));
+      readRevisionTime = 0;
+      readRevisionCount = 0;
+      ObjyObject.fetchCount = 0;
+      ObjyObject.updateCount = 0;
     }
+    // System.out.println("IS:>>> ObjyObject.ctor(): count " + ObjyObject.count + " - totalTime: " + ObjyObject.tDiff);
+    // for (ooId oid : ObjyObject.oids)
+    // {
+    // System.out.println("<" + oid.getStoreString() + "> ");
+    // }
+    // System.out.println();
+    // ObjyObject.count = 0;
+    // ObjyObject.tDiff = 0;
+    // ObjyObject.oids.clear();
   }
 
   public IObjectivityStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
@@ -697,8 +1006,12 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     String pathPrefix = context.getName();
     boolean exactMatch = context.exactMatch();
-    // System.out.println(">>>>IS:<<<< queryResources() for : " + (pathPrefix == null ? "NULL" : pathPrefix)
-    // + " - exactMatch: " + exactMatch);
+
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.format("queryResources() for : " + (pathPrefix == null ? "NULL" : pathPrefix) + " - exactMatch: "
+          + exactMatch);
+    }
     ObjyResourceList resourceList = objySession.getResourceList(getRepositoryName());
     int size = resourceList.size();
     if (size == 0) // nothing yet.
@@ -719,11 +1032,28 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         // get the proper revision of the resource (might need to refactor this code, see readRevision())
         if (getStore().isRequiredToSupportBranches())
         {
-          resourceRevision = resource.getRevision(context.getTimeStamp(), context.getBranch().getID());
+          try
+          {
+            resourceRevision = resource.getRevision(context.getTimeStamp(), context.getBranch().getID(),
+                objySession.getObjectManager());
+          }
+          catch (RuntimeException ex)
+          {
+            ex.printStackTrace();
+          }
+
         }
         else if (getStore().isRequiredToSupportAudits())
         {
-          resourceRevision = resource.getRevision(context.getTimeStamp(), CDOBranch.MAIN_BRANCH_ID);
+          try
+          {
+            resourceRevision = resource.getRevision(context.getTimeStamp(), CDOBranch.MAIN_BRANCH_ID,
+                objySession.getObjectManager());
+          }
+          catch (RuntimeException ex)
+          {
+            ex.printStackTrace();
+          }
         }
 
         if (resourceRevision == null || resourceRevision.getVersion() < 0)
@@ -732,24 +1062,17 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         }
 
         String resourceName = ObjyResourceList.getResourceName(resourceRevision);
-        if (exactMatch && pathPrefix != null && pathPrefix.equals(resourceName))
+        CDOID resourceID = OBJYCDOIDUtil.getCDOID(resource.ooId());
+        if (exactMatch && pathPrefix != null && pathPrefix.equals(resourceName) || pathPrefix == null
+            && resourceName == null)
         {
-          CDOID resourceID = OBJYCDOIDUtil.getCDOID(resource.ooId());
           if (!context.addResource(resourceID))
           {
-            // System.out.println("  >>IS:<<<< queryResources() got: " +
-            // resource.ooId().getStoreString() + " - version: " + resource.getVersion());
-            // No more results allowed
-            break; // don't continue
-          }
-        }
-        else if (pathPrefix == null && resourceName == null)
-        {
-          CDOID resourceID = OBJYCDOIDUtil.getCDOID(resource.ooId());
-          if (!context.addResource(resourceID))
-          {
-            // System.out.println("  >>IS:<<<< queryResources() got: " +
-            // resource.ooId().getStoreString() + " - version: " + resource.getVersion());
+            if (TRACER_DEBUG.isEnabled())
+            {
+              TRACER_DEBUG.format("   queryResources(1.1) got: " + resource.ooId().getStoreString() + " - version: "
+                  + resource.getVersion());
+            }
             // No more results allowed
             break; // don't continue
           }
@@ -758,8 +1081,12 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
         {
           if (resourceName.startsWith(pathPrefix))
           {
-            CDOID resourceID = OBJYCDOIDUtil.getCDOID(resource.ooId());
             context.addResource(resourceID);
+            if (TRACER_DEBUG.isEnabled())
+            {
+              TRACER_DEBUG.format("   queryResources(1.2) got: " + resource.ooId().getStoreString() + " - version: "
+                  + resource.getVersion());
+            }
           }
         }
         /***
@@ -775,8 +1102,91 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
   public void queryXRefs(QueryXRefsContext context)
   {
-    // TODO: implement ObjectivityStoreAccessor.queryXRefs(context)
-    throw new UnsupportedOperationException();
+    ensureSessionBegin();
+
+    Set<CDOID> targetIDs = context.getTargetObjects().keySet();
+    Map<EClass, List<EReference>> sourceCandidates = context.getSourceCandidates();
+
+    // get the context branch.
+    CDOBranch branch = context.getBranch();
+    ObjyBranchManager branchManager = objySession.getBranchManager(getRepositoryName());
+    ObjyBranch objyBranch = branchManager.getBranch(branch.getID());
+
+    // iterate over all revision in a branch.
+    ObjyObject objyObject = null;
+    SortedSet<?> revisions = objyBranch.getRevisions();
+    for (Object anObj : revisions)
+    {
+      // the ooObj we get from revisions is the correct one for that branch.
+      objyObject = objySession.getObjectManager().getObject(((ooObj)anObj).getOid());
+
+      // InternalCDORevision revision = getRevision(list, context);
+      // if (revision == null || revision instanceof SyntheticCDORevision)
+      // {
+      // continue;
+      // }
+      //
+      EClass eClass = ObjySchema.getEClass(getStore(), objyObject.objyClass());
+      CDOID sourceID = objyObject.getRevisionId();
+
+      List<EReference> eReferences = sourceCandidates.get(eClass);
+      if (eReferences != null)
+      {
+        for (EReference eReference : eReferences)
+        {
+          if (eReference.isMany())
+          {
+            @SuppressWarnings("unchecked")
+            List<Object> results = objyObject.fetchList(this, eReference, 0, CDORevision.UNCHUNKED);
+            if (results != null)
+            {
+              try
+              {
+                int index = 0;
+                for (Object id : results)
+                {
+                  if (!queryXRefs(context, targetIDs, (CDOID)id, sourceID, eReference, index++))
+                  {
+                    return;
+                  }
+                }
+              }
+              catch (Exception ex)
+              {
+                ex.printStackTrace();
+              }
+            }
+          }
+          else
+          {
+            Object value = objyObject.get(eReference);
+            CDOID id = (CDOID)value;
+            if (!queryXRefs(context, targetIDs, id, sourceID, eReference, 0))
+            {
+              return;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  private boolean queryXRefs(QueryXRefsContext context, Set<CDOID> targetIDs, CDOID targetID, CDOID sourceID,
+      EReference sourceReference, int index)
+  {
+    for (CDOID id : targetIDs)
+    {
+      if (id.equals(targetID))
+      {
+        if (!context.addXRef(targetID, sourceID, sourceReference, index))
+        {
+          // No more results allowed
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   /**
@@ -800,16 +1210,27 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   }
 
   /**
-	 *
-	 */
+   *
+   */
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
+    long __start = System.nanoTime();
     ensureSessionBegin();
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.format("Reading revision for: {0}", id); //$NON-NLS-1$
+      TRACER_DEBUG.format("RR - Read rev for: {0}, TS:{1}", id, branchPoint.getTimeStamp()); //$NON-NLS-1$
+    }
+
+    // we shouldn't be doing this!!!
+    if (id instanceof CDOIDExternal)
+    {
+      // 100917 - IS: This must be a bug in CDO, it's throwing a CDOIDExternal at us
+      // we'll return null.
+      // TRACER_DEBUG.format("objy can't read revision for CDOID: {0}, it's external.", id.toString());
+      TRACER_DEBUG.trace("objy can't read revision for external CDOID: " + id.toString());
+      return null;
     }
 
     // we might have a proxy object!!!!
@@ -820,10 +1241,14 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.format("objyObject is NULL"); //$NON-NLS-1$
+        TRACER_DEBUG.format("RR - objyObject is NULL 4 ID:" + id); //$NON-NLS-1$
       }
       return null;
     }
+    // else
+    // {
+    //      TRACER_DEBUG.format("RR - objyObject is ID:" + id + ", :" + objyObject.ooId().getStoreString()); //$NON-NLS-1$
+    // }
 
     InternalCDORevision revision = createRevision(objyObject, id);
     revision.setBranchPoint(branchPoint);
@@ -832,18 +1257,47 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (getStore().isRequiredToSupportBranches())
     {
-      objyRevision = objyObject.getRevision(branchPoint.getTimeStamp(), branchPoint.getBranch().getID());
+      try
+      {
+        objyRevision = objyObject.getRevision(branchPoint.getTimeStamp(), branchPoint.getBranch().getID(),
+            objySession.getObjectManager());
+        if (objyRevision == null)
+        {
+          TRACER_DEBUG
+              .format(
+                  "RR - branches ID:{0}, OB:{1}, BPB:{2}, BPTS:{3}", id, objyObject.getBranchId(), branchPoint.getBranch().getID(), branchPoint.getTimeStamp()); //$NON-NLS-1$
+        }
+      }
+      catch (RuntimeException ex)
+      {
+        ex.printStackTrace();
+      }
     }
     else if (getStore().isRequiredToSupportAudits())
     {
-      objyRevision = objyObject.getRevision(branchPoint.getTimeStamp(), CDOBranch.MAIN_BRANCH_ID);
+      try
+      {
+        objyRevision = objyObject.getRevision(branchPoint.getTimeStamp(), CDOBranch.MAIN_BRANCH_ID,
+            objySession.getObjectManager());
+        if (objyRevision == null)
+        {
+          TRACER_DEBUG
+              .format(
+                  "RR - audit ID:{0}, OB:{1}, BPB:{2}, BPTS:{3}", id, objyObject.getBranchId(), branchPoint.getBranch().getID(), branchPoint.getTimeStamp()); //$NON-NLS-1$
+        }
+      }
+      catch (RuntimeException ex)
+      {
+        ex.printStackTrace();
+      }
+
     }
 
     if (objyRevision == null)
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.format("objyRevision is NULL"); //$NON-NLS-1$
+        TRACER_DEBUG.format("RR - objyRevision is NULL 4 ID:" + id); //$NON-NLS-1$
       }
       return null;
     }
@@ -853,7 +1307,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.format("...revision for: {0} - OID: {1} is detached.", id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+        TRACER_DEBUG
+            .format("RR - ...revision for: {0} - OID: {1} is detached.", id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
       }
       EClass eClass = ObjySchema.getEClass(getStore(), objyObject.objyClass());
       return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), -objyRevision.getVersion(),
@@ -865,10 +1320,19 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.format("Fetching revision details for: {0} - OID: {1}", id, objyRevision.ooId().getStoreString()); //$NON-NLS-1$
+      TRACER_DEBUG
+          .format("RR - Fetching revision details for: {0} - OID:{1}", id, objyRevision.ooId().getStoreString()); //$NON-NLS-1$
     }
 
     boolean ok = objyRevision.fetch(this, revision, listChunk);
+
+    if (!ok)
+    {
+      TRACER_DEBUG.format("RR - Fetch rev failed 4: {0}, :{1}", id, objyRevision.ooId().getStoreString()); //$NON-NLS-1$
+    }
+
+    readRevisionTime += System.nanoTime() - __start;
+    readRevisionCount++;
 
     return ok ? revision : null;
   }
@@ -879,7 +1343,13 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
+    long __start = System.nanoTime();
     ensureSessionBegin();
+
+    if (TRACER_DEBUG.isEnabled())
+    {
+      TRACER_DEBUG.format("RRBV - Read rev 4: {0}, ver: {1}", id, branchVersion.getVersion()); //$NON-NLS-1$
+    }
 
     // we might have a proxy object!!!!
 
@@ -888,13 +1358,18 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.format("objyObject is NULL"); //$NON-NLS-1$
+        TRACER_DEBUG.format("RRBV - objyObject is NULL for ID: " + id); //$NON-NLS-1$
       }
       return null;
     }
 
+    // {
+    //      TRACER_DEBUG.format("RRBV - objyObject 4 ID: " + id + ", :" + objyObject.ooId().getStoreString()); //$NON-NLS-1$
+    // }
+
     ObjyObject objyRevision = null;
-    objyRevision = objyObject.getRevisionByVersion(branchVersion.getVersion());
+    objyRevision = objyObject.getRevisionByVersion(branchVersion.getVersion(), branchVersion.getBranch().getID(),
+        objySession.getObjectManager());
     // if (getStore().isRequiredToSupportAudits())
     // {
     // objyRevision = objyObject.getRevisionByVersion(branchVersion.getVersion());
@@ -921,7 +1396,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG.format("objyRevision is NULL"); //$NON-NLS-1$
+        TRACER_DEBUG.format("RRBV - objyRevision is NULL for ID: ", id); //$NON-NLS-1$
       }
       return null;
     }
@@ -945,16 +1420,15 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
           id + " - version requested was " + branchVersion + "."); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    return ok ? revision : null;
-  }
+    // if (!ok)
+    // {
+    //      TRACER_DEBUG.format("RRBV - Fetch rev failed 4: {0}, :", id, objyRevision.ooId().getStoreString()); //$NON-NLS-1$
+    // }
 
-  /***
-   * TODO - I haven't seen this being implemented in other stores. Find out what it suppose to mean? Could it be that we
-   * need to refresh all the objects we have in the session, i.e. the weak list in ObjyObjectManager for that session!!
-   */
-  public void refreshRevisions()
-  {
-    // TODO Auto-generated method stub
+    readRevisionTime += System.nanoTime() - __start;
+    readRevisionCount++;
+
+    return ok ? revision : null;
   }
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
@@ -1003,7 +1477,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   @Override
   public void addIDMappings(InternalCommitContext commitContext, OMMonitor monitor)
   {
-    long start = System.currentTimeMillis();
+    long __start = System.nanoTime();
     ensureSessionBegin();
     if (commitContext.getNewObjects().length > 0)
     {
@@ -1011,21 +1485,43 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       {
         TRACER_DEBUG.trace("creating " + commitContext.getNewObjects().length + " new objects and assigning new IDs");
       }
-
       InternalCDORevision[] newObjects = commitContext.getNewObjects();
-      monitor.begin(newObjects.length);
-
-      ObjyPlacementManagerLocal placementManager = new ObjyPlacementManagerLocal(getStore(), objySession, commitContext);
-
-      // iterate over the list and skip the ones we already have created.
-      for (InternalCDORevision revision : newObjects)
+      try
       {
-        placementManager.processRevision(revision);
+        monitor.begin(newObjects.length);
+
+        ObjyPlacementManagerLocal placementManager = new ObjyPlacementManagerLocal(getStore(), objySession,
+            commitContext, newObjyObjectsMap);
+
+        // iterate over the list and skip the ones we already have created.
+        for (InternalCDORevision revision : newObjects)
+        {
+          try
+          {
+            placementManager.processRevision(revision);
+          }
+          catch (com.objy.db.ObjyRuntimeException ex)
+          {
+            System.out.println(">>>>IS: Exception<<<< Session: " + objySession + " open status: "
+                + objySession.isOpen());
+            ex.printStackTrace();
+          }
+          monitor.worked();
+        }
+      }
+      finally
+      {
+        monitor.done();
       }
     }
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("addIDMappings time: " + (System.currentTimeMillis() - start));
+      TRACER_DEBUG.trace(" addIDMappings for " + commitContext.getNewObjects().length + " - time: "
+          + (System.nanoTime() - __start) / 1000000.0);
+      TRACER_DEBUG.trace("  createObjects : " + ObjyObject.createObjectCount + " - time: "
+          + ObjyObject.createObjectTime / 1000000.0);
+      ObjyObject.createObjectTime = 0;
+      ObjyObject.createObjectCount = 0;
     }
   }
 
@@ -1039,16 +1535,35 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   /***************************
    * Local Utility functions.
    ***************************/
+  public void ensureActiveSession()
+  {
+    ensureSessionBegin();
+  }
+
   protected void ensureSessionBegin()
   {
     getObjySession();
-    objySession.join();
+    if (!objySession.isJoined())
+    {
+      objySession.join();
+    }
     if (!objySession.isOpen())
     {
+      if (isRead)
+      {
+        objySession.setOpenMode(oo.openReadOnly);
+      }
+      else
+      {
+        objySession.setOpenMode(oo.openReadWrite);
+      }
       objySession.begin();
+      if (TRACER_DEBUG.isEnabled())
+      {
+        TRACER_DEBUG.trace(" ensureBeginSession() called begin() on session: " + objySession + " [name: "
+            + objySession.getName() + " - open: " + objySession.isOpen() + "]");
+      }
     }
-    // System.out.println(">>>>IS:<<<< ensureBeginSession() - session: " + objySession +
-    // " [open: "+ objySession.isOpen() + "]");
   }
 
   private void ensureSessionJoin()
@@ -1057,7 +1572,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     assert objySession != null;
     // testSwitchViewTarget() is crashing because objySession is null.
     // TBD: verify this case!!!
-    if (objySession != null)
+    if (objySession != null && !objySession.isJoined())
     {
       objySession.join();
     }
@@ -1106,8 +1621,15 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     ensureSessionBegin();
     // we need to write the following...
     // ...branch.getID(), timeStamp, userID, comment.
-    ObjyCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandler();
-    commitInfoHandler.writeCommitInfo(branch.getID(), timeStamp, previousTimeStamp, userID, comment);
+    try
+    {
+      ObjyCommitInfoHandler commitInfoHandler = getStore().getCommitInfoHandler();
+      commitInfoHandler.writeCommitInfo(branch.getID(), timeStamp, previousTimeStamp, userID, comment);
+    }
+    catch (com.objy.db.ObjyRuntimeException ex)
+    {
+      ex.printStackTrace();
+    }
   }
 
   public IQueryHandler getQueryHandler(org.eclipse.emf.cdo.common.util.CDOQueryInfo info)
@@ -1123,7 +1645,22 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     ensureSessionBegin();
-    return objySession.getBranchManager(getRepositoryName()).createBranch(branchID, branchInfo);
+    // IS: this is a hack to overcome the issue in cdo core where the Accessor is requested for
+    // read but it's trying to create stuff.
+    if (isRead)
+    {
+      TRACER_DEBUG.trace("-->> createBranch() - Hack... Hack... changing read to update.");
+      // upgrade the session to update.
+      objySession.commit();
+      objySession.setOpenMode(oo.openReadWrite);
+      objySession.begin();
+    }
+    Pair<Integer, Long> retValue = objySession.getBranchManager(getRepositoryName()).createBranch(branchID, branchInfo);
+    // return the session to read.
+    objySession.commit();
+    objySession.setOpenMode(oo.openReadOnly);
+    objySession.begin();
+    return retValue;
   }
 
   public BranchInfo loadBranch(int branchID)
@@ -1213,9 +1750,11 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   {
     int size = revisions.size();
     monitor.begin(size);
-
+    Async async = null;
     try
     {
+      async = monitor.forkAsync();
+
       Iterator<?> objItr = revisions.iterator();
       while (objItr.hasNext())
       {
@@ -1233,7 +1772,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     }
     finally
     {
+      async.stop();
       monitor.done();
+
     }
   }
 
@@ -1266,6 +1807,109 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
     // TODO: implement ObjectivityStoreAccessor.writeClob(id, size, reader)
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawExport();
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawImport
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawStore
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(InternalCDORevision revision, OMMonitor monitor)
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawStore
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawStore
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(byte[] id, long size, Reader reader) throws IOException
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawStore
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+      OMMonitor monitor)
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawStore
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawDelete
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawCommit(double commitWork, OMMonitor monitor)
+  {
+    // TODO: implement ObjectivityStoreAccessor.rawCommit
+    throw new UnsupportedOperationException();
+  }
+
+  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
+      Map<CDOID, LockGrade> locks)
+  {
+    // TODO: implement ObjectivityStoreAccessor.createLockArea
+    throw new UnsupportedOperationException();
+  }
+
+  public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
+  {
+    // TODO: implement ObjectivityStoreAccessor.getLockArea
+    throw new UnsupportedOperationException();
+  }
+
+  public void getLockAreas(String userIDPrefix, Handler handler)
+  {
+    ensureSessionBegin();
+
+    InternalCDOBranchManager branchManager = getStore().getRepository().getBranchManager();
+    ObjyLockAreaManager objyLockAreaManager = objySession.getLockAreaManager(getRepositoryName());
+    objyLockAreaManager.getLockAreas(branchManager, userIDPrefix, handler);
+  }
+
+  public void deleteLockArea(String durableLockingID)
+  {
+    // TODO: implement ObjectivityStoreAccessor.deleteLockArea
+    throw new UnsupportedOperationException();
+  }
+
+  public void lock(String durableLockingID, LockType type, Collection<? extends Object> objectsToLock)
+  {
+    // TODO: implement ObjectivityStoreAccessor.lock
+    throw new UnsupportedOperationException();
+  }
+
+  public void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
+  {
+    // TODO: implement ObjectivityStoreAccessor.unlock
+    throw new UnsupportedOperationException();
+  }
+
+  public void unlock(String durableLockingID)
+  {
+    // TODO: implement ObjectivityStoreAccessor.unlock
     throw new UnsupportedOperationException();
   }
 }

@@ -104,7 +104,7 @@ public class ObjyCommitInfoHandler
   protected ooTreeSetX getTreeSet()
   {
     ooTreeSetX treeSet = null;
-    treeSet = (ooTreeSetX)Session.getCurrent().getFD().objectFrom(commitInfoSetId);
+    treeSet = (ooTreeSetX)Session.getCurrent().getFD().objectFrom(commitInfoSetId.getString());
     return treeSet;
 
   }

@@ -78,12 +78,14 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
 
   protected ObjyArrayListString getList(ObjyObject objyObject, EStructuralFeature feature)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    ObjyArrayListString list = (ObjyArrayListString)objyObject.getFeatureList(position);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+
+    ObjyArrayListString list = (ObjyArrayListString)objyObject.getFeatureList(attributeName/* position */);
     if (list == null)
     {
-      list = new ObjyArrayListString(objyObject.get_class_obj(position));
-      objyObject.setFeatureList(position, list);
+      list = new ObjyArrayListString(objyObject.get_class_obj(attributeName/* position */));
+      objyObject.setFeatureList(attributeName/* position */, list);
     }
     return list;
   }
@@ -172,6 +174,7 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
     Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
     Class_Object newClassObject = Class_Object.new_persistent_object(
         ObjySchema.getObjyClass(ObjyArrayListString.ClassName).getASClass(), classObject.objectID(), false);
+    // ObjyObjectManager.newInternalObjCount++;
     classObject.set_ooId(position, newClassObject.objectID());
     ObjyArrayListString.initObject(newClassObject);
   }

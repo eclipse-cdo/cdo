@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.io.TMPUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import com.objy.db.app.Session;
+import com.objy.db.app.oo;
 import com.objy.db.app.ooContObj;
 import com.objy.db.app.ooDBObj;
 
@@ -49,7 +50,7 @@ public class FdManager
 
   private String fdDirPath = null;
 
-  private String lockserverHost = DEFAULT_VALUE;
+  private String lockServerHost = DEFAULT_VALUE;
 
   private String fdNumber = "12345";
 
@@ -61,12 +62,20 @@ public class FdManager
 
   private boolean initialized = false;
 
-  public void initialize(boolean reset)
+  private String configPath = "configuration";
+
+  private String logDirPath = null;
+
+  protected void initialize(boolean reset)
   {
     if (fdDirPath == null)
     {
       File dataFolder = TMPUtil.createTempFolder("Objy", "data");
       fdDirPath = dataFolder.getAbsolutePath();
+    }
+    if (noDefaultValueSet(logDirPath))
+    {
+      logDirPath = fdDirPath;
     }
     if (fdFilePath == null)
     {
@@ -129,20 +138,23 @@ public class FdManager
     boolean bRet = false;
     Process proc = null;
 
-    String command = "oonewfd"
-        // + " -fdfilehost " + getFdFileHost()
-        + " -fdfilepath " + fdFilePath + " -lockserver " + getLockServerHost() + " -fdnumber " + fdNumber
-        + " -pagesize " + getPageSize()
-        // + " -jnldirpath " + jrnlDirPath
-        // + " -licensefile " + licenseFilePath
-        // + ((standAlone)?" -standalone ":" ")
-        + " " + bootFilePath;
+    StringBuilder command = new StringBuilder(256);
+    command.append("oonewfd");
+    // command.append(" -fdfilehost ").append(getFdFileHost());
+    command.append(" -fdfilepath ").append(fdFilePath);
+    command.append(" -lockserver ").append(getLockServerHost());
+    command.append(" -fdnumber ").append(fdNumber);
+    command.append(" -pagesize ").append(getPageSize());
+    // command.append(" -jnldirpath ").append(jrnlDirPath);
+    // command.append(" -licensefile ").append(licenseFilePath);
+    // if (standAlone) command.append(" -standalone ");
+    command.append(' ').append(bootFilePath);
 
     TRACER_INFO.trace("Createing FD: '" + bootFilePath + "'.");
 
     try
     {
-      proc = Runtime.getRuntime().exec(command);
+      proc = Runtime.getRuntime().exec(command.toString());
       if (proc.waitFor() != 0)
       {
         dumpStream(proc.getErrorStream());
@@ -359,7 +371,7 @@ public class FdManager
 
   public String getFdFileHost()
   {
-    if (fdFileHost.equals(DEFAULT_VALUE))
+    if (noDefaultValueSet(fdFileHost))
     {
       // get local host
       try
@@ -394,13 +406,13 @@ public class FdManager
 
   public String getLockServerHost()
   {
-    if (lockserverHost.equals(DEFAULT_VALUE))
+    if (noDefaultValueSet(lockServerHost))
     {
       // get local host
       try
       {
         InetAddress address = InetAddress.getLocalHost();
-        lockserverHost = address.getHostName();
+        lockServerHost = address.getHostName();
       }
       catch (UnknownHostException e)
       {
@@ -409,12 +421,12 @@ public class FdManager
       }
 
     }
-    return lockserverHost;
+    return lockServerHost;
   }
 
   public void setLockServerHost(String lockServerHost)
   {
-    lockserverHost = lockServerHost;
+    this.lockServerHost = lockServerHost;
   }
 
   public String getFdNumber()
@@ -429,7 +441,7 @@ public class FdManager
 
   public String getPageSize()
   {
-    if (pageSize.equals(DEFAULT_VALUE))
+    if (noDefaultValueSet(pageSize))
     {
       pageSize = "8192";
     }
@@ -509,6 +521,7 @@ public class FdManager
     // ObjyConnection.INSTANCE.disconnect();
     // fdManager.resetFD();
     Session session = new Session();
+    session.setIndexMode(oo.EXPLICIT_UPDATE);
     session.begin();
     Iterator<?> itr = session.getFD().containedDBs();
     ooDBObj dbObj = null;
@@ -541,4 +554,20 @@ public class FdManager
     session.commit();
     session.terminate();
   }
+
+  boolean noDefaultValueSet(String value)
+  {
+    return value == null || value.isEmpty() || value.equals(DEFAULT_VALUE);
+  }
+
+  public void setlogDirPath(String logDirPath)
+  {
+    this.logDirPath = logDirPath;
+  }
+
+  public String getLogPath()
+  {
+    return logDirPath;
+  }
+
 }

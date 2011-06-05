@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Numeric_Value;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.String_Value;
@@ -30,10 +29,13 @@ public class CustomDataTypeMapper extends StringTypeMapper
   @Override
   public Object getValue(ObjyObject objyObject, EStructuralFeature feature)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
-    String_Value stringValue = objyObject.get_string(position);
-    boolean isNull = objyObject.get_numeric(nullPosition).booleanValue();
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
+
+    String_Value stringValue = objyObject.get_string(attributeName/* position */);
+    boolean isNull = objyObject.get_numeric(nullAttributeName/* nullPosition */).booleanValue();
 
     // EDataType dataType = (EDataType)feature.getEType();
     // EFactory factory = dataType.getEPackage().getEFactoryInstance();
@@ -55,10 +57,12 @@ public class CustomDataTypeMapper extends StringTypeMapper
   @Override
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
 
-    String_Value stringValue = objyObject.get_string(position);
+    String_Value stringValue = objyObject.get_string(attributeName/* position */);
     stringValue.update();
 
     // EDataType dataType = (EDataType)feature.getEType();
@@ -67,8 +71,8 @@ public class CustomDataTypeMapper extends StringTypeMapper
     //
     Numeric_Value isNullValue = newValue == null ? numericTrue : numericFalse;
     // String strValue = newValue == null ? null : valueAsString;
-    stringValue.set((newValue == null ? "" : newValue.toString()));
-    objyObject.set_numeric(nullPosition, isNullValue);
+    stringValue.set(newValue == null ? "" : newValue.toString());
+    objyObject.set_numeric(nullAttributeName/* nullPosition */, isNullValue);
   }
 
   @Override

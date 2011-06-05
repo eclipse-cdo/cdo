@@ -16,6 +16,9 @@ import org.eclipse.emf.cdo.server.objectivity.IObjectivityStoreConfig;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import com.objy.db.app.Connection;
+import com.objy.db.app.oo;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -29,6 +32,8 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
 
   private int sessionMaxCacheSize = 0;
 
+  private int logOption = oo.LogNone;
+
   public ObjectivityStoreConfig()
   {
     // fdManager.deleteFD();
@@ -37,7 +42,6 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
 
   public ObjectivityStoreConfig(Element storeConfig)
   {
-    // TODO - implement me!!!
     // for now we'll just call the default configuration...
     getFdProperties(storeConfig);
     fdManager.configure();
@@ -60,7 +64,6 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
   @Override
   public void doDeactivate()
   {
-    // System.out.println("ObjectivityStoreConfig.doDeactivate()");
     fdManager.deleteFD();
   }
 
@@ -71,9 +74,12 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
 
   public void resetFD()
   {
-    // System.out.println("ObjectivityStoreConfig.resetFD() - Start.");
+    if (Connection.current() == null)
+    {
+      return;
+    }
+
     fdManager.removeData();
-    // system.out.println("ObjectivityStoreConfig.resetFD() - END.");
   }
 
   private void getFdProperties(Element storeConfig)
@@ -88,7 +94,8 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
     String fdName = fdConfig.getAttribute("name"); //$NON-NLS-1$
     String lockServerHost = fdConfig.getAttribute("lockServerHost"); //$NON-NLS-1$
     String fdDirPath = fdConfig.getAttribute("fdDirPath"); //$NON-NLS-1$
-    //    String dbDirPath = fdConfig.getAttribute("dbDirPath"); //$NON-NLS-1$
+    String dbDirPath = fdConfig.getAttribute("dbDirPath"); //$NON-NLS-1$
+    String logDirPath = fdConfig.getAttribute("logDirPath");//$NON-NLS-1$
     String fdFileHost = fdConfig.getAttribute("fdFileHost"); //$NON-NLS-1$
     String fdNumber = fdConfig.getAttribute("fdNumber"); //$NON-NLS-1$
     String pageSize = fdConfig.getAttribute("pageSize"); //$NON-NLS-1$
@@ -97,8 +104,20 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
     sessionMinCacheSize = getIntegerValue(fdConfig.getAttribute("SessionMinCacheSize"), 0); //$NON-NLS-1$
     sessionMaxCacheSize = getIntegerValue(fdConfig.getAttribute("SessionMaxCacheSize"), 0); //$NON-NLS-1$
 
+    // Log options.
+    String logOptionString = fdConfig.getAttribute("logOption");
+    if (logOptionString.equalsIgnoreCase("LogAll"))
+    {
+      logOption = oo.LogAll;
+    }
+    else if (logOptionString.equalsIgnoreCase("LogSession"))
+    {
+      logOption = oo.LogSession;
+    }
+
     fdManager.setFdName(fdName);
     fdManager.setFdDirPath(fdDirPath);
+    fdManager.setlogDirPath(logDirPath);
     fdManager.setFdNumber(fdNumber);
     fdManager.setFdFileHost(fdFileHost);
     fdManager.setLockServerHost(lockServerHost);
@@ -124,5 +143,15 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
   public int getSessionMaxCacheSize()
   {
     return sessionMaxCacheSize;
+  }
+
+  public String getLogPath()
+  {
+    return fdManager.getLogPath();
+  }
+
+  public int getLogOption()
+  {
+    return logOption;
   }
 }

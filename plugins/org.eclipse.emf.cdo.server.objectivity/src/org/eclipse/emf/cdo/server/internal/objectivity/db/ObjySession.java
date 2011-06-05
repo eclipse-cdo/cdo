@@ -10,27 +10,39 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
+import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranchManager;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyLockAreaManager;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 
+import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import com.objy.db.CannotUpgradeLockException;
 import com.objy.db.app.Session;
 import com.objy.db.app.oo;
+import com.objy.db.app.ooContObj;
+import com.objy.db.app.ooId;
 
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-/***
- * Extends the session and keep an object manager instance.
- * 
+/* 
  * @author ibrahim
  */
 public class ObjySession extends Session
 {
+  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjySession.class);
+
+  private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjySession.class);
+
   private ObjyObjectManager objectManger = null;
 
   private ObjyResourceList resourceList = null;
 
   private ObjyBranchManager branchManager = null;
+
+  private ObjyLockAreaManager lockAreaManager = null;
 
   // private ObjectivityStore store = null;
 
@@ -44,6 +56,8 @@ public class ObjySession extends Session
   {
     super(objyConnection.getMinSessionCacheSize(), objyConnection.getMaxSessionCacheSize());
     setThreadPolicy(oo.THREAD_POLICY_UNRESTRICTED);
+    // setHotMode(false);
+    setIndexMode(oo.EXPLICIT_UPDATE);
     sessionName = name;
     sessionPool = pool;
     // this.store = store;
@@ -64,6 +78,15 @@ public class ObjySession extends Session
     return branchManager;
   }
 
+  public ObjyLockAreaManager getLockAreaManager(String repositoryName)
+  {
+    if (lockAreaManager == null)
+    {
+      lockAreaManager = ObjyDb.getOrCreateLockAreaManager(repositoryName);
+    }
+    return lockAreaManager;
+  }
+
   public void setAvailable(boolean value)
   {
     available = value;
@@ -77,6 +100,11 @@ public class ObjySession extends Session
   public String getName()
   {
     return sessionName;
+  }
+
+  public void setName(String name)
+  {
+    sessionName = name;
   }
 
   public ConcurrentHashMap<String, ObjySession> getPool()
@@ -94,10 +122,70 @@ public class ObjySession extends Session
   }
 
   @Override
+  public synchronized void returnSessionToPool()
+  {
+    // System.out.println(">>> IS: returning session: " + session.getName());
+    // TODO Auto-generated method stub
+    leave();
+    setAvailable(true);
+  }
+
+  @Override
   public synchronized void terminate()
   {
-    // System.out.println("OBJY>>> Terminating session... " + this.toString());
+    // System.out.println("OBJY>>> Terminating session... " + sessionName + " - " + toString());
     resourceList = null;
     super.terminate();
   }
+
+  public void lockContainers(Set<ooId> containerToLocks)
+  {
+    // Locks all containers for modified objects
+    if (!containerToLocks.isEmpty())
+    {
+      ooId idsToLock[] = containerToLocks.toArray(new ooId[containerToLocks.size()]);
+      // 100920 - IS: for debugging... TBR.
+      // for (ooId id : idsToLock)
+      // {
+      // TRACER_INFO.trace("Locking container: " + id.getStoreString());
+      // }
+
+      int count = 10;
+      while (0 != count--)
+      {
+        try
+        {
+          openContainers(idsToLock, oo.openReadWrite);
+          break;
+        }
+        catch (CannotUpgradeLockException cule)
+        {
+          // refresh containers.
+          for (ooId contId : idsToLock)
+          {
+            ooContObj contObj = (ooContObj)getFD().objectFrom(contId);
+            contObj.refresh(oo.WRITE);
+          }
+        }
+        catch (Exception e)
+        {
+          TRACER_INFO.trace("Locking problem try again : " + e.getMessage());
+          // this.ensureNewBeginSession();
+          if (!isOpen())
+          {
+            TRACER_INFO.trace("Objy session is not open");
+            // System.exit(-1); // TODO - this is temporary for debugging...
+          }
+          try
+          {
+            wait(500);
+          }
+          catch (InterruptedException ex)
+          {
+          }
+        }
+      }
+    }
+  }
+
 }

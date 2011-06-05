@@ -27,6 +27,9 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPropertyMapHandler
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranchManager;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyLockAreaManager;
+import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyStoreInfo;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStore;
@@ -39,6 +42,7 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import com.objy.db.app.Connection;
+import com.objy.db.app.oo;
 
 import java.util.Map;
 import java.util.Set;
@@ -47,7 +51,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ObjectivityStore extends Store implements IObjectivityStore
 {
 
-  public static final String TYPE = "objectivity"; //$NON-NLS-1$
+  public static final String TYPE = "objectivity"; // $NON-NLS, DurableLocking-1$
 
   private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjectivityStore.class);
 
@@ -107,7 +111,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     // Initialize schema as needed, and also any other config information
 
     // connection to the FD.
-    objyConnection.connect(storeConfig.getFdName());
+    objyConnection.connect(storeConfig);
     Connection.current().setUserClassLoader(this.getClass().getClassLoader());
 
     objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyStoreInfo"); //$NON-NLS-1$
@@ -115,9 +119,14 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageUnit"); //$NON-NLS-1$
     objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyCommitInfo"); //$NON-NLS-1$
     objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProperty"); //$NON-NLS-1$
+    objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranch"); //$NON-NLS-1$
+    objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranchManager"); //$NON-NLS-1$
+    objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyLockArea"); //$NON-NLS-1$
+    objyConnection.registerClass("org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyLockAreaManager"); //$NON-NLS-1$
 
-    ObjySession objySession = objyConnection.getWriteSessionFromPool("Main"); //$NON-NLS-1$
+    ObjySession objySession = objyConnection.getWriteSessionFromPool("Main_" + getRepository().getName()); //$NON-NLS-1$
     objySession.setRecoveryAutomatic(true);
+    objySession.setOpenMode(oo.openReadWrite); // we are initializing stuff, we need the read/write.
     objySession.begin();
 
     ObjySchema.createBaseSchema();
@@ -160,6 +169,12 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       objyPropertyMapHandler = new ObjyPropertyMapHandler(repositoryName);
       objyPackageHandler = new ObjyPackageHandler(repositoryName);
 
+      // more initializations.
+      ObjyLockAreaManager objyLockAreaManager = objySession.getLockAreaManager(repositoryName);
+      ObjyBranchManager objyBranchManager = objySession.getBranchManager(repositoryName);
+      ObjyResourceList objyResources = objySession.getResourceList(repositoryName);
+
+      long t3 = System.currentTimeMillis();
       objySession.commit();
 
       storeInitialized = true;
@@ -171,7 +186,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     }
     finally
     {
-      objyConnection.returnSessionToPool(objySession);
+      objySession.returnSessionToPool();
     }
   }
 
@@ -201,13 +216,15 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   @Override
   protected StoreAccessorPool getReaderPool(ISession session, boolean forReleasing)
   {
-    return readerPool;
+    // return readerPool;
+    return null;
   }
 
   @Override
   protected StoreAccessorPool getWriterPool(IView view, boolean forReleasing)
   {
-    return writerPool;
+    // return writerPool;
+    return null;
   }
 
   public boolean isLocal(CDOID id)
@@ -268,12 +285,6 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   {
     super.doActivate();
 
-    // lazy initialization of the store.
-    if (!storeInitialized)
-    {
-      initStore();
-    }
-
     nActivate++;
 
     if (TRACER_DEBUG.isEnabled())
@@ -281,31 +292,41 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       TRACER_DEBUG.trace("doActivate - count: " + nActivate);
     }
 
-    ObjySession objySession = objyConnection.getWriteSessionFromPool("Main");
-    objySession.setRecoveryAutomatic(true);
-    objySession.begin();
-
-    try
+    // lazy initialization of the store.
+    if (!storeInitialized)
     {
-      if (!objySession.getFD().hasDB(getRepository().getName()))
+      // long tStart = System.currentTimeMillis();
+      initStore();
+      // System.out.println("... ObjyStore initStore() time: " + (System.currentTimeMillis() - tStart));
+    }
+    else
+    {
+      ObjySession objySession = objyConnection.getWriteSessionFromPool("Main_" + getRepository().getName());
+      objySession.setRecoveryAutomatic(true);
+      objySession.begin();
+
+      try
       {
-        // Create the repo DB.
-        ObjyScope.insureScopeExist(objySession, getRepository().getName(), ObjyDb.DEFAULT_CONT_NAME);
-        // ...do other initialisation of the repository here.
-        // Note that in the current implementation we don't delete DBs by default, only delete
-        // the containers (see ObjectivityStoreConfig.resetFD()) so any initialization done here
-        // might not be repeated.
-      }
+        if (!objySession.getFD().hasDB(getRepository().getName()))
+        {
+          // Create the repo DB.
+          ObjyScope.insureScopeExist(objySession, getRepository().getName(), ObjyDb.DEFAULT_CONT_NAME);
+          // ...do other initialisation of the repository here.
+          // Note that in the current implementation we don't delete DBs by default, only delete
+          // the containers (see ObjectivityStoreConfig.resetFD()) so any initialization done here
+          // might not be repeated.
+        }
 
-      objySession.commit();
-    }
-    catch (RuntimeException ex)
-    {
-      objySession.abort();
-    }
-    finally
-    {
-      objyConnection.returnSessionToPool(objySession);
+        objySession.commit();
+      }
+      catch (RuntimeException ex)
+      {
+        objySession.abort();
+      }
+      finally
+      {
+        objySession.returnSessionToPool();
+      }
     }
   }
 
@@ -320,10 +341,14 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     finally
     {
       ObjyConnection.INSTANCE.disconnect();
+      // objyConnection.disconnect();
     }
 
-    // readerPool.dispose();
-    // writerPool.dispose();
+    readerPool.dispose();
+    writerPool.dispose();
+    readerPool = null;
+    writerPool = null;
+
     super.doDeactivate();
 
   }
@@ -338,7 +363,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       throw new UnsupportedOperationException();
     }
 
-    ObjySession objySession = objyConnection.getReadSessionFromPool("Main");
+    ObjySession objySession = objyConnection.getReadSessionFromPool("Main_" + getRepository().getName());
     objySession.begin();
     Map<String, String> properties = objyPropertyMapHandler.getPropertyValues(names);
     objySession.commit();
@@ -347,7 +372,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   public void setPersistentProperties(Map<String, String> properties)
   {
-    ObjySession objySession = objyConnection.getWriteSessionFromPool("Main");
+    ObjySession objySession = objyConnection.getWriteSessionFromPool("Main_" + getRepository().getName());
     objySession.begin();
     objyPropertyMapHandler.setPropertyValues(properties);
     objySession.commit();
@@ -355,7 +380,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   public void removePersistentProperties(Set<String> names)
   {
-    ObjySession objySession = objyConnection.getWriteSessionFromPool("Main");
+    ObjySession objySession = objyConnection.getWriteSessionFromPool("Main_" + getRepository().getName());
     objySession.begin();
     objyPropertyMapHandler.removePropertyValues(names);
     objySession.commit();
@@ -373,7 +398,8 @@ public class ObjectivityStore extends Store implements IObjectivityStore
 
   public ObjyPlacementManager getGlobalPlacementManager()
   {
-    return ObjyConnection.INSTANCE.getDefaultPlacementManager();
+    // return ObjyConnection.INSTANCE.getDefaultPlacementManager();
+    return objyConnection.getDefaultPlacementManager();
   }
 
 }

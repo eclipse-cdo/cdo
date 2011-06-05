@@ -69,12 +69,13 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
 
   public ObjyFeatureMapArrayList getList(ObjyObject objyObject, EStructuralFeature feature)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    ObjyFeatureMapArrayList list = (ObjyFeatureMapArrayList)objyObject.getFeatureList(position);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+    ObjyFeatureMapArrayList list = (ObjyFeatureMapArrayList)objyObject.getFeatureList(attributeName/* position */);
     if (list == null)
     {
-      list = new ObjyFeatureMapArrayList(objyObject.get_class_obj(position));
-      objyObject.setFeatureList(position, list);
+      list = new ObjyFeatureMapArrayList(objyObject.get_class_obj(attributeName/* position */));
+      objyObject.setFeatureList(attributeName/* position */, list);
     }
     return list;
   }
@@ -105,6 +106,9 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
     // create the reference.
     Class_Object newClassObject = Class_Object
         .new_persistent_object(getArrayListClass(), classObject.objectID(), false);
+    // {
+    // ObjyObjectManager.newInternalObjCount++;
+    // }
     Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
     classObject.set_ooId(position, newClassObject.objectID());
     // initialize the list structure.
@@ -113,8 +117,8 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
 
   public void delete(ObjyObject objyObject, EStructuralFeature feature)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    ooId tobeDeleted = objyObject.get_ooId(position);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    ooId tobeDeleted = objyObject.get_ooId(getAttributeName(feature)/* position */);
     ooObj objectToDelete = ooObj.create_ooObj(tobeDeleted);
     objectToDelete.delete();
   }

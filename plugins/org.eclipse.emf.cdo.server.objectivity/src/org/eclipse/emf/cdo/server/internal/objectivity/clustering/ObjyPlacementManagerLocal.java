@@ -12,13 +12,13 @@ package org.eclipse.emf.cdo.server.internal.objectivity.clustering;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStore;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.OBJYCDOIDUtil;
-import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
@@ -49,8 +49,6 @@ public class ObjyPlacementManagerLocal
 
   private String repositoryName = null;
 
-  private ObjyPlacementManager globalPlacementManager = null;
-
   ObjySession objySession = null;
 
   InternalCommitContext commitContext = null;
@@ -59,12 +57,12 @@ public class ObjyPlacementManagerLocal
 
   Map<CDOID, CDOID> idMapper;
 
+  Map<CDOID, ObjyObject> newObjyObjectsMap;
+
   public ObjyPlacementManagerLocal(ObjectivityStore objyStore, ObjySession objySession,
-      InternalCommitContext commitContext)
+      InternalCommitContext commitContext, Map<CDOID, ObjyObject> newObjyObjectsMap)
   {
     repositoryName = objyStore.getRepository().getName();
-    globalPlacementManager = objyStore.getGlobalPlacementManager();
-
     this.objySession = objySession;
     this.commitContext = commitContext;
     // first put them in a map for easy lookup and processing....
@@ -75,6 +73,8 @@ public class ObjyPlacementManagerLocal
     }
 
     idMapper = new HashMap<CDOID, CDOID>();
+
+    this.newObjyObjectsMap = newObjyObjectsMap;
   }
 
   public void processRevision(InternalCDORevision revision)
@@ -89,7 +89,14 @@ public class ObjyPlacementManagerLocal
     // create the object and add it to mapping, this will recursively call
     // other object creation as needed, based on the default clustering of
     // having each object is stored with its container.
-    createObjectAndAddToMapping(revision);
+    try
+    {
+      createObjectAndAddToMapping(revision);
+    }
+    catch (com.objy.db.ObjyRuntimeException ex)
+    {
+      ex.printStackTrace();
+    }
   }
 
   private ObjyObject createObjectAndAddToMapping(InternalCDORevision revision)
@@ -106,6 +113,7 @@ public class ObjyPlacementManagerLocal
     commitContext.addIDMapping(revision.getID(), newID);
     // keep a track of this mapping.
     idMapper.put(revision.getID(), newID);
+    newObjyObjectsMap.put(newID, objyObject);
 
     return objyObject;
   }
@@ -118,23 +126,26 @@ public class ObjyPlacementManagerLocal
 
   protected ObjyObject createObject(InternalCDORevision revision)
   {
+    long startTime = System.nanoTime();
     ooId nearObject = null;
     EClass eClass = revision.getEClass();
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("Creating new object with " + revision + " " + eClass);
+      TRACER_DEBUG.trace("Creating new object for revision: " + revision + " - eClass: " + eClass);
     }
     if (revision.isResourceNode())
     {
+      String resourceName = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);
       // The resourcelist is in the ConfigDB, but each resource is in a resource
       // container in the repo database, except the first root (ID == resourceID).
-      if (revision.getID() == revision.getResourceID()) // Check with Eike!
+      // if (revision.getID() == revision.getResourceID()) // Check with Eike!
+      if (resourceName == null) // root.
       {
         nearObject = objySession.getResourceList(repositoryName).ooId();
       }
       else
       {
-        ObjyScope objyScope = new ObjyScope(repositoryName, ObjyDb.RESOURCELIST_CONT_NAME);
+        ObjyScope objyScope = new ObjyScope(repositoryName, resourceName /* ObjyDb.RESOURCELIST_CONT_NAME */);
         nearObject = objyScope.getScopeContOid();
       }
     }
@@ -147,7 +158,8 @@ public class ObjyPlacementManagerLocal
     {
       // we have to put it somewhere.
       // call the global placement manager.
-      nearObject = globalPlacementManager.getNearObject(null, null, revision.getEClass());
+      nearObject = objySession.getObjectManager().getGlobalPlacementManager()
+          .getNearObject(null, null, revision.getEClass());
     }
 
     ObjyObject objyObject = objySession.getObjectManager().newObject(eClass, nearObject);
@@ -170,6 +182,8 @@ public class ObjyPlacementManagerLocal
     // SmartLock.lock(objyObject);
     // resourceList.add(objyObject);
     // }
+    ObjyObject.createObjectTime += System.nanoTime() - startTime;
+    ObjyObject.createObjectCount++;
 
     return objyObject;
   }

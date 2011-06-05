@@ -65,10 +65,12 @@ public class StringTypeMapper extends BasicTypeMapper implements ISingleTypeMapp
 
   public Object getValue(ObjyObject objyObject, EStructuralFeature feature)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
-    String_Value stringValue = objyObject.get_string(position);
-    boolean isNull = objyObject.get_numeric(nullPosition).booleanValue();
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
+    String_Value stringValue = objyObject.get_string(attributeName/* position */);
+    boolean isNull = objyObject.get_numeric(nullAttributeName/* nullPosition */).booleanValue();
     Object value = null;
 
     if (!isNull)
@@ -84,17 +86,19 @@ public class StringTypeMapper extends BasicTypeMapper implements ISingleTypeMapp
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
     boolean isNull = newValue == null || newValue == CDORevisionData.NIL;
-    Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
 
     if (!isNull)
     {
-      Class_Position position = getAttributePosition(objyObject, feature);
-      String_Value stringValue = objyObject.get_string(position);
+      // Class_Position position = getAttributePosition(objyObject, feature);
+      String attributeName = getAttributeName(feature);
+      String_Value stringValue = objyObject.get_string(attributeName/* position */);
       stringValue.update();
       stringValue.set((String)newValue);
     }
     Numeric_Value isNullValue = newValue == null ? numericTrue : numericFalse;
-    objyObject.set_numeric(nullPosition, isNullValue);
+    objyObject.set_numeric(nullAttributeName/* nullPosition */, isNullValue);
   }
 
   public Object remove(ObjyObject objyObject, EStructuralFeature feature)
@@ -106,8 +110,9 @@ public class StringTypeMapper extends BasicTypeMapper implements ISingleTypeMapp
   {
     // we could set the string value to "", but it would be easier to just set
     // the numeric _null to "true"
-    Class_Position position = getNullAttributePosition(objyObject, feature);
-    objyObject.set_numeric(position, numericTrue);
+    // Class_Position position = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
+    objyObject.set_numeric(nullAttributeName/* position */, numericTrue);
     // throw new UnsupportedOperationException("Implement me!!");
   }
 

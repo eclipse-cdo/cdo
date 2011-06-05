@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Numeric_Value;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.String_Value;
@@ -34,14 +33,18 @@ public class BigDecimalTypeMapper extends StringTypeMapper
   @Override
   public Object getValue(ObjyObject objyObject, EStructuralFeature feature)
   {
-    Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
-    boolean isNull = objyObject.get_numeric(nullPosition).booleanValue();
+    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
+
+    boolean isNull = objyObject.get_numeric(nullAttributeName/* nullPosition */).booleanValue();
     Object value = null;
 
     if (!isNull)
     {
-      Class_Position position = getAttributePosition(objyObject, feature);
-      String_Value stringValue = objyObject.get_string(position);
+      // Class_Position position = getAttributePosition(objyObject, feature);
+      String attributeName = getAttributeName(feature);
+
+      String_Value stringValue = objyObject.get_string(attributeName/* position */);
       value = new BigDecimal(stringValue.toString());
     }
     // else if (feature.isUnsettable())
@@ -55,20 +58,22 @@ public class BigDecimalTypeMapper extends StringTypeMapper
   @Override
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
-    Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
+    String nullAttributeName = getNullAttributeName(feature);
 
     boolean isNull = newValue == null || newValue == CDORevisionData.NIL;
     Numeric_Value isNullValue = isNull ? numericTrue : numericFalse;
 
     if (!isNull)
     {
-      Class_Position position = getAttributePosition(objyObject, feature);
-      String_Value stringValue = objyObject.get_string(position);
+      // Class_Position position = getAttributePosition(objyObject, feature);
+      String attributeName = getAttributeName(feature);
+      String_Value stringValue = objyObject.get_string(attributeName/* position */);
       stringValue.update();
       String strValue = ((BigDecimal)newValue).toString();
-      stringValue.set((strValue == null ? "" : strValue));
+      stringValue.set(strValue == null ? "" : strValue);
     }
-    objyObject.set_numeric(nullPosition, isNullValue);
+    objyObject.set_numeric(nullAttributeName/* nullPosition */, isNullValue);
   }
 
   @Override

@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Attribute;
@@ -55,15 +54,16 @@ public class SingleReferenceMapper extends BasicTypeMapper implements ISingleTyp
     /***
      * ooId id2 = internal.ooClassObject().get_ooId(position); if (id2 == null || id2.isNull()) { return null; }
      ***/
-    Class_Position position = getAttributePosition(objyObject, feature);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
 
-    return getValue(objyObject, position);
+    return getValue(objyObject, attributeName/* position */);
   }
 
   // called by ObjyObject to get some resource elements.
-  public Object getValue(ObjyObject objyObject, Class_Position position)
+  public Object getValue(ObjyObject objyObject, String attributeName/* Class_Position position */)
   {
-    ooId childObject = objyObject.get_ooId(position);
+    ooId childObject = objyObject.get_ooId(attributeName/* position */);
 
     if (!childObject.isNull())
     {
@@ -86,17 +86,20 @@ public class SingleReferenceMapper extends BasicTypeMapper implements ISingleTyp
 
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    setValue(objyObject, position, newValue);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+
+    setValue(objyObject, attributeName/* position */, newValue);
   }
 
   // called by ObjyObject to set resource elements.
-  public void setValue(ObjyObject objyObject, Class_Position position, Object newValue)
+  public void setValue(ObjyObject objyObject, String attributeName/* Class_Position position */, Object newValue)
   {
     ooId ooid = null;
 
     if (newValue instanceof CDOIDExternal)
     {
+      System.out.println("... CDOIDExternal inserted, content:" + ((CDOIDExternal)newValue).getURI());
       // create an ObjyProxy object to hold the the value.
       ObjyProxy proxyObject = ObjyProxy.createObject(objyObject.ooId());
       proxyObject.setUri(((CDOIDExternal)newValue).getURI());
@@ -107,7 +110,7 @@ public class SingleReferenceMapper extends BasicTypeMapper implements ISingleTyp
       ooid = TypeConvert.toOoId(newValue);
     }
 
-    objyObject.set_ooId(position, ooid);
+    objyObject.set_ooId(attributeName/* position */, ooid);
   }
 
   public boolean validate(d_Attribute ooAttribute, EStructuralFeature feature)
@@ -119,8 +122,10 @@ public class SingleReferenceMapper extends BasicTypeMapper implements ISingleTyp
 
   public void delete(ObjyObject objyObject, EStructuralFeature feature)
   {
-    Class_Position position = getAttributePosition(objyObject, feature);
-    ooId childOid = objyObject.get_ooId(position);
+    // Class_Position position = getAttributePosition(objyObject, feature);
+    String attributeName = getAttributeName(feature);
+
+    ooId childOid = objyObject.get_ooId(attributeName/* position */);
     if (!childOid.isNull())
     {
       // This is a single reference, so we shouldn't be deleting the reference

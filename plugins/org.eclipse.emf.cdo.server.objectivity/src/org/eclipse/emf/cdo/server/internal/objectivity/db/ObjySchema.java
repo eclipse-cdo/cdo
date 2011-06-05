@@ -81,6 +81,11 @@ public class ObjySchema
     {
       d_Class newClass = getTopModule().resolve_class(name);
       // EClass eClass = getEClass(store, name);
+      // IS:TEMP
+      if (newClass == null)
+      {
+        TRACER_DEBUG.trace("NULL..... dClass for " + name);
+      }
       classObject = new ObjyClass(newClass);
       mapOfObjyClasses.put(name, classObject);
     }
@@ -229,6 +234,12 @@ public class ObjySchema
 
       // System.out.println("OBJY: resolving class '" + className + "' in objy schema.");
       d_Class dClass = getTopModule().resolve_class(className);
+      // IS:TEMP
+      if (dClass == null)
+      {
+        TRACER_DEBUG.trace("NULL..... dClass for " + className);
+      }
+
       ObjyClass objyClass = new ObjyClass(dClass/* , eClass */);
       return objyClass;
     }
@@ -253,6 +264,11 @@ public class ObjySchema
 
       // System.out.println("OBJY: resolving class '" + className + "' in objy schema.");
       d_Class dClass = getTopModule().resolve_class(className);
+      // IS:TEMP.
+      if (dClass == null)
+      {
+        TRACER_DEBUG.trace("NULL..... dClass for " + className);
+      }
       ObjyClass objyClass = new ObjyClass(dClass/* , eClass */);
       return objyClass;
     }

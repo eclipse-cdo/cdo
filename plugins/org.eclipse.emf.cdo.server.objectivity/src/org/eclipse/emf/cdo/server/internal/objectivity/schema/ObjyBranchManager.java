@@ -130,9 +130,10 @@ public class ObjyBranchManager extends ooObj
     ObjyBranch objyBranch = null;
     while (treeItr.hasNext())
     {
-      objyBranch = treeItr.next();
-      if (branchId == objyBranch.getBranchId())
+      ObjyBranch tempObjyBranch = treeItr.next();
+      if (branchId == tempObjyBranch.getBranchId())
       {
+        objyBranch = tempObjyBranch;
         break;
       }
     }

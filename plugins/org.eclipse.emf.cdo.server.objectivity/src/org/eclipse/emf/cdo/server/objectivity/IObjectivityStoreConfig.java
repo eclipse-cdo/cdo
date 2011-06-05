@@ -23,4 +23,14 @@ public interface IObjectivityStoreConfig extends Serializable
 
   int getSessionMaxCacheSize();
 
+  /**
+   * @since 4.0
+   */
+  String getLogPath();
+
+  /**
+   * @since 4.0
+   */
+  int getLogOption();
+
 }

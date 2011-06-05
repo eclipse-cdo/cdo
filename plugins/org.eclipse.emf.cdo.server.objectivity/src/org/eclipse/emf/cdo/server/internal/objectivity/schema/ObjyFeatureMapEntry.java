@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 
 import com.objy.as.app.Class_Object;
+import com.objy.as.app.Numeric_Value;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Module;
@@ -73,6 +74,7 @@ public class ObjyFeatureMapEntry
         false);
 
     classObject.nset_ooId(EntryObject, object);
+    classObject.nset_numeric(EntryName, new Numeric_Value(tagId));
   }
 
   public ObjyFeatureMapEntry(Class_Object classObject)
@@ -82,23 +84,33 @@ public class ObjyFeatureMapEntry
     object = classObject.nget_ooId(EntryObject);
   }
 
+  protected void fetchObject()
+  {
+    tagId = classObject.nget_numeric(EntryName).intValue();
+    object = classObject.nget_ooId(EntryObject);
+  }
+
   public int getTagId()
   {
+    fetchObject();
     return tagId;
   }
 
   public void setTagId(int tagId)
   {
+    classObject.nset_numeric(EntryName, new Numeric_Value(tagId));
     this.tagId = tagId;
   }
 
   public ooId getObject()
   {
+    fetchObject();
     return object;
   }
 
   public void setObject(ooId object)
   {
+    classObject.nset_ooId(EntryObject, object);
     this.object = object;
   }
 

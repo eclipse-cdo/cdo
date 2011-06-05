@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
+import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObjectManager;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -31,6 +32,8 @@ import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Module;
 import com.objy.db.ObjyRuntimeException;
 import com.objy.db.app.ooId;
+import com.objy.db.app.ooObj;
+import com.objy.db.util.ooTreeListX;
 
 /***
  * OoResouceList is a specialized ooArrayListId, where all elements are of type Resourc(Node|Folder). The class will
@@ -155,6 +158,18 @@ public class ObjyResourceList
     getList().add(objyObject.ooId());
   }
 
+  // public void checkDuplicateResources(ObjectivityStoreAccessor storeAccessor, CDORevision revision)
+  // throws IllegalStateException
+  // {
+  // CDOID folderID = (CDOID)revision.data().getContainerID();
+  // String name = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);
+  // CDOID existingID = storeAccessor.readResourceID(folderID, name, revision.getBranch().getHead());
+  // if (existingID != CDOID.NULL && !existingID.equals(revision.getID()))
+  // {
+  //      throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID); //$NON-NLS-1$ //$NON-NLS-2$
+  // }
+  // }
+
   public void checkDuplicateResources(ObjectivityStoreAccessor storeAccessor, InternalCDORevision revision)
       throws IllegalStateException
   {
@@ -167,6 +182,7 @@ public class ObjyResourceList
 
     // iterate over all resource in the list, and verify if we have both name and folderID.
     int size = (int)getList().size();
+    ObjyObjectManager objyObjectManager = storeAccessor.getObjySession().getObjectManager();
     for (int i = 0; i < size; i++)
     {
       ObjyObject resource = getResource(i);
@@ -174,11 +190,26 @@ public class ObjyResourceList
       // get the proper revision of the resource (might need to refactor this code, see readRevision())
       if (storeAccessor.getStore().isRequiredToSupportBranches())
       {
-        resourceRevision = resource.getRevision(revision.getTimeStamp(), revision.getBranch().getID());
+        try
+        {
+          resourceRevision = resource.getRevision(revision.getTimeStamp(), revision.getBranch().getID(),
+              objyObjectManager);
+        }
+        catch (RuntimeException ex)
+        {
+          ex.printStackTrace();
+        }
       }
       else if (storeAccessor.getStore().isRequiredToSupportAudits())
       {
-        resourceRevision = resource.getRevision(revision.getTimeStamp(), CDOBranch.MAIN_BRANCH_ID);
+        try
+        {
+          resourceRevision = resource.getRevision(revision.getTimeStamp(), CDOBranch.MAIN_BRANCH_ID, objyObjectManager);
+        }
+        catch (RuntimeException ex)
+        {
+          ex.printStackTrace();
+        }
       }
 
       if (resourceRevision == null || resourceRevision.getVersion() < 0)
@@ -212,14 +243,31 @@ public class ObjyResourceList
   {
     Class_Object classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyResourceList.className)
         .getASClass(), nearOid, false);
+    // ObjyObjectManager.newInternalObjCount++;
     Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
-    Class_Object arrayClassObject = Class_Object.new_persistent_object(
-        ObjySchema.getTopModule().resolve_class(ObjyArrayListId.className), classObject.objectID(), false);
-    // ooId arrayOid = arrayClassObject.objectID();
+    // Class_Object arrayClassObject = Class_Object.new_persistent_object(
+    // ObjySchema.getTopModule().resolve_class(ObjyArrayListId.className), classObject.objectID(), false);
+    // // ooId arrayOid = arrayClassObject.objectID();
+    ooTreeListX list = new ooTreeListX(10, false);
+    // ObjyObjectManager.newInternalObjCount++;
+    ooObj anObj = ooObj.create_ooObj(classObject.objectID());
+    anObj.cluster(list);
+    // System.out.println("initObject: " + anObj.getOid().getStoreString() + " treeListX: "
+    // // + list.getOid().getStoreString());
+    classObject.set_ooId(position, list.getOid());
 
-    classObject.set_ooId(position, arrayClassObject.objectID());
-    ObjyArrayListId.initObject(arrayClassObject);
-    ObjyObject objyObject = new ObjyObject(classObject);
+    // classObject.set_ooId(position, arrayClassObject.objectID());
+    // ObjyArrayListId.initObject(arrayClassObject);
+    ObjyObject objyObject = null;
+    try
+    {
+      objyObject = new ObjyObject(classObject);
+    }
+    catch (RuntimeException ex)
+    {
+      ex.printStackTrace();
+    }
+
     return objyObject;
   }
 

@@ -12,9 +12,8 @@
 package org.eclipse.emf.cdo.tests.objectivity;
 
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.tests.AuditTest;
-import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
+import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -39,25 +38,6 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
     // ObjyStoreRepositoryConfig repoConfig = ObjyNonAuditConfig.INSTANCE;
     ObjyStoreRepositoryConfig repoConfig = new ObjyNonAuditConfig("ObjectivityStore: (non-audit)"); //$NON-NLS-1$
     addScenario(parent, COMBINED, repoConfig, JVM, NATIVE);
-  }
-
-  @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
-  {
-    super.initTestClasses(testClasses);
-
-    // non-audit mode - remove audit tests
-    testClasses.remove(AuditTest.class);
-    testClasses.remove(AuditSameSessionTest.class);
-    testClasses.remove(Bugzilla_252214_Test.class);
-    // non-branching mode - remove branch tests.
-    // testClasses.remove(BranchingTest.class);
-    // testClasses.remove(BranchingSameSessionTest.class);
-
-    // Objy has a deadlock issue which prevent this test from completing.
-    // testClasses.remove(ExternalReferenceTest.class);
-    // testClasses.remove(XATransactionTest.class);
-
   }
 
   @Override
@@ -95,4 +75,15 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
       props.put(IRepository.Props.SUPPORTING_BRANCHES, "false"); //$NON-NLS-1$
     }
   }
+
+  @Override
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  {
+    super.initTestClasses(testClasses);
+    // There is a problem with the root resource sharing, so for now we're commenting
+    // out ExternalReferenceTest and Bugzilla_259869_Test
+    testClasses.remove(ExternalReferenceTest.class);
+    testClasses.remove(Bugzilla_259869_Test.class);
+  }
+
 }

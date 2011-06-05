@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranchManager;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
+import com.objy.db.app.oo;
 import com.objy.db.app.ooObj;
 
 import org.junit.After;
@@ -102,7 +103,7 @@ class DbStore
   public void startup()
   {
     fdManager.configure("objyBrnachTest");
-    objyConnection.connect(fdManager.getFd());
+    objyConnection.connect(fdManager.getFd(), oo.LogNone);
     objySession = objyConnection.getWriteSessionFromPool("TestSession");
   }
 

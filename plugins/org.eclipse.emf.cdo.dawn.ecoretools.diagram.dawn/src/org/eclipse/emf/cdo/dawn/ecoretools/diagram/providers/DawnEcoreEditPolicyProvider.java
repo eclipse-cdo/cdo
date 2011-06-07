@@ -47,7 +47,7 @@ public class DawnEcoreEditPolicyProvider extends AbstractProvider implements IEd
     {
       EcoreDiagramEditorPlugin.getInstance().logInfo("Overwriting CANONICAL EDITING POLICY in " + editPart);
 
-      // The Ecore Tools implementation overwrites the generated canonical editing policy. But it does not register it a
+      // The EcoreTools implementation overwrites the generated canonical editing policy. But it does not register it a
       // "canonical" but as "pseudocanonical". So we need to do the same to overwrite the behavior.
       editPart.installEditPolicy("PseudoCanonical", new DawnECoreRootCanonicalEditPolicy());
       // editPart.installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new DawnECoreRootCanonicalEditPolicy());

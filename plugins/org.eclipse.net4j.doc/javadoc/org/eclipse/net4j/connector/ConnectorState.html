@@ -4,10 +4,10 @@
 <HEAD>
 
 <TITLE>
-ConnectorState (Net4j API Specification)
+ConnectorState (Net4j Signalling Platform Documentation)
 </TITLE>
 
-<META NAME="date" CONTENT="2011-05-28">
+<META NAME="date" CONTENT="">
 
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../stylesheet.css" TITLE="Style">
 
@@ -15,7 +15,7 @@ ConnectorState (Net4j API Specification)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="ConnectorState (Net4j API Specification)";
+        parent.document.title="ConnectorState (Net4j Signalling Platform Documentation)";
     }
 }
 </SCRIPT>
@@ -164,7 +164,7 @@ Enumerates the lifecycle states of an <A HREF="../../../../org/eclipse/net4j/con
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Indicates that the <A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><CODE>IConnector</CODE></A> has successfully managed to establish the underlying physical connection and
- has currently delegated control over this connection to an <A HREF="../../../../org/eclipse/net4j/util/security/INegotiator.html" title="interface in org.eclipse.net4j.util.security"><CODE>INegotiator</CODE></A>.</TD>
+ has currently delegated control over this connection to an <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security"><CODE>INegotiator</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -234,12 +234,12 @@ public static final <A HREF="../../../../org/eclipse/net4j/connector/ConnectorSt
  previously.
  <p>
  A connector is <code>DISCONNECTED</code> if and only if it is not
- <A HREF="../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#isActive(java.lang.Object)"><CODE>active</CODE></A>. A transition to <A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html#CONNECTING"><CODE>CONNECTING</CODE></A>
+ <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.html?is-external=true#isActive(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>active</CODE></A>. A transition to <A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html#CONNECTING"><CODE>CONNECTING</CODE></A>
  can be triggered by calling <A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#connect(long)"><CODE>IConnector.connect(long)</CODE></A> or <A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#connectAsync()"><CODE>IConnector.connectAsync()</CODE></A>.
 <P>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#getState()"><CODE>IConnector.getState()</CODE></A>, 
-<A HREF="../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#isActive()"><CODE>ILifecycle.isActive()</CODE></A></DL>
+<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>ILifecycle.isActive()</CODE></A></DL>
 </DL>
 <HR>
 
@@ -252,12 +252,12 @@ public static final <A HREF="../../../../org/eclipse/net4j/connector/ConnectorSt
  socket connection.
  <p>
  A connector can only be <code>CONNECTING</code> if it is
- <A HREF="../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#isActive(java.lang.Object)"><CODE>active</CODE></A>. As soon as the underlying physical
+ <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.html?is-external=true#isActive(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>active</CODE></A>. As soon as the underlying physical
  connection is successfully established the state of the connector automatically transitions to <A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html#NEGOTIATING"><CODE>NEGOTIATING</CODE></A>.
 <P>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#getState()"><CODE>IConnector.getState()</CODE></A>, 
-<A HREF="../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#isActive()"><CODE>ILifecycle.isActive()</CODE></A></DL>
+<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>ILifecycle.isActive()</CODE></A></DL>
 </DL>
 <HR>
 
@@ -267,10 +267,10 @@ NEGOTIATING</H3>
 public static final <A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</A> <B>NEGOTIATING</B></PRE>
 <DL>
 <DD>Indicates that the <A HREF="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><CODE>IConnector</CODE></A> has successfully managed to establish the underlying physical connection and
- has currently delegated control over this connection to an <A HREF="../../../../org/eclipse/net4j/util/security/INegotiator.html" title="interface in org.eclipse.net4j.util.security"><CODE>INegotiator</CODE></A>.
+ has currently delegated control over this connection to an <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security"><CODE>INegotiator</CODE></A>.
  <p>
  A connector can only be <code>NEGOTIATING</code> if it is
- <A HREF="../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#isActive(java.lang.Object)"><CODE>active</CODE></A> and a negotiator has been supplied.
+ <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.html?is-external=true#isActive(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>active</CODE></A> and a negotiator has been supplied.
  As soon as the negotiator has successfully negotiated both peers (or a negotiator has not been supplied) the state
  of the connector automatically transitions to <A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html#CONNECTED"><CODE>CONNECTED</CODE></A>.
  <p>
@@ -280,7 +280,7 @@ public static final <A HREF="../../../../org/eclipse/net4j/connector/ConnectorSt
 <P>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#getState()"><CODE>IConnector.getState()</CODE></A>, 
-<A HREF="../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#isActive()"><CODE>ILifecycle.isActive()</CODE></A></DL>
+<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>ILifecycle.isActive()</CODE></A></DL>
 </DL>
 <HR>
 
@@ -293,12 +293,12 @@ public static final <A HREF="../../../../org/eclipse/net4j/connector/ConnectorSt
  connection and is ready now to perform actual communications.
  <p>
  A connector can only be <code>CONNECTED</code> if it is
- <A HREF="../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#isActive(java.lang.Object)"><CODE>active</CODE></A>. A transition to
- <A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html#DISCONNECTED"><CODE>DISCONNECTED</CODE></A> can be triggered by calling <A HREF="../../../../org/eclipse/net4j/util/collection/Closeable.html#close()"><CODE>Closeable.close()</CODE></A>.
+ <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.html?is-external=true#isActive(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>active</CODE></A>. A transition to
+ <A HREF="../../../../org/eclipse/net4j/connector/ConnectorState.html#DISCONNECTED"><CODE>DISCONNECTED</CODE></A> can be triggered by calling <A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection"><CODE>Closeable.close()</CODE></A>.
 <P>
 <DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../org/eclipse/net4j/connector/IConnector.html#getState()"><CODE>IConnector.getState()</CODE></A>, 
-<A HREF="../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#isActive()"><CODE>ILifecycle.isActive()</CODE></A></DL>
+<A HREF="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle"><CODE>ILifecycle.isActive()</CODE></A></DL>
 </DL>
 
 <!-- ============ METHOD DETAIL ========== -->

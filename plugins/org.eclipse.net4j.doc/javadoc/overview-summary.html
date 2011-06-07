@@ -4,10 +4,10 @@
 <HEAD>
 
 <TITLE>
-Overview (Net4j API Specification)
+Overview (Net4j Signalling Platform Documentation)
 </TITLE>
 
-<META NAME="date" CONTENT="2011-05-28">
+<META NAME="date" CONTENT="">
 
 <LINK REL ="stylesheet" TYPE="text/css" HREF="stylesheet.css" TITLE="Style">
 
@@ -15,7 +15,7 @@ Overview (Net4j API Specification)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Overview (Net4j API Specification)";
+        parent.document.title="Overview (Net4j Signalling Platform Documentation)";
     }
 }
 </SCRIPT>
@@ -81,35 +81,10 @@ function windowTitle()
 <HR>
 <CENTER>
 <H1>
-<h1>Net4j API Specification</h1>
+<h1>Net4j Signalling Platform Documentation</h1>
 </H1>
 </CENTER>
 
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Net4j DB Framework</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A></B></TD>
-<TD>The Net4j DB framework.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</A></B></TD>
-<TD>The Net4j DB framework concepts for the abstraction of the SQL data definition language.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/db/dml/package-summary.html">org.eclipse.net4j.db.dml</A></B></TD>
-<TD>The Net4j DB framework concepts for the abstraction of the SQL data manipulation language.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/spi/db/package-summary.html">org.eclipse.net4j.spi.db</A></B></TD>
-<TD>Server service provider interfaces and useful base implementations for the Net4j DB framework.</TD>
-</TR>
-</TABLE>
-
-<P>
-&nbsp;
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
@@ -232,91 +207,11 @@ the Net4j transport layer.</TD>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Net4j Signalling Platform Utilities</B></FONT></TH>
+<B>Net4j Signalling Platform UI</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/package-summary.html">org.eclipse.net4j.util</A></B></TD>
-<TD>Utility classes.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/cache/package-summary.html">org.eclipse.net4j.util.cache</A></B></TD>
-<TD>A generic caching and memory monitoring framework.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/collection/package-summary.html">org.eclipse.net4j.util.collection</A></B></TD>
-<TD>Additional collection-like interfaces and classes.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/concurrent/package-summary.html">org.eclipse.net4j.util.concurrent</A></B></TD>
-<TD>Utility interfaces and classes commonly useful in concurrent programming.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</A></B></TD>
-<TD>A framework of notifying collections and wiring containers.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/container/delegate/package-summary.html">org.eclipse.net4j.util.container.delegate</A></B></TD>
-<TD>Hybrid interfaces of notifying containers and the Java Collection Framework.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/event/package-summary.html">org.eclipse.net4j.util.event</A></B></TD>
-<TD>A framework for sending of and listening to events.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/factory/package-summary.html">org.eclipse.net4j.util.factory</A></B></TD>
-<TD>A framework for factory based instance creation.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/fsm/package-summary.html">org.eclipse.net4j.util.fsm</A></B></TD>
-<TD>A framework for finite state machines.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/io/package-summary.html">org.eclipse.net4j.util.io</A></B></TD>
-<TD>Interfaces and classes for I/O.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/lifecycle/package-summary.html">org.eclipse.net4j.util.lifecycle</A></B></TD>
-<TD>A framework for components with a simple lifecycle.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/om/package-summary.html">org.eclipse.net4j.util.om</A></B></TD>
-<TD>Interfaces and classes for environment independent operations and maintenance (O&amp;M).</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/om/log/package-summary.html">org.eclipse.net4j.util.om.log</A></B></TD>
-<TD>Interfaces and classes for environment independent logging.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/om/monitor/package-summary.html">org.eclipse.net4j.util.om.monitor</A></B></TD>
-<TD>Interfaces and classes for environment independent progress monitoring.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/om/pref/package-summary.html">org.eclipse.net4j.util.om.pref</A></B></TD>
-<TD>Interfaces and classes for environment independent preference management.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/om/trace/package-summary.html">org.eclipse.net4j.util.om.trace</A></B></TD>
-<TD>Interfaces and classes for environment independent tracing.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/options/package-summary.html">org.eclipse.net4j.util.options</A></B></TD>
-<TD>A framework for option containers that fire change events.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/ref/package-summary.html">org.eclipse.net4j.util.ref</A></B></TD>
-<TD>A framework for memory-sensitive keyed references and value maps.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/registry/package-summary.html">org.eclipse.net4j.util.registry</A></B></TD>
-<TD>Interfaces and classes for general purpose registries.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/security/package-summary.html">org.eclipse.net4j.util.security</A></B></TD>
-<TD>Interfaces and classes for security, negotiation, authentication, authorization and cryptography.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/util/transaction/package-summary.html">org.eclipse.net4j.util.transaction</A></B></TD>
-<TD>A framework for transactional operations.</TD>
+<TD WIDTH="20%"><B><A HREF="org/eclipse/net4j/ui/package-summary.html">org.eclipse.net4j.ui</A></B></TD>
+<TD>Reusable UI components specific to the Net4j Signalling Platform.</TD>
 </TR>
 </TABLE>
 

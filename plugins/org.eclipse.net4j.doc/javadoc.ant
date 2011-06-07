@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <project name="JavaDoc" default="build.clean" basedir="../..">
 
-	<property name="javadoc.name" value="Net4j" />
 	<property name="javadoc.project" value="plugins/org.eclipse.net4j.doc" />
+	<property file="${javadoc.project}/plugin.properties" />
+	<property name="javadoc.name" value="${pluginName}" />
 	<property name="destdir" value="${javadoc.project}/javadoc" />
 
 	<path id="javadoc.classpath">
@@ -16,6 +17,10 @@
 			<include name="*/bin" />
 		</dirset>
 	</path>
+
+	<fileset dir="${destdir}" id="desthtml">
+		<include name="**/*.html" />
+	</fileset>
 
 	<target name="clean">
 		<delete includeemptydirs="true">
@@ -35,42 +40,18 @@
 		         author="true"
 		         version="true"
 		         use="true"
-		         windowtitle="${javadoc.name} API Specification"
-		         doctitle="&lt;h1>${javadoc.name} API Specification&lt;/h1>"
+		         windowtitle="${javadoc.name}"
+		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
 		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
 			<fileset dir="plugins" defaultexcludes="yes">
-				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/*.java" />
-				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/ddl/*.java" />
-				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/dml/*.java" />
-				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/spi/db/*.java" />
 				<include name="org.eclipse.net4j.http.common/src/org/eclipse/net4j/http/common/*.java" />
 				<include name="org.eclipse.net4j.http.server/src/org/eclipse/net4j/http/server/*.java" />
 				<include name="org.eclipse.net4j.http/src/org/eclipse/net4j/http/*.java" />
 				<include name="org.eclipse.net4j.jvm/src/org/eclipse/net4j/jvm/*.java" />
 				<include name="org.eclipse.net4j.tcp/src/org/eclipse/net4j/tcp/*.java" />
 				<include name="org.eclipse.net4j.tcp/src/org/eclipse/net4j/tcp/ssl/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/cache/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/collection/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/concurrent/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/container/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/container/delegate/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/event/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/factory/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/fsm/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/io/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/lifecycle/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/log/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/monitor/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/pref/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/om/trace/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/options/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/ref/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/registry/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/security/*.java" />
-				<include name="org.eclipse.net4j.util/src/org/eclipse/net4j/util/transaction/*.java" />
+				<include name="org.eclipse.net4j.ui/src/org/eclipse/net4j/ui/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/acceptor/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/buffer/*.java" />
@@ -83,12 +64,6 @@
 				<include name="org.eclipse.net4j/src/org/eclipse/spi/net4j/*.java" />
 			</fileset>
 
-			<group title="Net4j DB Framework">
-				<package name="org.eclipse.net4j.db.ddl" />
-				<package name="org.eclipse.net4j.spi.db" />
-				<package name="org.eclipse.net4j.db.dml" />
-				<package name="org.eclipse.net4j.db" />
-			</group>
 			<group title="Net4j Signalling Platform Transport">
 				<package name="org.eclipse.net4j.signal" />
 				<package name="org.eclipse.net4j.connector" />
@@ -117,33 +92,14 @@
 				<package name="org.eclipse.net4j.tcp.ssl" />
 				<package name="org.eclipse.net4j.tcp" />
 			</group>
-			<group title="Net4j Signalling Platform Utilities">
-				<package name="org.eclipse.net4j.util.container" />
-				<package name="org.eclipse.net4j.util.registry" />
-				<package name="org.eclipse.net4j.util.cache" />
-				<package name="org.eclipse.net4j.util.container.delegate" />
-				<package name="org.eclipse.net4j.util.om" />
-				<package name="org.eclipse.net4j.util.collection" />
-				<package name="org.eclipse.net4j.util.om.trace" />
-				<package name="org.eclipse.net4j.util.om.pref" />
-				<package name="org.eclipse.net4j.util.fsm" />
-				<package name="org.eclipse.net4j.util.io" />
-				<package name="org.eclipse.net4j.util.transaction" />
-				<package name="org.eclipse.net4j.util.event" />
-				<package name="org.eclipse.net4j.util.concurrent" />
-				<package name="org.eclipse.net4j.util.options" />
-				<package name="org.eclipse.net4j.util.om.monitor" />
-				<package name="org.eclipse.net4j.util.om.log" />
-				<package name="org.eclipse.net4j.util.security" />
-				<package name="org.eclipse.net4j.util.ref" />
-				<package name="org.eclipse.net4j.util" />
-				<package name="org.eclipse.net4j.util.lifecycle" />
-				<package name="org.eclipse.net4j.util.factory" />
+			<group title="Net4j Signalling Platform UI">
+				<package name="org.eclipse.net4j.ui" />
 			</group>
 
 			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />
 			<link href="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api" />
 			<link href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0" />
+			<link href="MAKE-RELATIVE/org.eclipse.net4j.util.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.util.doc/javadoc" />
 
 			<tag name="Singleton" description="Singleton" />
 			<tag name="generated" description="Generated" />
@@ -159,17 +115,17 @@
 		</javadoc>
 
 		<replaceregexp match="&lt;!-- Generated by javadoc .*--&gt;" replace="">
-			<fileset dir="${destdir}">
-				<include name="**/*.html" />
-			</fileset>
+			<fileset refid="desthtml" />
 		</replaceregexp>
 
-		<!-- Not yet necessary 
+		<replaceregexp match="CONTENT=&quot;[^&quot;]+&quot;" replace="CONTENT=&quot;&quot;">
+			<fileset refid="desthtml" />
+		</replaceregexp>
+
 		<java classname="org.eclipse.emf.cdo.releng.MakeHrefsRelative" dir="${basedir}" fork="true">
 			<classpath path="org.eclipse.emf.cdo.releng/bin" />
 			<arg value="${destdir}" />
 		</java>
-		-->
 	</target>
 
 	<target name="build.clean" depends="clean,build" />

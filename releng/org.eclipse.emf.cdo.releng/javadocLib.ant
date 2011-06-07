@@ -2,6 +2,8 @@
 <project name="JavaDocLib" default="delegate" basedir="..">
 
 	<target name="delegate">
+		<ant antfile="plugins/org.eclipse.net4j.util.doc/javadoc.ant" target="${delegate.target}" />
+		<ant antfile="plugins/org.eclipse.net4j.db.doc/javadoc.ant" target="${delegate.target}" />
 		<ant antfile="plugins/org.eclipse.net4j.doc/javadoc.ant" target="${delegate.target}" />
 		<ant antfile="plugins/org.eclipse.emf.cdo.doc/javadoc.ant" target="${delegate.target}" />
 	</target>

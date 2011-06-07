@@ -8,38 +8,49 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.internal.ui;
+package org.eclipse.net4j.ui;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
-import org.eclipse.spi.net4j.AcceptorFactory;
-
 /**
+ * A {@link StructuredContentProvider structured content provider} that shows the {@link IFactoryKey#getType() factory
+ * types} of the {@link #getInput() input}.
+ * 
  * @author Eike Stepper
+ * @since 4.0
  */
-public class AcceptorContentProvider extends StructuredContentProvider<IManagedContainer>
+public class FactoryTypeContentProvider extends StructuredContentProvider<IManagedContainer>
 {
-  public static final String PRODUCT_GROUP = AcceptorFactory.PRODUCT_GROUP;
+  private String productGroup;
 
-  public AcceptorContentProvider()
+  public FactoryTypeContentProvider(String productGroup)
   {
+    this.productGroup = productGroup;
+  }
+
+  public String getProductGroup()
+  {
+    return productGroup;
   }
 
   public Object[] getElements(Object inputElement)
   {
-    return getInput().getElements(PRODUCT_GROUP);
+    return getInput().getFactoryTypes(productGroup).toArray();
   }
 
   @Override
   protected void connectInput(IManagedContainer input)
   {
     input.addListener(this);
+    input.getFactoryRegistry().addListener(this);
   }
 
   @Override
   protected void disconnectInput(IManagedContainer input)
   {
     input.removeListener(this);
+    input.getFactoryRegistry().removeListener(this);
   }
 }

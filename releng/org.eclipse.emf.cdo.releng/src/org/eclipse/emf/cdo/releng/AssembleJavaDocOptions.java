@@ -49,11 +49,14 @@ public class AssembleJavaDocOptions
 
   private static File plugins;
 
+  private static File releng;
+
   public static void main(String[] args) throws Exception
   {
     String workspacePath = args.length == 0 ? ".." : args[0];
     workspace = new File(workspacePath);
     plugins = new File(workspace, "plugins");
+    releng = new File(workspace, "org.eclipse.emf.cdo.releng");
 
     for (File plugin : plugins.listFiles())
     {
@@ -259,7 +262,6 @@ public class AssembleJavaDocOptions
 
     public void generate() throws IOException
     {
-      File releng = new File(workspace, "org.eclipse.emf.cdo.releng");
       FileWriter out = null;
 
       try
@@ -420,12 +422,14 @@ public class AssembleJavaDocOptions
 
         try
         {
-          in = new FileReader(new File(project, "javadocTemplate.ant"));
+          in = new FileReader(new File(releng, "javadocTemplate.ant"));
           BufferedReader reader = new BufferedReader(in);
 
           String line;
           while ((line = reader.readLine()) != null)
           {
+            line = line.replace("${PROJECT-NAME}", projectName);
+
             String id = line.trim();
             if ("<!-- SOURCE FOLDERS -->".equals(id))
             {

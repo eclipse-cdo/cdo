@@ -8,15 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.internal.ui;
+package org.eclipse.net4j.ui;
 
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
 import org.eclipse.spi.net4j.ConnectorFactory;
 
 /**
+ * A {@link StructuredContentProvider structured content provider} that shows {@link IConnector connectors}.
+ * 
  * @author Eike Stepper
+ * @since 4.0
  */
 public class ConnectorContentProvider extends StructuredContentProvider<IManagedContainer>
 {

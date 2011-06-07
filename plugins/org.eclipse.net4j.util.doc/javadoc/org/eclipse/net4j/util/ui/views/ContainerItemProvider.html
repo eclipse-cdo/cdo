@@ -1,0 +1,987 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+ContainerItemProvider (Net4j Utilities Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="ContainerItemProvider (Net4j Utilities Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ContainerItemProvider.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html" title="class in org.eclipse.net4j.util.ui.views"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ContainerItemProvider.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.net4j.util.ui.views.ItemProvider">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.net4j.util.ui.views</FONT>
+<BR>
+Class ContainerItemProvider&lt;CONTAINER extends <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">org.eclipse.net4j.util.ui.StructuredContentProvider</A>&lt;INPUT&gt;
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">org.eclipse.net4j.util.ui.views.ItemProvider</A>&lt;CONTAINER&gt;
+          <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.views.ContainerItemProvider&lt;CONTAINER&gt;</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IColorProvider</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IFontProvider</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredContentProvider</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</A></DD>
+</DL>
+<DL>
+<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerPathItemProvider</A></DD>
+</DL>
+<HR>
+<DL>
+<DT><PRE>public class <B>ContainerItemProvider&lt;CONTAINER extends <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</B><DT>extends <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</A>&lt;CONTAINER&gt;</DL>
+</PRE>
+
+<P>
+<DL>
+<DT><B>Author:</B></DT>
+  <DD>Eike Stepper</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractContainerNode</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.AbstractNode</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.ContainerNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ContainerNode</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.ErrorElement.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ErrorElement</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LazyElement.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.LazyElement</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LeafNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.LeafNode</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.util.ui.views.ItemProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.net4j.util.ui.views.<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#NO_ELEMENTS">NO_ELEMENTS</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#ContainerItemProvider()">ContainerItemProvider</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#ContainerItemProvider(org.eclipse.net4j.util.ui.views.IElementFilter)">ContainerItemProvider</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</A>&nbsp;rootElementFilter)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#addNode(java.lang.Object, org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)">addNode</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
+        <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;node)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#connectInput(CONTAINER)">connectInput</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A>&nbsp;input)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.ContainerNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ContainerNode</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#createContaineNode(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node, java.lang.Object)">createContaineNode</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;parent,
+                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LeafNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.LeafNode</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#createLeafNode(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node, java.lang.Object)">createLeafNode</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;parent,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#createNode(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node, java.lang.Object)">createNode</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;parent,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#disconnectInput(CONTAINER)">disconnectInput</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A>&nbsp;input)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#dispose()">dispose</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Disposes of this content provider.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#elementAdded(java.lang.Object, java.lang.Object)">elementAdded</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
+             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parent)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#elementRemoved(java.lang.Object, java.lang.Object)">elementRemoved</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parent)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#executeRunnable(java.lang.Runnable)">executeRunnable</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</A>&nbsp;runnable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)">fillContextMenu</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+                <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</A>&nbsp;selection)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#filterRootElement(java.lang.Object)">filterRootElement</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getChildren(java.lang.Object)">getChildren</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the child elements of the given parent element.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getErrorText(org.eclipse.net4j.util.container.IContainer)">getErrorText</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getFont(java.lang.Object)">getFont</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides a font for the given element.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getForeground(java.lang.Object)">getForeground</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides a foreground color for the given element.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getImage(java.lang.Object)">getImage</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the image for the label of the given element.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getNode(java.lang.Object)">getNode</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>,<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getNodes()">getNodes</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getParent(java.lang.Object)">getParent</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the parent for the given element, or <code>null</code> 
+ indicating that the parent can't be computed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getRoot()">getRoot</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getRootElementFilter()">getRootElementFilter</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getSlowText(org.eclipse.net4j.util.container.IContainer)">getSlowText</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#handleInactiveElement(java.util.Iterator, org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)">handleInactiveElement</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&gt;&nbsp;it,
+                      <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;child)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#hasChildren(java.lang.Object)">hasChildren</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns whether the given element has children.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#isSlow(org.eclipse.net4j.util.container.IContainer)">isSlow</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#removeNode(java.lang.Object)">removeNode</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.ui.views.ItemProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.ui.views.<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#addListener(org.eclipse.jface.viewers.ILabelProviderListener)">addListener</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#fireLabelProviderChanged()">fireLabelProviderChanged</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#fireLabelProviderChanged(java.lang.Object)">fireLabelProviderChanged</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#fireLabelProviderChanged(java.lang.Object[])">fireLabelProviderChanged</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getBackground(java.lang.Object)">getBackground</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getElements(java.lang.Object)">getElements</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getListeners()">getListeners</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getText(java.lang.Object)">getText</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#isLabelProperty(java.lang.Object, java.lang.String)">isLabelProperty</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.ui.StructuredContentProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.ui.<A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">StructuredContentProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getDisplay()">getDisplay</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getInput()">getInput</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getItalicFont()">getItalicFont</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getViewer()">getViewer</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)">inputChanged</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)">notifyEvent</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#refreshElement(java.lang.Object, boolean)">refreshElement</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#refreshSynced(java.lang.Object, boolean)">refreshSynced</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#refreshViewer(boolean)">refreshViewer</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#revealElement(java.lang.Object)">revealElement</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#selectElement(java.lang.Object, boolean)">selectElement</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#updateLabels(java.lang.Object)">updateLabels</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.viewers.IContentProvider"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">inputChanged</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="ContainerItemProvider()"><!-- --></A><H3>
+ContainerItemProvider</H3>
+<PRE>
+public <B>ContainerItemProvider</B>()</PRE>
+<DL>
+</DL>
+<HR>
+
+<A NAME="ContainerItemProvider(org.eclipse.net4j.util.ui.views.IElementFilter)"><!-- --></A><H3>
+ContainerItemProvider</H3>
+<PRE>
+public <B>ContainerItemProvider</B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</A>&nbsp;rootElementFilter)</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getRootElementFilter()"><!-- --></A><H3>
+getRootElementFilter</H3>
+<PRE>
+public <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/IElementFilter.html" title="interface in org.eclipse.net4j.util.ui.views">IElementFilter</A> <B>getRootElementFilter</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hasChildren(java.lang.Object)"><!-- --></A><H3>
+hasChildren</H3>
+<PRE>
+public boolean <B>hasChildren</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#hasChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ITreeContentProvider</A></CODE></B></DD>
+<DD>Returns whether the given element has children.
+ <p>
+ Intended as an optimization for when the viewer does not
+ need the actual children.  Clients may be able to implement
+ this more efficiently than <code>getChildren</code>.
+ </p>
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#hasChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">hasChildren</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#hasChildren(java.lang.Object)">hasChildren</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A> extends <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>element</CODE> - the element
+<DT><B>Returns:</B><DD><code>true</code> if the given element has children,
+  and <code>false</code> if it has no children</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getChildren(java.lang.Object)"><!-- --></A><H3>
+getChildren</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>[] <B>getChildren</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ITreeContentProvider</A></CODE></B></DD>
+<DD>Returns the child elements of the given parent element.
+ <p>
+ The difference between this method and <code>IStructuredContentProvider.getElements</code> 
+ is that <code>getElements</code> is called to obtain the 
+ tree viewer's root elements, whereas <code>getChildren</code> is used
+ to obtain the children of a given parent element in the tree (including a root).
+ </p>
+ The result is not modified by the viewer.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>element</CODE> - the parent element
+<DT><B>Returns:</B><DD>an array of child elements</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getParent(java.lang.Object)"><!-- --></A><H3>
+getParent</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>getParent</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getParent(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ITreeContentProvider</A></CODE></B></DD>
+<DD>Returns the parent for the given element, or <code>null</code> 
+ indicating that the parent can't be computed. 
+ In this case the tree-structured viewer can't expand
+ a given node correctly if requested.
+<P>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>element</CODE> - the element
+<DT><B>Returns:</B><DD>the parent element, or <code>null</code> if it
+   has none or if the parent cannot be computed</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="dispose()"><!-- --></A><H3>
+dispose</H3>
+<PRE>
+public void <B>dispose</B>()</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IContentProvider</A></CODE></B></DD>
+<DD>Disposes of this content provider.  
+ This is called by the viewer when it is disposed.
+ <p>
+ The viewer should not be updated during this call, as it is in the process
+ of being disposed.
+ </p>
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers">dispose</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers">dispose</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#dispose()">dispose</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">StructuredContentProvider</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A> extends <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="connectInput(org.eclipse.net4j.util.container.IContainer)"><!-- --></A><A NAME="connectInput(CONTAINER)"><!-- --></A><H3>
+connectInput</H3>
+<PRE>
+protected void <B>connectInput</B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A>&nbsp;input)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#connectInput(INPUT)">connectInput</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">StructuredContentProvider</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A> extends <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="disconnectInput(org.eclipse.net4j.util.container.IContainer)"><!-- --></A><A NAME="disconnectInput(CONTAINER)"><!-- --></A><H3>
+disconnectInput</H3>
+<PRE>
+protected void <B>disconnectInput</B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A>&nbsp;input)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#disconnectInput(INPUT)">disconnectInput</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">StructuredContentProvider</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A> extends <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="handleInactiveElement(java.util.Iterator, org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)"><!-- --></A><H3>
+handleInactiveElement</H3>
+<PRE>
+protected void <B>handleInactiveElement</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util">Iterator</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&gt;&nbsp;it,
+                                     <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;child)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="elementAdded(java.lang.Object, java.lang.Object)"><!-- --></A><H3>
+elementAdded</H3>
+<PRE>
+protected void <B>elementAdded</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
+                            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parent)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="elementRemoved(java.lang.Object, java.lang.Object)"><!-- --></A><H3>
+elementRemoved</H3>
+<PRE>
+protected void <B>elementRemoved</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
+                              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parent)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRoot()"><!-- --></A><H3>
+getRoot</H3>
+<PRE>
+protected <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A> <B>getRoot</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getNodes()"><!-- --></A><H3>
+getNodes</H3>
+<PRE>
+protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>,<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&gt; <B>getNodes</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getNode(java.lang.Object)"><!-- --></A><H3>
+getNode</H3>
+<PRE>
+protected <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A> <B>getNode</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createNode(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node, java.lang.Object)"><!-- --></A><H3>
+createNode</H3>
+<PRE>
+protected <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A> <B>createNode</B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;parent,
+                                                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createLeafNode(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node, java.lang.Object)"><!-- --></A><H3>
+createLeafNode</H3>
+<PRE>
+protected <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LeafNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.LeafNode</A> <B>createLeafNode</B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;parent,
+                                                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createContaineNode(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node, java.lang.Object)"><!-- --></A><H3>
+createContaineNode</H3>
+<PRE>
+protected <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.ContainerNode.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider.ContainerNode</A> <B>createContaineNode</B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;parent,
+                                                                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="addNode(java.lang.Object, org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node)"><!-- --></A><H3>
+addNode</H3>
+<PRE>
+protected void <B>addNode</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
+                       <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;node)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="removeNode(java.lang.Object)"><!-- --></A><H3>
+removeNode</H3>
+<PRE>
+protected <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A> <B>removeNode</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="filterRootElement(java.lang.Object)"><!-- --></A><H3>
+filterRootElement</H3>
+<PRE>
+protected boolean <B>filterRootElement</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="executeRunnable(java.lang.Runnable)"><!-- --></A><H3>
+executeRunnable</H3>
+<PRE>
+protected void <B>executeRunnable</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</A>&nbsp;runnable)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isSlow(org.eclipse.net4j.util.container.IContainer)"><!-- --></A><H3>
+isSlow</H3>
+<PRE>
+protected boolean <B>isSlow</B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getSlowText(org.eclipse.net4j.util.container.IContainer)"><!-- --></A><H3>
+getSlowText</H3>
+<PRE>
+protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getSlowText</B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getErrorText(org.eclipse.net4j.util.container.IContainer)"><!-- --></A><H3>
+getErrorText</H3>
+<PRE>
+protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getErrorText</B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)"><!-- --></A><H3>
+fillContextMenu</H3>
+<PRE>
+protected void <B>fillContextMenu</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+                               <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</A>&nbsp;selection)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)">fillContextMenu</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A> extends <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getFont(java.lang.Object)"><!-- --></A><H3>
+getFont</H3>
+<PRE>
+public <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A> <B>getFont</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IFontProvider</A></CODE></B></DD>
+<DD>Provides a font for the given element.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getFont</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IFontProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getFont(java.lang.Object)">getFont</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A> extends <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>obj</CODE> - the element
+<DT><B>Returns:</B><DD>the font for the element, or <code>null</code> 
+   to use the default font</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getForeground(java.lang.Object)"><!-- --></A><H3>
+getForeground</H3>
+<PRE>
+public <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</A> <B>getForeground</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true#getForeground(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IColorProvider</A></CODE></B></DD>
+<DD>Provides a foreground color for the given element.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true#getForeground(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getForeground</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IColorProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getForeground(java.lang.Object)">getForeground</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A> extends <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>obj</CODE> - the element
+<DT><B>Returns:</B><DD>the foreground color for the element, or <code>null</code> 
+   to use the default foreground color</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getImage(java.lang.Object)"><!-- --></A><H3>
+getImage</H3>
+<PRE>
+public <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A> <B>getImage</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ILabelProvider</A></CODE></B></DD>
+<DD>Returns the image for the label of the given element.  The image
+ is owned by the label provider and must not be disposed directly.
+ Instead, dispose the label provider when no longer needed.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getImage</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getImage(java.lang.Object)">getImage</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="type parameter in ContainerItemProvider">CONTAINER</A> extends <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>obj</CODE> - the element for which to provide the label image
+<DT><B>Returns:</B><DD>the image used to label the element, or <code>null</code>
+   if there is no image for the given object</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/ContainerItemProvider.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html" title="class in org.eclipse.net4j.util.ui.views"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="ContainerItemProvider.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.net4j.util.ui.views.ItemProvider">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

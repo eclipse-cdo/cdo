@@ -1,0 +1,550 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+LogDialog (Net4j Utilities Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="LogDialog (Net4j Utilities Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/LogDialog.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/HistoryTextDialog.html" title="class in org.eclipse.net4j.util.ui.widgets"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/OneBorderComposite.html" title="class in org.eclipse.net4j.util.ui.widgets"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/util/ui/widgets/LogDialog.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="LogDialog.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_org.eclipse.jface.window.Window">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.net4j.util.ui.widgets.BaseDialog">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.net4j.util.ui.widgets</FONT>
+<BR>
+Class LogDialog</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window">org.eclipse.jface.window.Window</A>
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">org.eclipse.jface.dialogs.Dialog</A>
+          <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">org.eclipse.jface.dialogs.TrayDialog</A>
+              <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">org.eclipse.jface.dialogs.TitleAreaDialog</A>
+                  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html" title="class in org.eclipse.net4j.util.ui.widgets">org.eclipse.net4j.util.ui.widgets.BaseDialog</A>&lt;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</A>&gt;
+                      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.widgets.LogDialog</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/IShellProvider.html?is-external=true" title="class or interface in org.eclipse.jface.window">IShellProvider</A></DD>
+</DL>
+<HR>
+<DL>
+<DT><PRE>public class <B>LogDialog</B><DT>extends <A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html" title="class in org.eclipse.net4j.util.ui.widgets">BaseDialog</A>&lt;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</A>&gt;</DL>
+</PRE>
+
+<P>
+<DL>
+<DT><B>Author:</B></DT>
+  <DD>Eike Stepper</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.jface.window.Window"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from class org.eclipse.jface.window.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window">Window</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.IExceptionHandler.html?is-external=true" title="class or interface in org.eclipse.jface.window">Window.IExceptionHandler</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.util.ui.widgets.BaseDialog"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.net4j.util.ui.widgets.<A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html" title="class in org.eclipse.net4j.util.ui.widgets">BaseDialog</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html#DEFAULT_SHELL_STYLE">DEFAULT_SHELL_STYLE</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.jface.dialogs.TitleAreaDialog"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.jface.dialogs.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">TitleAreaDialog</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#DLG_IMG_TITLE_BANNER" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_TITLE_BANNER</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#DLG_IMG_TITLE_ERROR" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_TITLE_ERROR</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#INFO_MESSAGE" title="class or interface in org.eclipse.jface.dialogs">INFO_MESSAGE</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#WARNING_MESSAGE" title="class or interface in org.eclipse.jface.dialogs">WARNING_MESSAGE</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.jface.dialogs.Dialog"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.jface.dialogs.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">Dialog</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#blockedHandler" title="class or interface in org.eclipse.jface.dialogs">blockedHandler</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#buttonBar" title="class or interface in org.eclipse.jface.dialogs">buttonBar</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DIALOG_DEFAULT_BOUNDS" title="class or interface in org.eclipse.jface.dialogs">DIALOG_DEFAULT_BOUNDS</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DIALOG_PERSISTLOCATION" title="class or interface in org.eclipse.jface.dialogs">DIALOG_PERSISTLOCATION</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DIALOG_PERSISTSIZE" title="class or interface in org.eclipse.jface.dialogs">DIALOG_PERSISTSIZE</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#dialogArea" title="class or interface in org.eclipse.jface.dialogs">dialogArea</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_ERROR" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_ERROR</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_HELP" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_HELP</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_INFO" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_INFO</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_MESSAGE_ERROR" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_MESSAGE_ERROR</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_MESSAGE_INFO" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_MESSAGE_INFO</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_MESSAGE_WARNING" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_MESSAGE_WARNING</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_QUESTION" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_QUESTION</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#DLG_IMG_WARNING" title="class or interface in org.eclipse.jface.dialogs">DLG_IMG_WARNING</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#ELLIPSIS" title="class or interface in org.eclipse.jface.dialogs">ELLIPSIS</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.jface.window.Window"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.jface.window.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window">Window</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#CANCEL" title="class or interface in org.eclipse.jface.window">CANCEL</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#OK" title="class or interface in org.eclipse.jface.window">OK</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#LogDialog(org.eclipse.swt.widgets.Shell, int, java.lang.String, java.lang.String, org.eclipse.jface.dialogs.IDialogSettings)">LogDialog</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</A>&nbsp;parentShell,
+          int&nbsp;shellStyle,
+          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;title,
+          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;message,
+          <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogSettings.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">IDialogSettings</A>&nbsp;settings)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#LogDialog(org.eclipse.swt.widgets.Shell, java.lang.String, java.lang.String, org.eclipse.jface.dialogs.IDialogSettings)">LogDialog</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</A>&nbsp;parentShell,
+          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;title,
+          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;message,
+          <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogSettings.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">IDialogSettings</A>&nbsp;settings)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#append(java.lang.String)">append</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;text)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#append(java.lang.Throwable)">append</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;t)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#close()">close</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Closes this window, disposes its shell, and removes this window from its
+ window manager (if it has one).</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)">createButtonsForButtonBar</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds buttons to this dialog's button bar.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#createUI(org.eclipse.swt.widgets.Composite)">createUI</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/TextStyle.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">TextStyle</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#getTextStyle()">getTextStyle</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#setTextStyle(org.eclipse.swt.graphics.TextStyle)">setTextStyle</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/TextStyle.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">TextStyle</A>&nbsp;textStyle)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.ui.widgets.BaseDialog"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.ui.widgets.<A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html" title="class in org.eclipse.net4j.util.ui.widgets">BaseDialog</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html#configureShell(org.eclipse.swt.widgets.Shell)">configureShell</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html#createDialogArea(org.eclipse.swt.widgets.Composite)">createDialogArea</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html#fillContextMenu(org.eclipse.jface.action.IMenuManager, VIEWER)">fillContextMenu</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html#getCurrentViewer()">getCurrentViewer</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html#getDialogBoundsSettings()">getDialogBoundsSettings</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html#hookContextMenu()">hookContextMenu</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html#setCurrentViewer(VIEWER)">setCurrentViewer</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.dialogs.TitleAreaDialog"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.dialogs.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">TitleAreaDialog</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#createContents(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs">createContents</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#getErrorMessage()" title="class or interface in org.eclipse.jface.dialogs">getErrorMessage</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#getInitialSize()" title="class or interface in org.eclipse.jface.dialogs">getInitialSize</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#getMessage()" title="class or interface in org.eclipse.jface.dialogs">getMessage</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#getTitleArea()" title="class or interface in org.eclipse.jface.dialogs">getTitleArea</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#getTitleImageLabel()" title="class or interface in org.eclipse.jface.dialogs">getTitleImageLabel</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#setErrorMessage(java.lang.String)" title="class or interface in org.eclipse.jface.dialogs">setErrorMessage</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#setMessage(java.lang.String)" title="class or interface in org.eclipse.jface.dialogs">setMessage</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#setMessage(java.lang.String, int)" title="class or interface in org.eclipse.jface.dialogs">setMessage</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#setTitle(java.lang.String)" title="class or interface in org.eclipse.jface.dialogs">setTitle</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#setTitleAreaColor(org.eclipse.swt.graphics.RGB)" title="class or interface in org.eclipse.jface.dialogs">setTitleAreaColor</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TitleAreaDialog.html?is-external=true#setTitleImage(org.eclipse.swt.graphics.Image)" title="class or interface in org.eclipse.jface.dialogs">setTitleImage</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.dialogs.TrayDialog"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.dialogs.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">TrayDialog</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#closeTray()" title="class or interface in org.eclipse.jface.dialogs">closeTray</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#createButtonBar(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs">createButtonBar</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#createHelpControl(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs">createHelpControl</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#getLayout()" title="class or interface in org.eclipse.jface.dialogs">getLayout</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#getTray()" title="class or interface in org.eclipse.jface.dialogs">getTray</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#isDialogHelpAvailable()" title="class or interface in org.eclipse.jface.dialogs">isDialogHelpAvailable</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#isHelpAvailable()" title="class or interface in org.eclipse.jface.dialogs">isHelpAvailable</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#openTray(org.eclipse.jface.dialogs.DialogTray)" title="class or interface in org.eclipse.jface.dialogs">openTray</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#setDialogHelpAvailable(boolean)" title="class or interface in org.eclipse.jface.dialogs">setDialogHelpAvailable</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#setHelpAvailable(boolean)" title="class or interface in org.eclipse.jface.dialogs">setHelpAvailable</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.dialogs.Dialog"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.dialogs.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">Dialog</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#applyDialogFont(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.jface.dialogs">applyDialogFont</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#buttonPressed(int)" title="class or interface in org.eclipse.jface.dialogs">buttonPressed</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#cancelPressed()" title="class or interface in org.eclipse.jface.dialogs">cancelPressed</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHeightInCharsToPixels(org.eclipse.swt.graphics.FontMetrics, int)" title="class or interface in org.eclipse.jface.dialogs">convertHeightInCharsToPixels</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHeightInCharsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs">convertHeightInCharsToPixels</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHorizontalDLUsToPixels(org.eclipse.swt.graphics.FontMetrics, int)" title="class or interface in org.eclipse.jface.dialogs">convertHorizontalDLUsToPixels</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertHorizontalDLUsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs">convertHorizontalDLUsToPixels</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertVerticalDLUsToPixels(org.eclipse.swt.graphics.FontMetrics, int)" title="class or interface in org.eclipse.jface.dialogs">convertVerticalDLUsToPixels</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertVerticalDLUsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs">convertVerticalDLUsToPixels</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertWidthInCharsToPixels(org.eclipse.swt.graphics.FontMetrics, int)" title="class or interface in org.eclipse.jface.dialogs">convertWidthInCharsToPixels</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#convertWidthInCharsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs">convertWidthInCharsToPixels</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#create()" title="class or interface in org.eclipse.jface.dialogs">create</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#createButton(org.eclipse.swt.widgets.Composite, int, java.lang.String, boolean)" title="class or interface in org.eclipse.jface.dialogs">createButton</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#dialogFontIsDefault()" title="class or interface in org.eclipse.jface.dialogs">dialogFontIsDefault</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getBlockedHandler()" title="class or interface in org.eclipse.jface.dialogs">getBlockedHandler</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getButton(int)" title="class or interface in org.eclipse.jface.dialogs">getButton</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getButtonBar()" title="class or interface in org.eclipse.jface.dialogs">getButtonBar</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getCancelButton()" title="class or interface in org.eclipse.jface.dialogs">getCancelButton</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getDialogArea()" title="class or interface in org.eclipse.jface.dialogs">getDialogArea</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getDialogBoundsStrategy()" title="class or interface in org.eclipse.jface.dialogs">getDialogBoundsStrategy</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getImage(java.lang.String)" title="class or interface in org.eclipse.jface.dialogs">getImage</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getInitialLocation(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.jface.dialogs">getInitialLocation</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#getOKButton()" title="class or interface in org.eclipse.jface.dialogs">getOKButton</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#initializeBounds()" title="class or interface in org.eclipse.jface.dialogs">initializeBounds</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#initializeDialogUnits(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.jface.dialogs">initializeDialogUnits</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#isResizable()" title="class or interface in org.eclipse.jface.dialogs">isResizable</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#okPressed()" title="class or interface in org.eclipse.jface.dialogs">okPressed</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#setBlockedHandler(org.eclipse.jface.dialogs.IDialogBlockedHandler)" title="class or interface in org.eclipse.jface.dialogs">setBlockedHandler</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#setButtonLayoutData(org.eclipse.swt.widgets.Button)" title="class or interface in org.eclipse.jface.dialogs">setButtonLayoutData</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#setButtonLayoutFormData(org.eclipse.swt.widgets.Button)" title="class or interface in org.eclipse.jface.dialogs">setButtonLayoutFormData</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#shortenText(java.lang.String, org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.jface.dialogs">shortenText</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.window.Window"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.window.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true" title="class or interface in org.eclipse.jface.window">Window</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#canHandleShellCloseEvent()" title="class or interface in org.eclipse.jface.window">canHandleShellCloseEvent</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#constrainShellSize()" title="class or interface in org.eclipse.jface.window">constrainShellSize</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#createShell()" title="class or interface in org.eclipse.jface.window">createShell</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getConstrainedShellBounds(org.eclipse.swt.graphics.Rectangle)" title="class or interface in org.eclipse.jface.window">getConstrainedShellBounds</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getContents()" title="class or interface in org.eclipse.jface.window">getContents</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getDefaultImage()" title="class or interface in org.eclipse.jface.window">getDefaultImage</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getDefaultImages()" title="class or interface in org.eclipse.jface.window">getDefaultImages</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getDefaultOrientation()" title="class or interface in org.eclipse.jface.window">getDefaultOrientation</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getParentShell()" title="class or interface in org.eclipse.jface.window">getParentShell</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getReturnCode()" title="class or interface in org.eclipse.jface.window">getReturnCode</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getShell()" title="class or interface in org.eclipse.jface.window">getShell</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getShellListener()" title="class or interface in org.eclipse.jface.window">getShellListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getShellStyle()" title="class or interface in org.eclipse.jface.window">getShellStyle</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#getWindowManager()" title="class or interface in org.eclipse.jface.window">getWindowManager</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#handleFontChange(org.eclipse.jface.util.PropertyChangeEvent)" title="class or interface in org.eclipse.jface.window">handleFontChange</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#handleShellCloseEvent()" title="class or interface in org.eclipse.jface.window">handleShellCloseEvent</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#open()" title="class or interface in org.eclipse.jface.window">open</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setBlockOnOpen(boolean)" title="class or interface in org.eclipse.jface.window">setBlockOnOpen</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultImage(org.eclipse.swt.graphics.Image)" title="class or interface in org.eclipse.jface.window">setDefaultImage</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultImages(org.eclipse.swt.graphics.Image[])" title="class or interface in org.eclipse.jface.window">setDefaultImages</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultModalParent(org.eclipse.jface.window.IShellProvider)" title="class or interface in org.eclipse.jface.window">setDefaultModalParent</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setDefaultOrientation(int)" title="class or interface in org.eclipse.jface.window">setDefaultOrientation</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setExceptionHandler(org.eclipse.jface.window.Window.IExceptionHandler)" title="class or interface in org.eclipse.jface.window">setExceptionHandler</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setParentShell(org.eclipse.swt.widgets.Shell)" title="class or interface in org.eclipse.jface.window">setParentShell</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setReturnCode(int)" title="class or interface in org.eclipse.jface.window">setReturnCode</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setShellStyle(int)" title="class or interface in org.eclipse.jface.window">setShellStyle</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#setWindowManager(org.eclipse.jface.window.WindowManager)" title="class or interface in org.eclipse.jface.window">setWindowManager</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="LogDialog(org.eclipse.swt.widgets.Shell, int, java.lang.String, java.lang.String, org.eclipse.jface.dialogs.IDialogSettings)"><!-- --></A><H3>
+LogDialog</H3>
+<PRE>
+public <B>LogDialog</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</A>&nbsp;parentShell,
+                 int&nbsp;shellStyle,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;title,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;message,
+                 <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogSettings.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">IDialogSettings</A>&nbsp;settings)</PRE>
+<DL>
+</DL>
+<HR>
+
+<A NAME="LogDialog(org.eclipse.swt.widgets.Shell, java.lang.String, java.lang.String, org.eclipse.jface.dialogs.IDialogSettings)"><!-- --></A><H3>
+LogDialog</H3>
+<PRE>
+public <B>LogDialog</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</A>&nbsp;parentShell,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;title,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;message,
+                 <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogSettings.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">IDialogSettings</A>&nbsp;settings)</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getTextStyle()"><!-- --></A><H3>
+getTextStyle</H3>
+<PRE>
+public <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/TextStyle.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">TextStyle</A> <B>getTextStyle</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setTextStyle(org.eclipse.swt.graphics.TextStyle)"><!-- --></A><H3>
+setTextStyle</H3>
+<PRE>
+public void <B>setTextStyle</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/TextStyle.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">TextStyle</A>&nbsp;textStyle)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="append(java.lang.String)"><!-- --></A><H3>
+append</H3>
+<PRE>
+public void <B>append</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;text)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="append(java.lang.Throwable)"><!-- --></A><H3>
+append</H3>
+<PRE>
+public void <B>append</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;t)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="close()"><!-- --></A><H3>
+close</H3>
+<PRE>
+public boolean <B>close</B>()</PRE>
+<DL>
+<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#close()" title="class or interface in org.eclipse.jface.window">org.eclipse.jface.window.Window</A></CODE></B></DD>
+<DD>Closes this window, disposes its shell, and removes this window from its
+ window manager (if it has one).
+ <p>
+ This framework method may be extended (<code>super.close</code> must
+ be called).
+ </p>
+ <p>
+  Note that in order to prevent recursive calls to this method 
+  it does not call <code>Shell#close()</code>. As a result <code>ShellListener</code>s 
+  will not receive a <code>shellClosed</code> event.
+  </p>
+<P>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true#close()" title="class or interface in org.eclipse.jface.dialogs">close</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/TrayDialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">TrayDialog</A></CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD><code>true</code> if the window is (or was already) closed, and
+         <code>false</code> if it is still open<DT><B>See Also:</B><DD><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/window/Window.html?is-external=true#close()" title="class or interface in org.eclipse.jface.window"><CODE>Window.close()</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createUI(org.eclipse.swt.widgets.Composite)"><!-- --></A><H3>
+createUI</H3>
+<PRE>
+protected void <B>createUI</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html#createUI(org.eclipse.swt.widgets.Composite)">createUI</A></CODE> in class <CODE><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/BaseDialog.html" title="class in org.eclipse.net4j.util.ui.widgets">BaseDialog</A>&lt;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)"><!-- --></A><H3>
+createButtonsForButtonBar</H3>
+<PRE>
+protected void <B>createButtonsForButtonBar</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent)</PRE>
+<DL>
+<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs">org.eclipse.jface.dialogs.Dialog</A></CODE></B></DD>
+<DD>Adds buttons to this dialog's button bar.
+ <p>
+ The <code>Dialog</code> implementation of this framework method adds
+ standard ok and cancel buttons using the <code>createButton</code>
+ framework method. These standard buttons will be accessible from
+ <code>getCancelButton</code>, and <code>getOKButton</code>.
+ Subclasses may override.
+ </p>
+<P>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs">createButtonsForButtonBar</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">Dialog</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>parent</CODE> - the button bar composite</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/LogDialog.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/HistoryTextDialog.html" title="class in org.eclipse.net4j.util.ui.widgets"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/OneBorderComposite.html" title="class in org.eclipse.net4j.util.ui.widgets"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/util/ui/widgets/LogDialog.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="LogDialog.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_org.eclipse.jface.window.Window">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.net4j.util.ui.widgets.BaseDialog">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

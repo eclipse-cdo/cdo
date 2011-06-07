@@ -1,0 +1,545 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+UIActivator (Net4j Utilities Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="UIActivator (Net4j Utilities Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/UIActivator.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.WithState.html" title="class in org.eclipse.net4j.util.ui"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/ui/UIActivator.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="UIActivator.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.net4j.util.ui</FONT>
+<BR>
+Class UIActivator</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true" title="class or interface in org.eclipse.core.runtime">org.eclipse.core.runtime.Plugin</A>
+      <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true" title="class or interface in org.eclipse.ui.plugin">org.eclipse.ui.plugin.AbstractUIPlugin</A>
+          <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.UIActivator</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD>org.osgi.framework.BundleActivator</DD>
+</DL>
+<DL>
+<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.WithState.html" title="class in org.eclipse.net4j.util.ui">UIActivator.WithState</A></DD>
+</DL>
+<HR>
+<DL>
+<DT><PRE>public class <B>UIActivator</B><DT>extends <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true" title="class or interface in org.eclipse.ui.plugin">AbstractUIPlugin</A></DL>
+</PRE>
+
+<P>
+<DL>
+<DT><B>Author:</B></DT>
+  <DD>Eike Stepper</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.WithState.html" title="class in org.eclipse.net4j.util.ui">UIActivator.WithState</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;org.osgi.framework.BundleContext</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.html#bundleContext">bundleContext</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.core.runtime.Plugin"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.core.runtime.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true" title="class or interface in org.eclipse.core.runtime">Plugin</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#PLUGIN_PREFERENCE_SCOPE" title="class or interface in org.eclipse.core.runtime">PLUGIN_PREFERENCE_SCOPE</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#PREFERENCES_DEFAULT_OVERRIDE_BASE_NAME" title="class or interface in org.eclipse.core.runtime">PREFERENCES_DEFAULT_OVERRIDE_BASE_NAME</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#PREFERENCES_DEFAULT_OVERRIDE_FILE_NAME" title="class or interface in org.eclipse.core.runtime">PREFERENCES_DEFAULT_OVERRIDE_FILE_NAME</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.html#UIActivator(org.eclipse.net4j.util.om.OMBundle)">UIActivator</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</A>&nbsp;omBundle)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.html#doStart()">doStart</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.html#doStop()">doStop</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.html#getOMBundle()">getOMBundle</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.html#loadImageDescriptor(java.lang.String)">loadImageDescriptor</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;path)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.html#start(org.osgi.framework.BundleContext)">start</A></B>(org.osgi.framework.BundleContext&nbsp;context)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>AbstractUIPlugin</code> implementation of this <code>Plugin</code>
+ method refreshes the plug-in actions.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.html#stop(org.osgi.framework.BundleContext)">stop</A></B>(org.osgi.framework.BundleContext&nbsp;context)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>AbstractUIPlugin</code> implementation of this <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true" title="class or interface in org.eclipse.core.runtime"><CODE>Plugin</CODE></A>
+ method saves this plug-in's preference and dialog stores and shuts down 
+ its image registry (if they are in use).</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.ui.plugin.AbstractUIPlugin"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.ui.plugin.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true" title="class or interface in org.eclipse.ui.plugin">AbstractUIPlugin</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#createImageRegistry()" title="class or interface in org.eclipse.ui.plugin">createImageRegistry</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#getDialogSettings()" title="class or interface in org.eclipse.ui.plugin">getDialogSettings</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#getImageRegistry()" title="class or interface in org.eclipse.ui.plugin">getImageRegistry</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#getPreferenceStore()" title="class or interface in org.eclipse.ui.plugin">getPreferenceStore</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#getWorkbench()" title="class or interface in org.eclipse.ui.plugin">getWorkbench</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#imageDescriptorFromPlugin(java.lang.String, java.lang.String)" title="class or interface in org.eclipse.ui.plugin">imageDescriptorFromPlugin</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#initializeDefaultPluginPreferences()" title="class or interface in org.eclipse.ui.plugin">initializeDefaultPluginPreferences</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#initializeDefaultPreferences(org.eclipse.jface.preference.IPreferenceStore)" title="class or interface in org.eclipse.ui.plugin">initializeDefaultPreferences</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#initializeImageRegistry(org.eclipse.jface.resource.ImageRegistry)" title="class or interface in org.eclipse.ui.plugin">initializeImageRegistry</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#loadDialogSettings()" title="class or interface in org.eclipse.ui.plugin">loadDialogSettings</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#loadPreferenceStore()" title="class or interface in org.eclipse.ui.plugin">loadPreferenceStore</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#refreshPluginActions()" title="class or interface in org.eclipse.ui.plugin">refreshPluginActions</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#saveDialogSettings()" title="class or interface in org.eclipse.ui.plugin">saveDialogSettings</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#savePreferenceStore()" title="class or interface in org.eclipse.ui.plugin">savePreferenceStore</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#shutdown()" title="class or interface in org.eclipse.ui.plugin">shutdown</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#startup()" title="class or interface in org.eclipse.ui.plugin">startup</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.core.runtime.Plugin"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.core.runtime.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true" title="class or interface in org.eclipse.core.runtime">Plugin</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#find(org.eclipse.core.runtime.IPath)" title="class or interface in org.eclipse.core.runtime">find</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#find(org.eclipse.core.runtime.IPath, java.util.Map)" title="class or interface in org.eclipse.core.runtime">find</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#getBundle()" title="class or interface in org.eclipse.core.runtime">getBundle</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#getDescriptor()" title="class or interface in org.eclipse.core.runtime">getDescriptor</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#getLog()" title="class or interface in org.eclipse.core.runtime">getLog</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#getPluginPreferences()" title="class or interface in org.eclipse.core.runtime">getPluginPreferences</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#getStateLocation()" title="class or interface in org.eclipse.core.runtime">getStateLocation</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#internalInitializeDefaultPluginPreferences()" title="class or interface in org.eclipse.core.runtime">internalInitializeDefaultPluginPreferences</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#isDebugging()" title="class or interface in org.eclipse.core.runtime">isDebugging</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#openStream(org.eclipse.core.runtime.IPath)" title="class or interface in org.eclipse.core.runtime">openStream</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#openStream(org.eclipse.core.runtime.IPath, boolean)" title="class or interface in org.eclipse.core.runtime">openStream</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#savePluginPreferences()" title="class or interface in org.eclipse.core.runtime">savePluginPreferences</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#setDebugging(boolean)" title="class or interface in org.eclipse.core.runtime">setDebugging</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#toString()" title="class or interface in org.eclipse.core.runtime">toString</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="bundleContext"><!-- --></A><H3>
+bundleContext</H3>
+<PRE>
+protected org.osgi.framework.BundleContext <B>bundleContext</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DL>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="UIActivator(org.eclipse.net4j.util.om.OMBundle)"><!-- --></A><H3>
+UIActivator</H3>
+<PRE>
+public <B>UIActivator</B>(<A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</A>&nbsp;omBundle)</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getOMBundle()"><!-- --></A><H3>
+getOMBundle</H3>
+<PRE>
+public final <A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</A> <B>getOMBundle</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="loadImageDescriptor(java.lang.String)"><!-- --></A><H3>
+loadImageDescriptor</H3>
+<PRE>
+public <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</A> <B>loadImageDescriptor</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;path)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="start(org.osgi.framework.BundleContext)"><!-- --></A><H3>
+start</H3>
+<PRE>
+public final void <B>start</B>(org.osgi.framework.BundleContext&nbsp;context)
+                 throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+<DL>
+<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#start(org.osgi.framework.BundleContext)" title="class or interface in org.eclipse.ui.plugin">org.eclipse.ui.plugin.AbstractUIPlugin</A></CODE></B></DD>
+<DD>The <code>AbstractUIPlugin</code> implementation of this <code>Plugin</code>
+ method refreshes the plug-in actions.  Subclasses may extend this method,
+ but must send super <b>first</b>.
+ Starts up this plug-in.
+ <p>
+ This method should be overridden in subclasses that need to do something
+ when this plug-in is started.  Implementors should call the inherited method
+ at the first possible point to ensure that any system requirements can be met.
+ </p>
+ <p>
+ If this method throws an exception, it is taken as an indication that
+ plug-in initialization has failed; as a result, the plug-in will not
+ be activated; moreover, the plug-in will be marked as disabled and 
+ ineligible for activation for the duration.
+ </p>
+ <p>
+ Note 1: This method is automatically invoked by the platform 
+ the first time any code in the plug-in is executed.
+ </p>
+ <p>
+ Note 2: This method is intended to perform simple initialization 
+ of the plug-in environment. The platform may terminate initializers 
+ that do not complete in a timely fashion.
+ </p>
+ <p>
+ Note 3: The class loader typically has monitors acquired during invocation of this method.  It is 
+ strongly recommended that this method avoid synchronized blocks or other thread locking mechanisms,
+ as this would lead to deadlock vulnerability.
+ </p>
+ <p>
+ Note 4: The supplied bundle context represents the plug-in to the OSGi framework.
+ For security reasons, it is strongly recommended that this object should not be divulged.
+ </p>
+ <p>
+ Note 5: This method and the <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#stop(org.osgi.framework.BundleContext)" title="class or interface in org.eclipse.core.runtime"><CODE>Plugin.stop(BundleContext)</CODE></A> may be called from separate threads,
+ but the OSGi framework ensures that both methods will not be called simultaneously.
+ </p>
+ <b>Clients must never explicitly call this method.</b>
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE>start</CODE> in interface <CODE>org.osgi.framework.BundleActivator</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#start(org.osgi.framework.BundleContext)" title="class or interface in org.eclipse.ui.plugin">start</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true" title="class or interface in org.eclipse.ui.plugin">AbstractUIPlugin</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>context</CODE> - the bundle context for this plug-in
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE> - if this plug-in did not start up properly</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="stop(org.osgi.framework.BundleContext)"><!-- --></A><H3>
+stop</H3>
+<PRE>
+public final void <B>stop</B>(org.osgi.framework.BundleContext&nbsp;context)
+                throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+<DL>
+<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#stop(org.osgi.framework.BundleContext)" title="class or interface in org.eclipse.ui.plugin">org.eclipse.ui.plugin.AbstractUIPlugin</A></CODE></B></DD>
+<DD>The <code>AbstractUIPlugin</code> implementation of this <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true" title="class or interface in org.eclipse.core.runtime"><CODE>Plugin</CODE></A>
+ method saves this plug-in's preference and dialog stores and shuts down 
+ its image registry (if they are in use). Subclasses may extend this
+ method, but must send super <b>last</b>. A try-finally statement should
+ be used where necessary to ensure that <code>super.stop()</code> is
+ always done.
+ Stops this plug-in.
+ <p>
+ This method should be re-implemented in subclasses that need to do something
+ when the plug-in is shut down.  Implementors should call the inherited method
+ as late as possible to ensure that any system requirements can be met.
+ </p>
+ <p>
+ Plug-in shutdown code should be robust. In particular, this method
+ should always make an effort to shut down the plug-in. Furthermore,
+ the code should not assume that the plug-in was started successfully.
+ </p>
+ <p>
+ Note 1: If a plug-in has been automatically started, this method will be automatically
+ invoked by the platform when the platform is shut down.
+ </p>
+ <p>
+ Note 2: This method is intended to perform simple termination
+ of the plug-in environment. The platform may terminate invocations
+ that do not complete in a timely fashion.
+ </p>
+ <p>
+ Note 3: The supplied bundle context represents the plug-in to the OSGi framework.
+ For security reasons, it is strongly recommended that this object should not be divulged.
+ </p>
+ <p>
+ Note 4: This method and the <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/Plugin.html?is-external=true#start(org.osgi.framework.BundleContext)" title="class or interface in org.eclipse.core.runtime"><CODE>Plugin.start(BundleContext)</CODE></A> may be called from separate threads,
+ but the OSGi framework ensures that both methods will not be called simultaneously.
+ </p>
+ <b>Clients must never explicitly call this method.</b>
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE>stop</CODE> in interface <CODE>org.osgi.framework.BundleActivator</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true#stop(org.osgi.framework.BundleContext)" title="class or interface in org.eclipse.ui.plugin">stop</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/plugin/AbstractUIPlugin.html?is-external=true" title="class or interface in org.eclipse.ui.plugin">AbstractUIPlugin</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>context</CODE> - the bundle context for this plug-in
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE> - if this method fails to shut down this plug-in</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doStart()"><!-- --></A><H3>
+doStart</H3>
+<PRE>
+protected void <B>doStart</B>()
+                throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE><DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="doStop()"><!-- --></A><H3>
+doStop</H3>
+<PRE>
+protected void <B>doStop</B>()
+               throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE><DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/UIActivator.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.WithState.html" title="class in org.eclipse.net4j.util.ui"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/ui/UIActivator.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="UIActivator.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

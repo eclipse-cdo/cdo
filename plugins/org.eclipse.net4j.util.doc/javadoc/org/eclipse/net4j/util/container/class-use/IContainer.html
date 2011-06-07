@@ -1,0 +1,740 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+Uses of Interface org.eclipse.net4j.util.container.IContainer (Net4j Utilities Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Uses of Interface org.eclipse.net4j.util.container.IContainer (Net4j Utilities Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><FONT CLASS="NavBarFont1"><B>Class</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Use</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/util/container/\class-useIContainer.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="IContainer.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<CENTER>
+<H2>
+<B>Uses of Interface<br>org.eclipse.net4j.util.container.IContainer</B></H2>
+</CENTER>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Packages that use <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.util.container"><B>org.eclipse.net4j.util.container</B></A></TD>
+<TD>A framework of notifying collections and wiring containers.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.util.container.delegate"><B>org.eclipse.net4j.util.container.delegate</B></A></TD>
+<TD>Hybrid interfaces of notifying containers and the Java Collection Framework.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.util.registry"><B>org.eclipse.net4j.util.registry</B></A></TD>
+<TD>Interfaces and classes for general purpose registries.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.net4j.util.ui.views"><B>org.eclipse.net4j.util.ui.views</B></A></TD>
+<TD>Helpers for Eclipse view parts.&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.util.container"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A> in <A HREF="../../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A> in <A HREF="../../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/IPluginContainer.html" title="interface in org.eclipse.net4j.util.container">IPluginContainer</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</A> that implement <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/Container.html" title="class in org.eclipse.net4j.util.container">Container&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</A> that return <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>ContainerUtil.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerUtil.html#emptyContainer()">emptyContainer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>ContainerEvent.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#getSource()">getSource</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="type parameter in IContainerEvent">E</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>IContainerEvent.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/container/IContainerEvent.html#getSource()">getSource</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" title="type parameter in SingleDeltaContainerEvent">E</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>SingleDeltaContainerEvent.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html#getSource()">getSource</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</A> with parameters of type <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container">IContainerEvent</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/LifecycleEventConverter.html" title="type parameter in LifecycleEventConverter">E</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>LifecycleEventConverter.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/container/LifecycleEventConverter.html#createContainerEvent(org.eclipse.net4j.util.container.IContainer, E, org.eclipse.net4j.util.container.IContainerDelta.Kind)">createContainerEvent</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/LifecycleEventConverter.html" title="type parameter in LifecycleEventConverter">E</A>&gt;&nbsp;container,
+                     <A HREF="../../../../../../org/eclipse/net4j/util/container/LifecycleEventConverter.html" title="type parameter in LifecycleEventConverter">E</A>&nbsp;element,
+                     <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html" title="enum in org.eclipse.net4j.util.container">IContainerDelta.Kind</A>&nbsp;kind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ContainerEventAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEventAdapter.html#onAdded(org.eclipse.net4j.util.container.IContainer, E)">onAdded</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</A>&gt;&nbsp;container,
+        <A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ContainerEventAdapter.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEventAdapter.html#onRemoved(org.eclipse.net4j.util.container.IContainer, E)">onRemoved</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</A>&gt;&nbsp;container,
+          <A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEventAdapter.html" title="type parameter in ContainerEventAdapter">E</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Constructors in <A HREF="../../../../../../org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</A> with parameters of type <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#ContainerEvent(org.eclipse.net4j.util.container.IContainer)">ContainerEvent</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#ContainerEvent(org.eclipse.net4j.util.container.IContainer, java.util.List)">ContainerEvent</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</A>&gt;&nbsp;container,
+               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container">IContainerDelta</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</A>&gt;&gt;&nbsp;deltas)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html#SingleDeltaContainerEvent(org.eclipse.net4j.util.container.IContainer, E, org.eclipse.net4j.util.container.IContainerDelta.Kind)">SingleDeltaContainerEvent</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" title="type parameter in SingleDeltaContainerEvent">E</A>&gt;&nbsp;container,
+                          <A HREF="../../../../../../org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" title="type parameter in SingleDeltaContainerEvent">E</A>&nbsp;element,
+                          <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html" title="enum in org.eclipse.net4j.util.container">IContainerDelta.Kind</A>&nbsp;kind)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.util.container.delegate"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A> in <A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/package-summary.html">org.eclipse.net4j.util.container.delegate</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A> in <A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/package-summary.html">org.eclipse.net4j.util.container.delegate</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerBlockingQueue.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerBlockingQueue&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerCollection.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerCollection&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerList.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerList&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerMap.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerMap&lt;K,V&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerQueue.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerQueue&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerSet.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerSet&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerSortedSet.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerSortedSet&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/package-summary.html">org.eclipse.net4j.util.container.delegate</A> that implement <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/AbstractDelegator.html" title="class in org.eclipse.net4j.util.container.delegate">AbstractDelegator&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerBlockingQueue.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerBlockingQueue&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerCollection.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerCollection&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerList.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerList&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerMap.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerMap&lt;K,V&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerQueue.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerQueue&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerSet.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerSet&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerSortedSet.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerSortedSet&lt;E&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.util.registry"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A> in <A HREF="../../../../../../org/eclipse/net4j/util/registry/package-summary.html">org.eclipse.net4j.util.registry</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A> in <A HREF="../../../../../../org/eclipse/net4j/util/registry/package-summary.html">org.eclipse.net4j.util.registry</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry&lt;K,V&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../../org/eclipse/net4j/util/registry/package-summary.html">org.eclipse.net4j.util.registry</A> that implement <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html" title="class in org.eclipse.net4j.util.registry">DelegatingRegistry&lt;K,V&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implementation note: AbstractDelegatingRegistry does not preserve the "modifyable view" contract of
+ <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#entrySet()" title="class or interface in java.util"><CODE>Map.entrySet()</CODE></A> as well as of <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true#keySet()" title="class or interface in java.util"><CODE>Map.keySet()</CODE></A>, i.e. they are disconnected sets and modifications applied
+ to them are not applied to their underlying AbstractDelegatingRegistry.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="class in org.eclipse.net4j.util.registry">HashMapDelegatingRegistry&lt;K,V&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/registry/HashMapRegistry.html" title="class in org.eclipse.net4j.util.registry">HashMapRegistry&lt;K,V&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/registry/Registry.html" title="class in org.eclipse.net4j.util.registry">Registry&lt;K,V&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/registry/UnmodifiableRegistry.html" title="class in org.eclipse.net4j.util.registry">UnmodifiableRegistry&lt;K,V&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.net4j.util.ui.views"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A> in <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</A> with type parameters of type <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider&lt;CONTAINER extends IContainer&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerPathItemProvider&lt;CONTAINER extends IContainer&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.Default.html" title="class in org.eclipse.net4j.util.ui.views">ContainerView.Default&lt;CONTAINER extends IContainer&lt;?&gt;&gt;</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</A> that return <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>ContainerItemProvider.AbstractContainerNode.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#getContainer()">getContainer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>ContainerItemProvider.LazyElement.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LazyElement.html#getContainer()">getContainer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B>ContainerItemProvider.ErrorElement.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.ErrorElement.html#getContainer()">getContainer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;?&gt;</CODE></FONT></TD>
+<TD><CODE><B>ContainerView.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getContainer()">getContainer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</A> that return types with arguments of type <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></FONT></TD>
+<TD><CODE><B>ContainerView.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#createContainerItemProvider()">createContainerItemProvider</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</A> with parameters of type <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ContainerItemProvider.AbstractContainerNode.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#fillChildren(java.util.List, org.eclipse.net4j.util.container.IContainer)">fillChildren</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&gt;&nbsp;children,
+             <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B>ContainerItemProvider.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getErrorText(org.eclipse.net4j.util.container.IContainer)">getErrorText</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B>ContainerItemProvider.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#getSlowText(org.eclipse.net4j.util.container.IContainer)">getSlowText</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>ContainerItemProvider.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html#isSlow(org.eclipse.net4j.util.container.IContainer)">isSlow</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ContainerItemProvider.AbstractContainerNode.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#onAdded(org.eclipse.net4j.util.container.IContainer, java.lang.Object)">onAdded</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container,
+        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>ContainerItemProvider.AbstractContainerNode.</B><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractContainerNode.html#onRemoved(org.eclipse.net4j.util.container.IContainer, java.lang.Object)">onRemoved</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container,
+          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Constructors in <A HREF="../../../../../../org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</A> with parameters of type <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.ContainerNode.html#ContainerItemProvider.ContainerNode(org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node, org.eclipse.net4j.util.container.IContainer)">ContainerItemProvider.ContainerNode</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</A>&nbsp;parent,
+                                    <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.ErrorElement.html#ContainerItemProvider.ErrorElement(org.eclipse.net4j.util.container.IContainer)">ContainerItemProvider.ErrorElement</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LazyElement.html#ContainerItemProvider.LazyElement(org.eclipse.net4j.util.container.IContainer)">ContainerItemProvider.LazyElement</A></B>(<A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&nbsp;container)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><FONT CLASS="NavBarFont1"><B>Class</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Use</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV&nbsp;
+&nbsp;NEXT</FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/net4j/util/container/\class-useIContainer.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="IContainer.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

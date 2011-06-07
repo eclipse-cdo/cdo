@@ -1,0 +1,422 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+org.eclipse.net4j.util.io (Net4j Utilities Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="org.eclipse.net4j.util.io (Net4j Utilities Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-use.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/fsm/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/lifecycle/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/io/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<H2>
+Package org.eclipse.net4j.util.io
+</H2>
+Interfaces and classes for I/O.
+<P>
+<B>See:</B>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="#package_description"><B>Description</B></A>
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Interface Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataInput</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.html" title="interface in org.eclipse.net4j.util.io">ExtendedDataOutput</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedInputHandler.html" title="interface in org.eclipse.net4j.util.io">ExtendedInputHandler</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOHandler.html" title="interface in org.eclipse.net4j.util.io">ExtendedIOHandler</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.ClassResolver.html" title="interface in org.eclipse.net4j.util.io">ExtendedIOUtil.ClassResolver</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedOutputHandler.html" title="interface in org.eclipse.net4j.util.io">ExtendedOutputHandler</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter&lt;T&gt;</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable&lt;IO extends Closeable&gt;</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/IStreamWrapper.html" title="interface in org.eclipse.net4j.util.io">IStreamWrapper</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/StringIO.html" title="interface in org.eclipse.net4j.util.io">StringIO</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/AsyncOutputStream.html" title="class in org.eclipse.net4j.util.io">AsyncOutputStream</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/AsyncWriter.html" title="class in org.eclipse.net4j.util.io">AsyncWriter</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/CachedFileMap.html" title="class in org.eclipse.net4j.util.io">CachedFileMap&lt;K extends Comparable&lt;K&gt;,V&gt;</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/DataInputExtender.html" title="class in org.eclipse.net4j.util.io">DataInputExtender</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/DataOutputExtender.html" title="class in org.eclipse.net4j.util.io">DataOutputExtender</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/DelegatingInputStream.html" title="class in org.eclipse.net4j.util.io">DelegatingInputStream</A></B></TD>
+<TD>A <code>DelegatingInputStream</code> contains some other input stream, which it uses as its basic source of data,
+ possibly transforming the data along the way or providing additional functionality.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/DelegatingOutputStream.html" title="class in org.eclipse.net4j.util.io">DelegatingOutputStream</A></B></TD>
+<TD>This class is the superclass of all classes that filter output streams.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/DelegatingStreamWrapper.html" title="class in org.eclipse.net4j.util.io">DelegatingStreamWrapper</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/DigestWriter.html" title="class in org.eclipse.net4j.util.io">DigestWriter</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExpectedFileInputStream.html" title="class in org.eclipse.net4j.util.io">ExpectedFileInputStream</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExpectedFileReader.html" title="class in org.eclipse.net4j.util.io">ExpectedFileReader</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInput.Delegating</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedDataInput.Stream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInput.Stream</A></B></TD>
+<TD><B>Deprecated.</B></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedDataInputStream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataInputStream</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutput.Delegating</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutput.Stream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutput.Stream</A></B></TD>
+<TD><B>Deprecated.</B></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedDataOutputStream.html" title="class in org.eclipse.net4j.util.io">ExtendedDataOutputStream</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOAdapter.html" title="class in org.eclipse.net4j.util.io">ExtendedIOAdapter</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.html" title="class in org.eclipse.net4j.util.io">ExtendedIOUtil</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ExtendedIOUtil.ClassLoaderClassResolver.html" title="class in org.eclipse.net4j.util.io">ExtendedIOUtil.ClassLoaderClassResolver</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/GZIPStreamWrapper.html" title="class in org.eclipse.net4j.util.io">GZIPStreamWrapper</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html" title="class in org.eclipse.net4j.util.io">IOUtil</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.FileCollector.html" title="class in org.eclipse.net4j.util.io">IOUtil.FileCollector</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/LimitedReader.html" title="class in org.eclipse.net4j.util.io">LimitedReader</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/NIOUtil.html" title="class in org.eclipse.net4j.util.io">NIOUtil</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/SortedFileMap.html" title="class in org.eclipse.net4j.util.io">SortedFileMap&lt;K extends Comparable&lt;K&gt;,V&gt;</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/StreamWrapperChain.html" title="class in org.eclipse.net4j.util.io">StreamWrapperChain</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/StringCompressor.html" title="class in org.eclipse.net4j.util.io">StringCompressor</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/StringCompressor.Counting.html" title="class in org.eclipse.net4j.util.io">StringCompressor.Counting</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/TMPUtil.html" title="class in org.eclipse.net4j.util.io">TMPUtil</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/XMLOutput.html" title="class in org.eclipse.net4j.util.io">XMLOutput</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/XORInputStream.html" title="class in org.eclipse.net4j.util.io">XORInputStream</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/XOROutputStream.html" title="class in org.eclipse.net4j.util.io">XOROutputStream</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/XORStreamWrapper.html" title="class in org.eclipse.net4j.util.io">XORStreamWrapper</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ZIPUtil.html" title="class in org.eclipse.net4j.util.io">ZIPUtil</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ZIPUtil.EntryContext.html" title="class in org.eclipse.net4j.util.io">ZIPUtil.EntryContext</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ZIPUtil.FileSystemUnzipHandler.html" title="class in org.eclipse.net4j.util.io">ZIPUtil.FileSystemUnzipHandler</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/ZIPUtil.FileSystemZipHandler.html" title="class in org.eclipse.net4j.util.io">ZIPUtil.FileSystemZipHandler</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Exception Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOTimeoutException.html" title="class in org.eclipse.net4j.util.io">IOTimeoutException</A></B></TD>
+<TD>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>
+<A NAME="package_description"><!-- --></A><H2>
+Package org.eclipse.net4j.util.io Description
+</H2>
+
+<P>
+Interfaces and classes for I/O.
+<p>
+
+<!--
+
+<h2>Package Specification</h2>
+
+##### FILL IN ANY SPECS NEEDED BY JAVA COMPATIBILITY KIT #####
+<ul>
+  <li><a href="">##### REFER TO ANY FRAMEMAKER SPECIFICATION HERE #####</a>
+</ul>
+
+<h2>Related Documentation</h2>
+
+For overviews, tutorials, examples, guides, and tool documentation, please see:
+<ul>
+  <li><a href="">##### REFER TO NON-SPEC DOCUMENTATION HERE #####</a>
+</ul>
+
+-->
+
+<!-- Put @see and @since tags down here. -->
+<P>
+
+<P>
+<DL>
+</DL>
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Package</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <FONT CLASS="NavBarFont1">Class</FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-use.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/fsm/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/lifecycle/package-summary.html"><B>NEXT PACKAGE</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/io/package-summary.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="package-summary.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

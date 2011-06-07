@@ -1,0 +1,1593 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+IOUtil (Net4j Utilities Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="IOUtil (Net4j Utilities Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IOUtil.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/io/IOTimeoutException.html" title="class in org.eclipse.net4j.util.io"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.FileCollector.html" title="class in org.eclipse.net4j.util.io"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/io/IOUtil.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="IOUtil.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.net4j.util.io</FONT>
+<BR>
+Class IOUtil</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.io.IOUtil</B>
+</PRE>
+<HR>
+<DL>
+<DT><PRE>public final class <B>IOUtil</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></DL>
+</PRE>
+
+<P>
+<DL>
+<DT><B>Author:</B></DT>
+  <DD>Eike Stepper</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.FileCollector.html" title="class in org.eclipse.net4j.util.io">IOUtil.FileCollector</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#DEFAULT_BUFFER_SIZE">DEFAULT_BUFFER_SIZE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#DEFAULT_TIMEOUT">DEFAULT_TIMEOUT</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#EOF">EOF</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#WILDCARD_MULTI_CHARS">WILDCARD_MULTI_CHARS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#WILDCARD_MULTI_DIRS">WILDCARD_MULTI_DIRS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#WILDCARD_SINGLE_CHAR">WILDCARD_SINGLE_CHAR</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#close(java.io.Closeable)">close</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</A>&nbsp;closeable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#close(org.eclipse.net4j.util.collection.Closeable)">close</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</A>&nbsp;closeable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#closeSilent(java.io.Closeable)">closeSilent</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</A>&nbsp;closeable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#closeSilent(org.eclipse.net4j.util.collection.Closeable)">closeSilent</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</A>&nbsp;closeable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copy(java.io.InputStream, java.io.OutputStream)">copy</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;input,
+     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;output)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copy(java.io.InputStream, java.io.OutputStream, byte[])">copy</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;input,
+     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;output,
+     byte[]&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copy(java.io.InputStream, java.io.OutputStream, int)">copy</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;input,
+     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;output,
+     int&nbsp;bufferSize)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copy(java.io.InputStream, java.io.OutputStream, int, byte[])">copy</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;input,
+     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;output,
+     int&nbsp;size,
+     byte[]&nbsp;buffer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copyBinary(java.io.InputStream, java.io.OutputStream)">copyBinary</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;inputStream,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;outputStream)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copyBinary(java.io.InputStream, java.io.OutputStream, long)">copyBinary</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;inputStream,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;outputStream,
+           long&nbsp;size)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copyCharacter(java.io.Reader, java.io.Writer)">copyCharacter</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</A>&nbsp;reader,
+              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</A>&nbsp;writer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copyCharacter(java.io.Reader, java.io.Writer, long)">copyCharacter</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</A>&nbsp;reader,
+              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</A>&nbsp;writer,
+              long&nbsp;size)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copyFile(java.io.File, java.io.File)">copyFile</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;source,
+         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;target)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copyText(java.io.BufferedReader, java.io.BufferedWriter, org.eclipse.net4j.util.io.IOFilter...)">copyText</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/BufferedReader.html?is-external=true" title="class or interface in java.io">BufferedReader</A>&nbsp;reader,
+         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/BufferedWriter.html?is-external=true" title="class or interface in java.io">BufferedWriter</A>&nbsp;writer,
+         <A HREF="../../../../../org/eclipse/net4j/util/io/IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;...&nbsp;lineFilters)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copyText(java.io.File, java.io.File, org.eclipse.net4j.util.io.IOFilter...)">copyText</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;source,
+         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;target,
+         <A HREF="../../../../../org/eclipse/net4j/util/io/IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;...&nbsp;lineFilters)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copyTree(java.io.File, java.io.File)">copyTree</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;source,
+         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;target)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#copyTrees(java.util.Collection, java.io.File)">copyTrees</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&gt;&nbsp;sources,
+          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;target)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#delete(java.io.File)">delete</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#equals(java.io.File, java.io.File)">equals</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file1,
+       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file2)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#equals(java.io.InputStream, java.io.InputStream)">equals</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;stream1,
+       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;stream2)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#ERR()">ERR</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#glob(java.lang.String, java.io.File)">glob</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;pattern,
+     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;folder)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#IN()">IN</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#listBreadthFirst(java.io.File)">listBreadthFirst</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#listDepthFirst(java.io.File)">listDepthFirst</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#makeRelative(java.io.File, java.io.File)">makeRelative</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;toFolder)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#mkdirs(java.io.File)">mkdirs</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;folder)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#normalizeSeparator(java.lang.String)">normalizeSeparator</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;string)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileInputStream.html?is-external=true" title="class or interface in java.io">FileInputStream</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#openInputStream(java.io.File)">openInputStream</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileInputStream.html?is-external=true" title="class or interface in java.io">FileInputStream</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#openInputStream(java.lang.String)">openInputStream</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;fileName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io">FileOutputStream</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#openOutputStream(java.io.File)">openOutputStream</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io">FileOutputStream</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#openOutputStream(java.lang.String)">openOutputStream</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;fileName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileReader.html?is-external=true" title="class or interface in java.io">FileReader</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#openReader(java.io.File)">openReader</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileReader.html?is-external=true" title="class or interface in java.io">FileReader</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#openReader(java.lang.String)">openReader</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;fileName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileWriter.html?is-external=true" title="class or interface in java.io">FileWriter</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#openWriter(java.io.File)">openWriter</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileWriter.html?is-external=true" title="class or interface in java.io">FileWriter</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#openWriter(java.lang.String)">openWriter</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;fileName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#OUT()">OUT</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#print(java.lang.StackTraceElement[])">print</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StackTraceElement.html?is-external=true" title="class or interface in java.lang">StackTraceElement</A>[]&nbsp;elements)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#print(java.lang.StackTraceElement[], java.io.PrintStream)">print</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StackTraceElement.html?is-external=true" title="class or interface in java.lang">StackTraceElement</A>[]&nbsp;elements,
+      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A>&nbsp;stream)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#print(java.lang.Throwable)">print</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;t)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#print(java.lang.Throwable, java.io.PrintStream)">print</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;t,
+      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A>&nbsp;stream)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;byte[]</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#readFile(java.io.File)">readFile</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#readTextFile(java.io.File)">readTextFile</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#safeInput(java.io.File, org.eclipse.net4j.util.io.IORunnable)">safeInput</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+          <A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileInputStream.html?is-external=true" title="class or interface in java.io">FileInputStream</A>&gt;&nbsp;runnable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#safeOutput(java.io.File, org.eclipse.net4j.util.io.IORunnable)">safeOutput</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+           <A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io">FileOutputStream</A>&gt;&nbsp;runnable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#safeRead(java.io.File, org.eclipse.net4j.util.io.IORunnable)">safeRead</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+         <A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileReader.html?is-external=true" title="class or interface in java.io">FileReader</A>&gt;&nbsp;runnable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;IO extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</A>&gt; 
+<BR>
+void</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#safeRun(IO, org.eclipse.net4j.util.io.IORunnable)">safeRun</A></B>(IO&nbsp;io,
+        <A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</A>&lt;IO&gt;&nbsp;runnable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#safeWrite(java.io.File, org.eclipse.net4j.util.io.IORunnable)">safeWrite</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+          <A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileWriter.html?is-external=true" title="class or interface in java.io">FileWriter</A>&gt;&nbsp;runnable)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#toString(java.lang.Throwable)">toString</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;t)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#visitBreadthFirst(java.io.File[], org.eclipse.net4j.util.io.IOVisitor)">visitBreadthFirst</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>[]&nbsp;files,
+                  <A HREF="../../../../../org/eclipse/net4j/util/io/IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</A>&nbsp;visitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#visitBreadthFirst(java.io.File, org.eclipse.net4j.util.io.IOVisitor)">visitBreadthFirst</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+                  <A HREF="../../../../../org/eclipse/net4j/util/io/IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</A>&nbsp;visitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#visitDepthFirst(java.io.File[], org.eclipse.net4j.util.io.IOVisitor)">visitDepthFirst</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>[]&nbsp;files,
+                <A HREF="../../../../../org/eclipse/net4j/util/io/IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</A>&nbsp;visitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#visitDepthFirst(java.io.File, org.eclipse.net4j.util.io.IOVisitor)">visitDepthFirst</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+                <A HREF="../../../../../org/eclipse/net4j/util/io/IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</A>&nbsp;visitor)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.html#writeFile(java.io.File, byte[])">writeFile</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+          byte[]&nbsp;bytes)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="EOF"><!-- --></A><H3>
+EOF</H3>
+<PRE>
+public static final int <B>EOF</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.EOF">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="DEFAULT_TIMEOUT"><!-- --></A><H3>
+DEFAULT_TIMEOUT</H3>
+<PRE>
+public static final long <B>DEFAULT_TIMEOUT</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.DEFAULT_TIMEOUT">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="DEFAULT_BUFFER_SIZE"><!-- --></A><H3>
+DEFAULT_BUFFER_SIZE</H3>
+<PRE>
+public static final int <B>DEFAULT_BUFFER_SIZE</B></PRE>
+<DL>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.DEFAULT_BUFFER_SIZE">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="WILDCARD_SINGLE_CHAR"><!-- --></A><H3>
+WILDCARD_SINGLE_CHAR</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>WILDCARD_SINGLE_CHAR</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.WILDCARD_SINGLE_CHAR">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="WILDCARD_MULTI_CHARS"><!-- --></A><H3>
+WILDCARD_MULTI_CHARS</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>WILDCARD_MULTI_CHARS</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.WILDCARD_MULTI_CHARS">Constant Field Values</A></DL>
+</DL>
+<HR>
+
+<A NAME="WILDCARD_MULTI_DIRS"><!-- --></A><H3>
+WILDCARD_MULTI_DIRS</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>WILDCARD_MULTI_DIRS</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.WILDCARD_MULTI_DIRS">Constant Field Values</A></DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="IN()"><!-- --></A><H3>
+IN</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A> <B>IN</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="OUT()"><!-- --></A><H3>
+OUT</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A> <B>OUT</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="ERR()"><!-- --></A><H3>
+ERR</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A> <B>ERR</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="print(java.lang.StackTraceElement[])"><!-- --></A><H3>
+print</H3>
+<PRE>
+public static void <B>print</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StackTraceElement.html?is-external=true" title="class or interface in java.lang">StackTraceElement</A>[]&nbsp;elements)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="print(java.lang.StackTraceElement[], java.io.PrintStream)"><!-- --></A><H3>
+print</H3>
+<PRE>
+public static void <B>print</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/StackTraceElement.html?is-external=true" title="class or interface in java.lang">StackTraceElement</A>[]&nbsp;elements,
+                         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A>&nbsp;stream)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="print(java.lang.Throwable, java.io.PrintStream)"><!-- --></A><H3>
+print</H3>
+<PRE>
+public static void <B>print</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;t,
+                         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</A>&nbsp;stream)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="print(java.lang.Throwable)"><!-- --></A><H3>
+print</H3>
+<PRE>
+public static void <B>print</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;t)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="toString(java.lang.Throwable)"><!-- --></A><H3>
+toString</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>toString</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</A>&nbsp;t)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="openInputStream(java.lang.String)"><!-- --></A><H3>
+openInputStream</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileInputStream.html?is-external=true" title="class or interface in java.io">FileInputStream</A> <B>openInputStream</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;fileName)
+                                       throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="openInputStream(java.io.File)"><!-- --></A><H3>
+openInputStream</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileInputStream.html?is-external=true" title="class or interface in java.io">FileInputStream</A> <B>openInputStream</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)
+                                       throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="openOutputStream(java.lang.String)"><!-- --></A><H3>
+openOutputStream</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io">FileOutputStream</A> <B>openOutputStream</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;fileName)
+                                         throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="openOutputStream(java.io.File)"><!-- --></A><H3>
+openOutputStream</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io">FileOutputStream</A> <B>openOutputStream</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)
+                                         throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="openReader(java.lang.String)"><!-- --></A><H3>
+openReader</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileReader.html?is-external=true" title="class or interface in java.io">FileReader</A> <B>openReader</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;fileName)
+                             throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="openReader(java.io.File)"><!-- --></A><H3>
+openReader</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileReader.html?is-external=true" title="class or interface in java.io">FileReader</A> <B>openReader</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)
+                             throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="openWriter(java.lang.String)"><!-- --></A><H3>
+openWriter</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileWriter.html?is-external=true" title="class or interface in java.io">FileWriter</A> <B>openWriter</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;fileName)
+                             throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="openWriter(java.io.File)"><!-- --></A><H3>
+openWriter</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileWriter.html?is-external=true" title="class or interface in java.io">FileWriter</A> <B>openWriter</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)
+                             throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="closeSilent(java.io.Closeable)"><!-- --></A><H3>
+closeSilent</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A> <B>closeSilent</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</A>&nbsp;closeable)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="close(java.io.Closeable)"><!-- --></A><H3>
+close</H3>
+<PRE>
+public static void <B>close</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</A>&nbsp;closeable)
+                  throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="closeSilent(org.eclipse.net4j.util.collection.Closeable)"><!-- --></A><H3>
+closeSilent</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A> <B>closeSilent</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</A>&nbsp;closeable)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="close(org.eclipse.net4j.util.collection.Closeable)"><!-- --></A><H3>
+close</H3>
+<PRE>
+public static void <B>close</B>(<A HREF="../../../../../org/eclipse/net4j/util/collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</A>&nbsp;closeable)
+                  throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="makeRelative(java.io.File, java.io.File)"><!-- --></A><H3>
+makeRelative</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>makeRelative</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+                                  <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;toFolder)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="normalizeSeparator(java.lang.String)"><!-- --></A><H3>
+normalizeSeparator</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>normalizeSeparator</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;string)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="mkdirs(java.io.File)"><!-- --></A><H3>
+mkdirs</H3>
+<PRE>
+public static void <B>mkdirs</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;folder)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="delete(java.io.File)"><!-- --></A><H3>
+delete</H3>
+<PRE>
+public static int <B>delete</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyTree(java.io.File, java.io.File)"><!-- --></A><H3>
+copyTree</H3>
+<PRE>
+public static void <B>copyTree</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;source,
+                            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;target)
+                     throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyTrees(java.util.Collection, java.io.File)"><!-- --></A><H3>
+copyTrees</H3>
+<PRE>
+public static void <B>copyTrees</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&gt;&nbsp;sources,
+                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;target)
+                      throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyText(java.io.File, java.io.File, org.eclipse.net4j.util.io.IOFilter...)"><!-- --></A><H3>
+copyText</H3>
+<PRE>
+public static void <B>copyText</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;source,
+                            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;target,
+                            <A HREF="../../../../../org/eclipse/net4j/util/io/IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;...&nbsp;lineFilters)
+                     throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyText(java.io.BufferedReader, java.io.BufferedWriter, org.eclipse.net4j.util.io.IOFilter...)"><!-- --></A><H3>
+copyText</H3>
+<PRE>
+public static void <B>copyText</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/BufferedReader.html?is-external=true" title="class or interface in java.io">BufferedReader</A>&nbsp;reader,
+                            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/BufferedWriter.html?is-external=true" title="class or interface in java.io">BufferedWriter</A>&nbsp;writer,
+                            <A HREF="../../../../../org/eclipse/net4j/util/io/IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&gt;...&nbsp;lineFilters)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyBinary(java.io.InputStream, java.io.OutputStream)"><!-- --></A><H3>
+copyBinary</H3>
+<PRE>
+public static long <B>copyBinary</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;inputStream,
+                              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;outputStream)
+                       throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE><DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyBinary(java.io.InputStream, java.io.OutputStream, long)"><!-- --></A><H3>
+copyBinary</H3>
+<PRE>
+public static void <B>copyBinary</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;inputStream,
+                              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;outputStream,
+                              long&nbsp;size)
+                       throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE><DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyCharacter(java.io.Reader, java.io.Writer)"><!-- --></A><H3>
+copyCharacter</H3>
+<PRE>
+public static long <B>copyCharacter</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</A>&nbsp;reader,
+                                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</A>&nbsp;writer)
+                          throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE><DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyCharacter(java.io.Reader, java.io.Writer, long)"><!-- --></A><H3>
+copyCharacter</H3>
+<PRE>
+public static void <B>copyCharacter</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</A>&nbsp;reader,
+                                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Writer.html?is-external=true" title="class or interface in java.io">Writer</A>&nbsp;writer,
+                                 long&nbsp;size)
+                          throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE><DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copy(java.io.InputStream, java.io.OutputStream, int, byte[])"><!-- --></A><H3>
+copy</H3>
+<PRE>
+public static int <B>copy</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;input,
+                       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;output,
+                       int&nbsp;size,
+                       byte[]&nbsp;buffer)
+                throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copy(java.io.InputStream, java.io.OutputStream, byte[])"><!-- --></A><H3>
+copy</H3>
+<PRE>
+public static void <B>copy</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;input,
+                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;output,
+                        byte[]&nbsp;buffer)
+                 throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copy(java.io.InputStream, java.io.OutputStream, int)"><!-- --></A><H3>
+copy</H3>
+<PRE>
+public static void <B>copy</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;input,
+                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;output,
+                        int&nbsp;bufferSize)
+                 throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copy(java.io.InputStream, java.io.OutputStream)"><!-- --></A><H3>
+copy</H3>
+<PRE>
+public static void <B>copy</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;input,
+                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</A>&nbsp;output)
+                 throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="copyFile(java.io.File, java.io.File)"><!-- --></A><H3>
+copyFile</H3>
+<PRE>
+public static void <B>copyFile</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;source,
+                            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;target)
+                     throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE><DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/net4j/util/io/NIOUtil.html#copyFile(java.io.File, java.io.File)"><CODE>NIOUtil.copyFile(File, File)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="readTextFile(java.io.File)"><!-- --></A><H3>
+readTextFile</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>readTextFile</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)
+                           throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE><DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="readFile(java.io.File)"><!-- --></A><H3>
+readFile</H3>
+<PRE>
+public static byte[] <B>readFile</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)
+                       throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="writeFile(java.io.File, byte[])"><!-- --></A><H3>
+writeFile</H3>
+<PRE>
+public static void <B>writeFile</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+                             byte[]&nbsp;bytes)
+                      throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="listDepthFirst(java.io.File)"><!-- --></A><H3>
+listDepthFirst</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&gt; <B>listDepthFirst</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="listBreadthFirst(java.io.File)"><!-- --></A><H3>
+listBreadthFirst</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&gt; <B>listBreadthFirst</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="visitDepthFirst(java.io.File, org.eclipse.net4j.util.io.IOVisitor)"><!-- --></A><H3>
+visitDepthFirst</H3>
+<PRE>
+public static void <B>visitDepthFirst</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+                                   <A HREF="../../../../../org/eclipse/net4j/util/io/IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</A>&nbsp;visitor)
+                            throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="visitDepthFirst(java.io.File[], org.eclipse.net4j.util.io.IOVisitor)"><!-- --></A><H3>
+visitDepthFirst</H3>
+<PRE>
+public static void <B>visitDepthFirst</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>[]&nbsp;files,
+                                   <A HREF="../../../../../org/eclipse/net4j/util/io/IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</A>&nbsp;visitor)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="visitBreadthFirst(java.io.File, org.eclipse.net4j.util.io.IOVisitor)"><!-- --></A><H3>
+visitBreadthFirst</H3>
+<PRE>
+public static void <B>visitBreadthFirst</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+                                     <A HREF="../../../../../org/eclipse/net4j/util/io/IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</A>&nbsp;visitor)
+                              throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="visitBreadthFirst(java.io.File[], org.eclipse.net4j.util.io.IOVisitor)"><!-- --></A><H3>
+visitBreadthFirst</H3>
+<PRE>
+public static void <B>visitBreadthFirst</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>[]&nbsp;files,
+                                     <A HREF="../../../../../org/eclipse/net4j/util/io/IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</A>&nbsp;visitor)
+                              throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="safeRun(java.io.Closeable,org.eclipse.net4j.util.io.IORunnable)"><!-- --></A><A NAME="safeRun(IO, org.eclipse.net4j.util.io.IORunnable)"><!-- --></A><H3>
+safeRun</H3>
+<PRE>
+public static &lt;IO extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Closeable.html?is-external=true" title="class or interface in java.io">Closeable</A>&gt; void <B>safeRun</B>(IO&nbsp;io,
+                                                  <A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</A>&lt;IO&gt;&nbsp;runnable)
+                    throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="safeInput(java.io.File, org.eclipse.net4j.util.io.IORunnable)"><!-- --></A><H3>
+safeInput</H3>
+<PRE>
+public static void <B>safeInput</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+                             <A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileInputStream.html?is-external=true" title="class or interface in java.io">FileInputStream</A>&gt;&nbsp;runnable)
+                      throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="safeOutput(java.io.File, org.eclipse.net4j.util.io.IORunnable)"><!-- --></A><H3>
+safeOutput</H3>
+<PRE>
+public static void <B>safeOutput</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+                              <A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileOutputStream.html?is-external=true" title="class or interface in java.io">FileOutputStream</A>&gt;&nbsp;runnable)
+                       throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="safeRead(java.io.File, org.eclipse.net4j.util.io.IORunnable)"><!-- --></A><H3>
+safeRead</H3>
+<PRE>
+public static void <B>safeRead</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+                            <A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileReader.html?is-external=true" title="class or interface in java.io">FileReader</A>&gt;&nbsp;runnable)
+                     throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="safeWrite(java.io.File, org.eclipse.net4j.util.io.IORunnable)"><!-- --></A><H3>
+safeWrite</H3>
+<PRE>
+public static void <B>safeWrite</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
+                             <A HREF="../../../../../org/eclipse/net4j/util/io/IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/FileWriter.html?is-external=true" title="class or interface in java.io">FileWriter</A>&gt;&nbsp;runnable)
+                      throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="equals(java.io.InputStream, java.io.InputStream)"><!-- --></A><H3>
+equals</H3>
+<PRE>
+public static boolean <B>equals</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;stream1,
+                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</A>&nbsp;stream2)
+                      throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="equals(java.io.File, java.io.File)"><!-- --></A><H3>
+equals</H3>
+<PRE>
+public static boolean <B>equals</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file1,
+                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file2)
+                      throws <A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></PRE>
+<DL>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="glob(java.lang.String, java.io.File)"><!-- --></A><H3>
+glob</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&gt; <B>glob</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;pattern,
+                              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;folder)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/IOUtil.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/io/IOTimeoutException.html" title="class in org.eclipse.net4j.util.io"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/io/IOUtil.FileCollector.html" title="class in org.eclipse.net4j.util.io"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/io/IOUtil.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="IOUtil.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

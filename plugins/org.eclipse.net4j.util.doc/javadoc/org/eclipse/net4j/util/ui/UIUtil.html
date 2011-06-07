@@ -1,0 +1,781 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+UIUtil (Net4j Utilities Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="UIUtil (Net4j Utilities Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/UIUtil.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/UIQueueRunner.html" title="class in org.eclipse.net4j.util.ui"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/ValidationContext.html" title="interface in org.eclipse.net4j.util.ui"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/ui/UIUtil.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="UIUtil.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.net4j.util.ui</FONT>
+<BR>
+Class UIUtil</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.UIUtil</B>
+</PRE>
+<HR>
+<DL>
+<DT><PRE>public final class <B>UIUtil</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></DL>
+</PRE>
+
+<P>
+<DL>
+<DT><B>Author:</B></DT>
+  <DD>Eike Stepper</DD>
+</DL>
+<HR>
+
+<P>
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#ERROR_LOG_ID">ERROR_LOG_ID</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#addDecorationMargin(org.eclipse.swt.widgets.Control)">addDecorationMargin</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A>&nbsp;control)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#copyToClipboard(org.eclipse.swt.widgets.Display, java.lang.String)">copyToClipboard</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</A>&nbsp;display,
+                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;text)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html?is-external=true" title="class or interface in org.eclipse.swt.layout">GridData</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createEmptyGridData()">createEmptyGridData</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createGridComposite(org.eclipse.swt.widgets.Composite, int)">createGridComposite</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+                    int&nbsp;columns)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html?is-external=true" title="class or interface in org.eclipse.swt.layout">GridData</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createGridData()">createGridData</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html?is-external=true" title="class or interface in org.eclipse.swt.layout">GridData</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createGridData(boolean, boolean)">createGridData</A></B>(boolean&nbsp;grabHorizontal,
+               boolean&nbsp;grabVertical)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridLayout.html?is-external=true" title="class or interface in org.eclipse.swt.layout">GridLayout</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createGridLayout(int)">createGridLayout</A></B>(int&nbsp;columns)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createInteractiveCredentialsProvider()">createInteractiveCredentialsProvider</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#dispose(org.eclipse.swt.graphics.Color)">dispose</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</A>&nbsp;color)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#dispose(org.eclipse.swt.graphics.Font)">dispose</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A>&nbsp;font)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#dispose(org.eclipse.swt.widgets.Widget)">dispose</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Widget</A>&nbsp;widget)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getActiveWorkbenchPage()">getActiveWorkbenchPage</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPart</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getActiveWorkbenchPart()">getActiveWorkbenchPart</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchWindow.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchWindow</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getActiveWorkbenchWindow()">getActiveWorkbenchWindow</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getBoldFont(org.eclipse.swt.widgets.Control)">getBoldFont</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A>&nbsp;control)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getDisplay()">getDisplay</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElement(org.eclipse.jface.viewers.ISelection)">getElement</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</A>&nbsp;selection)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T&gt; T</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElement(org.eclipse.jface.viewers.ISelection, java.lang.Class)">getElement</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</A>&nbsp;selection,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElementIfOne(org.eclipse.jface.viewers.ISelection)">getElementIfOne</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</A>&nbsp;selection)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" SUMMARY="">
+<TR ALIGN="right" VALIGN="">
+<TD NOWRAP><FONT SIZE="-1">
+<CODE>&lt;T&gt; <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt;</CODE></FONT></TD>
+</TR>
+</TABLE>
+</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElements(org.eclipse.jface.viewers.ISelection, java.lang.Class)">getElements</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</A>&nbsp;selection,
+            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;type)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbench.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbench</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getWorkbench()">getWorkbench</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#refreshViewer(org.eclipse.jface.viewers.Viewer)">refreshViewer</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</A>&nbsp;viewer)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#setIndentation(org.eclipse.swt.widgets.Control, int, int)">setIndentation</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A>&nbsp;control,
+               int&nbsp;horizontalIndent,
+               int&nbsp;verticalIndent)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds indentation to the control. if indent value is < 0, the control indentation is left unchanged.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#setStatusBarMessage(java.lang.String, org.eclipse.swt.graphics.Image)">setStatusBarMessage</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;message,
+                    <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A>&nbsp;image)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shows a message in the StatusBar.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#setValidationContext(org.eclipse.swt.widgets.Control, org.eclipse.net4j.util.ui.ValidationContext)">setValidationContext</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A>&nbsp;control,
+                     <A HREF="../../../../../org/eclipse/net4j/util/ui/ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</A>&nbsp;context)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ============ FIELD DETAIL =========== -->
+
+<A NAME="field_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Field Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="ERROR_LOG_ID"><!-- --></A><H3>
+ERROR_LOG_ID</H3>
+<PRE>
+public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>ERROR_LOG_ID</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.net4j.util.ui.UIUtil.ERROR_LOG_ID">Constant Field Values</A></DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="copyToClipboard(org.eclipse.swt.widgets.Display, java.lang.String)"><!-- --></A><H3>
+copyToClipboard</H3>
+<PRE>
+public static void <B>copyToClipboard</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</A>&nbsp;display,
+                                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;text)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="dispose(org.eclipse.swt.graphics.Font)"><!-- --></A><H3>
+dispose</H3>
+<PRE>
+public static void <B>dispose</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A>&nbsp;font)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="dispose(org.eclipse.swt.graphics.Color)"><!-- --></A><H3>
+dispose</H3>
+<PRE>
+public static void <B>dispose</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</A>&nbsp;color)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="dispose(org.eclipse.swt.widgets.Widget)"><!-- --></A><H3>
+dispose</H3>
+<PRE>
+public static void <B>dispose</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Widget</A>&nbsp;widget)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getBoldFont(org.eclipse.swt.widgets.Control)"><!-- --></A><H3>
+getBoldFont</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A> <B>getBoldFont</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A>&nbsp;control)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getDisplay()"><!-- --></A><H3>
+getDisplay</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</A> <B>getDisplay</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getWorkbench()"><!-- --></A><H3>
+getWorkbench</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbench.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbench</A> <B>getWorkbench</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getActiveWorkbenchWindow()"><!-- --></A><H3>
+getActiveWorkbenchWindow</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchWindow.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchWindow</A> <B>getActiveWorkbenchWindow</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getActiveWorkbenchPage()"><!-- --></A><H3>
+getActiveWorkbenchPage</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</A> <B>getActiveWorkbenchPage</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getActiveWorkbenchPart()"><!-- --></A><H3>
+getActiveWorkbenchPart</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPart</A> <B>getActiveWorkbenchPart</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getElementIfOne(org.eclipse.jface.viewers.ISelection)"><!-- --></A><H3>
+getElementIfOne</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>getElementIfOne</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</A>&nbsp;selection)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getElement(org.eclipse.jface.viewers.ISelection)"><!-- --></A><H3>
+getElement</H3>
+<PRE>
+public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>getElement</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</A>&nbsp;selection)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getElement(org.eclipse.jface.viewers.ISelection, java.lang.Class)"><!-- --></A><H3>
+getElement</H3>
+<PRE>
+public static &lt;T&gt; T <B>getElement</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</A>&nbsp;selection,
+                               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;type)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getElements(org.eclipse.jface.viewers.ISelection, java.lang.Class)"><!-- --></A><H3>
+getElements</H3>
+<PRE>
+public static &lt;T&gt; <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;T&gt; <B>getElements</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</A>&nbsp;selection,
+                                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</A>&lt;T&gt;&nbsp;type)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setValidationContext(org.eclipse.swt.widgets.Control, org.eclipse.net4j.util.ui.ValidationContext)"><!-- --></A><H3>
+setValidationContext</H3>
+<PRE>
+public static int <B>setValidationContext</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A>&nbsp;control,
+                                       <A HREF="../../../../../org/eclipse/net4j/util/ui/ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</A>&nbsp;context)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createInteractiveCredentialsProvider()"><!-- --></A><H3>
+createInteractiveCredentialsProvider</H3>
+<PRE>
+public static <A HREF="../../../../../org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</A> <B>createInteractiveCredentialsProvider</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createGridComposite(org.eclipse.swt.widgets.Composite, int)"><!-- --></A><H3>
+createGridComposite</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A> <B>createGridComposite</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+                                            int&nbsp;columns)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createGridLayout(int)"><!-- --></A><H3>
+createGridLayout</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridLayout.html?is-external=true" title="class or interface in org.eclipse.swt.layout">GridLayout</A> <B>createGridLayout</B>(int&nbsp;columns)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createGridData()"><!-- --></A><H3>
+createGridData</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html?is-external=true" title="class or interface in org.eclipse.swt.layout">GridData</A> <B>createGridData</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createGridData(boolean, boolean)"><!-- --></A><H3>
+createGridData</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html?is-external=true" title="class or interface in org.eclipse.swt.layout">GridData</A> <B>createGridData</B>(boolean&nbsp;grabHorizontal,
+                                      boolean&nbsp;grabVertical)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createEmptyGridData()"><!-- --></A><H3>
+createEmptyGridData</H3>
+<PRE>
+public static <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html?is-external=true" title="class or interface in org.eclipse.swt.layout">GridData</A> <B>createEmptyGridData</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="addDecorationMargin(org.eclipse.swt.widgets.Control)"><!-- --></A><H3>
+addDecorationMargin</H3>
+<PRE>
+public static void <B>addDecorationMargin</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A>&nbsp;control)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setIndentation(org.eclipse.swt.widgets.Control, int, int)"><!-- --></A><H3>
+setIndentation</H3>
+<PRE>
+public static void <B>setIndentation</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A>&nbsp;control,
+                                  int&nbsp;horizontalIndent,
+                                  int&nbsp;verticalIndent)</PRE>
+<DL>
+<DD>Adds indentation to the control. if indent value is < 0, the control indentation is left unchanged.
+<P>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="refreshViewer(org.eclipse.jface.viewers.Viewer)"><!-- --></A><H3>
+refreshViewer</H3>
+<PRE>
+public static void <B>refreshViewer</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</A>&nbsp;viewer)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setStatusBarMessage(java.lang.String, org.eclipse.swt.graphics.Image)"><!-- --></A><H3>
+setStatusBarMessage</H3>
+<PRE>
+public static void <B>setStatusBarMessage</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;message,
+                                       <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A>&nbsp;image)</PRE>
+<DL>
+<DD>Shows a message in the StatusBar. Image can be omitted by passing a null parameter
+<P>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/UIUtil.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/UIQueueRunner.html" title="class in org.eclipse.net4j.util.ui"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/ValidationContext.html" title="interface in org.eclipse.net4j.util.ui"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/ui/UIUtil.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="UIUtil.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

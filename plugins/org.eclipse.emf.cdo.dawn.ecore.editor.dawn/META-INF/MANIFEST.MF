@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: %fragmentName
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.ecore.editor.dawn;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: org.eclipse.emf.ecore.editor

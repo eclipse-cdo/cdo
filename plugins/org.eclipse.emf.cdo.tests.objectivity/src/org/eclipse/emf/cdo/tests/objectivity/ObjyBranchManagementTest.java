@@ -102,6 +102,7 @@ class DbStore
 
   public void startup()
   {
+    fdManager.setFdDirPath("\\temp");
     fdManager.configure("objyBrnachTest");
     objyConnection.connect(fdManager.getFd(), oo.LogNone);
     objySession = objyConnection.getWriteSessionFromPool("TestSession");

@@ -38,7 +38,7 @@
    </requires>
 
    <plugin
-         id="org.eclipse.net4j.doc"
+         id="org.eclipse.net4j.util.doc"
          download-size="0"
          install-size="0"
          version="0.0.0"

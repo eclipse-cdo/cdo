@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListStrin
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Attribute;
@@ -171,11 +170,11 @@ public class StringManyTypeMapper extends BasicTypeMapper implements IManyTypeMa
 
   public void initialize(Class_Object classObject, EStructuralFeature feature)
   {
-    Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
+    // Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
     Class_Object newClassObject = Class_Object.new_persistent_object(
         ObjySchema.getObjyClass(ObjyArrayListString.ClassName).getASClass(), classObject.objectID(), false);
     // ObjyObjectManager.newInternalObjCount++;
-    classObject.set_ooId(position, newClassObject.objectID());
+    classObject.nset_ooId(getAttributeName(feature), newClassObject.objectID());
     ObjyArrayListString.initObject(newClassObject);
   }
 

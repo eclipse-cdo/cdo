@@ -32,8 +32,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ObjySession extends Session
 {
-  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjySession.class);
-
   private static final ContextTracer TRACER_INFO = new ContextTracer(OM.INFO, ObjySession.class);
 
   private ObjyObjectManager objectManger = null;
@@ -43,8 +41,6 @@ public class ObjySession extends Session
   private ObjyBranchManager branchManager = null;
 
   private ObjyLockAreaManager lockAreaManager = null;
-
-  // private ObjectivityStore store = null;
 
   protected String sessionName;
 
@@ -60,7 +56,6 @@ public class ObjySession extends Session
     setIndexMode(oo.EXPLICIT_UPDATE);
     sessionName = name;
     sessionPool = pool;
-    // this.store = store;
     objectManger = new ObjyObjectManager(objyConnection.getDefaultPlacementManager());
   }
 
@@ -125,7 +120,6 @@ public class ObjySession extends Session
   public synchronized void returnSessionToPool()
   {
     // System.out.println(">>> IS: returning session: " + session.getName());
-    // TODO Auto-generated method stub
     leave();
     setAvailable(true);
   }
@@ -174,7 +168,6 @@ public class ObjySession extends Session
           if (!isOpen())
           {
             TRACER_INFO.trace("Objy session is not open");
-            // System.exit(-1); // TODO - this is temporary for debugging...
           }
           try
           {

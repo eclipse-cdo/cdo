@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Numeric_Value;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.String_Value;
@@ -118,8 +117,8 @@ public class StringTypeMapper extends BasicTypeMapper implements ISingleTypeMapp
 
   public void initialize(Class_Object classObject, EStructuralFeature feature)
   {
-    Class_Position position = classObject.type_of().position_in_class(getNullAttributeName(feature));
-    classObject.set_numeric(position, numericTrue);
+    // Class_Position position = classObject.type_of().position_in_class(getNullAttributeName(feature));
+    classObject.nset_numeric(getNullAttributeName(feature), numericTrue);
   }
 
   public void modifySchema(Proposed_Class proposedooClass, EStructuralFeature feature)

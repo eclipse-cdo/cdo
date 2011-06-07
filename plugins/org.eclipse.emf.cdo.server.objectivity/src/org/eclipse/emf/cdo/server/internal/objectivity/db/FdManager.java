@@ -42,8 +42,6 @@ public class FdManager
 
   private static final String DEFAULT_VALUE = "_DEFAULT_";
 
-  // private static FdManager fdManagerSingleton = null;
-
   private String fdName = "test";
 
   private String fdFileHost = DEFAULT_VALUE;
@@ -61,8 +59,6 @@ public class FdManager
   private String bootFilePath = null;
 
   private boolean initialized = false;
-
-  private String configPath = "configuration";
 
   private String logDirPath = null;
 
@@ -557,7 +553,7 @@ public class FdManager
 
   boolean noDefaultValueSet(String value)
   {
-    return value == null || value.isEmpty() || value.equals(DEFAULT_VALUE);
+    return value == null || value.length() == 0 || value.equals(DEFAULT_VALUE);
   }
 
   public void setlogDirPath(String logDirPath)

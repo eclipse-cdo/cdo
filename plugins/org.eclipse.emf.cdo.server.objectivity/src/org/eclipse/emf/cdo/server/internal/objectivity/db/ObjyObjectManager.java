@@ -82,7 +82,7 @@ public class ObjyObjectManager
 
     Class_Object newClassObject = newClassObject(eClass, nearObject);
     ObjyObject objyObject = new ObjyObject(newClassObject);
-    idToObjyObjectMap.put(OBJYCDOIDUtil.getLong(objyObject.ooId()), objyObject);
+    // idToObjyObjectMap.put(OBJYCDOIDUtil.getLong(objyObject.ooId()), objyObject);
     if (TRACER_DEBUG.isEnabled())
     {
       newObjCount++;

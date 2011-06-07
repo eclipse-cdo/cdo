@@ -94,7 +94,8 @@ public class ObjectivityStoreConfig extends Lifecycle implements IObjectivitySto
     String fdName = fdConfig.getAttribute("name"); //$NON-NLS-1$
     String lockServerHost = fdConfig.getAttribute("lockServerHost"); //$NON-NLS-1$
     String fdDirPath = fdConfig.getAttribute("fdDirPath"); //$NON-NLS-1$
-    String dbDirPath = fdConfig.getAttribute("dbDirPath"); //$NON-NLS-1$
+    // for future use once we allow databases to be created somewhere else.
+    // String dbDirPath = fdConfig.getAttribute("dbDirPath"); //$NON-NLS-1$
     String logDirPath = fdConfig.getAttribute("logDirPath");//$NON-NLS-1$
     String fdFileHost = fdConfig.getAttribute("fdFileHost"); //$NON-NLS-1$
     String fdNumber = fdConfig.getAttribute("fdNumber"); //$NON-NLS-1$

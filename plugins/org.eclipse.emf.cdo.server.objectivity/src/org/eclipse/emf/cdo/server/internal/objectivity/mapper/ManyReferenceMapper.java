@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.server.internal.objectivity.utils.TypeConvert;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Attribute;
@@ -39,6 +38,7 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
   static ManyReferenceMapper INSTANCE = new ManyReferenceMapper();
 
+  @SuppressWarnings("unused")
   private static d_Class getArrayListClass()
   {
     if (dClassObject == null)
@@ -200,14 +200,14 @@ public class ManyReferenceMapper extends BasicTypeMapper implements IManyTypeMap
 
   public void initialize(Class_Object classObject, EStructuralFeature feature)
   {
-    Class_Position position = classObject.position_in_class(getAttributeName(feature));
+    // Class_Position position = classObject.position_in_class(getAttributeName(feature));
     // Class_Object newClassObject = Class_Object
     // .new_persistent_object(getArrayListClass(), classObject.objectID(), false);
     ooTreeListX list = new ooTreeListX(2, false);
     // ObjyObjectManager.newInternalObjCount++;
     ooObj anObj = ooObj.create_ooObj(classObject.objectID());
     anObj.cluster(list);
-    classObject.set_ooId(position, list.getOid());
+    classObject.nset_ooId(getAttributeName(feature), list.getOid());
     // classObject.set_ooId(position, newClassObject.objectID());
     // ObjyArrayListId.initObject(newClassObject);
   }

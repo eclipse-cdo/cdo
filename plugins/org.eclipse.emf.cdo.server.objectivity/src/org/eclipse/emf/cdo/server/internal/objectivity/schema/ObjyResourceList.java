@@ -26,7 +26,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Module;
@@ -124,8 +123,8 @@ public class ObjyResourceList
 
     try
     {
-      Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
-      ooId oid = classObject.get_ooId(position);
+      // Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
+      ooId oid = classObject.nget_ooId(ObjyResourceList.Attribute_arrayName);
       if (!oid.isNull())
       {
         list = new ObjyArrayListId(Class_Object.class_object_from_oid(oid));
@@ -244,7 +243,7 @@ public class ObjyResourceList
     Class_Object classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyResourceList.className)
         .getASClass(), nearOid, false);
     // ObjyObjectManager.newInternalObjCount++;
-    Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
+    // Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
     // Class_Object arrayClassObject = Class_Object.new_persistent_object(
     // ObjySchema.getTopModule().resolve_class(ObjyArrayListId.className), classObject.objectID(), false);
     // // ooId arrayOid = arrayClassObject.objectID();
@@ -254,7 +253,7 @@ public class ObjyResourceList
     anObj.cluster(list);
     // System.out.println("initObject: " + anObj.getOid().getStoreString() + " treeListX: "
     // // + list.getOid().getStoreString());
-    classObject.set_ooId(position, list.getOid());
+    classObject.nset_ooId(ObjyResourceList.Attribute_arrayName, list.getOid());
 
     // classObject.set_ooId(position, arrayClassObject.objectID());
     // ObjyArrayListId.initObject(arrayClassObject);

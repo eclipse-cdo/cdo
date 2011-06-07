@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapEntr
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.d_Access_Kind;
 import com.objy.as.app.d_Attribute;
@@ -109,8 +108,8 @@ public class FeatureMapTypeMapper extends BasicTypeMapper implements IManyTypeMa
     // {
     // ObjyObjectManager.newInternalObjCount++;
     // }
-    Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
-    classObject.set_ooId(position, newClassObject.objectID());
+    // Class_Position position = classObject.type_of().position_in_class(getAttributeName(feature));
+    classObject.nset_ooId(getAttributeName(feature), newClassObject.objectID());
     // initialize the list structure.
     ObjyFeatureMapArrayList.initObject(newClassObject);
   }

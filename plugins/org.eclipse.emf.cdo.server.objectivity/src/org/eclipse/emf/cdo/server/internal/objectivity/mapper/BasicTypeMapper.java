@@ -13,11 +13,7 @@ package org.eclipse.emf.cdo.server.internal.objectivity.mapper;
 
 //import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 //import org.eclipse.net4j.util.om.trace.ContextTracer;
-import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
-
-import com.objy.as.app.Class_Position;
 
 /**
  * mapping between Objy AS class/type and EMF types.
@@ -40,15 +36,15 @@ public abstract class BasicTypeMapper
     return feature.getName() + "_isNull";
   }
 
-  protected Class_Position getAttributePosition(ObjyObject objyObject, EStructuralFeature feature)
-  {
-    return objyObject.objyClass().resolve_position(getAttributeName(feature));
-  }
+  // protected Class_Position getAttributePosition(ObjyObject objyObject, EStructuralFeature feature)
+  // {
+  // return objyObject.objyClass().resolve_position(getAttributeName(feature));
+  // }
 
-  protected Class_Position getNullAttributePosition(ObjyObject objyObject, EStructuralFeature feature)
-  {
-    return objyObject.objyClass().resolve_position(getNullAttributeName(feature));
-  }
+  // protected Class_Position getNullAttributePosition(ObjyObject objyObject, EStructuralFeature feature)
+  // {
+  // return objyObject.objyClass().resolve_position(getNullAttributeName(feature));
+  // }
 
   // ---------------------------------
   // Object

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyObject;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Numeric_Value;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.String_Value;
@@ -59,7 +58,6 @@ public class BigIntegerTypeMapper extends StringTypeMapper
   @Override
   public void setValue(ObjyObject objyObject, EStructuralFeature feature, Object newValue)
   {
-    // Class_Position nullPosition = getNullAttributePosition(objyObject, feature);
     String nullAttributeName = getNullAttributeName(feature);
 
     boolean isNull = newValue == null || newValue == CDORevisionData.NIL;
@@ -67,7 +65,6 @@ public class BigIntegerTypeMapper extends StringTypeMapper
 
     if (!isNull)
     {
-      Class_Position position = getAttributePosition(objyObject, feature);
       String attributeName = getAttributeName(feature);
 
       String_Value stringValue = objyObject.get_string(attributeName/* position */);

@@ -11,13 +11,13 @@
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.server.internal.objectivity.ObjectivityStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.objectivity.mapper.IManyTypeMapper;
@@ -152,7 +152,7 @@ public class ObjyObject
       // }
       // }
       setObjectId(classObject.objectID());
-      version = classObject.get_numeric(objyClass.resolve_position(ObjyBase.ATT_VERSION)).intValue();
+      // version = classObject.get_numeric(objyClass.resolve_position(ObjyBase.ATT_VERSION)).intValue();
     }
     catch (RuntimeException ex)
     {
@@ -167,7 +167,7 @@ public class ObjyObject
   {
     if (lastRevisionRel == null)
     {
-      lastRevisionRel = classObject.get_relationship(objyClass.resolve_position(ObjyBase.ATT_LAST_REVISION));
+      lastRevisionRel = classObject.nget_relationship(ObjyBase.ATT_LAST_REVISION);
     }
     return lastRevisionRel;
   }
@@ -176,7 +176,8 @@ public class ObjyObject
   {
     if (revisionsRel == null)
     {
-      revisionsRel = classObject.get_relationship(objyClass.resolve_position(ObjyBase.ATT_REVISIONS));
+      // revisionsRel = classObject.get_relationship(objyClass.resolve_position(ObjyBase.ATT_REVISIONS));
+      revisionsRel = classObject.nget_relationship(ObjyBase.ATT_REVISIONS);
     }
     return revisionsRel;
   }
@@ -185,7 +186,8 @@ public class ObjyObject
   {
     if (baseRel == null)
     {
-      baseRel = classObject.get_relationship(objyClass.resolve_position(ObjyBase.ATT_BASE));
+      // baseRel = classObject.get_relationship(objyClass.resolve_position(ObjyBase.ATT_BASE));
+      baseRel = classObject.nget_relationship(ObjyBase.ATT_BASE);
     }
     return baseRel;
   }
@@ -338,9 +340,9 @@ public class ObjyObject
     {
       checkSession();
     }
-    if (version == Integer.MAX_VALUE)
+    // if (version == Integer.MAX_VALUE)
     {
-      version = classObject.get_numeric(objyClass.resolve_position(ObjyBase.ATT_VERSION)).intValue();
+      version = classObject.nget_numeric(ObjyBase.ATT_VERSION).intValue();
     }
     return version;
   }
@@ -351,7 +353,7 @@ public class ObjyObject
     {
       checkSession();
     }
-    classObject.set_numeric(objyClass.resolve_position(ObjyBase.ATT_VERSION), new Numeric_Value(version));
+    classObject.nset_numeric(ObjyBase.ATT_VERSION, new Numeric_Value(version));
     // getVersion(); // TBD, verify the need for this call!!!!
     this.version = version;
   }
@@ -362,7 +364,7 @@ public class ObjyObject
     {
       checkSession();
     }
-    long creationTime = classObject.get_numeric(objyClass.resolve_position(ObjyBase.ATT_CREATION_TIME)).longValue();
+    long creationTime = classObject.nget_numeric(ObjyBase.ATT_CREATION_TIME).longValue();
     return creationTime;
   }
 
@@ -372,7 +374,7 @@ public class ObjyObject
     {
       checkSession();
     }
-    classObject.set_numeric(objyClass.resolve_position(ObjyBase.ATT_CREATION_TIME), new Numeric_Value(creationTime));
+    classObject.nset_numeric(ObjyBase.ATT_CREATION_TIME, new Numeric_Value(creationTime));
   }
 
   public long getRevisedTime()
@@ -385,7 +387,7 @@ public class ObjyObject
       {
         checkSession();
       }
-      revisedTime = classObject.get_numeric(objyClass.resolve_position(ObjyBase.ATT_REVISED_TIME)).longValue();
+      revisedTime = classObject.nget_numeric(ObjyBase.ATT_REVISED_TIME).longValue();
     }
     catch (RuntimeException ex)
     {
@@ -403,7 +405,7 @@ public class ObjyObject
       {
         checkSession();
       }
-      classObject.set_numeric(objyClass.resolve_position(ObjyBase.ATT_REVISED_TIME), new Numeric_Value(revisedTime));
+      classObject.nset_numeric(ObjyBase.ATT_REVISED_TIME, new Numeric_Value(revisedTime));
     }
     catch (RuntimeException ex)
     {
@@ -419,7 +421,7 @@ public class ObjyObject
       {
         checkSession();
       }
-      classObject.set_numeric(objyClass.resolve_position(ObjyBase.ATT_BRANCHID), new Numeric_Value(branchId));
+      classObject.nset_numeric(ObjyBase.ATT_BRANCHID, new Numeric_Value(branchId));
     }
     catch (RuntimeException ex)
     {
@@ -437,7 +439,7 @@ public class ObjyObject
       {
         checkSession();
       }
-      branchId = classObject.get_numeric(objyClass.resolve_position(ObjyBase.ATT_BRANCHID)).intValue();
+      branchId = classObject.nget_numeric(ObjyBase.ATT_BRANCHID).intValue();
     }
     catch (RuntimeException ex)
     {
@@ -625,7 +627,8 @@ public class ObjyObject
             }
             else if (value instanceof CDOIDExternal)
             {
-              TRACER_DEBUG.trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)value).getURI());
+              TRACER_DEBUG
+                  .trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)value).getURI());
               // System.out.println("value is a proxy object - it should be handled by the mapper.");
               // create an ObjyProxy object to hold the the value.
               ObjyProxy proxyObject = ObjyProxy.createObject(ooId());
@@ -1532,6 +1535,21 @@ public class ObjyObject
     return OBJYCDOIDUtil.getCDOID(revisionId);
   }
 
+  public ObjyObject getBaseObject()
+  {
+    ObjyObject objyObject = null;
+    if (hasBaseRelationship())
+    {
+      baseClassObject = getBaseRelationship().get_class_obj();
+      objyObject = new ObjyObject(baseClassObject);
+    }
+    else
+    {
+      objyObject = this;
+    }
+    return objyObject;
+  }
+
   private boolean hasBaseRelationship()
   {
     if (!hasBaseRelationshipChecked)
@@ -1567,26 +1585,32 @@ public class ObjyObject
   public ObjyObject getRevision(long timeStamp, int branchId, ObjyObjectManager objyObjectManager)
   {
     ObjyObject objyRevision = null;
-    // Session.getCurrent().setReturn_Class_Object(true);
-    // int numRevisions = (int) revisions.size();
 
-    // evaluate current first.
-    if (evaluateRevision(timeStamp, branchId, this))
-    {
-      return this;
-    }
-
-    // if we don't have other revisions.
-    if (!getLastRevisionRelationship().exists())
-    {
-      return null;
-    }
+    // // evaluate current first.
+    // if (evaluateRevision(timeStamp, branchId, this))
+    // {
+    // return this;
+    // }
+    //
+    // // if we don't have other revisions.
+    // if (!getLastRevisionRelationship().exists())
+    // {
+    // return null;
+    // }
 
     // check last revision first.
     objyRevision = getLastRevision(objyObjectManager);
     if (evaluateRevision(timeStamp, branchId, objyRevision))
     {
       return objyRevision;
+    }
+
+    ObjyObject possibleRevision = null;
+
+    // check first revision.
+    if (evaluateRevision(timeStamp, branchId, this))
+    {
+      possibleRevision = this;
     }
 
     @SuppressWarnings("unchecked")
@@ -1597,11 +1621,11 @@ public class ObjyObject
       objyRevision = objyObjectManager.getObject(itr.next().getOid());
       if (evaluateRevision(timeStamp, branchId, objyRevision))
       {
-        return objyRevision;
+        possibleRevision = objyRevision;
       }
     }
 
-    return null;
+    return possibleRevision;
   }
 
   /**
@@ -1613,16 +1637,24 @@ public class ObjyObject
     // check the branchId first.
     if (objyRevision.getBranchId() == branchId)
     {
+      // long revisedTS = objyRevision.getRevisedTime();
+      // if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+      // {
+      // long creationTS = objyRevision.getCreationTime();
+      // if (creationTS <= timeStamp && (revisedTS == CDOBranchPoint.UNSPECIFIED_DATE || revisedTS >= timeStamp))
+      // // if (creationTS >= timeStamp && (revisedTS == CDOBranchPoint.UNSPECIFIED_DATE || revisedTS <= timeStamp))
+      // {
+      // return true;
+      // }
+      // }
+      // else if (revisedTS == CDOBranchPoint.UNSPECIFIED_DATE) // return the latest version in that branch.
+      // {
+      // return true;
+      // }
+
+      long creationTS = objyRevision.getCreationTime();
       long revisedTS = objyRevision.getRevisedTime();
-      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
-      {
-        long creationTS = objyRevision.getCreationTime();
-        if (creationTS <= timeStamp && (revisedTS == CDOBranchPoint.UNSPECIFIED_DATE || revisedTS >= timeStamp))
-        {
-          return true;
-        }
-      }
-      else if (revisedTS == CDOBranchPoint.UNSPECIFIED_DATE) // return the latest version in that branch.
+      if (CDOCommonUtil.isValidTimeStamp(timeStamp, creationTS, revisedTS))
       {
         return true;
       }

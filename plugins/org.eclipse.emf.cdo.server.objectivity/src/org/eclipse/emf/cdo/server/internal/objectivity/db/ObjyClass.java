@@ -10,20 +10,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.objectivity.db;
 
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListId;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyArrayListString;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyFeatureMapArrayList;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyProxy;
-
 import com.objy.as.app.Class_Position;
 import com.objy.as.app.d_Attribute;
 import com.objy.as.app.d_Class;
-import com.objy.as.app.d_Ref_Type;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Wrapper around the AS class to be able to cache attributes.
@@ -96,49 +87,49 @@ public class ObjyClass
     return asClassName;
   }
 
-  public List<Class_Position> getListOfRefAttributes()
-  {
-    List<Class_Position> positions = new ArrayList<Class_Position>();
-
-    System.out.println(">>> Class: " + asClassName);
-
-    //
-    @SuppressWarnings("rawtypes")
-    Iterator itr = asClass.attributes_plus_inherited();
-    while (itr.hasNext())
-    {
-      d_Attribute attribute = (d_Attribute)itr.next();
-      if (attribute.is_type() && attribute.type_of() instanceof d_Ref_Type)
-      {
-        d_Class dClass = attribute.class_type_of();
-        if (dClass.name().equals(ObjyFeatureMapArrayList.ClassName))
-        {
-          // we'll need to copy this one.
-          positions.add(resolve_position(attribute.name()));
-          System.out.println("\t attr: " + attribute.name());
-        }
-        else if (dClass.name().equals(ObjyArrayListString.ClassName))
-        {
-          // we'll need to copy this one.
-          positions.add(resolve_position(attribute.name()));
-          System.out.println("\t attr: " + attribute.name());
-        }
-        else if (dClass.name().equals(ObjyArrayListId.className))
-        {
-          // we'll need to copy this one.
-          positions.add(resolve_position(attribute.name()));
-          System.out.println("\t attr: " + attribute.name());
-        }
-        else if (dClass.name().equals(ObjyProxy.className))
-        {
-          // we'll need to copy this one.
-          positions.add(resolve_position(attribute.name()));
-          System.out.println("\t attr: " + attribute.name());
-        }
-      }
-    }
-
-    return positions;
-  }
+  // public List<Class_Position> getListOfRefAttributes()
+  // {
+  // List<Class_Position> positions = new ArrayList<Class_Position>();
+  //
+  // System.out.println(">>> Class: " + asClassName);
+  //
+  // //
+  // @SuppressWarnings("rawtypes")
+  // Iterator itr = asClass.attributes_plus_inherited();
+  // while (itr.hasNext())
+  // {
+  // d_Attribute attribute = (d_Attribute)itr.next();
+  // if (attribute.is_type() && attribute.type_of() instanceof d_Ref_Type)
+  // {
+  // d_Class dClass = attribute.class_type_of();
+  // if (dClass.name().equals(ObjyFeatureMapArrayList.ClassName))
+  // {
+  // // we'll need to copy this one.
+  // positions.add(resolve_position(attribute.name()));
+  // System.out.println("\t attr: " + attribute.name());
+  // }
+  // else if (dClass.name().equals(ObjyArrayListString.ClassName))
+  // {
+  // // we'll need to copy this one.
+  // positions.add(resolve_position(attribute.name()));
+  // System.out.println("\t attr: " + attribute.name());
+  // }
+  // else if (dClass.name().equals(ObjyArrayListId.className))
+  // {
+  // // we'll need to copy this one.
+  // positions.add(resolve_position(attribute.name()));
+  // System.out.println("\t attr: " + attribute.name());
+  // }
+  // else if (dClass.name().equals(ObjyProxy.className))
+  // {
+  // // we'll need to copy this one.
+  // positions.add(resolve_position(attribute.name()));
+  // System.out.println("\t attr: " + attribute.name());
+  // }
+  // }
+  // }
+  //
+  // return positions;
+  // }
 
 }

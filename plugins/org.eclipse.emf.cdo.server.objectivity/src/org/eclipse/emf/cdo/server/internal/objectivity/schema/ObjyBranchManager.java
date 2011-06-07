@@ -187,12 +187,11 @@ public class ObjyBranchManager extends ooObj
     fetch();
     List<ObjyBranch> objyBranchList = new ArrayList<ObjyBranch>();
 
-    @SuppressWarnings("unchecked")
-    Iterator<ObjyBranch> treeItr = branchSet.iterator();
+    Iterator<?> treeItr = branchSet.iterator();
     ObjyBranch objyBranch = null;
     while (treeItr.hasNext())
     {
-      objyBranch = treeItr.next();
+      objyBranch = (ObjyBranch)treeItr.next();
       if (objyBranch.getBranchId() == objyBranch.getBaseBranchId())
       {
         continue;

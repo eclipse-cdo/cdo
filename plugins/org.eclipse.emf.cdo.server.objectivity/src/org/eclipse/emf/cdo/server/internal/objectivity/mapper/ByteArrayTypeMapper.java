@@ -19,7 +19,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import com.objy.as.app.Class_Object;
-import com.objy.as.app.Class_Position;
 import com.objy.as.app.Numeric_Value;
 import com.objy.as.app.Proposed_Class;
 import com.objy.as.app.VArray_Object;
@@ -169,8 +168,8 @@ public class ByteArrayTypeMapper extends BasicTypeMapper implements ISingleTypeM
     // TODO Auto-generated method stub
     // throw new UnsupportedOperationException("Implement me!!");
     // at least rest the varray...
-    Class_Position position = classObject.type_of().position_in_class(feature.getName());
-    VArray_Object vArray = classObject.get_varray(position);
+    // Class_Position position = classObject.type_of().position_in_class(feature.getName());
+    VArray_Object vArray = classObject.nget_varray(feature.getName());
     vArray.resize(0);
   }
 

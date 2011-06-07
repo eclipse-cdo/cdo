@@ -82,8 +82,6 @@ public class ObjyConnection
 
   /***
    * Connect to a store and an FD. TODO - We might need to allow switching of FD in the future.
-   * 
-   * @param fdName
    */
   synchronized public void connect(IObjectivityStoreConfig storeConfig)
   {

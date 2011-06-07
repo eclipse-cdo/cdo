@@ -12,13 +12,9 @@
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM;
-
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import com.objy.as.app.Class_Object;
 import com.objy.db.app.Session;
-import com.objy.db.app.ooFDObj;
 import com.objy.db.app.ooId;
 import com.objy.db.app.ooObj;
 import com.objy.db.util.ooTreeListX;
@@ -34,11 +30,7 @@ import java.util.List;
 public class ObjyArrayListId
 {
 
-  private static final ContextTracer TRACER_DEBUG = new ContextTracer(OM.DEBUG, ObjyArrayListId.class);
-
   static public String className = "ooTreeListX";
-
-  private Class_Object classObject = null;
 
   private ooTreeListX list = null;
 
@@ -105,12 +97,9 @@ public class ObjyArrayListId
 
   public ObjyArrayListId(Class_Object classObject)
   {
-    this.classObject = classObject;
     // get the ooTreeList object.
-    // ooId listId = classObject.nget_ooId(ObjyArrayList.arrayName);
     ooId listId = classObject.objectID();
     list = (ooTreeListX)Session.getCurrent().getFD().objectFrom(listId);
-    // size = (int)classObject.nget_numeric(ObjyArrayList.sizeName).longValue();
   }
 
   protected void setValue(long index, ooObj newValue)
@@ -189,7 +178,6 @@ public class ObjyArrayListId
   public void addAll(int index, Object[] newValue)
   {
     List<Object> objList = new ArrayList<Object>();
-    ooFDObj fdObj = Session.getCurrent().getFD();
     for (int i = 0; i < newValue.length; i++)
     {
       objList.add(ooObj.create_ooObj((ooId)newValue[i]));

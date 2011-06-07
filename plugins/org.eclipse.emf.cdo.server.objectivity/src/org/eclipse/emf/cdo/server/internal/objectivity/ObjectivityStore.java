@@ -27,9 +27,6 @@ import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyPropertyMapHandler
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySchema;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjyScope;
 import org.eclipse.emf.cdo.server.internal.objectivity.db.ObjySession;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyBranchManager;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyLockAreaManager;
-import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyResourceList;
 import org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyStoreInfo;
 import org.eclipse.emf.cdo.server.internal.objectivity.utils.ObjyDb;
 import org.eclipse.emf.cdo.server.objectivity.IObjectivityStore;
@@ -169,12 +166,11 @@ public class ObjectivityStore extends Store implements IObjectivityStore
       objyPropertyMapHandler = new ObjyPropertyMapHandler(repositoryName);
       objyPackageHandler = new ObjyPackageHandler(repositoryName);
 
-      // more initializations.
-      ObjyLockAreaManager objyLockAreaManager = objySession.getLockAreaManager(repositoryName);
-      ObjyBranchManager objyBranchManager = objySession.getBranchManager(repositoryName);
-      ObjyResourceList objyResources = objySession.getResourceList(repositoryName);
+      // more initializations, this will ensure that we have Manager objects created.
+      objySession.getLockAreaManager(repositoryName);
+      objySession.getBranchManager(repositoryName);
+      objySession.getResourceList(repositoryName);
 
-      long t3 = System.currentTimeMillis();
       objySession.commit();
 
       storeInitialized = true;

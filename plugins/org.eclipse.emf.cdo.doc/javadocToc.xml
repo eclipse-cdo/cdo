@@ -2,7 +2,7 @@
 
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="CDO Documentation" topic="javadoc/overview-summary.html">
+<toc label="CDO Model Repository Documentation" topic="javadoc/overview-summary.html">
 	<topic label="API Reference" href="javadoc/overview-summary.html"/>
 	<topic label="Homepage" href="http://www.eclipse.org/cdo"/>
 	<topic label="Wiki" href="http://wiki.eclipse.org/CDO"/>

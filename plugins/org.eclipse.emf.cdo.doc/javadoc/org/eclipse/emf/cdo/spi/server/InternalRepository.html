@@ -4,10 +4,10 @@
 <HEAD>
 
 <TITLE>
-InternalRepository (CDO API Specification)
+InternalRepository (CDO Model Repository Documentation)
 </TITLE>
 
-<META NAME="date" CONTENT="2011-05-28">
+<META NAME="date" CONTENT="">
 
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
 
@@ -15,7 +15,7 @@ InternalRepository (CDO API Specification)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="InternalRepository (CDO API Specification)";
+        parent.document.title="InternalRepository (CDO Model Repository Documentation)";
     }
 }
 </SCRIPT>
@@ -92,7 +92,7 @@ org.eclipse.emf.cdo.spi.server</FONT>
 <BR>
 Interface InternalRepository</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A>, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalFailoverParticipant.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</A></DD>
@@ -148,10 +148,10 @@ Interface InternalRepository</H2>
 <A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</A>&lt;<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</A>&gt;</CODE></TD>
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</A>&lt;<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</A>&gt;</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -212,7 +212,7 @@ Interface InternalRepository</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;long[]</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#createCommitTimeStamp(org.eclipse.net4j.util.om.monitor.OMMonitor)">createCommitTimeStamp</A></B>(<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#createCommitTimeStamp(org.eclipse.net4j.util.om.monitor.OMMonitor)">createCommitTimeStamp</A></B>(<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a commit time stamp that is guaranteed to be unique in this repository.</TD>
@@ -248,7 +248,7 @@ Interface InternalRepository</H2>
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;long[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#forceCommitTimeStamp(long, org.eclipse.net4j.util.om.monitor.OMMonitor)">forceCommitTimeStamp</A></B>(long&nbsp;timestamp,
-                     <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
+                     <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Like <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#createCommitTimeStamp(org.eclipse.net4j.util.om.monitor.OMMonitor)"><CODE>createCommitTimeStamp(OMMonitor)</CODE></A>, but forces the repository to use the timestamp value passed in as
@@ -302,7 +302,7 @@ Interface InternalRepository</H2>
              <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;sourceInfo,
              <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;targetBaseInfo,
              <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;sourceBaseInfo,
-             <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
+             <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -428,7 +428,7 @@ Interface InternalRepository</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#notifyWriteAccessHandlers(org.eclipse.emf.cdo.server.ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, boolean, org.eclipse.net4j.util.om.monitor.OMMonitor)">notifyWriteAccessHandlers</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</A>&nbsp;transaction,
                           <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>&nbsp;commitContext,
                           boolean&nbsp;beforeCommit,
-                          <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
+                          <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -604,19 +604,19 @@ Interface InternalRepository</H2>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.container.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</A>, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor"><!-- --></A>
@@ -962,7 +962,7 @@ createCommitContext</H3>
 <A NAME="createCommitTimeStamp(org.eclipse.net4j.util.om.monitor.OMMonitor)"><!-- --></A><H3>
 createCommitTimeStamp</H3>
 <PRE>
-long[] <B>createCommitTimeStamp</B>(<A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
+long[] <B>createCommitTimeStamp</B>(<A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
 <DL>
 <DD>Returns a commit time stamp that is guaranteed to be unique in this repository. At index 1 of the returned
  <code>long</code> array is the previous commit time.
@@ -982,7 +982,7 @@ long[] <B>createCommitTimeStamp</B>(<A HREF="../../../../../../../../org.eclipse
 forceCommitTimeStamp</H3>
 <PRE>
 long[] <B>forceCommitTimeStamp</B>(long&nbsp;timestamp,
-                            <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
+                            <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
 <DL>
 <DD>Like <A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html#createCommitTimeStamp(org.eclipse.net4j.util.om.monitor.OMMonitor)"><CODE>createCommitTimeStamp(OMMonitor)</CODE></A>, but forces the repository to use the timestamp value passed in as
  the argument. This should be called only to force the timestamp of the first commit of a new repository to be equal
@@ -1123,7 +1123,7 @@ notifyWriteAccessHandlers</H3>
 void <B>notifyWriteAccessHandlers</B>(<A HREF="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</A>&nbsp;transaction,
                                <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>&nbsp;commitContext,
                                boolean&nbsp;beforeCommit,
-                               <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
+                               <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -1189,7 +1189,7 @@ getMergeData</H3>
                         <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;sourceInfo,
                         <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;targetBaseInfo,
                         <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</A>&nbsp;sourceBaseInfo,
-                        <A HREF="../../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
+                        <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</PRE>
 <DL>
 <DD><DL>
 </DL>

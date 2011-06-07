@@ -4,10 +4,10 @@
 <HEAD>
 
 <TITLE>
-CDOView (CDO API Specification)
+CDOView (CDO Model Repository Documentation)
 </TITLE>
 
-<META NAME="date" CONTENT="2011-05-28">
+<META NAME="date" CONTENT="">
 
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
 
@@ -15,7 +15,7 @@ CDOView (CDO API Specification)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="CDOView (CDO API Specification)";
+        parent.document.title="CDOView (CDO Model Repository Documentation)";
     }
 }
 </SCRIPT>
@@ -92,7 +92,7 @@ org.eclipse.emf.cdo.view</FONT>
 <BR>
 Interface CDOView</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</A>, <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</A></DD>
@@ -102,7 +102,7 @@ Interface CDOView</H2>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public interface <B>CDOView</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</A>, <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DL>
+<DT><PRE>public interface <B>CDOView</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DL>
 </PRE>
 
 <P>
@@ -396,7 +396,7 @@ T</CODE></FONT></TD>
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)">lockObjects</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;objects,
-            <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType,
+            <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType,
             long&nbsp;timeout)</CODE>
 
 <BR>
@@ -423,7 +423,7 @@ T</CODE></FONT></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</A>&gt;</CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryResourcesAsync(org.eclipse.emf.cdo.eresource.CDOResourceFolder, java.lang.String, boolean)">queryResourcesAsync</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</A>&nbsp;folder,
                     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
                     boolean&nbsp;exactMatch)</CODE>
@@ -454,7 +454,7 @@ T</CODE></FONT></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</A>&gt;</CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefsAsync</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;targetObjects,
                 <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A>...&nbsp;sourceReferences)</CODE>
 
@@ -524,7 +524,7 @@ T</CODE></FONT></TD>
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">unlockObjects</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;objects,
-              <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType)</CODE>
+              <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unlocks the given locked objects of this view.</TD>
@@ -560,10 +560,10 @@ T</CODE></FONT></TD>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.collection.Closeable"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.collection.<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.collection.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection">close</A>, <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection">isClosed</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection">close</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection">isClosed</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.util.CDOUpdatable"><!-- --></A>
@@ -578,10 +578,10 @@ T</CODE></FONT></TD>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -609,8 +609,8 @@ getSession</H3>
 </DD>
 <DD><DL>
 
-<DT><B>Returns:</B><DD>The session this view was opened by, or <code>null</code> if this view is closed.<DT><B>See Also:</B><DD><A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection"><CODE>Closeable.close()</CODE></A>, 
-<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection"><CODE>Closeable.isClosed()</CODE></A>, 
+<DT><B>Returns:</B><DD>The session this view was opened by, or <code>null</code> if this view is closed.<DT><B>See Also:</B><DD><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection"><CODE>Closeable.close()</CODE></A>, 
+<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection"><CODE>Closeable.isClosed()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#openView()"><CODE>CDOSession.openView()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#openTransaction()"><CODE>CDOSession.openTransaction()</CODE></A></DL>
 </DD>
@@ -916,7 +916,7 @@ queryResources</H3>
 <A NAME="queryResourcesAsync(org.eclipse.emf.cdo.eresource.CDOResourceFolder, java.lang.String, boolean)"><!-- --></A><H3>
 queryResourcesAsync</H3>
 <PRE>
-<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</A>&gt; <B>queryResourcesAsync</B>(<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</A>&nbsp;folder,
+<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</A>&gt; <B>queryResourcesAsync</B>(<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</A>&nbsp;folder,
                                                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;name,
                                                        boolean&nbsp;exactMatch)</PRE>
 <DL>
@@ -980,7 +980,7 @@ queryXRefs</H3>
 <A NAME="queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)"><!-- --></A><H3>
 queryXRefsAsync</H3>
 <PRE>
-<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</A>&gt; <B>queryXRefsAsync</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;targetObjects,
+<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</A>&gt; <B>queryXRefsAsync</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;targetObjects,
                                                       <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A>...&nbsp;sourceReferences)</PRE>
 <DL>
 <DD>Returns an iterator over the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo"><CODE>object references</CODE></A> that represent the cross references to
@@ -1096,7 +1096,7 @@ int <B>reload</B>(<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" ti
 lockObjects</H3>
 <PRE>
 void <B>lockObjects</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;objects,
-                 <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType,
+                 <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType,
                  long&nbsp;timeout)
                  throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></PRE>
 <DL>
@@ -1119,7 +1119,7 @@ void <B>lockObjects</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/ap
 unlockObjects</H3>
 <PRE>
 void <B>unlockObjects</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;objects,
-                   <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType)</PRE>
+                   <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType)</PRE>
 <DL>
 <DD>Unlocks the given locked objects of this view.
 <P>
@@ -1286,7 +1286,7 @@ options</H3>
 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</A> <B>options</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true#options()" title="class or interface in org.eclipse.net4j.util.options">options</A></CODE> in interface <CODE><A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true#options()" title="class or interface in org.eclipse.net4j.util.options">options</A></CODE> in interface <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>

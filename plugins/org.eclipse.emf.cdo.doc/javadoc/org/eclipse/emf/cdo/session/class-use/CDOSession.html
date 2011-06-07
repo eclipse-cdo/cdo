@@ -4,10 +4,10 @@
 <HEAD>
 
 <TITLE>
-Uses of Interface org.eclipse.emf.cdo.session.CDOSession (CDO API Specification)
+Uses of Interface org.eclipse.emf.cdo.session.CDOSession (CDO Model Repository Documentation)
 </TITLE>
 
-<META NAME="date" CONTENT="2011-05-28">
+<META NAME="date" CONTENT="">
 
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
 
@@ -15,7 +15,7 @@ Uses of Interface org.eclipse.emf.cdo.session.CDOSession (CDO API Specification)
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Uses of Interface org.eclipse.emf.cdo.session.CDOSession (CDO API Specification)";
+        parent.document.title="Uses of Interface org.eclipse.emf.cdo.session.CDOSession (CDO Model Repository Documentation)";
     }
 }
 </SCRIPT>
@@ -108,6 +108,14 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSess
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.transaction"><B>org.eclipse.emf.cdo.transaction</B></A></TD>
 <TD>Client concepts for dealing with transactions, distributed transactions and their save points.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.ui"><B>org.eclipse.emf.cdo.ui</B></A></TD>
+<TD>Reusable UI components specific to the CDO Model Repository.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.ui.widgets"><B>org.eclipse.emf.cdo.ui.widgets</B></A></TD>
+<TD>A library with reusable widgets.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.util"><B>org.eclipse.emf.cdo.util</B></A></TD>
@@ -302,6 +310,155 @@ Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" 
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A></CODE></FONT></TD>
 <TD><CODE><B>CDOPushTransaction.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getSession()">getSession</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.ui"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A> in <A HREF="../../../../../../org/eclipse/emf/cdo/ui/package-summary.html">org.eclipse.emf.cdo.ui</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/ui/package-summary.html">org.eclipse.emf.cdo.ui</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/Dialog.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">Dialog</A></CODE></FONT></TD>
+<TD><CODE><B>CDOInteractiveExceptionHandler.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOInteractiveExceptionHandler.html#createDialog(org.eclipse.emf.cdo.session.CDOSession, int, java.lang.Exception)">createDialog</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session,
+             int&nbsp;attempt,
+             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A>&nbsp;exception)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B>CDOItemProvider.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillGenerated(org.eclipse.jface.action.MenuManager, org.eclipse.emf.cdo.session.CDOSession)">fillGenerated</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">MenuManager</A>&nbsp;manager,
+              <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CDOItemProvider.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillSession(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.session.CDOSession)">fillSession</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+            <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B>CDOInteractiveExceptionHandler.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOInteractiveExceptionHandler.html#handleException(org.eclipse.emf.cdo.session.CDOSession, int, java.lang.Exception)">handleException</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session,
+                int&nbsp;attempt,
+                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A>&nbsp;exception)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Constructors in <A HREF="../../../../../../org/eclipse/emf/cdo/ui/package-summary.html">org.eclipse.emf.cdo.ui</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/CDOInteractiveExceptionHandler.ExceptionDialog.html#CDOInteractiveExceptionHandler.ExceptionDialog(org.eclipse.swt.widgets.Shell, org.eclipse.emf.cdo.session.CDOSession, int, java.lang.Exception)">CDOInteractiveExceptionHandler.ExceptionDialog</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</A>&nbsp;parentShell,
+                                               <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session,
+                                               int&nbsp;attempt,
+                                               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A>&nbsp;exception)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.ui.widgets"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Uses of <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A> in <A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/package-summary.html">org.eclipse.emf.cdo.ui.widgets</A></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/package-summary.html">org.eclipse.emf.cdo.ui.widgets</A> that return <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A></CODE></FONT></TD>
+<TD><CODE><B>ComposeBranchPointComposite.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#getSession()">getSession</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A></CODE></FONT></TD>
+<TD><CODE><B>SelectBranchComposite.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/SelectBranchComposite.html#getSession()">getSession</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/package-summary.html">org.eclipse.emf.cdo.ui.widgets</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/SelectBranchComposite.html" title="class in org.eclipse.emf.cdo.ui.widgets">SelectBranchComposite</A></CODE></FONT></TD>
+<TD><CODE><B>ComposeBranchPointComposite.</B><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#createSelectBranchComposite(org.eclipse.emf.cdo.session.CDOSession, org.eclipse.emf.cdo.common.branch.CDOBranch)">createSelectBranchComposite</A></B>(<A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session,
+                            <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="2">Constructors in <A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/package-summary.html">org.eclipse.emf.cdo.ui.widgets</A> with parameters of type <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#ComposeBranchPointComposite(org.eclipse.swt.widgets.Composite, int, org.eclipse.emf.cdo.session.CDOSession, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">ComposeBranchPointComposite</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+                            int&nbsp;style,
+                            <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session,
+                            <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;branchPoint,
+                            boolean&nbsp;allowTimeStamp)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/SelectBranchComposite.html#SelectBranchComposite(org.eclipse.swt.widgets.Composite, int, org.eclipse.emf.cdo.session.CDOSession, org.eclipse.emf.cdo.common.branch.CDOBranch)">SelectBranchComposite</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+                      int&nbsp;style,
+                      <A HREF="../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session,
+                      <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A>&nbsp;branch)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>

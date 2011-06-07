@@ -1,0 +1,444 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+AuditScale (CDO Model Repository Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="AuditScale (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/AuditScale.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html" title="class in org.eclipse.emf.cdo.ui.widgets"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/ui/widgets/AuditScale.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="AuditScale.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.swt.widgets.Control">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.emf.cdo.ui.widgets</FONT>
+<BR>
+Class AuditScale</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">org.eclipse.swt.widgets.Widget</A>
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">org.eclipse.swt.widgets.Control</A>
+          <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">org.eclipse.swt.widgets.Scrollable</A>
+              <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">org.eclipse.swt.widgets.Composite</A>
+                  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.ui.widgets.AuditScale</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Drawable.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Drawable</A></DD>
+</DL>
+<HR>
+<B>Deprecated.</B>
+<P>
+<DL>
+<DT><PRE><FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public class <B>AuditScale</B><DT>extends <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A></DL>
+</PRE>
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>2.0</DD>
+<DT><B>Author:</B></DT>
+  <DD>Eike Stepper</DD>
+</DL>
+<HR>
+
+<P>
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.swt.widgets.Control"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.swt.widgets.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#handle" title="class or interface in org.eclipse.swt.widgets">handle</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/AuditScale.html#AuditScale(org.eclipse.swt.widgets.Composite, int)">AuditScale</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+           int&nbsp;scaleStyle)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scale.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Scale</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/AuditScale.html#createScale(int)">createScale</A></B>(int&nbsp;style)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/AuditScale.html#getDirection()">getDirection</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scale.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Scale</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/AuditScale.html#getScale()">getScale</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/AuditScale.html#getScaleStyle()">getScaleStyle</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/AuditScale.html#main(java.lang.String[])">main</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>[]&nbsp;args)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/AuditScale.html#setBounds(int, int, int, int)">setBounds</A></B>(int&nbsp;x,
+          int&nbsp;y,
+          int&nbsp;width,
+          int&nbsp;height)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;Sets the receiver's size and location to the rectangular
+ area specified by the arguments.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.widgets.Composite"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.widgets.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#changed(org.eclipse.swt.widgets.Control[])" title="class or interface in org.eclipse.swt.widgets">changed</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#checkSubclass()" title="class or interface in org.eclipse.swt.widgets">checkSubclass</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#computeSize(int, int, boolean)" title="class or interface in org.eclipse.swt.widgets">computeSize</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#drawBackground(org.eclipse.swt.graphics.GC, int, int, int, int, int, int)" title="class or interface in org.eclipse.swt.widgets">drawBackground</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getBackgroundMode()" title="class or interface in org.eclipse.swt.widgets">getBackgroundMode</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getChildren()" title="class or interface in org.eclipse.swt.widgets">getChildren</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getLayout()" title="class or interface in org.eclipse.swt.widgets">getLayout</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getLayoutDeferred()" title="class or interface in org.eclipse.swt.widgets">getLayoutDeferred</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#getTabList()" title="class or interface in org.eclipse.swt.widgets">getTabList</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#isLayoutDeferred()" title="class or interface in org.eclipse.swt.widgets">isLayoutDeferred</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout()" title="class or interface in org.eclipse.swt.widgets">layout</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout(boolean)" title="class or interface in org.eclipse.swt.widgets">layout</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout(boolean, boolean)" title="class or interface in org.eclipse.swt.widgets">layout</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout(org.eclipse.swt.widgets.Control[])" title="class or interface in org.eclipse.swt.widgets">layout</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#layout(org.eclipse.swt.widgets.Control[], int)" title="class or interface in org.eclipse.swt.widgets">layout</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setBackgroundMode(int)" title="class or interface in org.eclipse.swt.widgets">setBackgroundMode</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setFocus()" title="class or interface in org.eclipse.swt.widgets">setFocus</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setLayout(org.eclipse.swt.widgets.Layout)" title="class or interface in org.eclipse.swt.widgets">setLayout</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setLayoutDeferred(boolean)" title="class or interface in org.eclipse.swt.widgets">setLayoutDeferred</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true#setTabList(org.eclipse.swt.widgets.Control[])" title="class or interface in org.eclipse.swt.widgets">setTabList</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.widgets.Scrollable"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.widgets.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Scrollable</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#computeTrim(int, int, int, int)" title="class or interface in org.eclipse.swt.widgets">computeTrim</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getBorderWidth()" title="class or interface in org.eclipse.swt.widgets">getBorderWidth</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getClientArea()" title="class or interface in org.eclipse.swt.widgets">getClientArea</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getHorizontalBar()" title="class or interface in org.eclipse.swt.widgets">getHorizontalBar</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scrollable.html?is-external=true#getVerticalBar()" title="class or interface in org.eclipse.swt.widgets">getVerticalBar</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.widgets.Control"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.widgets.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addControlListener(org.eclipse.swt.events.ControlListener)" title="class or interface in org.eclipse.swt.widgets">addControlListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addDragDetectListener(org.eclipse.swt.events.DragDetectListener)" title="class or interface in org.eclipse.swt.widgets">addDragDetectListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addFocusListener(org.eclipse.swt.events.FocusListener)" title="class or interface in org.eclipse.swt.widgets">addFocusListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addGestureListener(org.eclipse.swt.events.GestureListener)" title="class or interface in org.eclipse.swt.widgets">addGestureListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addHelpListener(org.eclipse.swt.events.HelpListener)" title="class or interface in org.eclipse.swt.widgets">addHelpListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addKeyListener(org.eclipse.swt.events.KeyListener)" title="class or interface in org.eclipse.swt.widgets">addKeyListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMenuDetectListener(org.eclipse.swt.events.MenuDetectListener)" title="class or interface in org.eclipse.swt.widgets">addMenuDetectListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseListener(org.eclipse.swt.events.MouseListener)" title="class or interface in org.eclipse.swt.widgets">addMouseListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseMoveListener(org.eclipse.swt.events.MouseMoveListener)" title="class or interface in org.eclipse.swt.widgets">addMouseMoveListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseTrackListener(org.eclipse.swt.events.MouseTrackListener)" title="class or interface in org.eclipse.swt.widgets">addMouseTrackListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addMouseWheelListener(org.eclipse.swt.events.MouseWheelListener)" title="class or interface in org.eclipse.swt.widgets">addMouseWheelListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addPaintListener(org.eclipse.swt.events.PaintListener)" title="class or interface in org.eclipse.swt.widgets">addPaintListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addTouchListener(org.eclipse.swt.events.TouchListener)" title="class or interface in org.eclipse.swt.widgets">addTouchListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#addTraverseListener(org.eclipse.swt.events.TraverseListener)" title="class or interface in org.eclipse.swt.widgets">addTraverseListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#computeSize(int, int)" title="class or interface in org.eclipse.swt.widgets">computeSize</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#dragDetect(org.eclipse.swt.widgets.Event)" title="class or interface in org.eclipse.swt.widgets">dragDetect</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#dragDetect(org.eclipse.swt.events.MouseEvent)" title="class or interface in org.eclipse.swt.widgets">dragDetect</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#forceFocus()" title="class or interface in org.eclipse.swt.widgets">forceFocus</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getAccessible()" title="class or interface in org.eclipse.swt.widgets">getAccessible</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBackground()" title="class or interface in org.eclipse.swt.widgets">getBackground</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBackgroundImage()" title="class or interface in org.eclipse.swt.widgets">getBackgroundImage</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getBounds()" title="class or interface in org.eclipse.swt.widgets">getBounds</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getCursor()" title="class or interface in org.eclipse.swt.widgets">getCursor</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getDragDetect()" title="class or interface in org.eclipse.swt.widgets">getDragDetect</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getEnabled()" title="class or interface in org.eclipse.swt.widgets">getEnabled</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getFont()" title="class or interface in org.eclipse.swt.widgets">getFont</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getForeground()" title="class or interface in org.eclipse.swt.widgets">getForeground</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getLayoutData()" title="class or interface in org.eclipse.swt.widgets">getLayoutData</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getLocation()" title="class or interface in org.eclipse.swt.widgets">getLocation</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getMenu()" title="class or interface in org.eclipse.swt.widgets">getMenu</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getMonitor()" title="class or interface in org.eclipse.swt.widgets">getMonitor</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getOrientation()" title="class or interface in org.eclipse.swt.widgets">getOrientation</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getParent()" title="class or interface in org.eclipse.swt.widgets">getParent</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getRegion()" title="class or interface in org.eclipse.swt.widgets">getRegion</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getShell()" title="class or interface in org.eclipse.swt.widgets">getShell</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getSize()" title="class or interface in org.eclipse.swt.widgets">getSize</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getToolTipText()" title="class or interface in org.eclipse.swt.widgets">getToolTipText</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getTouchEnabled()" title="class or interface in org.eclipse.swt.widgets">getTouchEnabled</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#getVisible()" title="class or interface in org.eclipse.swt.widgets">getVisible</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#internal_dispose_GC(int, org.eclipse.swt.graphics.GCData)" title="class or interface in org.eclipse.swt.widgets">internal_dispose_GC</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#internal_new_GC(org.eclipse.swt.graphics.GCData)" title="class or interface in org.eclipse.swt.widgets">internal_new_GC</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isEnabled()" title="class or interface in org.eclipse.swt.widgets">isEnabled</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isFocusControl()" title="class or interface in org.eclipse.swt.widgets">isFocusControl</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isReparentable()" title="class or interface in org.eclipse.swt.widgets">isReparentable</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#isVisible()" title="class or interface in org.eclipse.swt.widgets">isVisible</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#moveAbove(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.swt.widgets">moveAbove</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#moveBelow(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.swt.widgets">moveBelow</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#pack()" title="class or interface in org.eclipse.swt.widgets">pack</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#pack(boolean)" title="class or interface in org.eclipse.swt.widgets">pack</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#print(org.eclipse.swt.graphics.GC)" title="class or interface in org.eclipse.swt.widgets">print</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#redraw()" title="class or interface in org.eclipse.swt.widgets">redraw</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#redraw(int, int, int, int, boolean)" title="class or interface in org.eclipse.swt.widgets">redraw</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeControlListener(org.eclipse.swt.events.ControlListener)" title="class or interface in org.eclipse.swt.widgets">removeControlListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeDragDetectListener(org.eclipse.swt.events.DragDetectListener)" title="class or interface in org.eclipse.swt.widgets">removeDragDetectListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeFocusListener(org.eclipse.swt.events.FocusListener)" title="class or interface in org.eclipse.swt.widgets">removeFocusListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeGestureListener(org.eclipse.swt.events.GestureListener)" title="class or interface in org.eclipse.swt.widgets">removeGestureListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeHelpListener(org.eclipse.swt.events.HelpListener)" title="class or interface in org.eclipse.swt.widgets">removeHelpListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeKeyListener(org.eclipse.swt.events.KeyListener)" title="class or interface in org.eclipse.swt.widgets">removeKeyListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMenuDetectListener(org.eclipse.swt.events.MenuDetectListener)" title="class or interface in org.eclipse.swt.widgets">removeMenuDetectListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseListener(org.eclipse.swt.events.MouseListener)" title="class or interface in org.eclipse.swt.widgets">removeMouseListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseMoveListener(org.eclipse.swt.events.MouseMoveListener)" title="class or interface in org.eclipse.swt.widgets">removeMouseMoveListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseTrackListener(org.eclipse.swt.events.MouseTrackListener)" title="class or interface in org.eclipse.swt.widgets">removeMouseTrackListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeMouseWheelListener(org.eclipse.swt.events.MouseWheelListener)" title="class or interface in org.eclipse.swt.widgets">removeMouseWheelListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removePaintListener(org.eclipse.swt.events.PaintListener)" title="class or interface in org.eclipse.swt.widgets">removePaintListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeTouchListener(org.eclipse.swt.events.TouchListener)" title="class or interface in org.eclipse.swt.widgets">removeTouchListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#removeTraverseListener(org.eclipse.swt.events.TraverseListener)" title="class or interface in org.eclipse.swt.widgets">removeTraverseListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBackground(org.eclipse.swt.graphics.Color)" title="class or interface in org.eclipse.swt.widgets">setBackground</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBackgroundImage(org.eclipse.swt.graphics.Image)" title="class or interface in org.eclipse.swt.widgets">setBackgroundImage</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBounds(org.eclipse.swt.graphics.Rectangle)" title="class or interface in org.eclipse.swt.widgets">setBounds</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setCapture(boolean)" title="class or interface in org.eclipse.swt.widgets">setCapture</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setCursor(org.eclipse.swt.graphics.Cursor)" title="class or interface in org.eclipse.swt.widgets">setCursor</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setDragDetect(boolean)" title="class or interface in org.eclipse.swt.widgets">setDragDetect</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setEnabled(boolean)" title="class or interface in org.eclipse.swt.widgets">setEnabled</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setFont(org.eclipse.swt.graphics.Font)" title="class or interface in org.eclipse.swt.widgets">setFont</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setForeground(org.eclipse.swt.graphics.Color)" title="class or interface in org.eclipse.swt.widgets">setForeground</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setLayoutData(java.lang.Object)" title="class or interface in org.eclipse.swt.widgets">setLayoutData</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setLocation(int, int)" title="class or interface in org.eclipse.swt.widgets">setLocation</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setLocation(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.swt.widgets">setLocation</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setMenu(org.eclipse.swt.widgets.Menu)" title="class or interface in org.eclipse.swt.widgets">setMenu</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setOrientation(int)" title="class or interface in org.eclipse.swt.widgets">setOrientation</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setParent(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.swt.widgets">setParent</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setRedraw(boolean)" title="class or interface in org.eclipse.swt.widgets">setRedraw</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setRegion(org.eclipse.swt.graphics.Region)" title="class or interface in org.eclipse.swt.widgets">setRegion</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setSize(int, int)" title="class or interface in org.eclipse.swt.widgets">setSize</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setSize(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.swt.widgets">setSize</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setToolTipText(java.lang.String)" title="class or interface in org.eclipse.swt.widgets">setToolTipText</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setTouchEnabled(boolean)" title="class or interface in org.eclipse.swt.widgets">setTouchEnabled</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setVisible(boolean)" title="class or interface in org.eclipse.swt.widgets">setVisible</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toControl(int, int)" title="class or interface in org.eclipse.swt.widgets">toControl</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toControl(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.swt.widgets">toControl</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toDisplay(int, int)" title="class or interface in org.eclipse.swt.widgets">toDisplay</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#toDisplay(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.swt.widgets">toDisplay</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#traverse(int)" title="class or interface in org.eclipse.swt.widgets">traverse</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#traverse(int, org.eclipse.swt.widgets.Event)" title="class or interface in org.eclipse.swt.widgets">traverse</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#traverse(int, org.eclipse.swt.events.KeyEvent)" title="class or interface in org.eclipse.swt.widgets">traverse</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#update()" title="class or interface in org.eclipse.swt.widgets">update</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.widgets.Widget"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.widgets.<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Widget</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#addDisposeListener(org.eclipse.swt.events.DisposeListener)" title="class or interface in org.eclipse.swt.widgets">addDisposeListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#addListener(int, org.eclipse.swt.widgets.Listener)" title="class or interface in org.eclipse.swt.widgets">addListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#checkWidget()" title="class or interface in org.eclipse.swt.widgets">checkWidget</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#dispose()" title="class or interface in org.eclipse.swt.widgets">dispose</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getData()" title="class or interface in org.eclipse.swt.widgets">getData</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getData(java.lang.String)" title="class or interface in org.eclipse.swt.widgets">getData</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getDisplay()" title="class or interface in org.eclipse.swt.widgets">getDisplay</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getListeners(int)" title="class or interface in org.eclipse.swt.widgets">getListeners</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#getStyle()" title="class or interface in org.eclipse.swt.widgets">getStyle</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#isDisposed()" title="class or interface in org.eclipse.swt.widgets">isDisposed</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#isListening(int)" title="class or interface in org.eclipse.swt.widgets">isListening</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#notifyListeners(int, org.eclipse.swt.widgets.Event)" title="class or interface in org.eclipse.swt.widgets">notifyListeners</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#removeDisposeListener(org.eclipse.swt.events.DisposeListener)" title="class or interface in org.eclipse.swt.widgets">removeDisposeListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#removeListener(int, org.eclipse.swt.widgets.Listener)" title="class or interface in org.eclipse.swt.widgets">removeListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#removeListener(int, org.eclipse.swt.internal.SWTEventListener)" title="class or interface in org.eclipse.swt.widgets">removeListener</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#reskin(int)" title="class or interface in org.eclipse.swt.widgets">reskin</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#setData(java.lang.Object)" title="class or interface in org.eclipse.swt.widgets">setData</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#setData(java.lang.String, java.lang.Object)" title="class or interface in org.eclipse.swt.widgets">setData</A>, <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html?is-external=true#toString()" title="class or interface in org.eclipse.swt.widgets">toString</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="AuditScale(org.eclipse.swt.widgets.Composite, int)"><!-- --></A><H3>
+AuditScale</H3>
+<PRE>
+public <B>AuditScale</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+                  int&nbsp;scaleStyle)</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="getDirection()"><!-- --></A><H3>
+getDirection</H3>
+<PRE>
+public int <B>getDirection</B>()</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getScaleStyle()"><!-- --></A><H3>
+getScaleStyle</H3>
+<PRE>
+public int <B>getScaleStyle</B>()</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getScale()"><!-- --></A><H3>
+getScale</H3>
+<PRE>
+public <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scale.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Scale</A> <B>getScale</B>()</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createScale(int)"><!-- --></A><H3>
+createScale</H3>
+<PRE>
+protected <A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Scale.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Scale</A> <B>createScale</B>(int&nbsp;style)</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setBounds(int, int, int, int)"><!-- --></A><H3>
+setBounds</H3>
+<PRE>
+public void <B>setBounds</B>(int&nbsp;x,
+                      int&nbsp;y,
+                      int&nbsp;width,
+                      int&nbsp;height)</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBounds(int, int, int, int)" title="class or interface in org.eclipse.swt.widgets">org.eclipse.swt.widgets.Control</A></CODE></B></DD>
+<DD>Sets the receiver's size and location to the rectangular
+ area specified by the arguments. The <code>x</code> and 
+ <code>y</code> arguments are relative to the receiver's
+ parent (or its display if its parent is null), unless 
+ the receiver is a shell. In this case, the <code>x</code>
+ and <code>y</code> arguments are relative to the display.
+ <p>
+ Note: Attempting to set the width or height of the
+ receiver to a negative number will cause that
+ value to be set to zero instead.
+ </p>
+<P>
+<DD><DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true#setBounds(int, int, int, int)" title="class or interface in org.eclipse.swt.widgets">setBounds</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>x</CODE> - the new x coordinate for the receiver<DD><CODE>y</CODE> - the new y coordinate for the receiver<DD><CODE>width</CODE> - the new width for the receiver<DD><CODE>height</CODE> - the new height for the receiver</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="main(java.lang.String[])"><!-- --></A><H3>
+main</H3>
+<PRE>
+public static void <B>main</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>[]&nbsp;args)</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/AuditScale.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;PREV CLASS&nbsp;
+&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html" title="class in org.eclipse.emf.cdo.ui.widgets"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../../index.html?org/eclipse/emf/cdo/ui/widgets/AuditScale.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="AuditScale.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.swt.widgets.Control">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

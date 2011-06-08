@@ -86,9 +86,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
-      msg("Publish previous modifications");
-      pushTransaction.push();
-      assertEquals(false, transaction.isDirty());
+      push(transaction, pushTransaction);
       session.close();
     }
 
@@ -125,9 +123,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
-      msg("Publish previous modifications");
-      pushTransaction.push();
-      assertEquals(false, transaction.isDirty());
+      push(transaction, pushTransaction);
       session.close();
     }
 
@@ -164,9 +160,7 @@ public class PushTransactionTest extends AbstractCDOTest
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDORevisionDelta delta = transaction.getRevisionDeltas().values().iterator().next();
       assertNotNull(delta);
-      msg("Publish previous modifications");
-      pushTransaction.push();
-      assertEquals(false, transaction.isDirty());
+      push(transaction, pushTransaction);
       session.close();
     }
 
@@ -203,9 +197,7 @@ public class PushTransactionTest extends AbstractCDOTest
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDORevisionDelta delta = transaction.getRevisionDeltas().values().iterator().next();
       assertNotNull(delta);
-      msg("Publish previous modifications");
-      pushTransaction.push();
-      assertEquals(false, transaction.isDirty());
+      push(transaction, pushTransaction);
       session.close();
     }
 
@@ -213,6 +205,102 @@ public class PushTransactionTest extends AbstractCDOTest
     CDOView view = session.openView();
     CDOResource resource = view.getResource(getResourcePath(resourcePath));
     assertEquals(2, resource.getContents().size());
+  }
+
+  public void testAddNewObjectInObjectBetweenReloadAndPush() throws Exception
+  {
+    {
+      msg("Open session & local transaction");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      file = pushTransaction.getFile();
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
+      msg("Create a new element");
+      Category category = getModel1Factory().createCategory();
+      Company company = (Company)resource.getContents().get(1);
+      company.getCategories().add(category);
+      msg("Commit");
+      pushTransaction.commit();
+      session.close();
+    }
+
+    {
+      msg("Reload previous local session");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      assertEquals(true, transaction.isDirty());
+      assertEquals(1, transaction.getRevisionDeltas().size());
+      CDORevisionDelta delta = transaction.getRevisionDeltas().values().iterator().next();
+      assertNotNull(delta);
+
+      msg("Create a new element");
+      Category category = getModel1Factory().createCategory();
+      CDOResource resource = transaction.getResource(getResourcePath(resourcePath));
+      resource.getContents().add(category);
+      msg("Commit");
+      pushTransaction.commit();
+
+      push(transaction, pushTransaction);
+      session.close();
+    }
+
+    CDOSession session = openSession();
+    CDOView view = session.openView();
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
+    assertEquals(3, resource.getContents().size());
+  }
+
+  public void testAddNewObjectInObjectTwiceBetweenReloadAndPush() throws Exception
+  {
+    {
+      msg("Open session & local transaction");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      file = pushTransaction.getFile();
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
+      msg("Create a new element");
+      Category category = getModel1Factory().createCategory();
+      Company company = (Company)resource.getContents().get(1);
+      company.getCategories().add(category);
+      msg("Commit");
+      pushTransaction.commit();
+      session.close();
+    }
+
+    {
+      msg("Reload previous local session");
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      assertEquals(true, transaction.isDirty());
+      assertEquals(1, transaction.getRevisionDeltas().size());
+      CDORevisionDelta delta = transaction.getRevisionDeltas().values().iterator().next();
+      assertNotNull(delta);
+
+      msg("Create a new element");
+      Category category = getModel1Factory().createCategory();
+      CDOResource resource = transaction.getResource(getResourcePath(resourcePath));
+      resource.getContents().add(category);
+      msg("Commit");
+      pushTransaction.commit();
+
+      msg("Create a new element");
+      category = getModel1Factory().createCategory();
+      resource.getContents().add(category);
+      msg("Commit");
+      pushTransaction.commit();
+
+      push(transaction, pushTransaction);
+      session.close();
+    }
+
+    CDOSession session = openSession();
+    CDOView view = session.openView();
+    CDOResource resource = view.getResource(getResourcePath(resourcePath));
+    assertEquals(4, resource.getContents().size());
   }
 
   @CleanRepositoriesBefore
@@ -244,8 +332,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       CDOResource resource2 = (CDOResource)resource.getContents().get(2);
       assertNotNull(resource2);
-      msg("Publish previous modifications");
-      pushTransaction.push();
+      push(transaction, pushTransaction);
       session.close();
     }
 
@@ -296,9 +383,7 @@ public class PushTransactionTest extends AbstractCDOTest
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       assertEquals(4, resource.getContents().size());
-      msg("Publish previous modifications");
-      pushTransaction.push();
-      assertEquals(false, transaction.isDirty());
+      push(transaction, pushTransaction);
       session.close();
     }
 
@@ -349,8 +434,7 @@ public class PushTransactionTest extends AbstractCDOTest
       assertEquals(true, transaction.isDirty());
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       assertEquals(supplierName, ((Supplier)resource.getContents().get(1)).getName());
-      msg("Publish previous modifications");
-      pushTransaction.push();
+      push(transaction, pushTransaction);
       session.close();
     }
 
@@ -389,8 +473,7 @@ public class PushTransactionTest extends AbstractCDOTest
       assertEquals(true, transaction.isDirty());
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       assertEquals(0, resource.getContents().size());
-      msg("Publish previous modifications");
-      pushTransaction.push();
+      push(transaction, pushTransaction);
       session.close();
     }
 
@@ -425,8 +508,7 @@ public class PushTransactionTest extends AbstractCDOTest
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       Supplier supplier = (Supplier)resource.getContents().get(0);
       assertNull(supplier.getName());
-      msg("Publish previous modifications");
-      pushTransaction.push();
+      push(transaction, pushTransaction);
       session.close();
     }
 
@@ -522,6 +604,13 @@ public class PushTransactionTest extends AbstractCDOTest
     {
       // SUCCESS
     }
+  }
+
+  protected void push(CDOTransaction transaction, CDOPushTransaction pushTransaction) throws CommitException
+  {
+    msg("Publish previous modifications");
+    pushTransaction.push();
+    assertEquals(false, transaction.isDirty());
   }
 
   private void populateRepository()

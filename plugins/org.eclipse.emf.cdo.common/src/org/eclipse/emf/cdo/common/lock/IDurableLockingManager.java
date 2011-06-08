@@ -99,7 +99,7 @@ public interface IDurableLockingManager
   {
     NONE(0), READ(1), WRITE(2), READ_WRITE(READ.getValue() | WRITE.getValue());
 
-    private int value;
+    private final int value;
 
     private LockGrade(int value)
     {

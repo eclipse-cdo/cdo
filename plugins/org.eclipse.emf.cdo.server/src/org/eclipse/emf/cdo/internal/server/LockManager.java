@@ -129,7 +129,7 @@ public class LockManager extends RWLockManager<Object, IView> implements Interna
     {
       public boolean handleLockEntry(LockEntry<Object, IView> lockEntry)
       {
-        CDOID id = getIDToLock(lockEntry.getObject());
+        CDOID id = getLockKeyID(lockEntry.getObject());
         LockGrade grade = LockGrade.NONE;
         if (lockEntry.isReadLock(view))
         {
@@ -364,7 +364,7 @@ public class LockManager extends RWLockManager<Object, IView> implements Interna
     }
   }
 
-  public static CDOID getIDToLock(Object key)
+  public CDOID getLockKeyID(Object key)
   {
     if (key instanceof CDOID)
     {

@@ -34,7 +34,7 @@ public class CDORevisionImpl extends BaseCDORevision
 {
   private Object[] values;
 
-  private boolean frozen;
+  private transient boolean frozen;
 
   public CDORevisionImpl(EClass eClass)
   {
@@ -93,7 +93,7 @@ public class CDORevisionImpl extends BaseCDORevision
   public void freeze()
   {
     frozen = true;
-  
+
     EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(getEClass());
     for (int i = 0; i < features.length; i++)
     {

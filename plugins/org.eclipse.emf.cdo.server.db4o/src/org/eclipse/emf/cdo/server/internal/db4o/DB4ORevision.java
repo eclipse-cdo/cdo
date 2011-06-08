@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -272,6 +273,12 @@ public class DB4ORevision
         }
         else
         {
+          // Prevent the explicit null-ref "NIL" from being serialized!
+          if (obj == CDORevisionData.NIL)
+          {
+            obj = new ExplicitNull();
+          }
+
           values.add(i, obj);
         }
       }
@@ -320,6 +327,12 @@ public class DB4ORevision
       else if (listContainsInstancesOfClass(value, DB4OFeatureMapEntry.class))
       {
         value = DB4OFeatureMapEntry.getCDOFeatureMapEntryList(eClass, value);
+      }
+
+      // Convert 'null' into the explicit null-ref "NIL" if appropriate
+      if (value instanceof ExplicitNull)
+      {
+        value = CDORevisionData.NIL;
       }
 
       revision.setValue(feature, value);
@@ -439,5 +452,12 @@ public class DB4ORevision
       }
       return list;
     }
+  }
+
+  /**
+   * @author Caspar De Groot
+   */
+  private static final class ExplicitNull
+  {
   }
 }

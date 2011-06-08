@@ -23,12 +23,14 @@ import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import com.db4o.Db4o;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectServer;
 import com.db4o.ObjectSet;
 import com.db4o.config.Configuration;
+import com.db4o.constraints.UniqueFieldValueConstraint;
 import com.db4o.query.Query;
 import com.db4o.reflect.jdk.JdkReflector;
 
@@ -55,6 +57,8 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   private transient Configuration serverConfiguration;
 
   private ServerInfo serverInfo;
+
+  private DB4ODurableLockingManager durableLockingManager = new DB4ODurableLockingManager();
 
   @ExcludeFromDump
   private transient final StoreAccessorPool readerPool = new StoreAccessorPool(this, null);
@@ -103,6 +107,11 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   public boolean isFirstStart()
   {
     return getServerInfo().isFirstTime();
+  }
+
+  public DB4ODurableLockingManager getDurableLockingManager()
+  {
+    return durableLockingManager;
   }
 
   public Map<String, String> getPersistentProperties(Set<String> names)
@@ -167,6 +176,32 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     initObjectServer();
     initServerInfo();
     setLastCommitTime(getServerInfo().getLastCommitTime());
+    setLastObjectID(fetchLastObjectID());
+    LifecycleUtil.activate(durableLockingManager);
+  }
+
+  private long fetchLastObjectID()
+  {
+    ObjectContainer container = openClient();
+
+    try
+    {
+      Query query = container.query();
+      query.constrain(DB4ORevision.class);
+      query.descend("id").orderDescending();
+      ObjectSet<?> results = query.execute();
+      int size = results.size();
+      if (size > 0)
+      {
+        DB4ORevision rev = (DB4ORevision)results.next();
+        return rev.getID();
+      }
+      return 0;
+    }
+    finally
+    {
+      closeClient(container);
+    }
   }
 
   protected void initObjectServer()
@@ -216,13 +251,9 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
     try
     {
-      ObjectSet<ServerInfo> infos = container.query(ServerInfo.class);
-      if (infos.size() > 1)
-      {
-        throw new IllegalStateException("ServeInfo is stored in container more than once");
-      }
+      serverInfo = getServerInfoFromDatabase(container);
 
-      if (infos.isEmpty())
+      if (serverInfo == null)
       {
         serverInfo = new ServerInfo();
         serverInfo.setFirstTime(true);
@@ -231,7 +262,6 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
       }
       else
       {
-        serverInfo = infos.get(0);
         if (serverInfo.isFirstTime())
         {
           serverInfo.setFirstTime(false);
@@ -245,6 +275,22 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     }
   }
 
+  private ServerInfo getServerInfoFromDatabase(ObjectContainer container)
+  {
+    ObjectSet<ServerInfo> infos = container.query(ServerInfo.class);
+    if (infos.size() > 1)
+    {
+      throw new IllegalStateException("ServeInfo is stored in container more than once");
+    }
+
+    if (infos.size() == 1)
+    {
+      return infos.get(0);
+    }
+
+    return null;
+  }
+
   protected void closeClient(ObjectContainer container)
   {
     container.close();
@@ -256,6 +302,16 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
     try
     {
+      ServerInfo storedInfo = getServerInfoFromDatabase(usedContainer);
+      if (storedInfo != null && storedInfo != serverInfo)
+      {
+        storedInfo.setCreationTime(serverInfo.getCreationTime());
+        storedInfo.setFirstTime(serverInfo.isFirstTime());
+        storedInfo.setLastCommitTime(serverInfo.getLastCommitTime());
+        storedInfo.setProperties(serverInfo.getProperties());
+        serverInfo = storedInfo;
+      }
+
       usedContainer.store(serverInfo);
       usedContainer.commit();
     }
@@ -271,8 +327,8 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   @Override
   protected void doDeactivate() throws Exception
   {
-    tearDownObjectServer();
     ObjectContainer container = openClient();
+
     try
     {
       getServerInfo().setLastCommitTime(getLastCommitTime());
@@ -282,6 +338,10 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     {
       closeClient(container);
     }
+
+    LifecycleUtil.deactivate(durableLockingManager);
+    tearDownObjectServer();
+
     super.doDeactivate();
   }
 
@@ -289,10 +349,23 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
   {
     Configuration config = Db4o.newConfiguration();
     config.reflectWith(new JdkReflector(getClass().getClassLoader()));
+
     config.objectClass(DB4ORevision.class).objectField("id").indexed(true);
+    config.add(new UniqueFieldValueConstraint(DB4ORevision.class, "id"));
+
     config.objectClass(DB4OPackageUnit.class).objectField("id").indexed(true);
+    config.add(new UniqueFieldValueConstraint(DB4OPackageUnit.class, "id"));
+
     config.objectClass(DB4OIdentifiableObject.class).objectField("id").indexed(true);
+    config.add(new UniqueFieldValueConstraint(DB4OIdentifiableObject.class, "id"));
+
     config.objectClass(DB4OCommitInfo.class).objectField("timeStamp").indexed(true);
+
+    config.objectClass(DB4OLockArea.class).objectField("id").indexed(true);
+    config.add(new UniqueFieldValueConstraint(DB4OLockArea.class, "id"));
+    config.objectClass(DB4OLockArea.class).cascadeOnUpdate(true);
+    config.objectClass(DB4OLockArea.class).cascadeOnDelete(true);
+
     return config;
   }
 
@@ -400,7 +473,6 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
       return creationTime;
     }
 
-    @SuppressWarnings("unused")
     public void setProperties(Map<String, String> properties)
     {
       this.properties = properties;

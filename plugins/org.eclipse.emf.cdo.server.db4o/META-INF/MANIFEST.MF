@@ -11,6 +11,7 @@ Export-Package: org.eclipse.emf.cdo.server.db4o;version="1.0.0",
  org.eclipse.emf.cdo.server.internal.db4o.bundle;version="1.0.0";x-internal:=true
 Import-Package: com.db4o;version="[7.4.0,8.0.0)",
  com.db4o.config;version="[7.4.0,8.0.0)",
+ com.db4o.constraints;version="[7.4.0,8.0.0)",
  com.db4o.ext;version="[7.4.0,8.0.0)",
  com.db4o.query;version="[7.4.0,8.0.0)",
  com.db4o.reflect;version="[7.4.0,8.0.0)",

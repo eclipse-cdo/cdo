@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -29,7 +30,8 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking;
+import org.eclipse.emf.cdo.server.IStoreAccessor.Raw;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.db4o.IDB4OIdentifiableObject;
@@ -47,6 +49,7 @@ import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -85,7 +88,7 @@ import java.util.Set;
 /**
  * @author Victor Roldan Betancort
  */
-public class DB4OStoreAccessor extends LongIDStoreAccessor implements IStoreAccessor.Raw
+public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, DurableLocking
 {
   private ObjectContainer objectContainer;
 
@@ -826,5 +829,48 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements IStoreAcce
   public void rawCommit(double commitWork, OMMonitor monitor)
   {
     doCommit(monitor);
+  }
+
+  public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
+      Map<CDOID, LockGrade> locks)
+  {
+    DB4ODurableLockingManager manager = getStore().getDurableLockingManager();
+    return manager.createLockArea(this, userID, branchPoint, readOnly, locks);
+  }
+
+  public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
+  {
+    DB4ODurableLockingManager manager = getStore().getDurableLockingManager();
+    return manager.getLockArea(this, durableLockingID);
+  }
+
+  public void getLockAreas(String userIDPrefix, Handler handler)
+  {
+    DB4ODurableLockingManager manager = getStore().getDurableLockingManager();
+    manager.getLockAreas(this, userIDPrefix, handler);
+  }
+
+  public void deleteLockArea(String durableLockingID)
+  {
+    DB4ODurableLockingManager manager = getStore().getDurableLockingManager();
+    manager.deleteLockArea(this, durableLockingID);
+  }
+
+  public void lock(String durableLockingID, LockType type, Collection<? extends Object> objectsToLock)
+  {
+    DB4ODurableLockingManager manager = getStore().getDurableLockingManager();
+    manager.lock(this, durableLockingID, type, objectsToLock);
+  }
+
+  public void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
+  {
+    DB4ODurableLockingManager manager = getStore().getDurableLockingManager();
+    manager.unlock(this, durableLockingID, type, objectsToUnlock);
+  }
+
+  public void unlock(String durableLockingID)
+  {
+    DB4ODurableLockingManager manager = getStore().getDurableLockingManager();
+    manager.unlock(this, durableLockingID);
   }
 }

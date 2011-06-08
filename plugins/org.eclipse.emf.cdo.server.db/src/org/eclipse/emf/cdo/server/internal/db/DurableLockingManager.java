@@ -16,13 +16,13 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundException;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
-import org.eclipse.emf.cdo.internal.server.LockManager;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.server.DurableLockArea;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -596,9 +596,10 @@ public class DurableLockingManager extends Lifecycle
       stmtUpdate = statementCache.getPreparedStatement(sqlUpdateLock, ReuseProbability.MEDIUM);
       stmtUpdate.setString(2, durableLockingID);
 
+      InternalLockManager lockManager = accessor.getStore().getRepository().getLockManager();
       for (Object key : keys)
       {
-        CDOID id = LockManager.getIDToLock(key);
+        CDOID id = lockManager.getLockKeyID(key);
         idHandler.setCDOID(stmtSelect, 2, id);
         resultSet = stmtSelect.executeQuery();
 

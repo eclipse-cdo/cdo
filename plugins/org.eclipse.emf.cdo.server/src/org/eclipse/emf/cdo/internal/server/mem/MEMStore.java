@@ -29,7 +29,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
-import org.eclipse.emf.cdo.internal.server.LockManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking;
@@ -47,6 +46,7 @@ import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.DurableLockArea;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
@@ -757,9 +757,10 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
     LockArea area = getLockArea(durableLockingID);
     Map<CDOID, LockGrade> locks = area.getLocks();
 
+    InternalLockManager lockManager = getRepository().getLockManager();
     for (Object objectToLock : objectsToLock)
     {
-      CDOID id = LockManager.getIDToLock(objectToLock);
+      CDOID id = lockManager.getLockKeyID(objectToLock);
       LockGrade grade = locks.get(id);
       if (grade != null)
       {
@@ -779,9 +780,10 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
     LockArea area = getLockArea(durableLockingID);
     Map<CDOID, LockGrade> locks = area.getLocks();
 
+    InternalLockManager lockManager = getRepository().getLockManager();
     for (Object objectToUnlock : objectsToUnlock)
     {
-      CDOID id = LockManager.getIDToLock(objectToUnlock);
+      CDOID id = lockManager.getLockKeyID(objectToUnlock);
       LockGrade grade = locks.get(id);
       if (grade != null)
       {

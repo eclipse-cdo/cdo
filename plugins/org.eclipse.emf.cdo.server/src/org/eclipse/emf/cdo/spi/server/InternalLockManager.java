@@ -50,6 +50,11 @@ public interface InternalLockManager extends IRWLockManager<Object, IView>, IDur
   /**
    * @since 4.0
    */
+  public CDOID getLockKeyID(Object key);
+
+  /**
+   * @since 4.0
+   */
   public Map<CDOID, LockGrade> getLocks(IView view);
 
   /**

@@ -40,7 +40,7 @@ public class CDOListImpl extends MoveableArrayList<Object> implements InternalCD
 
   private static final long serialVersionUID = 1L;
 
-  private boolean frozen;
+  private transient boolean frozen;
 
   public CDOListImpl(int initialCapacity, int size)
   {

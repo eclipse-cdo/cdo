@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -25,6 +26,8 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -69,6 +72,7 @@ public abstract class AbstractOfflineExampleServer
   {
     this.name = name;
     this.port = port;
+
     container = OfflineExampleUtil.createContainer();
     container.getElement("org.eclipse.emf.cdo.server.browsers", "default", dbBrowserPort + ""); //$NON-NLS-1$ //$NON-NLS-2$
   }
@@ -95,6 +99,21 @@ public abstract class AbstractOfflineExampleServer
           RepositoryStateChangedEvent e = (RepositoryStateChangedEvent)event;
           System.out.println("State changed to " + e.getNewState());
         }
+      }
+    });
+
+    repository.getSessionManager().addListener(new ContainerEventAdapter<ISession>()
+    {
+      @Override
+      protected void onAdded(IContainer<ISession> sessionManager, ISession session)
+      {
+        System.out.println("Registered " + session);
+      }
+
+      @Override
+      protected void onRemoved(IContainer<ISession> sessionManager, ISession session)
+      {
+        System.out.println("Unregistered " + session);
       }
     });
 

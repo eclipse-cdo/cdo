@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -543,8 +544,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     {
       // Already set after commit to the master.
       // Do not call getTimeStamp() of the enclosing Repo class!!!
-      return new long[] { WriteThroughCommitContext.this.getTimeStamp(),
-          WriteThroughCommitContext.this.getPreviousTimeStamp() };
+      InternalRepository repository = getTransaction().getSession().getManager().getRepository();
+      return repository.forceCommitTimeStamp(WriteThroughCommitContext.this.getTimeStamp(), monitor);
     }
 
     @Override

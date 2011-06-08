@@ -67,6 +67,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -505,12 +506,8 @@ public class TransactionCommitContext implements InternalCommitContext
     CheckUtil.checkState(timeStamp != CDOBranchPoint.UNSPECIFIED_DATE, "Commit timestamp must not be 0");
   }
 
-  /**
-   * Returns
-   */
   protected long[] createTimeStamp(OMMonitor monitor)
   {
-    InternalRepository repository = transaction.getSession().getManager().getRepository();
     return repository.createCommitTimeStamp(monitor);
   }
 
@@ -521,17 +518,13 @@ public class TransactionCommitContext implements InternalCommitContext
 
   protected void setTimeStamp(long timeStamp)
   {
+    repository.forceCommitTimeStamp(timeStamp, new Monitor());
     this.timeStamp = timeStamp;
   }
 
   public long getPreviousTimeStamp()
   {
     return previousTimeStamp;
-  }
-
-  public void setPreviousTimeStamp(long previousTimeStamp)
-  {
-    this.previousTimeStamp = previousTimeStamp;
   }
 
   public void postCommit(boolean success)

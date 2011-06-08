@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -24,13 +25,18 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.Notifier;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionConfiguration
+public abstract class CDOSessionConfigurationImpl extends Notifier implements InternalCDOSessionConfiguration
 {
   private boolean passiveUpdateEnabled = true;
 
@@ -53,6 +59,27 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
   private boolean activateOnOpen = true;
 
   private InternalCDOSession session;
+
+  private final IListener lifecycleEventAdapter = new LifecycleEventAdapter()
+  {
+    @Override
+    protected void onActivated(final ILifecycle newSession)
+    {
+      newSession.removeListener(lifecycleEventAdapter);
+      fireEvent(new SessionOpenedEvent()
+      {
+        public CDOSessionConfiguration getSource()
+        {
+          return CDOSessionConfigurationImpl.this;
+        }
+
+        public CDOSession getOpenedSession()
+        {
+          return (CDOSession)newSession;
+        }
+      });
+    }
+  };
 
   public CDOSessionConfigurationImpl()
   {
@@ -215,7 +242,9 @@ public abstract class CDOSessionConfigurationImpl implements InternalCDOSessionC
     if (!isSessionOpen())
     {
       session = createSession();
+      session.addListener(lifecycleEventAdapter);
       configureSession(session);
+
       if (activateOnOpen)
       {
         session.activate();

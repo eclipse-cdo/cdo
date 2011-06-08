@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -36,20 +37,11 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
 {
   private final CDOCommitInfo commitInfo;
 
-  private long[] times;
-
   public ReplicatorCommitContext(InternalTransaction transaction, CDOCommitInfo commitInfo)
   {
     super(transaction);
     this.commitInfo = commitInfo;
 
-    long commitTimeStamp = commitInfo.getTimeStamp();
-    if (commitTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      commitTimeStamp = transaction.getSession().getManager().getRepository().getTimeStamp();
-    }
-
-    times = new long[] { commitTimeStamp, commitInfo.getPreviousTimeStamp() };
     setCommitComment(commitInfo.getComment());
 
     InternalCDOPackageUnit[] newPackageUnits = getNewPackageUnits(commitInfo, getPackageRegistry());
@@ -74,7 +66,15 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   @Override
   protected long[] createTimeStamp(OMMonitor monitor)
   {
-    return times;
+    InternalRepository repository = getTransaction().getSession().getManager().getRepository();
+
+    long commitTimeStamp = commitInfo.getTimeStamp();
+    if (commitTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      commitTimeStamp = repository.getTimeStamp();
+    }
+
+    return repository.forceCommitTimeStamp(commitInfo.getTimeStamp(), monitor);
   }
 
   @Override

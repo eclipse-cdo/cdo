@@ -10,9 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -29,6 +27,7 @@ import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.util.TestSessionConfiguration;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -279,61 +278,11 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
   {
     public CDOSessionConfiguration createSessionConfiguration()
     {
-      return new CDOSessionConfiguration()
+      return new TestSessionConfiguration()
       {
         public CDOSession openSession()
         {
           return Bugzilla_327604_Test.this.openSession();
-        }
-
-        public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
-        {
-          throw new UnsupportedOperationException();
-        }
-
-        public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
-        {
-          throw new UnsupportedOperationException();
-        }
-
-        public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler)
-        {
-          throw new UnsupportedOperationException();
-        }
-
-        public void setActivateOnOpen(boolean activateOnOpen)
-        {
-          throw new UnsupportedOperationException();
-        }
-
-        public boolean isSessionOpen()
-        {
-          throw new UnsupportedOperationException();
-        }
-
-        public boolean isPassiveUpdateEnabled()
-        {
-          throw new UnsupportedOperationException();
-        }
-
-        public boolean isActivateOnOpen()
-        {
-          throw new UnsupportedOperationException();
-        }
-
-        public PassiveUpdateMode getPassiveUpdateMode()
-        {
-          throw new UnsupportedOperationException();
-        }
-
-        public CDOSession.ExceptionHandler getExceptionHandler()
-        {
-          throw new UnsupportedOperationException();
-        }
-
-        public CDOAuthenticator getAuthenticator()
-        {
-          throw new UnsupportedOperationException();
         }
       };
     }

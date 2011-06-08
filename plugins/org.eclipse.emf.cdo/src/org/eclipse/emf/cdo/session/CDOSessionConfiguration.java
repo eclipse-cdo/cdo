@@ -13,13 +13,18 @@ package org.eclipse.emf.cdo.session;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.INotifier;
+
 /**
+ * Configures and opens new {@link CDOSession sessions}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSessionConfiguration
+public interface CDOSessionConfiguration extends INotifier
 {
   /**
    * @see CDOSession.Options#isPassiveUpdateEnabled()
@@ -83,4 +88,18 @@ public interface CDOSessionConfiguration
    * instance. Therefore it is impossible to change this configuration while the session is open.
    */
   public CDOSession openSession();
+
+  /**
+   * Fired from a {@link CDOSessionConfiguration session configuration} after a new {@link CDOSession session} has been
+   * opened.
+   * 
+   * @author Eike Stepper
+   * @since 4.0
+   */
+  public interface SessionOpenedEvent extends IEvent
+  {
+    public CDOSessionConfiguration getSource();
+
+    public CDOSession getOpenedSession();
+  }
 }

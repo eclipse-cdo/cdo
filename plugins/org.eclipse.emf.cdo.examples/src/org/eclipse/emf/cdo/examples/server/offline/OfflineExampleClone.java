@@ -18,10 +18,16 @@ import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfiguration.SessionOpenedEvent;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import java.util.Map;
 
@@ -89,6 +95,28 @@ public class OfflineExampleClone extends AbstractOfflineExampleServer
     configuration.setConnector(connector);
     configuration.setRepositoryName(repositoryName);
     configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP));
+    configuration.addListener(new IListener()
+    {
+      public void notifyEvent(IEvent event)
+      {
+        if (event instanceof SessionOpenedEvent)
+        {
+          SessionOpenedEvent e = (SessionOpenedEvent)event;
+          CDOSession session = e.getOpenedSession();
+          System.out.println("Opened " + session);
+
+          session.addListener(new LifecycleEventAdapter()
+          {
+            @Override
+            protected void onAboutToDeactivate(ILifecycle lifecycle)
+            {
+              System.out.println("Closing " + lifecycle);
+            }
+          });
+        }
+      }
+    });
+
     return configuration;
   }
 

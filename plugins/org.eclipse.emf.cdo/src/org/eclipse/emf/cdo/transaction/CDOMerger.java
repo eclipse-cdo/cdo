@@ -14,14 +14,24 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 
 /**
+ * Calculates the changes between a source {@link CDOChangeSet change set} and a target {@link CDOChangeSet change set}
+ * and returns the result relative to their common ancestor.
+ * 
  * @author Eike Stepper
  * @since 3.0
  */
 public interface CDOMerger
 {
+  /**
+   * Calculates the changes between a source {@link CDOChangeSet change set} and a target {@link CDOChangeSet change
+   * set} and returns the result relative to their common ancestor.
+   */
   public CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws ConflictException;
 
   /**
+   * Thrown from a {@link CDOMerger merger} in case of conflicting changes in the a source and target
+   * {@link CDOChangeSet change sets}.
+   * 
    * @author Eike Stepper
    * @since 4.0
    */

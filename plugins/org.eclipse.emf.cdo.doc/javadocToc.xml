@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?NLS TYPE="org.eclipse.help.toc"?>
-
-<toc label="CDO Model Repository Documentation" topic="javadoc/overview-summary.html">
-	<topic label="API Reference" href="javadoc/overview-summary.html"/>
-	<topic label="Homepage" href="http://www.eclipse.org/cdo"/>
-	<topic label="Wiki" href="http://wiki.eclipse.org/CDO"/>
-</toc>

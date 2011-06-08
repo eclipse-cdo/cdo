@@ -101,25 +101,25 @@
 			</fileset>
 
 			<group title="CDO Model Repository Client">
-				<package name="org.eclipse.emf.cdo.etypes" />
-				<package name="org.eclipse.emf.cdo.eresource.impl" />
-				<package name="org.eclipse.emf.cdo.view" />
-				<package name="org.eclipse.emf.cdo.eresource" />
-				<package name="org.eclipse.emf.internal.cdo" />
-				<package name="org.eclipse.emf.cdo.transaction" />
-				<package name="org.eclipse.emf.spi.cdo" />
-				<package name="org.eclipse.emf.cdo.etypes.util" />
-				<package name="org.eclipse.emf.cdo.session.remote" />
-				<package name="org.eclipse.emf.cdo.session" />
 				<package name="org.eclipse.emf.cdo" />
-				<package name="org.eclipse.emf.cdo.util" />
+				<package name="org.eclipse.emf.cdo.eresource" />
+				<package name="org.eclipse.emf.cdo.eresource.impl" />
 				<package name="org.eclipse.emf.cdo.eresource.util" />
-				<package name="org.eclipse.emf.cdo.etypes.impl" />
 				<package name="org.eclipse.emf.cdo.eresource.validation" />
+				<package name="org.eclipse.emf.cdo.etypes" />
+				<package name="org.eclipse.emf.cdo.etypes.impl" />
+				<package name="org.eclipse.emf.cdo.etypes.util" />
+				<package name="org.eclipse.emf.cdo.session" />
+				<package name="org.eclipse.emf.cdo.session.remote" />
+				<package name="org.eclipse.emf.cdo.transaction" />
+				<package name="org.eclipse.emf.cdo.util" />
+				<package name="org.eclipse.emf.cdo.view" />
+				<package name="org.eclipse.emf.internal.cdo" />
+				<package name="org.eclipse.emf.spi.cdo" />
 			</group>
 			<group title="CDO Model Repository Client Edit Support">
-				<package name="org.eclipse.emf.cdo.eresource.provider" />
 				<package name="org.eclipse.emf.cdo.edit" />
+				<package name="org.eclipse.emf.cdo.eresource.provider" />
 				<package name="org.eclipse.emf.cdo.etypes.provider" />
 			</group>
 			<group title="CDO Model Repository Client Location">
@@ -129,37 +129,37 @@
 				<package name="org.eclipse.emf.cdo.net4j" />
 			</group>
 			<group title="CDO Model Repository Client UI">
-				<package name="org.eclipse.emf.cdo.ui.widgets" />
 				<package name="org.eclipse.emf.cdo.ui" />
+				<package name="org.eclipse.emf.cdo.ui.widgets" />
 			</group>
 			<group title="CDO Model Repository Client UI IDE">
 				<package name="org.eclipse.emf.cdo.ui.ide" />
 			</group>
 			<group title="CDO Model Repository Common">
-				<package name="org.eclipse.emf.cdo.spi.common.revision" />
-				<package name="org.eclipse.emf.cdo.spi.common.id" />
 				<package name="org.eclipse.emf.cdo.common" />
-				<package name="org.eclipse.emf.cdo.common.commit.handler" />
-				<package name="org.eclipse.emf.cdo.common.revision" />
-				<package name="org.eclipse.emf.cdo.common.revision.delta" />
-				<package name="org.eclipse.emf.cdo.common.lock" />
-				<package name="org.eclipse.emf.cdo.common.util" />
-				<package name="org.eclipse.emf.cdo.spi.common.commit" />
-				<package name="org.eclipse.emf.cdo.common.id" />
-				<package name="org.eclipse.emf.cdo.common.model" />
-				<package name="org.eclipse.emf.cdo.spi.common.branch" />
-				<package name="org.eclipse.emf.cdo.spi.common" />
-				<package name="org.eclipse.emf.cdo.common.lob" />
-				<package name="org.eclipse.emf.cdo.common.protocol" />
 				<package name="org.eclipse.emf.cdo.common.branch" />
 				<package name="org.eclipse.emf.cdo.common.commit" />
+				<package name="org.eclipse.emf.cdo.common.commit.handler" />
+				<package name="org.eclipse.emf.cdo.common.id" />
+				<package name="org.eclipse.emf.cdo.common.lob" />
+				<package name="org.eclipse.emf.cdo.common.lock" />
+				<package name="org.eclipse.emf.cdo.common.model" />
+				<package name="org.eclipse.emf.cdo.common.protocol" />
+				<package name="org.eclipse.emf.cdo.common.revision" />
+				<package name="org.eclipse.emf.cdo.common.revision.delta" />
+				<package name="org.eclipse.emf.cdo.common.util" />
+				<package name="org.eclipse.emf.cdo.spi.common" />
+				<package name="org.eclipse.emf.cdo.spi.common.branch" />
+				<package name="org.eclipse.emf.cdo.spi.common.commit" />
+				<package name="org.eclipse.emf.cdo.spi.common.id" />
 				<package name="org.eclipse.emf.cdo.spi.common.model" />
+				<package name="org.eclipse.emf.cdo.spi.common.revision" />
 			</group>
 			<group title="CDO Model Repository Server">
 				<package name="org.eclipse.emf.cdo.server" />
 				<package name="org.eclipse.emf.cdo.server.embedded" />
-				<package name="org.eclipse.emf.cdo.spi.server" />
 				<package name="org.eclipse.emf.cdo.server.mem" />
+				<package name="org.eclipse.emf.cdo.spi.server" />
 			</group>
 			<group title="CDO Model Repository Server DB">
 				<package name="org.eclipse.emf.cdo.server.db" />

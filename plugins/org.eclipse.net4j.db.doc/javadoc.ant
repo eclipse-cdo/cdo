@@ -57,10 +57,10 @@
 			</fileset>
 
 			<group title="Net4j DB Framework">
-				<package name="org.eclipse.net4j.db.ddl" />
-				<package name="org.eclipse.net4j.spi.db" />
-				<package name="org.eclipse.net4j.db.dml" />
 				<package name="org.eclipse.net4j.db" />
+				<package name="org.eclipse.net4j.db.ddl" />
+				<package name="org.eclipse.net4j.db.dml" />
+				<package name="org.eclipse.net4j.spi.db" />
 			</group>
 			<group title="Net4j DB Framework Derby Adapter">
 				<package name="org.eclipse.net4j.db.derby" />

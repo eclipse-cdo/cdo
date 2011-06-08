@@ -14,7 +14,9 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.view.CDOView.Options;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -23,6 +25,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * A strategy interface to customize the {@link CDORevision revision} prefetching behaviour of a {@link CDOView view}.
+ * 
+ * @see Options#setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy)
  * @author Simon McDuff
  * @since 2.0
  */
@@ -43,10 +48,6 @@ public interface CDORevisionPrefetchingPolicy
    *          {@link CDORevisionManager#containsRevision(CDOID, CDOBranchPoint)}.
    * @param targetObject
    *          Container of the list
-   * @param feature
-   * @param list
-   * @param accessIndex
-   * @param accessID
    * @return Should return a list of id's to be fetch.
    * @since 3.0
    */

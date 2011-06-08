@@ -13,7 +13,12 @@ package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
+
 /**
+ * A distributed (XA) transaction that can atomically commit the changes to multiple {@link ResourceSet resource sets},
+ * each represented by a registered {@link CDOViewSet view set}.
+ * 
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

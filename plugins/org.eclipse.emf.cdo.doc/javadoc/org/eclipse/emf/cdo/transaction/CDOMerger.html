@@ -100,6 +100,11 @@ Interface CDOMerger</H2>
 </PRE>
 
 <P>
+Calculates the changes between a source <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set</CODE></A> and a target <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set</CODE></A>
+ and returns the result relative to their common ancestor.
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
@@ -123,7 +128,8 @@ Interface CDOMerger</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction">CDOMerger.ConflictException</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thrown from a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>merger</CODE></A> in case of conflicting changes in the a source and target
+ <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change sets</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -142,7 +148,8 @@ Interface CDOMerger</H2>
       <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A>&nbsp;source)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Calculates the changes between a source <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set</CODE></A> and a target <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change
+ set</CODE></A> and returns the result relative to their common ancestor.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -165,6 +172,9 @@ merge</H3>
                        <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A>&nbsp;source)
                        throws <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction">CDOMerger.ConflictException</A></PRE>
 <DL>
+<DD>Calculates the changes between a source <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set</CODE></A> and a target <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change
+ set</CODE></A> and returns the result relative to their common ancestor.
+<P>
 <DD><DL>
 
 <DT><B>Throws:</B>

@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo;
 
 import org.eclipse.emf.cdo.CDOLock;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -67,6 +68,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
+ * The base class of all <em>native</em> {@link CDOObject objects}.
+ * 
  * @author Eike Stepper
  */
 public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObject
@@ -1155,6 +1158,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   }
 
   /**
+   * For internal use only.
+   * 
    * @author Simon McDuff
    * @since 2.0
    */

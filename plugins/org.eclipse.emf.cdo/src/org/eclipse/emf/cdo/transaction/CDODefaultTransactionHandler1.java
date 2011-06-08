@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
 /**
+ * An empty default implementation of {@link CDOTransactionHandler1}.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.session;
 
 /**
+ * Provides consumers with {@link CDOSession session} instances.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

@@ -33,6 +33,9 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import java.util.List;
 
 /**
+ * A {@link CDOTransactionHandler1 transaction handler} that automatically attaches cross-referenced objects to the
+ * {@link CDOResource resource} that contains the referencing {@link CDOObject object}.
+ * 
  * @author Simon McDuff
  * @since 2.0
  */

@@ -226,7 +226,8 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFetchRuleManager.html#org.eclipse.emf.cdo.session"><B>CDOFetchRuleManager</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TODO Simon: JavaDoc</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Collects and updates <A HREF="../../../../../org/eclipse/emf/cdo/common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util"><CODE>fetch rules</CODE></A> for <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A>, usually based on
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view"><CODE>feature analyzer</CODE></A> statistics.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.session"><B>CDOView</B></A></B>
@@ -271,7 +272,8 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOQuery.html#org.eclipse.emf.cdo.transaction"><B>CDOQuery</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TODO Simon: JavaDoc</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides access to the information that specifies a query from a <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><CODE>view</CODE></A> to a
+ <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A> and to the results of the remote query execution;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.transaction"><B>CDOView</B></A></B>
@@ -327,7 +329,7 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDORevisionPrefetchingPolicy.html#org.eclipse.emf.cdo.util"><B>CDORevisionPrefetchingPolicy</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A strategy interface to customize the <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision</CODE></A> prefetching behaviour of a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.cdo.util"><B>CDOView</B></A></B>
@@ -361,19 +363,19 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOAdapterPolicy.html#org.eclipse.emf.cdo.view"><B>CDOAdapterPolicy</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies an adapter policy.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A policy that allows to specify valid <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>Adapter</CODE></A> / <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EObject</CODE></A> combinations.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFeatureAnalyzer.html#org.eclipse.emf.cdo.view"><B>CDOFeatureAnalyzer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TODO Simon: JavaDoc</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that is called by a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> on each model read access.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOInvalidationPolicy.html#org.eclipse.emf.cdo.view"><B>CDOInvalidationPolicy</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A strategy interface to customize the invalidation behaviour of a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOObjectHandler.html#org.eclipse.emf.cdo.view"><B>CDOObjectHandler</B></A></B>
@@ -386,13 +388,14 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOQuery.html#org.eclipse.emf.cdo.view"><B>CDOQuery</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TODO Simon: JavaDoc</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides access to the information that specifies a query from a <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><CODE>view</CODE></A> to a
+ <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A> and to the results of the remote query execution;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDORevisionPrefetchingPolicy.html#org.eclipse.emf.cdo.view"><B>CDORevisionPrefetchingPolicy</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A strategy interface to customize the <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision</CODE></A> prefetching behaviour of a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOStaleReferencePolicy.html#org.eclipse.emf.cdo.view"><B>CDOStaleReferencePolicy</B></A></B>
@@ -473,19 +476,20 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/view/package-summary.html
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOAdapterPolicy.html#org.eclipse.emf.spi.cdo"><B>CDOAdapterPolicy</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies an adapter policy.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A policy that allows to specify valid <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>Adapter</CODE></A> / <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EObject</CODE></A> combinations.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFeatureAnalyzer.html#org.eclipse.emf.spi.cdo"><B>CDOFeatureAnalyzer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TODO Simon: JavaDoc</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that is called by a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> on each model read access.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOFetchRuleManager.html#org.eclipse.emf.spi.cdo"><B>CDOFetchRuleManager</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TODO Simon: JavaDoc</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Collects and updates <A HREF="../../../../../org/eclipse/emf/cdo/common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util"><CODE>fetch rules</CODE></A> for <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A>, usually based on
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view"><CODE>feature analyzer</CODE></A> statistics.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/view/class-use/CDOView.html#org.eclipse.emf.spi.cdo"><B>CDOView</B></A></B>

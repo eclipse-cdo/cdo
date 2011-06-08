@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
@@ -58,6 +59,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * A {@link CDOTransaction transaction} that persists changes to the object graph locally on commit and can later load
+ * these changes and push them to the {@link CDOCommonRepository repository}.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

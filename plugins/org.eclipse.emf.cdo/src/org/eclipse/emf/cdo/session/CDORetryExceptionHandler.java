@@ -10,9 +10,14 @@
  */
 package org.eclipse.emf.cdo.session;
 
+import org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler;
+
 import java.text.MessageFormat;
 
 /**
+ * A {@link ExceptionHandler session exection handler} that retries the failed protocol operation a configurable number
+ * of times.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

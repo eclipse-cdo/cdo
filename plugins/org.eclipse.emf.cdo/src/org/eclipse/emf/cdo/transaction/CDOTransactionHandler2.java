@@ -14,6 +14,9 @@
 package org.eclipse.emf.cdo.transaction;
 
 /**
+ * A call-back interface that is called by a {@link CDOTransaction transcation} when it is about to be committed, has
+ * been committed or rolled back.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

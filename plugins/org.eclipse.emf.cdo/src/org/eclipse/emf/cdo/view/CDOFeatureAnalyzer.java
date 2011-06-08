@@ -18,29 +18,16 @@ import org.eclipse.emf.internal.cdo.analyzer.NOOPFeatureAnalyzer;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
- * TODO Simon: JavaDoc
+ * A call-back interface that is called by a {@link CDOView view} on each model read access.
  * 
  * @author Simon McDuff
  * @since 2.0
  */
 public interface CDOFeatureAnalyzer
 {
-  /**
-   * TODO Simon: JavaDoc
-   */
   public static final CDOFeatureAnalyzer NOOP = new NOOPFeatureAnalyzer();
 
-  /**
-   * TODO Simon: JavaDoc
-   * 
-   * @since 2.0
-   */
   public void preTraverseFeature(CDOObject revision, EStructuralFeature feature, int index);
 
-  /**
-   * TODO Simon: JavaDoc
-   * 
-   * @since 2.0
-   */
   public void postTraverseFeature(CDOObject revision, EStructuralFeature feature, int index, Object value);
 }

@@ -18,6 +18,9 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.view.CDOView;
 
 /**
+ * A call-back interface that is called by a {@link CDOTransaction transcation} when {@link CDOObject objects} are
+ * attached, modified or detached.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

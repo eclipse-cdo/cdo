@@ -17,7 +17,8 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * Only deal with transaction process.
+ * Provides functionality that is common to both {@link CDOTransaction single} transactions and {@link CDOXATransaction
+ * distributed} (XA) transactions.
  * 
  * @author Simon McDuff
  * @since 2.0

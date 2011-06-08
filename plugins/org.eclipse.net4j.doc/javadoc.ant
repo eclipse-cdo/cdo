@@ -65,16 +65,16 @@
 			</fileset>
 
 			<group title="Net4j Signalling Platform Transport">
-				<package name="org.eclipse.net4j.signal" />
+				<package name="org.eclipse.net4j" />
+				<package name="org.eclipse.net4j.acceptor" />
+				<package name="org.eclipse.net4j.buffer" />
+				<package name="org.eclipse.net4j.channel" />
 				<package name="org.eclipse.net4j.connector" />
 				<package name="org.eclipse.net4j.protocol" />
-				<package name="org.eclipse.net4j.channel" />
-				<package name="org.eclipse.net4j.buffer" />
-				<package name="org.eclipse.net4j" />
-				<package name="org.eclipse.spi.net4j" />
-				<package name="org.eclipse.net4j.acceptor" />
-				<package name="org.eclipse.net4j.signal.wrapping" />
+				<package name="org.eclipse.net4j.signal" />
 				<package name="org.eclipse.net4j.signal.heartbeat" />
+				<package name="org.eclipse.net4j.signal.wrapping" />
+				<package name="org.eclipse.spi.net4j" />
 			</group>
 			<group title="Net4j Signalling Platform Transport HTTP">
 				<package name="org.eclipse.net4j.http" />
@@ -89,8 +89,8 @@
 				<package name="org.eclipse.net4j.jvm" />
 			</group>
 			<group title="Net4j Signalling Platform Transport TCP">
-				<package name="org.eclipse.net4j.tcp.ssl" />
 				<package name="org.eclipse.net4j.tcp" />
+				<package name="org.eclipse.net4j.tcp.ssl" />
 			</group>
 			<group title="Net4j Signalling Platform UI">
 				<package name="org.eclipse.net4j.ui" />

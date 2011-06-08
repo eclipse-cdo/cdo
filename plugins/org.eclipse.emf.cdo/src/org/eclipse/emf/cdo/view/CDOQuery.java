@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -18,7 +20,8 @@ import org.eclipse.net4j.util.collection.CloseableIterator;
 import java.util.List;
 
 /**
- * TODO Simon: JavaDoc
+ * Provides access to the information that specifies a query from a {@link CDOCommonView view} to a
+ * {@link CDOCommonRepository repository} and to the results of the remote query execution;
  * 
  * @author Simon McDuff
  * @since 2.0

@@ -14,6 +14,8 @@
 package org.eclipse.emf.cdo.transaction;
 
 /**
+ * A combination of {@link CDOTransactionHandler1} and {@link CDOTransactionHandler2}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

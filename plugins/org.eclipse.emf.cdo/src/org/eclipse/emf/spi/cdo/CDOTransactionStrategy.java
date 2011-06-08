@@ -20,8 +20,6 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * TODO Simon: JavaDoc
- * 
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

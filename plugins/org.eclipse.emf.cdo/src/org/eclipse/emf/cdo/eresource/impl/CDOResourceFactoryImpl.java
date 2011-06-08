@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 
 import org.eclipse.emf.common.util.URI;
@@ -19,6 +20,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 /**
+ * Creates default {@link CDOResource} instances.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  */

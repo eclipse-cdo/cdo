@@ -329,7 +329,8 @@ Class DefaultCDOMerger</H2>
       <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A>&nbsp;source)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Calculates the changes between a source <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set</CODE></A> and a target <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change
+ set</CODE></A> and returns the result relative to their common ancestor.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -415,6 +416,10 @@ public <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetDat
                               <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A>&nbsp;source)
                        throws <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction">CDOMerger.ConflictException</A></PRE>
 <DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet, org.eclipse.emf.cdo.common.commit.CDOChangeSet)">CDOMerger</A></CODE></B></DD>
+<DD>Calculates the changes between a source <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set</CODE></A> and a target <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change
+ set</CODE></A> and returns the result relative to their common ancestor.
+<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet, org.eclipse.emf.cdo.common.commit.CDOChangeSet)">merge</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</A></CODE></DL>
 </DD>

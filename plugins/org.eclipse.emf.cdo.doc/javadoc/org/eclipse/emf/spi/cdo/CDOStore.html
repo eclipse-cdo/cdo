@@ -100,7 +100,9 @@ Interface CDOStore</H2>
 </PRE>
 
 <P>
-CDORevision needs to follow these rules:<br>
+A CDO specific version of an <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/InternalEObject.EStore.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>InternalEObject.EStore</CODE></A>.
+ <p>
+ CDORevisions need to follow these rules:<br>
  - Keep CDOID only when the object (!isNew && !isTransient) // Only when CDOID will not changed.<br>
  - Keep EObject for external reference, new, transient and that until commit time.<br>
  It is important since these objects could changed and we need to keep a reference to <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EObject</CODE></A> until the end.

@@ -96,19 +96,20 @@ Client concepts for dealing with views, view sets, queries, CDO objects and EMF 
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</A></B></TD>
-<TD>Specifies an adapter policy.</TD>
+<TD>A policy that allows to specify valid <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>Adapter</CODE></A> / <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EObject</CODE></A> combinations.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</A></B></TD>
-<TD>TODO Simon: JavaDoc</TD>
+<TD>A call-back interface that is called by a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> on each model read access.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</A></B></TD>
-<TD>TODO Simon: JavaDoc</TD>
+<TD>Collects and updates <A HREF="../../../../../org/eclipse/emf/cdo/common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util"><CODE>fetch rules</CODE></A> for <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A>, usually based on
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view"><CODE>feature analyzer</CODE></A> statistics.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A strategy interface to customize the invalidation behaviour of a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOObjectHandler.html" title="interface in org.eclipse.emf.cdo.view">CDOObjectHandler</A></B></TD>
@@ -117,11 +118,12 @@ Client concepts for dealing with views, view sets, queries, CDO objects and EMF 
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</A></B></TD>
-<TD>TODO Simon: JavaDoc</TD>
+<TD>Provides access to the information that specifies a query from a <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><CODE>view</CODE></A> to a
+ <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A> and to the results of the remote query execution;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A strategy interface to customize the <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision</CODE></A> prefetching behaviour of a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleObject.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleObject</A></B></TD>

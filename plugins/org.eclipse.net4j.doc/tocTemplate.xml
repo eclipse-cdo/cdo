@@ -2,8 +2,10 @@
 
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Net4j Utilities Documentation" topic="javadoc/overview-summary.html">
-	<topic label="API Reference" href="javadoc/overview-summary.html"/>
+<toc label="Net4j Signalling Platform Documentation" topic="javadoc/overview-summary.html">
+	<topic label="API Reference" href="javadoc/overview-summary.html">
+		<!-- GROUPS -->
+	</topic>
 	<topic label="Homepage" href="http://www.eclipse.org/cdo"/>
 	<topic label="Wiki" href="http://wiki.eclipse.org/Net4j"/>
 </toc>

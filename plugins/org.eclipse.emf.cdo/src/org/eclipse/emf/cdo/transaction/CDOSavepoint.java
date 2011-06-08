@@ -21,6 +21,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 /**
+ * One in a sequence of possibly several points in time of a {@link CDOTransaction transaction} that encapsulates the
+ * changes to transactional objects and that later changes can be {@link #rollback() rolled back} to.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

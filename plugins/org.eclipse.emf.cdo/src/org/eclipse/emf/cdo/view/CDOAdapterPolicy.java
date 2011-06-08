@@ -19,7 +19,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * Specifies an adapter policy.
+ * A policy that allows to specify valid {@link Adapter} / {@link EObject} combinations.
  * 
  * @author Simon McDuff
  * @see CDOView.Options#addChangeSubscriptionPolicy(CDOAdapterPolicy)

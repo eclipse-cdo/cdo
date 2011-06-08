@@ -78,38 +78,38 @@
 			</fileset>
 
 			<group title="Net4j Utilities">
-				<package name="org.eclipse.net4j.util.container" />
-				<package name="org.eclipse.net4j.util.registry" />
+				<package name="org.eclipse.net4j.util" />
 				<package name="org.eclipse.net4j.util.cache" />
-				<package name="org.eclipse.net4j.util.container.delegate" />
-				<package name="org.eclipse.net4j.util.om" />
 				<package name="org.eclipse.net4j.util.collection" />
-				<package name="org.eclipse.net4j.util.om.trace" />
-				<package name="org.eclipse.net4j.util.om.pref" />
+				<package name="org.eclipse.net4j.util.concurrent" />
+				<package name="org.eclipse.net4j.util.container" />
+				<package name="org.eclipse.net4j.util.container.delegate" />
+				<package name="org.eclipse.net4j.util.event" />
+				<package name="org.eclipse.net4j.util.factory" />
 				<package name="org.eclipse.net4j.util.fsm" />
 				<package name="org.eclipse.net4j.util.io" />
-				<package name="org.eclipse.net4j.util.transaction" />
-				<package name="org.eclipse.net4j.util.event" />
-				<package name="org.eclipse.net4j.util.concurrent" />
-				<package name="org.eclipse.net4j.util.options" />
-				<package name="org.eclipse.net4j.util.om.monitor" />
-				<package name="org.eclipse.net4j.util.om.log" />
-				<package name="org.eclipse.net4j.util.security" />
-				<package name="org.eclipse.net4j.util.ref" />
-				<package name="org.eclipse.net4j.util" />
 				<package name="org.eclipse.net4j.util.lifecycle" />
-				<package name="org.eclipse.net4j.util.factory" />
+				<package name="org.eclipse.net4j.util.om" />
+				<package name="org.eclipse.net4j.util.om.log" />
+				<package name="org.eclipse.net4j.util.om.monitor" />
+				<package name="org.eclipse.net4j.util.om.pref" />
+				<package name="org.eclipse.net4j.util.om.trace" />
+				<package name="org.eclipse.net4j.util.options" />
+				<package name="org.eclipse.net4j.util.ref" />
+				<package name="org.eclipse.net4j.util.registry" />
+				<package name="org.eclipse.net4j.util.security" />
+				<package name="org.eclipse.net4j.util.transaction" />
 			</group>
 			<group title="Net4j Utilities UI">
+				<package name="org.eclipse.net4j.util.ui" />
 				<package name="org.eclipse.net4j.util.ui.actions" />
 				<package name="org.eclipse.net4j.util.ui.container" />
-				<package name="org.eclipse.net4j.util.ui.proposals" />
-				<package name="org.eclipse.net4j.util.ui" />
-				<package name="org.eclipse.net4j.util.ui.widgets" />
 				<package name="org.eclipse.net4j.util.ui.dnd" />
-				<package name="org.eclipse.net4j.util.ui.views" />
-				<package name="org.eclipse.net4j.util.ui.security" />
 				<package name="org.eclipse.net4j.util.ui.prefs" />
+				<package name="org.eclipse.net4j.util.ui.proposals" />
+				<package name="org.eclipse.net4j.util.ui.security" />
+				<package name="org.eclipse.net4j.util.ui.views" />
+				<package name="org.eclipse.net4j.util.ui.widgets" />
 			</group>
 
 			<link href="http://download.oracle.com/javase/1.5.0/docs/api" />

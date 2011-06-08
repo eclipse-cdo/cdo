@@ -137,6 +137,8 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
   }
 
   /**
+   * A default adapter for all kinds of {@link CDORemoteSession remote session} related events.
+   * 
    * @author Eike Stepper
    * @since 3.0
    */

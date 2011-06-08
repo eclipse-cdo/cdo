@@ -74,7 +74,8 @@ public class AssembleJavaDocOptions
     Collection<JavaDoc> values = ANTLIB.getJavaDocs();
     for (JavaDoc javaDoc : values)
     {
-      javaDoc.generate();
+      javaDoc.generateAnt();
+      javaDoc.generateToc();
     }
 
     ANTLIB.generate();
@@ -332,6 +333,13 @@ public class AssembleJavaDocOptions
       return packageNames;
     }
 
+    public List<String> getSortedPackageNames()
+    {
+      List<String> names = new ArrayList<String>(packageNames);
+      Collections.sort(names);
+      return names;
+    }
+
     public int compareTo(SourcePlugin o)
     {
       return getLabel().compareTo(o.getLabel());
@@ -394,6 +402,13 @@ public class AssembleJavaDocOptions
       return sourcePlugins;
     }
 
+    public List<SourcePlugin> getSortedSourcePlugins()
+    {
+      List<SourcePlugin> plugins = new ArrayList<SourcePlugin>(sourcePlugins);
+      Collections.sort(plugins);
+      return plugins;
+    }
+
     public List<String> getSourceFolders()
     {
       return sourceFolders;
@@ -409,7 +424,7 @@ public class AssembleJavaDocOptions
       return packageExcludes;
     }
 
-    public void generate() throws IOException
+    public void generateAnt() throws IOException
     {
       File project = getProject();
       FileWriter out = null;
@@ -473,19 +488,79 @@ public class AssembleJavaDocOptions
             }
             else if ("<!-- GROUPS -->".equals(id))
             {
-              List<SourcePlugin> sorted = new ArrayList<SourcePlugin>(getSourcePlugins());
-              Collections.sort(sorted);
-
-              for (SourcePlugin sourcePlugin : sorted)
+              for (SourcePlugin sourcePlugin : getSortedSourcePlugins())
               {
                 writer.write("\t\t\t<group title=\"" + sourcePlugin.getLabel() + "\">\n");
 
-                for (String packageName : sourcePlugin.getPackageNames())
+                for (String packageName : sourcePlugin.getSortedPackageNames())
                 {
                   writer.write("\t\t\t\t<package name=\"" + packageName + "\" />\n");
                 }
 
                 writer.write("\t\t\t</group>\n");
+              }
+            }
+            else
+            {
+              writer.write(line);
+              writer.write("\n");
+            }
+          }
+
+          writer.flush();
+        }
+        finally
+        {
+          if (in != null)
+          {
+            in.close();
+          }
+        }
+      }
+      finally
+      {
+        if (out != null)
+        {
+          out.close();
+        }
+      }
+    }
+
+    public void generateToc() throws IOException
+    {
+      File project = getProject();
+      FileWriter out = null;
+      FileReader in = null;
+
+      try
+      {
+        out = new FileWriter(new File(project, "toc.xml"));
+        BufferedWriter writer = new BufferedWriter(out);
+
+        try
+        {
+          in = new FileReader(new File(project, "tocTemplate.xml"));
+          BufferedReader reader = new BufferedReader(in);
+
+          String line;
+          while ((line = reader.readLine()) != null)
+          {
+            String id = line.trim();
+            if ("<!-- GROUPS -->".equals(id))
+            {
+              for (SourcePlugin sourcePlugin : getSortedSourcePlugins())
+              {
+                List<String> sortedPackageNames = sourcePlugin.getSortedPackageNames();
+                writer.write("\t\t<topic label=\"" + sourcePlugin.getLabel() + "\" href=\"javadoc/"
+                    + sortedPackageNames.get(0).replace('.', '/') + "/package-summary.html\">\n");
+
+                for (String packageName : sortedPackageNames)
+                {
+                  writer.write("\t\t\t<topic label=\"" + packageName + "\" href=\"javadoc/"
+                      + packageName.replace('.', '/') + "/package-summary.html\" />\n");
+                }
+
+                writer.write("\t\t</topic>\n");
               }
             }
             else

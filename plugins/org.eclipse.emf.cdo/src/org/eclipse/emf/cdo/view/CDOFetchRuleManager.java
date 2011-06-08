@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 
@@ -19,7 +20,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * TODO Simon: JavaDoc
+ * Collects and updates {@link CDOFetchRule fetch rules} for {@link CDORevision revisions}, usually based on
+ * {@link CDOFeatureAnalyzer feature analyzer} statistics.
  * 
  * @author Simon McDuff
  * @since 2.0
@@ -28,20 +30,9 @@ import java.util.List;
  */
 public interface CDOFetchRuleManager
 {
-  /**
-   * TODO Simon: JavaDoc
-   */
   public CDOID getContext();
 
-  /**
-   * TODO Simon: JavaDoc
-   */
   public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids);
 
-  /**
-   * TODO Simon: JavaDoc
-   * 
-   * @since 2.0
-   */
   public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();
 }

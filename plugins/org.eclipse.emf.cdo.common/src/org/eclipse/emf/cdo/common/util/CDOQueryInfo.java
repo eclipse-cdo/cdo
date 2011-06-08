@@ -11,11 +11,16 @@
  */
 package org.eclipse.emf.cdo.common.util;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 
 import java.util.Map;
 
 /**
+ * Encapsulates all the transferrable information that fully specifies a query from a {@link CDOCommonView view} to a
+ * {@link CDOCommonRepository repository}.
+ * 
  * @author Simon McDuff
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

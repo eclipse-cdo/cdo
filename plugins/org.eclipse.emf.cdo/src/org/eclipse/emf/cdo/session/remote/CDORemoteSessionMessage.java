@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
+ * A message from a {@link CDORemoteSession remote session}.
+ * 
  * @author Eike Stepper
  * @since 3.0
  */
@@ -167,6 +169,8 @@ public final class CDORemoteSessionMessage
   }
 
   /**
+   * Enumerates the possible {@link CDORemoteSessionMessage remote session message} priorities.
+   * 
    * @author Eike Stepper
    */
   public enum Priority

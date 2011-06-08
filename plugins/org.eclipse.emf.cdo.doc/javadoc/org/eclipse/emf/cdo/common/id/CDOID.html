@@ -95,7 +95,7 @@ Interface CDOID</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/CDOIDDangling.html" title="interface in org.eclipse.emf.cdo">CDOIDDangling</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOIDExternal.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDExternal</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOIDObject.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDObject</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOIDTemp.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDTemp</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/id/InternalCDOIDObject.html" title="interface in org.eclipse.emf.cdo.spi.common.id">InternalCDOIDObject</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOIDExternal.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDExternal</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOIDObject.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDObject</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOIDTemp.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDTemp</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/id/InternalCDOIDObject.html" title="interface in org.eclipse.emf.cdo.spi.common.id">InternalCDOIDObject</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html" title="class in org.eclipse.emf.cdo.spi.common.id">AbstractCDOID</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOIDInteger.html" title="class in org.eclipse.emf.cdo.spi.common.id">AbstractCDOIDInteger</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOIDLong.html" title="class in org.eclipse.emf.cdo.spi.common.id">AbstractCDOIDLong</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/spi/common/id/AbstractCDOIDString.html" title="class in org.eclipse.emf.cdo.spi.common.id">AbstractCDOIDString</A></DD>
@@ -104,6 +104,10 @@ Interface CDOID</H2>
 <DL>
 <DT><PRE>public interface <B>CDOID</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;</DL>
 </PRE>
+
+<P>
+Identifies CDO objects uniquely in a CDO <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A>.
+<P>
 
 <P>
 <DL>
@@ -131,7 +135,7 @@ Interface CDOID</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <b>sub</b> types of CDO <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>IDs</CODE></A> with the main type <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.Type.html#OBJECT"><CODE>OBJECT</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -139,7 +143,7 @@ Interface CDOID</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.Type.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.Type</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible types of CDO <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>IDs</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;<!-- =========== FIELD SUMMARY =========== -->

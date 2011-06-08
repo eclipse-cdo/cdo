@@ -10,10 +10,13 @@
  */
 package org.eclipse.emf.cdo.common.revision;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 
 /**
+ * An entity that has a defined lifetime (creation plus revision) and a version in a {@link CDOBranch branch}.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

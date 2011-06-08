@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.transaction;
 import org.eclipse.emf.cdo.view.CDOViewEvent;
 
 /**
+ * A {@link CDOViewEvent view event} fired from a {@link CDOTransaction transaction} when it first becomes
+ * {@link CDOTransaction#isDirty() dirty}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

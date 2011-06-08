@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.ecore.EClass;
 
 /**
+ * Creates {@link CDORevision revision} instances.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

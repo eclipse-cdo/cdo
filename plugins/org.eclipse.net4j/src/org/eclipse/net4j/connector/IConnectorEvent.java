@@ -14,7 +14,7 @@ import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
- * An event that is fired by an {@link IConnector}.
+ * A generic {@link IEvent event} fired from a {@link IConnector connector}.
  * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

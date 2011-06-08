@@ -10,7 +10,11 @@
  */
 package org.eclipse.emf.cdo.common.id;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
+
 /**
+ * The {@link CDOID ID} of a CDO object that is persistent in a CDO {@link CDOCommonRepository repository}.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

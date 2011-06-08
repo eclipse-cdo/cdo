@@ -1666,6 +1666,7 @@ public class CDOViewImpl extends AbstractCDOView
     /**
      * @author Eike Stepper
      */
+    @SuppressWarnings("deprecation")
     private final class ReferencePolicyEventImpl extends OptionsEvent implements ReferencePolicyEvent
     {
       private static final long serialVersionUID = 1L;

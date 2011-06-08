@@ -143,7 +143,8 @@ public final class CDOModelUtil implements CDOModelConstants
    */
   public static boolean isResourceFolder(EClass eClass)
   {
-    return isResourcePackage(eClass.getEPackage()) && CDOModelConstants.RESOURCE_FOLDER_CLASS_NAME.equals(eClass.getName());
+    return isResourcePackage(eClass.getEPackage())
+        && CDOModelConstants.RESOURCE_FOLDER_CLASS_NAME.equals(eClass.getName());
   }
 
   /**
@@ -152,8 +153,9 @@ public final class CDOModelUtil implements CDOModelConstants
   public static boolean isResourceNode(EClass eClass)
   {
     return isResourcePackage(eClass.getEPackage())
-        && (CDOModelConstants.RESOURCE_NODE_CLASS_NAME.equals(eClass.getName()) || CDOModelConstants.RESOURCE_CLASS_NAME.equals(eClass.getName()) || CDOModelConstants.RESOURCE_FOLDER_CLASS_NAME
-            .equals(eClass.getName()));
+        && (CDOModelConstants.RESOURCE_NODE_CLASS_NAME.equals(eClass.getName())
+            || CDOModelConstants.RESOURCE_CLASS_NAME.equals(eClass.getName()) || CDOModelConstants.RESOURCE_FOLDER_CLASS_NAME
+              .equals(eClass.getName()));
   }
 
   /**
@@ -178,7 +180,8 @@ public final class CDOModelUtil implements CDOModelConstants
   public static boolean isLob(EClassifier eClassifier)
   {
     return isTypesPackage(eClassifier.getEPackage())
-        && (CDOModelConstants.BLOB_CLASS_NAME.equals(eClassifier.getName()) || CDOModelConstants.CLOB_CLASS_NAME.equals(eClassifier.getName()));
+        && (CDOModelConstants.BLOB_CLASS_NAME.equals(eClassifier.getName()) || CDOModelConstants.CLOB_CLASS_NAME
+            .equals(eClassifier.getName()));
   }
 
   /**

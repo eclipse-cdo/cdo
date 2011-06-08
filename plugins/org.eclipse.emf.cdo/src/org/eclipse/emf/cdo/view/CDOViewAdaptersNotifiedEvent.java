@@ -10,7 +10,13 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.common.notify.Adapter;
+
 /**
+ * A {@link CDOViewEvent view event} fired when a {@link CDOView view} has finished notifying EMF {@link Adapter
+ * adapters} about remote changes.
+ * 
+ * @see CDOView.Options#addChangeSubscriptionPolicy(CDOAdapterPolicy)
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

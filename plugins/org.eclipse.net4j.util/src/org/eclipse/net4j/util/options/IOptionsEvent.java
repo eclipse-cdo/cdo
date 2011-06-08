@@ -14,6 +14,8 @@ package org.eclipse.net4j.util.options;
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
+ * A generic {@link IEvent event} fired from an {@link IOptions options} object when an option has changed.
+ * 
  * @author Victor Roldan Betancort
  * @since 2.0
  */

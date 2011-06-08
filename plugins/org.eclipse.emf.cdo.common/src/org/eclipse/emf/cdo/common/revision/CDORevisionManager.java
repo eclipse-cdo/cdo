@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common.revision;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -19,6 +20,9 @@ import org.eclipse.emf.ecore.EClass;
 import java.util.List;
 
 /**
+ * Provides access to {@link CDORevision revisions} in a CDO {@link CDOCommonRepository repository} by demand loading
+ * and caching them.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

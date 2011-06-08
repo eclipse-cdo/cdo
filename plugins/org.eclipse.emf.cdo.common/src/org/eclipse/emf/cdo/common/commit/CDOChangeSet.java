@@ -14,6 +14,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 
 /**
+ * The {@link CDOChangeSetData change set data} between two {@link CDOBranchPointRange branch points} with a common
+ * ancestor.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

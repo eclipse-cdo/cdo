@@ -2709,6 +2709,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
     }
 
+    @Override
+    public CDOTransactionImpl getContainer()
+    {
+      return (CDOTransactionImpl)super.getContainer();
+    }
+
     public CDOConflictResolver[] getConflictResolvers()
     {
       synchronized (CDOTransactionImpl.this)

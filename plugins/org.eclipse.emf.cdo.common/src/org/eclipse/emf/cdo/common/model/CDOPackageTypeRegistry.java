@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
+
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
@@ -25,6 +27,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * A {@link #INSTANCE singleton} registry for the {@link Type package unit types} of EMF {@link EPackage packages}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */
@@ -209,7 +213,7 @@ public final class CDOPackageTypeRegistry
   }
 
   /**
-   * TODO Remove me when client and common are unified!
+   * A common marker interface for CDO (native) objects.
    * 
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.

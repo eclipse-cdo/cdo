@@ -17,6 +17,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
 /**
+ * Represents a reference from one object to another object, possibly {@link CDOID} or CDOObject typed.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

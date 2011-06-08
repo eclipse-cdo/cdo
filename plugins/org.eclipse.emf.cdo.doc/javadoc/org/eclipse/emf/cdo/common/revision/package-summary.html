@@ -96,27 +96,27 @@ Common concepts for dealing with revisions and revision lists.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDOAllRevisionsProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOAllRevisionsProvider</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Provides consumers with all <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> available in an instance of this interface.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDOElementProxy.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOElementProxy</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A moveable placeholder for the element of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>list</CODE></A> at a specified <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDOElementProxy.html#getIndex()"><CODE>index</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>ID</CODE></A> / <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A> pair.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>ID</CODE></A> / version pair.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><CODE>moveable</CODE></A> <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>EList</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDOListFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListFactory</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Creates <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>list</CODE></A> instances.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDOListResolver.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListResolver</A></B></TD>
@@ -125,47 +125,52 @@ Common concepts for dealing with revisions and revision lists.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An entity that has a defined lifetime (creation plus revision) and a version in a <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Encapsulates the immutable information of a single CDO object between two commits in a <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Caches <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> and possibly <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>evicts</CODE></A> those that are no longer strongly
+ referenced when free memory runs low.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.EvictionEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision cache</CODE></A> for <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> that
+ are evicted because they are no longer strongly referenced when free memory runs low.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An entity that <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> can be added to.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionData</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Encapsulates the modeled information and the EMF system values of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Creates <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision</CODE></A> instances.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A call-back interface that indicates the ability to <i>handle</i> <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> that are passed from
+ other entities.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Uniquely identifies a <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision</CODE></A> by version in a <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Provides access to <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> in a CDO <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A> by demand loading
+ and caching them.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Provides consumers with the <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> of <A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><CODE>identifiable</CODE></A> CDO objects by selecting a
+ particular one from several possible <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch points</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -179,7 +184,7 @@ Common concepts for dealing with revisions and revision lists.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Various static helper methods for dealing with <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.AllRevisionsDumper.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil.AllRevisionsDumper</A></B></TD>

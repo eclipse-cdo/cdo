@@ -11,15 +11,22 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonSession;
+
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 
 import java.util.List;
 import java.util.Map;
 
 /**
+ * An EMF {@link Registry package registry} that is used by CDO {@link CDOCommonRepository repositories} and
+ * {@link CDOCommonSession sessions}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

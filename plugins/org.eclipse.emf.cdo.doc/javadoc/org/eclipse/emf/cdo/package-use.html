@@ -146,19 +146,20 @@ Classes in <A HREF="../../../../org/eclipse/emf/cdo/package-summary.html">org.ec
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOLock.html#org.eclipse.emf.cdo"><B>CDOLock</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Once object got lock, it will not go in conflict mode or cannot be changed.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read or write lock on an <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> as returned by <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReadLock()"><CODE>CDOObject.cdoReadLock()</CODE></A> or
+ <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()"><CODE>CDOObject.cdoWriteLock()</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDONotification.html#org.eclipse.emf.cdo"><B>CDONotification</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TODO Simon: JavaDoc</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A base interface for all CDO specific notifications.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOState.html#org.eclipse.emf.cdo"><B>CDOState</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible states of <b>local</b> <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -244,7 +245,7 @@ Classes in <A HREF="../../../../org/eclipse/emf/cdo/package-summary.html">org.ec
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOObjectReference.html#org.eclipse.emf.cdo.transaction"><B>CDOObjectReference</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>CDOObject</CODE></A> typed reference from one object to another object.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -282,7 +283,7 @@ Classes in <A HREF="../../../../org/eclipse/emf/cdo/package-summary.html">org.ec
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOObjectReference.html#org.eclipse.emf.cdo.util"><B>CDOObjectReference</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>CDOObject</CODE></A> typed reference from one object to another object.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -304,13 +305,13 @@ Classes in <A HREF="../../../../org/eclipse/emf/cdo/package-summary.html">org.ec
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOObjectReference.html#org.eclipse.emf.cdo.view"><B>CDOObjectReference</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>CDOObject</CODE></A> typed reference from one object to another object.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOState.html#org.eclipse.emf.cdo.view"><B>CDOState</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible states of <b>local</b> <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -325,7 +326,8 @@ Classes in <A HREF="../../../../org/eclipse/emf/cdo/package-summary.html">org.ec
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOLock.html#org.eclipse.emf.internal.cdo"><B>CDOLock</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Once object got lock, it will not go in conflict mode or cannot be changed.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read or write lock on an <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> as returned by <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReadLock()"><CODE>CDOObject.cdoReadLock()</CODE></A> or
+ <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()"><CODE>CDOObject.cdoWriteLock()</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOObject.html#org.eclipse.emf.internal.cdo"><B>CDOObject</B></A></B>
@@ -338,7 +340,7 @@ Classes in <A HREF="../../../../org/eclipse/emf/cdo/package-summary.html">org.ec
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOState.html#org.eclipse.emf.internal.cdo"><B>CDOState</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible states of <b>local</b> <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -360,13 +362,13 @@ Classes in <A HREF="../../../../org/eclipse/emf/cdo/package-summary.html">org.ec
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOObjectReference.html#org.eclipse.emf.spi.cdo"><B>CDOObjectReference</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>CDOObject</CODE></A> typed reference from one object to another object.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../org/eclipse/emf/cdo/class-use/CDOState.html#org.eclipse.emf.spi.cdo"><B>CDOState</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible states of <b>local</b> <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

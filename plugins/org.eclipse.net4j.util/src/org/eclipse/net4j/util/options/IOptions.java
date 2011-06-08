@@ -14,10 +14,15 @@ package org.eclipse.net4j.util.options;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
+ * Encapsulates a set of notifying configuration options.
+ * 
  * @author Victor Roldan Betancort
  * @since 2.0
  */
 public interface IOptions extends INotifier
 {
+  /**
+   * Returns the container of this options object.
+   */
   public IOptionsContainer getContainer();
 }

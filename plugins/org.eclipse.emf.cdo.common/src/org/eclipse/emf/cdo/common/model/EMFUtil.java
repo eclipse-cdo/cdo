@@ -52,6 +52,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
+ * Various static helper methods for dealing with EMF meta models.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

@@ -12,12 +12,16 @@
  */
 package org.eclipse.emf.cdo.common.id;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
+
 import org.eclipse.net4j.util.ImplementationError;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
 
 /**
+ * Identifies CDO objects uniquely in a CDO {@link CDOCommonRepository repository}.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -50,6 +54,8 @@ public interface CDOID extends Serializable, Comparable<CDOID>
   public String toURIFragment();
 
   /**
+   * Enumerates the possible types of CDO {@link CDOID IDs}.
+   * 
    * @author Eike Stepper
    */
   public enum Type
@@ -122,6 +128,8 @@ public interface CDOID extends Serializable, Comparable<CDOID>
   }
 
   /**
+   * Enumerates the possible <b>sub</b> types of CDO {@link CDOID IDs} with the main type {@link Type#OBJECT OBJECT}.
+   * 
    * @author Eike Stepper
    * @since 3.0
    */

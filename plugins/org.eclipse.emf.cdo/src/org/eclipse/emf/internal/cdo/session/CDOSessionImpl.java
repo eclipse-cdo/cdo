@@ -101,7 +101,6 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
-import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 
 import org.eclipse.emf.common.util.ECollections;
@@ -1532,7 +1531,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       setCollectionLoadingPolicy(null); // Init default
     }
 
-    public IOptionsContainer getContainer()
+    public CDOSession getContainer()
     {
       return CDOSessionImpl.this;
     }

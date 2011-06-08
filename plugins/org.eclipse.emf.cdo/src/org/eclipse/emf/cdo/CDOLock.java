@@ -21,7 +21,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Lock;
 
 /**
- * Once object got lock, it will not go in conflict mode or cannot be changed.
+ * A read or write lock on an {@link CDOObject object} as returned by {@link CDOObject#cdoReadLock()} or
+ * {@link CDOObject#cdoWriteLock()}.
  * 
  * @author Simon McDuff
  * @since 2.0

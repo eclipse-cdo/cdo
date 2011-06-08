@@ -106,10 +106,6 @@ Client concepts like <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" ti
  It doesn't provide the old value, only the new index or new value.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/emf/cdo/CDOIDDangling.html" title="interface in org.eclipse.emf.cdo">CDOIDDangling</A></B></TD>
-<TD>&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/emf/cdo/CDOInvalidationNotification.html" title="interface in org.eclipse.emf.cdo">CDOInvalidationNotification</A></B></TD>
 <TD>A custom EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>notification</CODE></A> that is emitted to <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapters</CODE></A> of the objects in a
  <A HREF="../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> if <A HREF="../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationNotificationEnabled(boolean)"><CODE>invalidation notification</CODE></A> is
@@ -117,11 +113,12 @@ Client concepts like <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" ti
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo">CDOLock</A></B></TD>
-<TD>Once object got lock, it will not go in conflict mode or cannot be changed.</TD>
+<TD>A read or write lock on an <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> as returned by <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReadLock()"><CODE>CDOObject.cdoReadLock()</CODE></A> or
+ <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()"><CODE>CDOObject.cdoWriteLock()</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/emf/cdo/CDONotification.html" title="interface in org.eclipse.emf.cdo">CDONotification</A></B></TD>
-<TD>TODO Simon: JavaDoc</TD>
+<TD>A base interface for all CDO specific notifications.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A></B></TD>
@@ -130,7 +127,7 @@ Client concepts like <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" ti
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents a <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>CDOObject</CODE></A> typed reference from one object to another object.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -144,7 +141,7 @@ Client concepts like <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" ti
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Enumerates the possible states of <b>local</b> <A HREF="../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

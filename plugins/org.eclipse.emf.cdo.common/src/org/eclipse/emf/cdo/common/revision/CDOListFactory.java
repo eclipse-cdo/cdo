@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 
 /**
+ * Creates {@link CDOList list} instances.
+ * 
  * @author Simon McDuff
  * @since 2.0
  */

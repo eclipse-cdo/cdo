@@ -12,6 +12,8 @@
 package org.eclipse.emf.cdo.common.revision;
 
 /**
+ * A moveable placeholder for the element of a {@link CDOList list} at a specified {@link #getIndex() index}.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

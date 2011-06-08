@@ -265,6 +265,12 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     {
     }
 
+    @Override
+    public CDOSession getContainer()
+    {
+      return (CDOSession)super.getContainer();
+    }
+
     public ISignalProtocol<org.eclipse.emf.cdo.net4j.CDOSession> getProtocol()
     {
       CDOSessionProtocol protocol = getSessionProtocol();

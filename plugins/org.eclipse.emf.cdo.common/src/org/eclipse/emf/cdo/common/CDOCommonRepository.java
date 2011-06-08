@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.event.IEvent;
 import java.util.Set;
 
 /**
+ * Abstracts the information about CDO repositories that is common to both client and server side.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -90,6 +92,8 @@ public interface CDOCommonRepository extends CDOTimeProvider
   public boolean isEnsuringReferentialIntegrity();
 
   /**
+   * Enumerates the possible {@link CDOCommonRepository#getType() types} of a CDO repository.
+   * 
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    */
@@ -99,6 +103,8 @@ public interface CDOCommonRepository extends CDOTimeProvider
   }
 
   /**
+   * Enumerates the possible {@link CDOCommonRepository#getState() states} of a CDO repository.
+   * 
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    */
@@ -113,6 +119,9 @@ public interface CDOCommonRepository extends CDOTimeProvider
   }
 
   /**
+   * An {@link IEvent event} fired when the {@link Type type} of a CDO repository has changed. This usually happens only
+   * for repository fail-over participants.
+   * 
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -125,6 +134,8 @@ public interface CDOCommonRepository extends CDOTimeProvider
   }
 
   /**
+   * An {@link IEvent event} fired when the {@link State state} of a CDO repository has changed.
+   * 
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.

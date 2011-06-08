@@ -11,7 +11,8 @@
 package org.eclipse.emf.cdo.view;
 
 /**
- * Notifies about a change of the branch point of the view.
+ * A {@link CDOViewEvent view event} fired when a {@link CDOView view} has been made
+ * {@link CDOView#enableDurableLocking(boolean) durable} or volatile.
  * 
  * @author Eike Stepper
  * @since 4.0

@@ -14,6 +14,8 @@ import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
+ * An {@link IEvent event} fired from a {@link IContainer container} when its contents have changed.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

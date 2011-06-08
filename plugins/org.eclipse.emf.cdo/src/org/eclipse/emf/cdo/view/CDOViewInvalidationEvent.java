@@ -15,19 +15,20 @@ import org.eclipse.emf.cdo.CDOInvalidationNotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.session.CDOSession.Options;
-
-import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 
 import java.util.Map;
 import java.util.Set;
 
 /**
- * An event that is emitted to registered {@link IListener listeners} of a {@link CDOView} if
- * {@link Options#setPassiveUpdateEnabled(boolean) passive update} is enabled for the session.
+ * A {@link CDOViewEvent view event} fired when passive updates (commit notifications) are being received from a remote
+ * repository. {@link Options#setPassiveUpdateEnabled(boolean) Passive updates} must be enabled for this event to be
+ * fired.
  * 
- * @author Simon McDuff
+ * @see CDOSessionInvalidationEvent
  * @see CDOInvalidationNotification
  * @see CDOAdapterPolicy
+ * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

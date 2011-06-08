@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.net4j.util.collection.Closeable;
 
 /**
+ * Abstracts the information about CDO views that is common to both client and server side.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

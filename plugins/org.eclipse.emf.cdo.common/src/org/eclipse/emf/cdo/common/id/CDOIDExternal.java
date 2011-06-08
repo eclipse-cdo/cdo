@@ -11,7 +11,11 @@
  */
 package org.eclipse.emf.cdo.common.id;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
+
 /**
+ * The {@link CDOID ID} of a CDO object that is external to a CDO {@link CDOCommonRepository repository}.
+ * 
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.common;
 
 /**
+ * Abstracts the information about CDO transactions that is common to both client and server side.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

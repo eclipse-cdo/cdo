@@ -52,6 +52,8 @@ import java.util.Set;
 import java.util.StringTokenizer;
 
 /**
+ * Various static helper methods for dealing with {@link CDORevision revisions}.
+ * 
  * @author Eike Stepper
  */
 public final class CDORevisionUtil

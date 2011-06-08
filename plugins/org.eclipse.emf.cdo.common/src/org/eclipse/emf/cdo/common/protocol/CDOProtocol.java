@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.common.protocol;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 
 /**
+ * The communications protocol associated with a CDO {@link CDOCommonSession session}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

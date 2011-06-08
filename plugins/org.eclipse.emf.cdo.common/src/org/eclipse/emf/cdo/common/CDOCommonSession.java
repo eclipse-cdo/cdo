@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.security.IUserAware;
 
 /**
+ * Abstracts the information about CDO sessions that is common to both client and server side.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -36,12 +38,21 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
   public Options options();
 
   /**
+   * Encapsulates the configuration options of CDO sessions that are common to both client and server side.
+   * 
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Options extends IOptions
   {
+    /**
+     * Returns the {@link CDOCommonSession session} of this options object.
+     * 
+     * @since 4.0
+     */
+    public CDOCommonSession getContainer();
+
     public boolean isPassiveUpdateEnabled();
 
     /**
@@ -74,6 +85,9 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
     public void setPassiveUpdateMode(PassiveUpdateMode mode);
 
     /**
+     * Enumerates the possible {@link CDOCommonSession.Options#getPassiveUpdateMode() passive update modes} of a CDO
+     * session.
+     * 
      * @author Eike Stepper
      * @since 3.0
      */
@@ -98,6 +112,9 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired when the {@link PassiveUpdateMode passive update mode} of a CDO
+     * session has changed.
+     * 
      * @author Eike Stepper
      * @since 3.0
      */

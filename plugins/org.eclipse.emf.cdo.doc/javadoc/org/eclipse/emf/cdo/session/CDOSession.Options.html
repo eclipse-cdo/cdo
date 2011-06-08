@@ -106,6 +106,10 @@ Interface CDOSession.Options</H2>
 </PRE>
 
 <P>
+Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> configuration options.
+<P>
+
+<P>
 <DL>
 <DT><B>Author:</B></DT>
   <DD>Simon McDuff</DD>
@@ -131,7 +135,9 @@ Interface CDOSession.Options</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.CollectionLoadingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.CollectionLoadingPolicyEvent</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)"><CODE>collection loading policy</CODE></A> option of a
+ <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -139,7 +145,9 @@ Interface CDOSession.Options</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.GeneratedPackageEmulationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.GeneratedPackageEmulationEvent</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setGeneratedPackageEmulationEnabled(boolean)"><CODE>generated package emulation enabled</CODE></A> option of a
+ <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -147,7 +155,8 @@ Interface CDOSession.Options</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.LobCacheEvent</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired when the <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)"><CODE>large object cache</CODE></A>
+ option of a <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> has changed.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.cdo.common.CDOCommonSession.Options"><!-- --></A>
@@ -177,6 +186,14 @@ Interface CDOSession.Options</H2>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><CODE>collection loading policy</CODE></A> of this <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> controls how
  a list gets populated.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#getContainer()">getContainer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> of this options object.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -228,15 +245,6 @@ Interface CDOSession.Options</H2>
 <TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()">getPassiveUpdateMode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</A></CODE></TD>
 </TR>
 </TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.options.IOptions"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.options.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true#getContainer()" title="class or interface in org.eclipse.net4j.util.options">getContainer</A></CODE></TD>
-</TR>
-</TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
@@ -258,6 +266,24 @@ Interface CDOSession.Options</H2>
 <B>Method Detail</B></FONT></TH>
 </TR>
 </TABLE>
+
+<A NAME="getContainer()"><!-- --></A><H3>
+getContainer</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A> <B>getContainer</B>()</PRE>
+<DL>
+<DD>Returns the <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> of this options object.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getContainer()">getContainer</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true#getContainer()" title="class or interface in org.eclipse.net4j.util.options">getContainer</A></CODE> in interface <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
 
 <A NAME="isGeneratedPackageEmulationEnabled()"><!-- --></A><H3>
 isGeneratedPackageEmulationEnabled</H3>

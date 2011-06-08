@@ -392,12 +392,21 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
   public Options options();
 
   /**
+   * Encapsulates a set of notifying {@link CDOView view} configuration options.
+   * 
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Options extends IOptions
   {
+    /**
+     * Returns the {@link CDOView view} of this options object.
+     * 
+     * @since 4.0
+     */
+    public CDOView getContainer();
+
     /**
      * @since 3.0
      */
@@ -543,6 +552,9 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
     public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
 
     /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setCacheReferenceType(ReferenceType) cache reference type} option has changed.
+     * 
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -552,15 +564,36 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setStrongReferencePolicy(CDOAdapterPolicy) strong reference policy} option has changed.
+     * 
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
+     * @since 4.0
      */
-    public interface ReferencePolicyEvent extends IOptionsEvent
+    public interface StrongReferencePolicyEvent extends IOptionsEvent
     {
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setStrongReferencePolicy(CDOAdapterPolicy) strong reference policy} option has changed.
+     * 
+     * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     * @deprecated Use {@link StrongReferencePolicyEvent} instead.
+     */
+    @Deprecated
+    public interface ReferencePolicyEvent extends StrongReferencePolicyEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setStaleReferenceBehaviour(CDOStaleReferencePolicy) stale reference type} option has changed.
+     * 
      * @since 3.0
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -570,6 +603,9 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#addChangeSubscriptionPolicy(CDOAdapterPolicy) change subscription policies} option has changed.
+     * 
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -579,6 +615,9 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setInvalidationPolicy(CDOInvalidationPolicy) invalidation policy} option has changed.
+     * 
      * @author Eike Stepper
      * @since 3.0
      * @noextend This interface is not intended to be extended by clients.
@@ -589,6 +628,9 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setInvalidationNotificationEnabled(boolean) invalidation notification enabled} option has changed.
+     * 
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -598,6 +640,10 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy) revision prefetching policy} option has
+     * changed.
+     * 
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.

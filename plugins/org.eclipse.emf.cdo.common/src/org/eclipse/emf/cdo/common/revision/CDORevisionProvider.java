@@ -10,9 +10,13 @@
  */
 package org.eclipse.emf.cdo.common.revision;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
 /**
+ * Provides consumers with the {@link CDORevision revisions} of {@link CDOID identifiable} CDO objects by selecting a
+ * particular one from several possible {@link CDOBranchPoint branch points}.
+ * 
  * @author Eike Stepper
  * @since 3.0
  */

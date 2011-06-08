@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.emf.common.util.EList;
 
 /**
+ * A {@link MoveableList moveable} {@link EList}.
+ * 
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

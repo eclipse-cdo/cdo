@@ -138,52 +138,65 @@ Client concepts for dealing with views, view sets, queries, CDO objects and EMF 
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> configuration options.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.CacheReferenceTypeEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.CacheReferenceTypeEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired from view <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()"><CODE>options</CODE></A> when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)"><CODE>cache reference type</CODE></A> option has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.ChangeSubscriptionPoliciesEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ChangeSubscriptionPoliciesEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired from view <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()"><CODE>options</CODE></A> when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><CODE>change subscription policies</CODE></A> option has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.InvalidationNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationNotificationEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired from view <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()"><CODE>options</CODE></A> when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationNotificationEnabled(boolean)"><CODE>invalidation notification enabled</CODE></A> option has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.InvalidationPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.InvalidationPolicyEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired from view <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()"><CODE>options</CODE></A> when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)"><CODE>invalidation policy</CODE></A> option has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.ReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ReferencePolicyEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.StrongReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view"><CODE>CDOView.Options.StrongReferencePolicyEvent</CODE></A> instead.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.RevisionPrefetchingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.RevisionPrefetchingPolicyEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired from view <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()"><CODE>options</CODE></A> when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setRevisionPrefetchingPolicy(org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy)"><CODE>revision prefetching policy</CODE></A> option has
+ changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.StaleReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.StaleReferencePolicyEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired from view <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()"><CODE>options</CODE></A> when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferenceBehaviour(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)"><CODE>stale reference type</CODE></A> option has changed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.StrongReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.StrongReferencePolicyEvent</A></B></TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired from view <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()"><CODE>options</CODE></A> when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><CODE>strong reference policy</CODE></A> option has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewAdaptersNotifiedEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewAdaptersNotifiedEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view event</CODE></A> fired when a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> has finished notifying EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapters</CODE></A> about remote changes.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewDurabilityChangedEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewDurabilityChangedEvent</A></B></TD>
-<TD>Notifies about a change of the branch point of the view.</TD>
+<TD>A <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view event</CODE></A> fired when a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> has been made
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)"><CODE>durable</CODE></A> or volatile.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A generic <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewInvalidationEvent</A></B></TD>
-<TD>An event that is emitted to registered <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listeners</CODE></A> of a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>CDOView</CODE></A> if
- <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><CODE>passive update</CODE></A> is enabled for the session.</TD>
+<TD>A <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view event</CODE></A> fired when passive updates (commit notifications) are being received from a remote
+ repository.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</A></B></TD>
@@ -199,7 +212,7 @@ Client concepts for dealing with views, view sets, queries, CDO objects and EMF 
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewTargetChangedEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewTargetChangedEvent</A></B></TD>
-<TD>Notifies about a change of the branch point of the view.</TD>
+<TD>A <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view event</CODE></A> fired when the branch point of a <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> has changed.</TD>
 </TR>
 </TABLE>
 &nbsp;

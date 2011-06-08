@@ -18,12 +18,30 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/QueryManager.java" type="org.eclipse.emf.cdo.internal.server.QueryManager$QueryContext">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="IQueryContext"/>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="QueryContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/Repository.java" type="org.eclipse.emf.cdo.internal.server.Repository">
         <filter id="574660632">
             <message_arguments>
                 <message_argument value="InternalRepository"/>
                 <message_argument value="CDOCommonRepository"/>
                 <message_argument value="Repository"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/ResourcesQueryHandler.java" type="org.eclipse.emf.cdo.internal.server.ResourcesQueryHandler$QueryContext">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="QueryResourcesContext"/>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="QueryContext"/>
             </message_arguments>
         </filter>
     </resource>
@@ -73,6 +91,13 @@
                 <message_argument value="XRefContext"/>
             </message_arguments>
         </filter>
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="QueryXRefsContext"/>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="XRefContext"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/View.java" type="org.eclipse.emf.cdo.internal.server.View">
         <filter id="574660632">
@@ -87,6 +112,13 @@
         <filter id="572522506">
             <message_arguments>
                 <message_argument value="CDOIDReference"/>
+                <message_argument value="QueryContext"/>
+            </message_arguments>
+        </filter>
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="QueryXRefsContext"/>
+                <message_argument value="CDOBranchPoint"/>
                 <message_argument value="QueryContext"/>
             </message_arguments>
         </filter>
@@ -142,6 +174,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IQueryContext.java" type="org.eclipse.emf.cdo.server.IQueryContext">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="IQueryContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/IRepository.java" type="org.eclipse.emf.cdo.server.IRepository">
         <filter id="574619656">
             <message_arguments>
@@ -163,6 +203,22 @@
             <message_arguments>
                 <message_argument value="IDurableLockingManager"/>
                 <message_argument value="DurableLocking"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IStoreAccessor.java" type="org.eclipse.emf.cdo.server.IStoreAccessor$QueryResourcesContext">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="QueryResourcesContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/IStoreAccessor.java" type="org.eclipse.emf.cdo.server.IStoreAccessor$QueryXRefsContext">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="QueryXRefsContext"/>
             </message_arguments>
         </filter>
     </resource>
@@ -227,6 +283,15 @@
             <message_arguments>
                 <message_argument value="Options"/>
                 <message_argument value="InternalSession"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/server/Store.java" type="org.eclipse.emf.cdo.spi.server.Store">
+        <filter id="574660632">
+            <message_arguments>
+                <message_argument value="ExactMatch"/>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="Store"/>
             </message_arguments>
         </filter>
     </resource>

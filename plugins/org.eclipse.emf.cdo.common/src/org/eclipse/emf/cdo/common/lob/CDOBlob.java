@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * A identifiable binary large object with streaming support.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

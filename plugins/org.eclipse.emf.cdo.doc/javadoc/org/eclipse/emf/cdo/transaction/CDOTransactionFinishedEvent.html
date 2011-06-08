@@ -100,6 +100,12 @@ Interface CDOTransactionFinishedEvent</H2>
 </PRE>
 
 <P>
+A <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view event</CODE></A> fired from a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A> when it becomes
+ <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#isDirty()"><CODE>clean</CODE></A> after a sucessful <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>commit</CODE></A> or
+ <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback()"><CODE>rollback</CODE></A>.
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>2.0</DD>
@@ -127,7 +133,7 @@ Interface CDOTransactionFinishedEvent</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionFinishedEvent.Type.html" title="enum in org.eclipse.emf.cdo.transaction">CDOTransactionFinishedEvent.Type</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionFinishedEvent.html#getType()"><CODE>causes</CODE></A> for a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A> to become finished.</TD>
 </TR>
 </TABLE>
 &nbsp;

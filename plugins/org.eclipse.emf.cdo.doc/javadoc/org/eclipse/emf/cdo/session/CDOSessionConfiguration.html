@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.SessionOpenedEvent.html" title="interface in org.eclipse.emf.cdo.session"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="CDOSessionConfiguration.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -76,7 +76,7 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>
@@ -92,12 +92,19 @@ org.eclipse.emf.cdo.session</FONT>
 <BR>
 Interface CDOSessionConfiguration</H2>
 <DL>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
+</DL>
+<DL>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">RecoveringCDOSessionConfiguration</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public interface <B>CDOSessionConfiguration</B></DL>
+<DT><PRE>public interface <B>CDOSessionConfiguration</B><DT>extends <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DL>
 </PRE>
+
+<P>
+Configures and opens new <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>sessions</CODE></A>.
+<P>
 
 <P>
 <DL>
@@ -113,7 +120,25 @@ Interface CDOSessionConfiguration</H2>
 <HR>
 
 <P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
 
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.SessionOpenedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration.SessionOpenedEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fired from a <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session configuration</CODE></A> after a new <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> has been
+ opened.</TD>
+</TR>
+</TABLE>
+&nbsp;
 <!-- ========== METHOD SUMMARY =========== -->
 
 <A NAME="method_summary"><!-- --></A>
@@ -212,6 +237,15 @@ Interface CDOSessionConfiguration</H2>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
 &nbsp;
 <P>
 
@@ -231,6 +265,9 @@ isPassiveUpdateEnabled</H3>
 boolean <B>isPassiveUpdateEnabled</B>()</PRE>
 <DL>
 <DD><DL>
+</DL>
+</DD>
+<DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()"><CODE>CDOCommonSession.Options.isPassiveUpdateEnabled()</CODE></A></DL>
@@ -243,6 +280,9 @@ setPassiveUpdateEnabled</H3>
 <PRE>
 void <B>setPassiveUpdateEnabled</B>(boolean&nbsp;passiveUpdateEnabled)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
@@ -257,6 +297,9 @@ getPassiveUpdateMode</H3>
 <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</A> <B>getPassiveUpdateMode</B>()</PRE>
 <DL>
 <DD><DL>
+</DL>
+</DD>
+<DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()"><CODE>CDOCommonSession.Options.getPassiveUpdateMode()</CODE></A></DL>
@@ -269,6 +312,9 @@ setPassiveUpdateMode</H3>
 <PRE>
 void <B>setPassiveUpdateMode</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</A>&nbsp;passiveUpdateMode)</PRE>
 <DL>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
@@ -283,6 +329,9 @@ getExceptionHandler</H3>
 <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</A> <B>getExceptionHandler</B>()</PRE>
 <DL>
 <DD><DL>
+</DL>
+</DD>
+<DD><DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getExceptionHandler()"><CODE>CDOSession.getExceptionHandler()</CODE></A></DL>
 </DD>
 </DL>
@@ -296,6 +345,9 @@ void <B>setExceptionHandler</B>(<A HREF="../../../../../org/eclipse/emf/cdo/sess
 <DD>A special exception handler can be set <b>before</b> the session is opened and can not be changed thereafter.
 <P>
 <DD><DL>
+</DL>
+</DD>
+<DD><DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getExceptionHandler()"><CODE>CDOSession.getExceptionHandler()</CODE></A></DL>
 </DD>
 </DL>
@@ -308,6 +360,9 @@ getAuthenticator</H3>
 <DL>
 <DD>Returns the authenticator of this configuration, never <code>null</code>.
 <P>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -325,6 +380,9 @@ boolean <B>isActivateOnOpen</B>()</PRE>
 <DD><DL>
 </DL>
 </DD>
+<DD><DL>
+</DL>
+</DD>
 </DL>
 <HR>
 
@@ -335,6 +393,9 @@ void <B>setActivateOnOpen</B>(boolean&nbsp;activateOnOpen)</PRE>
 <DL>
 <DD>Specifies whether the session opened by <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#openSession()"><CODE>openSession()</CODE></A> will be automatically activated or not.
 <P>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -351,6 +412,9 @@ boolean <B>isSessionOpen</B>()</PRE>
 <DD><DL>
 </DL>
 </DD>
+<DD><DL>
+</DL>
+</DD>
 </DL>
 <HR>
 
@@ -362,6 +426,9 @@ openSession</H3>
 <DD>Opens the session for this configuration. Once the session is openend this method always returns the same session
  instance. Therefore it is impossible to change this configuration while the session is open.
 <P>
+<DD><DL>
+</DL>
+</DD>
 <DD><DL>
 </DL>
 </DD>
@@ -398,7 +465,7 @@ openSession</H3>
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.SessionOpenedEvent.html" title="interface in org.eclipse.emf.cdo.session"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="CDOSessionConfiguration.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -418,7 +485,7 @@ openSession</H3>
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
 DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
 </TR>

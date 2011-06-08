@@ -59,6 +59,9 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle
   public Queue<IBuffer> getSendQueue();
 
   /**
+   * An {@link IEvent event} fired from a {@link InternalChannel channel} when a {@link IBuffer buffer} is enqueued or
+   * dequeued.
+   * 
    * @author Eike Stepper
    * @since 3.0
    * @noextend This interface is not intended to be extended by clients.
@@ -73,6 +76,8 @@ public interface InternalChannel extends IChannel, IBufferProvider, ILifecycle
     public int getQueueSize();
 
     /**
+     * Enumerates the possible {@link InternalChannel#getSendQueue() send queue} {@link SendQueueEvent event} types.
+     * 
      * @author Eike Stepper
      */
     public enum Type

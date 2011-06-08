@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.common.model;
 
 /**
+ * Symbolic model constants commonly used in CDO.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

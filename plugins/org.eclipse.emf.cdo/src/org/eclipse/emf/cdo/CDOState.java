@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo;
 
 /**
+ * Enumerates the possible states of <b>local</b> {@link CDOObject objects}.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  */

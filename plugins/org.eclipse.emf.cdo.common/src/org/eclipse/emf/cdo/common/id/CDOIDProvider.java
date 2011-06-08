@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.common.id;
 
 /**
+ * Provides the {@link CDOID IDs} of passed objects.
+ * 
  * @author Eike Stepper
  */
 public interface CDOIDProvider

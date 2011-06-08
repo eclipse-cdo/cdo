@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 /**
  * Represents and controls the connection to a model repository.
@@ -325,12 +326,21 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
   public Options options();
 
   /**
+   * Encapsulates a set of notifying {@link CDOSession session} configuration options.
+   * 
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Options extends CDOCommonSession.Options
   {
+    /**
+     * Returns the {@link CDOSession session} of this options object.
+     * 
+     * @since 4.0
+     */
+    public CDOSession getContainer();
+
     public boolean isGeneratedPackageEmulationEnabled();
 
     public void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled);
@@ -374,6 +384,10 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
     public void setLobCache(CDOLobStore lobCache);
 
     /**
+     * An {@link IOptionsEvent options event} fired when the
+     * {@link Options#setGeneratedPackageEmulationEnabled(boolean) generated package emulation enabled} option of a
+     * {@link CDOSession session} has changed.
+     * 
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -383,6 +397,10 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired when the
+     * {@link Options#setCollectionLoadingPolicy(CDOCollectionLoadingPolicy) collection loading policy} option of a
+     * {@link CDOSession session} has changed.
+     * 
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -392,6 +410,9 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired when the {@link Options#setLobCache(CDOLobStore) large object cache}
+     * option of a {@link CDOSession session} has changed.
+     * 
      * @author Eike Stepper
      * @since 4.0
      * @noextend This interface is not intended to be extended by clients.
@@ -403,6 +424,10 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
   }
 
   /**
+   * Handles {@link CDOSessionProtocol protocol} exceptions if
+   * {@link CDOSessionConfiguration#setExceptionHandler(ExceptionHandler) configured} before the session has been
+   * opened.
+   * 
    * @author Eike Stepper
    */
   public interface ExceptionHandler

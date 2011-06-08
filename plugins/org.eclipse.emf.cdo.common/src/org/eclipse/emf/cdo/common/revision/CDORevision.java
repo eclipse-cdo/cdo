@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.ecore.EClass;
 
 /**
+ * Encapsulates the immutable information of a single CDO object between two commits in a {@link CDOBranch branch}.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

@@ -17,6 +17,9 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.net4j.util.concurrent.QueueWorker;
 
 /**
+ * A {@link CDOCommitInfoHandler commit info handler} that asynchronously delegates {@link CDOCommitInfo commit infos}
+ * to another handler.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

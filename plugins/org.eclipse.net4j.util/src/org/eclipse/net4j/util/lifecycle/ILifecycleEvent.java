@@ -13,6 +13,9 @@ package org.eclipse.net4j.util.lifecycle;
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
+ * An {@link IEvent event} fired from an object with a {@link ILifecycle lifecycle} when its lifecycle {@link Kind
+ * state} has changed.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -27,6 +30,8 @@ public interface ILifecycleEvent extends IEvent
   public Kind getKind();
 
   /**
+   * Enumerates the possible {@link ILifecycle#getLifecycleState() lifecycle state} changes of an object.
+   * 
    * @author Eike Stepper
    */
   public enum Kind

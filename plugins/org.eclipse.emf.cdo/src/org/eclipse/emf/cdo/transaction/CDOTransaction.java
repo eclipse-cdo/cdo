@@ -189,10 +189,21 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public Options options();
 
   /**
+   * Encapsulates a set of notifying {@link CDOTransaction transaction} configuration options.
+   * 
    * @author Simon McDuff
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Options extends CDOView.Options
   {
+    /**
+     * Returns the {@link CDOTransaction transaction} of this options object.
+     * 
+     * @since 4.0
+     */
+    public CDOTransaction getContainer();
+
     /**
      * Returns a copy of the conflict resolver list of this transaction.
      */
@@ -232,15 +243,25 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     public void setAutoReleaseLocksEnabled(boolean on);
 
     /**
+     * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
+     * {@link Options#addConflictResolver(CDOConflictResolver) conflict resolvers} option has changed.
+     * 
      * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface ConflictResolversEvent extends IOptionsEvent
     {
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
+     * {@link Options#setAutoReleaseLocksEnabled(boolean) auto release locks} option has changed.
+     * 
      * @author Eike Stepper
      * @since 3.0
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface AutoReleaseLocksEvent extends IOptionsEvent
     {

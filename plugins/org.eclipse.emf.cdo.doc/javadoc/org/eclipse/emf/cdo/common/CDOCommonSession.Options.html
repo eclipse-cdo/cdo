@@ -106,6 +106,10 @@ Interface CDOCommonSession.Options</H2>
 </PRE>
 
 <P>
+Encapsulates the configuration options of CDO sessions that are common to both client and server side.
+<P>
+
+<P>
 <DL>
 <DT><B>Author:</B></DT>
   <DD>Simon McDuff</DD>
@@ -131,7 +135,8 @@ Interface CDOCommonSession.Options</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateEvent</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired when the <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common"><CODE>passive update mode</CODE></A> of a CDO
+ session has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -139,7 +144,8 @@ Interface CDOCommonSession.Options</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()"><CODE>passive update modes</CODE></A> of a CDO
+ session.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -150,6 +156,14 @@ Interface CDOCommonSession.Options</H2>
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getContainer()">getContainer</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common"><CODE>session</CODE></A> of this options object.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -184,15 +198,6 @@ Interface CDOCommonSession.Options</H2>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.options.IOptions"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.options.<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true#getContainer()" title="class or interface in org.eclipse.net4j.util.options">getContainer</A></CODE></TD>
-</TR>
-</TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
@@ -214,6 +219,24 @@ Interface CDOCommonSession.Options</H2>
 <B>Method Detail</B></FONT></TH>
 </TR>
 </TABLE>
+
+<A NAME="getContainer()"><!-- --></A><H3>
+getContainer</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</A> <B>getContainer</B>()</PRE>
+<DL>
+<DD>Returns the <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common"><CODE>session</CODE></A> of this options object.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true#getContainer()" title="class or interface in org.eclipse.net4j.util.options">getContainer</A></CODE> in interface <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
 
 <A NAME="isPassiveUpdateEnabled()"><!-- --></A><H3>
 isPassiveUpdateEnabled</H3>

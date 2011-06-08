@@ -18,11 +18,10 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.event.IListener;
-
 /**
- * An event that is emitted to registered {@link IListener listeners} of a {@link CDOSession} if
- * {@link CDOSession.Options#setPassiveUpdateEnabled(boolean) passive update} is enabled for the session.
+ * A {@link CDOSessionEvent session event} fired when passive updates (commit notifications) are being received from a
+ * remote repository. {@link CDOSession.Options#setPassiveUpdateEnabled(boolean) Passive updates} must be enabled for
+ * this event to be fired.
  * 
  * @author Eike Stepper
  * @see CDOInvalidationNotification

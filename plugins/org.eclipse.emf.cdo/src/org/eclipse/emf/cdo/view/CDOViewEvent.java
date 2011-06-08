@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
+ * A generic {@link IEvent event} fired from a {@link CDOView view}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

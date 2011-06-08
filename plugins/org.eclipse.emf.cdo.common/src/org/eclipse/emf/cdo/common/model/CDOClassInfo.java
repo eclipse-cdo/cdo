@@ -15,6 +15,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
+ * An EMF {@link Adapter adapter} that encapsulates CDO specific information about an {@link EClass}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

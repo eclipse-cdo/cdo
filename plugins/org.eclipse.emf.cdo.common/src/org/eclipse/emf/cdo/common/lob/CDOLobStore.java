@@ -16,6 +16,8 @@ import java.io.InputStream;
 import java.io.Reader;
 
 /**
+ * Stores and loads {@link CDOLob large objects}.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

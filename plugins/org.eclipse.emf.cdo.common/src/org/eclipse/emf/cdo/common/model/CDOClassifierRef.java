@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.text.MessageFormat;
 
 /**
+ * References an {@link EClassifier}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */
@@ -144,6 +146,8 @@ public final class CDOClassifierRef
   }
 
   /**
+   * Provides {@link CDOClassifierRef classifier references}.
+   * 
    * @author Eike Stepper
    * @since 3.0
    */

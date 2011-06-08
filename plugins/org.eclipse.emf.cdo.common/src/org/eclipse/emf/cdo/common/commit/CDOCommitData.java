@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import java.util.List;
 
 /**
+ * {@link CDOChangeSetData Change set data} with detailed information about new {@link #getNewPackageUnits() package
+ * units}.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

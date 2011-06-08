@@ -96,15 +96,17 @@ Common concepts for dealing with durable locks and views.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Manages all aspects of durable CDO views like persisting informations like <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch point</CODE></A> and
+ acquired locks.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Encapsulates the persistable information about a single durable CDO view like <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch point</CODE></A>
+ and acquired locks.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.Handler.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea.Handler</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A call-back interface for <em>handling</em> <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><CODE>lock area</CODE></A> objects.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -118,7 +120,7 @@ Common concepts for dealing with durable locks and views.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Enumerates the possible combinations of read and write locks on a single CDO object.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -132,7 +134,7 @@ Common concepts for dealing with durable locks and views.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockAreaNotFoundException.html" title="class in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockAreaNotFoundException</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Thrown if a <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><CODE>lock area</CODE></A> is spcified that does not exist in a CDO <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

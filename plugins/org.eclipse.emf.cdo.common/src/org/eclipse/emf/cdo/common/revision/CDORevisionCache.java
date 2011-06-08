@@ -23,6 +23,9 @@ import org.eclipse.emf.ecore.EClass;
 import java.util.List;
 
 /**
+ * Caches {@link CDORevision revisions} and possibly {@link EvictionEvent evicts} those that are no longer strongly
+ * referenced when free memory runs low.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
@@ -55,6 +58,9 @@ public interface CDORevisionCache extends CDORevisionCacheAdder, INotifier
   public List<CDORevision> getCurrentRevisions();
 
   /**
+   * An {@link IEvent event} fired from a {@link CDORevisionCache revision cache} for {@link CDORevision revisions} that
+   * are evicted because they are no longer strongly referenced when free memory runs low.
+   * 
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.

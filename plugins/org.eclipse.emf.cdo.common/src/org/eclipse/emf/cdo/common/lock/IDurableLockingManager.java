@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common.lock;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
@@ -18,6 +19,9 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import java.util.Map;
 
 /**
+ * Manages all aspects of durable CDO views like persisting informations like {@link CDOBranchPoint branch point} and
+ * acquired locks.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
@@ -41,6 +45,9 @@ public interface IDurableLockingManager
   public void deleteLockArea(String durableLockingID);
 
   /**
+   * Encapsulates the persistable information about a single durable CDO view like {@link CDOBranchPoint branch point}
+   * and acquired locks.
+   * 
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -56,6 +63,8 @@ public interface IDurableLockingManager
     public Map<CDOID, LockGrade> getLocks();
 
     /**
+     * A call-back interface for <em>handling</em> {@link LockArea lock area} objects.
+     * 
      * @author Eike Stepper
      */
     public interface Handler
@@ -65,6 +74,9 @@ public interface IDurableLockingManager
   }
 
   /**
+   * Thrown if a {@link LockArea lock area} is spcified that does not exist in a CDO {@link CDOCommonRepository
+   * repository}.
+   * 
    * @author Eike Stepper
    */
   public static class LockAreaNotFoundException extends IllegalStateException
@@ -92,6 +104,8 @@ public interface IDurableLockingManager
   }
 
   /**
+   * Enumerates the possible combinations of read and write locks on a single CDO object.
+   * 
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    */

@@ -11,7 +11,12 @@
  */
 package org.eclipse.emf.cdo.common.id;
 
+import org.eclipse.emf.cdo.common.CDOCommonTransaction;
+
 /**
+ * The {@link CDOID ID} of a CDO object that is new in a dirty (uncommitted) CDO {@link CDOCommonTransaction
+ * transaction}.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

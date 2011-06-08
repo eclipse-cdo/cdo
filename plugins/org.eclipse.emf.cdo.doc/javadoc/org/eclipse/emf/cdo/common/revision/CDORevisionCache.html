@@ -103,6 +103,11 @@ Interface CDORevisionCache</H2>
 </PRE>
 
 <P>
+Caches <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> and possibly <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>evicts</CODE></A> those that are no longer strongly
+ referenced when free memory runs low.
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
@@ -130,7 +135,8 @@ Interface CDORevisionCache</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.EvictionEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache.EvictionEvent</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision cache</CODE></A> for <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> that
+ are evicted because they are no longer strongly referenced when free memory runs low.</TD>
 </TR>
 </TABLE>
 &nbsp;<!-- =========== FIELD SUMMARY =========== -->

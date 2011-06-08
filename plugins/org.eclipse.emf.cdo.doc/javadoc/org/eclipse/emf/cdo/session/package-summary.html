@@ -109,27 +109,39 @@ Client concepts for dealing with sessions to remote repositories.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Handles <A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><CODE>protocol</CODE></A> exceptions if
+ <CODE>configured</CODE> before the session has been
+ opened.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> configuration options.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.CollectionLoadingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.CollectionLoadingPolicyEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)"><CODE>collection loading policy</CODE></A> option of a
+ <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.GeneratedPackageEmulationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.GeneratedPackageEmulationEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setGeneratedPackageEmulationEnabled(boolean)"><CODE>generated package emulation enabled</CODE></A> option of a
+ <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.LobCacheEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired when the <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)"><CODE>large object cache</CODE></A>
+ option of a <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Configures and opens new <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>sessions</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.SessionOpenedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration.SessionOpenedEvent</A></B></TD>
+<TD>Fired from a <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session configuration</CODE></A> after a new <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> has been
+ opened.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</A></B></TD>
@@ -137,12 +149,12 @@ Client concepts for dealing with sessions to remote repositories.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A generic <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</A></B></TD>
-<TD>An event that is emitted to registered <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listeners</CODE></A> of a <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>CDOSession</CODE></A> if
- <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><CODE>passive update</CODE></A> is enabled for the session.</TD>
+<TD>A <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session event</CODE></A> fired when passive updates (commit notifications) are being received from a
+ remote repository.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionProvider.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionProvider</A></B></TD>

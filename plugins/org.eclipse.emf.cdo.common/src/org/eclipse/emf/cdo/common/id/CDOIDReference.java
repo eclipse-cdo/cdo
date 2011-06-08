@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.io.IOException;
 
 /**
+ * Represents a {@link CDOID} typed reference from one object to another object.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

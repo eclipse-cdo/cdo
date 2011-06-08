@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo;
 import org.eclipse.emf.cdo.common.id.CDOReference;
 
 /**
+ * Represents a {@link CDOObject} typed reference from one object to another object.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

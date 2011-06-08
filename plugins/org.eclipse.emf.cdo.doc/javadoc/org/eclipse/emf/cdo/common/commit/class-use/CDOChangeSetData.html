@@ -156,7 +156,8 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChang
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set data</CODE></A> between two <A HREF="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch points</CODE></A> with a common
+ ancestor.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -164,7 +165,8 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChang
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Change set data</CODE></A> with detailed information about new <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html#getNewPackageUnits()"><CODE>package
+ units</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -172,7 +174,8 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChang
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -421,8 +424,8 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChang
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An event that is emitted to registered <A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listeners</CODE></A> of a <A HREF="../../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>CDOSession</CODE></A> if
- <A HREF="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><CODE>passive update</CODE></A> is enabled for the session.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session event</CODE></A> fired when passive updates (commit notifications) are being received from a
+ remote repository.</TD>
 </TR>
 </TABLE>
 &nbsp;

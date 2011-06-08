@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.common.branch;
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
+ * An {@link IEvent event} fired from a {@link CDOBranchManager branch manager} when a new {@link CDOBranch branch} has
+ * been created.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

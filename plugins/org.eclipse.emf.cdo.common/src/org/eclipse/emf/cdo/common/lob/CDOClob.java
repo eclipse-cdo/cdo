@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
+ * A identifiable character large object with streaming support.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

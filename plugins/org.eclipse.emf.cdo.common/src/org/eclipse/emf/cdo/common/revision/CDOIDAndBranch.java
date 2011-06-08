@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
 /**
+ * An {@link CDOID ID} / {@link CDOBranch branch} pair.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

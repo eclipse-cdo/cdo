@@ -44,6 +44,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.io.IOException;
 
 /**
+ * Provides I/O methods for writing various CDO data types and concepts to streams.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

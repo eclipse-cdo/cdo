@@ -158,43 +158,47 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeKind.html#org.eclipse.emf.cdo.common.commit"><B>CDOChangeKind</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates possible change kinds.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeKindProvider.html#org.eclipse.emf.cdo.common.commit"><B>CDOChangeKindProvider</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generic provider for the kinds of changes that have been applied to objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.cdo.common.commit"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitData.html#org.eclipse.emf.cdo.common.commit"><B>CDOCommitData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Change set data</CODE></A> with detailed information about new <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html#getNewPackageUnits()"><CODE>package
+ units</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfo.html#org.eclipse.emf.cdo.common.commit"><B>CDOCommitInfo</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfoHandler.html#org.eclipse.emf.cdo.common.commit"><B>CDOCommitInfoHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit infos</CODE></A> that are passed
+ from other entities.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfoManager.html#org.eclipse.emf.cdo.common.commit"><B>CDOCommitInfoManager</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads, provides and possible manages <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info</CODE></A> objects.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -209,13 +213,15 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfo.html#org.eclipse.emf.cdo.common.commit.handler"><B>CDOCommitInfo</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfoHandler.html#org.eclipse.emf.cdo.common.commit.handler"><B>CDOCommitInfoHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit infos</CODE></A> that are passed
+ from other entities.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -230,19 +236,22 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.cdo.common.protocol"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitData.html#org.eclipse.emf.cdo.common.protocol"><B>CDOCommitData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Change set data</CODE></A> with detailed information about new <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html#getNewPackageUnits()"><CODE>package
+ units</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfo.html#org.eclipse.emf.cdo.common.protocol"><B>CDOCommitInfo</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -257,13 +266,15 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSet.html#org.eclipse.emf.cdo.common.revision"><B>CDOChangeSet</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set data</CODE></A> between two <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch points</CODE></A> with a common
+ ancestor.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.cdo.common.revision"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -278,13 +289,14 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.cdo.common.util"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfoManager.html#org.eclipse.emf.cdo.common.util"><B>CDOCommitInfoManager</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads, provides and possible manages <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info</CODE></A> objects.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -299,13 +311,15 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfo.html#org.eclipse.emf.cdo.server"><B>CDOCommitInfo</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfoHandler.html#org.eclipse.emf.cdo.server"><B>CDOCommitInfoHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit infos</CODE></A> that are passed
+ from other entities.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -320,7 +334,8 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.cdo.server.ocl"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -335,31 +350,34 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeKindProvider.html#org.eclipse.emf.cdo.session"><B>CDOChangeKindProvider</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generic provider for the kinds of changes that have been applied to objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.cdo.session"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitData.html#org.eclipse.emf.cdo.session"><B>CDOCommitData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Change set data</CODE></A> with detailed information about new <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html#getNewPackageUnits()"><CODE>package
+ units</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfo.html#org.eclipse.emf.cdo.session"><B>CDOCommitInfo</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfoManager.html#org.eclipse.emf.cdo.session"><B>CDOCommitInfoManager</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads, provides and possible manages <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info</CODE></A> objects.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -374,7 +392,8 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfoHandler.html#org.eclipse.emf.cdo.spi.common"><B>CDOCommitInfoHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit infos</CODE></A> that are passed
+ from other entities.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -389,19 +408,20 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeKind.html#org.eclipse.emf.cdo.spi.common.commit"><B>CDOChangeKind</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates possible change kinds.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeKindProvider.html#org.eclipse.emf.cdo.spi.common.commit"><B>CDOChangeKindProvider</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Generic provider for the kinds of changes that have been applied to objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.cdo.spi.common.commit"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetDataProvider.html#org.eclipse.emf.cdo.spi.common.commit"><B>CDOChangeSetDataProvider</B></A></B>
@@ -413,25 +433,28 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitData.html#org.eclipse.emf.cdo.spi.common.commit"><B>CDOCommitData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Change set data</CODE></A> with detailed information about new <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html#getNewPackageUnits()"><CODE>package
+ units</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfo.html#org.eclipse.emf.cdo.spi.common.commit"><B>CDOCommitInfo</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfoHandler.html#org.eclipse.emf.cdo.spi.common.commit"><B>CDOCommitInfoHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit infos</CODE></A> that are passed
+ from other entities.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfoManager.html#org.eclipse.emf.cdo.spi.common.commit"><B>CDOCommitInfoManager</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loads, provides and possible manages <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info</CODE></A> objects.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -446,25 +469,29 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.cdo.spi.server"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitData.html#org.eclipse.emf.cdo.spi.server"><B>CDOCommitData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Change set data</CODE></A> with detailed information about new <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html#getNewPackageUnits()"><CODE>package
+ units</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfo.html#org.eclipse.emf.cdo.spi.server"><B>CDOCommitInfo</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfoHandler.html#org.eclipse.emf.cdo.spi.server"><B>CDOCommitInfoHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit infos</CODE></A> that are passed
+ from other entities.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -479,13 +506,15 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSet.html#org.eclipse.emf.cdo.transaction"><B>CDOChangeSet</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set data</CODE></A> between two <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch points</CODE></A> with a common
+ ancestor.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.cdo.transaction"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetDataProvider.html#org.eclipse.emf.cdo.transaction"><B>CDOChangeSetDataProvider</B></A></B>
@@ -497,7 +526,8 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfo.html#org.eclipse.emf.cdo.transaction"><B>CDOCommitInfo</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -512,7 +542,8 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.cdo.view"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -527,13 +558,15 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSet.html#org.eclipse.emf.spi.cdo"><B>CDOChangeSet</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set data</CODE></A> between two <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch points</CODE></A> with a common
+ ancestor.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetData.html#org.eclipse.emf.spi.cdo"><B>CDOChangeSetData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change kind provider</CODE></A> with detailed information about <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><CODE>new</CODE></A>,
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><CODE>changed</CODE></A> and <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><CODE>detached</CODE></A> objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOChangeSetDataProvider.html#org.eclipse.emf.spi.cdo"><B>CDOChangeSetDataProvider</B></A></B>
@@ -545,13 +578,15 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/package-
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitData.html#org.eclipse.emf.spi.cdo"><B>CDOCommitData</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Change set data</CODE></A> with detailed information about new <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html#getNewPackageUnits()"><CODE>package
+ units</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/class-use/CDOCommitInfo.html#org.eclipse.emf.spi.cdo"><B>CDOCommitInfo</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>Commit data</CODE></A> in the context of a <A HREF="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>commit info manager</CODE></A> with
+ additional commit informations.</TD>
 </TR>
 </TABLE>
 &nbsp;

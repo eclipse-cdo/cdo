@@ -18,6 +18,9 @@ import org.eclipse.emf.ecore.EPackage;
 import java.util.Map.Entry;
 
 /**
+ * Populates a {@link #getTarget() target} package registry by asynchronously polling a {@link #getSource() source}
+ * package registry for new {@link EPackage} registrations.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */
@@ -113,6 +116,9 @@ public class CDOPackageRegistryPopulator extends Worker
   }
 
   /**
+   * A package {@link org.eclipse.emf.ecore.EPackage.Descriptor descriptor} that resolves {@link EPackage packages} from
+   * a {@link #getSource() source } package registry.
+   * 
    * @author Eike Stepper
    */
   public static class Descriptor implements EPackage.Descriptor

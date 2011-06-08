@@ -40,6 +40,8 @@ import org.eclipse.net4j.util.ObjectUtil;
 import java.text.MessageFormat;
 
 /**
+ * Various static methods that may help with CDO {@link CDOID IDs}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

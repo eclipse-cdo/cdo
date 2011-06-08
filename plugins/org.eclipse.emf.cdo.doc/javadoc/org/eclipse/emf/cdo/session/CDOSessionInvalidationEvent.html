@@ -100,8 +100,9 @@ Interface CDOSessionInvalidationEvent</H2>
 </PRE>
 
 <P>
-An event that is emitted to registered <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>listeners</CODE></A> of a <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>CDOSession</CODE></A> if
- <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><CODE>passive update</CODE></A> is enabled for the session.
+A <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session event</CODE></A> fired when passive updates (commit notifications) are being received from a
+ remote repository. <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><CODE>Passive updates</CODE></A> must be enabled for
+ this event to be fired.
 <P>
 
 <P>

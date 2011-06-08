@@ -43,6 +43,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import java.io.IOException;
 
 /**
+ * Provides I/O methods for reading various CDO data types and concepts from streams.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

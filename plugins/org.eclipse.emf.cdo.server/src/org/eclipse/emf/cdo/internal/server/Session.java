@@ -15,6 +15,7 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -46,7 +47,6 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
-import org.eclipse.net4j.util.options.IOptionsContainer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
@@ -122,7 +122,7 @@ public class Session extends Container<IView> implements InternalSession
   /**
    * @since 2.0
    */
-  public IOptionsContainer getContainer()
+  public CDOCommonSession getContainer()
   {
     return this;
   }

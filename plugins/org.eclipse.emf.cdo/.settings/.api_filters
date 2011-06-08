@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo" version="2">
-    <resource path="src/org/eclipse/emf/cdo/CDOIDDangling.java" type="org.eclipse.emf.cdo.CDOIDDangling">
-        <filter id="571473929">
-            <message_arguments>
-                <message_argument value="CDOID"/>
-                <message_argument value="CDOIDDangling"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/CDOObjectReference.java" type="org.eclipse.emf.cdo.CDOObjectReference">
         <filter id="574619656">
             <message_arguments>
@@ -57,7 +49,21 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/transaction/CDOSavepoint.java" type="org.eclipse.emf.cdo.transaction.CDOSavepoint">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOChangeSetDataProvider"/>
+                <message_argument value="CDOSavepoint"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/transaction/CDOTransaction.java" type="org.eclipse.emf.cdo.transaction.CDOTransaction">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOChangeSetDataProvider"/>
+                <message_argument value="CDOTransaction"/>
+            </message_arguments>
+        </filter>
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOCommonTransaction"/>
@@ -78,14 +84,6 @@
             <message_arguments>
                 <message_argument value="CDOCommonView"/>
                 <message_argument value="CDOView"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/internal/cdo/object/CDOIDDanglingImpl.java" type="org.eclipse.emf.internal.cdo.object.CDOIDDanglingImpl">
-        <filter id="571473929">
-            <message_arguments>
-                <message_argument value="AbstractCDOID"/>
-                <message_argument value="CDOIDDanglingImpl"/>
             </message_arguments>
         </filter>
     </resource>
@@ -139,6 +137,14 @@
             <message_arguments>
                 <message_argument value="CDOProtocol"/>
                 <message_argument value="CDOSessionProtocol"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/CDOSessionProtocol.java" type="org.eclipse.emf.spi.cdo.CDOSessionProtocol$CommitTransactionResult">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="CommitTransactionResult"/>
             </message_arguments>
         </filter>
     </resource>

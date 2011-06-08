@@ -52,7 +52,6 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
-import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
 
@@ -244,7 +243,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     return false;
   }
 
-  public IOptionsContainer getContainer()
+  public CDOView getContainer()
   {
     return this;
   }

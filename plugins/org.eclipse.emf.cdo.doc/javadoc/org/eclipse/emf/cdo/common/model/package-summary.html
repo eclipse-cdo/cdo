@@ -96,15 +96,15 @@ Common concepts for dealing with models and types.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.Provider.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassifierRef.Provider</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Provides <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model"><CODE>classifier references</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapter</CODE></A> that encapsulates CDO specific information about an <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EClass</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOModelConstants.html" title="interface in org.eclipse.emf.cdo.common.model">CDOModelConstants</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Symbolic model constants commonly used in CDO.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</A></B></TD>
@@ -113,11 +113,12 @@ Common concepts for dealing with models and types.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>package registry</CODE></A> that is used by CDO <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repositories</CODE></A> and
+ <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common"><CODE>sessions</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageTypeRegistry.CDOObjectMarker.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageTypeRegistry.CDOObjectMarker</A></B></TD>
-<TD>TODO Remove me when client and common are unified!</TD>
+<TD>A common marker interface for CDO (native) objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</A></B></TD>
@@ -139,7 +140,7 @@ Common concepts for dealing with models and types.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>References an <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EClassifier</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOModelUtil.html" title="class in org.eclipse.emf.cdo.common.model">CDOModelUtil</A></B></TD>
@@ -147,19 +148,21 @@ Common concepts for dealing with models and types.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistryPopulator.html" title="class in org.eclipse.emf.cdo.common.model">CDOPackageRegistryPopulator</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Populates a <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistryPopulator.html#getTarget()"><CODE>target</CODE></A> package registry by asynchronously polling a <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistryPopulator.html#getSource()"><CODE>source</CODE></A>
+ package registry for new <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>EPackage</CODE></A> registrations.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistryPopulator.Descriptor.html" title="class in org.eclipse.emf.cdo.common.model">CDOPackageRegistryPopulator.Descriptor</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A package <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>descriptor</CODE></A> that resolves <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>packages</CODE></A> from
+ a <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistryPopulator.Descriptor.html#getSource()"><CODE>source </CODE></A> package registry.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageTypeRegistry.html" title="class in org.eclipse.emf.cdo.common.model">CDOPackageTypeRegistry</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageTypeRegistry.html#INSTANCE"><CODE>singleton</CODE></A> registry for the <A HREF="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model"><CODE>package unit types</CODE></A> of EMF <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>packages</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.html" title="class in org.eclipse.emf.cdo.common.model">EMFUtil</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Various static helper methods for dealing with EMF meta models.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/model/EMFUtil.ExtResourceSet.html" title="class in org.eclipse.emf.cdo.common.model">EMFUtil.ExtResourceSet</A></B></TD>

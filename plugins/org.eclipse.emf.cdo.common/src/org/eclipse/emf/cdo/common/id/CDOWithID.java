@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.common.id;
 
 /**
+ * An identifiable object.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

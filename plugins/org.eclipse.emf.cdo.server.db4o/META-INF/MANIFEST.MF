@@ -5,10 +5,10 @@ Bundle-SymbolicName: org.eclipse.emf.cdo.server.db4o;singleton:=true
 Bundle-Version: 4.0.0.qualifier
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.eclipse.emf.cdo.server;bundle-version="[3.0.0,4.0.1)"
-Export-Package: org.eclipse.emf.cdo.server.db4o;version="1.0.0",
- org.eclipse.emf.cdo.server.internal.db4o;version="1.0.0";x-friends:="org.eclipse.emf.cdo.tests.db4o",
- org.eclipse.emf.cdo.server.internal.db4o.bundle;version="1.0.0";x-internal:=true
+Require-Bundle: org.eclipse.emf.cdo.server;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
+Export-Package: org.eclipse.emf.cdo.server.db4o;version="4.0.0",
+ org.eclipse.emf.cdo.server.internal.db4o;version="4.0.0";x-friends:="org.eclipse.emf.cdo.tests.db4o",
+ org.eclipse.emf.cdo.server.internal.db4o.bundle;version="4.0.0";x-internal:=true
 Import-Package: com.db4o;version="[7.4.0,8.0.0)",
  com.db4o.config;version="[7.4.0,8.0.0)",
  com.db4o.constraints;version="[7.4.0,8.0.0)",

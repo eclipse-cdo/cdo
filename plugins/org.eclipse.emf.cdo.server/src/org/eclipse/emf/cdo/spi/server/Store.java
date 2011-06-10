@@ -28,7 +28,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
@@ -426,7 +426,7 @@ public abstract class Store extends Lifecycle implements InternalStore
    * example it could always return the same pool instance, regardless of the given session.
    * <p>
    * If the implementor of this method decides to create pools that are only compatible with certain sessions or views,
-   * then it is his responsibility to listen to {@link IContainerDelta.Kind#REMOVED REMOVED} events sent by either the
+   * then it is his responsibility to listen to {@link Kind#REMOVED REMOVED} events sent by either the
    * {@link ISessionManager} (indicating that a session is closed) or any of its sessions (indicating that a view is
    * closed). <b>Note:</b> Closing a session <em>implies</em> that all contained views are closed sliently without
    * firing respective events!
@@ -446,7 +446,7 @@ public abstract class Store extends Lifecycle implements InternalStore
    * example it could always return the same pool instance, regardless of the given session.
    * <p>
    * If the implementor of this method decides to create pools that are only compatible with certain sessions or views,
-   * then it is his responsibility to listen to {@link IContainerDelta.Kind#REMOVED REMOVED} events sent by either the
+   * then it is his responsibility to listen to {@link Kind#REMOVED REMOVED} events sent by either the
    * {@link ISessionManager} (indicating that a session is closed) or any of its sessions (indicating that a view is
    * closed). <b>Note:</b> Closing a session <em>implies</em> that all contained views are closed sliently without
    * firing respective events!

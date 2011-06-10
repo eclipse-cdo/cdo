@@ -252,7 +252,7 @@ A <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" t
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)">commit</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;progressMonitor)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)">commit</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;progressMonitor)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -779,7 +779,7 @@ T</CODE></FONT></TD>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#push(org.eclipse.core.runtime.IProgressMonitor)">push</A></B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;progressMonitor)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#push(org.eclipse.core.runtime.IProgressMonitor)">push</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;progressMonitor)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -1142,7 +1142,7 @@ public <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.h
 <A NAME="commit(org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
 commit</H3>
 <PRE>
-public <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>commit</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;progressMonitor)
+public <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</A> <B>commit</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;progressMonitor)
                      throws <A HREF="../../../../../org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</A></PRE>
 <DL>
 <DD><DL>
@@ -1190,7 +1190,7 @@ public void <B>push</B>()
 <A NAME="push(org.eclipse.core.runtime.IProgressMonitor)"><!-- --></A><H3>
 push</H3>
 <PRE>
-public void <B>push</B>(<A HREF="http://help.eclipse.org/helios/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;progressMonitor)
+public void <B>push</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</A>&nbsp;progressMonitor)
           throws <A HREF="../../../../../org/eclipse/emf/cdo/util/CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</A></PRE>
 <DL>
 <DD><DL>
@@ -2368,8 +2368,8 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Strin
 <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#openView(java.lang.String, org.eclipse.emf.ecore.resource.ResourceSet)"><CODE>CDOSession.openView(String, ResourceSet)</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#openTransaction(java.lang.String)"><CODE>CDOSession.openTransaction(String)</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#openTransaction(java.lang.String, org.eclipse.emf.ecore.resource.ResourceSet)"><CODE>CDOSession.openTransaction(String, ResourceSet)</CODE></A>, 
-<CODE>CDOView#lockObjects(Collection, LockType, long)</CODE>, 
-<CODE>CDOView#unlockObjects(Collection, LockType)</CODE>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)"><CODE>CDOView.lockObjects(Collection, IRWLockManager.LockType, long)</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)"><CODE>CDOView.unlockObjects(Collection, IRWLockManager.LockType)</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects()"><CODE>CDOView.unlockObjects()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReadLock()"><CODE>CDOObject.cdoReadLock()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()"><CODE>CDOObject.cdoWriteLock()</CODE></A></DL>

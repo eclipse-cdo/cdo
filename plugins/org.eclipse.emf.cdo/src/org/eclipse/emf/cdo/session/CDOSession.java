@@ -425,8 +425,8 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
 
   /**
    * Handles {@link CDOSessionProtocol protocol} exceptions if
-   * {@link CDOSessionConfiguration#setExceptionHandler(ExceptionHandler) configured} before the session has been
-   * opened.
+   * {@link CDOSessionConfiguration#setExceptionHandler(CDOSession.ExceptionHandler) configured} before the session has
+   * been opened.
    * 
    * @author Eike Stepper
    */

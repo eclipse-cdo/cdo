@@ -112,10 +112,12 @@ An enum for the degree of probability to which a prepared statement is reused la
  the cache of prepared statements so that statements which are more likely reused are kept in the cache longer. Rule
  of thumb:
  <ul>
- <li>For global statements which are used regularly (such as lookup object in cdo_objects) use .
- <li>For constant object-specific statements which are used regularly use .
- <li>For object-specific statements which are assembled from constants which are used regularly use .
- <li>For all other dynamic statements, like queries, use 
+ <li>For global statements which are used regularly (such as lookup object in cdo_objects) use
+ <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.ReuseProbability.html#MAX"><CODE>MAX</CODE></A>.
+ <li>For constant object-specific statements which are used regularly use <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.ReuseProbability.html#HIGH"><CODE>HIGH</CODE></A>.
+ <li>For object-specific statements which are assembled from constants which are used regularly use
+ <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.ReuseProbability.html#MEDIUM"><CODE>MEDIUM</CODE></A>.
+ <li>For all other dynamic statements, like queries, use <A HREF="../../../../../../org/eclipse/emf/cdo/server/db/IPreparedStatementCache.ReuseProbability.html#LOW"><CODE>LOW</CODE></A>
  </ul>
 <P>
 

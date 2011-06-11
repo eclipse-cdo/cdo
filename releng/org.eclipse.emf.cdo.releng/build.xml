@@ -264,12 +264,21 @@
 	<target name="set.build.timestamp" depends="set.build.timestamp.from.environment" unless="build.timestamp">
 		<tstamp>
 			<format property="build.timestamp" pattern="yyyy-MM-dd_HH-mm-ss" locale="en,US" />
+			<format property="build.qualifier" pattern="yyyyMMddHHmm" locale="en,US" />
 		</tstamp>
 	</target>
 
 	<target name="store.build.info" depends="infer.build.type.from.Hudson.build.cause,set.build.timestamp">
 		<echoxml file="${build.info.file.name}">
-			<build type="${build.type}" timestamp="${build.timestamp}" />
+			<build trigger="${build.trigger}"
+			       type="${build.type}"
+			       qualifier="${build.qualifier}"
+			       timestamp="${build.timestamp}"
+			       stream="${stream}"
+			       workspace="${env.WORKSPACE}"
+			       hudson="${env.HUDSON_URL}"
+			       job="${env.JOB_NAME}"
+			       number="${env.BUILD_NUMBER}" />
 		</echoxml>
 	</target>
 

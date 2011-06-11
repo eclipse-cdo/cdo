@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <project name="CDO">
 
+	<property name="stream" value="4.0" />
+
 	<condition property="properties.file" value="build.properties" else="local.properties">
 		<isset property="server.build" />
 	</condition>
@@ -40,6 +42,14 @@
 		<isset property="env.SITE_PACK200" />
 	</condition>
 
+	<condition property="zip.site" value="${env.ZIP_SITE}" else="true">
+		<isset property="env.ZIP_SITE" />
+	</condition>
+
+	<condition property="zip.dropins" value="${env.ZIP_DROPINS}" else="true">
+		<isset property="env.ZIP_DROPINS" />
+	</condition>
+
 	<condition property="no.proxy" value="${env.no_proxy}, dev.eclipse.org" else="dev.eclipse.org">
 		<isset property="env.no_proxy" />
 	</condition>
@@ -51,7 +61,9 @@
 	<property name="targetPlatformPath" location="${result}/tp" />
 	<property name="buckminster.output.root" location="${result}/output" />
 	<property name="buckminster.temp.root" location="${result}/temp" />
-	<property name="site.p2.dir" location="${workspace}/_temp/org.eclipse.emf.cdo.site_4.0.0-eclipse.feature/site.p2" />
+	<property name="zips" value="${buckminster.temp.root}/zips" />
+	<property name="temp" location="${workspace}/temp" />
+	<property name="site.p2.dir" location="${temp}/org.eclipse.emf.cdo.site_${stream}.0-eclipse.feature/site.p2" />
 
 	<!-- This macro executes the default application of an eclipse installation
 			 that resides in the folder ${buildtools}/@app -->
@@ -358,6 +370,60 @@
 		<xslt style="xsl/content2html.xsl" in="${site.p2.dir}/content.xml" out="${site.p2.dir}/index.html" />
 		<xslt style="xsl/content2xml.xsl" in="${site.p2.dir}/content.xml" out="${site.p2.dir}/index.xml" />
 		<delete file="${site.p2.dir}/content.xml" />
+
+		<antcall target="build.zip.site" />
+		<antcall target="build.zip.dropins" />
+	</target>
+
+	<target name="build.zip.site" if="zip.site">
+		<zip destfile="${result}/site.p2.zip">
+			<fileset dir="${site.p2.dir}">
+				<include name="**/*" />
+			</fileset>
+		</zip>
+	</target>
+
+	<target name="build.zip.dropins" if="zip.dropins">
+		<antcall target="purge.zips" />
+		<mkdir dir="${zips}" />
+		<copy todir="${zips}">
+			<fileset dir="rootfiles">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+
+		<mkdir dir="${zips}/features" />
+		<copy todir="${zips}/features">
+			<fileset dir="${site.p2.dir}">
+				<include name="*-eclipse.feature/jar/*" />
+				<include name="*-eclipse.feature/source.jar/*" />
+				<exclude name="org.eclipse.emf.cdo.site*/**/*" />
+				<exclude name="org.eclipse.emf.cdo.epp*/**/*" />
+			</fileset>
+		</copy>
+
+		<mkdir dir="${zips}/plugins" />
+		<copy todir="${zips}/plugins">
+			<fileset dir="${site.p2.dir}">
+				<include name="*-osgi.bundle/jar/*" />
+				<include name="*-osgi.bundle/source.jar/*" />
+			</fileset>
+		</copy>
+
+		<zip destfile="${result}/dropins.p2.zip">
+			<fileset dir="${zips}">
+				<include name="**/*" />
+			</fileset>
+		</zip>
+		<antcall target="purge.zips" />
+	</target>
+
+	<target name="purge.zips">
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset dir="${zips}" defaultexcludes="false">
+				<include name="**/*" />
+			</fileset>
+		</delete>
 	</target>
 
 	<target name="test" depends="site.p2">

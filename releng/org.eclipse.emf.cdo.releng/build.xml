@@ -371,12 +371,13 @@
 		<xslt style="xsl/content2xml.xsl" in="${site.p2.dir}/content.xml" out="${site.p2.dir}/index.xml" />
 		<delete file="${site.p2.dir}/content.xml" />
 
+		<mkdir dir="${result}/zips" />
 		<antcall target="build.zip.site" />
 		<antcall target="build.zip.dropins" />
 	</target>
 
 	<target name="build.zip.site" if="zip.site">
-		<zip destfile="${result}/site.zip">
+		<zip destfile="${result}/zips/site.zip">
 			<fileset dir="${site.p2.dir}">
 				<include name="**/*" />
 			</fileset>
@@ -409,12 +410,12 @@
 			</fileset>
 		</copy>
 
-		<zip destfile="${result}/dropins.zip">
+		<zip destfile="${result}/zips/dropins.zip">
 			<fileset dir="${zips}">
 				<include name="**/*" />
 			</fileset>
 		</zip>
-		
+
 		<antcall target="purge.zips" />
 	</target>
 

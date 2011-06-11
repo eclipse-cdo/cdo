@@ -394,17 +394,18 @@
 
 		<mkdir dir="${zips}/features" />
 		<copy todir="${zips}/features">
-			<fileset dir="${site.p2.dir}">
+			<fileset dir="${temp}">
 				<include name="*-eclipse.feature/jar/*" />
 				<include name="*-eclipse.feature/source.jar/*" />
 				<exclude name="org.eclipse.emf.cdo.site*/**/*" />
 				<exclude name="org.eclipse.emf.cdo.epp*/**/*" />
+				<exclude name="org.eclipse.emf.cdo.license*/**/*" />
 			</fileset>
 		</copy>
 
 		<mkdir dir="${zips}/plugins" />
 		<copy todir="${zips}/plugins">
-			<fileset dir="${site.p2.dir}">
+			<fileset dir="${temp}">
 				<include name="*-osgi.bundle/jar/*" />
 				<include name="*-osgi.bundle/source.jar/*" />
 			</fileset>

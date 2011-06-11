@@ -376,7 +376,7 @@
 	</target>
 
 	<target name="build.zip.site" if="zip.site">
-		<zip destfile="${result}/site.p2.zip">
+		<zip destfile="${result}/site.zip">
 			<fileset dir="${site.p2.dir}">
 				<include name="**/*" />
 			</fileset>
@@ -392,8 +392,7 @@
 			</fileset>
 		</copy>
 
-		<mkdir dir="${zips}/features" />
-		<copy todir="${zips}/features">
+		<copy todir="${zips}/features" flatten="true">
 			<fileset dir="${temp}">
 				<include name="*-eclipse.feature/jar/*" />
 				<include name="*-eclipse.feature/source.jar/*" />
@@ -403,19 +402,19 @@
 			</fileset>
 		</copy>
 
-		<mkdir dir="${zips}/plugins" />
-		<copy todir="${zips}/plugins">
+		<copy todir="${zips}/plugins" flatten="true">
 			<fileset dir="${temp}">
 				<include name="*-osgi.bundle/jar/*" />
 				<include name="*-osgi.bundle/source.jar/*" />
 			</fileset>
 		</copy>
 
-		<zip destfile="${result}/dropins.p2.zip">
+		<zip destfile="${result}/dropins.zip">
 			<fileset dir="${zips}">
 				<include name="**/*" />
 			</fileset>
 		</zip>
+		
 		<antcall target="purge.zips" />
 	</target>
 

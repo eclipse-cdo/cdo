@@ -264,7 +264,6 @@
 	<target name="set.build.timestamp" depends="set.build.timestamp.from.environment" unless="build.timestamp">
 		<tstamp>
 			<format property="build.timestamp" pattern="yyyy-MM-dd_HH-mm-ss" locale="en,US" />
-			<format property="build.qualifier" pattern="yyyyMMddHHmm" locale="en,US" />
 		</tstamp>
 	</target>
 
@@ -275,9 +274,7 @@
 		<echoxml file="${result}/build-info.xml">
 			<build type="${build.type}"
 			       timestamp="${build.timestamp}"
-			       workspace="${env.WORKSPACE}"
 			       hudson="${env.HUDSON_URL}"
-			       qualifier="${build.qualifier}"
 			       stream="${stream}"
 			       job="${env.JOB_NAME}"
 			       number="${env.BUILD_NUMBER}"

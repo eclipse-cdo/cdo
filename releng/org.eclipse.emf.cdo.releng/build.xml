@@ -271,15 +271,16 @@
 	<target name="store.build.info" depends="infer.build.type.from.Hudson.build.cause,set.build.timestamp">
 		<echoxml file="${build.info.file.name}">
 			<!--
-			       qualifier="${build.qualifier}"
-			       stream="${stream}"
 			       workspace="${env.WORKSPACE}"
 			       hudson="${env.HUDSON_URL}"
-			       job="${env.JOB_NAME}"
-			       number="${env.BUILD_NUMBER}" 
-				trigger="${build.trigger}"
 			-->
-			<build type="${build.type}" timestamp="${build.timestamp}" />
+			<build type="${build.type}"
+			       timestamp="${build.timestamp}"
+			       qualifier="${build.qualifier}"
+			       stream="${stream}"
+			       job="${env.JOB_NAME}"
+			       number="${env.BUILD_NUMBER}"
+			       trigger="${build.trigger}" />
 		</echoxml>
 	</target>
 

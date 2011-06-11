@@ -38,16 +38,16 @@
 		<equals arg1="${env.CLEAN_OUTPUT}" arg2="true" />
 	</condition>
 
-	<condition property="site.pack200" value="${env.SITE_PACK200}" else="true">
-		<isset property="env.SITE_PACK200" />
-	</condition>
-
 	<condition property="zip.site" value="${env.ZIP_SITE}" else="true">
 		<isset property="env.ZIP_SITE" />
 	</condition>
 
 	<condition property="zip.dropins" value="${env.ZIP_DROPINS}" else="true">
 		<isset property="env.ZIP_DROPINS" />
+	</condition>
+
+	<condition property="site.pack200" value="${env.SITE_PACK200}" else="true">
+		<isset property="env.SITE_PACK200" />
 	</condition>
 
 	<condition property="no.proxy" value="${env.no_proxy}, dev.eclipse.org" else="dev.eclipse.org">
@@ -62,7 +62,7 @@
 	<property name="buckminster.output.root" location="${result}/output" />
 	<property name="buckminster.temp.root" location="${result}/temp" />
 	<property name="zips" value="${buckminster.temp.root}/zips" />
-	<property name="temp" location="${workspace}/temp" />
+	<property name="temp" location="${workspace}/_temp" />
 	<property name="site.p2.dir" location="${temp}/org.eclipse.emf.cdo.site_${stream}.0-eclipse.feature/site.p2" />
 
 	<!-- This macro executes the default application of an eclipse installation

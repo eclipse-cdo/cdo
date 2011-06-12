@@ -1,5 +1,3 @@
-#!/bin/bash
-
 for job in `ls jobs`
 do
   if [ -f "jobs/$job/nextBuildNumber" ]

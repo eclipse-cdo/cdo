@@ -22,5 +22,5 @@ do
 	else
 		echo "Nothing to promote."
 	fi
-	
 done
+	

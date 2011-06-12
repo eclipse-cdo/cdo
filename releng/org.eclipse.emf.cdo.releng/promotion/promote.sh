@@ -11,7 +11,7 @@ do
   then
     lastBuildNumber=`cat "$file"`
   else
-    lastBuildNumber=0
+    lastBuildNumber=1
   fi
 
   nextBuildNumber=`cat "/shared/jobs/$job/nextBuildNumber"`

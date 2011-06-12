@@ -229,7 +229,7 @@
 		</condition>
 	</target>
 
-	<target name="infer.build.type.from.Hudson.build.cause"
+	<target name="set.build.type.from.Hudson.build.cause"
 	        depends="set.build.type.default.if.not.in.Hudson"
 	        unless="build.type">
 		<!-- Infer the build type from the cause/trigger of the build as filed by Hudson:
@@ -261,7 +261,7 @@
 		</tstamp>
 	</target>
 
-	<target name="set.svn.revisions" if="env.BUILD_URL">
+	<target name="set.build.revision" if="env.BUILD_URL">
 		<!--
 		<xmlproperty keeproot="false">
 			<url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
@@ -277,7 +277,7 @@
 	</target>
 
 	<target name="init.build.properties"
-	        depends="infer.build.type.from.Hudson.build.cause,set.build.timestamp,set.svn.revisions">
+	        depends="set.build.type.from.Hudson.build.cause,set.build.timestamp,set.build.revision">
 		<tempfile destdir="${java.io.tmpdir}"
 		          prefix="build-"
 		          suffix=".xml"
@@ -322,12 +322,6 @@
 		</echoproperties>
 	</target>
 
-	<target name="empty.test.report">
-		<echo message="Creating a empty test report to make Hudson happy" />
-		<copy file="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/testReportEmpty.xml"
-		      tofile="${result}/testReport.xml" />
-	</target>
-
 	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">
 		<echo message="Importing projects into workspace ${workspace} and binaries into target platform ${targetPlatformPath}" />
 		<!--
@@ -354,9 +348,13 @@
 				<arg value="${basedir}/${mspec.file}" />
 			</cmdargs>
 		</buckminster>
+
+		<echo message="Creating a empty test report to make Hudson happy" />
+		<copy file="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/testReportEmpty.xml"
+		      tofile="${result}/testReport.xml" />
 	</target>
 
-	<target name="build.workspace" depends="provision,empty.test.report">
+	<target name="build.workspace" depends="provision">
 		<echo message="Building all projects in workspace ${workspace}" />
 		<buckminster command="build">
 			<cmdargs>

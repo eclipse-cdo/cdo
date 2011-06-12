@@ -396,16 +396,6 @@
 			       number="${env.BUILD_NUMBER}"
 			       trigger="${build.trigger}" />
 		</echoxml>
-
-		<!--
-		<echo message="Copying Hudson build infos" />
-		<copy todir="${result}">
-			<fileset dir="${build.root}/builds/${build.timestamp}">
-				<include name="changelog.xml" />
-				<include name="revision.txt" />
-			</fileset>
-		</copy>
-		-->
 	</target>
 
 	<target name="generate.bookmarks">

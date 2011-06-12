@@ -4,7 +4,7 @@ set -e
 promotionDir=~/promotion
 jobsDir=$promotionDir/jobs
 
-CriticalSection ()
+function CriticalSection ()
 {
 	for job in `ls "$jobsDir"`
 	do

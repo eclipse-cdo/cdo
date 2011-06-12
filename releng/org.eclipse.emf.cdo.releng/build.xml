@@ -268,12 +268,29 @@
 	</target>
 
 	<target name="store.build.info" depends="infer.build.type.from.Hudson.build.cause,set.build.timestamp">
+		<!-- Create a file needed by Buckminster. Don't modify! -->
 		<echoxml file="${build.info.file.name}">
 			<build type="${build.type}" timestamp="${build.timestamp}" />
 		</echoxml>
+
+		<!-- Create a file needed by Promotion. -->
+		<tempfile destdir="${java.io.tmpdir}"
+		          prefix="build-qualifier"
+		          suffix=".properties"
+		          deleteonexit="true"
+		          property="build.qualifier.file.name" />
+		<java classname="org.eclipse.emf.cdo.releng.GenerateBuildQualifier">
+			<classpath path="org.eclipse.emf.cdo.releng/bin" />
+			<arg value="${build.type}" />
+			<arg value="${build.timestamp}" />
+			<arg value="${build.qualifier.file.name}" />
+		</java>
+		<property file="${build.qualifier.file.name}" />
+
 		<echoxml file="${result}/build-info.xml">
 			<build type="${build.type}"
 			       timestamp="${build.timestamp}"
+			       qualifier="${build.qualifier}"
 			       hudson="${env.HUDSON_URL}"
 			       stream="${stream}"
 			       job="${env.JOB_NAME}"

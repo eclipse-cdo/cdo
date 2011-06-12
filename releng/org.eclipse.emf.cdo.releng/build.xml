@@ -409,10 +409,11 @@
 		<antcall target="generate.categories" />
 		<delete file="${site.p2.dir}/content.xml" />
 
-		<!--
 		<mkdir dir="${result}/zips" />
-		<antcall target="build.zip.site" />
 		<antcall target="build.zip.dropins" />
+		
+		<!--
+		<antcall target="build.zip.site" />
 		-->
 	</target>
 

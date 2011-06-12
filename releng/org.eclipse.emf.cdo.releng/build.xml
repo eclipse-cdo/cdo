@@ -365,20 +365,7 @@
 			</cmdargs>
 		</buckminster>
 
-		<echo message="Unpacking ${site.p2.dir}/content.jar" />
-		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />
-		<property name="content.xml" value="${site.p2.dir}/content.xml" />
-
-		<antcall target="generate.buildinfo" />
-		<antcall target="generate.bookmarks" />
-		<antcall target="generate.categories" />
-		<antcall target="generate.zip.dropins" />
-
-		<delete file="${content.xml}" />
-	</target>
-
-	<target name="generate.buildinfo">
-		<echo message="Creating build-info.xml" />
+		<echo message="Setting build.qualifier" />
 		<tempfile destdir="${java.io.tmpdir}"
 		          prefix="build-qualifier"
 		          suffix=".properties"
@@ -391,6 +378,21 @@
 			<arg value="${build.qualifier.file.name}" />
 		</java>
 		<property file="${build.qualifier.file.name}" />
+
+		<echo message="Unpacking ${site.p2.dir}/content.jar" />
+		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />
+		<property name="content.xml" value="${site.p2.dir}/content.xml" />
+
+		<antcall target="generate.buildinfos" />
+		<antcall target="generate.bookmarks" />
+		<antcall target="generate.categories" />
+		<antcall target="generate.zip.dropins" />
+
+		<delete file="${content.xml}" />
+	</target>
+
+	<target name="generate.buildinfos">
+		<echo message="Creating build-info.xml" />
 		<echoxml file="${result}/build-info.xml">
 			<build type="${build.type}"
 			       timestamp="${build.timestamp}"
@@ -401,6 +403,16 @@
 			       number="${env.BUILD_NUMBER}"
 			       trigger="${build.trigger}" />
 		</echoxml>
+
+		<!--
+		<echo message="Copying Hudson build infos" />
+		<copy todir="${result}">
+			<fileset dir="dir">
+				<include name="include" />
+				<exclude name="exclude" />
+			</fileset>
+		</copy>
+		-->
 	</target>
 
 	<target name="generate.bookmarks">

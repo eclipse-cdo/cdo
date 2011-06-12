@@ -1,7 +1,6 @@
 #!/bin/bash
 
 for job in `ls jobs` ; do
-do
 	if [ -f "jobs/$job/nextBuildNumber" ]
 	then
 		lastBuildNumber=`cat "jobs/$job/nextBuildNumber"`

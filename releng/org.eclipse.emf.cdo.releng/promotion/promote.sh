@@ -18,7 +18,7 @@ do
 	nextBuildNumber=`cat "/shared/jobs/$job/nextBuildNumber"`
 	if [ "$nextBuildNumber" != "$lastBuildNumber" ]
 	then
-		echo "Promoting a build..."
+		echo "Promoting a build: $nextBuildNumber"
 	else
 		echo "Nothing to promote."
 	fi

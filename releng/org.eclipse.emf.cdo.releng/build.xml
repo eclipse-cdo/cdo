@@ -375,6 +375,7 @@
 
 		<antcall target="generate.buildinfos" />
 		<antcall target="generate.bookmarks" />
+		<antcall target="generate.index" />
 		<antcall target="generate.categories" />
 		<antcall target="generate.zip.dropins" />
 

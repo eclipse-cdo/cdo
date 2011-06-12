@@ -7,7 +7,7 @@
 			type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1.0.0'>
 			<properties size='2'>
 				<property name='p2.timestamp' value='1307560601786'/>
-				<property name='p2.compressed' value='false'/>
+				<property name='p2.compressed' value='true'/>
 			</properties>
 			<units size='1'>
 				<unit id="BUILD_QUALIFIER" version="0.0.0">

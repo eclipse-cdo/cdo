@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 
 jobsDir=~/promotion/jobs
-mkdir "$jobsDir"
 
 for job in `ls "$jobsDir"`
 do
 	jobDir=$jobsDir/$job
-	mkdir "$jobDir"
-	
 	file=$jobDir/nextBuildNumber
+	
   if [ -f "$file" ]
   then
     lastBuildNumber=`cat "$file"`

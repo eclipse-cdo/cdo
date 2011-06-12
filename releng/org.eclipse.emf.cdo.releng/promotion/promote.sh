@@ -30,10 +30,13 @@ then
 	    echo "Nothing to promote for $job"
 	  fi
 	done
-   
-  sleep 20000
-  
+	
+	sleep 30
+	
   rm -f "$lockFile"
   trap - INT TERM EXIT
+else
+	echo "Failed to acquire lockfile: $lockFile." 
+	echo "Held by $(cat $lockFile)"
 fi 
 

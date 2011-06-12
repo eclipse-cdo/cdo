@@ -404,14 +404,14 @@
 			       trigger="${build.trigger}" />
 		</echoxml>
 
-		<!--
 		<echo message="Copying Hudson build infos" />
 		<copy todir="${result}">
-			<fileset dir="dir">
-				<include name="include" />
-				<exclude name="exclude" />
+			<fileset dir="${build.root}/builds/${build.timestamp}">
+				<include name="changelog.xml" />
+				<include name="revision.txt" />
 			</fileset>
 		</copy>
+		<!--
 		-->
 	</target>
 

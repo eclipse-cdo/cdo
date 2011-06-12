@@ -373,7 +373,7 @@
 			</cmdargs>
 		</buckminster>
 
-		<echo message="Creating bookmarks.tmp" />
+		<echo message="Creating bookmarks.xml" />
 		<xslt style="xsl/bom2bookmarks.xsl" in="${result}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />
 		<replace file="${site.p2.dir}/bookmarks.tmp" token="http://dev.eclipse.org" value="file://to-be-removed" />
 		<replace file="${site.p2.dir}/bookmarks.tmp" token="file:/home/data/httpd/" value="http://" />
@@ -385,7 +385,6 @@
 		<delete file="${site.p2.dir}/content.xml" />
 
 		<mkdir dir="${result}/zips" />
-		<antcall target="build.zip.site" />
 		<antcall target="build.zip.dropins" />
 	</target>
 

@@ -394,15 +394,55 @@
 		<xslt style="xsl/bom2bookmarks.xsl" in="${result}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />
 		<replace file="${site.p2.dir}/bookmarks.tmp" token="http://dev.eclipse.org" value="file://to-be-removed" />
 		<replace file="${site.p2.dir}/bookmarks.tmp" token="file:/home/data/httpd/" value="http://" />
+		<!-- Note: The final bookmarks.xml creation takes place in a later Hudson build step! -->
+
+		<echo message="Unpacking ${site.p2.dir}/content.jar" />
+		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />
+		<property name="content.xml" value="${site.p2.dir}/content.xml" />
 
 		<echo message="Creating human readable index.html" />
-		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />
-		<xslt style="xsl/content2html.xsl" in="${site.p2.dir}/content.xml" out="${site.p2.dir}/index.html" />
+		<xslt style="xsl/content2html.xsl" in="${content.xml}" out="${site.p2.dir}/index.html" />
+		<xslt style="xsl/content2xml.xsl" in="${content.xml}" out="${site.p2.dir}/index.xml" />
+
+		<echo message="Creating categories/content.xml" />
 		<xslt style="xsl/content2xml.xsl" in="${site.p2.dir}/content.xml" out="${site.p2.dir}/index.xml" />
 		<delete file="${site.p2.dir}/content.xml" />
 
+		<!--
 		<mkdir dir="${result}/zips" />
+		<antcall target="build.zip.site" />
 		<antcall target="build.zip.dropins" />
+		-->
+	</target>
+
+	<target name="generate.categories">
+		<property name="categories.repo" value="${site.p2.dir}/categories" />
+		<property name="categories.xml" value="${categories.repo}/content.xml" />
+
+		<resourcecount property="requires.size">
+			<tokens>
+				<concat>
+					<filterchain>
+						<tokenfilter>
+							<containsregex pattern="property[^a-zA-Z]+name[^a-zA-Z]+org\.eclipse\.equinox.p2\.type\.category[^a-zA-Z]+value[^a-zA-Z]+true" />
+							<linetokenizer />
+						</tokenfilter>
+					</filterchain>
+					<fileset file="${content.xml}" />
+				</concat>
+			</tokens>
+		</resourcecount>
+
+		<xslt style="xsl/content2categories.xsl" in="${content.xml}" out="${categories.xml}" />
+		<replaceregexp file="${categories.xml}" match="BUILD_QUALIFIER" replace="${build.qualifier}" byline="true" />
+		<replaceregexp file="${categories.xml}" match="REQUIRES_SIZE" replace="${requires.size}" byline="true" />
+
+		<zip destfile="${categories.repo}/content.jar">
+			<fileset dir="${categories.repo}">
+				<include name="content.xml" />
+			</fileset>
+		</zip>
+		<delete file="${categories.xml}" />
 	</target>
 
 	<target name="build.zip.site" if="zip.site">

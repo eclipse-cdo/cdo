@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 #/shared/common/apache-ant-1.7.1/bin/ant \
 #	-f /shared/modeling/tools/promotion/download-artifacts.xml \

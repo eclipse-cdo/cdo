@@ -3,6 +3,7 @@ set -e
 
 promotionDir=~/promotion
 jobsDir=$promotionDir/jobs
+ant=/shared/common/apache-ant-1.7.1/bin/ant
 
 CriticalSection ()
 {
@@ -22,13 +23,11 @@ CriticalSection ()
 	  if [ "$nextBuildNumber" != "$lastBuildNumber" ]
 	  then
 	    echo "Checking whether $job builds need promotion..."
-			#echo "$nextBuildNumber" > "$file"
+	    "$ant" -f "$promotionDir/bootstrap.ant" -DlastBuildNumber="$lastBuildNumber" -DnextBuildNumber="$nextBuildNumber"
 	  else
 	    echo "Nothing to promote for $job"
 	  fi
 	done
-	
-	sleep 30
 }
 
 lockFile=$promotionDir/promote.lock

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<project name="bootstrapPromoter" default="bootstrap">
+
+	<property environment="env" />
+
+	<target name="bootstrap">
+		<echo message="Promoting builds: ${env.lastBuildNumber} --> ${env.nextBuildNumber}" />
+	</target>
+
+</project>

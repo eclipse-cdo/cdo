@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng;
+package org.eclipse.emf.cdo.releng.promoter;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

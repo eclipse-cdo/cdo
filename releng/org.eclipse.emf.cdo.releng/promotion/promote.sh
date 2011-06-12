@@ -3,12 +3,9 @@ set -e
 
 promotionDir=~/promotion
 jobsDir=$promotionDir/jobs
-lockFile=$promotionDir/promote.lock
 
-if ( set -o noclobber; echo "$$" > "$lockFile" ) 2> /dev/null; 
-then
-  trap 'rm -f "$lockFile"; exit $?' INT TERM EXIT
-
+CriticalSection ()
+{
 	for job in `ls "$jobsDir"`
 	do
 		jobDir=$jobsDir/$job
@@ -32,7 +29,15 @@ then
 	done
 	
 	sleep 30
-	
+}
+
+lockFile=$promotionDir/promote.lock
+if ( set -o noclobber; echo "$$" > "$lockFile" ) 2> /dev/null; 
+then
+  trap 'rm -f "$lockFile"; exit $?' INT TERM EXIT
+
+	CriticalSection()
+		
   rm -f "$lockFile"
   trap - INT TERM EXIT
 else

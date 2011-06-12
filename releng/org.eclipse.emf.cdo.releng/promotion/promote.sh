@@ -24,7 +24,7 @@ then
 	  nextBuildNumber=`cat "/shared/jobs/$job/nextBuildNumber"`
 	  if [ "$nextBuildNumber" != "$lastBuildNumber" ]
 	  then
-	    echo "Checking whether $job is promotable..."
+	    echo "Checking whether $job builds need promotion..."
 			#echo "$nextBuildNumber" > "$file"
 	  else
 	    echo "Nothing to promote for $job"

@@ -404,6 +404,7 @@
 			       trigger="${build.trigger}" />
 		</echoxml>
 
+		<!--
 		<echo message="Copying Hudson build infos" />
 		<copy todir="${result}">
 			<fileset dir="${build.root}/builds/${build.timestamp}">
@@ -411,7 +412,6 @@
 				<include name="revision.txt" />
 			</fileset>
 		</copy>
-		<!--
 		-->
 	</target>
 

@@ -25,7 +25,7 @@ CriticalSection ()
 	  if [ "$nextBuildNumber" != "$lastBuildNumber" ]
 	  then
 	    echo "Checking whether $job builds need promotion..."
-	    "$ant" -f "$promotionDir/bootstrapPromoter.ant" -DlastBuildNumber="$lastBuildNumber" -DnextBuildNumber="$nextBuildNumber"
+	    "$ant" -f "$promotionDir/bootstrapPromoter.ant" "-DlastBuildNumber=$lastBuildNumber" "-DnextBuildNumber=$nextBuildNumber"
 	  else
 	    echo "Nothing to promote for $job"
 	  fi

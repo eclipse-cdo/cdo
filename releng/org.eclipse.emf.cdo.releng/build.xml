@@ -405,7 +405,7 @@
 		<xslt style="xsl/content2xml.xsl" in="${content.xml}" out="${site.p2.dir}/index.xml" />
 
 		<echo message="Creating categories/content.xml" />
-		<xslt style="xsl/content2xml.xsl" in="${site.p2.dir}/content.xml" out="${site.p2.dir}/index.xml" />
+		<antcall target="generate.categories" />
 		<delete file="${site.p2.dir}/content.xml" />
 
 		<!--

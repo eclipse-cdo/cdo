@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-jobsDir=~/promotion/jobs
-lockFile=$jobsDir/promote.lock
+promotionDir=~/promotion
+jobsDir=$promotionDir/jobs
+lockFile=$promotionDir/promote.lock
 
 if ( set -o noclobber; echo "$$" > "$lockFile" ) 2> /dev/null; 
 then

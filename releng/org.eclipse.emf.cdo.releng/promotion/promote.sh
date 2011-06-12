@@ -36,7 +36,6 @@ then
   rm -f "$lockFile"
   trap - INT TERM EXIT
 else
-	echo "Failed to acquire lockfile: $lockFile." 
-	echo "Held by $(cat $lockFile)"
+	echo "Promotion already being executed by process $(cat $lockFile)."
 fi 
 

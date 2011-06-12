@@ -317,7 +317,7 @@
 	</target>
 
 	<target name="fake.test.report">
-		<echo message="Creating a fake test report to make Hudson happy" />
+		<echo message="Creating a empty test report to make Hudson happy" />
 		<copy file="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/testReportEmpty.xml"
 		      tofile="${result}/testReport.xml" />
 	</target>
@@ -365,6 +365,19 @@
 			</cmdargs>
 		</buckminster>
 
+		<echo message="Unpacking ${site.p2.dir}/content.jar" />
+		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />
+		<property name="content.xml" value="${site.p2.dir}/content.xml" />
+
+		<antcall target="generate.buildinfo" />
+		<antcall target="generate.bookmarks" />
+		<antcall target="generate.categories" />
+		<antcall target="generate.zip.dropins" />
+
+		<delete file="${content.xml}" />
+	</target>
+
+	<target name="generate.buildinfo">
 		<echo message="Creating build-info.xml" />
 		<tempfile destdir="${java.io.tmpdir}"
 		          prefix="build-qualifier"
@@ -372,7 +385,7 @@
 		          deleteonexit="true"
 		          property="build.qualifier.file.name" />
 		<java classname="org.eclipse.emf.cdo.releng.GenerateBuildQualifier" dir="${basedir}" fork="true">
-			<classpath path="bin" />
+			<classpath path="${workspace}/org.eclipse.emf.cdo.releng/bin" />
 			<arg value="${build.type}" />
 			<arg value="${build.timestamp}" />
 			<arg value="${build.qualifier.file.name}" />
@@ -388,38 +401,26 @@
 			       number="${env.BUILD_NUMBER}"
 			       trigger="${build.trigger}" />
 		</echoxml>
+	</target>
 
+	<target name="generate.bookmarks">
 		<echo message="Creating bookmarks.xml" />
 		<xslt style="xsl/bom2bookmarks.xsl" in="${result}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />
 		<replace file="${site.p2.dir}/bookmarks.tmp" token="http://dev.eclipse.org" value="file://to-be-removed" />
 		<replace file="${site.p2.dir}/bookmarks.tmp" token="file:/home/data/httpd/" value="http://" />
 		<!-- Note: The final bookmarks.xml creation takes place in a later Hudson build step! -->
+	</target>
 
-		<echo message="Unpacking ${site.p2.dir}/content.jar" />
-		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />
-		<property name="content.xml" value="${site.p2.dir}/content.xml" />
-
-		<echo message="Creating ${site.p2.dir}/index.html" />
+	<target name="generate.index">
+		<echo message="Creating human readable index" />
 		<xslt style="xsl/content2html.xsl" in="${content.xml}" out="${site.p2.dir}/index.html" />
-		
-		<echo message="Creating ${site.p2.dir}/index.xml" />
 		<xslt style="xsl/content2xml.xsl" in="${content.xml}" out="${site.p2.dir}/index.xml" />
-
-		<echo message="Creating ${site.p2.dir}/categories/content.xml" />
-		<antcall target="generate.categories" />
-		<delete file="${site.p2.dir}/content.xml" />
-
-		<mkdir dir="${result}/zips" />
-		<antcall target="build.zip.dropins" />
-		
-		<!--
-		<antcall target="build.zip.site" />
-		-->
 	</target>
 
 	<target name="generate.categories">
 		<property name="categories.repo" value="${site.p2.dir}/categories" />
 		<property name="categories.xml" value="${categories.repo}/content.xml" />
+		<echo message="Creating ${categories.xml}" />
 
 		<resourcecount property="requires.size">
 			<tokens>
@@ -447,7 +448,7 @@
 		<delete file="${categories.xml}" />
 	</target>
 
-	<target name="build.zip.site" if="zip.site">
+	<target name="generate.zip.site" if="zip.site">
 		<zip destfile="${result}/zips/site.zip">
 			<fileset dir="${site.p2.dir}">
 				<include name="**/*" />
@@ -455,7 +456,7 @@
 		</zip>
 	</target>
 
-	<target name="build.zip.dropins" if="zip.dropins">
+	<target name="generate.zip.dropins" if="zip.dropins">
 		<antcall target="purge.zips" />
 		<mkdir dir="${zips}" />
 		<copy todir="${zips}">

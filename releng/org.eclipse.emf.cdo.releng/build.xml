@@ -316,7 +316,7 @@
 		</echoproperties>
 	</target>
 
-	<target name="fake.test.report">
+	<target name="empty.test.report">
 		<echo message="Creating a empty test report to make Hudson happy" />
 		<copy file="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/testReportEmpty.xml"
 		      tofile="${result}/testReport.xml" />
@@ -350,7 +350,7 @@
 		</buckminster>
 	</target>
 
-	<target name="site.p2" depends="provision,fake.test.report">
+	<target name="site.p2" depends="provision,empty.test.report">
 		<echo message="Building all projects in workspace ${workspace}" />
 		<buckminster command="build">
 			<cmdargs>

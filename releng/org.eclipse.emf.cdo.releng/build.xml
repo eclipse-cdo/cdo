@@ -261,23 +261,7 @@
 		</tstamp>
 	</target>
 
-	<target name="set.build.revision" if="env.BUILD_URL">
-		<!--
-		<xmlproperty keeproot="false">
-			<url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
-		</xmlproperty>
-		<loadresource property="build.trigger">
-			<propertyresource name="action.cause.shortDescription" />
-			<filterchain>
-				<replaceregex pattern="^Started by " replace="" />
-			</filterchain>
-		</loadresource>
-		-->
-		<echo message="SVN revision is: " />
-	</target>
-
-	<target name="init.build.properties"
-	        depends="set.build.type.from.Hudson.build.cause,set.build.timestamp,set.build.revision">
+	<target name="init.build.properties" depends="set.build.type.from.Hudson.build.cause,set.build.timestamp">
 		<tempfile destdir="${java.io.tmpdir}"
 		          prefix="build-"
 		          suffix=".xml"
@@ -361,15 +345,6 @@
 				<arg value="--thorough" />
 			</cmdargs>
 		</buckminster>
-	</target>
-
-	<target name="site.p2" depends="build.workspace">
-		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
-		<buckminster command="perform">
-			<cmdargs>
-				<arg value="org.eclipse.emf.cdo.site#site.p2" />
-			</cmdargs>
-		</buckminster>
 
 		<echo message="Setting build.qualifier" />
 		<tempfile destdir="${java.io.tmpdir}"
@@ -384,16 +359,26 @@
 			<arg value="${build.qualifier.file.name}" />
 		</java>
 		<property file="${build.qualifier.file.name}" />
+	</target>
 
-		<echo message="Unpacking ${site.p2.dir}/content.jar" />
-		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />
+	<target name="site.p2" depends="build.workspace">
+		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
+		<buckminster command="perform">
+			<cmdargs>
+				<arg value="org.eclipse.emf.cdo.site#site.p2" />
+			</cmdargs>
+		</buckminster>
+
 		<property name="content.xml" value="${site.p2.dir}/content.xml" />
+		<echo message="Extracting ${content.xml}" />
+		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />
 
 		<antcall target="generate.buildinfos" />
 		<antcall target="generate.bookmarks" />
 		<antcall target="generate.categories" />
 		<antcall target="generate.zip.dropins" />
 
+		<echo message="Deleting ${content.xml}" />
 		<delete file="${content.xml}" />
 	</target>
 

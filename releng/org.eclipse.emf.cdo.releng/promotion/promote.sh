@@ -3,7 +3,9 @@ set -e
 
 promotionDir=~/promotion
 jobsDir=$promotionDir/jobs
+
 ant=/shared/common/apache-ant-1.7.1/bin/ant
+JAVA_HOME=/shared/common/jdk-1.6.0_10
 
 CriticalSection ()
 {
@@ -23,7 +25,7 @@ CriticalSection ()
 	  if [ "$nextBuildNumber" != "$lastBuildNumber" ]
 	  then
 	    echo "Checking whether $job builds need promotion..."
-	    "$ant" -f "$promotionDir/bootstrap.ant" -DlastBuildNumber="$lastBuildNumber" -DnextBuildNumber="$nextBuildNumber"
+	    "$ant" -f "$promotionDir/bootstrapPromoter.ant" -DlastBuildNumber="$lastBuildNumber" -DnextBuildNumber="$nextBuildNumber"
 	  else
 	    echo "Nothing to promote for $job"
 	  fi

@@ -434,22 +434,22 @@
 		<property name="categories.xml" value="${categories.repo}/content.xml" />
 		<echo message="Creating ${categories.xml}" />
 
+		<xslt style="xsl/content2categories.xsl" in="${content.xml}" out="${categories.xml}" />
+		<replaceregexp file="${categories.xml}" match="BUILD_QUALIFIER" replace="${build.qualifier}" byline="true" />
+
 		<resourcecount property="requires.size">
 			<tokens>
 				<concat>
 					<filterchain>
 						<tokenfilter>
-							<containsregex pattern="property[^a-zA-Z]+name[^a-zA-Z]+org\.eclipse\.equinox.p2\.type\.category[^a-zA-Z]+value[^a-zA-Z]+true" />
+							<containsregex pattern="required namespace" />
 							<linetokenizer />
 						</tokenfilter>
 					</filterchain>
-					<fileset file="${content.xml}" />
+					<fileset file="${categories.xml}" />
 				</concat>
 			</tokens>
 		</resourcecount>
-
-		<xslt style="xsl/content2categories.xsl" in="${content.xml}" out="${categories.xml}" />
-		<replaceregexp file="${categories.xml}" match="BUILD_QUALIFIER" replace="${build.qualifier}" byline="true" />
 		<replaceregexp file="${categories.xml}" match="REQUIRES_SIZE" replace="${requires.size}" byline="true" />
 
 		<zip destfile="${categories.repo}/content.jar">

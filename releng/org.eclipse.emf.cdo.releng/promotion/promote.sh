@@ -23,4 +23,6 @@ do
   else
     echo "Nothing to promote for $job"
   fi
+  
+  echo "$nextBuildNumber" > "$file"
 done

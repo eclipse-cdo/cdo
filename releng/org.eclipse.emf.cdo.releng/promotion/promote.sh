@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-workDir=~/promotion/jobs
+workDir=~/promotion/work
 mkdir "$workDir"
 
-for job in `ls jobs`
+for job in `ls "$workDir"`
 do
 	jobDir=$workDir/$job
 	mkdir "$jobDir"

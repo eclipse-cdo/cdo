@@ -25,13 +25,14 @@ then
 	  if [ "$nextBuildNumber" != "$lastBuildNumber" ]
 	  then
 	    echo "Checking whether $job is promotable..."
-	    sleep 20000
 			#echo "$nextBuildNumber" > "$file"
 	  else
 	    echo "Nothing to promote for $job"
 	  fi
 	done
    
+  sleep 20000
+  
   rm -f "$lockFile"
   trap - INT TERM EXIT
 fi 

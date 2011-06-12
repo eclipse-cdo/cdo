@@ -27,7 +27,7 @@
 		</repository>
 	</xsl:template>
 	
-	<xsl:template match="property">
+	<xsl:template match="property[../../@id!='Default']">
 		<required namespace="org.eclipse.equinox.p2.iu">
 			<xsl:attribute name="name">
 				<xsl:value-of select="../../@id"/>

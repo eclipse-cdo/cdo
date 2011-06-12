@@ -398,6 +398,7 @@
 			       timestamp="${build.timestamp}"
 			       qualifier="${build.qualifier}"
 			       hudson="${env.HUDSON_URL}"
+			       revisions="${env.SVN_REVISION}"
 			       stream="${stream}"
 			       job="${env.JOB_NAME}"
 			       number="${env.BUILD_NUMBER}"

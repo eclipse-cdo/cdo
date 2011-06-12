@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for job in `ls jobs`
+for job in `ls jobs` ; do
 do
 	if [ -f "jobs/$job/nextBuildNumber" ]
 	then

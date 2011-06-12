@@ -461,6 +461,7 @@
 	</target>
 
 	<target name="generate.zip.site" if="zip.site">
+		<mkdir dir="${result}/zips" />
 		<zip destfile="${result}/zips/site.zip">
 			<fileset dir="${site.p2.dir}">
 				<include name="**/*" />
@@ -469,6 +470,7 @@
 	</target>
 
 	<target name="generate.zip.dropins" if="zip.dropins">
+		<mkdir dir="${result}/zips" />
 		<antcall target="purge.zips" />
 		<mkdir dir="${zips}" />
 		<copy todir="${zips}">

@@ -2,6 +2,7 @@
 
 for job in `ls jobs`
 do
+
   if [ -f "jobs/$job/nextBuildNumber" ]
   then
     lastBuildNumber=`cat "jobs/$job/nextBuildNumber"`

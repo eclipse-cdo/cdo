@@ -61,7 +61,7 @@
 	<property name="targetPlatformPath" location="${result}/tp" />
 	<property name="buckminster.output.root" location="${result}/output" />
 	<property name="buckminster.temp.root" location="${result}/temp" />
-	<property name="zips" value="${buckminster.temp.root}/zips" />
+	<property name="buckminster.temp.zips" value="${buckminster.temp.root}/zips" />
 	<property name="temp" location="${workspace}/_temp" />
 	<property name="site.p2.dir" location="${temp}/org.eclipse.emf.cdo.site_${stream}.0-eclipse.feature/site.p2" />
 
@@ -470,16 +470,19 @@
 	</target>
 
 	<target name="generate.zip.dropins" if="zip.dropins">
-		<mkdir dir="${result}/zips" />
-		<antcall target="purge.zips" />
-		<mkdir dir="${zips}" />
-		<copy todir="${zips}">
+		<mkdir dir="${buckminster.temp.zips}" />
+		<delete failonerror="false" includeemptydirs="true">
+			<fileset dir="${buckminster.temp.zips}" defaultexcludes="false">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+		<copy todir="${buckminster.temp.zips}">
 			<fileset dir="rootfiles">
 				<include name="**/*" />
 			</fileset>
 		</copy>
 
-		<copy todir="${zips}/features" flatten="true">
+		<copy todir="${buckminster.temp.zips}/features" flatten="true">
 			<fileset dir="${temp}">
 				<include name="*-eclipse.feature/jar/*" />
 				<include name="*-eclipse.feature/source.jar/*" />
@@ -489,28 +492,19 @@
 			</fileset>
 		</copy>
 
-		<copy todir="${zips}/plugins" flatten="true">
+		<copy todir="${buckminster.temp.zips}/plugins" flatten="true">
 			<fileset dir="${temp}">
 				<include name="*-osgi.bundle/jar/*" />
 				<include name="*-osgi.bundle/source.jar/*" />
 			</fileset>
 		</copy>
 
+		<mkdir dir="${result}/zips" />
 		<zip destfile="${result}/zips/dropins.zip">
-			<fileset dir="${zips}">
+			<fileset dir="${buckminster.temp.zips}">
 				<include name="**/*" />
 			</fileset>
 		</zip>
-
-		<antcall target="purge.zips" />
-	</target>
-
-	<target name="purge.zips">
-		<delete failonerror="false" includeemptydirs="true">
-			<fileset dir="${zips}" defaultexcludes="false">
-				<include name="**/*" />
-			</fileset>
-		</delete>
 	</target>
 
 	<target name="test" depends="site.p2">

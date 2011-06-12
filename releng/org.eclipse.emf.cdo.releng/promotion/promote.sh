@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-workDir=~/promotion/work
-mkdir "$workDir"
+jobsDir=~/promotion/jobs
+mkdir "$jobsDir"
 
-for job in `ls "$workDir"`
+for job in `ls "$jobsDir"`
 do
-	jobDir=$workDir/$job
+	jobDir=$jobsDir/$job
 	mkdir "$jobDir"
 	
 	file=$jobDir/nextBuildNumber

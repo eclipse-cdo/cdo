@@ -279,7 +279,7 @@
 		          suffix=".properties"
 		          deleteonexit="true"
 		          property="build.qualifier.file.name" />
-		<java classname="org.eclipse.emf.cdo.releng.GenerateBuildQualifier">
+		<java classname="org.eclipse.emf.cdo.releng.GenerateBuildQualifier" dir="${basedir}" fork="true">
 			<classpath path="bin" />
 			<arg value="${build.type}" />
 			<arg value="${build.timestamp}" />

@@ -2,7 +2,7 @@
 <project name="bootstrapPromoter" default="bootstrap">
 
 	<target name="bootstrap">
-		<echo message="Promoting builds: ${lastBuildNumber} --> ${nextBuildNumber}" />
+		<echo message="Checking ${jobName} builds: ${lastBuildNumber} --> ${nextBuildNumber}" />
 	</target>
 
 </project>

@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 set -e
 
-promotionDir=~/promotion
-jobsDir=$promotionDir/jobs
+promotionWorkDir=~/promotion
 
-ant=/shared/common/apache-ant-1.7.1/bin/ant
+HUDSON_JOBS_DIR=/shared/jobs
 JAVA_HOME=/shared/common/jdk-1.6.0_10
+ANT=/shared/common/apache-ant-1.7.1/bin/ant
 
 CriticalSection ()
 {
-	for jobName in `ls "$jobsDir"`
+	localJobsDir=$promotionWorkDir/jobs
+	for jobName in `ls "$localJobsDir"`
 	do
-		jobDir=$jobsDir/$jobName
+		jobDir=$localJobsDir/$jobName
 		file=$jobDir/nextBuildNumber
 		
 	  if [ -f "$file" ]
@@ -21,12 +22,13 @@ CriticalSection ()
 	    lastBuildNumber=1
 	  fi
 	
-	  nextBuildNumber=`cat "/shared/jobs/$jobName/nextBuildNumber"`
+	  nextBuildNumber=`cat "$HUDSON_JOBS_DIR/$jobName/nextBuildNumber"`
 	  if [ "$nextBuildNumber" != "$lastBuildNumber" ]
 	  then
 	    echo "Checking $jobName for builds that need promotion..."
-	    "$ant" -f "$promotionDir/bootstrap.ant" \
-	    	"-DjobDir=$jobDir" \
+	    "$ANT" -f "$promotionWorkDir/bootstrap.ant" \
+	    	"-DhudsonJobsDir=$HUDSON_JOBS_DIR" \
+	    	"-DpromotionWorkDir=$promotionWorkDir" \
 	    	"-DjobName=$jobName" \
 	    	"-DlastBuildNumber=$lastBuildNumber" \
 	    	"-DnextBuildNumber=$nextBuildNumber"
@@ -36,7 +38,7 @@ CriticalSection ()
 	done
 }
 
-lockFile=$promotionDir/promote.lock
+lockFile=$promotionWorkDir/promote.lock
 if ( set -o noclobber; echo "$$" > "$lockFile" ) 2> /dev/null; 
 then
   trap 'rm -f "$lockFile"; exit $?' INT TERM EXIT

@@ -10,50 +10,64 @@
  */
 package org.eclipse.emf.cdo.releng.promoter;
 
-import java.io.FileOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
 
 /**
  * @author Eike Stepper
  */
 public class Promoter
 {
+  private static String hudsonJobsDir;
+
+  private static String jobName;
+
   public static void main(String[] args) throws IOException
   {
-    if (args.length != 3)
+    if (args.length != 4)
     {
-      System.err
-          .println("Specify exactly three arguments, e.g. GenerateBuildQualifier R 2011-06-11_09-55-11 /path/to/build-qualifier.properties");
+      System.err.println("Specify exactly four arguments, "
+          + "e.g. Promoter /path/to/hudson/jobs hudson-job-name last-build-number next-build-number");
       System.exit(2);
     }
 
-    String buildType = args[0];
-    String buildTimestamp = args[1];
-    String buildQualifier = generateBuildQualifier(buildType, buildTimestamp);
+    hudsonJobsDir = args[0];
+    jobName = args[1];
 
-    String fileName = args[2];
-    FileOutputStream out = null;
+    int lastBuildNumber = Integer.parseInt(args[2]);
+    int nextBuildNumber = Integer.parseInt(args[3]);
 
-    try
+    File hudsonJob = new File(hudsonJobsDir, jobName);
+    File builds = new File(hudsonJob, "builds");
+    for (int buildNumber = lastBuildNumber; buildNumber < nextBuildNumber; buildNumber++)
     {
-      out = new FileOutputStream(fileName);
-      PrintStream stream = new PrintStream(out);
-      stream.println("build.qualifier=" + buildQualifier);
-      stream.flush();
-    }
-    finally
-    {
-      if (out != null)
+      File build = new File(builds, String.valueOf(buildNumber));
+      if (build.exists())
       {
-        out.close();
+        promote(build);
       }
     }
+
+    // FileOutputStream out = null;
+    //
+    // try
+    // {
+    // out = new FileOutputStream(fileName);
+    // PrintStream stream = new PrintStream(out);
+    // stream.println("build.qualifier=" + buildQualifier);
+    // stream.flush();
+    // }
+    // finally
+    // {
+    // if (out != null)
+    // {
+    // out.close();
+    // }
+    // }
   }
 
-  private static String generateBuildQualifier(String buildType, String buildTimestamp)
+  private static void promote(File build)
   {
-    return buildType + buildTimestamp.substring(0, 4) + buildTimestamp.substring(5, 7)
-        + buildTimestamp.substring(8, 10) + "-" + buildTimestamp.substring(11, 13) + buildTimestamp.substring(14, 16);
+    System.out.println("Promoting " + jobName + "#" + build.getName());
   }
 }

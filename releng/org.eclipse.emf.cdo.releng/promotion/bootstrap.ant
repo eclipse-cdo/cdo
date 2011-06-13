@@ -1,8 +1,14 @@
 <?xml version="1.0"?>
-<project name="bootstrapPromoter" default="bootstrap">
+<project name="bootstrap" default="bootstrap">
 
 	<target name="bootstrap">
-		<echo message="Checking ${jobName} builds: ${lastBuildNumber} --> ${nextBuildNumber}" />
+		<java classname="org.eclipse.emf.cdo.releng.promoter.Promoter" dir="${promotionWorkDir}" fork="true">
+			<classpath path="classes" />
+			<arg value="${hudsonJobsDir}" />
+			<arg value="${jobName}" />
+			<arg value="${lastBuildNumber}" />
+			<arg value="${nextBuildNumber}" />
+		</java>
 	</target>
 
 </project>

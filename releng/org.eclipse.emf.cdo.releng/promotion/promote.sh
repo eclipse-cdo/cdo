@@ -9,9 +9,9 @@ JAVA_HOME=/shared/common/jdk-1.6.0_10
 
 CriticalSection ()
 {
-	for job in `ls "$jobsDir"`
+	for jobName in `ls "$jobsDir"`
 	do
-		jobDir=$jobsDir/$job
+		jobDir=$jobsDir/$jobName
 		file=$jobDir/nextBuildNumber
 		
 	  if [ -f "$file" ]
@@ -21,13 +21,17 @@ CriticalSection ()
 	    lastBuildNumber=1
 	  fi
 	
-	  nextBuildNumber=`cat "/shared/jobs/$job/nextBuildNumber"`
+	  nextBuildNumber=`cat "/shared/jobs/$jobName/nextBuildNumber"`
 	  if [ "$nextBuildNumber" != "$lastBuildNumber" ]
 	  then
-	    echo "Checking whether $job builds need promotion..."
-	    "$ant" -f "$promotionDir/bootstrapPromoter.ant" -DlastBuildNumber=$lastBuildNumber -DnextBuildNumber=$nextBuildNumber
+	    echo "Checking $jobName for builds that need promotion..."
+	    "$ant" -f "$promotionDir/bootstrap.ant" \
+	    	"-DjobDir=$jobDir" \
+	    	"-DjobName=$jobName" \
+	    	"-DlastBuildNumber=$lastBuildNumber" \
+	    	"-DnextBuildNumber=$nextBuildNumber"
 	  else
-	    echo "Nothing to promote for $job"
+	    echo "Nothing to promote for $jobName"
 	  fi
 	done
 }

@@ -2,6 +2,7 @@
 <project name="CDO">
 
 	<property name="stream" value="4.0" />
+	<property name="branch" value="trunk" />
 
 	<condition property="properties.file" value="build.properties" else="local.properties">
 		<isset property="server.build" />
@@ -392,6 +393,7 @@
 			       hudson="${env.HUDSON_URL}"
 			       revision="${env.SVN_REVISION}"
 			       stream="${stream}"
+			       branch="${branch}"
 			       job="${env.JOB_NAME}"
 			       number="${env.BUILD_NUMBER}"
 			       trigger="${build.trigger}" />

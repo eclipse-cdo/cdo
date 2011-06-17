@@ -77,7 +77,7 @@ public class GastroServlet extends HttpServlet
     String repositoryName = GastroServer.getRepository().getName();
     restaurantName = getRestaurantName();
 
-    acceptor = (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "jvm", repositoryName);
+    acceptor = Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "jvm", repositoryName);
     connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "jvm", repositoryName);
 
     CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();

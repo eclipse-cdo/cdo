@@ -2,7 +2,7 @@
 <project name="Test" default="default">
 
 	<target name="default">
-		<xslt style="bom2bookmarks.xsl" in="bom.xml" out="bom-bookmarks.xml" />
+		<xslt style="content2categories.xsl" in="content.xml" out="categories.xml" />
 
 		<!--
 		<xslt style="rmap2bookmarks.xsl" in="../build.rmap" out="cdo-bookmarks.xml" />

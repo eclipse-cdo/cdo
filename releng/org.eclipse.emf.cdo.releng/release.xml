@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<release tag="4.0-GA" integration="true" repository="CDO Model Repository Site">
+<release tag="R20110608-1407" integration="false" repository="CDO Model Repository Site">
 <element name="com.mongodb" version="2.4.0.v20110608-1747" type="org.eclipse.update.feature"/>
 <element name="com.mongodb.source" version="2.4.0.v20110608-1747" type="org.eclipse.update.feature"/>
 <element name="org.eclipse.emf.cdo" version="4.0.0.v20110608-1639" type="org.eclipse.update.feature"/>

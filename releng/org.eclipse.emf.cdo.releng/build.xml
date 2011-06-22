@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="CDO">
 
-	<property name="stream" value="4.0" />
+	<property name="stream" value="4.1" />
 	<property name="branch" value="trunk" />
 
 	<condition property="properties.file" value="build.properties" else="local.properties">

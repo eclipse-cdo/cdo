@@ -396,7 +396,7 @@
 	</target>
 
 	<target name="clean.workspace">
-		<delete dir="${workspace}" failonerror="true" quiet="true" />
+		<delete dir="${workspace}" includeemptydirs="true" failonerror="true" quiet="true" />
 	</target>
 
 	<target name="clean.output">

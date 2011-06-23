@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cs:cspecExtension xmlns:cs="http://www.eclipse.org/buckminster/CSpec-1.0">
+<cs:cspec xmlns:cs="http://www.eclipse.org/buckminster/CSpec-1.0" name="org.eclipse.emf.cdo.releng"
+	componentType="buckminster" version="4.0.1.qualifier">
 	<cs:dependencies>
 		<cs:dependency name="org.eclipse.emf.cdo.site" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.cdo.server.product" componentType="eclipse.feature"/>
@@ -73,6 +74,7 @@
 		<cs:dependency name="com.google.inject" componentType="osgi.bundle"/>
 		<cs:dependency name="com.google.inject.source" componentType="osgi.bundle"/>
 		-->
+
 	</cs:dependencies>
 
 	<cs:actions>
@@ -113,4 +115,4 @@
 			<cs:attribute name="promote.site.to.archive"/>
 		</cs:public>
 	</cs:groups>
-</cs:cspecExtension>
+</cs:cspec>

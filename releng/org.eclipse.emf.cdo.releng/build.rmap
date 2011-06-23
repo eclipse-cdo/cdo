@@ -17,7 +17,7 @@
 	<rm:locator searchPathRef="platform" />
 
 	<rm:searchPath name="releng">
-		<rm:provider componentTypes="osgi.bundle" readerType="svn">
+		<rm:provider componentTypes="buckminster,osgi.bundle" readerType="svn">
 			<rm:uri format="{0}/trunk/releng/{1}">
 				<bc:propertyRef key="svn.repository" />
 				<bc:propertyRef key="buckminster.component" />

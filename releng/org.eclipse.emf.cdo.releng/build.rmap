@@ -3,7 +3,10 @@
 	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
 
 	<rm:property key="orbit.version" mutable="true" value="R20110523182458" />
+	<rm:property key="svn.branch" mutable="true" value="trunk" />
+	<!--
 	<rm:property key="svn.branch" mutable="true" value="branches/maintenance/4.0" />
+	-->
 	
 	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo" />
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />

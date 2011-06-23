@@ -15,5 +15,9 @@
     <cq:advisorNode namePattern="^org\.eclipse\.swt\.(?:gtk\.aix\.ppc(?:64)?|motif\.solaris\.sparc|photon\.qnx\.x86)$" skipComponent="true"/>
     <cq:advisorNode namePattern="^org\.eclipse\.equinox\.launcher\.gtk\.aix\.ppc(?:64)?$" skipComponent="true"/>
 
+    <cq:advisorNode namePattern="org\.eclipse\.emf\.cdo.*" branchTagPath="maintenance/4.0"/>
+    <cq:advisorNode namePattern="org\.eclipse\.net4j.*" branchTagPath="maintenance/4.0"/>
+    <cq:advisorNode namePattern="org\.gastro.*" branchTagPath="maintenance/4.0"/>
+
 	<cq:advisorNode namePattern=".*" useMaterialization="false" useTargetPlatform="false"/>
 </cq:componentQuery>

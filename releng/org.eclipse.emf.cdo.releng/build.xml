@@ -51,7 +51,6 @@
 	<property name="targetPlatformPath" location="${result}/tp" />
 	<property name="buckminster.output.root" location="${result}/output" />
 	<property name="buckminster.temp.root" location="${result}/temp" />
-	<property name="site.p2.dir" location="${workspace}/_temp/org.eclipse.emf.cdo.site_4.0.0-eclipse.feature/site.p2" />
 
 	<!-- This macro executes the default application of an eclipse installation
 			 that resides in the folder ${buildtools}/@app -->
@@ -352,6 +351,17 @@
 				<arg value="org.eclipse.emf.cdo.site#site.p2" />
 			</cmdargs>
 		</buckminster>
+
+		<!--
+		<property name="site.p2.dir"
+		          location="${workspace}/_temp/org.eclipse.emf.cdo.site_${stream}.0-eclipse.feature/site.p2" />
+		-->
+
+		<pathconvert property="site.p2.dir">
+			<fileset dir="${workspace}/_temp/">
+				<filename name="org.eclipse.emf.cdo.site_${stream}.*-eclipse.feature/site.p2" />
+			</fileset>
+		</pathconvert>
 
 		<echo message="Creating bookmarks.tmp" />
 		<xslt style="xsl/bom2bookmarks.xsl" in="${result}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />

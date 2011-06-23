@@ -18,13 +18,13 @@
 
 	<rm:searchPath name="releng">
 		<rm:provider componentTypes="buckminster,osgi.bundle" readerType="svn">
-			<rm:uri format="{0}/trunk/releng/{1}">
+			<rm:uri format="{0}/trunk/releng/{1}?moduleAfterTag&amp;moduleAfterBranch">
 				<bc:propertyRef key="svn.repository" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="svn">
-			<rm:uri format="{0}/trunk/releng/{1}-feature">
+			<rm:uri format="{0}/trunk/releng/{1}-feature?moduleAfterTag&amp;moduleAfterBranch">
 				<bc:propertyRef key="svn.repository" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
@@ -33,13 +33,13 @@
 
 	<rm:searchPath name="sources">
 		<rm:provider componentTypes="osgi.bundle" readerType="svn">
-			<rm:uri format="{0}/trunk/plugins/{1}">
+			<rm:uri format="{0}/trunk/plugins/{1}?moduleAfterTag&amp;moduleAfterBranch">
 				<bc:propertyRef key="svn.repository" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="svn">
-			<rm:uri format="{0}/trunk/features/{1}-feature">
+			<rm:uri format="{0}/trunk/features/{1}-feature?moduleAfterTag&amp;moduleAfterBranch">
 				<bc:propertyRef key="svn.repository" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>

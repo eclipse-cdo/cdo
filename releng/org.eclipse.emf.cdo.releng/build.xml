@@ -313,11 +313,16 @@
 		</buckminster>
 		-->
 
+		<unzip dest="${workspace}"
+		       src="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
+
 		<mkdir dir="${targetPlatformPath}" />
 		<buckminster command="import">
 			<cmdargs>
+				<!--
 				<arg value="-T" />
 				<arg value="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
+				-->
 
 				<arg value="-B" />
 				<arg value="${result}/bom.xml" />

@@ -371,9 +371,9 @@
 		</buckminster>
 
 		<pathconvert property="site.p2.dir">
-			<fileset dir="${workspace}/_temp/">
-				<filename name="org.eclipse.emf.cdo.site_${stream}.*-eclipse.feature/site.p2" />
-			</fileset>
+			<dirset dir="${workspace}/_temp/">
+				<dir name="org.eclipse.emf.cdo.site_${stream}.*-eclipse.feature/site.p2" />
+			</dirset>
 		</pathconvert>
 
 		<property name="content.xml" value="${site.p2.dir}/content.xml" />

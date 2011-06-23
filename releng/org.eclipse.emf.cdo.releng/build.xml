@@ -511,21 +511,21 @@
 	</target>
 
 	<target name="clean.tools">
-		<delete dir="${tools}/director" failonerror="true" quiet="true" />
-		<delete dir="${tools}/buckminster" failonerror="true" quiet="true" />
+		<delete dir="${tools}/director" includeemptydirs="true" failonerror="true" quiet="true" />
+		<delete dir="${tools}/buckminster" includeemptydirs="true" failonerror="true" quiet="true" />
 	</target>
 
 	<target name="clean.tp">
-		<delete dir="${targetPlatformPath}" failonerror="true" quiet="true" />
+		<delete dir="${targetPlatformPath}" includeemptydirs="true" failonerror="true" quiet="true" />
 	</target>
 
 	<target name="clean.workspace">
-		<delete dir="${workspace}" failonerror="true" quiet="true" />
+		<delete dir="${workspace}" includeemptydirs="true" failonerror="true" quiet="true" />
 	</target>
 
 	<target name="clean.output">
-		<delete dir="${buckminster.output.root}" failonerror="true" quiet="true" />
-		<delete dir="${buckminster.temp.root}" failonerror="true" quiet="true" />
+		<delete dir="${buckminster.output.root}" includeemptydirs="true" failonerror="true" quiet="true" />
+		<delete dir="${buckminster.temp.root}" includeemptydirs="true" failonerror="true" quiet="true" />
 	</target>
 
 	<target name="clean.all" depends="clean.tools,clean.workspace,clean.tp,clean.output" />

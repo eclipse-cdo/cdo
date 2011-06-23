@@ -446,7 +446,13 @@ public class AssembleJavaDocOptions
             line = line.replace("${PROJECT-NAME}", projectName);
 
             String id = line.trim();
-            if ("<!-- SOURCE FOLDERS -->".equals(id))
+            if ("<!-- GENERATION WARNING -->".equals(id))
+            {
+              writer.write("\t<!-- =========================================== -->\n");
+              writer.write("\t<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->\n");
+              writer.write("\t<!-- =========================================== -->\n");
+            }
+            else if ("<!-- SOURCE FOLDERS -->".equals(id))
             {
               for (String sourceFolder : sort(sourceFolders))
               {

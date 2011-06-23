@@ -13,6 +13,9 @@
 				<xsl:value-of select="@repository"/>
 			</xsl:attribute>
 			<xsl:attribute name="selected">true</xsl:attribute>
+			<xsl:attribute name="name">
+				<xsl:value-of select="@repository"/>
+			</xsl:attribute>
 		</site>
 	</xsl:template>
 	

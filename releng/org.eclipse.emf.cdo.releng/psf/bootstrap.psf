@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <psf version="2.0">
 <provider id="org.eclipse.team.svn.core.svnnature">
-<project reference="1.0.1,http://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/branches/maintenance/4.0/releng/org.eclipse.emf.cdo.releng,org.eclipse.emf.cdo.releng,b0917047782400101a32c14fbf1c4a20;http://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo;http://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo;branches;tags;branches/maintenance/4.0;true;d2b83600-2311-11e0-a056-4ff0aab784c1;http://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo;;false;&lt;http://dev.eclipse.org:443&gt; Eclipse Account;;0"/>
+<project reference="1.0.1,http://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo/branches/4.0-maintenance/releng/org.eclipse.emf.cdo.releng,org.eclipse.emf.cdo.releng,b0917047782400101a32c14fbf1c4a20;http://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo;http://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo;branches;tags;branches/4.0-maintenance;true;d2b83600-2311-11e0-a056-4ff0aab784c1;http://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo;;false;&lt;http://dev.eclipse.org:443&gt; Eclipse Account;;0"/>
 </provider>
 </psf>

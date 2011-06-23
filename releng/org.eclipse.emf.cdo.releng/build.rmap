@@ -3,11 +3,6 @@
 	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
 
 	<rm:property key="orbit.version" mutable="true" value="R20110523182458" />
-	<rm:property key="svn.branch" mutable="true" value="trunk" />
-	<!--
-	<rm:property key="svn.branch" mutable="true" value="branches/maintenance/4.0" />
-	-->
-	
 	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo" />
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
 	<rm:property key="resolve.target.platform" mutable="true" value="true" />
@@ -23,16 +18,14 @@
 
 	<rm:searchPath name="releng">
 		<rm:provider componentTypes="osgi.bundle" readerType="svn">
-			<rm:uri format="{0}/{1}/releng/{2}">
+			<rm:uri format="{0}/trunk/releng/{1}">
 				<bc:propertyRef key="svn.repository" />
-				<bc:propertyRef key="svn.branch" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="svn">
-			<rm:uri format="{0}/{1}/releng/{2}-feature">
+			<rm:uri format="{0}/trunk/releng/{1}-feature">
 				<bc:propertyRef key="svn.repository" />
-				<bc:propertyRef key="svn.branch" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
@@ -40,16 +33,14 @@
 
 	<rm:searchPath name="sources">
 		<rm:provider componentTypes="osgi.bundle" readerType="svn">
-			<rm:uri format="{0}/{1}/plugins/{2}">
+			<rm:uri format="{0}/trunk/plugins/{1}">
 				<bc:propertyRef key="svn.repository" />
-				<bc:propertyRef key="svn.branch" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="svn">
-			<rm:uri format="{0}/{1}/features/{2}-feature">
+			<rm:uri format="{0}/trunk/features/{1}-feature">
 				<bc:propertyRef key="svn.repository" />
-				<bc:propertyRef key="svn.branch" />
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>

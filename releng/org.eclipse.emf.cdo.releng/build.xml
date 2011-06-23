@@ -60,7 +60,6 @@
 	<property name="buckminster.temp.root" location="${result}/temp" />
 	<property name="buckminster.temp.zips" value="${buckminster.temp.root}/zips" />
 	<property name="temp" location="${workspace}/_temp" />
-	<property name="site.p2.dir" location="${temp}/org.eclipse.emf.cdo.site_${stream}.0-eclipse.feature/site.p2" />
 
 	<!-- This macro executes the default application of an eclipse installation
 			 that resides in the folder ${buildtools}/@app -->
@@ -370,6 +369,12 @@
 				<arg value="org.eclipse.emf.cdo.site#site.p2" />
 			</cmdargs>
 		</buckminster>
+
+		<pathconvert property="site.p2.dir">
+			<fileset dir="${workspace}/_temp/">
+				<filename name="org.eclipse.emf.cdo.site_${stream}.*-eclipse.feature/site.p2" />
+			</fileset>
+		</pathconvert>
 
 		<property name="content.xml" value="${site.p2.dir}/content.xml" />
 		<echo message="Extracting ${content.xml}" />

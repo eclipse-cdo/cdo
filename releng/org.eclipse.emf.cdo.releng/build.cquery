@@ -7,7 +7,11 @@
     <cq:advisorNode namePattern="org\.eclipse\.net4j.*\.source" skipComponent="true"/>
     <cq:advisorNode namePattern="org\.gastro.*\.source" skipComponent="true"/>
     <cq:advisorNode namePattern="com\.mongodb.*\.source" skipComponent="true"/>
-	
+
+    <cq:advisorNode namePattern="org\.eclipse\.emf\.cdo.*" branchTagPath="maintenance/4.0"/>
+    <cq:advisorNode namePattern="org\.eclipse\.net4j.*" branchTagPath="maintenance/4.0"/>
+    <cq:advisorNode namePattern="org\.gastro.*" branchTagPath="maintenance/4.0"/>
+
 		<!-- For unknown reasons source 1.0.4 gets included for 1.1.1 -->
     <cq:advisorNode namePattern="org\.apache\.commons\.logging\.source" skipComponent="true"/>
 	

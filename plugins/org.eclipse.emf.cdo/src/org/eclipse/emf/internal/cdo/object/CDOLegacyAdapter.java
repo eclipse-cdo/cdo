@@ -15,12 +15,17 @@ import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
+
+import org.eclipse.net4j.util.om.trace.ContextTracer;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.CDOStore;
+import org.eclipse.emf.spi.cdo.FSMUtil;
 
 import java.util.List;
 
@@ -30,12 +35,18 @@ import java.util.List;
  */
 public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Internal
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_OBJECT, CDOLegacyAdapter.class);
+
   /**
    * @since 3.0
    */
   public CDOLegacyAdapter(InternalEObject object)
   {
     super(object);
+
+    instance.eAdapters().add(this);
+    ((org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList)instance.eAdapters())
+        .addListener(new AdapterListListener());
   }
 
   public void setTarget(Notifier newTarget)
@@ -130,6 +141,47 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
       // Align Container for bidirectional references because this is not set in the store. See Bugzilla_246622_Test
       instanceToRevisionContainment();
+    }
+  }
+
+  /**
+   * @author Martin Flügge
+   * @since 3.0
+   */
+  protected class AdapterListListener implements
+      org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList.Listener
+  {
+    /**
+     * @since 4.0
+     */
+    public AdapterListListener()
+    {
+    }
+
+    public void added(Notifier notifier, Adapter adapter)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Added : {0} to {1} ", adapter, CDOLegacyAdapter.this); //$NON-NLS-1$
+      }
+
+      if (!FSMUtil.isTransient(CDOLegacyAdapter.this))
+      {
+        cdoView().handleAddAdapter(CDOLegacyAdapter.this, adapter);
+      }
+    }
+
+    public void removed(Notifier notifier, Adapter adapter)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Removed : {0} from {1} ", adapter, CDOLegacyAdapter.this); //$NON-NLS-1$
+      }
+
+      if (!FSMUtil.isTransient(CDOLegacyAdapter.this))
+      {
+        cdoView().handleRemoveAdapter(CDOLegacyAdapter.this, adapter);
+      }
     }
   }
 }

@@ -37,7 +37,6 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -110,9 +109,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   {
     this.instance = instance;
     state = CDOState.TRANSIENT;
-
-    instance.eAdapters().add((Adapter)this);
-    attachAdapterListListener();
   }
 
   public CDOState cdoState()
@@ -165,7 +161,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   {
     if (TRACER.isEnabled())
     {
-      TRACER.trace(("Setting revision: " + revision)); //$NON-NLS-1$
+      TRACER.trace("Setting revision: " + revision); //$NON-NLS-1$
     }
 
     this.revision = (InternalCDORevision)revision;
@@ -315,14 +311,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   public String toString()
   {
     return "CDOLegacyWrapper[" + instance.getClass().getSimpleName() + "@" + id + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-  }
-
-  /**
-   * @since 3.0
-   */
-  protected void attachAdapterListListener()
-  {
-    ((EObservableAdapterList)instance.eAdapters()).addListener(new AdapterListListener());
   }
 
   protected void instanceToRevision()
@@ -503,7 +491,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format(("Setting attribute value " + object + " to feature " + feature + " in instance " + instance)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+          TRACER.format("Setting attribute value " + object + " to feature " + feature + " in instance " + instance); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
 
         // Just fake it for the store :(
@@ -521,7 +509,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         // EReferences
         if (TRACER.isEnabled())
         {
-          TRACER.format(("Adding object " + object + " to feature " + feature + " in instance " + instance)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+          TRACER.format("Adding object " + object + " to feature " + feature + " in instance " + instance); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
 
         int featureID = instance.eClass().getFeatureID(feature);
@@ -563,7 +551,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
         if (TRACER.isEnabled())
         {
-          TRACER.format(("Added object " + object + " to feature " + feature + " in instance " + instance)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+          TRACER.format("Added object " + object + " to feature " + feature + " in instance " + instance); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         }
       }
     }

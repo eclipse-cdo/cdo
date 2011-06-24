@@ -23,7 +23,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -447,46 +446,5 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
   public String eURIFragmentSegment(EStructuralFeature feature, EObject object)
   {
     return instance.eURIFragmentSegment(feature, object);
-  }
-
-  /**
-   * @author Martin Flügge
-   * @since 3.0
-   */
-  protected class AdapterListListener implements
-      org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList.Listener
-  {
-    /**
-     * @since 4.0
-     */
-    public AdapterListListener()
-    {
-    }
-
-    public void added(Notifier notifier, Adapter adapter)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Added : {0} to {1} ", adapter, CDOObjectWrapper.this); //$NON-NLS-1$
-      }
-
-      if (!FSMUtil.isTransient(CDOObjectWrapper.this))
-      {
-        cdoView().handleAddAdapter(CDOObjectWrapper.this, adapter);
-      }
-    }
-
-    public void removed(Notifier notifier, Adapter adapter)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Removed : {0} from {1} ", adapter, CDOObjectWrapper.this); //$NON-NLS-1$
-      }
-
-      if (!FSMUtil.isTransient(CDOObjectWrapper.this))
-      {
-        cdoView().handleRemoveAdapter(CDOObjectWrapper.this, adapter);
-      }
-    }
   }
 }

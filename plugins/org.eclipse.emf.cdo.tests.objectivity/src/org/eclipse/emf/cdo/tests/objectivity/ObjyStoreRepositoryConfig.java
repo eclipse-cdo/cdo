@@ -43,7 +43,7 @@ public abstract class ObjyStoreRepositoryConfig extends RepositoryConfig
   protected void deactivateRepositories()
   {
     super.deactivateRepositories();
-    // System.out.println(">>>>IS:<<<< We need to remove all data created here....");
+    // System.out.println("IS: We need to remove all data created here....");
     storeConfig.resetFD();
   }
 

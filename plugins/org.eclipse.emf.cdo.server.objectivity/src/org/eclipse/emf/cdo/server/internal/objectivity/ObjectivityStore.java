@@ -190,7 +190,7 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   protected IStoreAccessor createReader(ISession session)
   {
     // System.out
-    // .println(">>>>IS:<<<< ObjectivityStore.createRead() - " + (session == null ? "null" : session.toString()));
+    // .println("IS: ObjectivityStore.createRead() - " + (session == null ? "null" : session.toString()));
     return new ObjectivityStoreAccessor(this, session);
   }
 
@@ -199,11 +199,11 @@ public class ObjectivityStore extends Store implements IObjectivityStore
   {
     // if (transaction == null)
     // {
-    // System.out.println(">>>>IS:<<<< ObjectivityStore.createWriter() - transaction: null");
+    // System.out.println("IS: ObjectivityStore.createWriter() - transaction: null");
     // }
     // else
     // {
-    // System.out.println(">>>>IS:<<<< ObjectivityStore.createWriter() - "
+    // System.out.println("IS: ObjectivityStore.createWriter() - "
     // + (transaction.getSession() == null ? "null" : transaction.getSession().toString()));
     // }
     return new ObjectivityStoreAccessor(this, transaction);

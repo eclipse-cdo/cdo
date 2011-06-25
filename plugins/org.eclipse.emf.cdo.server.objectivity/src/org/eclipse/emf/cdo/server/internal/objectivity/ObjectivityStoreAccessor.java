@@ -274,7 +274,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   @Override
   protected void doActivate() throws Exception
   {
-    // System.out.println(">>>>IS:<<<< StoreAccessor.doActivate() " + this);
+    // System.out.println("IS: StoreAccessor.doActivate() " + this);
     // getObjySession();
   }
 
@@ -362,7 +362,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
   private void returnObjySession()
   {
-    // System.out.println(">>>>IS:<<<< Returning to pool, session: " + objySession + " - name: " +
+    // System.out.println("IS: Returning to pool, session: " + objySession + " - name: " +
     // objySession.getName());
     ensureSessionJoin();
     // testDetachWithoutRevision_CheckMainBranch() is crashing because objySession is null.
@@ -374,7 +374,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (objySession.isOpen())
     {
-      // System.out.println(">>>>IS:<<<< commiting session: " + objySession + " - name: " + objySession.getName());
+      // System.out.println("IS: commiting session: " + objySession + " - name: " + objySession.getName());
       objySession.commit(); // IS: we might need to abort instead.
     }
     objySession.returnSessionToPool();
@@ -391,14 +391,14 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   @Override
   protected void doPassivate() throws Exception
   {
-    // System.out.println(">>>>IS:<<<< StoreAccessor.doPassivate() " + this);
+    // System.out.println("IS: StoreAccessor.doPassivate() " + this);
     returnObjySession();
   }
 
   @Override
   protected void doUnpassivate() throws Exception
   {
-    // System.out.println(">>>>IS:<<<< StoreAccessor.doUnpassivate() " + this);
+    // System.out.println("IS: StoreAccessor.doUnpassivate() " + this);
     // IS: don't call this now, in case we don't have a context.
     // getObjySession();
   }
@@ -407,7 +407,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   // protected void setContext(Object context)
   // {
   // super.setContext(context);
-  // System.out.println(">>>>IS:<<<< StoreAccessor.setContext() " + this + " - context: " + context.toString());
+  // System.out.println("IS: StoreAccessor.setContext() " + this + " - context: " + context.toString());
   // }
 
   @Override
@@ -1508,8 +1508,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
           }
           catch (com.objy.db.ObjyRuntimeException ex)
           {
-            System.out.println(">>>>IS: Exception<<<< Session: " + objySession + " open status: "
-                + objySession.isOpen());
+            System.out.println("IS: Exception, Session: " + objySession + " open status: " + objySession.isOpen());
             ex.printStackTrace();
           }
           monitor.worked();

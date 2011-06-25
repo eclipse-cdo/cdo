@@ -57,6 +57,11 @@ public final class TMPUtil
       }
 
       tempFolder = new File(path);
+
+      if (!tempFolder.exists())
+      {
+        tempFolder.mkdirs();
+      }
     }
 
     return tempFolder;

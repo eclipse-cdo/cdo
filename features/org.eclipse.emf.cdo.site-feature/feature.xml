@@ -14,9 +14,7 @@
       label="CDO Model Repository Site"
       version="4.0.1.qualifier"
       provider-name="%providerName"
-      image="eclipse_update_120.jpg"
-      license-feature="org.eclipse.emf.cdo.license"
-      license-feature-version="4.0.0.qualifier">
+      image="eclipse_update_120.jpg" license-feature="org.eclipse.emf.cdo.license" license-feature-version="4.0.0.qualifier">
 
    <description>
       %description
@@ -126,3 +124,4 @@
          unpack="false"/>
 
 </feature>
+

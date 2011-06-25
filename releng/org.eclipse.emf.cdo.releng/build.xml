@@ -1,15 +1,9 @@
 <?xml version="1.0"?>
 <project name="CDO">
 
-<<<<<<< .working
 	<property name="stream" value="4.0" />
 	<property name="branch" value="branches/4.0-maintenance" />
 
-=======
-	<property name="stream" value="4.1" />
-	<property name="branch" value="trunk" />
-
->>>>>>> .merge-right.r8409
 	<condition property="properties.file" value="build.properties" else="local.properties">
 		<isset property="server.build" />
 	</condition>

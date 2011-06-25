@@ -169,9 +169,13 @@ public class XMLUserType implements UserType
       // st.setString(index, ((Enumerator)getEEnum().getDefaultValue()).getLiteral());
       arg0.setNull(arg2, sqlTypes()[0]);
     }
-    else
+    else if (arg1 instanceof java.lang.String)
     {
       arg0.setObject(arg2, convertToObject((java.lang.String)arg1), getSqlType());
+    }
+    else
+    {
+      arg0.setObject(arg2, arg1, getSqlType());
     }
   }
 

@@ -163,8 +163,9 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
    * branch point} in this branch with the given time stamp.
    * <p>
    * 
-   * @name The name of the sub branch to be created. It must not contain the {@link #PATH_SEPARATOR path separator}
-   *       character (slash).
+   * @param name
+   *          The name of the sub branch to be created. It must not contain the {@link #PATH_SEPARATOR path separator}
+   *          character (slash).
    * @param timeStamp
    *          The time stamp in this branch that the sub branch to be created is supposed to be {@link #getBase() based
    *          at}. It must not be before the base time stamp of this branch and it must be different from the fixed

@@ -188,8 +188,8 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
     }
 
     /**
-     * Called if the local session is {@link CDORemoteSessionManager#isSubscribed() subscribed} and a remote session
-     * {@link CDORemoteSession#sendCustomData(String, byte[]) sent} custom data to the local session.
+     * Called if the local session is {@link CDORemoteSessionManager#isSubscribed() subscribed} and a remote session has
+     * {@link CDORemoteSession#sendMessage(CDORemoteSessionMessage) sent} custom data to the local session.
      */
     protected void onMessageReceived(CDORemoteSession remoteSession, CDORemoteSessionMessage message)
     {

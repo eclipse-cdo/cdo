@@ -1397,7 +1397,7 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
   // }
 
   /**
-   * {@link ResourceImpl.ContentsEList}!!! --> Bugzilla!
+   * An implementation of a CDO specific '<em><b>contents</b></em>' list.
    * 
    * @ADDED
    * @author Eike Stepper

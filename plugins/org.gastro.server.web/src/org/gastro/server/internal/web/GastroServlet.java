@@ -25,6 +25,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.gastro.business.BusinessDay;
@@ -38,7 +39,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -73,11 +73,11 @@ public class GastroServlet extends HttpServlet
   @Override
   public void init() throws ServletException
   {
-    System.out.println("INIT GastroServlet");
+    OM.LOG.info("Gastro servlet initializing");
     String repositoryName = GastroServer.getRepository().getName();
     restaurantName = getRestaurantName();
 
-    acceptor = (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "jvm", repositoryName);
+    acceptor = Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "jvm", repositoryName);
     connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "jvm", repositoryName);
 
     CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
@@ -87,12 +87,13 @@ public class GastroServlet extends HttpServlet
     CDOSession session = config.openSession();
     view = session.openView();
     super.init();
+    OM.LOG.info("Gastro servlet initialized");
   }
 
   @Override
   public void destroy()
   {
-    System.out.println("DESTROY GastroServlet");
+    OM.LOG.info("Gastro servlet destroying");
     if (view != null)
     {
       CDOSession session = (CDOSession)view.getSession();
@@ -113,6 +114,7 @@ public class GastroServlet extends HttpServlet
     }
 
     super.destroy();
+    OM.LOG.info("Gastro servlet destroyed");
   }
 
   public synchronized MenuCard getMenuCard()
@@ -155,18 +157,19 @@ public class GastroServlet extends HttpServlet
   {
     try
     {
-      String configName = System.getProperty("servlet.config", "gastro.properties");
-      InputStream fis = new FileInputStream(configName);
+      String configPath = OMPlatform.INSTANCE.getProperty("servlet.config", "config/gastro.properties");
+      // InputStream stream = new FileInputStream(configPath);
+      InputStream stream = OM.BUNDLE.getInputStream(configPath);
 
       try
       {
         Properties properties = new Properties();
-        properties.load(fis);
+        properties.load(stream);
         return properties.getProperty("restaurant");
       }
       finally
       {
-        fis.close();
+        stream.close();
       }
     }
     catch (IOException ex)

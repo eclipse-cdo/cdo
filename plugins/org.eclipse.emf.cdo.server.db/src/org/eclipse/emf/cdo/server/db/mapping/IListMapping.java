@@ -102,10 +102,10 @@ public interface IListMapping
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised);
 
   /**
-   * Retrieve cross-references from DB
+   * Retrieve cross-references from DB.
    * 
-   * @see IClassMapping#queryXRefs(IDBStoreAccessor, QueryXRefsContext, String)
-   * @see IStoreAccessor#queryXRefs(QueryXRefsContext)
+   * @see IClassMapping#queryXRefs(IDBStoreAccessor, IStoreAccessor.QueryXRefsContext, String)
+   * @see IStoreAccessor#queryXRefs(IStoreAccessor.QueryXRefsContext)
    * @since 4.0
    */
   public boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,

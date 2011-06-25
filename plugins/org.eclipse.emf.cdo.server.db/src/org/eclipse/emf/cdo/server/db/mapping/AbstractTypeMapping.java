@@ -233,8 +233,8 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   }
 
   /**
-   * Returns the SQL type of this TypeMapping. The default implementation considers the type map hold by the meta-data
-   * manager (@see {@link MetaDataManager#getDBType(org.eclipse.emf.ecore.EClassifier)} Subclasses may override.
+   * Returns the SQL type of this TypeMapping. The default implementation considers the type map held by the
+   * {@link MetaDataManager meta-data manager}. Subclasses may override.
    * 
    * @return The sql type of this TypeMapping.
    */

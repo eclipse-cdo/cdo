@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.util.CDOUpdatable;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.options.IOptions;
@@ -344,9 +345,9 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
    * @see CDOSession#openView(String, ResourceSet)
    * @see CDOSession#openTransaction(String)
    * @see CDOSession#openTransaction(String, ResourceSet)
-   * @see CDOView#lockObjects(Collection, LockType, long)
-   * @see CDOView#unlockObjects(Collection, LockType)
-   * @see CDOView#unlockObjects()
+   * @see #lockObjects(Collection, IRWLockManager.LockType, long)
+   * @see #unlockObjects(Collection, IRWLockManager.LockType)
+   * @see #unlockObjects()
    * @see CDOObject#cdoReadLock()
    * @see CDOObject#cdoWriteLock()
    * @since 4.0

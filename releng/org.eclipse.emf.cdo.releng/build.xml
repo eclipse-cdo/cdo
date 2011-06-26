@@ -145,8 +145,7 @@
 		<delete failonerror="false">
 			<fileset dir="${result}">
 				<include name="bom.xml" />
-				<include name="coverageReport.xml" />
-				<include name="testReport.xml" />
+				<include name="test-report.xml" />
 			</fileset>
 		</delete>
 
@@ -335,8 +334,8 @@
 		</buckminster>
 
 		<echo message="Creating a empty test report to make Hudson happy" />
-		<copy file="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/testReportEmpty.xml"
-		      tofile="${result}/testReport.xml" />
+		<copy file="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/test-report-empty.xml"
+		      tofile="${result}/test-report.xml" />
 	</target>
 
 	<target name="build.workspace" depends="provision">
@@ -498,7 +497,7 @@
 				<arg value="-l" />
 				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
 				<arg value="-o" />
-				<arg value="${result}/testReport.xml" />
+				<arg value="${result}/test-report.xml" />
 				<arg value="--terseXML" />
 				<arg value="--flatXML" />
 			</cmdargs>

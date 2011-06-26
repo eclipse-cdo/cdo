@@ -383,7 +383,7 @@
 		<antcall target="generate.buildinfos" />
 		<antcall target="generate.bookmarks" />
 		<antcall target="generate.index" />
-		<antcall target="generate.categories" />
+		<!--<antcall target="generate.categories" />-->
 		<antcall target="generate.zip.dropins" />
 
 		<echo message="Deleting ${content.xml}" />
@@ -420,6 +420,7 @@
 		<xslt style="xsl/content2xml.xsl" in="${content.xml}" out="${site.p2.dir}/index.xml" />
 	</target>
 
+	<!-- DONE BY PROMOTION
 	<target name="generate.categories">
 		<property name="categories.repo" value="${site.p2.dir}/categories" />
 		<property name="categories.xml" value="${categories.repo}/content.xml" />
@@ -450,6 +451,7 @@
 		</zip>
 		<delete file="${categories.xml}" />
 	</target>
+	-->
 
 	<target name="generate.zip.dropins" if="zip.dropins">
 		<mkdir dir="${buckminster.temp.zips}" />

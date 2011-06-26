@@ -3,6 +3,7 @@
 
 	<property name="stream" value="4.0" />
 	<property name="branch" value="branches/4.0-maintenance" />
+	<property name="weekly.build.type" value="M" />
 
 	<condition property="properties.file" value="build.properties" else="local.properties">
 		<isset property="server.build" />
@@ -227,7 +228,7 @@
 	        depends="set.build.type.default.if.not.in.Hudson"
 	        unless="build.type">
 		<!-- Infer the build type from the cause/trigger of the build as filed by Hudson:
-				 build triggered by timer/schedule => I build
+				 build triggered by timer/schedule => ${weekly.build.type} build
 				 any other cause => N build -->
 		<xmlproperty keeproot="false">
 			<url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
@@ -238,7 +239,7 @@
 				<replaceregex pattern="^Started by " replace="" />
 			</filterchain>
 		</loadresource>
-		<condition property="build.type" value="I" else="N">
+		<condition property="build.type" value="${weekly.build.type}" else="N">
 			<equals arg1="${build.trigger}" arg2="timer" />
 		</condition>
 	</target>

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.impl.EStoreEObjectImpl;
 
 /**
@@ -43,6 +44,24 @@ public interface CDORevisionData
    */
   public Object getContainerID();
 
+  /**
+   * Provides the input to the calculation of the feature in the container revision that actually holds this revision.
+   * <p>
+   * <b>Usage Example:</b>
+   * <p>
+   * <code><pre>
+   * CDORevision revision = ...;
+   * CDORevision container = <i>Util.getRevision</i>(revision.data().getContainerID());
+   * 
+   * int containingFeatureID = revision.data().getContainingFeatureID();
+   * 
+   * EStructuralFeature feature = containingFeatureID <= InternalEObject.EOPPOSITE_FEATURE_BASE ?
+   *     container.getEClass().getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containingFeatureID) :
+   *     ((EReference)revision.getEClass().getEStructuralFeature(containingFeatureID)).getEOpposite();</pre></code>
+   * 
+   * @see BasicEObjectImpl#eContainingFeature()
+   * @see #getContainerID()
+   */
   public int getContainingFeatureID();
 
   /**

@@ -165,7 +165,7 @@ public class CommitIntegrityCheck
         // @1
         CDOID currentContainerID = (CDOID)transaction.convertObjectToID(dirtyRev.getContainerID());
         CDOID cleanContainerID = (CDOID)transaction.convertObjectToID(cleanRev.getContainerID());
-        if (currentContainerID != cleanContainerID)
+        if (!CDOIDUtil.equals(currentContainerID, cleanContainerID))
         {
           if (currentContainerID != CDOID.NULL)
           {
@@ -184,7 +184,7 @@ public class CommitIntegrityCheck
         // @3
         CDOID currentResourceID = (CDOID)transaction.convertObjectToID(dirtyRev.getResourceID());
         CDOID cleanResourceID = (CDOID)transaction.convertObjectToID(cleanRev.getResourceID());
-        if (currentResourceID != cleanResourceID)
+        if (!CDOIDUtil.equals(currentResourceID, cleanResourceID))
         {
           if (currentResourceID != CDOID.NULL)
           {

@@ -215,12 +215,16 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     masterTransaction.commit();
     masterCompany.setName("Company3");
     masterTransaction.commit();
+    msg(CDOUtil.getCDOObject(masterCompany).cdoRevision().getVersion());
 
     // go online.
     getOfflineConfig().startMasterTransport();
     waitForOnline(clone);
 
     cloneTransaction.waitForUpdate(masterTransaction.getLastCommitTime(), 1000);
+
+    cloneCompany.getName();
+    msg(CDOUtil.getCDOObject(cloneCompany).cdoRevision().getVersion());
 
     cloneCompany.setName("Company4");
     cloneTransaction.commit();

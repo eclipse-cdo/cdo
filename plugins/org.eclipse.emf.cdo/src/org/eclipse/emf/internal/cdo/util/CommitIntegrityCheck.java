@@ -249,8 +249,11 @@ public class CommitIntegrityCheck
       CDOID oldID = (CDOID)transaction.convertObjectToID(oldIDOrObject);
       if (oldIDOrObject != null)
       {
-        // Old child must be included
-        checkIncluded(oldID, "removed/former child/refTarget of", dirtyObject);
+        // Old child must be included if it's the container or has an eOpposite
+        if (containmentOrWithOpposite)
+        {
+          checkIncluded(oldID, "removed/former child/refTarget of", dirtyObject);
+        }
       }
 
       if (newIDOrObject != null)

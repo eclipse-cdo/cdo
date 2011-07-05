@@ -809,7 +809,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
     {
       byte[] id = it.next();
       String key = HexUtil.bytesToHex(id);
-      if (lobs.containsKey(key))
+      if (!lobs.containsKey(key))
       {
         it.remove();
       }

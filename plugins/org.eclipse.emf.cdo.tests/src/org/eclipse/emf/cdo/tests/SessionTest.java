@@ -13,16 +13,21 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -385,5 +390,28 @@ public class SessionTest extends AbstractCDOTest
     {
       assertEquals(SecurityException.class, success.getCause().getClass());
     }
+  }
+
+  public void testSetProtocolTimeout() throws Exception
+  {
+    IRepository repository = getRepository();
+    repository.getSessionManager().addListener(new ContainerEventAdapter<ISession>()
+    {
+      @Override
+      protected void onAdded(IContainer<ISession> container, ISession session)
+      {
+        ISessionProtocol protocol = session.getProtocol();
+        if (protocol instanceof ISignalProtocol)
+        {
+          ISignalProtocol<?> signalProtocol = (ISignalProtocol<?>)protocol;
+          signalProtocol.setTimeout(30L * 1000L);
+        }
+      }
+    });
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.createResource(getResourcePath("ttt"));
+    transaction.commit();
   }
 }

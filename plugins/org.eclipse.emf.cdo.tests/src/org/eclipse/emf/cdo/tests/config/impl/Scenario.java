@@ -55,12 +55,12 @@ public class Scenario implements IScenario
   {
   }
 
-  public synchronized IContainerConfig getContainerConfig()
+  public IContainerConfig getContainerConfig()
   {
     return containerConfig;
   }
 
-  public synchronized void setContainerConfig(IContainerConfig containerConfig)
+  public void setContainerConfig(IContainerConfig containerConfig)
   {
     configs = null;
     this.containerConfig = containerConfig;
@@ -70,12 +70,12 @@ public class Scenario implements IScenario
     }
   }
 
-  public synchronized IRepositoryConfig getRepositoryConfig()
+  public IRepositoryConfig getRepositoryConfig()
   {
     return repositoryConfig;
   }
 
-  public synchronized void setRepositoryConfig(IRepositoryConfig repositoryConfig)
+  public void setRepositoryConfig(IRepositoryConfig repositoryConfig)
   {
     configs = null;
     this.repositoryConfig = repositoryConfig;
@@ -85,12 +85,12 @@ public class Scenario implements IScenario
     }
   }
 
-  public synchronized ISessionConfig getSessionConfig()
+  public ISessionConfig getSessionConfig()
   {
     return sessionConfig;
   }
 
-  public synchronized void setSessionConfig(ISessionConfig sessionConfig)
+  public void setSessionConfig(ISessionConfig sessionConfig)
   {
     configs = null;
     this.sessionConfig = sessionConfig;
@@ -100,12 +100,12 @@ public class Scenario implements IScenario
     }
   }
 
-  public synchronized IModelConfig getModelConfig()
+  public IModelConfig getModelConfig()
   {
     return modelConfig;
   }
 
-  public synchronized void setModelConfig(IModelConfig modelConfig)
+  public void setModelConfig(IModelConfig modelConfig)
   {
     configs = null;
     this.modelConfig = modelConfig;
@@ -116,13 +116,13 @@ public class Scenario implements IScenario
   }
 
   @Override
-  public synchronized String toString()
+  public String toString()
   {
     return MessageFormat.format("Scenario[{0}, {1}, {2}, {3}]", //
         getContainerConfig(), getRepositoryConfig(), getSessionConfig(), getModelConfig());
   }
 
-  public synchronized Set<IConfig> getConfigs()
+  public Set<IConfig> getConfigs()
   {
     if (configs == null)
     {
@@ -136,7 +136,7 @@ public class Scenario implements IScenario
     return configs;
   }
 
-  public synchronized boolean isValid()
+  public boolean isValid()
   {
     Set<IConfig> configs = getConfigs();
     for (IConfig config : configs)
@@ -150,12 +150,12 @@ public class Scenario implements IScenario
     return true;
   }
 
-  public synchronized ConfigTest getCurrentTest()
+  public ConfigTest getCurrentTest()
   {
     return currentTest;
   }
 
-  public synchronized void setCurrentTest(ConfigTest currentTest)
+  public void setCurrentTest(ConfigTest currentTest)
   {
     this.currentTest = currentTest;
     if (containerConfig != null)
@@ -179,7 +179,7 @@ public class Scenario implements IScenario
     }
   }
 
-  public synchronized void setUp() throws Exception
+  public void setUp() throws Exception
   {
     try
     {
@@ -205,7 +205,7 @@ public class Scenario implements IScenario
     }
   }
 
-  public synchronized void tearDown() throws Exception
+  public void tearDown() throws Exception
   {
     try
     {
@@ -244,7 +244,7 @@ public class Scenario implements IScenario
     }
   }
 
-  public synchronized void save()
+  public void save()
   {
     File file = getStateFile();
     ObjectOutputStream stream = null;

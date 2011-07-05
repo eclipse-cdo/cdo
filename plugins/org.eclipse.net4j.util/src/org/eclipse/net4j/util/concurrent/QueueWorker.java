@@ -20,13 +20,18 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class QueueWorker<E> extends Worker
 {
+  /**
+   * @since 3.2
+   */
+  public static final int DEFAULT_POLL_MILLIS = 100;
+
   private BlockingQueue<E> queue;
 
   private long pollMillis;
 
   public QueueWorker()
   {
-    setPollMillis(100);
+    setPollMillis(DEFAULT_POLL_MILLIS);
   }
 
   public long getPollMillis()

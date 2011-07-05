@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
 
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -59,6 +60,8 @@ import java.util.List;
 public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<CommitTransactionResult>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CommitTransactionRequest.class);
+
+  private static long sleepMillisForTesting = 0L;
 
   private CDOIDProvider idProvider; // CDOTransaction
 
@@ -149,6 +152,11 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     for (CDOIDAndVersion newObject : newObjects)
     {
       out.writeCDORevision((CDORevision)newObject, CDORevision.UNCHUNKED);
+
+      if (sleepMillisForTesting != 0L)
+      {
+        ConcurrencyUtil.sleep(sleepMillisForTesting);
+      }
     }
 
     if (TRACER.isEnabled())

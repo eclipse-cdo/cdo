@@ -27,13 +27,14 @@ public abstract class Timeouter
 
   private TimerTask timeoutTask;
 
-  private long touched;
+  private volatile long touched;
 
   public Timeouter(Timer timer, long timeout)
   {
     this.timer = timer;
     this.timeout = timeout;
-    touched = System.currentTimeMillis();
+
+    touch();
     scheduleTimeout();
   }
 

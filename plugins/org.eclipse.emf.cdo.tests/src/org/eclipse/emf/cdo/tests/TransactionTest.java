@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -30,6 +31,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -39,6 +41,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.emf.common.notify.Notification;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -479,5 +482,33 @@ public class TransactionTest extends AbstractCDOTest
     resource.getContents().add(getModel1Factory().createCompany());
 
     transaction.commit();
+  }
+
+  public void _testLongCommit2() throws Exception
+  {
+    OMPlatform.INSTANCE.setDebugging(true);
+    Field field = ReflectUtil.getField(CommitTransactionRequest.class, "sleepMillisForTesting");
+
+    try
+    {
+      ReflectUtil.setValue(field, null, 1000L);
+
+      org.eclipse.emf.cdo.net4j.CDOSession session = (org.eclipse.emf.cdo.net4j.CDOSession)openSession();
+      session.options().setCommitTimeout(60);
+
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
+
+      for (int i = 0; i < 300; i++)
+      {
+        resource.getContents().add(getModel1Factory().createCompany());
+      }
+
+      transaction.commit();
+    }
+    finally
+    {
+      ReflectUtil.setValue(field, null, 0L);
+    }
   }
 }

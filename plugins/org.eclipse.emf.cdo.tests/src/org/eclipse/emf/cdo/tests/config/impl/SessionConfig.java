@@ -51,6 +51,8 @@ import java.util.Set;
  */
 public abstract class SessionConfig extends Config implements ISessionConfig
 {
+  public static final String PROP_TEST_SESSION_CONFIGURATION = "test.session.SessionConfiguration";
+
   public static final String PROP_TEST_CREDENTIALS_PROVIDER = "test.session.CredentialsProvider";
 
   private static final long serialVersionUID = 1L;
@@ -79,8 +81,17 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   public CDOSession openSession(String repositoryName)
   {
-    CDOSessionConfiguration configuration = createSessionConfiguration(repositoryName);
-    configuration.getAuthenticator().setCredentialsProvider(getTestCredentialsProvider());
+    CDOSessionConfiguration configuration = getTestSessionConfiguration();
+    if (configuration == null)
+    {
+      configuration = createSessionConfiguration(repositoryName);
+    }
+
+    IPasswordCredentialsProvider credentialsProvider = getTestCredentialsProvider();
+    if (credentialsProvider != null)
+    {
+      configuration.getAuthenticator().setCredentialsProvider(credentialsProvider);
+    }
 
     CDOSession session = configuration.openSession();
     configureSession(session);
@@ -146,6 +157,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     {
       removeDynamicPackagesFromGlobalRegistry();
     }
+  }
+
+  protected CDOSessionConfiguration getTestSessionConfiguration()
+  {
+    return (CDOSessionConfiguration)getTestProperty(PROP_TEST_SESSION_CONFIGURATION);
   }
 
   protected IPasswordCredentialsProvider getTestCredentialsProvider()

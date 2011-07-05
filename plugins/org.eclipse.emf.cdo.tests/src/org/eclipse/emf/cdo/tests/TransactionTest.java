@@ -12,7 +12,10 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -455,5 +458,26 @@ public class TransactionTest extends AbstractCDOTest
     transaction2.commit();
     IOUtil.OUT().println("After transaction2.commit(): " + cdoCategory2.cdoRevision());
     assertEquals(3, cdoCategory2.cdoRevision().getVersion());
+  }
+
+  public void testLongCommit() throws Exception
+  {
+    OMPlatform.INSTANCE.setDebugging(true);
+
+    IRepository repository = getRepository();
+    repository.addCommitInfoHandler(new CDOCommitInfoHandler()
+    {
+      public void handleCommitInfo(CDOCommitInfo commitInfo)
+      {
+        sleep(15L * 1000L);
+      }
+    });
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
+    resource.getContents().add(getModel1Factory().createCompany());
+
+    transaction.commit();
   }
 }

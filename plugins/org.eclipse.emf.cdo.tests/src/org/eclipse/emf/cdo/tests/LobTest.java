@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.InputStream;
@@ -33,11 +34,14 @@ import java.io.Reader;
  */
 public class LobTest extends AbstractCDOTest
 {
+  private byte[] lobID;
+
   @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
     skipLargeObjects();
+    lobID = null;
   }
 
   public void testCommitBlob() throws Exception
@@ -60,6 +64,8 @@ public class LobTest extends AbstractCDOTest
       resource.getContents().add(image);
 
       transaction.commit();
+
+      lobID = blob.getID();
     }
     finally
     {
@@ -71,7 +77,7 @@ public class LobTest extends AbstractCDOTest
   public void testReadBlob() throws Exception
   {
     testCommitBlob();
-    new java.io.File(CDOLobStoreImpl.INSTANCE.getFolder(), "0a596b8789ffbd6340081279755475e7a3c85674.blob").delete();
+    new java.io.File(CDOLobStoreImpl.INSTANCE.getFolder(), HexUtil.bytesToHex(lobID) + ".blob").delete();
 
     CDOSession session = openSession();
     CDOView view = session.openView();
@@ -113,6 +119,8 @@ public class LobTest extends AbstractCDOTest
       resource.getContents().add(file);
 
       transaction.commit();
+
+      lobID = clob.getID();
     }
     finally
     {
@@ -124,7 +132,7 @@ public class LobTest extends AbstractCDOTest
   public void testReadClob() throws Exception
   {
     testCommitClob();
-    new java.io.File(CDOLobStoreImpl.INSTANCE.getFolder(), "5ef5685c7036c7fc8cafac1d54b91b4e06d9de4e.clob").delete();
+    new java.io.File(CDOLobStoreImpl.INSTANCE.getFolder(), HexUtil.bytesToHex(lobID) + ".clob").delete();
 
     CDOSession session = openSession();
     CDOView view = session.openView();

@@ -25,9 +25,12 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.RemoteException;
+import org.eclipse.net4j.signal.SignalProtocol.TimeoutChangedEvent;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -390,6 +393,28 @@ public class SessionTest extends AbstractCDOTest
     {
       assertEquals(SecurityException.class, success.getCause().getClass());
     }
+  }
+
+  public void testProtocolTimeoutChangedEvent() throws Exception
+  {
+    final boolean[] eventSent = { false };
+
+    org.eclipse.emf.cdo.net4j.CDOSession session = (org.eclipse.emf.cdo.net4j.CDOSession)openSession();
+    session.options().getProtocol().addListener(new IListener()
+    {
+      public void notifyEvent(IEvent event)
+      {
+        if (event instanceof TimeoutChangedEvent)
+        {
+          TimeoutChangedEvent e = (TimeoutChangedEvent)event;
+          System.out.println(e);
+          eventSent[0] = true;
+        }
+      }
+    });
+
+    session.options().getProtocol().setTimeout(20L * 1000L);
+    assertEquals(true, eventSent[0]);
   }
 
   public void testSetProtocolTimeout() throws Exception

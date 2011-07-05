@@ -17,6 +17,7 @@ import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
@@ -97,7 +98,12 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    */
   public void setTimeout(long timeout)
   {
-    this.timeout = timeout;
+    long oldTimeout = this.timeout;
+    if (oldTimeout != timeout)
+    {
+      this.timeout = timeout;
+      fireEvent(new TimeoutChangedEvent(this, oldTimeout, timeout));
+    }
   }
 
   public IStreamWrapper getStreamWrapper()
@@ -451,6 +457,50 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
         indication.setMonitorCanceled();
       }
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public static final class TimeoutChangedEvent extends Event
+  {
+    private static final long serialVersionUID = 1L;
+
+    private long oldTimeout;
+
+    private long newTimeout;
+
+    private TimeoutChangedEvent(ISignalProtocol<?> source, long oldTimeout, long newTimeout)
+    {
+      super(source);
+      this.oldTimeout = oldTimeout;
+      this.newTimeout = newTimeout;
+    }
+
+    @Override
+    public SignalProtocol<?> getSource()
+    {
+      return (SignalProtocol<?>)super.getSource();
+    }
+
+    public long getOldTimeout()
+    {
+      return oldTimeout;
+    }
+
+    public long getNewTimeout()
+    {
+      return newTimeout;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "TimeoutChangedEvent [oldTimeout=" + oldTimeout + ", newTimeout=" + newTimeout + ", source=" + source
+          + "]";
+    }
+
   }
 
   /**

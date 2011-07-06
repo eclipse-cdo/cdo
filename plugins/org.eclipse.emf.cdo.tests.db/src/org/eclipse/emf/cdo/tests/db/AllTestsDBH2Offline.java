@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.offline.Bugzilla_325097_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_326047_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_328352_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_329014_Test;
+import org.eclipse.emf.cdo.tests.offline.FailoverTest;
 import org.eclipse.emf.cdo.tests.offline.OfflineDelayedTest;
 import org.eclipse.emf.cdo.tests.offline.OfflineRawTest;
 import org.eclipse.emf.cdo.tests.offline.OfflineTest;
@@ -80,16 +81,17 @@ public class AllTestsDBH2Offline extends DBConfigs
   {
     // super.initTestClasses(testClasses);
 
+    testClasses.add(OfflineTest.class);
+    testClasses.add(OfflineRawTest.class);
+    testClasses.add(OfflineDelayedTest.class);
+
     testClasses.add(Bugzilla_329014_Test.class);
     testClasses.add(Bugzilla_328352_Test.class);
     testClasses.add(Bugzilla_326047_Test.class);
     testClasses.add(Bugzilla_325097_Test.class);
     testClasses.add(Bugzilla_319552_Test.class);
-    testClasses.add(OfflineRawTest.class);
-    testClasses.add(OfflineDelayedTest.class);
-    testClasses.add(OfflineTest.class);
 
-    // testClasses.add(FailoverTest.class);
+    testClasses.add(FailoverTest.class);
   }
 
   /**

@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -1155,7 +1156,15 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
       {
         InternalCDORevision newRevision = oldRevision.copy();
         newRevision.adjustForCommit(commitInfo.getBranch(), commitInfo.getTimeStamp());
+
+        CDORevisable target = delta.getTarget();
+        if (target != null)
+        {
+          newRevision.setVersion(target.getVersion());
+        }
+
         delta.apply(newRevision);
+        newRevision.freeze();
         return new Pair<InternalCDORevision, InternalCDORevision>(oldRevision, newRevision);
       }
     }
@@ -1187,6 +1196,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
         Pair<CDOCommitInfo, InternalCDOTransaction> currentPair = outOfSequenceInvalidations
             .remove(nextPreviousTimeStamp);
 
+        // If we don't have the invalidation that follows the last one we processed,
+        // then there is nothing we can do right now
         if (currentPair == null)
         {
           break;

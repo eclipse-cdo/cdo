@@ -383,7 +383,7 @@ public final class CDOStoreImpl implements CDOStore
 
       value = convertToCDO(cdoObject, feature, value);
 
-      InternalCDORevision oldRevision = getRevision(cdoObject);
+      InternalCDORevision oldRevision = getRevisionForReading(cdoObject);
       Object oldValue = oldRevision.get(feature, index);
       oldValue = convertToEMF(eObject, oldRevision, feature, index, oldValue);
 

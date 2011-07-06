@@ -305,19 +305,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     Set<CDOTransactionHandler> result = new HashSet<CDOTransactionHandler>();
     synchronized (transactionHandlersLock)
     {
-      for (CDOTransactionHandler1 handler : transactionHandlers1.get())
+      CDOTransactionHandler1[] handlers1 = transactionHandlers1.get();
+      if (handlers1 != null)
       {
-        if (handler instanceof CDOTransactionHandler)
+        for (CDOTransactionHandler1 handler : handlers1)
         {
-          result.add((CDOTransactionHandler)handler);
+          if (handler instanceof CDOTransactionHandler)
+          {
+            result.add((CDOTransactionHandler)handler);
+          }
         }
       }
 
-      for (CDOTransactionHandler2 handler : transactionHandlers2.get())
+      CDOTransactionHandler2[] handlers2 = transactionHandlers2.get();
+      if (handlers2 != null)
       {
-        if (handler instanceof CDOTransactionHandler)
+        for (CDOTransactionHandler2 handler : handlers2)
         {
-          result.add((CDOTransactionHandler)handler);
+          if (handler instanceof CDOTransactionHandler)
+          {
+            result.add((CDOTransactionHandler)handler);
+          }
         }
       }
     }

@@ -467,21 +467,30 @@ public class TransactionTest extends AbstractCDOTest
   {
     OMPlatform.INSTANCE.setDebugging(true);
 
-    IRepository repository = getRepository();
-    repository.addCommitInfoHandler(new CDOCommitInfoHandler()
+    CDOCommitInfoHandler handler = new CDOCommitInfoHandler()
     {
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
         sleep(15L * 1000L);
       }
-    });
+    };
 
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
-    resource.getContents().add(getModel1Factory().createCompany());
+    IRepository repository = getRepository();
+    repository.addCommitInfoHandler(handler);
 
-    transaction.commit();
+    try
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
+      resource.getContents().add(getModel1Factory().createCompany());
+
+      transaction.commit();
+    }
+    finally
+    {
+      repository.removeCommitInfoHandler(handler);
+    }
   }
 
   public void _testLongCommit2() throws Exception

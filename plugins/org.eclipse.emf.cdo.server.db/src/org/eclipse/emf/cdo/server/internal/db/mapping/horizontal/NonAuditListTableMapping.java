@@ -472,12 +472,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           TRACER.format("Performing {0} delete operations", deleteCounter); //$NON-NLS-1$
         }
 
-        int[] result = deleteStmt.executeBatch();
-        Assert.isTrue(result.length == deleteCounter);
-        for (int r : result)
-        {
-          Assert.isTrue(r == 1);
-        }
+        DBUtil.executeBatch(deleteStmt, deleteCounter);
       }
 
       if (moveCounter > 0)
@@ -487,12 +482,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           TRACER.format("Performing {0} move operations", moveCounter); //$NON-NLS-1$
         }
 
-        int[] result = moveStmt.executeBatch();
-        Assert.isTrue(result.length == moveCounter);
-        for (int r : result)
-        {
-          Assert.isTrue(r == 1);
-        }
+        DBUtil.executeBatch(moveStmt, moveCounter);
       }
 
       if (insertCounter > 0)
@@ -502,12 +492,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           TRACER.format("Performing {0} insert operations", insertCounter); //$NON-NLS-1$
         }
 
-        int[] result = insertStmt.executeBatch();
-        Assert.isTrue(result.length == insertCounter);
-        for (int r : result)
-        {
-          Assert.isTrue(r == 1);
-        }
+        DBUtil.executeBatch(insertStmt, insertCounter);
       }
 
       if (setValueCounter > 0)
@@ -517,12 +502,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           TRACER.format("Performing {0} set operations", setValueCounter); //$NON-NLS-1$
         }
 
-        int[] result = setValueStmt.executeBatch();
-        Assert.isTrue(result.length == setValueCounter);
-        for (int r : result)
-        {
-          Assert.isTrue(r == 1);
-        }
+        DBUtil.executeBatch(setValueStmt, setValueCounter);
       }
     }
     catch (SQLException e)

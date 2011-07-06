@@ -518,6 +518,34 @@ public final class DBUtil
     }
   }
 
+  /**
+   * @since 4.1
+   */
+  public static void executeBatch(PreparedStatement stmt, int counter)
+  {
+    try
+    {
+      int[] results = stmt.executeBatch();
+      if (results.length != counter)
+      {
+        throw new DBException("Statement has " + results.length + " results (expected: " + counter + ")");
+      }
+
+      for (int i = 0; i < results.length; i++)
+      {
+        int result = results[i];
+        if (result != 1 && result != Statement.SUCCESS_NO_INFO)
+        {
+          throw new DBException("Result " + i + " is not successful: " + result);
+        }
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
   public static int update(Connection connection, String sql)
   {
     trace(sql);

@@ -114,7 +114,7 @@ public class FailoverTest extends AbstractSyncingTest
   {
     CDOSession masterSession = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = masterSession.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    CDOResource resource = transaction.createResource("/my/resource");
 
     TestListener listener = new TestListener();
     CDOSession backupSession = openSession();

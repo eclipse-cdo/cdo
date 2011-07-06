@@ -41,7 +41,7 @@ public class OfflineTest extends AbstractSyncingTest
   {
     CDOSession session = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    CDOResource resource = transaction.createResource("/my/resource");
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");
@@ -84,7 +84,7 @@ public class OfflineTest extends AbstractSyncingTest
   {
     CDOSession masterSession = openSession(getRepository().getName() + "_master");
     CDOTransaction transaction = masterSession.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    CDOResource resource = transaction.createResource("/my/resource");
 
     TestListener listener = new TestListener();
     CDOSession cloneSession = openSession();
@@ -142,7 +142,7 @@ public class OfflineTest extends AbstractSyncingTest
     waitForOnline(cloneSession.getRepositoryInfo());
 
     CDOTransaction transaction = cloneSession.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    CDOResource resource = transaction.createResource("/my/resource");
 
     resource.getContents().add(company);
     transaction.commit();
@@ -186,7 +186,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    CDOResource resource = transaction.createResource("/my/resource");
 
     resource.getContents().add(company);
     transaction.commit();
@@ -222,7 +222,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource(getResourcePath("/master/resource"));
+    CDOResource resource = transaction.getResource("/master/resource");
 
     Company company = (Company)resource.getContents().get(0);
     assertEquals("MODIFICATION", company.getName());
@@ -255,7 +255,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getResource(getResourcePath("/master/resource"));
+    CDOResource resource = transaction.getResource("/master/resource");
 
     assertEquals(0, resource.getContents().size());
   }
@@ -273,7 +273,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    CDOResource resource = transaction.createResource("/my/resource");
 
     resource.getContents().add(company);
     CDOCommitInfo commitInfo = transaction.commit();
@@ -288,7 +288,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    CDOResource resource = transaction.createResource("/my/resource");
     resource.getContents().add(getModel1Factory().createCompany());
     transaction.commit();
 
@@ -330,7 +330,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    CDOResource resource = transaction.createResource("/my/resource");
 
     resource.getContents().add(company);
     CDOCommitInfo commitInfo = transaction.commit();
@@ -354,7 +354,7 @@ public class OfflineTest extends AbstractSyncingTest
 
     CDOSession masterSession = openSession(clone.getName() + "_master");
     CDOTransaction transaction = masterSession.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    CDOResource resource = transaction.createResource("/my/resource");
 
     for (int i = 0; i < 10; i++)
     {

@@ -279,7 +279,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public void tearDown() throws Exception
   {
     deactivateServerBrowser();
-    if (!isOptimizing() || leavesCleanRepos())
+    if (!isOptimizing() || mustLeaveCleanRepos())
     {
       deactivateRepositories();
     }
@@ -464,7 +464,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     return hasAnnotation(CleanRepositoriesBefore.class);
   }
 
-  protected boolean leavesCleanRepos()
+  protected boolean mustLeaveCleanRepos()
   {
     return hasAnnotation(CleanRepositoriesAfter.class);
   }

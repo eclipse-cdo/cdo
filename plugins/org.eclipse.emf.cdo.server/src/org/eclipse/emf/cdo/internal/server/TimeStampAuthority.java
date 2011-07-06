@@ -100,11 +100,10 @@ class TimeStampAuthority
         now = timeStampOverride;
       }
 
-      long previousIssuedTimeStamp = lastIssuedTimeStamp;
       lastIssuedTimeStamp = now;
 
       runningTransactions.add(lastIssuedTimeStamp);
-      return new long[] { lastIssuedTimeStamp, previousIssuedTimeStamp };
+      return new long[] { lastIssuedTimeStamp, getLastFinishedTimeStamp() };
     }
     finally
     {
@@ -125,10 +124,20 @@ class TimeStampAuthority
     // of the runningTransactions. Since both sets are sorted, we only need to compare the heads.
     long oldestRunning = runningTransactions.isEmpty() ? Long.MAX_VALUE : runningTransactions.get(0);
     long oldestFinished;
-    while (!finishedTransactions.isEmpty() && (oldestFinished = finishedTransactions.first()) < oldestRunning)
+    synchronized (lastCommitTimeStampLock)
     {
-      finishedTransactions.remove(oldestFinished);
-      lastFinishedTimeStamp = oldestFinished;
+      long oldValue = lastFinishedTimeStamp;
+      while (!finishedTransactions.isEmpty() && (oldestFinished = finishedTransactions.first()) < oldestRunning)
+      {
+        finishedTransactions.remove(oldestFinished);
+        lastFinishedTimeStamp = oldestFinished;
+      }
+
+      // If we actually changed the lastFinishedTimeStamp, we need to notify waiting threads
+      if (lastFinishedTimeStamp != oldValue)
+      {
+        lastCommitTimeStampLock.notifyAll();
+      }
     }
 
     if (strictOrdering)

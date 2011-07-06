@@ -46,6 +46,7 @@ import org.eclipse.core.runtime.Assert;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -472,12 +473,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           TRACER.format("Performing {0} delete operations", deleteCounter); //$NON-NLS-1$
         }
 
-        int[] result = deleteStmt.executeBatch();
-        Assert.isTrue(result.length == deleteCounter);
-        for (int r : result)
-        {
-          Assert.isTrue(r == 1);
-        }
+        executeBatch(deleteStmt, deleteCounter);
       }
 
       if (moveCounter > 0)
@@ -487,12 +483,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           TRACER.format("Performing {0} move operations", moveCounter); //$NON-NLS-1$
         }
 
-        int[] result = moveStmt.executeBatch();
-        Assert.isTrue(result.length == moveCounter);
-        for (int r : result)
-        {
-          Assert.isTrue(r == 1);
-        }
+        executeBatch(moveStmt, moveCounter);
       }
 
       if (insertCounter > 0)
@@ -502,12 +493,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           TRACER.format("Performing {0} insert operations", insertCounter); //$NON-NLS-1$
         }
 
-        int[] result = insertStmt.executeBatch();
-        Assert.isTrue(result.length == insertCounter);
-        for (int r : result)
-        {
-          Assert.isTrue(r == 1);
-        }
+        executeBatch(insertStmt, insertCounter);
       }
 
       if (setValueCounter > 0)
@@ -517,12 +503,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           TRACER.format("Performing {0} set operations", setValueCounter); //$NON-NLS-1$
         }
 
-        int[] result = setValueStmt.executeBatch();
-        Assert.isTrue(result.length == setValueCounter);
-        for (int r : result)
-        {
-          Assert.isTrue(r == 1);
-        }
+        executeBatch(setValueStmt, setValueCounter);
       }
     }
     catch (SQLException e)
@@ -532,6 +513,31 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     finally
     {
       releaseStatement(accessor, deleteStmt, moveStmt, insertStmt, setValueStmt);
+    }
+  }
+
+  private static void executeBatch(PreparedStatement stmt, int counter)
+  {
+    try
+    {
+      int[] results = stmt.executeBatch();
+      if (results.length != counter)
+      {
+        throw new DBException("Statement has " + results.length + " results (expected: " + counter + ")");
+      }
+
+      for (int i = 0; i < results.length; i++)
+      {
+        int result = results[i];
+        if (result != 1 && result != Statement.SUCCESS_NO_INFO)
+        {
+          throw new DBException("Result " + i + " is not successful: " + result);
+        }
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
     }
   }
 

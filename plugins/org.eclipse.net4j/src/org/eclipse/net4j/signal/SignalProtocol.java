@@ -17,6 +17,7 @@ import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
@@ -58,6 +59,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    */
   public static final short SIGNAL_MONITOR_PROGRESS = -3;
 
+  static final short SIGNAL_SET_TIMEOUT = -4;
+
   private static final int MIN_CORRELATION_ID = 1;
 
   private static final int MAX_CORRELATION_ID = Integer.MAX_VALUE;
@@ -97,7 +100,13 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    */
   public void setTimeout(long timeout)
   {
-    this.timeout = timeout;
+    long oldTimeout = this.timeout;
+    handleSetTimeOut(timeout);
+
+    if (oldTimeout != this.timeout && isActive())
+    {
+      sendSetTimeout();
+    }
   }
 
   public IStreamWrapper getStreamWrapper()
@@ -240,6 +249,17 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   }
 
   @Override
+  protected void doAfterActivate() throws Exception
+  {
+    super.doAfterActivate();
+
+    if (timeout != DEFAULT_TIMEOUT)
+    {
+      sendSetTimeout();
+    }
+  }
+
+  @Override
   protected void doBeforeDeactivate() throws Exception
   {
     synchronized (signals)
@@ -294,6 +314,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
     case SIGNAL_MONITOR_PROGRESS:
       return new MonitorProgressIndication(this);
+
+    case SIGNAL_SET_TIMEOUT:
+      return new SetTimeoutIndication(this);
 
     default:
       SignalReactor signal = createSignalReactor(signalID);
@@ -450,6 +473,27 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
         IndicationWithMonitoring indication = (IndicationWithMonitoring)signal;
         indication.setMonitorCanceled();
       }
+    }
+  }
+
+  void handleSetTimeOut(long timeout)
+  {
+    long oldTimeout = this.timeout;
+    if (oldTimeout != timeout)
+    {
+      this.timeout = timeout;
+    }
+  }
+
+  void sendSetTimeout()
+  {
+    try
+    {
+      new SetTimeoutRequest(this, this.timeout).send();
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
     }
   }
 

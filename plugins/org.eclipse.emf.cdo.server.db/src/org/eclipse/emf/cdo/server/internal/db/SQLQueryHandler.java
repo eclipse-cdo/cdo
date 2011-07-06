@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -209,7 +210,7 @@ public class SQLQueryHandler implements IQueryHandler
             columnNames[i - 1] = resultSet.getMetaData().getColumnName(i);
           }
         }
-        
+
         int maxResults = info.getMaxResults();
         int counter = 0;
 
@@ -230,7 +231,7 @@ public class SQLQueryHandler implements IQueryHandler
             int columnCount = resultSet.getMetaData().getColumnCount();
             if (columnCount == 1)
             {
-              Object result = resultSet.getObject(1);
+              Object result = convertValue(resultSet.getObject(1));
               context.addResult(mapQuery ? toMap(columnNames, new Object[] { result }) : result);
             }
             else
@@ -238,7 +239,7 @@ public class SQLQueryHandler implements IQueryHandler
               Object[] results = new Object[columnCount];
               for (int i = 0; i < columnCount; i++)
               {
-                results[i] = resultSet.getObject(i + 1);
+                results[i] = convertValue(resultSet.getObject(i + 1));
               }
 
               context.addResult(mapQuery ? toMap(columnNames, results) : results);
@@ -261,6 +262,25 @@ public class SQLQueryHandler implements IQueryHandler
       DBUtil.close(resultSet);
       DBUtil.close(statement);
     }
+  }
+
+  private Object convertValue(Object value)
+  {
+    if (value instanceof Clob)
+    {
+      Clob clob = (Clob)value;
+
+      try
+      {
+        value = clob.getSubString(1, (int)clob.length());
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException("Could not extract CLOB value", ex);
+      }
+    }
+
+    return value;
   }
 
   private Map<String, Object> toMap(String[] columnNames, Object[] results)

@@ -103,7 +103,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
   @Override
   public CDOSession openSession()
   {
-    return openSession();
+    return (CDOSession)openNet4jSession();
   }
 
   public InternalCDOSession createSession()

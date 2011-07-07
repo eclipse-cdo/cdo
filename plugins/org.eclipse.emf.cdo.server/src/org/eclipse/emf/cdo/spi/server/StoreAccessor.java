@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.io.LimitedInputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
@@ -112,11 +113,11 @@ public abstract class StoreAccessor extends StoreAccessorBase
             long size = in.readLong();
             if (size > 0)
             {
-              writeBlob(id, size, in);
+              writeBlob(id, size, new LimitedInputStream(in, size));
             }
             else
             {
-              writeClob(id, -size, new InputStreamReader(in));
+              writeClob(id, -size, new InputStreamReader(new LimitedInputStream(in, -size)));
             }
           }
         }

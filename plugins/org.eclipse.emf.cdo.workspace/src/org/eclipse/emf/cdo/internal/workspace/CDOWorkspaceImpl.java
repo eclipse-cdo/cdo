@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.server.Repository;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -576,13 +577,13 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     IJVMConnector connector = getLocalConnector();
     String repositoryName = localRepository.getName();
 
-    org.eclipse.emf.cdo.net4j.CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName(repositoryName);
     configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP)); // Use repo's cache
     ((InternalCDOSessionConfiguration)configuration).setMainBranchLocal(true);
 
-    InternalCDOSession session = (InternalCDOSession)configuration.openSession();
+    InternalCDOSession session = (InternalCDOSession)configuration.openNet4jSession();
     session.setPackageRegistry(localRepository.getPackageRegistry(false)); // Use repo's registry
 
     head = session.getBranchManager().getMainBranch().getHead();

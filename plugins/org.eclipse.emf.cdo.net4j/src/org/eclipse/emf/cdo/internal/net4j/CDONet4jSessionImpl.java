@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl.RepositoryInfo;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
-import org.eclipse.emf.cdo.net4j.CDOSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -48,6 +48,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 /**
  * @author Eike Stepper
  */
+@SuppressWarnings("deprecation")
 public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.emf.cdo.net4j.CDOSession
 {
   private IStreamWrapper streamWrapper;
@@ -266,12 +267,12 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
 
     @Override
-    public CDOSession getContainer()
+    public CDONet4jSession getContainer()
     {
-      return (CDOSession)super.getContainer();
+      return (CDONet4jSession)super.getContainer();
     }
 
-    public ISignalProtocol<org.eclipse.emf.cdo.net4j.CDOSession> getProtocol()
+    public ISignalProtocol<org.eclipse.emf.cdo.net4j.CDONet4jSession> getProtocol()
     {
       CDOSessionProtocol protocol = getSessionProtocol();
       if (protocol instanceof DelegatingSessionProtocol)
@@ -280,7 +281,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       }
 
       @SuppressWarnings("unchecked")
-      ISignalProtocol<CDOSession> signalProtocol = (ISignalProtocol<CDOSession>)protocol;
+      ISignalProtocol<CDONet4jSession> signalProtocol = (ISignalProtocol<CDONet4jSession>)protocol;
       return signalProtocol;
     }
 

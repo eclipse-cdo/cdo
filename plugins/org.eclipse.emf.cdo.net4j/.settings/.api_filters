@@ -33,15 +33,15 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/net4j/CDOSession.java" type="org.eclipse.emf.cdo.net4j.CDOSession">
+    <resource path="src/org/eclipse/emf/cdo/net4j/CDONet4jSession.java" type="org.eclipse.emf.cdo.net4j.CDONet4jSession">
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOSession"/>
-                <message_argument value="CDOSession"/>
+                <message_argument value="CDONet4jSession"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/net4j/CDOSession.java" type="org.eclipse.emf.cdo.net4j.CDOSession$Options">
+    <resource path="src/org/eclipse/emf/cdo/net4j/CDONet4jSession.java" type="org.eclipse.emf.cdo.net4j.CDONet4jSession$Options">
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="Options"/>
@@ -49,11 +49,11 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.java" type="org.eclipse.emf.cdo.net4j.CDOSessionConfiguration">
+    <resource path="src/org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.java" type="org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration">
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOSessionConfiguration"/>
-                <message_argument value="CDOSessionConfiguration"/>
+                <message_argument value="CDONet4jSessionConfiguration"/>
             </message_arguments>
         </filter>
     </resource>

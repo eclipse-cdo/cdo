@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.net4j.CDOSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
@@ -41,7 +41,7 @@ public class Bugzilla_316145_Test extends AbstractCDOTest
     super.doSetUp();
 
     // create model history
-    CDOSession session = (CDOSession)openSession();
+    CDONet4jSession session = (CDONet4jSession)openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getOrCreateResource(getResourcePath(RESOURCE_NAME));
 
@@ -64,7 +64,7 @@ public class Bugzilla_316145_Test extends AbstractCDOTest
 
   public void testRevisionInListNull()
   {
-    CDOSession session = (CDOSession)openSession();
+    CDONet4jSession session = (CDONet4jSession)openSession();
     CDOTransaction transaction = session.openTransaction();
     CDORevision revision = session.getRevisionManager().getRevision(id, transaction, 0, 0, true);
     msg(revision);

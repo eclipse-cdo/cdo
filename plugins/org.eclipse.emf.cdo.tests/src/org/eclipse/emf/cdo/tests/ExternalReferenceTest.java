@@ -456,7 +456,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       SignalCounter signalCounter = new SignalCounter();
 
       CDOSession session = openSession();
-      ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol();
+      ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getProtocol();
       protocol.addListener(signalCounter);
 
       CDOTransaction transaction = session.openTransaction(resourceSet);

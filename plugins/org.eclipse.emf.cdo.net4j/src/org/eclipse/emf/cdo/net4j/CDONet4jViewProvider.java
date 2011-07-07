@@ -49,7 +49,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     CDOURIData data = new CDOURIData(uri);
 
     IConnector connector = getConnector(data.getAuthority());
-    CDOSession session = getSession(connector, data.getUserName(), data.getPassWord(), data.getRepositoryName());
+    CDONet4jSession session = getSession(connector, data.getUserName(), data.getPassWord(), data.getRepositoryName());
 
     String branchPath = data.getBranchPath().toPortableString();
     CDOBranch branch = session.getBranchManager().getBranch(branchPath);
@@ -71,7 +71,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     builder.append(transport);
     builder.append("://");
 
-    CDOSession session = (CDOSession)view.getSession();
+    CDONet4jSession session = (CDONet4jSession)view.getSession();
 
     // CDOAuthenticator authenticator = ((InternalCDOSession)session).getAuthenticator();
     // IPasswordCredentialsProvider credentialsProvider = authenticator.getCredentialsProvider();
@@ -137,16 +137,23 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     return URI.createURI(url).authority();
   }
 
-  protected CDOSession getSession(IConnector connector, String userName, String passWord, String repositoryName)
-  {
-    CDOSessionConfiguration configuration = getSessionConfiguration(connector, userName, passWord, repositoryName);
-    return configuration.openSession();
-  }
-
-  protected CDOSessionConfiguration getSessionConfiguration(IConnector connector, String userName, String passWord,
+  /**
+   * @since 4.1
+   */
+  protected CDONet4jSession getNet4jSession(IConnector connector, String userName, String passWord,
       String repositoryName)
   {
-    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration configuration = getSessionConfiguration(connector, userName, passWord, repositoryName);
+    return configuration.openNet4jSession();
+  }
+
+  /**
+   * @since 4.1
+   */
+  protected CDONet4jSessionConfiguration getNet4jSessionConfiguration(IConnector connector, String userName,
+      String passWord, String repositoryName)
+  {
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName(repositoryName);
 
@@ -174,6 +181,26 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
     configuration.getAuthenticator().setCredentialsProvider(credentialsProvider);
     return configuration;
+  }
+
+  /**
+   * @deprecated Use {@link #getNet4jSession(IConnector, String, String, String) getNet4jSession()}.
+   */
+  @Deprecated
+  protected CDOSession getSession(IConnector connector, String userName, String passWord, String repositoryName)
+  {
+    return (CDOSession)getNet4jSession(connector, userName, passWord, repositoryName);
+  }
+
+  /**
+   * @deprecated Use {@link #getNet4jSessionConfiguration(IConnector, String, String, String)
+   *             getNet4jSessionConfiguration()}.
+   */
+  @Deprecated
+  protected CDOSessionConfiguration getSessionConfiguration(IConnector connector, String userName, String passWord,
+      String repositoryName)
+  {
+    return (CDOSessionConfiguration)getNet4jSessionConfiguration(connector, userName, passWord, repositoryName);
   }
 
   protected IManagedContainer getContainer()

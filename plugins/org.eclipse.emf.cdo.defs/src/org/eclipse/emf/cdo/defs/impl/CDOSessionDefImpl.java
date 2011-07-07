@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.defs.CDODefsPackage;
 import org.eclipse.emf.cdo.defs.CDOPackageRegistryDef;
 import org.eclipse.emf.cdo.defs.CDOSessionDef;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.connector.IConnector;
@@ -461,9 +461,10 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   protected CDOSession createInstance()
   {
-    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
 
     if (isSetConnectorDef())
     {

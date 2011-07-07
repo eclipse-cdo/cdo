@@ -15,9 +15,9 @@ package org.gastro.internal.rcp;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSession;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
@@ -55,7 +55,7 @@ public class Model extends Lifecycle implements IModel
 
   private AdapterFactory adapterFactory;
 
-  private CDOSession session;
+  private CDONet4jSession session;
 
   private CDOView view;
 
@@ -211,11 +211,11 @@ public class Model extends Lifecycle implements IModel
 
     IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", server);
 
-    CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
     config.setConnector(connector);
     config.setRepositoryName(repository);
 
-    session = config.openSession();
+    session = config.openNet4jSession();
     view = session.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
   }

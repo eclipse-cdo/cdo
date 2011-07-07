@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.examples.server.offline;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
@@ -81,7 +81,7 @@ public class OfflineExampleClone extends AbstractOfflineExampleServer
   {
     return new CDOSessionConfigurationFactory()
     {
-      public CDOSessionConfiguration createSessionConfiguration()
+      public CDONet4jSessionConfiguration createSessionConfiguration()
       {
         IConnector connector = createConnector("localhost:" + OfflineExampleMaster.PORT);
         return OfflineExampleClone.this.createSessionConfiguration(connector, repositoryName);
@@ -89,9 +89,9 @@ public class OfflineExampleClone extends AbstractOfflineExampleServer
     };
   }
 
-  protected CDOSessionConfiguration createSessionConfiguration(IConnector connector, String repositoryName)
+  protected CDONet4jSessionConfiguration createSessionConfiguration(IConnector connector, String repositoryName)
   {
-    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName(repositoryName);
     configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP));

@@ -502,7 +502,7 @@ public class TransactionTest extends AbstractCDOTest
     {
       ReflectUtil.setValue(field, null, 1000L);
 
-      org.eclipse.emf.cdo.net4j.CDOSession session = (org.eclipse.emf.cdo.net4j.CDOSession)openSession();
+      org.eclipse.emf.cdo.net4j.CDONet4jSession session = (org.eclipse.emf.cdo.net4j.CDONet4jSession)openSession();
       session.options().setCommitTimeout(60);
 
       CDOTransaction transaction = session.openTransaction();

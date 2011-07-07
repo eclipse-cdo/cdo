@@ -16,9 +16,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;
 import org.eclipse.emf.cdo.examples.company.Customer;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSession;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -80,7 +80,7 @@ public class OfflineExampleClient
     return false;
   }
 
-  private static void createSessionListener(final CDOSession session, final boolean autoMerging)
+  private static void createSessionListener(final CDONet4jSession session, final boolean autoMerging)
   {
     session.addListener(new IListener()
     {
@@ -100,7 +100,7 @@ public class OfflineExampleClient
         }
       }
 
-      private void merge(final CDOSession session, State newState)
+      private void merge(final CDONet4jSession session, State newState)
       {
         if (newState == State.ONLINE && wasOffline)
         {
@@ -141,11 +141,11 @@ public class OfflineExampleClient
     IConnector connector = Net4jUtil.getConnector(container, AbstractOfflineExampleServer.TRANSPORT_TYPE, "localhost:"
         + PORT);
 
-    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName(OfflineExampleClone.NAME);
 
-    CDOSession session = configuration.openSession();
+    CDONet4jSession session = configuration.openNet4jSession();
     CDORepositoryInfo repositoryInfo = session.getRepositoryInfo();
     System.out.println("Connected to " + repositoryInfo.getName());
 

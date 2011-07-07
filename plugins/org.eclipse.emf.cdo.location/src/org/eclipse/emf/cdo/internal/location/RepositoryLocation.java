@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.location;
 
 import org.eclipse.emf.cdo.location.ICheckoutSource;
 import org.eclipse.emf.cdo.location.IRepositoryLocation;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 
@@ -108,7 +109,7 @@ public class RepositoryLocation extends Container<ICheckoutSource> implements IR
   {
     IConnector connector = getConnector();
 
-    org.eclipse.emf.cdo.net4j.CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
     config.setConnector(connector);
     config.setRepositoryName(getRepositoryName());
     return config;

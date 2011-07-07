@@ -39,7 +39,7 @@ public class CompareTest extends AbstractCDOTest
     skipUnlessBranching();
 
     CDOSession session = openSession();
-    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(1000000000);
+    ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getProtocol().setTimeout(1000000000);
 
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);

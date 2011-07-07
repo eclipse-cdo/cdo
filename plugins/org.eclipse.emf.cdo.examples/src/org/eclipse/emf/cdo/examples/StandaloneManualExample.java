@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.examples;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -81,12 +81,12 @@ public class StandaloneManualExample
     connector.activate();
 
     // Create configuration
-    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName("repo1"); //$NON-NLS-1$
 
     // Open session
-    CDOSession session = configuration.openSession();
+    CDOSession session = configuration.openNet4jSession();
     session.getPackageRegistry().putEPackage(CompanyPackage.eINSTANCE);
 
     // Open transaction

@@ -98,7 +98,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
   @Override
   protected int getMonitorTimeoutSeconds()
   {
-    org.eclipse.emf.cdo.net4j.CDOSession session = (org.eclipse.emf.cdo.net4j.CDOSession)getSession();
+    org.eclipse.emf.cdo.net4j.CDONet4jSession session = (org.eclipse.emf.cdo.net4j.CDONet4jSession)getSession();
     return session.options().getCommitTimeout();
   }
 

@@ -12,6 +12,8 @@
 package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionConfigurationImpl;
@@ -30,6 +32,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
+@SuppressWarnings("deprecation")
 public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImpl implements
     org.eclipse.emf.cdo.net4j.CDOSessionConfiguration
 {
@@ -92,10 +95,15 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     this.signalTimeout = signalTimeout;
   }
 
-  @Override
-  public org.eclipse.emf.cdo.net4j.CDOSession openSession()
+  public CDONet4jSession openNet4jSession()
   {
-    return (org.eclipse.emf.cdo.net4j.CDOSession)super.openSession();
+    return (CDONet4jSession)super.openSession();
+  }
+
+  @Override
+  public CDOSession openSession()
+  {
+    return openSession();
   }
 
   public InternalCDOSession createSession()

@@ -11,8 +11,8 @@
  */
 package org.eclipse.emf.cdo.tests.revisioncache;
 
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.mem.IMEMStore;
@@ -121,12 +121,12 @@ public class Session extends Lifecycle
     LifecycleUtil.activate(clientContainer);
 
     // Create configuration
-    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     connector = JVMUtil.getConnector(clientContainer, CONNECTOR_NAME);
     configuration.setConnector(connector);
     configuration.setRepositoryName(REPO_NAME);
 
-    return configuration.openSession();
+    return configuration.openNet4jSession();
   }
 
   /**

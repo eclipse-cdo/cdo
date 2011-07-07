@@ -17,9 +17,9 @@ import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;
 import org.eclipse.emf.cdo.examples.company.Customer;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSession;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -271,16 +271,16 @@ public abstract class FailoverExample
   {
     return new CDOSessionConfigurationFactory()
     {
-      public CDOSessionConfiguration createSessionConfiguration()
+      public CDONet4jSessionConfiguration createSessionConfiguration()
       {
         return FailoverExample.this.createSessionConfiguration(connector, repositoryName);
       }
     };
   }
 
-  protected CDOSessionConfiguration createSessionConfiguration(IConnector connector, String repositoryName)
+  protected CDONet4jSessionConfiguration createSessionConfiguration(IConnector connector, String repositoryName)
   {
-    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName(repositoryName);
     configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP));
@@ -550,10 +550,10 @@ public abstract class FailoverExample
       public static void main(String[] args) throws Exception
       {
         IManagedContainer container = createContainer();
-        CDOSessionConfiguration configuration = CDONet4jUtil.createFailoverSessionConfiguration(REPOSITORY_MONITOR_HOST
-            + ":" + REPOSITORY_MONITOR_PORT, REPOSITORY_GROUP, container);
+        CDONet4jSessionConfiguration configuration = CDONet4jUtil.createFailoverSessionConfiguration(
+            REPOSITORY_MONITOR_HOST + ":" + REPOSITORY_MONITOR_PORT, REPOSITORY_GROUP, container);
 
-        final CDOSession session = configuration.openSession();
+        final CDONet4jSession session = configuration.openNet4jSession();
         System.out.println("Connected");
 
         final CDOTransaction tx = session.openTransaction();

@@ -14,9 +14,9 @@
 package org.gastro.server.internal.web;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSession;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -80,11 +80,11 @@ public class GastroServlet extends HttpServlet
     acceptor = Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "jvm", repositoryName);
     connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "jvm", repositoryName);
 
-    CDOSessionConfiguration config = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
     config.setConnector(connector);
     config.setRepositoryName(repositoryName);
 
-    CDOSession session = config.openSession();
+    CDONet4jSession session = config.openNet4jSession();
     view = session.openView();
     super.init();
     OM.LOG.info("Gastro servlet initialized");
@@ -96,7 +96,7 @@ public class GastroServlet extends HttpServlet
     OM.LOG.info("Gastro servlet destroying");
     if (view != null)
     {
-      CDOSession session = (CDOSession)view.getSession();
+      CDONet4jSession session = (CDONet4jSession)view.getSession();
       if (session != null)
       {
         session.close();

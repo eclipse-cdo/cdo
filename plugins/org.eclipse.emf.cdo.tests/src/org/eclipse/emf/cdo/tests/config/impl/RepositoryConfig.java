@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
 import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
 import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
@@ -645,7 +645,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
               .createRevisionManager();
           revisionManager.setCache(new NOOPRevisionCache());
 
-          CDOSessionConfiguration config = new CDONet4jSessionConfigurationImpl()
+          CDONet4jSessionConfiguration config = new CDONet4jSessionConfigurationImpl()
           {
             @Override
             public InternalCDOSession createSession()

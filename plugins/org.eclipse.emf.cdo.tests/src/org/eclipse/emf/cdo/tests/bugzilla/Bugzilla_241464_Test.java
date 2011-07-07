@@ -33,7 +33,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
   {
     {
       CDOSession session = openSession();
-      if (!(session instanceof org.eclipse.emf.cdo.net4j.CDOSession))
+      if (!(session instanceof org.eclipse.emf.cdo.net4j.CDONet4jSession))
       {
         return;
       }
@@ -55,7 +55,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
 
     TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
     revisionManager.setGetRevisionsDelay(10000L); // Make the protocol time out
-    ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(2000L);
+    ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getProtocol().setTimeout(2000L);
 
     try
     {

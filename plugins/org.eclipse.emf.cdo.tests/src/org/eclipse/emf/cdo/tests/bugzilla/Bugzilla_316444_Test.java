@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
-import org.eclipse.emf.cdo.net4j.CDOSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -167,7 +167,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     exceptions.clear();
 
     {
-      CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
+      CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
       CDOTransaction transaction = session.openTransaction();
 
@@ -209,7 +209,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
 
     {
       // Just an additional check to make sure that the graph is stored correctly even after repository restart
-      CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
+      CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
       CDOTransaction transaction = session.openTransaction();
       Resource resource = transaction.getResource(getResourcePath(RESOURCE_PATH), true);
@@ -233,7 +233,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     }
 
     {
-      CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
+      CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
 
       // ----- start threads -----
@@ -271,7 +271,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
   {
     String resourcePath = RESOURCE_PATH + "1";
     {
-      CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
+      CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
       CDOTransaction transaction = session.openTransaction();
 
@@ -308,7 +308,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     // restartRepository();
 
     {
-      CDOSession session = (CDOSession)openSession(REPOSITORY_NAME);
+      CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
 
       // ----- start threads -----
@@ -396,7 +396,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
    */
   private class ThreadA extends AbstactTestThread
   {
-    private CDOSession session;
+    private CDONet4jSession session;
 
     public ThreadA(String resourcePath)
     {
@@ -404,7 +404,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       setName("ThreadA");
 
       msg("Starting Thread A");
-      session = (CDOSession)openSession(REPOSITORY_NAME);
+      session = (CDONet4jSession)openSession(REPOSITORY_NAME);
       idSessionA = session.getSessionID();
     }
 
@@ -452,7 +452,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
    */
   private class ThreadB extends AbstactTestThread
   {
-    private CDOSession session;
+    private CDONet4jSession session;
 
     public ThreadB(String resourcePath)
     {
@@ -460,7 +460,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       setName("ThreadB");
 
       msg("Starting Thread B");
-      session = (CDOSession)openSession(REPOSITORY_NAME);
+      session = (CDONet4jSession)openSession(REPOSITORY_NAME);
       idSessionB = session.getSessionID();
     }
 
@@ -523,7 +523,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
    */
   private class ThreadX extends AbstactTestThread
   {
-    private CDOSession session;
+    private CDONet4jSession session;
 
     public ThreadX(String resourcePath)
     {
@@ -531,7 +531,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       setName("ThreadX");
 
       msg("Starting Thread X");
-      session = (CDOSession)openSession(REPOSITORY_NAME);
+      session = (CDONet4jSession)openSession(REPOSITORY_NAME);
       idSessionB = session.getSessionID();
     }
 

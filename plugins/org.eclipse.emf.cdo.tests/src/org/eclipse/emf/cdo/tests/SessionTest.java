@@ -399,7 +399,7 @@ public class SessionTest extends AbstractCDOTest
   {
     final boolean[] eventSent = { false };
 
-    org.eclipse.emf.cdo.net4j.CDOSession session = (org.eclipse.emf.cdo.net4j.CDOSession)openSession();
+    org.eclipse.emf.cdo.net4j.CDONet4jSession session = (org.eclipse.emf.cdo.net4j.CDONet4jSession)openSession();
     session.options().getProtocol().addListener(new IListener()
     {
       public void notifyEvent(IEvent event)

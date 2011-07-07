@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.net4j;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
+@SuppressWarnings("deprecation")
 public interface RecoveringCDOSessionConfiguration extends CDOSessionConfiguration
 {
   public boolean isHeartBeatEnabled();

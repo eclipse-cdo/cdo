@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.efs;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
@@ -200,7 +201,7 @@ public abstract class CDOFileSystem extends FileSystem
     protected CDOSessionConfiguration createSessionConfiguration(String authority, String repositoryName,
         IProgressMonitor monitor)
     {
-      org.eclipse.emf.cdo.net4j.CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+      CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
       configuration.setConnector(getConnector(authority, monitor));
       configuration.setRepositoryName(repositoryName);
       return configuration;

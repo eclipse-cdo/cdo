@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDONet4jViewProvider;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
@@ -292,7 +293,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     @Override
     protected CDOSessionConfiguration createSessionConfiguration(String repositoryName)
     {
-      org.eclipse.emf.cdo.net4j.CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+      CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
       configuration.setConnector(getConnector());
       configuration.setRepositoryName(repositoryName);
       configuration.setRevisionManager(new TestRevisionManager());
@@ -303,7 +304,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     protected void configureSession(CDOSession session)
     {
       super.configureSession(session);
-      ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(-1);
+      ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getProtocol().setTimeout(-1);
     }
 
     protected abstract CDOViewProvider createViewProvider(IManagedContainer container);

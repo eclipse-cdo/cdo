@@ -86,9 +86,21 @@ public final class CDONet4jUtil
   {
   }
 
-  public static CDOSessionConfiguration createSessionConfiguration()
+  /**
+   * @since 4.1
+   */
+  public static CDONet4jSessionConfiguration createNet4jSessionConfiguration()
   {
     return new CDONet4jSessionConfigurationImpl();
+  }
+
+  /**
+   * @deprecated Use {@link #createNet4jSessionConfiguration() createNet4jSessionConfiguration()}.
+   */
+  @Deprecated
+  public static CDOSessionConfiguration createSessionConfiguration()
+  {
+    return (CDOSessionConfiguration)createNet4jSessionConfiguration();
   }
 
   /**
@@ -125,10 +137,21 @@ public final class CDONet4jUtil
   }
 
   /**
-   * @since 4.0
+   * @since 4.1
    */
+  public static CDONet4jSession getNet4jSession(IManagedContainer container, String description)
+  {
+    return (CDONet4jSession)container
+        .getElement(CDOSessionFactory.PRODUCT_GROUP, Net4jSessionFactory.TYPE, description);
+  }
+
+  /**
+   * @since 4.0
+   * @deprecated Use {@link #getNet4jSession(IManagedContainer, String) getNet4jSession()}.
+   */
+  @Deprecated
   public static CDOSession getSession(IManagedContainer container, String description)
   {
-    return (CDOSession)container.getElement(CDOSessionFactory.PRODUCT_GROUP, Net4jSessionFactory.TYPE, description);
+    return (CDOSession)getNet4jSession(container, description);
   }
 }

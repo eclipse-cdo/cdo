@@ -10,8 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
@@ -41,13 +41,13 @@ public class Net4jSessionFactory extends CDOSessionFactory
   @Override
   protected InternalCDOSession createSession(String repositoryName, boolean automaticPackageRegistry)
   {
-    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setRepositoryName(repositoryName);
     configuration.getAuthenticator().setCredentialsProvider(getCredentialsProvider());
 
     // The session will be activated by the container
     configuration.setActivateOnOpen(false);
-    return (InternalCDOSession)configuration.openSession();
+    return (InternalCDOSession)configuration.openNet4jSession();
   }
 
   protected IPasswordCredentialsProvider getCredentialsProvider()

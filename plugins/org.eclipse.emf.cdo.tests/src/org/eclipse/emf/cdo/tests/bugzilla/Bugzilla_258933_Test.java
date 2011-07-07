@@ -128,9 +128,9 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     CDOSession session = openSession();
-    if (session instanceof org.eclipse.emf.cdo.net4j.CDOSession)
+    if (session instanceof org.eclipse.emf.cdo.net4j.CDONet4jSession)
     {
-      ((org.eclipse.emf.cdo.net4j.CDOSession)session).options().getProtocol().setTimeout(2000L);
+      ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getProtocol().setTimeout(2000L);
     }
 
     EPackage subpackage1 = session.getPackageRegistry().getEPackage(SUB_PACKAGE_URI);

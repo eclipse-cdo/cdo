@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.examples;
 import org.eclipse.emf.cdo.examples.company.Category;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;
 import org.eclipse.emf.cdo.examples.company.Product;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
@@ -110,9 +110,9 @@ public class ImportXML
 
   protected static CDOSession openSession(IConnector connector)
   {
-    CDOSessionConfiguration configuration = CDONet4jUtil.createSessionConfiguration();
+    CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName(REPOSITORY_NAME);
-    return configuration.openSession();
+    return configuration.openNet4jSession();
   }
 }

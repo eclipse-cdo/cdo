@@ -11,8 +11,9 @@
 package org.eclipse.emf.cdo.examples.hibernate.client;
 
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.net4j.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -38,7 +39,7 @@ public class BaseTest extends TestCase
 
   protected static final String CONNECTION_ADDRESS = "localhost:2036"; //$NON-NLS-1$
 
-  private CDOSessionConfiguration sessionConfiguration = null;
+  private CDONet4jSessionConfiguration sessionConfiguration = null;
 
   /**
    * Opens a CDOSession, does not register an EPackage with the session. This should be done by the caller.
@@ -49,13 +50,15 @@ public class BaseTest extends TestCase
     {
       initialize();
     }
-    final CDOSession cdoSession = sessionConfiguration.openSession();
+
+    final CDONet4jSession cdoSession = sessionConfiguration.openNet4jSession();
     cdoSession.getPackageRegistry().putEPackage(CompanyPackage.eINSTANCE);
     return cdoSession;
   }
 
   /**
-   * Initializes the connection and creates a {@link CDOSessionConfiguration} which is stored in a member of this class.
+   * Initializes the connection and creates a {@link CDONet4jSessionConfiguration} which is stored in a member of this
+   * class.
    */
   protected void initialize()
   {
@@ -75,7 +78,7 @@ public class BaseTest extends TestCase
     final IConnector connector = TCPUtil.getConnector(container, CONNECTION_ADDRESS);
 
     // Create configuration
-    sessionConfiguration = CDONet4jUtil.createSessionConfiguration();
+    sessionConfiguration = CDONet4jUtil.createNet4jSessionConfiguration();
     sessionConfiguration.setConnector(connector);
     sessionConfiguration.setRepositoryName(REPO_NAME);
   }

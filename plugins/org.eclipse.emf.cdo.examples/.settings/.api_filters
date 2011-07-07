@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.examples" version="2">
+    <resource path="src/org/eclipse/emf/cdo/examples/ImportXML.java" type="org.eclipse.emf.cdo.examples.ImportXML">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.ImportXML"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.ImportXML"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/StandaloneContainerExample.java" type="org.eclipse.emf.cdo.examples.StandaloneContainerExample">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.StandaloneContainerExample"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.StandaloneContainerExample"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/StandaloneContainerExampleSSL.java" type="org.eclipse.emf.cdo.examples.StandaloneContainerExampleSSL">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.StandaloneContainerExampleSSL"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.StandaloneContainerExampleSSL"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/StandaloneManualExample.java" type="org.eclipse.emf.cdo.examples.StandaloneManualExample">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.StandaloneManualExample"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.StandaloneManualExample"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/TransactionMonitoring.java" type="org.eclipse.emf.cdo.examples.TransactionMonitoring">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.TransactionMonitoring"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.TransactionMonitoring"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/VariousExamples.java" type="org.eclipse.emf.cdo.examples.VariousExamples">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.VariousExamples"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.VariousExamples"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/Webinar20090129.java" type="org.eclipse.emf.cdo.examples.Webinar20090129">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.Webinar20090129"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.Webinar20090129"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/server/FailoverExample.java" type="org.eclipse.emf.cdo.examples.server.FailoverExample">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.FailoverExample"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.FailoverExample"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/server/Server.java" type="org.eclipse.emf.cdo.examples.server.Server">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.Server"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.Server"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/server/offline/AbstractOfflineExampleServer.java" type="org.eclipse.emf.cdo.examples.server.offline.AbstractOfflineExampleServer">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.offline.AbstractOfflineExampleServer"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.offline.AbstractOfflineExampleServer"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/server/offline/OfflineExampleClient.java" type="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleClient">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleClient"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleClient"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/server/offline/OfflineExampleClone.java" type="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleClone">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleClone"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleClone"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/server/offline/OfflineExampleMaster.java" type="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleMaster">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleMaster"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleMaster"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/examples/server/offline/OfflineExampleUtil.java" type="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleUtil">
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleUtil"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.examples.server.offline.OfflineExampleUtil"/>
+                <message_argument value="org.eclipse.emf.cdo.examples_4.0.100"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

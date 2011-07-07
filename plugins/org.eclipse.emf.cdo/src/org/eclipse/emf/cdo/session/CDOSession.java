@@ -26,21 +26,21 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionContainer;
 import org.eclipse.emf.cdo.util.CDOUpdatable;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 /**
- * Represents and controls the connection to a model repository.
+ * Represents and controls the connection to a model repository in addition to the inherited {@link CDOView view}
+ * management functions.
  * <p>
  * A session has the following responsibilities:
  * <ul>
@@ -58,7 +58,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<CDOView>
+public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransactionContainer
 {
   /**
    * Returns an instance of {@link CDORepositoryInfo} that describes the model repository this {@link CDOSession
@@ -114,185 +114,6 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, IContainer<C
   public CDOCommitInfoManager getCommitInfoManager();
 
   public CDOSession.ExceptionHandler getExceptionHandler();
-
-  /**
-   * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
-   * 
-   * @see #openTransaction()
-   * @since 4.0
-   */
-  public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet);
-
-  /**
-   * Opens and returns a new {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set}.
-   * 
-   * @see #openTransaction()
-   * @since 4.0
-   */
-  public CDOTransaction openTransaction(CDOBranchPoint target);
-
-  /**
-   * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
-   * 
-   * @see #openTransaction()
-   * @since 3.0
-   */
-  public CDOTransaction openTransaction(CDOBranch branch, ResourceSet resourceSet);
-
-  /**
-   * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
-   * 
-   * @see #openTransaction()
-   * @since 3.0
-   */
-  public CDOTransaction openTransaction(ResourceSet resourceSet);
-
-  /**
-   * Opens and returns a new {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set}.
-   * <p>
-   * Same as calling <code>openTransaction(new ResourceSetImpl())</code>.
-   * 
-   * @see #openTransaction(ResourceSet)
-   * @since 3.0
-   */
-  public CDOTransaction openTransaction(CDOBranch branch);
-
-  /**
-   * Opens and returns a new {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set}.
-   * <p>
-   * Same as calling <code>openTransaction(new ResourceSetImpl())</code>.
-   * 
-   * @see #openTransaction(ResourceSet)
-   */
-  public CDOTransaction openTransaction();
-
-  /**
-   * Opens and returns a {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set} by resuming a
-   * transaction that has previously been made durable by calling {@link CDOTransaction#enableDurableLocking(boolean)
-   * CDOTransaction.enableDurableLocking(true)}.
-   * <p>
-   * Same as calling <code>openTransaction(durableLockingID, new ResourceSetImpl())</code>.
-   * 
-   * @see #openTransaction(String,ResourceSet)
-   * @since 4.0
-   */
-  public CDOTransaction openTransaction(String durableLockingID);
-
-  /**
-   * Opens and returns a {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set} by
-   * resuming a transaction that has previously been made durable by calling
-   * {@link CDOTransaction#enableDurableLocking(boolean) CDOTransaction.enableDurableLocking(true)}.
-   * 
-   * @see #openTransaction(String)
-   * @since 4.0
-   */
-  public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet);
-
-  /**
-   * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
-   * 
-   * @see #openView()
-   * @since 4.0
-   */
-  public CDOView openView(CDOBranchPoint target, ResourceSet resourceSet);
-
-  /**
-   * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
-   * 
-   * @see #openView()
-   * @since 4.0
-   */
-  public CDOView openView(CDOBranchPoint target);
-
-  /**
-   * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
-   * 
-   * @see #openView()
-   * @since 3.0
-   */
-  public CDOView openView(CDOBranch branch, long timeStamp, ResourceSet resourceSet);
-
-  /**
-   * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
-   * <p>
-   * Same as calling <code>openView(new ResourceSetImpl())</code>.
-   * 
-   * @see #openView(CDOBranch, long, ResourceSet)
-   * @since 3.0
-   */
-  public CDOView openView(CDOBranch branch, long timeStamp);
-
-  /**
-   * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
-   * <p>
-   * Same as calling <code>openView(new ResourceSetImpl())</code>.
-   * 
-   * @see #openView(CDOBranch, long, ResourceSet)
-   * @since 3.0
-   */
-  public CDOView openView(CDOBranch branch);
-
-  /**
-   * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
-   * <p>
-   * Same as calling <code>openView(new ResourceSetImpl())</code>.
-   * 
-   * @see #openView(CDOBranch, long, ResourceSet)
-   * @since 3.0
-   */
-  public CDOView openView(long timeStamp);
-
-  /**
-   * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
-   * 
-   * @see #openView(CDOBranch, long, ResourceSet)
-   * @since 4.0
-   */
-  public CDOView openView(ResourceSet resourceSet);
-
-  /**
-   * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
-   * <p>
-   * Same as calling <code>openView(new ResourceSetImpl())</code>.
-   * 
-   * @see #openView(CDOBranch, long, ResourceSet)
-   */
-  public CDOView openView();
-
-  /**
-   * Opens and returns a {@link CDOView view} on a new EMF {@link ResourceSet resource set} by resuming a view that has
-   * previously been made durable by calling {@link CDOView#enableDurableLocking(boolean)
-   * CDOView.enableDurableLocking(true)}.
-   * <p>
-   * Same as calling <code>openView(durableLockingID, new ResourceSetImpl())</code>.
-   * 
-   * @see #openView(String,ResourceSet)
-   * @since 4.0
-   */
-  public CDOView openView(String durableLockingID);
-
-  /**
-   * Opens and returns a {@link CDOView view} on the given EMF {@link ResourceSet resource set} by resuming a view that
-   * has previously been made durable by calling {@link CDOView#enableDurableLocking(boolean)
-   * CDOView.enableDurableLocking(true)}.
-   * 
-   * @see #openView(String)
-   * @since 4.0
-   */
-  public CDOView openView(String durableLockingID, ResourceSet resourceSet);
-
-  /**
-   * Returns an array of all open {@link CDOView views} and {@link CDOTransaction transactions} of this session.
-   * 
-   * @see #openView()
-   * @see #openTransaction()
-   */
-  public CDOView[] getViews();
-
-  /**
-   * @since 4.0
-   */
-  public CDOView getView(int viewID);
 
   /**
    * Refreshes the object caches of all (non-historical) {@link CDOView views}.

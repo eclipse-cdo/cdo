@@ -81,8 +81,6 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
-import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
-import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -91,7 +89,6 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
-import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -108,15 +105,12 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
-import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -139,7 +133,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOSessionImpl extends Container<CDOView> implements InternalCDOSession
+public abstract class CDOSessionImpl extends CDOTransactionContainerImpl implements InternalCDOSession
 {
   private ExceptionHandler exceptionHandler;
 
@@ -197,16 +191,11 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   private InternalCDORemoteSessionManager remoteSessionManager;
 
-  private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
-
   /**
    * A map to track for every object that was committed since this session's last refresh, onto what CDOBranchPoint it
    * was committed. (Used only for sticky transactions, see bug 290032 - Sticky views.)
    */
   private Map<CDOID, CDOBranchPoint> committedSinceLastRefresh = new HashMap<CDOID, CDOBranchPoint>();
-
-  @ExcludeFromDump
-  private int lastViewID;
 
   public CDOSessionImpl()
   {
@@ -536,213 +525,17 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     lockmanager.unlock(LockType.WRITE, key, singletonCollection);
   }
 
-  public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)
+  @Override
+  protected void initViewSynced(InternalCDOView view)
   {
-    checkArg(target.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE, "Target is not head of a branch: " + target);
-    return null;
-  }
-
-  public CDOTransaction openTransaction(CDOBranchPoint target)
-  {
-    return openTransaction(target, createResourceSet());
-  }
-
-  public InternalCDOTransaction openTransaction(CDOBranch branch, ResourceSet resourceSet)
-  {
-    checkActive();
-    InternalCDOTransaction transaction = createTransaction(branch);
-    initView(transaction, resourceSet);
-    return transaction;
-  }
-
-  public InternalCDOTransaction openTransaction(ResourceSet resourceSet)
-  {
-    return openTransaction(getBranchManager().getMainBranch(), resourceSet);
-  }
-
-  public InternalCDOTransaction openTransaction(CDOBranch branch)
-  {
-    return openTransaction(branch, createResourceSet());
-  }
-
-  /**
-   * @since 2.0
-   */
-  public InternalCDOTransaction openTransaction()
-  {
-    return openTransaction(getBranchManager().getMainBranch());
-  }
-
-  public CDOTransaction openTransaction(String durableLockingID)
-  {
-    return openTransaction(durableLockingID, createResourceSet());
-  }
-
-  public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet)
-  {
-    checkActive();
-    InternalCDOTransaction transaction = createTransaction(durableLockingID);
-    initView(transaction, resourceSet);
-    return transaction;
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected InternalCDOTransaction createTransaction(CDOBranch branch)
-  {
-    return new CDOTransactionImpl(branch);
-  }
-
-  /**
-   * @since 4.0
-   */
-  protected InternalCDOTransaction createTransaction(String durableLockingID)
-  {
-    return new CDOTransactionImpl(durableLockingID);
-  }
-
-  public CDOView openView(CDOBranchPoint target, ResourceSet resourceSet)
-  {
-    return openView(target.getBranch(), target.getTimeStamp(), resourceSet);
-  }
-
-  public CDOView openView(CDOBranchPoint target)
-  {
-    return openView(target, createResourceSet());
-  }
-
-  public InternalCDOView openView(CDOBranch branch, long timeStamp, ResourceSet resourceSet)
-  {
-    checkActive();
-    InternalCDOView view = createView(branch, timeStamp);
-    initView(view, resourceSet);
-    return view;
-  }
-
-  public InternalCDOView openView(CDOBranch branch, long timeStamp)
-  {
-    return openView(branch, timeStamp, createResourceSet());
-  }
-
-  public InternalCDOView openView(CDOBranch branch)
-  {
-    return openView(branch, CDOBranchPoint.UNSPECIFIED_DATE);
-  }
-
-  public InternalCDOView openView(long timeStamp)
-  {
-    return openView(getBranchManager().getMainBranch(), timeStamp);
-  }
-
-  public InternalCDOView openView(ResourceSet resourceSet)
-  {
-    return openView(getBranchManager().getMainBranch(), CDOBranchPoint.UNSPECIFIED_DATE, resourceSet);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public InternalCDOView openView()
-  {
-    return openView(CDOBranchPoint.UNSPECIFIED_DATE);
-  }
-
-  public CDOView openView(String durableLockingID)
-  {
-    return openView(durableLockingID, createResourceSet());
-  }
-
-  public CDOView openView(String durableLockingID, ResourceSet resourceSet)
-  {
-    checkActive();
-    InternalCDOView view = createView(durableLockingID);
-    initView(view, resourceSet);
-    return view;
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected InternalCDOView createView(CDOBranch branch, long timeStamp)
-  {
-    return new CDOViewImpl(branch, timeStamp);
-  }
-
-  /**
-   * @since 4.0
-   */
-  protected InternalCDOView createView(String durableLockingID)
-  {
-    return new CDOViewImpl(durableLockingID);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public void viewDetached(InternalCDOView view)
-  {
-    // Detach viewset from the view
-    view.getViewSet().remove(view);
-    synchronized (views)
-    {
-      if (!views.remove(view))
-      {
-        return;
-      }
-    }
-
-    if (isActive())
-    {
-      try
-      {
-        LifecycleUtil.deactivate(view);
-      }
-      catch (Exception ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
-    }
-
-    fireElementRemovedEvent(view);
-  }
-
-  public CDOView getView(int viewID)
-  {
-    checkActive();
-    for (InternalCDOView view : getViews())
-    {
-      if (view.getViewID() == viewID)
-      {
-        return view;
-      }
-    }
-
-    return null;
-  }
-
-  /**
-   * @since 2.0
-   */
-  public InternalCDOView[] getViews()
-  {
-    checkActive();
-    synchronized (views)
-    {
-      return views.toArray(new InternalCDOView[views.size()]);
-    }
-  }
-
-  public CDOView[] getElements()
-  {
-    return getViews();
+    view.setSession(this);
+    view.setLastUpdateTime(getLastUpdateTime());
   }
 
   @Override
-  public boolean isEmpty()
+  protected CDOBranch getMainBranch()
   {
-    checkActive();
-    return views.isEmpty();
+    return getBranchManager().getMainBranch();
   }
 
   /**
@@ -904,7 +697,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   public boolean waitForUpdate(long updateTime, long timeoutMillis)
   {
     long end = timeoutMillis == NO_TIMEOUT ? Long.MAX_VALUE : System.currentTimeMillis() + timeoutMillis;
-    for (CDOView view : views)
+    for (CDOView view : getViews())
     {
       long viewTimeoutMillis = timeoutMillis == NO_TIMEOUT ? NO_TIMEOUT : end - System.currentTimeMillis();
       boolean ok = view.waitForUpdate(updateTime, viewTimeoutMillis);
@@ -1398,46 +1191,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
   }
 
-  protected ResourceSet createResourceSet()
-  {
-    return new ResourceSetImpl();
-  }
-
-  /**
-   * @since 2.0
-   */
-  protected void initView(InternalCDOView view, ResourceSet resourceSet)
-  {
-    InternalCDOViewSet viewSet = SessionUtil.prepareResourceSet(resourceSet);
-    synchronized (views)
-    {
-      view.setSession(this);
-      view.setViewID(++lastViewID);
-      view.setLastUpdateTime(getLastUpdateTime());
-      views.add(view);
-    }
-
-    // Link ViewSet with View
-    view.setViewSet(viewSet);
-    viewSet.add(view);
-
-    try
-    {
-      view.activate();
-      fireElementAddedEvent(view);
-    }
-    catch (RuntimeException ex)
-    {
-      synchronized (views)
-      {
-        views.remove(view);
-      }
-
-      viewSet.remove(view);
-      throw ex;
-    }
-  }
-
   @Override
   protected void doActivate() throws Exception
   {
@@ -1455,18 +1208,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   @Override
   protected void doDeactivate() throws Exception
   {
-    for (InternalCDOView view : views.toArray(new InternalCDOView[views.size()]))
-    {
-      try
-      {
-        view.close();
-      }
-      catch (RuntimeException ignore)
-      {
-      }
-    }
+    super.doDeactivate();
 
-    views.clear();
     outOfSequenceInvalidations.clear();
 
     unhookSessionProtocol();
@@ -1478,8 +1221,6 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     CDOSessionProtocol sessionProtocol = getSessionProtocol();
     LifecycleUtil.deactivate(sessionProtocol);
     setSessionProtocol(null);
-
-    super.doDeactivate();
   }
 
   /**

@@ -343,6 +343,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return new ServerCDOView[] { ServerCDOView.this };
     }
 
+    public InternalCDOTransaction getTransaction(int viewID)
+    {
+      return null;
+    }
+
+    public InternalCDOTransaction[] getTransactions()
+    {
+      return new InternalCDOTransaction[0];
+    }
+
     public CDOView[] getViews()
     {
       return getElements();

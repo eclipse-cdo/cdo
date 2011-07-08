@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -471,7 +472,7 @@ public class TransactionTest extends AbstractCDOTest
     {
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
-        sleep(15L * 1000L);
+        sleep(3000L);
       }
     };
 
@@ -481,6 +482,11 @@ public class TransactionTest extends AbstractCDOTest
     try
     {
       CDOSession session = openSession();
+      if (session instanceof CDONet4jSession)
+      {
+        ((CDONet4jSession)session).options().setCommitTimeout(1);
+
+      }
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
       resource.getContents().add(getModel1Factory().createCompany());

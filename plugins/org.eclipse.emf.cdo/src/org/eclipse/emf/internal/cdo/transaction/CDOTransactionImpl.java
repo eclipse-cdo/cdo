@@ -100,6 +100,7 @@ import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
+import org.eclipse.emf.internal.cdo.view.CDOViewSetImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -132,6 +133,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -151,6 +153,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -1096,14 +1099,25 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     cleanUp(null);
   }
 
-  private void removeObject(CDOID id, CDOObject object)
+  private void removeObject(CDOID id, final CDOObject object)
   {
     ((InternalCDOObject)object).cdoInternalSetState(CDOState.TRANSIENT);
     removeObject(id);
 
     if (object instanceof CDOResource)
     {
-      getResourceSet().getResources().remove(object);
+      InternalCDOViewSet viewSet = getViewSet();
+      if (viewSet instanceof CDOViewSetImpl)
+      {
+        ((CDOViewSetImpl)viewSet).executeWithoutNotificationHandling(new Callable<Boolean>()
+        {
+          public Boolean call() throws Exception
+          {
+            getResourceSet().getResources().remove(object);
+            return true;
+          }
+        });
+      }
     }
 
     ((InternalCDOObject)object).cdoInternalSetID(null);

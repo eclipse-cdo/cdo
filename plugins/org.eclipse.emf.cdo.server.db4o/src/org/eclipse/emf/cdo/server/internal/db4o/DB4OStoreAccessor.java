@@ -426,7 +426,7 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     {
       byte[] id = it.next();
       String key = HexUtil.bytesToHex(id);
-      if (DB4OStore.getIdentifiableObject(getObjectContainer(), key) != null)
+      if (DB4OStore.getIdentifiableObject(getObjectContainer(), key) == null)
       {
         it.remove();
       }

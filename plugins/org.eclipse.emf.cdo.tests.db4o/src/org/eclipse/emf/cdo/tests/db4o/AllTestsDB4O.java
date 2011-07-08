@@ -142,43 +142,4 @@ public class AllTestsDB4O extends AllConfigs
       return optimizing;
     }
   }
-
-  public static class MemDB4ORepositoryConfig extends RepositoryConfig
-  {
-    public static final MemDB4ORepositoryConfig INSTANCE = new MemDB4ORepositoryConfig("DB4O");
-
-    private static final long serialVersionUID = 1L;
-
-    private transient boolean optimizing = false;
-
-    public MemDB4ORepositoryConfig(String name)
-    {
-      super(name);
-    }
-
-    @Override
-    protected void initRepositoryProperties(Map<String, String> props)
-    {
-      super.initRepositoryProperties(props);
-      props.put(IRepository.Props.SUPPORTING_AUDITS, "false");
-      props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
-    }
-
-    @Override
-    protected IStore createStore(String repoName)
-    {
-      if (!isRestarting())
-      {
-        MEMDB4OStore.clearContainer();
-      }
-      return new MEMDB4OStore();
-    }
-
-    @Override
-    protected boolean isOptimizing()
-    {
-      // Do NOT replace this with a hardcoded value!
-      return optimizing;
-    }
-  }
 }

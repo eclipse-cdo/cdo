@@ -1413,6 +1413,7 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     {
       view.setSession(this);
       view.setViewID(++lastViewID);
+      view.setLastUpdateTime(getLastUpdateTime());
       views.add(view);
     }
 

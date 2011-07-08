@@ -61,7 +61,7 @@ public class CDOServerApplication extends OSGiApplication
       repositories = repositoryConfigurator.configure(configFile);
       if (repositories == null || repositories.length == 0)
       {
-        OM.LOG.warn(Messages.getString("CDOServerApplication.3") + configFile.getAbsolutePath()); //$NON-NLS-1$
+        OM.LOG.warn(Messages.getString("CDOServerApplication.3") + " " + configFile.getAbsolutePath()); //$NON-NLS-1$
       }
 
       String port = OMPlatform.INSTANCE.getProperty(PROP_BROWSER_PORT);
@@ -74,7 +74,7 @@ public class CDOServerApplication extends OSGiApplication
     }
     else
     {
-      OM.LOG.warn(Messages.getString("CDOServerApplication.5") + configFile.getAbsolutePath()); //$NON-NLS-1$
+      OM.LOG.warn(Messages.getString("CDOServerApplication.5") + " " + configFile.getAbsolutePath()); //$NON-NLS-1$
     }
 
     OM.LOG.info(Messages.getString("CDOServerApplication.6")); //$NON-NLS-1$

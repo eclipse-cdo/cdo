@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.internal.server.LimitedInputStream;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.ITransaction;
@@ -112,11 +113,11 @@ public abstract class StoreAccessor extends StoreAccessorBase
             long size = in.readLong();
             if (size > 0)
             {
-              writeBlob(id, size, in);
+              writeBlob(id, size, new LimitedInputStream(in, size));
             }
             else
             {
-              writeClob(id, -size, new InputStreamReader(in));
+              writeClob(id, -size, new InputStreamReader(new LimitedInputStream(in, -size)));
             }
           }
         }

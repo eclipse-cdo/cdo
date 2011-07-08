@@ -63,6 +63,7 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -72,6 +73,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'.
@@ -347,12 +349,9 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     if (remote)
     {
       existing = false;
-      cdoView().getResourceSet().getResources().remove(this);
     }
-    else
-    {
-      removeFromResourceSet();
-    }
+
+    removeFromResourceSet();
   }
 
   /**
@@ -1190,10 +1189,18 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
   private void removeFromResourceSet()
   {
-    ResourceSet resourceSet = getResourceSet();
+    final ResourceSet resourceSet = getResourceSet();
     if (resourceSet != null)
     {
-      resourceSet.getResources().remove(this);
+      InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(resourceSet);
+      viewSet.executeWithoutNotificationHandling(new Callable<Boolean>()
+      {
+        public Boolean call() throws Exception
+        {
+          resourceSet.getResources().remove(CDOResourceImpl.this);
+          return true;
+        }
+      });
     }
   }
 
@@ -1235,10 +1242,19 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public NotificationChain basicSetResourceSet(ResourceSet resourceSet, NotificationChain notifications)
   {
-    ResourceSet oldResourceSet = getResourceSet();
+    final ResourceSet oldResourceSet = getResourceSet();
     if (oldResourceSet != null)
     {
-      notifications = ((InternalEList<Resource>)oldResourceSet.getResources()).basicRemove(this, notifications);
+      final NotificationChain finalNotifications = notifications;
+
+      InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(oldResourceSet);
+      notifications = viewSet.executeWithoutNotificationHandling(new Callable<NotificationChain>()
+      {
+        public NotificationChain call() throws Exception
+        {
+          return ((InternalEList<Resource>)oldResourceSet.getResources()).basicRemove(this, finalNotifications);
+        }
+      });
     }
 
     setResourceSet(resourceSet);

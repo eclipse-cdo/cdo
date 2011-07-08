@@ -8,15 +8,20 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Victor Roldan Betancort - bug 338921
  */
 package org.eclipse.emf.internal.cdo.view;
 
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
+
+import org.eclipse.net4j.util.WrappedException;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -26,16 +31,21 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 /**
  * @author Simon McDuff
@@ -52,6 +62,8 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
   private CDOViewSetPackageRegistryImpl packageRegistry;
 
   private ResourceSet resourceSet;
+
+  private ThreadLocal<Boolean> ignoreNotifications = new InheritableThreadLocal<Boolean>();
 
   public CDOViewSetImpl()
   {
@@ -208,9 +220,137 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     return type instanceof ResourceSet;
   }
 
+  public synchronized <V> V executeWithoutNotificationHandling(Callable<V> callable)
+  {
+    Boolean wasIgnore = ignoreNotifications.get();
+
+    try
+    {
+      ignoreNotifications.set(true);
+      return callable.call();
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+    finally
+    {
+      if (wasIgnore == null)
+      {
+        ignoreNotifications.remove();
+      }
+    }
+  }
+
   public void notifyChanged(Notification notification)
   {
-    // Do nothing
     // The resource <-> view association is done in CDOResourceImpl.basicSetResourceSet()
+
+    if (ignoreNotifications.get() == null)
+    {
+      // We need to deregister CDOResources from CDOView if removed from the ResourceSet, see bug 338921
+      switch (notification.getEventType())
+      {
+      case Notification.REMOVE_MANY:
+        deregisterResources((List<?>)notification.getOldValue());
+        break;
+
+      case Notification.REMOVE:
+        deregisterResources(Collections.singleton(notification.getOldValue()));
+        break;
+      }
+    }
+  }
+
+  private void deregisterResources(Collection<?> potentialResources)
+  {
+    List<CDOResource> allDirtyResources = new ArrayList<CDOResource>();
+
+    try
+    {
+      Map<CDOView, List<CDOResource>> resourcesPerView = getResourcesPerView(potentialResources);
+
+      for (Entry<CDOView, List<CDOResource>> entry : resourcesPerView.entrySet())
+      {
+        InternalCDOView view = (InternalCDOView)entry.getKey();
+        List<CDOResource> resources = entry.getValue();
+
+        if (view.isDirty())
+        {
+          List<CDOResource> dirtyResources = getDirtyResources(resources);
+          if (!dirtyResources.isEmpty())
+          {
+            allDirtyResources.addAll(dirtyResources);
+            resourceSet.getResources().addAll(resources);
+            continue;
+          }
+        }
+
+        for (CDOResource resource : resources)
+        {
+          InternalCDOObject internalResource = (InternalCDOObject)resource;
+          view.deregisterObject(internalResource);
+          internalResource.cdoInternalSetState(CDOState.INVALID);
+        }
+      }
+    }
+    finally
+    {
+      int size = allDirtyResources.size();
+      if (size == 1)
+      {
+        throw new CDOException("Attempt to remove a dirty resource from a resource set: " + allDirtyResources.get(0));
+      }
+      else if (size > 1)
+      {
+        throw new CDOException("Attempt to remove dirty resources from a resource set: " + allDirtyResources);
+      }
+    }
+  }
+
+  private List<CDOResource> getDirtyResources(List<CDOResource> resources)
+  {
+    List<CDOResource> dirtyResources = new ArrayList<CDOResource>();
+    for (CDOResource resource : resources)
+    {
+      switch (resource.cdoState())
+      {
+      case NEW:
+      case DIRTY:
+      case CONFLICT:
+      case INVALID_CONFLICT:
+        dirtyResources.addAll(resources);
+      }
+    }
+
+    return dirtyResources;
+  }
+
+  private Map<CDOView, List<CDOResource>> getResourcesPerView(Collection<?> potentialResources)
+  {
+    Map<CDOView, List<CDOResource>> resourcesPerView = new HashMap<CDOView, List<CDOResource>>();
+
+    for (Object potentialResource : potentialResources)
+    {
+      if (potentialResource instanceof CDOResource)
+      {
+        CDOResource resource = (CDOResource)potentialResource;
+        CDOView view = resource.cdoView();
+
+        if (views.contains(view))
+        {
+          List<CDOResource> resources = resourcesPerView.get(view);
+          if (resources == null)
+          {
+            resources = new ArrayList<CDOResource>();
+            resourcesPerView.put(view, resources);
+          }
+
+          resources.add(resource);
+        }
+      }
+    }
+
+    return resourcesPerView;
   }
 }

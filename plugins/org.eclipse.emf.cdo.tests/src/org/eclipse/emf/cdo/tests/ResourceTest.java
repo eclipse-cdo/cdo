@@ -412,55 +412,13 @@ public class ResourceTest extends AbstractCDOTest
     }
   }
 
-  public void testAttachManyResources() throws Exception
+  public void testAttachResource() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
-    CDOResource resource2 = transaction.createResource(getResourcePath("/my/resource2"));
-    CDOResource resource3 = transaction.createResource(getResourcePath("/my/resource3"));
-
-    List<Resource> tobeRemoved = new ArrayList<Resource>();
-    tobeRemoved.add(resource1);
-    tobeRemoved.add(resource3);
-    assertEquals(3, transaction.getResourceSet().getResources().size());// Bug 346636
-
-    transaction.getResourceSet().getResources().removeAll(tobeRemoved);
+    transaction.createResource(getResourcePath("/my/resource1"));
     assertEquals(1, transaction.getResourceSet().getResources().size());// Bug 346636
-    assertEquals(null, transaction.getResourceSet().getResource(resource1.getURI(), false));
-    assertEquals(resource2, transaction.getResourceSet().getResource(resource2.getURI(), false));
-    assertEquals(null, transaction.getResourceSet().getResource(resource3.getURI(), false));
-
-    transaction.getResourceSet().getResources().addAll(tobeRemoved);
-    assertEquals(3, transaction.getResourceSet().getResources().size());// Bug 346636
-    assertEquals(resource1, transaction.getResourceSet().getResource(resource1.getURI(), false));
-    assertEquals(resource2, transaction.getResourceSet().getResource(resource2.getURI(), false));
-    assertEquals(resource3, transaction.getResourceSet().getResource(resource3.getURI(), false));
-
-    transaction.commit();
-    session.close();
-  }
-
-  public void testDetachManyResources() throws Exception
-  {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-
-    CDOResource resource1 = transaction.createResource(getResourcePath("/my/resource1"));
-    CDOResource resource2 = transaction.createResource(getResourcePath("/my/resource2"));
-    CDOResource resource3 = transaction.createResource(getResourcePath("/my/resource3"));
-
-    List<Resource> tobeRemoved = new ArrayList<Resource>();
-    tobeRemoved.add(resource1);
-    tobeRemoved.add(resource3);
-    assertEquals(3, transaction.getResourceSet().getResources().size());// Bug 346636
-
-    transaction.getResourceSet().getResources().removeAll(tobeRemoved);
-    assertEquals(1, transaction.getResourceSet().getResources().size());// Bug 346636
-    assertEquals(null, transaction.getResourceSet().getResource(resource1.getURI(), false));
-    assertEquals(resource2, transaction.getResourceSet().getResource(resource2.getURI(), false));
-    assertEquals(null, transaction.getResourceSet().getResource(resource3.getURI(), false));
 
     transaction.commit();
     session.close();

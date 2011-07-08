@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.common.notify.Adapter;
 
+import java.util.concurrent.Callable;
+
 /**
  * @author Eike Stepper
  * @since 2.0
@@ -27,4 +29,9 @@ public interface InternalCDOViewSet extends CDOViewSet, Adapter
   public void remove(InternalCDOView view);
 
   public InternalCDOView resolveView(String repositoryUUID);
+
+  /**
+   * @since 4.1
+   */
+  public <V> V executeWithoutNotificationHandling(Callable<V> callable);
 }

@@ -152,6 +152,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -1097,14 +1098,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     cleanUp(null);
   }
 
-  private void removeObject(CDOID id, CDOObject object)
+  private void removeObject(CDOID id, final CDOObject object)
   {
     ((InternalCDOObject)object).cdoInternalSetState(CDOState.TRANSIENT);
     removeObject(id);
 
     if (object instanceof CDOResource)
     {
-      getResourceSet().getResources().remove(object);
+      getViewSet().executeWithoutNotificationHandling(new Callable<Boolean>()
+      {
+        public Boolean call() throws Exception
+        {
+          getResourceSet().getResources().remove(object);
+          return true;
+        }
+      });
     }
 
     ((InternalCDOObject)object).cdoInternalSetID(null);

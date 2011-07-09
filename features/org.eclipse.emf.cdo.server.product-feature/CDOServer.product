@@ -3,26 +3,25 @@
 
 <product name="CDO Server" id="org.eclipse.emf.cdo.server.product" application="org.eclipse.emf.cdo.server.app" useFeatures="true" includeLaunchers="true">
 
+
    <configIni use="">
    </configIni>
 
    <launcherArgs>
-      <programArgs>-clean
--debug
+      <programArgs>-debug
 -console
 --launcher.XXMaxPermSize
 128M</programArgs>
-      <vmArgs>-Xms64M
--Xmx512M
--Ddebug=true</vmArgs>
-      <vmArgsLin>-Dnet4j.config=configuration</vmArgsLin>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
--Dnet4j.config=configuration</vmArgsMac>
-      <vmArgsSol>-Dnet4j.config=configuration</vmArgsSol>
-      <vmArgsWin>-Dnet4j.config=configuration</vmArgsWin>
+      <vmArgs>-Xms256M
+-Xmx1024M
+-Ddebug=true
+-Dnet4j.config=.</vmArgs>
+      <vmArgsMac>-XstartOnFirstThread
+-Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
+
 
    <launcher name="cdo-server">
       <solaris/>
@@ -31,35 +30,16 @@
       </win>
    </launcher>
 
+
    <vm>
    </vm>
 
+
    <plugins>
-      <plugin id="org.eclipse.core.contenttype"/>
-      <plugin id="org.eclipse.core.jobs"/>
-      <plugin id="org.eclipse.core.runtime"/>
-      <plugin id="org.eclipse.core.runtime.compatibility.auth"/>
-      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
-      <plugin id="org.eclipse.emf.cdo.common"/>
-      <plugin id="org.eclipse.emf.cdo.server"/>
-      <plugin id="org.eclipse.emf.cdo.server.db"/>
-      <plugin id="org.eclipse.equinox.app"/>
-      <plugin id="org.eclipse.equinox.common"/>
-      <plugin id="org.eclipse.equinox.preferences"/>
-      <plugin id="org.eclipse.equinox.registry"/>
-      <plugin id="org.eclipse.net4j"/>
-      <plugin id="org.eclipse.net4j.db"/>
-      <plugin id="org.eclipse.net4j.db.derby"/>
-      <plugin id="org.eclipse.net4j.tcp"/>
-      <plugin id="org.eclipse.net4j.util"/>
-      <plugin id="org.eclipse.osgi"/>
-      <plugin id="org.eclipse.osgi.services"/>
-      <plugin id="org.eclipse.osgi.util"/>
-      <plugin id="org.eclipse.update.configurator"/>
    </plugins>
 
    <features>
-      <feature id="org.eclipse.emf.cdo.server.product" version="4.0.0.qualifier"/>
+      <feature id="org.eclipse.emf.cdo.server.product"/>
    </features>
 
 

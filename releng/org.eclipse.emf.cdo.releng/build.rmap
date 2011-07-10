@@ -5,6 +5,7 @@
 	<!-- Properties -->
 	
 	<rm:property key="orbit.version" mutable="true" value="R20110523182458" />
+	<rm:property key="local.repository" mutable="true" value="file://C:/Users/Stepper/.hudson/jobs/emf-cdo-integration/org.eclipse.emf.cdo" />
 	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo" />
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
 	<rm:property key="resolve.target.platform" mutable="true" value="true" />
@@ -33,13 +34,15 @@
 	
 	<rm:searchPath name="releng-local">
 		<rm:provider componentTypes="osgi.bundle" readerType="local">
-			<rm:uri format="../org.eclipse.emf.cdo/releng/{0}">
+			<rm:uri format="{1}/releng/{0}">
 				<bc:propertyRef key="buckminster.component" />
+				<bc:propertyRef key="local.repository" />
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="local">
-			<rm:uri format="../org.eclipse.emf.cdo/releng/{0}-feature">
+			<rm:uri format="{1}/releng/{0}-feature">
 				<bc:propertyRef key="buckminster.component" />
+				<bc:propertyRef key="local.repository" />
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
@@ -61,13 +64,15 @@
 
 	<rm:searchPath name="sources-local">
 		<rm:provider componentTypes="osgi.bundle" readerType="local">
-			<rm:uri format="../org.eclipse.emf.cdo/plugins/{0}">
+			<rm:uri format="{1}/plugins/{0}">
 				<bc:propertyRef key="buckminster.component" />
+				<bc:propertyRef key="local.repository" />
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="local">
-			<rm:uri format="../org.eclipse.emf.cdo/features/{0}-feature">
+			<rm:uri format="{1}/features/{0}-feature">
 				<bc:propertyRef key="buckminster.component" />
+				<bc:propertyRef key="local.repository" />
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>

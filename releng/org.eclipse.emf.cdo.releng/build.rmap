@@ -33,12 +33,12 @@
 	
 	<rm:searchPath name="releng-local">
 		<rm:provider componentTypes="osgi.bundle" readerType="local">
-			<rm:uri format="org.eclipse.emf.cdo/releng/{0}">
+			<rm:uri format="../org.eclipse.emf.cdo/releng/{0}">
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="local">
-			<rm:uri format="org.eclipse.emf.cdo/releng/{0}-feature">
+			<rm:uri format="../org.eclipse.emf.cdo/releng/{0}-feature">
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
@@ -61,12 +61,12 @@
 
 	<rm:searchPath name="sources-local">
 		<rm:provider componentTypes="osgi.bundle" readerType="local">
-			<rm:uri format="org.eclipse.emf.cdo/plugins/{0}">
+			<rm:uri format="../org.eclipse.emf.cdo/plugins/{0}">
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="local">
-			<rm:uri format="org.eclipse.emf.cdo/features/{0}-feature">
+			<rm:uri format="../org.eclipse.emf.cdo/features/{0}-feature">
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>

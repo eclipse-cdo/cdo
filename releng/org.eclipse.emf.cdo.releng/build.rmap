@@ -5,7 +5,7 @@
 	<!-- Properties -->
 	
 	<rm:property key="orbit.version" mutable="true" value="R20110523182458" />
-	<rm:property key="local.repository" mutable="true" value="file:C:/Users/Stepper/.hudson/jobs/emf-cdo-integration/org.eclipse.emf.cdo" />
+	<rm:property key="local.repository" mutable="true" value="file:C:/Users/Stepper/.hudson/jobs/emf-cdo-integration/workspace/org.eclipse.emf.cdo" />
 	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo" />
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
 	<rm:property key="resolve.target.platform" mutable="true" value="true" />

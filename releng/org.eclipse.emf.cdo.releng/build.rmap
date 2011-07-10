@@ -2,51 +2,92 @@
 <rm:rmap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0"
 	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
 
+	<!-- Properties -->
+	
 	<rm:property key="orbit.version" mutable="true" value="R20110523182458" />
 	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo" />
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
 	<rm:property key="resolve.target.platform" mutable="true" value="true" />
 	<rm:property key="build.type" mutable="true" value="N" />
 
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng(?:\..+)?$" searchPathRef="releng" />
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$" searchPathRef="sources" />
-	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="sources" />
-	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="sources" />
-	<rm:locator pattern="^com\.mongodb(?:\..+)?$" searchPathRef="sources" />
+	<!-- Locators -->
+	
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng(?:\..+)?$" searchPathRef="releng-local" />
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng(?:\..+)?$" searchPathRef="releng-svn" />
+	
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$" searchPathRef="sources-local" />
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$" searchPathRef="sources-svn" />
+	
+	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="sources-local" />
+	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="sources-svn" />
+	
+	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="sources-local" />
+	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="sources-svn" />
+	
+	<rm:locator pattern="^com\.mongodb(?:\..+)?$" searchPathRef="sources-local" />
+	<rm:locator pattern="^com\.mongodb(?:\..+)?$" searchPathRef="sources-svn" />
 
-	<rm:locator searchPathRef="platform" />
+	<rm:locator searchPathRef="platform-p2" />
 
-	<rm:searchPath name="releng">
-		<rm:provider componentTypes="osgi.bundle" readerType="svn">
-			<rm:uri format="{0}/trunk/releng/{1}?moduleAfterTag&amp;moduleAfterBranch">
-				<bc:propertyRef key="svn.repository" />
+	<!-- Search Paths -->
+	
+	<rm:searchPath name="releng-local">
+		<rm:provider componentTypes="osgi.bundle" readerType="local">
+			<rm:uri format="org.eclipse.emf.cdo/releng/{0}">
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature" readerType="svn">
-			<rm:uri format="{0}/trunk/releng/{1}-feature?moduleAfterTag&amp;moduleAfterBranch">
-				<bc:propertyRef key="svn.repository" />
-				<bc:propertyRef key="buckminster.component" />
-			</rm:uri>
-		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="sources">
-		<rm:provider componentTypes="osgi.bundle" readerType="svn">
-			<rm:uri format="{0}/trunk/plugins/{1}?moduleAfterTag&amp;moduleAfterBranch">
-				<bc:propertyRef key="svn.repository" />
-				<bc:propertyRef key="buckminster.component" />
-			</rm:uri>
-		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature" readerType="svn">
-			<rm:uri format="{0}/trunk/features/{1}-feature?moduleAfterTag&amp;moduleAfterBranch">
-				<bc:propertyRef key="svn.repository" />
+		<rm:provider componentTypes="eclipse.feature" readerType="local">
+			<rm:uri format="org.eclipse.emf.cdo/releng/{0}-feature">
 				<bc:propertyRef key="buckminster.component" />
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
 
-	<rm:searchPath name="platform">
+	<rm:searchPath name="releng-svn">
+		<rm:provider componentTypes="osgi.bundle" readerType="svn">
+			<rm:uri format="{1}/trunk/releng/{0}?moduleAfterTag&amp;moduleAfterBranch">
+				<bc:propertyRef key="buckminster.component" />
+				<bc:propertyRef key="svn.repository" />
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="eclipse.feature" readerType="svn">
+			<rm:uri format="{1}/trunk/releng/{0}-feature?moduleAfterTag&amp;moduleAfterBranch">
+				<bc:propertyRef key="buckminster.component" />
+				<bc:propertyRef key="svn.repository" />
+			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+
+	<rm:searchPath name="sources-local">
+		<rm:provider componentTypes="osgi.bundle" readerType="local">
+			<rm:uri format="org.eclipse.emf.cdo/plugins/{0}">
+				<bc:propertyRef key="buckminster.component" />
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="eclipse.feature" readerType="local">
+			<rm:uri format="org.eclipse.emf.cdo/features/{0}-feature">
+				<bc:propertyRef key="buckminster.component" />
+			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+
+	<rm:searchPath name="sources-svn">
+		<rm:provider componentTypes="osgi.bundle" readerType="svn">
+			<rm:uri format="{1}/trunk/plugins/{0}?moduleAfterTag&amp;moduleAfterBranch">
+				<bc:propertyRef key="buckminster.component" />
+				<bc:propertyRef key="svn.repository" />
+			</rm:uri>
+		</rm:provider>
+		<rm:provider componentTypes="eclipse.feature" readerType="svn">
+			<rm:uri format="{1}/trunk/features/{0}-feature?moduleAfterTag&amp;moduleAfterBranch">
+				<bc:propertyRef key="buckminster.component" />
+				<bc:propertyRef key="svn.repository" />
+			</rm:uri>
+		</rm:provider>
+	</rm:searchPath>
+
+	<rm:searchPath name="platform-p2">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/updates/milestones">

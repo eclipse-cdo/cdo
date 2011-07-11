@@ -1,156 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rm:rmap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0"
-	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
-
+	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0"
+	xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
+	
 	<!-- Properties -->
 	
-	<rm:property key="orbit.version" mutable="true" value="R20110523182458" />
-	<rm:property key="local.repository" mutable="true" value="file:///Users/Stepper/.hudson/jobs/emf-cdo-integration/workspace/org.eclipse.emf.cdo" />
-	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo" />
-	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org" />
-	<rm:property key="resolve.target.platform" mutable="true" value="true" />
-	<rm:property key="build.type" mutable="true" value="N" />
-
+	<rm:property key="orbit.version" mutable="true" value="R20110523182458"/>
+	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo"/>
+	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
+	<rm:property key="resolve.target.platform" mutable="true" value="true"/>
+	<rm:property key="build.type" mutable="true" value="N"/>
+	
 	<!-- Locators -->
 	
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng(?:\..+)?$" searchPathRef="releng-local" />
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo\.releng(?:\..+)?$" searchPathRef="releng-svn" />
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$" searchPathRef="local" failOnError="false"/>
+	<rm:locator pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$" searchPathRef="svn"/>
 	
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$" searchPathRef="sources-local" />
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$" searchPathRef="sources-svn" />
+	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="local" failOnError="false"/>
+	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="svn"/>
 	
-	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="sources-local" />
-	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="sources-svn" />
+	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="local" failOnError="false"/>
+	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="svn"/>
 	
-	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="sources-local" />
-	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="sources-svn" />
+	<rm:locator pattern="^com\.mongodb(?:\..+)?$" searchPathRef="local" failOnError="false"/>
+	<rm:locator pattern="^com\.mongodb(?:\..+)?$" searchPathRef="svn"/>
 	
-	<rm:locator pattern="^com\.mongodb(?:\..+)?$" searchPathRef="sources-local" />
-	<rm:locator pattern="^com\.mongodb(?:\..+)?$" searchPathRef="sources-svn" />
-
-	<rm:locator searchPathRef="platform-p2" />
-
+	<rm:locator searchPathRef="p2"/>
+	
 	<!-- Search Paths -->
 	
-	<rm:searchPath name="releng-local">
+	<rm:searchPath name="local">
 		<rm:provider componentTypes="osgi.bundle" readerType="local">
-			<rm:uri format="{1}/releng/{0}">
-				<bc:propertyRef key="buckminster.component" />
-				<bc:propertyRef key="local.repository" />
+			<rm:uri format="file://{0}/plugins/{1}">
+				<bc:propertyRef key="checkout"/>
+				<bc:propertyRef key="buckminster.component"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="local">
-			<rm:uri format="{1}/releng/{0}-feature">
-				<bc:propertyRef key="buckminster.component" />
-				<bc:propertyRef key="local.repository" />
+			<rm:uri format="file://{0}/features/{1}-feature">
+				<bc:propertyRef key="checkout"/>
+				<bc:propertyRef key="buckminster.component"/>
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
-
-	<rm:searchPath name="releng-svn">
+	
+	<rm:searchPath name="svn">
 		<rm:provider componentTypes="osgi.bundle" readerType="svn">
-			<rm:uri format="{1}/trunk/releng/{0}?moduleAfterTag&amp;moduleAfterBranch">
-				<bc:propertyRef key="buckminster.component" />
-				<bc:propertyRef key="svn.repository" />
+			<rm:uri format="{0}/trunk/plugins/{1}?moduleAfterTag&amp;moduleAfterBranch">
+				<bc:propertyRef key="svn.repository"/>
+				<bc:propertyRef key="buckminster.component"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="svn">
-			<rm:uri format="{1}/trunk/releng/{0}-feature?moduleAfterTag&amp;moduleAfterBranch">
-				<bc:propertyRef key="buckminster.component" />
-				<bc:propertyRef key="svn.repository" />
+			<rm:uri format="{0}/trunk/features/{1}-feature?moduleAfterTag&amp;moduleAfterBranch">
+				<bc:propertyRef key="svn.repository"/>
+				<bc:propertyRef key="buckminster.component"/>
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
-
-	<rm:searchPath name="sources-local">
-		<rm:provider componentTypes="osgi.bundle" readerType="local">
-			<rm:uri format="{1}/plugins/{0}">
-				<bc:propertyRef key="buckminster.component" />
-				<bc:propertyRef key="local.repository" />
-			</rm:uri>
-		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature" readerType="local">
-			<rm:uri format="{1}/features/{0}-feature">
-				<bc:propertyRef key="buckminster.component" />
-				<bc:propertyRef key="local.repository" />
-			</rm:uri>
-		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="sources-svn">
-		<rm:provider componentTypes="osgi.bundle" readerType="svn">
-			<rm:uri format="{1}/trunk/plugins/{0}?moduleAfterTag&amp;moduleAfterBranch">
-				<bc:propertyRef key="buckminster.component" />
-				<bc:propertyRef key="svn.repository" />
-			</rm:uri>
-		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature" readerType="svn">
-			<rm:uri format="{1}/trunk/features/{0}-feature?moduleAfterTag&amp;moduleAfterBranch">
-				<bc:propertyRef key="buckminster.component" />
-				<bc:propertyRef key="svn.repository" />
-			</rm:uri>
-		</rm:provider>
-	</rm:searchPath>
-
-	<rm:searchPath name="platform-p2">
+	
+	<rm:searchPath name="p2">
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emft/mwe/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emft/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/amalgam/temp/ecoretools-1.0.0">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/emf/updates/2.7milestones">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/tools/gef/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/gmp/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/mdt/ocl/updates/milestones/3.1.0">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/m2m/qvtoml/updates/releases">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/m2t/xpand/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
@@ -159,20 +126,20 @@
 			<!-- ## Do not forget to adjust dawn tests feature.properties (1x) ## -->
 			<!-- ################################################################ -->
 			<rm:uri format="{0}/technology/swtbot/helios/dev-build/update-site">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/tools/orbit/downloads/drops/{1}/repository">
-				<bc:propertyRef key="eclipse.downloads" />
-				<bc:propertyRef key="orbit.version" />
+				<bc:propertyRef key="eclipse.downloads"/>
+				<bc:propertyRef key="orbit.version"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/interim">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
@@ -180,18 +147,18 @@
 			<!-- ############################################################### -->
 			<!-- ## Do not forget to adjust hibernate feature.properties (3x) ## -->
 			<!-- ############################################################### -->
-			<rm:uri format="http://www.elver.org/eclipse/update" />
+			<rm:uri format="http://www.elver.org/eclipse/update"/>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="http://net4j.sourceforge.net/update" />
+			<rm:uri format="http://net4j.sourceforge.net/update"/>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/eclipse/updates/3.7milestones">
-				<bc:propertyRef key="eclipse.downloads" />
+				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
-
+	
 </rm:rmap>

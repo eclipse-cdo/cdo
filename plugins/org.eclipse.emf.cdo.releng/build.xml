@@ -82,6 +82,7 @@
 		<attribute name="os" />
 		<attribute name="ws" />
 		<attribute name="arch" />
+		<attribute name="priority" />
 		<sequential>
 			<mkdir dir="${temp.server}" />
 			<eclipse.launch app="director">
@@ -119,6 +120,11 @@
 			<delete includeemptydirs="true" quiet="true">
 				<fileset refid="@{name}-files" />
 			</delete>
+			<echo message="description=for execution on @{name}."
+			      file="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-DemoServer-@{name}.properties" />
+			<echo message="priority=@{priority}"
+			      file="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-DemoServer-@{name}.properties"
+			      append="true" />
 		</sequential>
 	</macrodef>
 
@@ -509,14 +515,14 @@
 			</fileset>
 		</zip>
 		<echo message=" for use with a &lt;a href=&quot;http://help.eclipse.org/indigo/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/misc/p2_dropins_format.html&quot;&gt;dropins&lt;/a&gt; folder."
-		      file="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-Dropins.txt" />
+		      file="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-Dropins.properties" />
 
 		<echo message="" />
 		<echo message="Generating demo servers" />
 		<property name="temp.server" location="${buckminster.temp.root}/server" />
-		<generate-server name="Windows" os="win32" ws="win32" arch="x86" />
-		<generate-server name="Linux" os="linux" ws="gtk" arch="x86" />
-		<generate-server name="Mac" os="macosx" ws="carbon" arch="x86" />
+		<generate-server name="Windows" os="win32" ws="win32" arch="x86" priority="400" />
+		<generate-server name="Linux" os="linux" ws="gtk" arch="x86" priority="300" />
+		<generate-server name="Mac" os="macosx" ws="carbon" arch="x86" priority="200" />
 	</target>
 
 	<!-- ==== -->

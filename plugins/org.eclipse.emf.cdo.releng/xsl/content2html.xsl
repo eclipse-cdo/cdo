@@ -31,34 +31,26 @@
 					<a href="bookmarks.xml">bookmarks.xml</a> file.</em>
 				
 			</p>
-			<ul>
-				<li>
-					<a href="javascript:toggle('features')">Features</a>
-					<a name="features" href="#features">
-						<img src="http://www.eclipse.org/cdo/images/link_obj.gif" alt="Permalink" width="12" height="12"/>
-					</a>
-					<div id="features">
-						<table border="0">
-							<xsl:apply-templates select="//provided[@namespace='org.eclipse.update.feature']">
-								<xsl:sort select="@name"/>
-							</xsl:apply-templates>
-						</table>
-					</div>
-				</li>
-				<li>
-					<a href="javascript:toggle('plugins')">Plugins</a>
-					<a name="plugins" href="#plugins">
-						<img src="http://www.eclipse.org/cdo/images/link_obj.gif" alt="Permalink" width="12" height="12"/>
-					</a>
-					<div id="plugins">
-						<table border="0">
-							<xsl:apply-templates select="//provided[@namespace='osgi.bundle']">
-								<xsl:sort select="@name"/>
-							</xsl:apply-templates>
-						</table>
-					</div>
-				</li>
-			</ul>
+			<table border="0">
+				<tr>
+					<td colspan="2">
+						<hr/>
+						<h2>Features</h2>
+					</td>
+				</tr>
+				<xsl:apply-templates select="//provided[@namespace='org.eclipse.update.feature']">
+					<xsl:sort select="@name"/>
+				</xsl:apply-templates>
+				<tr>
+					<td colspan="2">
+						<hr/>
+						<h2>Plugins</h2>
+					</td>
+				</tr>
+				<xsl:apply-templates select="//provided[@namespace='osgi.bundle']">
+					<xsl:sort select="@name"/>
+				</xsl:apply-templates>
+			</table>
 		</body>
 	</xsl:template>
 	

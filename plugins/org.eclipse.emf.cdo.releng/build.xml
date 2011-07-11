@@ -133,8 +133,8 @@
 	<!-- =============== -->
 
 	<target name="init.properties">
-		<echo message="Stream: ${stream}" />
-		<echo message="Branch: ${branch}" />
+		<echo message="stream = ${stream}" />
+		<echo message="branch = ${branch}" />
 
 		<condition property="no.proxy" value="${hudson.no_proxy}, dev.eclipse.org" else="dev.eclipse.org">
 			<isset property="hudson.no_proxy" />
@@ -151,11 +151,99 @@
 		<property name="buckminster.temp.root" location="${result}/temp" />
 	</target >
 
+	<!-- ========== -->
+	<!-- Init Clean -->
+	<!-- ========== -->
+
+	<target name="init.clean" depends="init.properties">
+		<delete includeemptydirs="true" failonerror="true" quiet="true">
+			<fileset dir="${hudson.WORKSPACE}">
+				<include name="binary/**" />
+				<include name="features/**" />
+				<include name="plugins/**" />
+				<include name="zips/**" />
+				<include name="*.jar" />
+				<include name="*.xml" />
+				<include name="*.html" />
+			</fileset>
+		</delete>
+
+		<delete dir="${buckminster.output.root}" includeemptydirs="true" failonerror="true" quiet="true" />
+		<delete dir="${buckminster.temp.root}" includeemptydirs="true" failonerror="true" quiet="true" />
+	</target >
+
+	<!-- ========== -->
+	<!-- Init Tools -->
+	<!-- ========== -->
+
+	<target name="init.tools" depends="init.clean">
+		<if>
+			<equals arg1="${hudson.CLEAN_TOOLS}" arg2="true" />
+			<then>
+				<echo message="Cleaning tools" />
+				<delete dir="${tools}/director" includeemptydirs="true" failonerror="true" quiet="true" />
+				<delete dir="${tools}/buckminster" includeemptydirs="true" failonerror="true" quiet="true" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${tools}/director/director" />
+			</not>
+			<then>
+				<echo message="" />
+				<echo message="Installing director" />
+				<tempfile destdir="${java.io.tmpdir}"
+				          prefix="director-"
+				          suffix=".zip"
+				          property="director.zip"
+				          deleteonexit="true" />
+				<get src="${director}" dest="${director.zip}" />
+				<mkdir dir="${tools}" />
+				<unzip src="${director.zip}" dest="${tools}" />
+				<delete file="${director.zip}" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${tools}/buckminster/buckminster" />
+			</not>
+			<then>
+				<echo message="" />
+				<echo message="Installing buckminster" />
+				<eclipse.launch app="director">
+					<properties>
+						<sysproperty key="eclipse.p2.mirrors" value="false" />
+					</properties>
+					<args>
+						<arg value="-r" />
+						<arg value="${buckminster.headless}" />
+						<arg value="-r" />
+						<arg value="${buckminster.external}" />
+						<arg value="-d" />
+						<arg value="${tools}/buckminster" />
+						<arg value="-p" />
+						<arg value="Buckminster" />
+						<arg value="-i" />
+						<arg value="org.eclipse.buckminster.cmdline.product" />
+						<arg value="-i" />
+						<arg value="org.eclipse.buckminster.core.headless.feature.feature.group" />
+						<arg value="-i" />
+						<arg value="org.eclipse.buckminster.pde.headless.feature.feature.group" />
+						<arg value="-i" />
+						<arg value="org.eclipse.buckminster.subversive.headless.feature.feature.group" />
+					</args>
+				</eclipse.launch>
+			</then>
+		</if>
+	</target >
+
 	<!-- ================ -->
 	<!-- Init Build Infos -->
 	<!-- ================ -->
 
-	<target name="init.buildinfos" depends="init.properties">
+	<target name="init.buildinfos" depends="init.clean">
 		<xmlproperty keeproot="false">
 			<url url="${hudson.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
 		</xmlproperty>
@@ -252,99 +340,11 @@
 		<echo message="${hudson.JOB_URL}ws/result/all.properties" />
 	</target >
 
-	<!-- ========== -->
-	<!-- Init Clean -->
-	<!-- ========== -->
-
-	<target name="init.clean" depends="init.properties">
-		<delete includeemptydirs="true" failonerror="true" quiet="true">
-			<fileset dir="${hudson.WORKSPACE}">
-				<include name="binary/**" />
-				<include name="features/**" />
-				<include name="plugins/**" />
-				<include name="zips/**" />
-				<include name="*.jar" />
-				<include name="*.xml" />
-				<include name="*.html" />
-			</fileset>
-		</delete>
-
-		<delete dir="${buckminster.output.root}" includeemptydirs="true" failonerror="true" quiet="true" />
-		<delete dir="${buckminster.temp.root}" includeemptydirs="true" failonerror="true" quiet="true" />
-	</target >
-
-	<!-- ========== -->
-	<!-- Init Tools -->
-	<!-- ========== -->
-
-	<target name="init.tools" depends="init.properties">
-		<if>
-			<equals arg1="${hudson.CLEAN_TOOLS}" arg2="true" />
-			<then>
-				<echo message="Cleaning tools" />
-				<delete dir="${tools}/director" includeemptydirs="true" failonerror="true" quiet="true" />
-				<delete dir="${tools}/buckminster" includeemptydirs="true" failonerror="true" quiet="true" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<available file="${tools}/director/director" />
-			</not>
-			<then>
-				<echo message="" />
-				<echo message="Installing director" />
-				<tempfile destdir="${java.io.tmpdir}"
-				          prefix="director-"
-				          suffix=".zip"
-				          property="director.zip"
-				          deleteonexit="true" />
-				<get src="${director}" dest="${director.zip}" />
-				<mkdir dir="${tools}" />
-				<unzip src="${director.zip}" dest="${tools}" />
-				<delete file="${director.zip}" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<available file="${tools}/buckminster/buckminster" />
-			</not>
-			<then>
-				<echo message="" />
-				<echo message="Installing buckminster" />
-				<eclipse.launch app="director">
-					<properties>
-						<sysproperty key="eclipse.p2.mirrors" value="false" />
-					</properties>
-					<args>
-						<arg value="-r" />
-						<arg value="${buckminster.headless}" />
-						<arg value="-r" />
-						<arg value="${buckminster.external}" />
-						<arg value="-d" />
-						<arg value="${tools}/buckminster" />
-						<arg value="-p" />
-						<arg value="Buckminster" />
-						<arg value="-i" />
-						<arg value="org.eclipse.buckminster.cmdline.product" />
-						<arg value="-i" />
-						<arg value="org.eclipse.buckminster.core.headless.feature.feature.group" />
-						<arg value="-i" />
-						<arg value="org.eclipse.buckminster.pde.headless.feature.feature.group" />
-						<arg value="-i" />
-						<arg value="org.eclipse.buckminster.subversive.headless.feature.feature.group" />
-					</args>
-				</eclipse.launch>
-			</then>
-		</if>
-	</target >
-
 	<!-- ============== -->
 	<!-- Init Workspace -->
 	<!-- ============== -->
 
-	<target name="init.workspace" depends="init.properties">
+	<target name="init.workspace" depends="init.clean">
 		<echo message="Initializing workspace" />
 
 		<if>
@@ -388,7 +388,7 @@
 	<!-- ========= -->
 
 	<target name="provision"
-	        depends="init.buildinfos,init.clean,init.tools,init.workspace"
+	        depends="init.tools,init.buildinfos,init.workspace"
 	        description="Imports projects and binaries">
 		<echo message="Importing projects into ${ws}" />
 		<echo message="Importing binaries into ${tp}" />

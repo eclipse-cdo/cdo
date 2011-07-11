@@ -167,7 +167,7 @@
 				<replaceregex pattern="Benutzer" replace="user" />
 			</filterchain>
 		</loadresource>
-		<echo message="Build trigger: ${build.trigger}" />
+		<echo message="build.trigger = ${build.trigger}" />
 
 		<if>
 			<equals arg1="${hudson.BUILD_TYPE}" arg2="&lt;default&gt;" />
@@ -180,10 +180,10 @@
 				<property name="build.type" value="${hudson.BUILD_TYPE}" />
 			</else>
 		</if>
-		<echo message="Build type: ${build.type}" />
+		<echo message="build.type = ${build.type}" />
 
 		<property name="build.timestamp" value="${hudson.BUILD_ID}" />
-		<echo message="Build timestamp: ${build.timestamp}" />
+		<echo message="build.timestamp = ${build.timestamp}" />
 
 		<tempfile property="build.qualifier.tmp"
 		          destdir="${java.io.tmpdir}"
@@ -196,7 +196,7 @@
 			<substitution expression="\1\2\3-\4\5" />
 		</replaceregexp >
 		<property file="${build.qualifier.tmp}" />
-		<echo message="Build qualifier: ${build.qualifier}" />
+		<echo message="build.qualifier = ${build.qualifier}" />
 		<echoxml file="${hudson.WORKSPACE}/build-info.xml">
 			<build type="${build.type}"
 			       timestamp="${build.timestamp}"
@@ -218,7 +218,18 @@
 				<equals arg1="${hudson.HUDSON_URL}" arg2="https://hudson.eclipse.org/hudson/" />
 			</and>
 		</condition>
-		<echo message="Site signing: ${site.signing}" />
+		<echo message="site.signing = ${site.signing}" />
+
+		<if>
+			<equals arg1="${site.signing}" arg2="true" />
+			<then>
+				<property name="eclipse.staging.area"
+				          value="/shared/download-staging.priv/modeling/emf/cdo/${hudson.JOB_NAME}" />
+				<echo message="eclipse.staging.area = ${eclipse.staging.area}" />
+			</then>
+		</if>
+
+		<echo message="" />
 
 		<property name="properties.tmp" value="${result}${file.separator}buckminster.properties" />
 		<echoproperties destfile="${properties.tmp}">

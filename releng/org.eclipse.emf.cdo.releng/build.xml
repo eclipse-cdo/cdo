@@ -1,78 +1,32 @@
 <?xml version="1.0"?>
+<!--
+	Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
 <project name="CDO">
 
-	<property name="stream" value="4.1" />
-	<property name="branch" value="trunk" />
-	<property name="weekly.build.type" value="I" />
+	<property file="build.properties" />
+	<property environment="hudson" />
 
-	<condition property="properties.file" value="build.properties" else="local.properties">
-		<isset property="server.build" />
-	</condition>
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="C:\develop\bin\ant-contrib\ant-contrib-1.0b3.jar" />
+			<pathelement location="${ant.contrib}" />
+		</classpath>
+	</taskdef>
 
-	<condition property="mspec.file" value="build.mspec" else="local.mspec">
-		<isset property="server.build" />
-	</condition>
-
-	<property file="${properties.file}" />
-	<property environment="env" />
-
-	<condition property="build.root" value="${env.WORKSPACE}" else="${basedir}/../build">
-		<isset property="env.WORKSPACE" />
-	</condition>
-
-	<condition property="buckminster.loglevel" value="${env.BUCKMINSTER_LOGLEVEL}" else="INFO">
-		<isset property="env.BUCKMINSTER_LOGLEVEL" />
-	</condition>
-
-	<condition property="clean.tools" value="true">
-		<equals arg1="${env.CLEAN_TOOLS}" arg2="true" />
-	</condition>
-
-	<condition property="clean.tp" value="true">
-		<equals arg1="${env.CLEAN_TP}" arg2="true" />
-	</condition>
-
-	<condition property="clean.workspace" value="true">
-		<equals arg1="${env.CLEAN_WORKSPACE}" arg2="true" />
-	</condition>
-
-	<condition property="clean.output" value="true">
-		<equals arg1="${env.CLEAN_OUTPUT}" arg2="true" />
-	</condition>
-
-	<condition property="zip.dropins" value="${env.ZIP_DROPINS}" else="true">
-		<isset property="env.ZIP_DROPINS" />
-	</condition>
-
-	<condition property="site.pack200" value="${env.SITE_PACK200}" else="true">
-		<isset property="env.SITE_PACK200" />
-	</condition>
-
-	<condition property="no.proxy" value="${env.no_proxy}, dev.eclipse.org" else="dev.eclipse.org">
-		<isset property="env.no_proxy" />
-	</condition>
-
-	<!-- Default properties intended to be overridden by entries in the above property file -->
-	<property name="tools" location="${build.root}/tools" />
-	<property name="result" location="${build.root}/result" />
-	<property name="workspace" location="${result}/workspace" />
-	<property name="targetPlatformPath" location="${result}/tp" />
-	<property name="buckminster.output.root" location="${result}/output" />
-	<property name="buckminster.temp.root" location="${result}/temp" />
-	<property name="buckminster.temp.zips" value="${buckminster.temp.root}/zips" />
-	<property name="temp" location="${workspace}/_temp" />
-
-	<!-- This macro executes the default application of an eclipse installation
-			 that resides in the folder ${buildtools}/@app -->
 	<macrodef name="eclipse.launch">
 		<attribute name="app" />
 		<element name="properties" optional="true" />
 		<element name="args" optional="true" />
 		<sequential>
-			<!-- We assume that the eclipse installation is beneath ${buildtools} -->
 			<property name="@{app}.deploy.dir" value="${tools}/@{app}" />
-
-			<!-- Find the Eclipse launcher and assign its location to the @{app}.launcher property -->
 			<pathconvert property="@{app}.launcher">
 				<first count="1">
 					<sort>
@@ -83,12 +37,9 @@
 					</sort>
 				</first>
 			</pathconvert>
-
-			<!-- Launch the eclipse application -->
 			<java fork="true" jar="${@{app}.launcher}" dir="${@{app}.deploy.dir}" failonerror="true">
 				<env key="no_proxy" value="${no.proxy}" />
 				<properties />
-				<!-- Uncomment to debug <jvmarg value="-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=y"/> -->
 				<args />
 			</java>
 		</sequential>
@@ -96,7 +47,7 @@
 
 	<macrodef name="buckminster">
 		<attribute name="command" />
-		<attribute name="workspace" default="${workspace}" />
+		<attribute name="workspace" default="${ws}" />
 		<element name="sysproperties" optional="true" />
 		<element name="globargs" optional="true" />
 		<element name="cmdargs" optional="true" />
@@ -108,10 +59,13 @@
 				</properties>
 				<args>
 					<jvmarg value="-Xmx4096m" />
+					<jvmarg value="-Declipse.p2.mirrors=false" />
+					<jvmarg value="-Declipse.p2.unsignedPolicy=allow" />
+					<jvmarg value="-Dsvnkit.ssh2.persistent=false" />
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
-					<arg value="${buckminster.loglevel}" />
+					<arg value="${hudson.LOGLEVEL}" />
 					<arg value="--displaystacktrace" />
 					<globargs />
 					<arg value="@{command}" />
@@ -123,170 +77,145 @@
 		</sequential>
 	</macrodef>
 
-	<target name="init.clean.tools" if="clean.tools">
-		<antcall target="clean.tools" />
-	</target>
-
-	<target name="init.clean.tp" if="clean.tp">
-		<antcall target="clean.tp" />
-	</target>
-
-	<target name="init.clean.workspace" if="clean.workspace">
-		<antcall target="clean.workspace" />
-	</target>
-
-	<target name="init.clean.output" if="clean.output">
-		<antcall target="clean.output" />
-	</target>
-
-	<target name="init.checks" depends="init.clean.tools,init.clean.tp,init.clean.workspace,init.clean.output">
-		<available file="${tools}/director/director" property="director.exists" />
-		<available file="${tools}/buckminster/buckminster" property="buckminster.exists" />
-
-		<delete failonerror="false">
-			<fileset dir="${result}">
-				<include name="bom.xml" />
-				<include name="test-report.xml" />
+	<macrodef name="generate-server">
+		<attribute name="name" />
+		<attribute name="os" />
+		<attribute name="ws" />
+		<attribute name="arch" />
+		<sequential>
+			<mkdir dir="${temp.server}" />
+			<eclipse.launch app="director">
+				<properties>
+					<sysproperty key="eclipse.p2.mirrors" value="false" />
+				</properties>
+				<args>
+					<arg value="-r" />
+					<arg value="file:${hudson.WORKSPACE}" />
+					<arg value="-d" />
+					<arg value="${temp.server}" />
+					<arg value="-p" />
+					<arg value="CDOServer" />
+					<arg value="-i" />
+					<arg value="org.eclipse.emf.cdo.server.product" />
+					<arg value="-p2.os" />
+					<arg value="@{os}" />
+					<arg value="-p2.ws" />
+					<arg value="@{ws}" />
+					<arg value="-p2.arch" />
+					<arg value="@{arch}" />
+				</args>
+			</eclipse.launch>
+			<delete includeemptydirs="true" quiet="true">
+				<fileset dir="${temp.server}/p2">
+					<include name="**" />
+				</fileset>
+			</delete>
+			<fileset dir="${temp.server}" id="@{name}-files">
+				<include name="**" />
 			</fileset>
-		</delete>
+			<zip destfile="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-DemoServer-@{name}.zip">
+				<fileset refid="@{name}-files" />
+			</zip>
+			<delete includeemptydirs="true" quiet="true">
+				<fileset refid="@{name}-files" />
+			</delete>
+		</sequential>
+	</macrodef>
 
-	</target>
+	<!-- =============== -->
+	<!-- Init Properties -->
+	<!-- =============== -->
 
-	<target name="get.director" unless="director.exists">
-		<echo message="Fetching headless director application" />
-		<tempfile destdir="${java.io.tmpdir}"
-		          prefix="director-"
-		          suffix=".zip"
-		          property="director.zip"
-		          deleteonexit="true" />
-		<get src="${eclipse.downloads}/${director.path}" dest="${director.zip}" />
-		<mkdir dir="${tools}" />
-		<unzip src="${director.zip}" dest="${tools}" />
-		<delete file="${director.zip}" />
-	</target>
+	<target name="init.properties">
+		<echo message="Stream: ${stream}" />
+		<echo message="Branch: ${branch}" />
 
-	<target name="install.buckminster" unless="buckminster.exists" depends="get.director">
-		<echo message="Configuring headless buckminster with needed features" />
-		<eclipse.launch app="director">
-			<properties>
-				<sysproperty key="eclipse.p2.mirrors" value="false" />
-				<!--
-				propagate the pack200 setting if defined
-				<syspropertyset>
-					<propertyref name="org.eclipse.update.jarprocessor.pack200" />
-				</syspropertyset>
-				-->
-			</properties>
-			<args>
-				<arg value="-r" />
-				<arg value="${eclipse.downloads}/${bm.headless.path}" />
-				<arg value="-r" />
-				<arg value="${bm.external.path}" />
-				<arg value="-d" />
-				<arg value="${tools}/buckminster" />
-				<arg value="-p" />
-				<arg value="Buckminster" />
-				<arg value="-i" />
-				<arg value="org.eclipse.buckminster.cmdline.product" />
-				<arg value="-i" />
-				<arg value="org.eclipse.buckminster.core.headless.feature.feature.group" />
-				<arg value="-i" />
-				<arg value="org.eclipse.buckminster.pde.headless.feature.feature.group" />
-				<arg value="-i" />
-				<arg value="org.eclipse.buckminster.subversive.headless.feature.feature.group" />
-				<!--
-				<arg value="-i" />
-				<arg value="org.eclipse.buckminster.emma.headless.feature.feature.group" />
-				-->
-			</args>
-		</eclipse.launch>
-	</target>
-
-	<target name="init.workspace" unless="workspace.exists">
-		<mkdir dir="${result}" />
-	</target>
-
-	<target name="set.build.type.from.environment" unless="build.type">
-		<!-- Set the build type to the value of the BUILD_TYPE environment variable if not empty -->
-		<property name="env.BUILD_TYPE" value="" />
-		<condition property="build.type" value="${env.BUILD_TYPE}">
-			<length string="${env.BUILD_TYPE}" trim="true" when="greater" length="0" />
+		<condition property="no.proxy" value="${hudson.no_proxy}, dev.eclipse.org" else="dev.eclipse.org">
+			<isset property="hudson.no_proxy" />
 		</condition>
-	</target>
 
-	<target name="set.build.type.default.if.not.in.Hudson"
-	        depends="set.build.type.from.environment"
-	        unless="build.type">
-		<!-- Set the build type to the default value of "N" if not running in Hudson -->
-		<condition property="build.type" value="N">
-			<not>
-				<isset property="env.BUILD_URL" />
-			</not>
-		</condition>
-	</target>
+		<property name="checkout" value="/dev/null" />
+		<property name="releng" location="${checkout}/plugins/org.eclipse.emf.cdo.releng" />
+		<property name="test.report" location="${hudson.WORKSPACE}/test-report.xml" />
+		<property name="tools" location="${hudson.WORKSPACE}/tools" />
+		<property name="result" location="${hudson.WORKSPACE}/result" />
+		<property name="ws" location="${result}/ws" />
+		<property name="tp" location="${result}/tp" />
+		<property name="buckminster.output.root" location="${result}/output" />
+		<property name="buckminster.temp.root" location="${result}/temp" />
+	</target >
 
-	<target name="set.build.type.from.Hudson.build.cause"
-	        depends="set.build.type.default.if.not.in.Hudson"
-	        unless="build.type">
-		<!-- Infer the build type from the cause/trigger of the build as filed by Hudson:
-				 build triggered by timer/schedule => ${weekly.build.type} build
-				 any other cause => N build -->
+	<!-- ================ -->
+	<!-- Init Build Infos -->
+	<!-- ================ -->
+
+	<target name="init.buildinfos" depends="init.properties">
 		<xmlproperty keeproot="false">
-			<url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
+			<url url="${hudson.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
 		</xmlproperty>
 		<loadresource property="build.trigger">
 			<propertyresource name="action.cause.shortDescription" />
 			<filterchain>
 				<replaceregex pattern="^Started by " replace="" />
+				<replaceregex pattern="^Gestartet durch " replace="" />
+				<replaceregex pattern="Benutzer" replace="user" />
 			</filterchain>
 		</loadresource>
-		<condition property="build.type" value="${weekly.build.type}" else="N">
-			<equals arg1="${build.trigger}" arg2="timer" />
-		</condition>
-	</target>
+		<echo message="Build trigger: ${build.trigger}" />
 
-	<target name="set.build.timestamp.from.environment" unless="build.timestamp">
-		<condition property="build.timestamp" value="${env.BUILD_ID}">
-			<isset property="env.BUILD_ID" />
-		</condition>
-	</target>
+		<if>
+			<equals arg1="${hudson.BUILD_TYPE}" arg2="&lt;default&gt;" />
+			<then>
+				<condition property="build.type" value="${weekly.build.type}" else="N">
+					<equals arg1="${build.trigger}" arg2="timer" />
+				</condition>
+			</then>
+			<else>
+				<property name="build.type" value="${hudson.BUILD_TYPE}" />
+			</else>
+		</if>
+		<echo message="Build type: ${build.type}" />
 
-	<target name="set.build.timestamp" depends="set.build.timestamp.from.environment" unless="build.timestamp">
-		<tstamp>
-			<format property="build.timestamp" pattern="yyyy-MM-dd_HH-mm-ss" locale="en,US" />
-		</tstamp>
-	</target>
+		<property name="build.timestamp" value="${hudson.BUILD_ID}" />
+		<echo message="Build timestamp: ${build.timestamp}" />
 
-	<target name="init.build.properties" depends="set.build.type.from.Hudson.build.cause,set.build.timestamp">
-		<tempfile destdir="${java.io.tmpdir}"
-		          prefix="build-"
-		          suffix=".xml"
-		          deleteonexit="true"
-		          property="build.info.file.name" />
-		<!-- Create a file needed by Buckminster. Don't modify! -->
-		<echoxml file="${build.info.file.name}">
-			<build type="${build.type}" timestamp="${build.timestamp}" />
+		<tempfile property="build.qualifier.tmp"
+		          destdir="${java.io.tmpdir}"
+		          prefix="build-qualifier-"
+		          suffix=".tmp"
+		          deleteonexit="true" />
+		<echo message="build.qualifier=${build.type}${build.timestamp}" file="${build.qualifier.tmp}" />
+		<replaceregexp file="${build.qualifier.tmp}">
+			<regexp pattern="([0-9]*)-([0-9]*)-([0-9]*)_([0-9]*)-([0-9]*)-([0-9]*)" />
+			<substitution expression="\1\2\3-\4\5" />
+		</replaceregexp >
+		<property file="${build.qualifier.tmp}" />
+		<echo message="Build qualifier: ${build.qualifier}" />
+		<echoxml file="${hudson.WORKSPACE}/build-info.xml">
+			<build type="${build.type}"
+			       timestamp="${build.timestamp}"
+			       qualifier="${build.qualifier}"
+			       hudson="${hudson.HUDSON_URL}"
+			       revision="${hudson.SVN_REVISION}"
+			       stream="${stream}"
+			       branch="${branch}"
+			       job="${hudson.JOB_NAME}"
+			       number="${hudson.BUILD_NUMBER}"
+			       trigger="${build.trigger}" />
 		</echoxml>
-		<xmlproperty file="${build.info.file.name}" collapseattributes="true" />
-		<echo message="Build type is: ${build.type}" />
 
-		<condition property="build.nightly" value="true">
-			<equals arg1="${build.type}" arg2="N" />
+		<condition property="site.signing" value="true" else="false">
+			<and>
+				<not>
+					<equals arg1="${build.type}" arg2="N" />
+				</not>
+				<equals arg1="${hudson.HUDSON_URL}" arg2="https://hudson.eclipse.org/hudson/" />
+			</and>
 		</condition>
+		<echo message="Site signing: ${site.signing}" />
 
-		<condition property="site.signing" value="false" else="true">
-			<isset property="build.nightly" />
-		</condition>
-
-		<!-- Echo relevant properties to a temporary file so that Buckminster can read them -->
-		<tempfile destdir="${java.io.tmpdir}"
-		          prefix="build-"
-		          suffix=".properties"
-		          deleteonexit="true"
-		          property="properties.tmp" />
-		<echo message="Properties file is: ${properties.tmp}" />
+		<property name="properties.tmp" value="${result}${file.separator}buckminster.properties" />
 		<echoproperties destfile="${properties.tmp}">
-			<!-- We don't want these. basedir in particular will cause problems if passed explicitly -->
 			<propertyset negate="true">
 				<propertyref name="basedir" />
 				<propertyref name="eclipse.home" />
@@ -300,69 +229,188 @@
 				<propertyref prefix="user." />
 			</propertyset>
 		</echoproperties>
+		<echo message="${hudson.JOB_URL}ws/result/buckminster.properties" />
+
+		<echoproperties destfile="${result}/all.properties" />
+		<echo message="${hudson.JOB_URL}ws/result/all.properties" />
+	</target >
+
+	<!-- ========== -->
+	<!-- Init Clean -->
+	<!-- ========== -->
+
+	<target name="init.clean" depends="init.properties">
+		<delete includeemptydirs="true" failonerror="true" quiet="true">
+			<fileset dir="${hudson.WORKSPACE}">
+				<include name="binary/**" />
+				<include name="features/**" />
+				<include name="plugins/**" />
+				<include name="zips/**" />
+				<include name="*.jar" />
+				<include name="*.xml" />
+				<include name="*.html" />
+			</fileset>
+		</delete>
+
+		<delete dir="${buckminster.output.root}" includeemptydirs="true" failonerror="true" quiet="true" />
+		<delete dir="${buckminster.temp.root}" includeemptydirs="true" failonerror="true" quiet="true" />
+	</target >
+
+	<!-- ========== -->
+	<!-- Init Tools -->
+	<!-- ========== -->
+
+	<target name="init.tools" depends="init.properties">
+		<if>
+			<equals arg1="${hudson.CLEAN_TOOLS}" arg2="true" />
+			<then>
+				<echo message="Cleaning tools" />
+				<delete dir="${tools}/director" includeemptydirs="true" failonerror="true" quiet="true" />
+				<delete dir="${tools}/buckminster" includeemptydirs="true" failonerror="true" quiet="true" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${tools}/director/director" />
+			</not>
+			<then>
+				<echo message="" />
+				<echo message="Installing director" />
+				<tempfile destdir="${java.io.tmpdir}"
+				          prefix="director-"
+				          suffix=".zip"
+				          property="director.zip"
+				          deleteonexit="true" />
+				<get src="${eclipse.downloads}/${director.path}" dest="${director.zip}" />
+				<mkdir dir="${tools}" />
+				<unzip src="${director.zip}" dest="${tools}" />
+				<delete file="${director.zip}" />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<available file="${tools}/buckminster/buckminster" />
+			</not>
+			<then>
+				<echo message="" />
+				<echo message="Installing buckminster" />
+				<eclipse.launch app="director">
+					<properties>
+						<sysproperty key="eclipse.p2.mirrors" value="false" />
+					</properties>
+					<args>
+						<arg value="-r" />
+						<arg value="${buckminster.headless}" />
+						<arg value="-r" />
+						<arg value="${buckminster.external}" />
+						<arg value="-d" />
+						<arg value="${tools}/buckminster" />
+						<arg value="-p" />
+						<arg value="Buckminster" />
+						<arg value="-i" />
+						<arg value="org.eclipse.buckminster.cmdline.product" />
+						<arg value="-i" />
+						<arg value="org.eclipse.buckminster.core.headless.feature.feature.group" />
+						<arg value="-i" />
+						<arg value="org.eclipse.buckminster.pde.headless.feature.feature.group" />
+						<arg value="-i" />
+						<arg value="org.eclipse.buckminster.subversive.headless.feature.feature.group" />
+					</args>
+				</eclipse.launch>
+			</then>
+		</if>
+	</target >
+
+	<!-- ============== -->
+	<!-- Init Workspace -->
+	<!-- ============== -->
+
+	<target name="init.workspace" depends="init.properties">
+		<echo message="" />
+		<echo message="Initializing workspace" />
+
+		<if>
+			<equals arg1="${hudson.CLEAN_TP}" arg2="true" />
+			<then>
+				<delete dir="${tp}" includeemptydirs="true" failonerror="true" quiet="true" />
+			</then>
+		</if>
+
+		<delete dir="${ws}" includeemptydirs="true" failonerror="true" quiet="true" />
+		<unzip dest="${ws}" src="${releng}/hudson/workspace.zip" />
+		<copy file="${releng}/hudson/test-report-empty.xml" tofile="${test.report}" />
+
+		<if>
+			<available file="${checkout}" type="dir" />
+			<then>
+				<copy todir="${ws}" includeemptydirs="true" overwrite="true" preservelastmodified="true">
+					<fileset dir="${checkout}">
+						<include name="features/**" />
+						<include name="plugins/**" />
+						<include name="releng/**" />
+					</fileset>
+				</copy>
+				<move todir="${ws}/features" failonerror="false">
+					<fileset dir="${ws}/releng">
+						<include name="org.eclipse.emf.cdo.releng*-feature" />
+					</fileset>
+				</move>
+				<move todir="${ws}/plugins" failonerror="false">
+					<fileset dir="${ws}/releng">
+						<include name="org.eclipse.emf.cdo.releng*" />
+					</fileset>
+				</move>
+				<delete dir="${ws}/releng" includeemptydirs="true" failonerror="false" quiet="true" />
+			</then>
+		</if>
 	</target>
 
-	<target name="provision" depends="init.checks,init.workspace,install.buckminster,init.build.properties">
-		<echo message="Importing projects into workspace ${workspace} and binaries into target platform ${targetPlatformPath}" />
-		<!--
-		<buckminster command="setpref">
-			<cmdargs>
-				<arg value="targetPlatformPath=${targetPlatformPath}" />
-			</cmdargs>
-		</buckminster>
-		-->
+	<!-- ========= -->
+	<!-- Provision -->
+	<!-- ========= -->
 
-		<unzip dest="${workspace}"
-		       src="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
+	<target name="provision"
+	        depends="init.buildinfos,init.clean,init.tools,init.workspace"
+	        description="Imports projects and binaries">
+		<echo message="Importing projects into ${ws}" />
+		<echo message="Importing binaries into ${tp}" />
 
-		<mkdir dir="${targetPlatformPath}" />
+		<mkdir dir="${tp}" />
 		<buckminster command="import">
 			<cmdargs>
-				<!--
-				<arg value="-T" />
-				<arg value="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
-				-->
-
 				<arg value="-B" />
-				<arg value="${result}/bom.xml" />
+				<arg value="${hudson.WORKSPACE}/bom.xml" />
 
 				<arg value="-P" />
-				<arg value="${basedir}/${properties.file}" />
+				<arg value="${basedir}/build.properties" />
 
-				<!-- Last arg: -->
-				<arg value="${basedir}/${mspec.file}" />
+				<!-- Last argument: -->
+				<arg value="${basedir}/build.mspec" />
 			</cmdargs>
 		</buckminster>
-
-		<echo message="Creating a empty test report to make Hudson happy" />
-		<copy file="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/test-report-empty.xml"
-		      tofile="${result}/test-report.xml" />
 	</target>
 
-	<target name="build.workspace" depends="provision">
-		<echo message="Building all projects in workspace ${workspace}" />
+	<!-- ===== -->
+	<!-- Build -->
+	<!-- ===== -->
+
+	<target name="build" depends="provision" description="Builds all projects and generates build-infos.xml">
+		<echo message="Building all projects in workspace ${ws}" />
 		<buckminster command="build">
 			<cmdargs>
 				<arg value="--thorough" />
 			</cmdargs>
 		</buckminster>
-
-		<echo message="Setting build.qualifier" />
-		<tempfile destdir="${java.io.tmpdir}"
-		          prefix="build-qualifier"
-		          suffix=".properties"
-		          deleteonexit="true"
-		          property="build.qualifier.file.name" />
-		<java classname="org.eclipse.emf.cdo.releng.GenerateBuildQualifier" dir="${basedir}" fork="true">
-			<classpath path="${workspace}/plugins/org.eclipse.emf.cdo.releng/bin" />
-			<arg value="${build.type}" />
-			<arg value="${build.timestamp}" />
-			<arg value="${build.qualifier.file.name}" />
-		</java>
-		<property file="${build.qualifier.file.name}" />
 	</target>
 
-	<target name="site.p2" depends="build.workspace">
+	<!-- ======= -->
+	<!-- Site.p2 -->
+	<!-- ======= -->
+
+	<target name="site.p2" depends="build" description="Generates the site and depending artifacts">
+		<echo message="" />
 		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
 		<buckminster command="perform">
 			<cmdargs>
@@ -371,103 +419,76 @@
 		</buckminster>
 
 		<pathconvert property="site.p2.dir">
-			<dirset dir="${workspace}/_temp/">
+			<dirset dir="${buckminster.output.root}">
 				<filename name="org.eclipse.emf.cdo.site_${stream}.*-eclipse.feature/site.p2" />
 			</dirset>
 		</pathconvert>
+		<echoproperties destfile="${result}/all.properties" />
 
-		<property name="content.xml" value="${site.p2.dir}/content.xml" />
-		<echo message="Extracting ${content.xml}" />
-		<unzip src="${site.p2.dir}/content.jar" dest="${site.p2.dir}" />
-
-		<antcall target="generate.buildinfos" />
-		<antcall target="generate.bookmarks" />
-		<antcall target="generate.index" />
-		<!--<antcall target="generate.categories" />-->
-		<antcall target="generate.zip.dropins" />
-
-		<echo message="Deleting ${content.xml}" />
-		<delete file="${content.xml}" />
-	</target>
-
-	<target name="generate.buildinfos">
-		<echo message="Creating build-info.xml" />
-		<echoxml file="${result}/build-info.xml">
-			<build type="${build.type}"
-			       timestamp="${build.timestamp}"
-			       qualifier="${build.qualifier}"
-			       hudson="${env.HUDSON_URL}"
-			       revision="${env.SVN_REVISION}"
-			       stream="${stream}"
-			       branch="${branch}"
-			       job="${env.JOB_NAME}"
-			       number="${env.BUILD_NUMBER}"
-			       trigger="${build.trigger}" />
-		</echoxml>
-	</target>
-
-	<target name="generate.bookmarks">
-		<echo message="Creating bookmarks.xml" />
-		<xslt style="xsl/bom2bookmarks.xsl" in="${result}/bom.xml" out="${site.p2.dir}/bookmarks.tmp" />
-		<replace file="${site.p2.dir}/bookmarks.tmp" token="http://dev.eclipse.org" value="file://to-be-removed" />
-		<replace file="${site.p2.dir}/bookmarks.tmp" token="file:/home/data/httpd/" value="http://" />
-		<!-- Note: The final bookmarks.xml creation takes place in a later Hudson build step! -->
-	</target>
-
-	<target name="generate.index">
-		<echo message="Creating human readable index" />
-		<xslt style="xsl/content2html.xsl" in="${content.xml}" out="${site.p2.dir}/index.html" />
-		<xslt style="xsl/content2xml.xsl" in="${content.xml}" out="${site.p2.dir}/index.xml" />
-	</target>
-
-	<!-- DONE BY PROMOTION
-	<target name="generate.categories">
-		<property name="categories.repo" value="${site.p2.dir}/categories" />
-		<property name="categories.xml" value="${categories.repo}/content.xml" />
-		<echo message="Creating ${categories.xml}" />
-
-		<xslt style="xsl/content2categories.xsl" in="${content.xml}" out="${categories.xml}" />
-		<replaceregexp file="${categories.xml}" match="BUILD_QUALIFIER" replace="${build.qualifier}" byline="true" />
-
-		<resourcecount property="requires.size">
-			<tokens>
-				<concat>
-					<filterchain>
-						<tokenfilter>
-							<containsregex pattern="required namespace" />
-							<linetokenizer />
-						</tokenfilter>
-					</filterchain>
-					<fileset file="${categories.xml}" />
-				</concat>
-			</tokens>
-		</resourcecount>
-		<replaceregexp file="${categories.xml}" match="REQUIRES_SIZE" replace="${requires.size}" byline="true" />
-
-		<zip destfile="${categories.repo}/content.jar">
-			<fileset dir="${categories.repo}">
-				<include name="content.xml" />
+		<copy todir="${hudson.WORKSPACE}"
+		      overwrite="true"
+		      includeemptydirs="true"
+		      preservelastmodified="true"
+		      failonerror="true">
+			<fileset dir="${site.p2.dir}">
+				<include name="**" />
 			</fileset>
-		</zip>
-		<delete file="${categories.xml}" />
-	</target>
-	-->
+		</copy>
 
-	<target name="generate.zip.dropins" if="zip.dropins">
-		<mkdir dir="${buckminster.temp.zips}" />
+		<echo message="" />
+		<echo message="Creating index" />
+		<unzip src="${hudson.WORKSPACE}/content.jar" dest="${hudson.WORKSPACE}" />
+		<property name="content.xml" location="${hudson.WORKSPACE}/content.xml" />
+		<xslt style="xsl/content2html.xsl" in="${content.xml}" out="${hudson.WORKSPACE}/index.html" />
+		<xslt style="xsl/content2xml.xsl" in="${content.xml}" out="${hudson.WORKSPACE}/index.xml" />
+		<delete file="${content.xml}" />
+
+		<echo message="" />
+		<echo message="Creating bookmarks" />
+		<property name="bookmarks.tmp" location="${hudson.WORKSPACE}/bookmarks.tmp" />
+		<xslt style="xsl/bom2bookmarks.xsl" in="${hudson.WORKSPACE}/bom.xml" out="${bookmarks.tmp}" />
+		<replace file="${bookmarks.tmp}" token="http://dev.eclipse.org" value="file://to-be-removed" />
+		<replace file="${bookmarks.tmp}" token="file:/home/data/httpd/" value="http://" />
+		<property name="bookmarks.xml" location="${hudson.WORKSPACE}/bookmarks.xml" />
+		<concat destfile="${bookmarks.xml}">
+			<header filtering="false">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;bookmarks&gt;
+</header>
+			<union>
+				<sort>
+					<tokens>
+						<file file="${bookmarks.tmp}" />
+						<linetokenizer includedelims="true" />
+					</tokens>
+				</sort>
+			</union>
+			<filterchain>
+				<linecontains>
+					<contains value="http://" />
+				</linecontains>
+			</filterchain>
+			<footer filtering="false">&lt;/bookmarks&gt;
+			</footer>
+		</concat>
+		<delete file="${bookmarks.tmp}" />
+
+		<echo message="" />
+		<echo message="Creating dropins" />
+		<property name="temp.zips" location="${buckminster.temp.root}/zips" />
+		<mkdir dir="${temp.zips}" />
 		<delete failonerror="false" includeemptydirs="true">
-			<fileset dir="${buckminster.temp.zips}" defaultexcludes="false">
+			<fileset dir="${temp.zips}" defaultexcludes="false">
 				<include name="**/*" />
 			</fileset>
 		</delete>
-		<copy todir="${buckminster.temp.zips}">
+		<copy todir="${temp.zips}">
 			<fileset dir="rootfiles">
 				<include name="**/*" />
 			</fileset>
 		</copy>
 
-		<copy todir="${buckminster.temp.zips}/features" flatten="true">
-			<fileset dir="${temp}">
+		<copy todir="${temp.zips}/features" flatten="true">
+			<fileset dir="${buckminster.output.root}">
 				<include name="*-eclipse.feature/jar/*" />
 				<include name="*-eclipse.feature/source.jar/*" />
 				<exclude name="org.eclipse.emf.cdo.site*/**/*" />
@@ -476,65 +497,46 @@
 			</fileset>
 		</copy>
 
-		<copy todir="${buckminster.temp.zips}/plugins" flatten="true">
-			<fileset dir="${temp}">
+		<copy todir="${temp.zips}/plugins" flatten="true">
+			<fileset dir="${buckminster.output.root}">
 				<include name="*-osgi.bundle/jar/*" />
 				<include name="*-osgi.bundle/source.jar/*" />
 			</fileset>
 		</copy>
 
-		<mkdir dir="${result}/zips" />
-		<zip destfile="${result}/zips/dropins.zip">
-			<fileset dir="${buckminster.temp.zips}">
+		<mkdir dir="${hudson.WORKSPACE}/zips" />
+		<zip destfile="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-Dropins.zip">
+			<fileset dir="${temp.zips}">
 				<include name="**/*" />
 			</fileset>
 		</zip>
+		<echo message=" for use with a &lt;a href=&quot;http://help.eclipse.org/indigo/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/misc/p2_dropins_format.html&quot;&gt;dropins&lt;/a&gt; folder."
+		      file="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-Dropins.txt" />
+
+		<echo message="" />
+		<echo message="Generating demo servers" />
+		<property name="temp.server" location="${buckminster.temp.root}/server" />
+		<generate-server name="Windows" os="win32" ws="win32" arch="x86" />
+		<generate-server name="Linux" os="linux" ws="gtk" arch="x86" />
+		<generate-server name="Mac" os="macosx" ws="carbon" arch="x86" />
 	</target>
 
-	<target name="test" depends="site.p2">
+	<!-- ==== -->
+	<!-- Test -->
+	<!-- ==== -->
+
+	<target name="test" depends="site.p2" description="Runs the tests">
 		<echo message="Running JUnit tests" />
 		<buckminster command="junit">
 			<cmdargs>
 				<arg value="-l" />
 				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
 				<arg value="-o" />
-				<arg value="${result}/test-report.xml" />
+				<arg value="${test.report}" />
 				<arg value="--terseXML" />
 				<arg value="--flatXML" />
 			</cmdargs>
 		</buckminster>
 	</target>
-
-	<target name="promote.sites" depends="provision">
-		<echo message="Building all projects in workspace ${workspace}" />
-		<buckminster command="build" />
-
-		<echo message="Performing org.eclipse.emf.cdo.releng#promote" />
-		<buckminster command="perform">
-			<cmdargs>
-				<arg value="org.eclipse.emf.cdo.releng#promote" />
-			</cmdargs>
-		</buckminster>
-	</target>
-
-	<target name="clean.tools">
-		<delete dir="${tools}/director" includeemptydirs="true" failonerror="true" quiet="true" />
-		<delete dir="${tools}/buckminster" includeemptydirs="true" failonerror="true" quiet="true" />
-	</target>
-
-	<target name="clean.tp">
-		<delete dir="${targetPlatformPath}" includeemptydirs="true" failonerror="true" quiet="true" />
-	</target>
-
-	<target name="clean.workspace">
-		<delete dir="${workspace}" includeemptydirs="true" failonerror="true" quiet="true" />
-	</target>
-
-	<target name="clean.output">
-		<delete dir="${buckminster.output.root}" includeemptydirs="true" failonerror="true" quiet="true" />
-		<delete dir="${buckminster.temp.root}" includeemptydirs="true" failonerror="true" quiet="true" />
-	</target>
-
-	<target name="clean.all" depends="clean.tools,clean.workspace,clean.tp,clean.output" />
 
 </project>

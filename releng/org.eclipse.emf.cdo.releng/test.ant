@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<project name="CDO">
+
+	<property file="build.properties" />
+	<property environment="hudson" />
+
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="C:\develop\bin\ant-contrib\ant-contrib-1.0b3.jar" />
+			<pathelement location="${ant.contrib}" />
+		</classpath>
+	</taskdef>
+
+	<target name="site.p2">
+	</target>
+
+</project>

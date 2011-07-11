@@ -282,7 +282,7 @@
 				          suffix=".zip"
 				          property="director.zip"
 				          deleteonexit="true" />
-				<get src="${eclipse.downloads}/${director.path}" dest="${director.zip}" />
+				<get src="${director}" dest="${director.zip}" />
 				<mkdir dir="${tools}" />
 				<unzip src="${director.zip}" dest="${tools}" />
 				<delete file="${director.zip}" />

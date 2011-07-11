@@ -328,7 +328,6 @@
 	<!-- ============== -->
 
 	<target name="init.workspace" depends="init.properties">
-		<echo message="" />
 		<echo message="Initializing workspace" />
 
 		<if>
@@ -410,7 +409,6 @@
 	<!-- ======= -->
 
 	<target name="site.p2" depends="build" description="Generates the site and depending artifacts">
-		<echo message="" />
 		<echo message="Performing org.eclipse.emf.cdo.site#site.p2" />
 		<buckminster command="perform">
 			<cmdargs>

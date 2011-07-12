@@ -77,14 +77,16 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="generate-server">
-		<attribute name="name" />
+	<macrodef name="generate-product">
+		<attribute name="profile" />
+		<attribute name="feature" />
+		<attribute name="platform" />
 		<attribute name="os" />
 		<attribute name="ws" />
 		<attribute name="arch" />
 		<attribute name="priority" />
 		<sequential>
-			<mkdir dir="${temp.server}" />
+			<mkdir dir="${temp.product}" />
 			<eclipse.launch app="director">
 				<properties>
 					<sysproperty key="eclipse.p2.mirrors" value="false" />
@@ -93,11 +95,11 @@
 					<arg value="-r" />
 					<arg value="file:${hudson.WORKSPACE}" />
 					<arg value="-d" />
-					<arg value="${temp.server}" />
+					<arg value="${temp.product}" />
 					<arg value="-p" />
-					<arg value="CDOServer" />
+					<arg value="@{profile}" />
 					<arg value="-i" />
-					<arg value="org.eclipse.emf.cdo.server.product" />
+					<arg value="@{feature}" />
 					<arg value="-p2.os" />
 					<arg value="@{os}" />
 					<arg value="-p2.ws" />
@@ -107,23 +109,26 @@
 				</args>
 			</eclipse.launch>
 			<delete includeemptydirs="true" quiet="true">
-				<fileset dir="${temp.server}/p2">
-					<include name="**" />
+				<fileset dir="${temp.product}">
+					<include name="p2/**" />
+					<include name="launcher.exe" />
 				</fileset>
 			</delete>
-			<fileset dir="${temp.server}" id="@{name}-files">
+
+			<fileset dir="${temp.product}" id="@{profile}-@{platform}-files">
 				<include name="**" />
 			</fileset>
-			<zip destfile="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-DemoServer-@{name}.zip">
-				<fileset refid="@{name}-files" />
+			<zip destfile="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-@{profile}-@{platform}.zip">
+				<fileset refid="@{profile}-@{platform}-files" />
 			</zip>
 			<delete includeemptydirs="true" quiet="true">
-				<fileset refid="@{name}-files" />
+				<fileset refid="@{profile}-@{platform}-files" />
 			</delete>
-			<echo message="description=for execution on @{name}."
-			      file="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-DemoServer-@{name}.properties" />
+
+			<echo message="description=for execution on @{platform}."
+			      file="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties" />
 			<echo message="priority=@{priority}"
-			      file="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-DemoServer-@{name}.properties"
+			      file="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties"
 			      append="true" />
 		</sequential>
 	</macrodef>
@@ -132,7 +137,7 @@
 	<!-- Init Properties -->
 	<!-- =============== -->
 
-	<target name="init.properties">
+	<target name="-init.properties">
 		<echo message="stream = ${stream}" />
 		<echo message="branch = ${branch}" />
 
@@ -155,7 +160,7 @@
 	<!-- Init Clean -->
 	<!-- ========== -->
 
-	<target name="init.clean" depends="init.properties">
+	<target name="-init.clean" depends="-init.properties">
 		<delete includeemptydirs="true" failonerror="true" quiet="true">
 			<fileset dir="${hudson.WORKSPACE}">
 				<include name="binary/**" />
@@ -176,7 +181,7 @@
 	<!-- Init Tools -->
 	<!-- ========== -->
 
-	<target name="init.tools" depends="init.clean">
+	<target name="-init.tools" depends="-init.clean">
 		<if>
 			<equals arg1="${hudson.CLEAN_TOOLS}" arg2="true" />
 			<then>
@@ -243,7 +248,7 @@
 	<!-- Init Build Infos -->
 	<!-- ================ -->
 
-	<target name="init.buildinfos" depends="init.clean">
+	<target name="-init.buildinfos" depends="-init.clean">
 		<xmlproperty keeproot="false">
 			<url url="${hudson.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
 		</xmlproperty>
@@ -344,7 +349,7 @@
 	<!-- Init Workspace -->
 	<!-- ============== -->
 
-	<target name="init.workspace" depends="init.clean">
+	<target name="-init.workspace" depends="-init.clean">
 		<echo message="Initializing workspace" />
 
 		<if>
@@ -388,7 +393,7 @@
 	<!-- ========= -->
 
 	<target name="provision"
-	        depends="init.tools,init.buildinfos,init.workspace"
+	        depends="-init.tools,-init.buildinfos,-init.workspace"
 	        description="Imports projects and binaries">
 		<echo message="Importing projects into ${ws}" />
 		<echo message="Importing binaries into ${tp}" />
@@ -450,16 +455,47 @@
 			</fileset>
 		</copy>
 
-		<echo message="" />
-		<echo message="Creating index" />
+		<antcall target="-generate.index" />
+		<antcall target="-generate.bookmarks" />
+		<antcall target="-generate.dropins" />
+		<antcall target="-generate.products" />
+	</target>
+
+	<!-- ==== -->
+	<!-- Test -->
+	<!-- ==== -->
+
+	<target name="test" depends="site.p2" description="Runs the tests">
+		<echo message="Running JUnit tests" />
+		<buckminster command="junit">
+			<cmdargs>
+				<arg value="-l" />
+				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
+				<arg value="-o" />
+				<arg value="${test.report}" />
+				<arg value="--terseXML" />
+				<arg value="--flatXML" />
+			</cmdargs>
+		</buckminster>
+	</target>
+
+	<!-- ============== -->
+	<!-- Generate Index -->
+	<!-- ============== -->
+
+	<target name="-generate.index">
 		<unzip src="${hudson.WORKSPACE}/content.jar" dest="${hudson.WORKSPACE}" />
 		<property name="content.xml" location="${hudson.WORKSPACE}/content.xml" />
 		<xslt style="xsl/content2html.xsl" in="${content.xml}" out="${hudson.WORKSPACE}/index.html" />
 		<xslt style="xsl/content2xml.xsl" in="${content.xml}" out="${hudson.WORKSPACE}/index.xml" />
 		<delete file="${content.xml}" />
+	</target>
 
-		<echo message="" />
-		<echo message="Creating bookmarks" />
+	<!-- =================== -->
+	<!-- Generate Booksmarks -->
+	<!-- =================== -->
+
+	<target name="-generate.bookmarks">
 		<property name="bookmarks.tmp" location="${hudson.WORKSPACE}/bookmarks.tmp" />
 		<xslt style="xsl/bom2bookmarks.xsl" in="${hudson.WORKSPACE}/bom.xml" out="${bookmarks.tmp}" />
 		<replace file="${bookmarks.tmp}" token="http://dev.eclipse.org" value="file://to-be-removed" />
@@ -486,9 +522,13 @@
 			</footer>
 		</concat>
 		<delete file="${bookmarks.tmp}" />
+	</target>
 
-		<echo message="" />
-		<echo message="Creating dropins" />
+	<!-- ================ -->
+	<!-- Generate Dropins -->
+	<!-- ================ -->
+
+	<target name="-generate.dropins">
 		<property name="temp.zips" location="${buckminster.temp.root}/zips" />
 		<mkdir dir="${temp.zips}" />
 		<delete failonerror="false" includeemptydirs="true">
@@ -527,31 +567,62 @@
 		</zip>
 		<echo message=" for use with a &lt;a href=&quot;http://help.eclipse.org/indigo/index.jsp?topic=/org.eclipse.platform.doc.isv/reference/misc/p2_dropins_format.html&quot;&gt;dropins&lt;/a&gt; folder."
 		      file="${hudson.WORKSPACE}/zips/emf-cdo-${build.qualifier}-Dropins.properties" />
-
-		<echo message="" />
-		<echo message="Generating demo servers" />
-		<property name="temp.server" location="${buckminster.temp.root}/server" />
-		<generate-server name="Windows" os="win32" ws="win32" arch="x86" priority="400" />
-		<generate-server name="Linux" os="linux" ws="gtk" arch="x86" priority="300" />
-		<generate-server name="Mac" os="macosx" ws="carbon" arch="x86" priority="200" />
 	</target>
 
-	<!-- ==== -->
-	<!-- Test -->
-	<!-- ==== -->
+	<!-- ================= -->
+	<!-- Generate Products -->
+	<!-- ================= -->
 
-	<target name="test" depends="site.p2" description="Runs the tests">
-		<echo message="Running JUnit tests" />
-		<buckminster command="junit">
-			<cmdargs>
-				<arg value="-l" />
-				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
-				<arg value="-o" />
-				<arg value="${test.report}" />
-				<arg value="--terseXML" />
-				<arg value="--flatXML" />
-			</cmdargs>
-		</buckminster>
+	<target name="-generate.products">
+		<property name="temp.product" location="${buckminster.temp.root}/product" />
+
+		<generate-product profile="CDOServer"
+		                  feature="org.eclipse.emf.cdo.server.product"
+		                  platform="Windows"
+		                  os="win32"
+		                  ws="win32"
+		                  arch="x86"
+		                  priority="450" />
+
+		<generate-product profile="CDOServer"
+		                  feature="org.eclipse.emf.cdo.server.product"
+		                  platform="Linux"
+		                  os="linux"
+		                  ws="gtk"
+		                  arch="x86"
+		                  priority="440" />
+
+		<generate-product profile="CDOServer"
+		                  feature="org.eclipse.emf.cdo.server.product"
+		                  platform="Mac"
+		                  os="macosx"
+		                  ws="carbon"
+		                  arch="x86"
+		                  priority="430" />
+
+		<generate-product profile="CDOExplorer"
+		                  feature="org.eclipse.emf.cdo.explorer.product"
+		                  platform="Windows"
+		                  os="win32"
+		                  ws="win32"
+		                  arch="x86"
+		                  priority="350" />
+
+		<generate-product profile="CDOExplorer"
+		                  feature="org.eclipse.emf.cdo.explorer.product"
+		                  platform="Linux"
+		                  os="linux"
+		                  ws="gtk"
+		                  arch="x86"
+		                  priority="340" />
+
+		<generate-product profile="CDOExplorer"
+		                  feature="org.eclipse.emf.cdo.explorer.product"
+		                  platform="Mac"
+		                  os="macosx"
+		                  ws="carbon"
+		                  arch="x86"
+		                  priority="330" />
 	</target>
 
 </project>

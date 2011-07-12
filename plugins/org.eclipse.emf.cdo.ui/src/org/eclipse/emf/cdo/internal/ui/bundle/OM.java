@@ -47,10 +47,10 @@ public abstract class OM
   PREFS.initArray("PREF_HISTORY_SELECT_PACKAGES"); //$NON-NLS-1$
 
   public static final OMPreference<String[]> PREF_HISTORY_CONNECTORS = //
-  PREFS.initArray("PREF_HISTORY_CONNECTORS"); //$NON-NLS-1$
+  PREFS.init("PREF_HISTORY_CONNECTORS", new String[] { "tcp://localhost" }); //$NON-NLS-1$
 
   public static final OMPreference<String[]> PREF_HISTORY_REPOSITORIES = //
-  PREFS.initArray("PREF_HISTORY_REPOSITORIES"); //$NON-NLS-1$
+  PREFS.init("PREF_HISTORY_REPOSITORIES", new String[] { "repo1" }); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_AUTOMATIC_PACKAGE_REGISTRY = //
   PREFS.init("PREF_AUTOMATIC_PACKAGE_REGISTRY", true); //$NON-NLS-1$

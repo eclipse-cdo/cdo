@@ -45,7 +45,7 @@
           storeType="mem"/>
    	</extension>
 
-    <extension id="app" point="org.eclipse.core.runtime.applications" name="%extension.name">
+    <extension id="app" point="org.eclipse.core.runtime.applications" name="%app.name">
 				<application cardinality="1" thread="any">
 					<run class="org.eclipse.emf.cdo.internal.server.bundle.CDOServerApplication"/>
  				</application>

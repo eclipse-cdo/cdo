@@ -33,6 +33,9 @@
    <feature id="org.eclipse.emf.cdo.server.product" version="0.0.0">
       <category name="org.eclipse.emf.cdo.category"/>
    </feature>
+   <feature id="org.eclipse.emf.cdo.explorer.product" version="0.0.0">
+      <category name="org.eclipse.emf.cdo.category"/>
+   </feature>
    <feature id="org.eclipse.emf.cdo.tests" version="0.0.0">
       <category name="org.eclipse.emf.cdo.category"/>
    </feature>

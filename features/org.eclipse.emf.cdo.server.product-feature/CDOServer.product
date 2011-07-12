@@ -3,7 +3,6 @@
 
 <product name="CDO Server" id="org.eclipse.emf.cdo.server.product" application="org.eclipse.emf.cdo.server.app" useFeatures="true" includeLaunchers="true">
 
-
    <configIni use="">
    </configIni>
 
@@ -22,7 +21,6 @@
 
    <windowImages/>
 
-
    <launcher name="cdo-server">
       <solaris/>
       <win useIco="false">
@@ -30,17 +28,11 @@
       </win>
    </launcher>
 
-
    <vm>
    </vm>
-
-
-   <plugins>
-   </plugins>
 
    <features>
       <feature id="org.eclipse.emf.cdo.server.product"/>
    </features>
-
 
 </product>

@@ -932,24 +932,17 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       }
       else
       {
-        try
+        InternalCDOObject object = (InternalCDOObject)EcoreUtil.getAdapter(
+            ((InternalEObject)potentialObject).eAdapters(), CDOLegacyAdapter.class);
+        if (object != null)
         {
-          InternalCDOObject object = (InternalCDOObject)EcoreUtil.getAdapter(
-              ((InternalEObject)potentialObject).eAdapters(), CDOLegacyAdapter.class);
-          if (object != null)
+          CDOID id = getID(object, onlyPersistedID);
+          if (id != null)
           {
-            CDOID id = getID(object, onlyPersistedID);
-            if (id != null)
-            {
-              return id;
-            }
-
-            potentialObject = object;
+            return id;
           }
-        }
-        catch (Throwable ex)
-        {
-          OM.LOG.warn(ex);
+
+          potentialObject = object;
         }
       }
     }

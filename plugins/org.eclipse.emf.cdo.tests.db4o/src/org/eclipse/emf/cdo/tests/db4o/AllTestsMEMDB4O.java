@@ -2,34 +2,19 @@ package org.eclipse.emf.cdo.tests.db4o;
 
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.tests.AllConfigs;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_261218_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_324585_Test;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
-import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class AllTestsMEMDB4O extends AllConfigs
+public class AllTestsMEMDB4O extends AllTestsDB4O
 {
 
   public static Test suite()
   {
     return new AllTestsMEMDB4O().getTestSuite("CDO Tests (MEMDB4O)");
-  }
-
-  @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
-  {
-    super.initTestClasses(testClasses);
-
-    // Skipped because takes too much
-    testClasses.remove(Bugzilla_261218_Test.class);
-    testClasses.remove(Bugzilla_324585_Test.class);
   }
 
   @Override

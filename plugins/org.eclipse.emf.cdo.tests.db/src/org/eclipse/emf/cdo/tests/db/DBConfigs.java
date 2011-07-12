@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.XRefTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_303807_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
@@ -87,10 +86,6 @@ public abstract class DBConfigs extends AllConfigs
     // XXX [PSQL] disabled because of Bug 290097
     testClasses.remove(ExternalReferenceTest.class);
     testClasses.add(DISABLE_ExternalReferenceTest.class);
-
-    // XXX [PSQL] disabled because of Bug 290097
-    testClasses.remove(Bugzilla_259869_Test.class);
-    testClasses.add(DISABLE_Bugzilla_259869_Test.class);
   }
 
   protected abstract boolean hasBranchingSupport();

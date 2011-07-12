@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.objectivity;
 
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
-import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_259869_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -83,7 +82,6 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
     // There is a problem with the root resource sharing, so for now we're commenting
     // out ExternalReferenceTest and Bugzilla_259869_Test
     testClasses.remove(ExternalReferenceTest.class);
-    testClasses.remove(Bugzilla_259869_Test.class);
   }
 
 }

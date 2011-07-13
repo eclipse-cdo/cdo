@@ -487,7 +487,7 @@
 	<!-- ============= -->
 
 	<target name="generate.only" depends="-init.properties" description="Runs the post-site.p2 generators">
-		<xmlproperty file="${hudson.WORKSPACE}/build-info.xml" prefix="build." keeproot="false" />
+		<xmlproperty file="${hudson.WORKSPACE}/build-info.xml" collapseAttributes="true" />
 		<echoproperties />
 		<antcall target="-generate.all" />
 	</target>

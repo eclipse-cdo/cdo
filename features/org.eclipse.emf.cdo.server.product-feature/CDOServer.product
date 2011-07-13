@@ -33,6 +33,7 @@
 
    <features>
       <feature id="org.eclipse.emf.cdo.server.product"/>
+      <feature id="org.eclipse.equinox.executable"/>
    </features>
 
 </product>

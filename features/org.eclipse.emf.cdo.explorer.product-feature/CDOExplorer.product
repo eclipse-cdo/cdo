@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="CDO Explorer" id="org.eclipse.emf.cdo.explorer.product" application="org.eclipse.emf.cdo.explorer.app" useFeatures="true" includeLaunchers="true">
+<product name="CDO Explorer" id="org.eclipse.emf.cdo.server.product.tcp_h2" application="org.eclipse.emf.cdo.explorer.app" useFeatures="true" includeLaunchers="true">
 
    <configIni use="">
    </configIni>
@@ -17,6 +17,9 @@
 
    <windowImages/>
 
+   <splash
+      location="org.eclipse.emf.cdo.explorer"
+      startupProgressRect="148,605,327,10" />
    <launcher name="cdo-explorer">
       <solaris/>
       <win useIco="false">
@@ -29,6 +32,7 @@
 
    <features>
       <feature id="org.eclipse.emf.cdo.explorer.product"/>
+      <feature id="org.eclipse.equinox.executable"/>
    </features>
 
 </product>

@@ -94,6 +94,8 @@
 				<args>
 					<arg value="-r" />
 					<arg value="file:${hudson.WORKSPACE}" />
+					<arg value="-r" />
+					<arg value="${eclipse.downloads}/releases/${train}" />
 					<arg value="-d" />
 					<arg value="${temp.product}" />
 					<arg value="-p" />
@@ -140,6 +142,7 @@
 	<target name="-init.properties">
 		<echo message="stream = ${stream}" />
 		<echo message="branch = ${branch}" />
+		<echo message="train = ${train}" />
 
 		<condition property="no.proxy" value="${hudson.no_proxy}, dev.eclipse.org" else="dev.eclipse.org">
 			<isset property="hudson.no_proxy" />
@@ -148,10 +151,13 @@
 		<property name="checkout" value="/dev/null" />
 		<property name="releng" location="${checkout}/plugins/org.eclipse.emf.cdo.releng" />
 		<property name="test.report" location="${hudson.WORKSPACE}/test-report.xml" />
+
 		<property name="tools" location="${hudson.WORKSPACE}/tools" />
 		<property name="result" location="${hudson.WORKSPACE}/result" />
+
 		<property name="ws" location="${result}/ws" />
 		<property name="tp" location="${result}/tp" />
+
 		<property name="buckminster.output.root" location="${result}/output" />
 		<property name="buckminster.temp.root" location="${result}/temp" />
 	</target >
@@ -455,10 +461,7 @@
 			</fileset>
 		</copy>
 
-		<antcall target="-generate.index" />
-		<antcall target="-generate.bookmarks" />
-		<antcall target="-generate.dropins" />
-		<antcall target="-generate.products" />
+		<antcall target="-generate.all" />
 	</target>
 
 	<!-- ==== -->
@@ -477,6 +480,27 @@
 				<arg value="--flatXML" />
 			</cmdargs>
 		</buckminster>
+	</target>
+
+	<!-- ============= -->
+	<!-- Generate Only -->
+	<!-- ============= -->
+
+	<target name="generate.only" depends="-init.properties" description="Runs the post-site.p2 generators">
+		<xmlproperty file="${hudson.WORKSPACE}/build-info.xml" prefix="build." keeproot="false" />
+		<echoproperties />
+		<antcall target="-generate.all" />
+	</target>
+
+	<!-- ============ -->
+	<!-- Generate All -->
+	<!-- ============ -->
+
+	<target name="-generate.all">
+		<antcall target="-generate.index" />
+		<antcall target="-generate.bookmarks" />
+		<antcall target="-generate.dropins" />
+		<antcall target="-generate.products" />
 	</target>
 
 	<!-- ============== -->

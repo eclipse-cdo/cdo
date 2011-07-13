@@ -33,12 +33,22 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
-   <includes
-         id="org.eclipse.equinox.executable"
-         version="0.0.0"/>
-
    <plugin
          id="org.eclipse.emf.cdo.explorer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.examples.company"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.examples.company.edit"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -29,14 +29,6 @@
       	</product>
    	</extension>
 
-   <extension point="org.eclipse.ui.perspectives">
-      <perspective
-            name="RCP Perspective"
-            class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerPerspective"
-            id="org.eclipse.emf.cdo.explorer.perspective">
-      </perspective>
-   </extension>
-   
    <extension point="org.eclipse.ui.intro">
       <intro
             class="org.eclipse.ui.intro.config.CustomizableIntroPart"

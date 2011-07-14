@@ -14,7 +14,9 @@
       label="%featureName"
       version="4.0.0.qualifier"
       provider-name="%providerName"
-      image="eclipse_update_120.jpg" license-feature="org.eclipse.emf.cdo.license" license-feature-version="4.0.0.qualifier">
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.cdo.license"
+      license-feature-version="4.0.0.qualifier">
 
    <description>
       %description
@@ -63,6 +65,13 @@
 
    <plugin
          id="org.eclipse.emf.cdo.server.ocl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.server.product"
          download-size="0"
          install-size="0"
          version="0.0.0"

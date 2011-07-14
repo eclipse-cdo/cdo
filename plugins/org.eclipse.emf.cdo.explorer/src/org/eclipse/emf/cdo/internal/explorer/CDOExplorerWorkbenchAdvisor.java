@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.explorer;
 
+import org.eclipse.emf.cdo.internal.ui.perspectives.CDOExplorerPerspective;
+
 import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;

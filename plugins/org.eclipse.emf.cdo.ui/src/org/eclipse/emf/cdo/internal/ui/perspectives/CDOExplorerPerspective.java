@@ -48,23 +48,23 @@ public class CDOExplorerPerspective implements IPerspectiveFactory
 
   protected void addViews()
   {
-    IFolderLayout BrowsingFolderLayout0 = pageLayout.createFolder("cdoFolderLayout0", IPageLayout.LEFT, 0.20f, //$NON-NLS-1$
+    IFolderLayout navigationPane = pageLayout.createFolder("navigationPane", IPageLayout.LEFT, 0.30f, //$NON-NLS-1$
         pageLayout.getEditorArea());
-    BrowsingFolderLayout0.addView(IPageLayout.ID_PROJECT_EXPLORER);
+    navigationPane.addView(IPageLayout.ID_PROJECT_EXPLORER);
 
-    IFolderLayout BrowsingFolderLayout1 = pageLayout.createFolder("cdoFolderLayout1", IPageLayout.BOTTOM, 0.70f, //$NON-NLS-1$
+    IFolderLayout sessionsPane = pageLayout.createFolder("sessionsPane", IPageLayout.BOTTOM, 0.70f, //$NON-NLS-1$
         IPageLayout.ID_PROJECT_EXPLORER);
-    BrowsingFolderLayout1.addView(CDOSessionsView.ID);
+    sessionsPane.addView(CDOSessionsView.ID);
 
-    IFolderLayout BrowsingFolderLayout2 = pageLayout.createFolder("cdoFolderLayout3", IPageLayout.BOTTOM, 0.70f, //$NON-NLS-1$
+    IFolderLayout propertiesPane = pageLayout.createFolder("propertiesPane", IPageLayout.BOTTOM, 0.70f, //$NON-NLS-1$
         pageLayout.getEditorArea());
-    BrowsingFolderLayout2.addView(IPageLayout.ID_PROP_SHEET);
-    BrowsingFolderLayout2.addView(CDOWatchListView.ID);
-    BrowsingFolderLayout2.addView(CDORemoteSessionsView.ID);
+    propertiesPane.addView(IPageLayout.ID_PROP_SHEET);
+    propertiesPane.addView(CDOWatchListView.ID);
+    propertiesPane.addView(CDORemoteSessionsView.ID);
 
-    IFolderLayout BrowsingFolderLayout3 = pageLayout.createFolder("cdoFolderLayout2", IPageLayout.RIGHT, 0.8f, //$NON-NLS-1$
+    IFolderLayout outlinePane = pageLayout.createFolder("outlinePane", IPageLayout.RIGHT, 0.70f, //$NON-NLS-1$
         pageLayout.getEditorArea());
-    BrowsingFolderLayout3.addView(IPageLayout.ID_OUTLINE);
+    outlinePane.addView(IPageLayout.ID_OUTLINE);
   }
 
   protected void addViewShortcuts()
@@ -87,5 +87,4 @@ public class CDOExplorerPerspective implements IPerspectiveFactory
     return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId()
         .equals(CDOExplorerPerspective.ID);
   }
-
 }

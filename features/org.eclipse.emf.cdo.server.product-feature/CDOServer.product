@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="CDO Server" id="org.eclipse.emf.cdo.server.product" application="org.eclipse.emf.cdo.server.app" useFeatures="true" includeLaunchers="true">
+<product name="CDO Server" id="org.eclipse.emf.cdo.server.product.tcp_h2" application="org.eclipse.emf.cdo.server.app" useFeatures="true" includeLaunchers="true">
 
    <configIni use="">
    </configIni>
@@ -31,9 +31,12 @@
    <vm>
    </vm>
 
+   <plugins>
+   </plugins>
+
    <features>
       <feature id="org.eclipse.emf.cdo.server.product"/>
-      <feature id="org.eclipse.equinox.executable"/>
    </features>
+
 
 </product>

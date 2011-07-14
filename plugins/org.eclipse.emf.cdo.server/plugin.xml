@@ -51,13 +51,4 @@
  				</application>
 		</extension>
 
-   	<extension id="product" point="org.eclipse.core.runtime.products">
-      	<product
-        	name="%product.name"
-          description="%product.description"
-          application="org.eclipse.emf.cdo.server.app">
-        		<property name="appName" value="CDO Server"/>
-      	</product>
-   	</extension>
-
 </plugin>

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="CDO Explorer" id="org.eclipse.emf.cdo.server.product.tcp_h2" application="org.eclipse.emf.cdo.explorer.app" useFeatures="true" includeLaunchers="true">
+<product name="CDO Explorer" id="org.eclipse.emf.cdo.explorer.product" application="org.eclipse.emf.cdo.explorer.app" useFeatures="true" includeLaunchers="true">
 
    <configIni use="">
    </configIni>
 
    <launcherArgs>
-      <programArgs>--launcher.XXMaxPermSize
+      <programArgs>-showsplash
+--launcher.XXMaxPermSize
 128M</programArgs>
       <vmArgs>-Xms256M
 -Xmx1024M</vmArgs>
@@ -30,9 +31,12 @@
    <vm>
    </vm>
 
+   <plugins>
+   </plugins>
+
    <features>
       <feature id="org.eclipse.emf.cdo.explorer.product"/>
-      <feature id="org.eclipse.equinox.executable"/>
    </features>
+
 
 </product>

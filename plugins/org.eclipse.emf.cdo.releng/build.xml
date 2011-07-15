@@ -412,17 +412,6 @@
 						<include name="plugins/**" />
 					</fileset>
 				</copy>
-				<move todir="${ws}/features" failonerror="false">
-					<fileset dir="${ws}/releng">
-						<include name="org.eclipse.emf.cdo.releng*-feature" />
-					</fileset>
-				</move>
-				<move todir="${ws}/plugins" failonerror="false">
-					<fileset dir="${ws}/releng">
-						<include name="org.eclipse.emf.cdo.releng*" />
-					</fileset>
-				</move>
-				<delete dir="${ws}/releng" includeemptydirs="true" failonerror="false" quiet="true" />
 			</then>
 		</if>
 	</target>

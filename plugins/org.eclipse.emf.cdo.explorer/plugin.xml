@@ -29,30 +29,4 @@
       	</product>
    	</extension>
 
-   <extension point="org.eclipse.ui.intro">
-      <intro
-            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
-            id="org.eclipse.emf.cdo.explorer.intro">
-      </intro>
-      <introProductBinding
-            introId="org.eclipse.emf.cdo.explorer.intro"
-            productId="org.eclipse.emf.cdo.explorer.product">
-      </introProductBinding>
-   </extension>
-   
-   <extension point="org.eclipse.ui.intro.config">
-      <config
-            introId="org.eclipse.emf.cdo.explorer.intro"
-            content="introContent.xml"
-            id="org.eclipse.emf.cdo.explorer.configId">
-         <presentation
-               home-page-id="root">
-            <implementation
-                  kind="html"
-                  os="win32,linux,macosx">
-            </implementation>
-         </presentation>
-      </config>
-   </extension>
-
 </plugin>

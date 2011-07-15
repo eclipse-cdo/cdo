@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+	Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+<project name="Hudson" basedir=".">
+
+	<target name="-init.properties">
+		<!-- Build Parameters -->
+		<property name="BUILD_TYPE" value="N" />
+		<property name="LOGLEVEL" value="INFO" />
+		<property name="CLEAN_TOOLS" value="false" />
+		<property name="CLEAN_TP" value="false" />
+
+		<!-- Job Settings -->
+		<property name="checkout" location="/develop/ws/cdo" />
+		<property name="platform" value="Windows" />
+		
+		<!-- Hudson Variables -->
+		<property name="hudson.root" location="temp" />
+		
+		<property name="WORKSPACE" location="hudson" />
+		<property name="HUDSON_URL" value="value" />
+		<property name="JOB_URL" value="value" />
+		<property name="JOB_NAME" value="value" />
+		<property name="BUILD_URL" value="value" />
+		<property name="BUILD_ID" value="value" />
+		<property name="BUILD_NUMBER" value="value" />
+		<property name="SVN_REVISION" value="value" />
+	</target >
+
+</project>

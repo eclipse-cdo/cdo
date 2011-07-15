@@ -7,8 +7,7 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-showsplash
---launcher.XXMaxPermSize
+      <programArgs>--launcher.XXMaxPermSize
 128M</programArgs>
       <vmArgs>-Xms256M
 -Xmx1024M</vmArgs>
@@ -18,9 +17,7 @@
 
    <windowImages/>
 
-   <splash
-      location="org.eclipse.emf.cdo.explorer"
-      startupProgressRect="148,605,327,10" />
+
    <launcher name="cdo-explorer">
       <solaris/>
       <win useIco="false">

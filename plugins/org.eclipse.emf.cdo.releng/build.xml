@@ -11,14 +11,6 @@
 -->
 <project name="CDO">
 
-	<!-- 
-	###################################################################
-	This build can be optimized by setting these properties externally:
-			checkout = "/existing/source/checkout/to/copy/from"
-			platform = "Windows" | "Linux" | "Mac"
-	###################################################################
-	-->
-
 	<property file="build.properties" />
 	<property environment="hudson" />
 

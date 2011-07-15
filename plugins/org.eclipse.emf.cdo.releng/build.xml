@@ -147,11 +147,8 @@
 						</fileset>
 					</zip>
 
-					<echo message="description=for execution on @{platform}."
+					<echo message="description=for execution on @{platform}.${line.separator}priority=@{priority}"
 					      file="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties" />
-					<echo message="priority=@{priority}"
-					      file="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties"
-					      append="true" />
 				</then>
 			</if>
 		</sequential>

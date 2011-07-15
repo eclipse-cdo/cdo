@@ -410,7 +410,6 @@
 					<fileset dir="${checkout}">
 						<include name="features/**" />
 						<include name="plugins/**" />
-						<include name="releng/**" />
 					</fileset>
 				</copy>
 				<move todir="${ws}/features" failonerror="false">

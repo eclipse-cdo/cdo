@@ -11,6 +11,14 @@
 -->
 <project name="CDO">
 
+	<!-- 
+	###################################################################
+	This build can be optimized by setting these properties externally:
+			checkout = "/existing/source/checkout/to/copy/from"
+			platform = "Windows" | "Linux" | "Mac"
+	###################################################################
+	-->
+
 	<property file="build.properties" />
 	<property environment="hudson" />
 
@@ -86,70 +94,74 @@
 		<attribute name="arch" />
 		<attribute name="priority" />
 		<sequential>
-			<echo message="" />
-			<echo message="Generating @{profile} for @{platform}" />
-			<mkdir dir="${temp.products}/@{profile}-@{platform}" />
+			<if>
+				<or>
+					<not>
+						<isset property="platform" />
+					</not>
+					<equals arg1="${platform}" arg2="@{platform}" />
+				</or>
+				<then>
+					<echo message="" />
+					<echo message="Generating @{profile} for @{platform}" />
+					<mkdir dir="${temp.products}/@{profile}-@{platform}" />
 
-			<eclipse.launch app="director">
-				<properties>
-					<sysproperty key="eclipse.p2.mirrors" value="false" />
-				</properties>
-				<args>
-					<!--
-					<arg value="-debug" />
-					<arg value="-consoleLog" />
-					-->
-					<arg value="-r" />
-					<arg value="file:${hudson.WORKSPACE}" />
-					<arg value="-r" />
-					<arg value="${eclipse.downloads}/releases/${train}" />
-					<arg value="-r" />
-					<arg value="${eclipse.downloads}/eclipse/updates/3.7milestones" />
-					<arg value="-r" />
-					<arg value="${eclipse.downloads}/eclipse/updates/3.7" />
-					<!--
-					-->
-					<arg value="-d" />
-					<arg value="${temp.products}/@{profile}-@{platform}" />
-					<arg value="-p" />
-					<arg value="@{profile}" />
-					<arg value="-i" />
-					<arg value="@{id}" />
-					<arg value="-p2.os" />
-					<arg value="@{os}" />
-					<arg value="-p2.ws" />
-					<arg value="@{ws}" />
-					<arg value="-p2.arch" />
-					<arg value="@{arch}" />
-				</args>
-			</eclipse.launch>
+					<eclipse.launch app="director">
+						<properties>
+							<sysproperty key="eclipse.p2.mirrors" value="false" />
+						</properties>
+						<args>
+							<arg value="-r" />
+							<arg value="file:${hudson.WORKSPACE}" />
+							<arg value="-r" />
+							<arg value="${train.releases}" />
+							<arg value="-r" />
+							<arg value="${eclipse.updates}" />
+							<arg value="-r" />
+							<arg value="${eclipse.milestones}" />
+							<arg value="-d" />
+							<arg value="${temp.products}/@{profile}-@{platform}" />
+							<arg value="-p" />
+							<arg value="@{profile}" />
+							<arg value="-i" />
+							<arg value="@{id}" />
+							<arg value="-p2.os" />
+							<arg value="@{os}" />
+							<arg value="-p2.ws" />
+							<arg value="@{ws}" />
+							<arg value="-p2.arch" />
+							<arg value="@{arch}" />
+						</args>
+					</eclipse.launch>
 
-			<delete includeemptydirs="true" quiet="true">
-				<fileset dir="${temp.products}/@{profile}-@{platform}">
-					<include name="p2/**" />
-					<include name="launcher.exe" />
-					<include name="eclipsec.exe" />
-				</fileset>
-			</delete>
+					<delete includeemptydirs="true" quiet="true">
+						<fileset dir="${temp.products}/@{profile}-@{platform}">
+							<include name="p2/**" />
+							<include name="launcher.exe" />
+							<include name="eclipsec.exe" />
+						</fileset>
+					</delete>
 
-			<copy todir="${temp.products}/@{profile}-@{platform}" failonerror="true">
-				<fileset dir="${ws}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
-					<include name="epl-v10.html" />
-					<include name="notice.html" />
-				</fileset>
-			</copy>
+					<copy todir="${temp.products}/@{profile}-@{platform}" failonerror="true">
+						<fileset dir="${ws}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
+							<include name="epl-v10.html" />
+							<include name="notice.html" />
+						</fileset>
+					</copy>
 
-			<zip destfile="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.zip">
-				<fileset dir="${temp.products}/@{profile}-@{platform}">
-					<include name="**" />
-				</fileset>
-			</zip>
+					<zip destfile="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.zip">
+						<fileset dir="${temp.products}/@{profile}-@{platform}">
+							<include name="**" />
+						</fileset>
+					</zip>
 
-			<echo message="description=for execution on @{platform}."
-			      file="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties" />
-			<echo message="priority=@{priority}"
-			      file="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties"
-			      append="true" />
+					<echo message="description=for execution on @{platform}."
+					      file="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties" />
+					<echo message="priority=@{priority}"
+					      file="${zips}/emf-cdo-${build.qualifier}-@{profile}-@{platform}.properties"
+					      append="true" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -291,7 +303,7 @@
 		<if>
 			<equals arg1="${hudson.BUILD_TYPE}" arg2="&lt;default&gt;" />
 			<then>
-				<condition property="build.type" value="${weekly.build.type}" else="N">
+				<condition property="build.type" value="${weekly}" else="N">
 					<equals arg1="${build.trigger}" arg2="timer" />
 				</condition>
 			</then>
@@ -320,6 +332,8 @@
 			<build stream="${stream}"
 			       branch="${branch}"
 			       train="${train}"
+			       eclipse="${eclipse}"
+			       emf="${emf}"
 			       type="${build.type}"
 			       timestamp="${build.timestamp}"
 			       qualifier="${build.qualifier}"
@@ -521,11 +535,9 @@
 		<property name="zips" location="${hudson.WORKSPACE}/zips" />
 		<mkdir dir="${zips}" />
 
-		<!--
 		<antcall target="-generate.index" />
 		<antcall target="-generate.bookmarks" />
 		<antcall target="-generate.dropins" />
-		-->
 		<antcall target="-generate.products" />
 	</target>
 
@@ -649,7 +661,6 @@
 		                  arch="x86"
 		                  priority="350" />
 
-		<!--
 		<generate.product id="org.eclipse.emf.cdo.server.product.tcp_h2"
 		                  profile="CDOServer"
 		                  platform="Linux"
@@ -681,7 +692,6 @@
 		                  ws="carbon"
 		                  arch="x86"
 		                  priority="330" />
-		-->
 	</target>
 
 </project>

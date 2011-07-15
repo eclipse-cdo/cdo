@@ -182,7 +182,7 @@
 
 		<property name="buckminster.output.root" location="${result}/output" />
 		<property name="buckminster.temp.root" location="${result}/temp" />
-	</target >
+	</target>
 
 	<!-- ========== -->
 	<!-- Init Clean -->
@@ -205,7 +205,7 @@
 		<delete dir="${buckminster.temp.root}" includeemptydirs="true" failonerror="true" quiet="true" />
 
 		<mkdir dir="${result}" />
-	</target >
+	</target>
 
 	<!-- ========== -->
 	<!-- Init Tools -->
@@ -272,24 +272,31 @@
 				</eclipse.launch>
 			</then>
 		</if>
-	</target >
+	</target>
 
 	<!-- ================ -->
 	<!-- Init Build Infos -->
 	<!-- ================ -->
 
 	<target name="-init.buildinfos" depends="-init.clean">
-		<xmlproperty keeproot="false">
-			<url url="${hudson.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
-		</xmlproperty>
-		<loadresource property="build.trigger">
-			<propertyresource name="action.cause.shortDescription" />
-			<filterchain>
-				<replaceregex pattern="^Started by " replace="" />
-				<replaceregex pattern="^Gestartet durch " replace="" />
-				<replaceregex pattern="Benutzer" replace="user" />
-			</filterchain>
-		</loadresource>
+		<if>
+			<not>
+				<isset property="build.trigger" />
+			</not>
+			<then>
+				<xmlproperty keeproot="false">
+					<url url="${hudson.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
+				</xmlproperty>
+				<loadresource property="build.trigger">
+					<propertyresource name="action.cause.shortDescription" />
+					<filterchain>
+						<replaceregex pattern="^Started by " replace="" />
+						<replaceregex pattern="^Gestartet durch " replace="" />
+						<replaceregex pattern="Benutzer" replace="user" />
+					</filterchain>
+				</loadresource>
+			</then>
+		</if>
 		<echo message="build.trigger = ${build.trigger}" />
 
 		<if>
@@ -376,7 +383,7 @@
 
 		<echoproperties destfile="${result}/all.properties" />
 		<echo message="${hudson.JOB_URL}ws/result/all.properties" />
-	</target >
+	</target>
 
 	<!-- ============== -->
 	<!-- Init Workspace -->
@@ -488,7 +495,12 @@
 			</fileset>
 		</copy>
 
-		<antcall target="-generate.all" />
+		<if>
+			<equals arg1="${hudson.GENERATE_PRODUCTS}" arg2="true" />
+			<then>
+				<antcall target="-generate.all" />
+			</then>
+		</if>
 	</target>
 
 	<!-- ==== -->

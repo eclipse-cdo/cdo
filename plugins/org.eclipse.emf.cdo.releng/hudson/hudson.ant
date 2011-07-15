@@ -28,8 +28,8 @@
 			<property name="hudson.BUILD_NUMBER" value="1" />
 			<property name="hudson.WORKSPACE" location="${hudson.root}" />
 			<property name="hudson.HUDSON_URL" value="file://${hudson.root}" />
-			<property name="hudson.JOB_URL" value="${HUDSON_URL}/jobs/${JOB_NAME}" />
-			<property name="hudson.BUILD_URL" value="${JOB_URL}/${BUILD_NUMBER}" />
+			<property name="hudson.JOB_URL" value="${hudson.HUDSON_URL}/jobs/${hudson.JOB_NAME}" />
+			<property name="hudson.BUILD_URL" value="${hudson.JOB_URL}/${hudson.BUILD_NUMBER}" />
 			<property name="hudson.BUILD_ID" value="2011-07-14_23-29-20" />
 			<property name="hudson.SVN_REVISION" value="0815" />
 		</ant>

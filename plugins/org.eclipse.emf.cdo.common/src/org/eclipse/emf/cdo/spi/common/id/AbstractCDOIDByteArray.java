@@ -7,81 +7,64 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Simon McDuff - bug 226778
  */
 package org.eclipse.emf.cdo.spi.common.id;
 
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author Eike Stepper
- * @since 2.0
+ * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
  */
-public abstract class AbstractCDOIDInteger extends AbstractCDOID
+public abstract class AbstractCDOIDByteArray extends AbstractCDOID
 {
+  public static final String NULL_VALUE = null;
+
   private static final long serialVersionUID = 1L;
 
-  private int value;
+  private byte[] value;
 
-  public AbstractCDOIDInteger()
+  public AbstractCDOIDByteArray()
   {
   }
 
-  public AbstractCDOIDInteger(int value)
+  public AbstractCDOIDByteArray(byte[] value)
   {
-    if (value == 0)
-    {
-      throw new IllegalArgumentException("value == 0"); //$NON-NLS-1$
-    }
-
     this.value = value;
   }
 
-  public int getIntValue()
+  public byte[] getByteArrayValue()
   {
     return value;
   }
 
   public String toURIFragment()
   {
-    return String.valueOf(value);
+    return HexUtil.bytesToHex(value);
   }
 
   @Override
   public void read(String fragmentPart)
   {
-    value = Integer.valueOf(fragmentPart);
+    value = HexUtil.hexToBytes(fragmentPart);
   }
 
   @Override
   public void read(ExtendedDataInput in) throws IOException
   {
-    value = in.readInt();
+    value = in.readByteArray();
   }
 
   @Override
   public void write(ExtendedDataOutput out) throws IOException
   {
-    out.writeInt(value);
-  }
-
-  public int compareTo(AbstractCDOIDInteger that)
-  {
-    if (value < that.value)
-    {
-      return -1;
-    }
-
-    if (value > that.value)
-    {
-      return 1;
-    }
-
-    return 0;
+    out.writeByteArray(value);
   }
 
   @Override
@@ -94,8 +77,8 @@ public abstract class AbstractCDOIDInteger extends AbstractCDOID
 
     if (obj != null && obj.getClass() == getClass())
     {
-      AbstractCDOIDInteger that = (AbstractCDOIDInteger)obj;
-      return value == that.value;
+      AbstractCDOIDByteArray that = (AbstractCDOIDByteArray)obj;
+      return Arrays.equals(value, that.value);
     }
 
     return false;
@@ -104,6 +87,6 @@ public abstract class AbstractCDOIDInteger extends AbstractCDOID
   @Override
   public int hashCode()
   {
-    return getClass().hashCode() ^ value;
+    return getClass().hashCode() ^ Arrays.hashCode(value);
   }
 }

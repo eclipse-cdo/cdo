@@ -197,6 +197,14 @@ public final class CDOIDUtil
   }
 
   /**
+   * @since 4.1
+   */
+  public static CDOID createUUID(byte[] value)
+  {
+    return new CDOIDObjectUUIDImpl(value);
+  }
+
+  /**
    * @since 2.0
    */
   public static CDOIDExternal createExternal(String uri)

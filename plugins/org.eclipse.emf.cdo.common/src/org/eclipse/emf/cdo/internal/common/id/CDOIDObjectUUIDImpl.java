@@ -12,14 +12,14 @@
 package org.eclipse.emf.cdo.internal.common.id;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDByteArray;
 import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
 /**
  * @author Martin Taal
  * @since 3.0
  */
-public class CDOIDObjectUUIDImpl extends AbstractCDOIDString implements InternalCDOIDObject
+public class CDOIDObjectUUIDImpl extends AbstractCDOIDByteArray implements InternalCDOIDObject
 {
   private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class CDOIDObjectUUIDImpl extends AbstractCDOIDString implements Internal
   {
   }
 
-  public CDOIDObjectUUIDImpl(String value)
+  public CDOIDObjectUUIDImpl(byte[] value)
   {
     super(value);
   }
@@ -68,14 +68,37 @@ public class CDOIDObjectUUIDImpl extends AbstractCDOIDString implements Internal
   }
 
   @Override
-  public String toString()
-  {
-    return getStringValue();
-  }
-
-  @Override
   protected int doCompareTo(CDOID o) throws ClassCastException
   {
-    return getStringValue().compareTo(((CDOIDObjectUUIDImpl)o).getStringValue());
+    byte[] thisValue = getByteArrayValue();
+    byte[] thatValue = ((CDOIDObjectUUIDImpl)o).getByteArrayValue();
+    int minLength = Math.min(thisValue.length, thatValue.length);
+
+    for (int i = 0; i < minLength; i++)
+    {
+      byte thisByte = thisValue[i];
+      byte thatByte = thatValue[i];
+      if (thisByte < thatByte)
+      {
+        return -1;
+      }
+
+      if (thisByte > thatByte)
+      {
+        return 1;
+      }
+    }
+
+    if (thisValue.length < thatValue.length)
+    {
+      return -1;
+    }
+
+    if (thisValue.length > thatValue.length)
+    {
+      return 1;
+    }
+
+    return 0;
   }
 }

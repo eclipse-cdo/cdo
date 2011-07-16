@@ -31,6 +31,12 @@ public abstract class AbstractCDOID implements CDOID
   {
   }
 
+  @Override
+  public String toString()
+  {
+    return toURIFragment();
+  }
+
   public final int compareTo(CDOID o)
   {
     try

@@ -115,6 +115,8 @@ public class MYSQLAdapter extends DBAdapter
     case VARCHAR:
     case CLOB:
       return "LONGTEXT"; //$NON-NLS-1$
+    case BLOB:
+      return "LONGBLOB"; //$NON-NLS-1$
     }
 
     return super.getTypeName(field);

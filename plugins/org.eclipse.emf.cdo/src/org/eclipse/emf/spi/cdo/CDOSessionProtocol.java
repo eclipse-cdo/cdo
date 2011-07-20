@@ -13,6 +13,7 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -270,14 +271,16 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
 
+    private IDGenerationLocation repositoryIDGenerationLocation;
+
     /**
-     * @since 4.0
+     * @since 4.1
      */
     public OpenSessionResult(int sessionID, String userID, String repositoryUUID,
         CDOCommonRepository.Type repositoryType, CDOCommonRepository.State repositoryState, String storeType,
         Set<CDOID.ObjectType> objectIDTypes, long repositoryCreationTime, long lastUpdateTime, CDOID rootResourceID,
         boolean repositorySupportingAudits, boolean repositorySupportingBranches, boolean repositorySupportingEcore,
-        boolean repositoryEnsuringReferentialIntegrity)
+        boolean repositoryEnsuringReferentialIntegrity, IDGenerationLocation repositoryIDGenerationLocation)
     {
       this.sessionID = sessionID;
       this.userID = userID;
@@ -293,6 +296,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       this.repositorySupportingBranches = repositorySupportingBranches;
       this.repositorySupportingEcore = repositorySupportingEcore;
       this.repositoryEnsuringReferentialIntegrity = repositoryEnsuringReferentialIntegrity;
+      this.repositoryIDGenerationLocation = repositoryIDGenerationLocation;
     }
 
     public int getSessionID()
@@ -385,6 +389,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public boolean isRepositoryEnsuringReferentialIntegrity()
     {
       return repositoryEnsuringReferentialIntegrity;
+    }
+
+    /**
+     * @since 4.1
+     */
+    public IDGenerationLocation getRepositoryIDGenerationLocation()
+    {
+      return repositoryIDGenerationLocation;
     }
 
     public RepositoryTimeResult getRepositoryTimeResult()

@@ -14,6 +14,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -197,7 +198,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       return (EClass)type.resolve(packageRegistry);
     }
 
-    throw new IllegalStateException("No type found for " + id);
+    return null;
   }
 
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
@@ -211,20 +212,23 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
 
     EClass eClass = getObjectType(id);
-    InternalCDORevision revision = getStore().createRevision(eClass, id);
-    revision.setBranchPoint(branchPoint);
-
-    IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
-    if (mapping.readRevision(this, revision, listChunk))
+    if (eClass != null)
     {
-      int version = revision.getVersion();
-      if (version < CDOBranchVersion.FIRST_VERSION - 1)
-      {
-        return new DetachedCDORevision(eClass, id, revision.getBranch(), -version, revision.getTimeStamp(),
-            revision.getRevised());
-      }
+      InternalCDORevision revision = getStore().createRevision(eClass, id);
+      revision.setBranchPoint(branchPoint);
 
-      return revision;
+      IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
+      if (mapping.readRevision(this, revision, listChunk))
+      {
+        int version = revision.getVersion();
+        if (version < CDOBranchVersion.FIRST_VERSION - 1)
+        {
+          return new DetachedCDORevision(eClass, id, revision.getBranch(), -version, revision.getTimeStamp(),
+              revision.getRevised());
+        }
+
+        return revision;
+      }
     }
 
     // Reading failed - revision does not exist.
@@ -468,6 +472,10 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     super.applyIDMappings(context, monitor);
 
+    // Remember maxID because it may have to be adjusted if the repository is BACKUP or CLONE. See bug 325097.
+    boolean adjustMaxID = !context.getBranchPoint().getBranch().isLocal()
+        && getStore().getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
+
     IIDHandler idHandler = getStore().getIDHandler();
 
     // Remember CDOIDs of new objects. They are cleared after writeRevisions()
@@ -476,13 +484,9 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       CDOID id = revision.getID();
       newObjects.add(id);
 
-      // Remember maxID because it may have to be adjusted if the repository is BACKUP or CLONE. See bug 325097.
-      if (!context.getBranchPoint().getBranch().isLocal())
+      if (adjustMaxID && idHandler.compare(id, maxID) > 0)
       {
-        if (idHandler.compare(id, maxID) > 0)
-        {
-          maxID = id;
-        }
+        maxID = id;
       }
     }
   }
@@ -697,14 +701,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
         async = monitor.forkAsync();
         getConnection().commit();
 
-        IIDHandler idHandler = getStore().getIDHandler();
-        if (idHandler.compare(maxID, idHandler.getLastObjectID()) > 0)
+        if (maxID != CDOID.NULL)
         {
           // See bug 325097
-          idHandler.setLastObjectID(maxID);
+          getStore().getIDHandler().adjustLastObjectID(maxID);
+          maxID = CDOID.NULL;
         }
-
-        maxID = CDOID.NULL;
       }
       finally
       {
@@ -1226,12 +1228,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
 
     writeRevision(revision, isFirstRevision, false, monitor);
-
-    IIDHandler idHandler = getStore().getIDHandler();
-    if (idHandler.compare(id, idHandler.getLastObjectID()) > 0)
-    {
-      idHandler.setLastObjectID(id);
-    }
+    getStore().getIDHandler().adjustLastObjectID(id);
   }
 
   public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
@@ -1250,20 +1247,24 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
   }
 
+  @Deprecated
   public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
   {
-    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
-    if (eClass == null)
-    {
-      eClass = getObjectType(id);
-    }
+    throw new UnsupportedOperationException();
 
-    IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
-    mapping.detachObject(this, id, version, branch, CDOBranchPoint.UNSPECIFIED_DATE, monitor.fork());
+    // IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    // if (eClass == null)
+    // {
+    // eClass = getObjectType(id);
+    // }
+    //
+    // IClassMapping mapping = mappingStrategy.getClassMapping(eClass);
+    // mapping.detachObject(this, id, version, branch, CDOBranchPoint.UNSPECIFIED_DATE, monitor);
   }
 
   public void rawCommit(double commitWork, OMMonitor monitor)
   {
+    monitor.begin();
     Async async = monitor.forkAsync();
 
     try
@@ -1277,6 +1278,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     finally
     {
       async.stop();
+      monitor.done();
     }
   }
 

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
@@ -131,7 +132,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Override
-  protected synchronized void excludeTempIDs(CDOID id)
+  protected synchronized void excludeNewObject(CDOID id)
   {
     // Do nothing
   }
@@ -529,6 +530,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return repository.isEnsuringReferentialIntegrity();
     }
 
+    public IDGenerationLocation getIDGenerationLocation()
+    {
+      return repository.getIDGenerationLocation();
+    }
+
     public void handleRepositoryTypeChanged(Type oldType, Type newType)
     {
     }
@@ -697,6 +703,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return null;
     }
 
+    public CDOIDGenerator getIDGenerator()
+    {
+      return null;
+    }
+
     public void viewDetached(InternalCDOView view)
     {
       // Do nothing
@@ -738,6 +749,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     public void setExceptionHandler(ExceptionHandler exceptionHandler)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setIDGenerator(CDOIDGenerator idGenerator)
     {
       throw new UnsupportedOperationException();
     }

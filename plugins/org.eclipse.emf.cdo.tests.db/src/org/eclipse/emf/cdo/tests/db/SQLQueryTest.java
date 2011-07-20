@@ -95,7 +95,6 @@ public class SQLQueryTest extends AbstractCDOTest
     }
 
     transaction.commit();
-    enableConsole();
   }
 
   @CleanRepositoriesBefore
@@ -135,7 +134,6 @@ public class SQLQueryTest extends AbstractCDOTest
     }
 
     transaction.commit();
-    enableConsole();
   }
 
   @CleanRepositoriesBefore
@@ -162,7 +160,6 @@ public class SQLQueryTest extends AbstractCDOTest
     }
 
     transaction.commit();
-    enableConsole();
   }
 
   public void testPaging() throws Exception
@@ -200,7 +197,6 @@ public class SQLQueryTest extends AbstractCDOTest
     }
 
     transaction.commit();
-    enableConsole();
   }
 
   public void testIterator() throws Exception
@@ -232,7 +228,6 @@ public class SQLQueryTest extends AbstractCDOTest
     }
 
     transaction.commit();
-    enableConsole();
   }
 
   public void _testNonCdoObjectQueries() throws Exception
@@ -281,6 +276,7 @@ public class SQLQueryTest extends AbstractCDOTest
     }
   }
 
+  @CleanRepositoriesBefore
   public void testNonCDOObjectQueries_Complex() throws Exception
   {
     msg("Opening session");
@@ -293,19 +289,29 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for customer fields");
-      CDOQuery query = transaction.createQuery("sql", "SELECT STREET, CITY, NAME FROM MODEL1_CUSTOMER");
+      CDOQuery query = transaction.createQuery("sql", "SELECT street, city, name FROM model1_customer ORDER BY street");
       query.setParameter("cdoObjectQuery", false);
 
       List<Object[]> results = query.getResult(Object[].class);
       for (int i = 0; i < NUM_OF_CUSTOMERS; i++)
       {
-        assertEquals(true, results.get(i)[0].equals("Street " + i));
-        assertEquals(true, i == 0 ? results.get(i)[1] == null : results.get(i)[1].equals("City " + i));
-        assertEquals(true, results.get(i)[2].equals(i + ""));
+        assertEquals("Street " + i, results.get(i)[0]);
+        Object actual = results.get(i)[1];
+        if (i == 0)
+        {
+          assertEquals(null, actual);
+        }
+        else
+        {
+          assertEquals("City " + i, actual);
+        }
+
+        assertEquals("" + i, results.get(i)[2]);
       }
     }
   }
 
+  @CleanRepositoriesBefore
   public void testNonCDOObjectQueries_Complex_MAP() throws Exception
   {
     msg("Opening session");
@@ -316,25 +322,31 @@ public class SQLQueryTest extends AbstractCDOTest
     msg("Opening transaction for querying");
     CDOTransaction transaction = session.openTransaction();
 
-    {
-      msg("Query for customer fields");
-      CDOQuery query = transaction.createQuery("sql", "SELECT STREET, CITY, NAME FROM MODEL1_CUSTOMER");
-      query.setParameter("cdoObjectQuery", false);
-      query.setParameter("mapQuery", true);
+    msg("Query for customer fields");
+    CDOQuery query = transaction.createQuery("sql", "SELECT street, city, name FROM model1_customer ORDER BY street");
+    query.setParameter("cdoObjectQuery", false);
+    query.setParameter("mapQuery", true);
 
-      List<Map<String, Object>> results = query.getResult();
-      for (int i = 0; i < NUM_OF_CUSTOMERS; i++)
+    List<Map<String, Object>> results = query.getResult();
+    for (int i = 0; i < NUM_OF_CUSTOMERS; i++)
+    {
+      assertEquals("Street " + i, results.get(i).get("STREET"));
+      Object actual = results.get(i).get("CITY");
+      if (i == 0)
       {
-        assertEquals(true, results.get(i).get("STREET").equals("Street " + i));
-        assertEquals(true, i == 0 ? results.get(i).get("CITY") == null : results.get(i).get("CITY").equals("City " + i));
-        assertEquals(true, results.get(i).get("NAME").equals(i + ""));
+        assertEquals(null, actual);
       }
+      else
+      {
+        assertEquals("City " + i, actual);
+      }
+
+      assertEquals("" + i, results.get(i).get("NAME"));
     }
   }
 
   private void createTestSet(CDOSession session)
   {
-    // disableConsole();
     msg("Opening transaction");
     CDOTransaction transaction = session.openTransaction();
 
@@ -352,8 +364,6 @@ public class SQLQueryTest extends AbstractCDOTest
     {
       throw WrappedException.wrap(ex);
     }
-
-    enableConsole();
   }
 
   private void fillResource(CDOResource resource)

@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.tests.SecurityTest;
 import org.eclipse.net4j.util.tests.SortedFileMapTest;
 import org.eclipse.net4j.util.tests.StringCompressorTest;
 import org.eclipse.net4j.util.tests.SynchronizingCorrelatorTest;
+import org.eclipse.net4j.util.tests.UUIDGeneratorTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -33,6 +34,7 @@ public class AllTests
   public static Test suite()
   {
     TestSuite suite = new TestSuite("Tests for Net4j"); //$NON-NLS-1$
+    suite.addTestSuite(UUIDGeneratorTest.class);
     suite.addTestSuite(MultiMapTest.class);
     suite.addTestSuite(SortedFileMapTest.class);
     suite.addTestSuite(SynchronizingCorrelatorTest.class);

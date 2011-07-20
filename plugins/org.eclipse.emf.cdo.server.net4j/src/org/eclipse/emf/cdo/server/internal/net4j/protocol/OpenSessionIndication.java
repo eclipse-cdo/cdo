@@ -144,6 +144,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       out.writeBoolean(repository.isSupportingBranches());
       out.writeBoolean(repository.isSupportingEcore());
       out.writeBoolean(repository.isEnsuringReferentialIntegrity());
+      out.writeEnum(repository.getIDGenerationLocation());
 
       CDOPackageUnit[] packageUnits = repository.getPackageRegistry().getPackageUnits();
       out.writeCDOPackageUnits(packageUnits);

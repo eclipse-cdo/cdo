@@ -36,4 +36,9 @@ public interface InternalCDOSavepoint extends CDOSavepoint, InternalCDOUserSavep
   public Set<CDOID> getSharedDetachedObjects();
 
   public void recalculateSharedDetachedObjects();
+
+  /**
+   * @since 4.1
+   */
+  public boolean isNewObject(CDOID id);
 }

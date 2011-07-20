@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -29,6 +30,8 @@ import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,7 +76,16 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
 
   public void detachObject(InternalCDOObject object);
 
+  /**
+   * @deprecated {@link #createIDForNewObject()} is called since 4.1.
+   */
+  @Deprecated
   public CDOIDTemp getNextTemporaryID();
+
+  /**
+   * @since 4.1
+   */
+  public CDOID createIDForNewObject();
 
   /**
    * @since 4.0
@@ -94,10 +106,22 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    *          {@link #merge(CDOBranchPoint, org.eclipse.emf.cdo.transaction.CDOMerger) merge} or if the merge was not in
    *          a {@link CDOBranch#isLocal() local} branch.
    * @since 4.0
+   * @deprecated Use {@link #applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint)}
    */
+  @Deprecated
   public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(
       CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider,
       CDOBranchPoint source);
+
+  /**
+   * @param source
+   *          May be <code>null</code> if changeSetData does not result from a
+   *          {@link #merge(CDOBranchPoint, org.eclipse.emf.cdo.transaction.CDOMerger) merge} or if the merge was not in
+   *          a {@link CDOBranch#isLocal() local} branch.
+   * @since 4.1
+   */
+  public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider,
+      CDORevisionProvider targetProvider, CDOBranchPoint source);
 
   /**
    * @since 4.0
@@ -121,5 +145,37 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
     public void preCommit();
 
     public void postCommit(CommitTransactionResult result);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public final class ApplyChangeSetResult
+  {
+    private CDOChangeSetData changeSetData = new CDOChangeSetDataImpl();
+
+    private Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
+
+    private List<CDOID> adjustedObjects = new ArrayList<CDOID>();
+
+    public ApplyChangeSetResult()
+    {
+    }
+
+    public CDOChangeSetData getChangeSetData()
+    {
+      return changeSetData;
+    }
+
+    public Map<CDOID, CDOID> getIDMappings()
+    {
+      return idMappings;
+    }
+
+    public List<CDOID> getAdjustedObjects()
+    {
+      return adjustedObjects;
+    }
   }
 }

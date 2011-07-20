@@ -207,10 +207,14 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   /**
    * @author Eike Stepper
    * @noimplement This interface is not intended to be implemented by clients.
+   * @noextend This interface is not intended to be extended by clients.
    */
   public interface Props
   {
     /**
+     * Used to override the automatic UUID generation during first startup of a repository. Passing the empty string
+     * causes the UUID of the repository to be set to its {@link IRepository#getName() name}.
+     * 
      * @since 2.0
      */
     public static final String OVERRIDE_UUID = "overrideUUID"; //$NON-NLS-1$
@@ -239,5 +243,10 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      * @since 4.0
      */
     public static final String ALLOW_INTERRUPT_RUNNING_QUERIES = "allowInterruptRunningQueries"; //$NON-NLS-1$
+
+    /**
+     * @since 4.1
+     */
+    public static final String ID_GENERATION_LOCATION = "idGenerationLocation"; //$NON-NLS-1$
   }
 }

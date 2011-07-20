@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.ISession;
@@ -76,7 +77,11 @@ public abstract class StoreAccessor extends StoreAccessorBase
         writePackageUnits(newPackageUnits, monitor.fork(newPackageUnits.length));
       }
 
-      addIDMappings(context, monitor.fork());
+      if (getStore().getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+      {
+        addIDMappings(context, monitor.fork());
+      }
+
       applyIDMappings(context, monitor);
 
       if (detachedObjects.length != 0)

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.workspace;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
@@ -17,6 +19,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
@@ -27,13 +30,15 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -47,6 +52,7 @@ import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
+import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler1;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -59,8 +65,8 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
+import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
@@ -71,10 +77,12 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.ApplyChangeSetResult;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.Arrays;
@@ -100,6 +108,10 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   private InternalCDOWorkspaceBase base;
 
+  private IDGenerationLocation idGenerationLocation;
+
+  private CDOIDGenerator idGenerator;
+
   private InternalRepository localRepository;
 
   private InternalCDOSession localSession;
@@ -116,13 +128,11 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
-  private CDOServerBrowser browser;
-
-  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
+  public CDOWorkspaceImpl(String localRepositoryName, IStore local, IDGenerationLocation idGenerationLocation,
+      CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
       String branchPath, long timeStamp)
   {
-    init(local, base, remote);
-    remoteSessionConfigurationFactory = remote;
+    init(localRepositoryName, local, idGenerationLocation, idGenerator, base, remote);
 
     this.branchPath = StringUtil.isEmpty(branchPath) ? CDOBranch.MAIN_BRANCH_NAME : branchPath;
     this.timeStamp = timeStamp;
@@ -132,24 +142,23 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     saveProperties();
   }
 
-  public CDOWorkspaceImpl(IStore local, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
+  public CDOWorkspaceImpl(String localRepositoryName, IStore local, IDGenerationLocation idGenerationLocation,
+      CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
-    init(local, base, remote);
+    init(localRepositoryName, local, idGenerationLocation, idGenerator, base, remote);
     loadProperties();
   }
 
-  protected void init(IStore local, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
+  protected void init(String localRepositoryName, IStore local, IDGenerationLocation idGenerationLocation,
+      CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
+    this.idGenerationLocation = idGenerationLocation;
+    this.idGenerator = idGenerator;
+
     container = createContainer(local);
     remoteSessionConfigurationFactory = remote;
 
-    localRepository = createLocalRepository(local);
-
-    Map<String, InternalRepository> repositories = new HashMap<String, InternalRepository>();
-    repositories.put(localRepository.getName(), localRepository);
-    browser = new CDOServerBrowser(repositories);
-    browser.setPort(7779);
-    browser.activate();
+    localRepository = createLocalRepository(localRepositoryName, local);
 
     this.base = base;
     this.base.init(this);
@@ -220,6 +229,11 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
   public boolean isFixed()
   {
     return fixed;
+  }
+
+  public CDOIDGenerator getIDGenerator()
+  {
+    return idGenerator;
   }
 
   public InternalCDOWorkspaceBase getBase()
@@ -296,7 +310,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         }
       });
 
-      transaction.applyChangeSetData(remoteData, new CDORevisionProvider()
+      transaction.applyChangeSet(remoteData, new CDORevisionProvider()
       {
         public CDORevision getRevision(CDOID id)
         {
@@ -346,18 +360,23 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
       CDOChangeSetData changes = getLocalChanges();
 
-      Pair<Map<CDOID, CDOID>, List<CDOID>> mappedLocalIDs = transaction.applyChangeSetData(changes, base, this, head)
-          .getElement2();
+      ApplyChangeSetResult result = transaction.applyChangeSet(changes, base, this, head);
+      if (!result.getIDMappings().isEmpty())
+      {
+        throw new IllegalStateException("Attaching new objects is only supported for IDGenerationLocation.CLIENT");
+      }
 
-      CDOIDMapper idMapper = getIDMapper(transaction, mappedLocalIDs);
+      // Attaching new objects is only supported for IDGenerationLocation.CLIENT
+      // CDOIDMapper idMapper = getIDMapper(transaction, result.getIDMappings());
 
       transaction.setCommitComment(comment);
       CDOCommitInfo info = transaction.commit();
 
-      if (idMapper != null)
-      {
-        adjustLocally(idMapper, mappedLocalIDs.getElement2());
-      }
+      // Attaching new objects is only supported for IDGenerationLocation.CLIENT
+      // if (idMapper != null)
+      // {
+      // adjustLocalIDs(idMapper, result.getAdjustedObjects());
+      // }
 
       base.clear();
       timeStamp = info.getTimeStamp();
@@ -371,15 +390,17 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     }
   }
 
-  protected CDOIDMapper getIDMapper(InternalCDOTransaction transaction,
-      Pair<Map<CDOID, CDOID>, List<CDOID>> mappedLocalIDs)
+  /**
+   * @deprecated Attaching new objects is only supported for IDGenerationLocation.CLIENT
+   */
+  @Deprecated
+  protected CDOIDMapper getIDMapper(InternalCDOTransaction transaction, final Map<CDOID, CDOID> idMappings)
   {
-    if (mappedLocalIDs == null)
+    if (idMappings.isEmpty())
     {
       return null;
     }
 
-    final Map<CDOID, CDOID> idMappings = mappedLocalIDs.getElement1();
     transaction.addListener(new IListener()
     {
       public void notifyEvent(IEvent event)
@@ -401,50 +422,73 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     return new CDOIDMapper(idMappings);
   }
 
-  protected void adjustLocally(CDOIDMapper idMapper, List<CDOID> adjustedObjects)
+  /**
+   * @deprecated Attaching new objects is only supported for IDGenerationLocation.CLIENT
+   */
+  @Deprecated
+  protected void adjustLocalIDs(CDOIDMapper idMapper, List<CDOID> adjustedObjects)
   {
-    IStoreAccessor.Raw accessor = (IStoreAccessor.Raw)localRepository.getStore().getReader(null);
-    OMMonitor monitor = new Monitor();
-
-    for (Entry<CDOID, CDOID> entry : idMapper.getIDMappings().entrySet())
+    Map<CDOID, CDOID> idMappings = idMapper.getIDMappings();
+    if (!idMappings.isEmpty())
     {
-      CDOID id = entry.getKey();
-      InternalCDORevision revision = accessor.readRevision(id, head, CDORevision.UNCHUNKED, null);
-      accessor.rawDelete(revision.getID(), revision.getVersion(), revision.getBranch(), revision.getEClass(), monitor);
+      CDOTransaction transaction = null;
+      OMMonitor monitor = new Monitor();
 
-      CDOID newID = entry.getValue();
-      revision.setID(newID);
-      revision.setVersion(CDORevision.FIRST_VERSION);
+      try
+      {
+        transaction = localSession.openTransaction();
+        ISession repoSession = localRepository.getSessionManager().getSession(localSession.getSessionID());
+        ITransaction repoTransaction = (ITransaction)repoSession.getView(transaction.getViewID());
 
-      revision.adjustReferences(idMapper);
-      accessor.rawStore(revision, monitor);
+        IStoreAccessor.Raw accessor = (IStoreAccessor.Raw)localRepository.getStore().getWriter(repoTransaction);
+        StoreThreadLocal.setAccessor(accessor);
+
+        monitor.begin(idMappings.size() * 2 + adjustedObjects.size() * 2 + 10);
+
+        for (Entry<CDOID, CDOID> entry : idMappings.entrySet())
+        {
+          CDOID id = entry.getKey();
+
+          InternalCDORevision revision = accessor.readRevision(id, head, CDORevision.UNCHUNKED, null);
+          int version = revision.getVersion();
+          CDOBranch branch = revision.getBranch();
+          EClass eClass = revision.getEClass();
+
+          CDOID newID = entry.getValue();
+          revision.setID(newID);
+          revision.setVersion(CDORevision.FIRST_VERSION);
+
+          accessor.rawDelete(id, version, branch, eClass, monitor.fork());
+          revision.adjustReferences(idMapper);
+          accessor.rawStore(revision, monitor.fork());
+        }
+
+        for (CDOID id : adjustedObjects)
+        {
+          InternalCDORevision revision = accessor.readRevision(id, head, CDORevision.UNCHUNKED, null);
+          int version = revision.getVersion();
+          CDOBranch branch = revision.getBranch();
+          EClass eClass = revision.getEClass();
+
+          // TODO DBStoreAccessor.rawDelete() creates a new row with -(version+1)!!!
+          accessor.rawDelete(id, version, branch, eClass, monitor.fork());
+          revision.adjustReferences(idMapper);
+          accessor.rawStore(revision, monitor.fork());
+        }
+
+        accessor.rawCommit(1, monitor.fork(10));
+      }
+      finally
+      {
+        monitor.done();
+        StoreThreadLocal.release();
+
+        if (transaction != null)
+        {
+          transaction.close();
+        }
+      }
     }
-
-    for (CDOID id : adjustedObjects)
-    {
-      InternalCDORevision revision = accessor.readRevision(id, head, CDORevision.UNCHUNKED, null);
-      accessor.rawDelete(revision.getID(), revision.getVersion(), revision.getBranch(), revision.getEClass(), monitor);
-
-      revision.adjustReferences(idMapper);
-      accessor.rawStore(revision, monitor);
-    }
-
-    accessor.rawCommit(1, monitor);
-  }
-
-  protected InternalCDORevision adjustRevision(IStoreAccessor.Raw accessor, CDOID id, CDOIDMapper idMapper)
-  {
-    InternalCDORevision revision = accessor.readRevision(id, head, CDORevision.UNCHUNKED, null);
-    CDOID newID = idMapper.getIDMappings().get(id);
-    if (newID != null)
-    {
-      revision.setID(newID);
-      revision.setVersion(CDORevision.FIRST_VERSION);
-    }
-
-    revision.adjustReferences(idMapper);
-    accessor.rawStore(revision, new Monitor());
-    return revision;
   }
 
   public CDOChangeSetData compare(String branchPath)
@@ -460,9 +504,6 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
   public synchronized void close()
   {
-    LifecycleUtil.deactivate(browser);
-    browser = null;
-
     LifecycleUtil.deactivate(localSession);
     localSession = null;
 
@@ -538,20 +579,28 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     return JVMUtil.getConnector(container, localAcceptorName);
   }
 
-  protected InternalRepository createLocalRepository(IStore store)
+  protected InternalRepository createLocalRepository(String localRepositoryName, IStore store)
   {
     Map<String, String> props = new HashMap<String, String>();
     props.put(Props.OVERRIDE_UUID, ""); // UUID := name !!!
     props.put(Props.SUPPORTING_AUDITS, "false");
     props.put(Props.SUPPORTING_BRANCHES, "false");
+    props.put(Props.ID_GENERATION_LOCATION, idGenerationLocation.toString());
 
     Repository repository = new Repository.Default()
     {
       @Override
       public void initMainBranch(InternalCDOBranchManager branchManager, long timeStamp)
       {
-        // Mark the main branch local so that new objects get local IDs
-        branchManager.initMainBranch(true, timeStamp);
+        if (idGenerationLocation == IDGenerationLocation.STORE)
+        {
+          // Mark the main branch local so that new objects get local IDs
+          branchManager.initMainBranch(true, timeStamp);
+        }
+        else
+        {
+          super.initMainBranch(branchManager, timeStamp);
+        }
       }
 
       @Override
@@ -562,7 +611,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
       }
     };
 
-    repository.setName("local");
+    repository.setName(localRepositoryName);
     repository.setStore((InternalStore)store);
     repository.setProperties(props);
 
@@ -580,10 +629,16 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName(repositoryName);
+    configuration.setIDGenerator(idGenerator);
     configuration.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP)); // Use repo's cache
-    ((InternalCDOSessionConfiguration)configuration).setMainBranchLocal(true);
+
+    if (idGenerationLocation == IDGenerationLocation.STORE)
+    {
+      ((InternalCDOSessionConfiguration)configuration).setMainBranchLocal(true);
+    }
 
     InternalCDOSession session = (InternalCDOSession)configuration.openNet4jSession();
+    ((ISignalProtocol<?>)session.getSessionProtocol()).setTimeout(ISignalProtocol.NO_TIMEOUT);
     session.setPackageRegistry(localRepository.getPackageRegistry(false)); // Use repo's registry
 
     head = session.getBranchManager().getMainBranch().getHead();
@@ -633,6 +688,18 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
           CDOWorkspaceImpl.this.committedTransaction(transaction, commitContext);
         }
       });
+
+      if (idGenerationLocation != IDGenerationLocation.CLIENT)
+      {
+        transaction.addTransactionHandler(new CDODefaultTransactionHandler1()
+        {
+          @Override
+          public void attachingObject(CDOTransaction transaction, CDOObject object)
+          {
+            throw new IllegalStateException("Attaching new objects is only supported for IDGenerationLocation.CLIENT");
+          }
+        });
+      }
     }
   }
 
@@ -651,10 +718,18 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     CDOSessionConfiguration configuration = remoteSessionConfigurationFactory.createSessionConfiguration();
     InternalCDOSession session = (InternalCDOSession)configuration.openSession();
 
-    if (!session.getRepositoryInfo().isSupportingAudits())
+    CDORepositoryInfo repositoryInfo = session.getRepositoryInfo();
+    if (!repositoryInfo.isSupportingAudits())
     {
       session.close();
       throw new IllegalStateException("Remote repository does not support auditing");
+    }
+
+    IDGenerationLocation remoteLocation = repositoryInfo.getIDGenerationLocation();
+    if (!remoteLocation.equals(idGenerationLocation))
+    {
+      session.close();
+      throw new IllegalStateException("Remote repository uses different ID generation location: " + remoteLocation);
     }
 
     return session;

@@ -154,6 +154,20 @@ public class Commits extends Coll
   {
     // This must be the first commit into the repo.
     systemPackageUnits = packageUnits;
+
+    for (int i = 0; i < packageUnits.length; i++)
+    {
+      InternalCDOPackageUnit packageUnit = packageUnits[i];
+      InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
+      for (int j = 0; j < packageInfos.length; j++)
+      {
+        InternalCDOPackageInfo packageInfo = packageInfos[j];
+        for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
+        {
+          store.getClasses().mapNewClassifier(classifier);
+        }
+      }
+    }
   }
 
   private DBObject[] marshallUnits(InternalCDOPackageUnit[] packageUnits)

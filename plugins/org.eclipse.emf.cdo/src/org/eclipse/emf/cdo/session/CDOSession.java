@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -114,6 +115,11 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   public CDOCommitInfoManager getCommitInfoManager();
 
   public CDOSession.ExceptionHandler getExceptionHandler();
+
+  /**
+   * @since 4.1
+   */
+  public CDOIDGenerator getIDGenerator();
 
   /**
    * Refreshes the object caches of all (non-historical) {@link CDOView views}.

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.util;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
@@ -33,6 +34,11 @@ public abstract class TestSessionConfiguration extends Notifier implements CDOSe
   }
 
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void setIDGenerator(CDOIDGenerator idGenerator)
   {
     throw new UnsupportedOperationException();
   }
@@ -63,6 +69,11 @@ public abstract class TestSessionConfiguration extends Notifier implements CDOSe
   }
 
   public CDOSession.ExceptionHandler getExceptionHandler()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOIDGenerator getIDGenerator()
   {
     throw new UnsupportedOperationException();
   }

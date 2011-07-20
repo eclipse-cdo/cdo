@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -118,6 +119,11 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   public CDOLobStore getLobStore();
 
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
+
+  /**
+   * @since 4.1
+   */
+  public void setIDGenerator(CDOIDGenerator idGenerator);
 
   /**
    * @since 3.0

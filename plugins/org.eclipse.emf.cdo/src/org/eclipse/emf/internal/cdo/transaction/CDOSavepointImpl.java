@@ -282,9 +282,10 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       {
         for (Entry<CDOID, CDOObject> entry : savepoint.getNewObjects().entrySet())
         {
-          if (!getSharedDetachedObjects().contains(entry.getKey()))
+          CDOID id = entry.getKey();
+          if (!getSharedDetachedObjects().contains(id))
           {
-            newObjects.put(entry.getKey(), entry.getValue());
+            newObjects.put(id, entry.getValue());
           }
         }
       }
@@ -334,16 +335,17 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       {
         for (Entry<CDOID, CDORevisionDelta> entry : savepoint.getRevisionDeltas().entrySet())
         {
-          // Skipping temporary
-          if (entry.getKey().isTemporary() || getSharedDetachedObjects().contains(entry.getKey()))
+          // Skipping new or detached objects
+          CDOID id = entry.getKey();
+          if (isNewObject(id) || getSharedDetachedObjects().contains(id))
           {
             continue;
           }
 
-          CDORevisionDeltaImpl revisionDelta = (CDORevisionDeltaImpl)revisionDeltas.get(entry.getKey());
+          CDORevisionDeltaImpl revisionDelta = (CDORevisionDeltaImpl)revisionDeltas.get(id);
           if (revisionDelta == null)
           {
-            revisionDeltas.put(entry.getKey(), entry.getValue().copy());
+            revisionDeltas.put(id, entry.getValue().copy());
           }
           else
           {
@@ -376,13 +378,14 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 
         for (Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
         {
-          if (!entry.getKey().isTemporary())
+          CDOID id = entry.getKey();
+          if (!isNewObject(id))
           {
             // Bug 283985 (Re-attachment):
             // Object is only included if it was not reattached in a later savepoint
-            if (!reattachedObjectIDs.contains(entry.getKey()))
+            if (!reattachedObjectIDs.contains(id))
             {
-              detachedObjects.put(entry.getKey(), entry.getValue());
+              detachedObjects.put(id, entry.getValue());
             }
           }
         }
@@ -405,6 +408,27 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         }
       }
     }
+  }
+
+  public boolean isNewObject(CDOID id)
+  {
+    if (id.isTemporary())
+    {
+      return true;
+    }
+
+    synchronized (transaction)
+    {
+      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+      {
+        if (savepoint.getNewObjects().containsKey(id))
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   public void rollback()

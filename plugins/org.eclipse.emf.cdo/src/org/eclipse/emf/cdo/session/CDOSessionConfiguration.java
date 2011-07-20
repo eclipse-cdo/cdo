@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 
 import org.eclipse.net4j.util.event.IEvent;
@@ -61,6 +62,21 @@ public interface CDOSessionConfiguration extends INotifier
    * @see CDOSession#getExceptionHandler()
    */
   public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler);
+
+  /**
+   * @see CDOSession#getIDGenerator()
+   * @since 4.1
+   */
+  public CDOIDGenerator getIDGenerator();
+
+  /**
+   * A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter. If not
+   * <code>null</code>, the passed generator <b>must be</b> thread-safe.
+   * 
+   * @see CDOSession#getIDGenerator()
+   * @since 4.1
+   */
+  public void setIDGenerator(CDOIDGenerator idGenerator);
 
   /**
    * Returns the authenticator of this configuration, never <code>null</code>.

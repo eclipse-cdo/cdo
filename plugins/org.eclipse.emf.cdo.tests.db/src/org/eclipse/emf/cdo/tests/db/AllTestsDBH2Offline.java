@@ -118,7 +118,6 @@ public class AllTestsDBH2Offline extends DBConfigs
       props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
     }
 
-    @Override
     public IStore createStore(String repoName)
     {
       IMappingStrategy mappingStrategy = createMappingStrategy();

@@ -11,15 +11,16 @@
 package org.eclipse.emf.cdo.workspace;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceImpl;
+import org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceConfigurationImpl;
 import org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceBase;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
-import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
 
 import java.io.File;
 
 /**
+ * Various static helper methods for dealing with {@link CDOWorkspace workspaces}.
+ * 
  * @author Eike Stepper
  */
 public final class CDOWorkspaceUtil
@@ -33,31 +34,69 @@ public final class CDOWorkspaceUtil
     return new FolderCDOWorkspaceBase(folder);
   }
 
-  public static CDOWorkspace open(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
+  /**
+   * @since 4.1
+   */
+  public static CDOWorkspaceConfiguration createWorkspaceConfiguration()
   {
-    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceBase)base, remote);
+    return new CDOWorkspaceConfigurationImpl();
   }
 
+  /**
+   * @deprecated Use {@link #createWorkspaceConfiguration()} and {@link CDOWorkspaceConfiguration#open()}
+   */
+  @Deprecated
+  public static CDOWorkspace open(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
+  {
+    CDOWorkspaceConfiguration config = createWorkspaceConfiguration();
+    config.setStore(local);
+    config.setBase(base);
+    config.setRemote(remote);
+    return config.open();
+  }
+
+  /**
+   * @deprecated Use {@link #createWorkspaceConfiguration()} and {@link CDOWorkspaceConfiguration#checkout()}
+   */
+  @Deprecated
   public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
     return checkout(local, base, remote, null);
   }
 
+  /**
+   * @deprecated Use {@link #createWorkspaceConfiguration()} and {@link CDOWorkspaceConfiguration#checkout()}
+   */
+  @Deprecated
   public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
       String branchPath)
   {
     return checkout(local, base, remote, branchPath, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
+  /**
+   * @deprecated Use {@link #createWorkspaceConfiguration()} and {@link CDOWorkspaceConfiguration#checkout()}
+   */
+  @Deprecated
   public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
       long timeStamp)
   {
     return checkout(local, base, remote, null, timeStamp);
   }
 
+  /**
+   * @deprecated Use {@link #createWorkspaceConfiguration()} and {@link CDOWorkspaceConfiguration#checkout()}
+   */
+  @Deprecated
   public static CDOWorkspace checkout(IStore local, CDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
       String branchPath, long timeStamp)
   {
-    return new CDOWorkspaceImpl(local, (InternalCDOWorkspaceBase)base, remote, branchPath, timeStamp);
+    CDOWorkspaceConfiguration config = createWorkspaceConfiguration();
+    config.setStore(local);
+    config.setBase(base);
+    config.setRemote(remote);
+    config.setBranchPath(branchPath);
+    config.setTimeStamp(timeStamp);
+    return config.checkout();
   }
 }

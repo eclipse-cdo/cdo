@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -137,6 +138,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 {
   private ExceptionHandler exceptionHandler;
 
+  private CDOIDGenerator idGenerator;
+
   private InternalCDOPackageRegistry packageRegistry;
 
   private InternalCDOBranchManager branchManager;
@@ -242,6 +245,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     this.exceptionHandler = exceptionHandler;
   }
 
+  public CDOIDGenerator getIDGenerator()
+  {
+    return idGenerator;
+  }
+
+  public void setIDGenerator(CDOIDGenerator idGenerator)
+  {
+    checkInactive();
+    this.idGenerator = idGenerator;
+  }
+
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return packageRegistry;
@@ -259,6 +273,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   public void setBranchManager(InternalCDOBranchManager branchManager)
   {
+    checkInactive();
     this.branchManager = branchManager;
   }
 
@@ -269,6 +284,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   public void setRevisionManager(InternalCDORevisionManager revisionManager)
   {
+    checkInactive();
     this.revisionManager = revisionManager;
   }
 
@@ -279,6 +295,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   public void setCommitInfoManager(InternalCDOCommitInfoManager commitInfoManager)
   {
+    checkInactive();
     this.commitInfoManager = commitInfoManager;
   }
 
@@ -289,6 +306,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   public void setSessionProtocol(CDOSessionProtocol sessionProtocol)
   {
+    checkInactive();
     if (exceptionHandler == null)
     {
       this.sessionProtocol = sessionProtocol;

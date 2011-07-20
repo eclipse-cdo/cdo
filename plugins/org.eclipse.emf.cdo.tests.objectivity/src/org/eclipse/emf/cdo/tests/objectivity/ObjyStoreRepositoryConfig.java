@@ -47,8 +47,7 @@ public abstract class ObjyStoreRepositoryConfig extends RepositoryConfig
     storeConfig.resetFD();
   }
 
-  @Override
-  protected IStore createStore(String repoName)
+  public IStore createStore(String repoName)
   {
     // We might need to use the repoName to our advantage!!!
     System.out.println("************* ObjyStore creation ****************\n");

@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceConfiguration;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
 import org.eclipse.net4j.jvm.JVMUtil;
@@ -159,10 +160,16 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
     CDOWorkspaceBase base = CDOWorkspaceUtil.createFolderWorkspaceBase(folder);
     IOUtil.ERR().println("CDOWorkspaceBaseline: " + folder.getAbsolutePath());
 
-    InternalCDOWorkspace workspace = (InternalCDOWorkspace)CDOWorkspaceUtil.checkout(localStore, base, remote,
-        branchPath, timeStamp);
+    CDOWorkspaceConfiguration config = CDOWorkspaceUtil.createWorkspaceConfiguration();
+    config.setStore(localStore);
+    config.setBase(base);
+    config.setRemote(remote);
+    config.setBranchPath(branchPath);
+    config.setTimeStamp(timeStamp);
 
+    InternalCDOWorkspace workspace = (InternalCDOWorkspace)config.checkout();
     workspaces.add(workspace);
+
     InternalRepository localRepository = workspace.getLocalRepository();
     registerRepository(localRepository);
     LifecycleUtil.activate(localRepository);

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceConfiguration;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 import org.eclipse.emf.cdo.workspace.internal.efs.CDOWorkspaceFileSystem;
 import org.eclipse.emf.cdo.workspace.internal.efs.CDOWorkspaceStore;
@@ -61,10 +62,14 @@ public final class CDOFS
   {
     IDBStore local = creatLocalStore(projectFolder);
     CDOWorkspaceBase base = createWorkspaceBase(new File(projectFolder, "base"));
-
     IRepositoryLocation remote = readRepositoryLocation(projectFolder);
 
-    CDOWorkspace workspace = CDOWorkspaceUtil.open(local, base, remote);
+    CDOWorkspaceConfiguration config = CDOWorkspaceUtil.createWorkspaceConfiguration();
+    config.setStore(local);
+    config.setBase(base);
+    config.setRemote(remote);
+
+    CDOWorkspace workspace = config.open();
     return workspace;
   }
 
@@ -103,7 +108,14 @@ public final class CDOFS
     String branchPath = checkoutSource.getBranchPath();
     long timeStamp = checkoutSource.getTimeStamp();
 
-    CDOWorkspace workspace = CDOWorkspaceUtil.checkout(local, base, remote, branchPath, timeStamp);
+    CDOWorkspaceConfiguration config = CDOWorkspaceUtil.createWorkspaceConfiguration();
+    config.setStore(local);
+    config.setBase(base);
+    config.setRemote(remote);
+    config.setBranchPath(branchPath);
+    config.setTimeStamp(timeStamp);
+
+    CDOWorkspace workspace = config.checkout();
     CDOWorkspaceStore store = getFileSystem().addWorkspaceStore(projectName, workspace);
     return store.toURI();
   }

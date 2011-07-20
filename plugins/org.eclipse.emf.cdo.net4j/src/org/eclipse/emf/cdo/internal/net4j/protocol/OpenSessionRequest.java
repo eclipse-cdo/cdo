@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
@@ -175,9 +176,16 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
       TRACER.format("Read repositoryEnsuringReferentialIntegrity: {0}", repositoryEnsuringReferentialIntegrity); //$NON-NLS-1$
     }
 
+    IDGenerationLocation repositoryIDGenerationLocation = in.readEnum(IDGenerationLocation.class);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read repositoryIDGenerationLocation: {0}", repositoryIDGenerationLocation); //$NON-NLS-1$
+    }
+
     result = new OpenSessionResult(sessionID, userID, repositoryUUID, repositoryType, repositoryState, storeType,
         objectIDTypes, repositoryCreationTime, lastUpdateTime, rootResourceID, repositorySupportingAudits,
-        repositorySupportingBranches, repositorySupportingEcore, repositoryEnsuringReferentialIntegrity);
+        repositorySupportingBranches, repositorySupportingEcore, repositoryEnsuringReferentialIntegrity,
+        repositoryIDGenerationLocation);
 
     CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
     for (int i = 0; i < packageUnits.length; i++)

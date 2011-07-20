@@ -23,7 +23,11 @@ import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
+ * Represents a local {@link CDOWorkspaceConfiguration#checkout() checkout} from a remote repository.
+ * 
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOWorkspace extends CDORevisionProvider, Closeable
 {

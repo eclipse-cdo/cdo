@@ -14,6 +14,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -94,8 +95,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   private Map<String, String> properties;
 
-  // private IIDHandler idHandler = new StringIDHandler(this);
-  private IIDHandler idHandler = new LongIDHandler(this);
+  private IIDHandler idHandler;
 
   private IMetaDataManager metaDataManager = new MetaDataManager(this);
 
@@ -492,7 +492,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkNull(idHandler, Messages.getString("DBStore.3")); //$NON-NLS-1$
     checkNull(mappingStrategy, Messages.getString("DBStore.2")); //$NON-NLS-1$
     checkNull(dbAdapter, Messages.getString("DBStore.1")); //$NON-NLS-1$
     checkNull(dbConnectionProvider, Messages.getString("DBStore.0")); //$NON-NLS-1$
@@ -502,6 +501,15 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
+    if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+    {
+      idHandler = new UUIDHandler(this);
+    }
+    else
+    {
+      idHandler = new LongIDHandler(this);
+    }
 
     setObjectIDTypes(idHandler.getObjectIDTypes());
     connectionKeepAliveTimer = new Timer("Connection-Keep-Alive-" + this); //$NON-NLS-1$
@@ -558,8 +566,13 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     Map<String, String> map = new HashMap<String, String>();
     map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
     map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
-    map.put(PROP_NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
-    map.put(PROP_LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
+
+    if (getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+    {
+      map.put(PROP_NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
+      map.put(PROP_LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
+    }
+
     map.put(PROP_LAST_BRANCHID, Integer.toString(getLastBranchID()));
     map.put(PROP_LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
     map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
@@ -616,16 +629,26 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     if (map.containsKey(PROP_GRACEFULLY_SHUT_DOWN))
     {
       names.clear();
-      names.add(PROP_NEXT_LOCAL_CDOID);
-      names.add(PROP_LAST_CDOID);
+
+      boolean generatingIDs = getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
+      if (generatingIDs)
+      {
+        names.add(PROP_NEXT_LOCAL_CDOID);
+        names.add(PROP_LAST_CDOID);
+      }
+
       names.add(PROP_LAST_BRANCHID);
       names.add(PROP_LAST_LOCAL_BRANCHID);
       names.add(PROP_LAST_COMMITTIME);
       names.add(PROP_LAST_NONLOCAL_COMMITTIME);
       map = getPersistentProperties(names);
 
-      idHandler.setNextLocalObjectID(Store.stringToID(map.get(PROP_NEXT_LOCAL_CDOID)));
-      idHandler.setLastObjectID(Store.stringToID(map.get(PROP_LAST_CDOID)));
+      if (generatingIDs)
+      {
+        idHandler.setNextLocalObjectID(Store.stringToID(map.get(PROP_NEXT_LOCAL_CDOID)));
+        idHandler.setLastObjectID(Store.stringToID(map.get(PROP_LAST_CDOID)));
+      }
+
       setLastBranchID(Integer.valueOf(map.get(PROP_LAST_BRANCHID)));
       setLastLocalBranchID(Integer.valueOf(map.get(PROP_LAST_LOCAL_BRANCHID)));
       setLastCommitTime(Long.valueOf(map.get(PROP_LAST_COMMITTIME)));

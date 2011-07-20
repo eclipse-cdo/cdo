@@ -312,11 +312,13 @@ public class CommitIntegrityCheck
     {
       return true;
     }
+
     if (idOrObject instanceof EObject)
     {
       CDOObject obj = CDOUtil.getCDOObject((EObject)idOrObject);
       return obj.cdoState() == CDOState.NEW;
     }
+
     return false;
   }
 

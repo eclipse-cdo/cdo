@@ -117,11 +117,11 @@ public interface IClassMapping
    * @param accessor
    *          the accessor to use.
    * @param id
-   *          the id to revise
+   *          the id to revise.
    * @param version
-   *          the last valid version plus one (needed as marker)
+   *          the last valid version.
    * @param timeStamp
-   *          the timestamp of detach
+   *          the timestamp of detach.
    * @param monitor
    *          the monitor to indicate progress.
    * @since 3.0

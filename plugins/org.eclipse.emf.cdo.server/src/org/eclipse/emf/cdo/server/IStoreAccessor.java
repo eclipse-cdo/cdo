@@ -665,7 +665,9 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * where the accumulated backend changes can be committed atomically.
      * 
      * @see #rawCommit(double, OMMonitor)
+     * @deprecated Not used anymore
      */
+    @Deprecated
     public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor);
 
     /**

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.config;
 
+import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import java.util.Map;
@@ -30,4 +31,6 @@ public interface IRepositoryConfig extends IConfig
   public void registerRepository(InternalRepository repository);
 
   public void setRestarting(boolean b);
+
+  public IStore createStore(String repoName);
 }

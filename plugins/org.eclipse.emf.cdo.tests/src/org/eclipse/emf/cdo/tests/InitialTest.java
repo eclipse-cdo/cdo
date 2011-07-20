@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -822,6 +823,13 @@ public class InitialTest extends AbstractCDOTest
     assertEquals(supplier, CDOUtil.getEObject(supplierFromURI));
 
     EObject supplierAfterCommit2 = transaction.getResourceSet().getEObject(supplierTempURI, true);
-    assertEquals(null, supplierAfterCommit2);
+    if (session.getRepositoryInfo().getIDGenerationLocation() == IDGenerationLocation.STORE)
+    {
+      assertEquals(null, supplierAfterCommit2);
+    }
+    else
+    {
+      assertEquals(supplier, supplierAfterCommit2);
+    }
   }
 }

@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
@@ -190,5 +192,16 @@ public interface IStore
   public enum RevisionParallelism
   {
     NONE, BRANCHING
+  }
+
+  /**
+   * A marker interface for {@link IStore stores} that can handle {@link CDOID IDs} assigned by a
+   * {@link IDGenerationLocation#CLIENT client}, typically {@link ObjectType#UUID UUIDs}.
+   * 
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public interface CanHandleClientAssignedIDs
+  {
   }
 }

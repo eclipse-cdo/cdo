@@ -139,6 +139,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
     }
 
+    // int xxx;
+    // repositoryProperties.put(IRepository.Props.ID_GENERATION_LOCATION, IDGenerationLocation.CLIENT.toString());
     return repositoryProperties;
   }
 
@@ -418,8 +420,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     return repository;
   }
-
-  protected abstract IStore createStore(String repoName);
 
   protected InternalRepository getTestRepository()
   {
@@ -766,8 +766,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       super("MEM");
     }
 
-    @Override
-    protected IStore createStore(String repoName)
+    public IStore createStore(String repoName)
     {
       return MEMStoreUtil.createMEMStore();
     }
@@ -795,8 +794,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       super("MEMAudits");
     }
 
-    @Override
-    protected IStore createStore(String repoName)
+    public IStore createStore(String repoName)
     {
       return MEMStoreUtil.createMEMStore();
     }
@@ -824,8 +822,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       super("MEMBranches");
     }
 
-    @Override
-    protected IStore createStore(String repoName)
+    public IStore createStore(String repoName)
     {
       return MEMStoreUtil.createMEMStore();
     }
@@ -850,11 +847,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     public MEMOffline()
     {
-      super("MEM_OFFLINE");
+      super("MEMOffline");
     }
 
-    @Override
-    protected IStore createStore(String repoName)
+    public IStore createStore(String repoName)
     {
       return MEMStoreUtil.createMEMStore();
     }

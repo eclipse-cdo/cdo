@@ -31,11 +31,13 @@ import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
+import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDByteArray;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDLong;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOIDString;
 import org.eclipse.emf.cdo.spi.common.id.InternalCDOIDObject;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.UUIDGenerator;
 
 import java.text.MessageFormat;
 
@@ -137,6 +139,36 @@ public final class CDOIDUtil
   }
 
   /**
+   * @since 4.1
+   */
+  public static byte[] getByteArray(CDOID id)
+  {
+    if (id == null)
+    {
+      return null;
+    }
+
+    switch (id.getType())
+    {
+    case NULL:
+      return null;
+
+    case OBJECT:
+      if (id instanceof AbstractCDOIDByteArray)
+      {
+        return ((AbstractCDOIDByteArray)id).getByteArrayValue();
+      }
+
+      throw new IllegalArgumentException(MessageFormat.format(
+          Messages.getString("CDOIDUtil.0"), id.getClass().getName())); //$NON-NLS-1$
+
+    default:
+      throw new IllegalArgumentException(MessageFormat.format(
+          Messages.getString("CDOIDUtil.3"), id.getClass().getName())); //$NON-NLS-1$
+    }
+  }
+
+  /**
    * @since 3.0
    */
   public static CDOClassifierRef getClassifierRef(CDOID id)
@@ -202,6 +234,32 @@ public final class CDOIDUtil
   public static CDOID createUUID(byte[] value)
   {
     return new CDOIDObjectUUIDImpl(value);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static CDOID createUUID()
+  {
+    byte[] value = new byte[16];
+    UUIDGenerator.DEFAULT.generate(value);
+    return createUUID(value);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static String encodeUUID(byte[] bytes)
+  {
+    return UUIDGenerator.DEFAULT.encode(bytes);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static byte[] decodeUUID(String string)
+  {
+    return UUIDGenerator.DEFAULT.decode(string);
   }
 
   /**

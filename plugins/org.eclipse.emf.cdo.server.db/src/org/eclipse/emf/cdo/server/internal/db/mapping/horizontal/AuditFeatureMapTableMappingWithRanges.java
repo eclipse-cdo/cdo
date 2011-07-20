@@ -162,7 +162,7 @@ public class AuditFeatureMapTableMappingWithRanges extends BasicAbstractListTabl
     table = store.getDBSchema().addTable(tableName);
 
     // add fields for CDOID
-    IDBField idField = table.addField(CDODBSchema.FEATUREMAP_REVISION_ID, DBType.INTEGER);
+    IDBField idField = table.addField(CDODBSchema.FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType());
 
     // add fields for version range
     IDBField versionAddedField = table.addField(CDODBSchema.FEATUREMAP_VERSION_ADDED, DBType.INTEGER);

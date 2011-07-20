@@ -135,6 +135,11 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
       return session.getRepository().isEnsuringReferentialIntegrity();
     }
 
+    public IDGenerationLocation getIDGenerationLocation()
+    {
+      return session.getRepository().getIDGenerationLocation();
+    }
+
     public String getStoreType()
     {
       return session.getRepository().getStoreType();

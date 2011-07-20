@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
@@ -47,6 +48,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IStore.CanHandleClientAssignedIDs;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
@@ -135,6 +137,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private boolean supportingEcore;
 
   private boolean ensuringReferentialIntegrity;
+
+  private IDGenerationLocation idGenerationLocation;
 
   private InternalCDOPackageRegistry packageRegistry;
 
@@ -297,6 +301,11 @@ public class Repository extends Container<Object> implements InternalRepository
   public boolean isEnsuringReferentialIntegrity()
   {
     return ensuringReferentialIntegrity;
+  }
+
+  public IDGenerationLocation getIDGenerationLocation()
+  {
+    return idGenerationLocation;
   }
 
   public String getStoreType()
@@ -1353,6 +1362,17 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       ensuringReferentialIntegrity = Boolean.valueOf(valueIntegrity);
     }
+
+    String valueIDLocation = properties.get(Props.ID_GENERATION_LOCATION);
+    if (valueIDLocation != null)
+    {
+      idGenerationLocation = IDGenerationLocation.valueOf(valueIDLocation);
+    }
+
+    if (idGenerationLocation == null)
+    {
+      idGenerationLocation = IDGenerationLocation.STORE;
+    }
   }
 
   public void initSystemPackages()
@@ -1407,7 +1427,7 @@ public class Repository extends Container<Object> implements InternalRepository
   protected void initRootResource()
   {
     CDOBranchPoint head = branchManager.getMainBranch().getHead();
-    CDOIDTemp tempID = CDOIDUtil.createTempObject(1);
+    CDOID id = createRootResourceID();
 
     CDORevisionFactory factory = getRevisionManager().getFactory();
     InternalCDORevision rootResource = (InternalCDORevision)factory
@@ -1416,8 +1436,8 @@ public class Repository extends Container<Object> implements InternalRepository
     rootResource.setBranchPoint(head);
     rootResource.setContainerID(CDOID.NULL);
     rootResource.setContainingFeatureID(0);
-    rootResource.setID(tempID);
-    rootResource.setResourceID(tempID);
+    rootResource.setID(id);
+    rootResource.setResourceID(id);
 
     InternalSession session = getSessionManager().openSession(null);
     InternalTransaction transaction = session.openTransaction(1, head);
@@ -1455,10 +1475,20 @@ public class Repository extends Container<Object> implements InternalRepository
       throw new TransactionException(rollbackMessage);
     }
 
-    rootResourceID = commitContext.getIDMappings().get(tempID);
+    rootResourceID = id instanceof CDOIDTemp ? commitContext.getIDMappings().get(id) : id;
 
     commitContext.postCommit(true);
     session.close();
+  }
+
+  protected CDOID createRootResourceID()
+  {
+    if (getIDGenerationLocation() == IDGenerationLocation.STORE)
+    {
+      return CDOIDUtil.createTempObject(1);
+    }
+
+    return CDOIDGenerator.UUID.generateCDOID();
   }
 
   protected void readRootResource()
@@ -1533,6 +1563,11 @@ public class Repository extends Container<Object> implements InternalRepository
     super.doActivate();
 
     initProperties();
+    if (idGenerationLocation == IDGenerationLocation.CLIENT && !(store instanceof CanHandleClientAssignedIDs))
+    {
+      throw new IllegalStateException("Store can not handle client assigned IDs: " + store);
+    }
+
     store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
         : IStore.RevisionTemporality.NONE);
     store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING

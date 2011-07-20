@@ -92,8 +92,7 @@ public class AllTestsDB4O extends AllConfigs
       props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
     }
 
-    @Override
-    protected IStore createStore(String repoName)
+    public IStore createStore(String repoName)
     {
       File tempFolder = TMPUtil.getTempFolder();
       File file = new File(tempFolder, "cdodb_" + repoName + ".db4o");

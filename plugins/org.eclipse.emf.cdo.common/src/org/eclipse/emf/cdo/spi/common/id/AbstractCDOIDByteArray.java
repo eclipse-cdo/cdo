@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.spi.common.id;
 
-import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
@@ -36,6 +38,7 @@ public abstract class AbstractCDOIDByteArray extends AbstractCDOID
 
   public AbstractCDOIDByteArray(byte[] value)
   {
+    CheckUtil.checkArg(value != null && value.length == 16, "Illegal UUID value");
     this.value = value;
   }
 
@@ -46,13 +49,13 @@ public abstract class AbstractCDOIDByteArray extends AbstractCDOID
 
   public String toURIFragment()
   {
-    return HexUtil.bytesToHex(value);
+    return CDOIDUtil.encodeUUID(value);
   }
 
   @Override
   public void read(String fragmentPart)
   {
-    value = HexUtil.hexToBytes(fragmentPart);
+    value = CDOIDUtil.decodeUUID(fragmentPart);
   }
 
   @Override

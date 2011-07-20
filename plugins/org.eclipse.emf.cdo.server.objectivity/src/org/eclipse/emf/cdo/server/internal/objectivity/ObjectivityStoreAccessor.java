@@ -1928,9 +1928,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
   {
-    // TODO: implement ObjectivityStoreAccessor.rawDelete
     throw new UnsupportedOperationException();
   }
 

@@ -389,9 +389,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
     writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, monitor);
   }
 
+  @Deprecated
   public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
   {
-    getStore().rawDelete(id, version, branch);
+    throw new UnsupportedOperationException();
+
+    // getStore().rawDelete(id, version, branch);
   }
 
   public void rawCommit(double commitWork, OMMonitor monitor)

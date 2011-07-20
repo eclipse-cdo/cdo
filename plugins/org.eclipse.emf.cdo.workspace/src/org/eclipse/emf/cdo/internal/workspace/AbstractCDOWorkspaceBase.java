@@ -96,6 +96,7 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
 
   protected boolean isAddedObject(CDOID id)
   {
+    // throw new RuntimeException("Check whether CDOID.isLocal() is still valid with UUIDs");
     return store.isLocal(id);
   }
 

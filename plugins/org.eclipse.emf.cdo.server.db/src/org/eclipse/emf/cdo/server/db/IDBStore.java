@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IStore.CanHandleClientAssignedIDs;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
@@ -26,7 +27,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBStore extends IStore, IDBConnectionProvider
+public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClientAssignedIDs
 {
   /**
    * @since 2.0

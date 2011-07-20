@@ -44,13 +44,13 @@ public class AllTestsMEMDB4O extends AllTestsDB4O
       props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
     }
 
-    @Override
-    protected IStore createStore(String repoName)
+    public IStore createStore(String repoName)
     {
       if (!isRestarting())
       {
         MEMDB4OStore.clearContainer();
       }
+
       return new MEMDB4OStore();
     }
 

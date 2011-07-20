@@ -52,7 +52,6 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
     return true;
   }
 
-  @Override
   public IStore createStore(String repoName)
   {
     IMappingStrategy mappingStrategy = createMappingStrategy();

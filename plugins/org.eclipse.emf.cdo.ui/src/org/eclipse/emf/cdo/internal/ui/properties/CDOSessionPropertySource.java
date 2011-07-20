@@ -52,6 +52,8 @@ public class CDOSessionPropertySource extends CDOPropertySource<CDOSession>
 
   private static final String ENSURE_REFERENTIAL_INTEGRITY = "ensureReferentialIntegrity"; //$NON-NLS-1$
 
+  private static final String ID_GENERATION_LOCATION = "idGenerationLocation"; //$NON-NLS-1$
+
   private static final String STORE_TYPE = "storeType"; //$NON-NLS-1$
 
   private static final String OBJECT_ID_TYPES = "objectIDTypes"; //$NON-NLS-1$
@@ -110,6 +112,10 @@ public class CDOSessionPropertySource extends CDOPropertySource<CDOSession>
     addPropertyDescriptor(CATEGORY_REPOSITORY, ENSURE_REFERENTIAL_INTEGRITY, //
         Messages.getString("CDOSessionPropertySource_30"), //$NON-NLS-1$
         Messages.getString("CDOSessionPropertySource_31")); //$NON-NLS-1$
+
+    addPropertyDescriptor(CATEGORY_REPOSITORY, ID_GENERATION_LOCATION, //
+        Messages.getString("CDOSessionPropertySource_32"), //$NON-NLS-1$
+        Messages.getString("CDOSessionPropertySource_33")); //$NON-NLS-1$
 
     addPropertyDescriptor(CATEGORY_REPOSITORY, STORE_TYPE, //
         Messages.getString("CDOSessionPropertySource_24"), //$NON-NLS-1$
@@ -176,6 +182,16 @@ public class CDOSessionPropertySource extends CDOPropertySource<CDOSession>
     if (SUPPORTING_BRANCHES.equals(id))
     {
       return session.getRepositoryInfo().isSupportingBranches();
+    }
+
+    if (ENSURE_REFERENTIAL_INTEGRITY.equals(id))
+    {
+      return session.getRepositoryInfo().isEnsuringReferentialIntegrity();
+    }
+
+    if (ID_GENERATION_LOCATION.equals(id))
+    {
+      return session.getRepositoryInfo().getIDGenerationLocation();
     }
 
     if (STORE_TYPE.equals(id))

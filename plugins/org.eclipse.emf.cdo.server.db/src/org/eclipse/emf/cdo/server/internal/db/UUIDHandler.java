@@ -37,21 +37,21 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class StringIDHandler extends Lifecycle implements IIDHandler
+public class UUIDHandler extends Lifecycle implements IIDHandler
 {
-  public static final Set<ObjectType> OBJECT_ID_TYPES = Collections.singleton(CDOID.ObjectType.STRING);
+  public static final Set<ObjectType> OBJECT_ID_TYPES = Collections.singleton(ObjectType.UUID);
 
-  public static final CDOID MIN = CDOID.NULL;
+  private static final char NULL_CHAR = '0';
 
-  public static final CDOID MAX = create(Long.toString(Long.MAX_VALUE));
+  private static final String NULL_STRING = Character.toString(NULL_CHAR);
+
+  private static final char INTERNAL_CHAR = '@';
+
+  private static final String INTERNAL_STRING = Character.toString(INTERNAL_CHAR);
 
   private DBStore store;
 
-  private long lastObjectID = 0;
-
-  private long nextLocalObjectID = Long.MAX_VALUE;
-
-  public StringIDHandler(DBStore store)
+  public UUIDHandler(DBStore store)
   {
     this.store = store;
   }
@@ -63,12 +63,13 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
 
   public int compare(CDOID id1, CDOID id2)
   {
-    if (id1.getType() == CDOID.Type.OBJECT && id2.getType() == CDOID.Type.OBJECT)
-    {
-      return Long.valueOf(value(id1)).compareTo(Long.valueOf(value(id2)));
-    }
-
-    return id1.compareTo(id2);
+    // if (id1.getType() == CDOID.Type.OBJECT && id2.getType() == CDOID.Type.OBJECT)
+    // {
+    // return Long.valueOf(value(id1)).compareTo(Long.valueOf(value(id2)));
+    // }
+    //
+    // return id1.compareTo(id2);
+    throw new UnsupportedOperationException();
   }
 
   public DBType getDBType()
@@ -83,52 +84,41 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
 
   public CDOID createCDOID(String val)
   {
-    return create(val);
+    return create(INTERNAL_STRING + val);
   }
 
   public synchronized CDOID getLastObjectID()
   {
-    return CDOIDUtil.createString("" + lastObjectID);
+    throw new UnsupportedOperationException();
   }
 
   public synchronized void setLastObjectID(CDOID lastObjectID)
   {
-    this.lastObjectID = Long.parseLong(value(lastObjectID));
+    // Do nothing
   }
 
   public void adjustLastObjectID(CDOID maxID)
   {
-    // TODO: implement StringIDHandler.adjustLastObjectID(maxID)
-    throw new UnsupportedOperationException();
+    // Do nothing
   }
 
   public synchronized CDOID getNextLocalObjectID()
   {
-    return CDOIDUtil.createString("" + nextLocalObjectID);
+    throw new UnsupportedOperationException();
   }
 
   public synchronized void setNextLocalObjectID(CDOID nextLocalObjectID)
   {
-    this.nextLocalObjectID = Long.parseLong(value(nextLocalObjectID));
+    // Do nothing
   }
 
   public synchronized CDOID getNextCDOID(CDORevision revision)
   {
-    if (revision.getBranch().isLocal())
-    {
-      return CDOIDUtil.createString("" + nextLocalObjectID--);
-    }
-
-    return CDOIDUtil.createString("" + ++lastObjectID);
+    throw new UnsupportedOperationException();
   }
 
   public boolean isLocalCDOID(CDOID id)
   {
-    if (id.getType() == CDOID.Type.OBJECT)
-    {
-      return Long.parseLong(value(id)) > nextLocalObjectID;
-    }
-
     return false;
   }
 
@@ -151,8 +141,7 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
 
   public void setCDOID(PreparedStatement stmt, int column, CDOID id, long commitTime) throws SQLException
   {
-    String value = value(id);
-    stmt.setString(column, value == null || value.length() == 0 ? "0" : value);
+    stmt.setString(column, value(id));
   }
 
   public CDOID getCDOID(ResultSet resultSet, int column) throws SQLException
@@ -179,22 +168,22 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
 
   public CDOID getMinCDOID()
   {
-    return MIN;
+    throw new UnsupportedOperationException();
   }
 
   public CDOID getMaxCDOID()
   {
-    return MAX;
+    throw new UnsupportedOperationException();
   }
 
   public CDOID mapURI(IDBStoreAccessor accessor, String uri, long commitTime)
   {
-    return create(uri);
+    return CDOIDUtil.createExternal(uri);
   }
 
   public String unmapURI(IDBStoreAccessor accessor, CDOID id)
   {
-    return value(id);
+    return CDOIDUtil.getString(id);
   }
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
@@ -223,20 +212,15 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
     }
 
     char firstChar = id.charAt(0);
-    if (length == 1 && firstChar == '0')
+    if (length == 1 && firstChar == NULL_CHAR)
     {
       return null;
     }
 
-    if (Character.isDigit(firstChar))
+    if (firstChar == INTERNAL_CHAR)
     {
-      long value = Long.parseLong(id);
-      if (value < 0)
-      {
-        throw new IllegalArgumentException("Illegal ID value: " + id);
-      }
-
-      return CDOIDUtil.createString(id);
+      byte[] bytes = CDOIDUtil.decodeUUID(id.substring(1));
+      return CDOIDUtil.createUUID(bytes);
     }
 
     return CDOIDUtil.createExternal(id);
@@ -244,6 +228,16 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
 
   private static String value(CDOID id)
   {
-    return CDOIDUtil.getString(id);
+    if (CDOIDUtil.isNull(id))
+    {
+      return NULL_STRING;
+    }
+
+    if (id.isExternal())
+    {
+      return CDOIDUtil.getString(id);
+    }
+
+    return INTERNAL_STRING + id.toURIFragment();
   }
 }

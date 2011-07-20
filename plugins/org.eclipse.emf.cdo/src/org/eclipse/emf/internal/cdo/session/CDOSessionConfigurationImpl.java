@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo.session;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -45,6 +46,8 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   private CDOAuthenticator authenticator = new CDOAuthenticatorImpl();
 
   private CDOSession.ExceptionHandler exceptionHandler;
+
+  private CDOIDGenerator idGenerator;
 
   private InternalCDOBranchManager branchManager;
 
@@ -137,6 +140,17 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   {
     checkNotOpen();
     this.exceptionHandler = exceptionHandler;
+  }
+
+  public CDOIDGenerator getIDGenerator()
+  {
+    return idGenerator;
+  }
+
+  public void setIDGenerator(CDOIDGenerator idGenerator)
+  {
+    checkNotOpen();
+    this.idGenerator = idGenerator;
   }
 
   public InternalCDOBranchManager getBranchManager()
@@ -258,8 +272,10 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   {
     session.options().setPassiveUpdateEnabled(passiveUpdateEnabled);
     session.options().setPassiveUpdateMode(passiveUpdateMode);
+
     session.setMainBranchLocal(mainBranchLocal);
     session.setExceptionHandler(exceptionHandler);
+    session.setIDGenerator(idGenerator);
     session.setAuthenticator(authenticator);
     session.setRevisionManager(revisionManager);
     session.setBranchManager(branchManager);

@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
+import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -675,15 +676,16 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
-    InternalCDORevision revision = (InternalCDORevision)accessor.getTransaction().getRevision(id);
-    int branchId = accessor.getTransaction().getBranch().getID();
+    ITransaction transaction = accessor.getTransaction();
+    InternalCDORevision revision = (InternalCDORevision)transaction.getRevision(id);
+    int branchID = transaction.getBranch().getID();
 
     if (TRACER.isEnabled())
     {
       TRACER.format("objectDetached {1}", revision); //$NON-NLS-1$
     }
 
-    clearList(accessor, id, branchId, revision.getVersion(), FINAL_VERSION, revision.getList(getFeature()).size() - 1);
+    clearList(accessor, id, branchID, revision.getVersion(), FINAL_VERSION, revision.getList(getFeature()).size() - 1);
   }
 
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, final int oldVersion,

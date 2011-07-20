@@ -321,6 +321,11 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public void applyIDMappings(OMMonitor monitor)
   {
+    if (idMappings.isEmpty())
+    {
+      return;
+    }
+
     try
     {
       monitor.begin(newObjects.length + dirtyObjects.length + dirtyObjectDeltas.length);

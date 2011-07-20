@@ -584,7 +584,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     for (CDOObject target : targetObjects)
     {
       CDOID id = getXRefTargetID(target);
-      if (id.isTemporary())
+      if (isObjectNew(id))
       {
         throw new IllegalArgumentException("Cross referencing for uncommitted new objects not supported " + target);
       }
@@ -689,7 +689,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
         return null;
       }
 
-      excludeTempIDs(id);
+      excludeNewObject(id);
       localLookupObject = createObject(id);
 
       // CDOResource have a special way to register to the view.
@@ -708,12 +708,17 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     return lastLookupObject;
   }
 
-  protected synchronized void excludeTempIDs(CDOID id)
+  protected synchronized void excludeNewObject(CDOID id)
   {
-    if (id.isTemporary())
+    if (isObjectNew(id))
     {
       throw new ObjectNotFoundException(id, this);
     }
+  }
+
+  public boolean isObjectNew(CDOID id)
+  {
+    return id.isTemporary();
   }
 
   /**
@@ -882,7 +887,13 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
         if (object.cdoView() != null && FSMUtil.isNew(object))
         {
           String uri = EcoreUtil.getURI(eObject).toString();
-          return CDOIDUtil.createTempObjectExternal(uri);
+          if (object.cdoID().isTemporary())
+          {
+            return CDOIDUtil.createTempObjectExternal(uri);
+          }
+
+          // New objects with non-temporary IDs are possible. Likely UUIDs
+          return CDOIDUtil.createExternal(uri);
         }
       }
 

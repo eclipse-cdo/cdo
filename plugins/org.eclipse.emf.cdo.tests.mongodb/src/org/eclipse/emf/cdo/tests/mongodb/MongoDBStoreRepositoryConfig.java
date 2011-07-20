@@ -71,7 +71,6 @@ public class MongoDBStoreRepositoryConfig extends RepositoryConfig
     super.tearDown();
   }
 
-  @Override
   public IStore createStore(String repoName)
   {
     MongoURI mongoURI = new MongoURI("mongodb://localhost");

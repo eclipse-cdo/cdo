@@ -134,7 +134,7 @@ public final class HexUtil
       b2 = (byte)Character.digit(s.charAt(i + 1), 16);
       if (b1 < 0 || b2 < 0)
       {
-        throw new NumberFormatException();
+        throw new NumberFormatException(s);
       }
 
       out[off + i / 2] = (byte)(b1 << 4 | b2);

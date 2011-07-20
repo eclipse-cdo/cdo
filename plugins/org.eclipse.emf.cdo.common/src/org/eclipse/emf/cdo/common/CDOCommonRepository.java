@@ -63,6 +63,11 @@ public interface CDOCommonRepository extends CDOTimeProvider
   public Set<CDOID.ObjectType> getObjectIDTypes();
 
   /**
+   * @since 4.1
+   */
+  public IDGenerationLocation getIDGenerationLocation();
+
+  /**
    * Returns the ID of the root resource of this repository.
    */
   public CDOID getRootResourceID();
@@ -92,10 +97,21 @@ public interface CDOCommonRepository extends CDOTimeProvider
   public boolean isEnsuringReferentialIntegrity();
 
   /**
+   * Enumerates the possible {@link CDOCommonRepository#getIDGenerationLocation() ID generation locations} of a CDO
+   * repository.
+   * 
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public enum IDGenerationLocation
+  {
+    STORE, CLIENT
+  }
+
+  /**
    * Enumerates the possible {@link CDOCommonRepository#getType() types} of a CDO repository.
    * 
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
    */
   public enum Type
   {
@@ -106,7 +122,6 @@ public interface CDOCommonRepository extends CDOTimeProvider
    * Enumerates the possible {@link CDOCommonRepository#getState() states} of a CDO repository.
    * 
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
    */
   public static enum State
   {

@@ -52,6 +52,11 @@ public interface IIDHandler extends Comparator<CDOID>
 
   public void setLastObjectID(CDOID lastObjectID);
 
+  /**
+   * @since 4.1
+   */
+  public void adjustLastObjectID(CDOID maxID);
+
   public CDOID getNextLocalObjectID();
 
   public void setNextLocalObjectID(CDOID nextLocalObjectID);

@@ -1091,9 +1091,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
 
     EStructuralFeature.Internal internalFeature = (EStructuralFeature.Internal)eFeature;
-    EReference oppositeReference = instance.cdoID().isTemporary() ? null : internalFeature.getEOpposite();
+    InternalCDOView view = instance.cdoView();
+    EReference oppositeReference = view.isObjectNew(instance.cdoID()) ? null : internalFeature.getEOpposite();
 
-    CDOStore cdoStore = instance.cdoView().getStore();
+    CDOStore cdoStore = view.getStore();
     EStore eStore = instance.eStore();
 
     if (eFeature.isMany())

@@ -165,7 +165,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
         throw new UnsupportedOperationException(OBJECT_NOT_PERSISTED_MESSAGE);
       }
 
-      if (id.isTemporary())
+      if (view.isObjectNew(id))
       {
         throw new UnsupportedOperationException(OBJECT_NOT_PERSISTED_MESSAGE);
       }

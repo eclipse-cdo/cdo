@@ -118,6 +118,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    */
   public boolean isObjectLocked(CDOObject object, LockType lockType, boolean byOthers);
 
+  /**
+   * @since 4.1
+   */
+  public boolean isObjectNew(CDOID id);
+
   public void handleAddAdapter(InternalCDOObject eObject, Adapter adapter);
 
   public void handleRemoveAdapter(InternalCDOObject eObject, Adapter adapter);

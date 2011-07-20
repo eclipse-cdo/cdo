@@ -55,19 +55,13 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
   protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
     requestingTransactionInfo(out);
-    requestingIdMapping(out);
-  }
-
-  @Override
-  protected CommitTransactionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
-  {
-    return confirmingCheckError(in);
+    requestingIDMapping(out);
   }
 
   /**
-   * Write ids that are needed. only If it needs to
+   * Write IDs that are needed. only If it needs to
    */
-  protected void requestingIdMapping(CDODataOutput out) throws IOException
+  protected void requestingIDMapping(CDODataOutput out) throws IOException
   {
     InternalCDOXACommitContext context = getCommitContext();
     Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> requestedIDs = context.getRequestedIDs();
@@ -77,13 +71,13 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
     {
       PROTOCOL.format("Number of ids requested: {0}", size); //$NON-NLS-1$
     }
-
+  
     for (Entry<CDOIDTempObjectExternalImpl, InternalCDOTransaction> entry : requestedIDs.entrySet())
     {
       CDOIDTempObjectExternalImpl tempID = entry.getKey();
       URI oldURIExternal = URI.createURI(tempID.toURIFragment());
       CDOID oldCDOID = CDOIDUtil.read(oldURIExternal.fragment());
-
+  
       InternalCDOXACommitContext commitContext = context.getTransactionManager().getCommitContext(entry.getValue());
       if (commitContext == null)
       {
@@ -91,7 +85,7 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
             Messages.getString("CommitTransactionPhase2Request.1"), entry //$NON-NLS-1$
                 .getValue()));
       }
-
+  
       CDOID newID = commitContext.getResult().getIDMappings().get(oldCDOID);
       if (newID == null)
       {
@@ -99,17 +93,23 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
             Messages.getString("CommitTransactionPhase2Request.2"), oldCDOID //$NON-NLS-1$
                 .toURIFragment()));
       }
-
+  
       CDOID newIDExternal = CDOURIUtil.convertExternalCDOID(oldURIExternal, newID);
       if (PROTOCOL.isEnabled())
       {
         PROTOCOL.format("ID mapping: {0} --> {1}", tempID.toURIFragment(), newIDExternal.toURIFragment()); //$NON-NLS-1$
       }
-
+  
       out.writeCDOID(tempID);
       out.writeCDOID(newIDExternal);
-
+  
       context.getResult().addIDMapping(tempID, newIDExternal);
     }
+  }
+
+  @Override
+  protected CommitTransactionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
+  {
+    return confirmingCheckError(in);
   }
 }

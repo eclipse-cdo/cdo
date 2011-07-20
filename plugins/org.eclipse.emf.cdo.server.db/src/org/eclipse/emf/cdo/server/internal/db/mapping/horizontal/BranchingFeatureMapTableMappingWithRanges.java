@@ -112,14 +112,14 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
    */
   private Map<CDOID, ITypeMapping> typeMappings;
 
+  private List<DBType> dbTypes;
+
   // --------- SQL strings - see initSQLStrings() -----------------
   private String sqlSelectChunksPrefix;
 
   private String sqlOrderByIndex;
 
-  protected String sqlInsert;
-
-  private List<DBType> dbTypes;
+  private String sqlInsert;
 
   private String sqlRemoveEntry;
 
@@ -154,7 +154,7 @@ public class BranchingFeatureMapTableMappingWithRanges extends BasicAbstractList
     table = store.getDBSchema().addTable(tableName);
 
     // add fields for CDOID
-    IDBField idField = table.addField(CDODBSchema.FEATUREMAP_REVISION_ID, DBType.INTEGER);
+    IDBField idField = table.addField(CDODBSchema.FEATUREMAP_REVISION_ID, store.getIDHandler().getDBType());
 
     IDBField branchField = table.addField(CDODBSchema.LIST_REVISION_BRANCH, DBType.INTEGER);
 

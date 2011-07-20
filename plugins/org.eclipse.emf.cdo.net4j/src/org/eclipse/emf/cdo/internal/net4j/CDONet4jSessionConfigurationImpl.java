@@ -159,6 +159,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private boolean ensuringReferentialIntegrity;
 
+    private IDGenerationLocation idGenerationLocation;
+
     private InternalCDOSession session;
 
     public RepositoryInfo(String name, OpenSessionResult result, InternalCDOSession session)
@@ -176,6 +178,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       supportingBranches = result.isRepositorySupportingBranches();
       supportingEcore = result.isRepositorySupportingEcore();
       ensuringReferentialIntegrity = result.isRepositoryEnsuringReferentialIntegrity();
+      idGenerationLocation = result.getRepositoryIDGenerationLocation();
       this.session = session;
     }
 
@@ -265,6 +268,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public boolean isEnsuringReferentialIntegrity()
     {
       return ensuringReferentialIntegrity;
+    }
+
+    public IDGenerationLocation getIDGenerationLocation()
+    {
+      return idGenerationLocation;
     }
 
     private RepositoryTimeResult refreshTime()

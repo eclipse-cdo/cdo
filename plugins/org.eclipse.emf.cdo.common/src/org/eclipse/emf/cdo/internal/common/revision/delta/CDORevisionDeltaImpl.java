@@ -283,12 +283,12 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     }
   }
 
-  public boolean adjustReferences(CDOReferenceAdjuster idMappings)
+  public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
     boolean changed = false;
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
     {
-      changed |= ((CDOFeatureDeltaImpl)featureDelta).adjustReferences(idMappings);
+      changed |= ((CDOFeatureDeltaImpl)featureDelta).adjustReferences(referenceAdjuster);
     }
 
     return changed;

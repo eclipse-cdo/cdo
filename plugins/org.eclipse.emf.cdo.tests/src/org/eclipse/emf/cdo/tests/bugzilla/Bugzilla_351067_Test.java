@@ -29,6 +29,8 @@ public class Bugzilla_351067_Test extends AbstractCDOTest
 {
   public void testCommitBlob() throws Exception
   {
+    skipLargeObjects();
+
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("res"));

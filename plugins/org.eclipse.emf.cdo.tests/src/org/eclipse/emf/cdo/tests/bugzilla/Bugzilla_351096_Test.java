@@ -33,6 +33,8 @@ public class Bugzilla_351096_Test extends AbstractCDOTest
 {
   public void testCommit2Blob() throws Exception
   {
+    skipLargeObjects();
+
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("res"));
@@ -71,6 +73,8 @@ public class Bugzilla_351096_Test extends AbstractCDOTest
 
   public void testCommit2Clob() throws Exception
   {
+    skipLargeObjects();
+
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("res"));

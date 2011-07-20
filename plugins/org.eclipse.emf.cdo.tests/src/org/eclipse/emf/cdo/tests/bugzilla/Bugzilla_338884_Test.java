@@ -34,6 +34,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * See bug 338884.
+ * 
  * @author Caspar De Groot
  */
 public class Bugzilla_338884_Test extends AbstractCDOTest

@@ -131,6 +131,7 @@ public class DBBrowserPage extends AbstractPage
   {
     String order = browser.getParam("order");
     String direction = browser.getParam("direction");
+    String highlight = browser.getParam("highlight");
 
     Statement stmt = null;
     ResultSet resultSet = null;
@@ -166,7 +167,9 @@ public class DBBrowserPage extends AbstractPage
         pout.print("<td><b>" + row + "</b></td>\r\n");
         for (int i = 0; i < columns; i++)
         {
-          pout.print("<td>" + browser.escape(resultSet.getString(1 + i)) + "</td>\r\n");
+          String value = resultSet.getString(1 + i);
+          String bgcolor = highlight != null && highlight.equals(value) ? " bgcolor=\"#fffca6\"" : "";
+          pout.print("<td" + bgcolor + ">" + browser.href(value, getName(), "highlight", value) + "</td>\r\n");
         }
 
         pout.print("</tr>\r\n");

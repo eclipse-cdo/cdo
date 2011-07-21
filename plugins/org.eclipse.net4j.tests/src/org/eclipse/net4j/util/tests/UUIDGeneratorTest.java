@@ -14,7 +14,7 @@ import org.eclipse.net4j.util.UUIDGenerator;
 
 /**
  * @author Eike Stepper
- * @since 3.2
+ * @since 4.0
  */
 public class UUIDGeneratorTest extends AbstractOMTest
 {

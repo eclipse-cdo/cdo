@@ -11,12 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.objectivity;
 
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
-
-import java.util.List;
-import java.util.Map;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -33,54 +27,6 @@ public class AllTestsObjyBranching extends ObjyDBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    ObjyStoreRepositoryConfig repoConfig = ObjyBranchingConfig.INSTANCE;
-    addScenario(parent, COMBINED, repoConfig, JVM, NATIVE);
-  }
-
-  @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
-  {
-    super.initTestClasses(testClasses);
-
-    // // add branching tests for this testsuite
-    // testClasses.add(BranchingTest.class);
-    // testClasses.add(BranchingSameSessionTest.class);
-    // testClasses.add(MergingTest.class);
-  }
-
-  @Override
-  protected boolean hasAuditSupport()
-  {
-    return true;
-  }
-
-  @Override
-  protected boolean hasBranchingSupport()
-  {
-    return true;
-  }
-
-  public static class ObjyBranchingConfig extends ObjyStoreRepositoryConfig
-  {
-    private static final long serialVersionUID = 1L;
-
-    public static final AllTestsObjyBranching.ObjyBranchingConfig INSTANCE = new ObjyBranchingConfig(
-        "ObjectivityStore: (branching)"); //$NON-NLS-1$
-
-    public ObjyBranchingConfig(String name)
-    {
-      super(name);
-
-      org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM.DEBUG.setEnabled(true);
-      org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM.INFO.setEnabled(true);
-    }
-
-    @Override
-    protected void initRepositoryProperties(Map<String, String> props)
-    {
-      super.initRepositoryProperties(props);
-      props.put(IRepository.Props.SUPPORTING_AUDITS, "true"); //$NON-NLS-1$
-      props.put(IRepository.Props.SUPPORTING_BRANCHES, "true"); //$NON-NLS-1$
-    }
+    addScenario(parent, COMBINED, new ObjyConfig(true, true), JVM, NATIVE);
   }
 }

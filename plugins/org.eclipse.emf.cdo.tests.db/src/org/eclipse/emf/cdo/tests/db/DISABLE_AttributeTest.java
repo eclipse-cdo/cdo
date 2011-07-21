@@ -21,7 +21,7 @@ public class DISABLE_AttributeTest extends AttributeTest
   public void testByteArray() throws Exception
   {
     // XXX disabled because of Bug 289445
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
     super.testByteArray();
   }
 
@@ -29,7 +29,7 @@ public class DISABLE_AttributeTest extends AttributeTest
   public void testByteArrayEmpty() throws Exception
   {
     // XXX disabled because of Bug 289445
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
     super.testByteArrayEmpty();
   }
 
@@ -37,7 +37,7 @@ public class DISABLE_AttributeTest extends AttributeTest
   public void testByteArrayNull() throws Exception
   {
     // XXX disabled because of Bug 289445
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
     super.testByteArrayNull();
   }
 }

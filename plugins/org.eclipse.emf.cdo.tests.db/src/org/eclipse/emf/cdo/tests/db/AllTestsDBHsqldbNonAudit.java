@@ -10,16 +10,12 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
-import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_261218_Test;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
-import org.eclipse.emf.cdo.tests.db.verifier.DBStoreVerifier;
-import org.eclipse.emf.cdo.tests.db.verifier.DBStoreVerifier.NonAudit;
 
 import java.util.List;
-import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -37,59 +33,15 @@ public class AllTestsDBHsqldbNonAudit extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE, TCP, NATIVE);
+    addScenario(parent, COMBINED, new HsqldbConfig(false, false, IDGenerationLocation.STORE), TCP, NATIVE);
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    super.initTestClasses(testClasses);
+    super.initTestClasses(testClasses, scenario);
 
     // this takes ages - so for now, we disable it
     testClasses.remove(Bugzilla_261218_Test.class);
-  }
-
-  @Override
-  protected boolean hasAuditSupport()
-  {
-    return false;
-  }
-
-  @Override
-  protected boolean hasBranchingSupport()
-  {
-    return false;
-  }
-
-  public static class HsqldbNonAudit extends AllTestsDBHsqldb.Hsqldb
-  {
-    private static final long serialVersionUID = 1L;
-
-    public static final AllTestsDBHsqldbNonAudit.HsqldbNonAudit INSTANCE = new HsqldbNonAudit(
-        "DBStore: Hsqldb (non audit)");
-
-    public HsqldbNonAudit(String name)
-    {
-      super(name);
-    }
-
-    @Override
-    protected void initRepositoryProperties(Map<String, String> props)
-    {
-      super.initRepositoryProperties(props);
-      props.put(IRepository.Props.SUPPORTING_AUDITS, "false");
-    }
-
-    @Override
-    protected IMappingStrategy createMappingStrategy()
-    {
-      return CDODBUtil.createHorizontalMappingStrategy(false);
-    }
-
-    @Override
-    protected DBStoreVerifier getVerifier(IRepository repository)
-    {
-      return new NonAudit(repository);
-    }
   }
 }

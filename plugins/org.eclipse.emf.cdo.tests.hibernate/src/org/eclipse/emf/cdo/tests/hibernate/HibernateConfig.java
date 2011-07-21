@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.hibernate;
 
-import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.hibernate.CDOHibernateUtil;
 import org.eclipse.emf.cdo.server.hibernate.IHibernateMappingProvider;
@@ -38,15 +38,13 @@ public class HibernateConfig extends RepositoryConfig
 
   public HibernateConfig()
   {
-    super("Hibernate");
+    super("Hibernate", false, false, IDGenerationLocation.STORE);
   }
 
   @Override
   protected void initRepositoryProperties(Map<String, String> props)
   {
     super.initRepositoryProperties(props);
-    props.put(Props.SUPPORTING_AUDITS, "false");
-    props.put(Props.SUPPORTING_BRANCHES, "false");
 
     try
     {

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.config;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
@@ -21,6 +22,12 @@ import java.util.Map;
 public interface IRepositoryConfig extends IConfig
 {
   public static final String REPOSITORY_NAME = "repo1";
+
+  public boolean isSupportingAudits();
+
+  public boolean isSupportingBranches();
+
+  public IDGenerationLocation getIDGenerationLocation();
 
   public Map<String, String> getRepositoryProperties();
 

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnBasicEMFUITest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnBasicGMFUITest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnCreationWizardTest;
 import org.eclipse.emf.cdo.tests.AllTests;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -34,16 +35,16 @@ public class AllTestsDawnUI extends AllTests
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initConfigSuites(TestSuite parent)
+  {
+    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
+  }
+
+  @Override
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     testClasses.add(DawnCreationWizardTest.class);
     testClasses.add(DawnBasicGMFUITest.class);
     testClasses.add(DawnBasicEMFUITest.class);
-  }
-
-  @Override
-  protected void initConfigSuites(TestSuite parent)
-  {
-    addScenario(parent, COMBINED, MEM, TCP, NATIVE);
   }
 }

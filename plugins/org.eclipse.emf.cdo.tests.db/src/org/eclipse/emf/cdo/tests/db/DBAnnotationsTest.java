@@ -68,10 +68,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testLengthAnnotationNegative() throws Exception
   {
     // HSQL does not support length annotations
-    skipConfig(AllTestsDBHsqldb.Hsqldb.INSTANCE);
-    skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof HsqldbConfig);
+
     // XXX PSQL fails, too - need to investigate
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
 
     msg("Opening session");
     EPackage model1 = createModel();
@@ -111,7 +111,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testLengthAnnotationByMetaData() throws CommitException
   {
     // XXX [PSQL] disabled because of Bug 290095
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
 
     msg("Opening session");
     final EPackage model1 = createModel();
@@ -152,11 +152,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testTypeAnnotationByMetaData() throws CommitException
   {
     // XXX [PSQL] disabled because of Bug 290095
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
 
     // HSQL does not support type annotations
-    skipConfig(AllTestsDBHsqldb.Hsqldb.INSTANCE);
-    skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof HsqldbConfig);
 
     msg("Opening session");
     final EPackage model1 = createModel();
@@ -197,7 +196,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testTableNameAnnotationByMetaData() throws CommitException
   {
     // XXX [PSQL] disabled because of Bug 290095
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
 
     msg("Opening session");
     EPackage model1 = createModel();
@@ -237,7 +236,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testColumnNameAnnotationByMetaData() throws CommitException
   {
     // XXX [PSQL] disabled because of Bug 290095
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
 
     msg("Opening session");
     final EPackage model1 = createModel();
@@ -278,11 +277,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
   public void testColumnNameTypeAnnotationByMetaData() throws CommitException
   {
     // HSQL does not support type annotations
-    skipConfig(AllTestsDBHsqldb.Hsqldb.INSTANCE);
-    skipConfig(AllTestsDBHsqldbNonAudit.HsqldbNonAudit.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof HsqldbConfig);
 
     // XXX [PSQL] disabled because of Bug 290095
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
 
     msg("Opening session");
     final EPackage model1 = createModel();

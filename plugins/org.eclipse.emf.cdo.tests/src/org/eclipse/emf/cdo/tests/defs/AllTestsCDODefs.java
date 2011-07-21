@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests.defs;
 
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
@@ -36,7 +37,7 @@ public class AllTestsCDODefs extends ConfigTestSuite
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     testClasses.add(EGlobalPackageDefImplTest.class);
     testClasses.add(CDOPackageRegistryDefImplTest.class);

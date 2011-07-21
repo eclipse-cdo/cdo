@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Stefan Winkler - introduced variable mapping strategies
  */
 package org.eclipse.emf.cdo.tests.db;
 
@@ -18,18 +19,17 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsDBH2Branching extends DBConfigs
+public class AllTestsDBH2Audit extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2Branching().getTestSuite("CDO Tests (DBStore H2 Horizontal - branching mode)");
+    return new AllTestsDBH2Audit().getTestSuite("CDO Tests (DBStore H2 Horizontal)");
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new H2Config(true, true, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, COMBINED, new H2Config(true, true, true, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, COMBINED, new H2Config(true, true, true, true, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, COMBINED, new H2Config(true, false, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, COMBINED, new H2Config(true, false, true, false, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 }

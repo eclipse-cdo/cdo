@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -27,20 +29,22 @@ public class AllTestsDBH2All extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, AllTestsDBH2NonAudit.H2NonAudit.ReusableFolder.INSTANCE, JVM, NATIVE);
-    addScenario(parent, COMBINED, AllTestsDBH2.H2.ReusableFolder.RANGE_INSTANCE, JVM, NATIVE);
-    addScenario(parent, COMBINED, AllTestsDBH2Branching.H2Branching.ReusableFolder.INSTANCE, JVM, NATIVE);
+    addScenarios(parent, IDGenerationLocation.STORE);
+    addScenarios(parent, IDGenerationLocation.CLIENT);
   }
 
-  @Override
-  protected boolean hasAuditSupport()
+  private void addScenarios(TestSuite parent, IDGenerationLocation idGenerationLocation)
   {
-    return true;
-  }
+    // Non-audit
+    addScenario(parent, COMBINED, new H2Config(false, false, false, false, idGenerationLocation), JVM, NATIVE);
 
-  @Override
-  protected boolean hasBranchingSupport()
-  {
-    return false;
+    // Audit
+    addScenario(parent, COMBINED, new H2Config(true, false, false, false, idGenerationLocation), JVM, NATIVE);
+    addScenario(parent, COMBINED, new H2Config(true, false, true, false, idGenerationLocation), JVM, NATIVE);
+
+    // Branching
+    addScenario(parent, COMBINED, new H2Config(true, true, false, false, idGenerationLocation), JVM, NATIVE);
+    addScenario(parent, COMBINED, new H2Config(true, true, true, false, idGenerationLocation), JVM, NATIVE);
+    addScenario(parent, COMBINED, new H2Config(true, true, true, true, idGenerationLocation), JVM, NATIVE);
   }
 }

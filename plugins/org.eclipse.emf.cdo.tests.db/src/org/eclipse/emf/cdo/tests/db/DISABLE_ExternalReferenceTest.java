@@ -21,7 +21,7 @@ public class DISABLE_ExternalReferenceTest extends ExternalReferenceTest
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
     // XXX disabled because of Bug 290097
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
     super.testOneXMIResourceManyViewsOnOneResourceSet();
   }
 
@@ -29,7 +29,7 @@ public class DISABLE_ExternalReferenceTest extends ExternalReferenceTest
   public void testManyViewsOnOneResourceSet() throws Exception
   {
     // XXX disabled because of Bug 290097
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
     super.testManyViewsOnOneResourceSet();
   }
 }

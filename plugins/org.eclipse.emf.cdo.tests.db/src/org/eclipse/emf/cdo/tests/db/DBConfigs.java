@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.XRefTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_303807_Test;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -35,7 +36,7 @@ import java.util.List;
 public abstract class DBConfigs extends AllConfigs
 {
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     testClasses.add(Net4jDBTest.class);
     testClasses.add(DBAnnotationsTest.class);
@@ -43,10 +44,10 @@ public abstract class DBConfigs extends AllConfigs
     testClasses.add(CustomTypeMappingTest.class);
     testClasses.add(SQLQueryTest.class);
 
-    super.initTestClasses(testClasses);
+    super.initTestClasses(testClasses, scenario);
     testClasses.remove(MEMStoreQueryTest.class);
 
-    if (!hasBranchingSupport())
+    if (!scenario.getRepositoryConfig().isSupportingBranches())
     {
       testClasses.remove(BranchingTest.class);
       testClasses.remove(BranchingSameSessionTest.class);
@@ -54,7 +55,7 @@ public abstract class DBConfigs extends AllConfigs
       testClasses.remove(Bugzilla_303807_Test.class);
     }
 
-    if (!hasAuditSupport())
+    if (!scenario.getRepositoryConfig().isSupportingAudits())
     {
       // non-audit mode - remove audit tests
       testClasses.remove(AuditTest.class);
@@ -87,8 +88,4 @@ public abstract class DBConfigs extends AllConfigs
     testClasses.remove(ExternalReferenceTest.class);
     testClasses.add(DISABLE_ExternalReferenceTest.class);
   }
-
-  protected abstract boolean hasBranchingSupport();
-
-  protected abstract boolean hasAuditSupport();
 }

@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_308895_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_316444_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_319836_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_322804_Test;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -72,7 +73,7 @@ public class AllTestsHibernate extends AllConfigs
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
     // testClasses.add(XRefTest.class);
@@ -100,7 +101,7 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(Hibernate_PartialCommitTest.class);
     testClasses.add(Hibernate_Bugzilla_316444_Test.class);
 
-    super.initTestClasses(testClasses);
+    super.initTestClasses(testClasses, scenario);
 
     // Teneo does not yet support lists of int arrays:
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=330212

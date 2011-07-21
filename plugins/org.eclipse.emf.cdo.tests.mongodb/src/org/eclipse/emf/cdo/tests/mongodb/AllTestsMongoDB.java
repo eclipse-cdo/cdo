@@ -11,8 +11,10 @@
  */
 package org.eclipse.emf.cdo.tests.mongodb;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -33,16 +35,16 @@ public class AllTestsMongoDB extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MongoDBStoreRepositoryConfig.INSTANCE, JVM, NATIVE);
-    addScenario(parent, COMBINED, MongoDBStoreRepositoryConfig.AUDITING, JVM, NATIVE);
+    addScenario(parent, COMBINED, new MongoDBConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, COMBINED, new MongoDBConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
     // addScenario(parent, COMBINED, MongoDBStoreRepositoryConfig.BRANCHING, JVM, NATIVE);
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     testClasses.add(MongoDBInitialTest.class);
-    super.initTestClasses(testClasses);
+    super.initTestClasses(testClasses, scenario);
     testClasses.remove(MEMStoreQueryTest.class);
   }
 }

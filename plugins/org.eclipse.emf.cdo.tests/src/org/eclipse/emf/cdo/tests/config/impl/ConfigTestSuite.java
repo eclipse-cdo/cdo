@@ -67,7 +67,7 @@ public abstract class ConfigTestSuite implements IConstants
       TestSuite suite = new TestSuite(scenario.toString());
 
       List<Class<? extends ConfigTest>> testClasses = new ArrayList<Class<? extends ConfigTest>>();
-      initTestClasses(testClasses);
+      initTestClasses(testClasses, scenario);
 
       for (Class<? extends ConfigTest> testClass : testClasses)
       {
@@ -98,7 +98,7 @@ public abstract class ConfigTestSuite implements IConstants
   // }
   // }
 
-  protected abstract void initTestClasses(List<Class<? extends ConfigTest>> testClasses);
+  protected abstract void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario);
 
   /**
    * @author Eike Stepper

@@ -22,7 +22,7 @@ public class AutomatedTests
   {
     TestSuite suite = new TestSuite(AutomatedTests.class.getName());
     suite.addTest(AllTestsDBH2NonAudit.suite());
-    suite.addTest(AllTestsDBH2.suite());
+    suite.addTest(AllTestsDBH2Audit.suite());
     suite.addTest(AllTestsDBH2Branching.suite());
     // suite.addTest(AllTestsDBH2Offline.suite());
     // suite.addTest(AllTestsDBHsqldb.suite());

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.offline.FailoverTest;
 import org.eclipse.emf.cdo.tests.offline.OfflineDelayed2Test;
@@ -31,21 +32,19 @@ public class AllTestsMEMOffline extends AllConfigs
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initConfigSuites(TestSuite parent)
   {
-    // super.initTestClasses(testClasses);
+    addScenario(parent, COMBINED, MEM_OFFLINE, JVM, NATIVE);
+  }
 
+  @Override
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
+  {
     // MEM does not support raw replication
     // testClasses.add(OfflineRawTest.class);
 
     testClasses.add(OfflineTest.class);
     testClasses.add(OfflineDelayed2Test.class);
     testClasses.add(FailoverTest.class);
-  }
-
-  @Override
-  protected void initConfigSuites(TestSuite parent)
-  {
-    addScenario(parent, COMBINED, MEM_OFFLINE, JVM, NATIVE);
   }
 }

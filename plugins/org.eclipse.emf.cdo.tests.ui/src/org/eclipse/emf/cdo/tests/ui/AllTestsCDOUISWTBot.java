@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.ui;
 
 import org.eclipse.emf.cdo.tests.AllTests;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
@@ -42,7 +43,7 @@ public class AllTestsCDOUISWTBot extends ConfigTestSuite
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     testClasses.add(CDOSessionsViewTest.class);
   }

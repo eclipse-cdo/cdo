@@ -10,9 +10,12 @@
  */
 package org.eclipse.emf.cdo.tests.config;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.config.impl.ContainerConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMConfig;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMOfflineConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 
@@ -25,13 +28,13 @@ public interface IConstants
 
   public static final ContainerConfig SEPARATED = ContainerConfig.Separated.INSTANCE;
 
-  public static final RepositoryConfig.MEM MEM = RepositoryConfig.MEM.INSTANCE;
+  public static final RepositoryConfig MEM = new MEMConfig(false, false, IDGenerationLocation.STORE);
 
-  public static final RepositoryConfig.MEMAudits MEM_AUDITS = RepositoryConfig.MEMAudits.INSTANCE;
+  public static final RepositoryConfig MEM_AUDITS = new MEMConfig(true, false, IDGenerationLocation.STORE);
 
-  public static final RepositoryConfig.MEMBranches MEM_BRANCHES = RepositoryConfig.MEMBranches.INSTANCE;
+  public static final RepositoryConfig MEM_BRANCHES = new MEMConfig(true, true, IDGenerationLocation.STORE);
 
-  public static final RepositoryConfig.MEMOffline MEM_OFFLINE = RepositoryConfig.MEMOffline.INSTANCE;
+  public static final RepositoryConfig MEM_OFFLINE = new MEMOfflineConfig();
 
   public static final SessionConfig EMBEDDED = SessionConfig.Embedded.INSTANCE;
 

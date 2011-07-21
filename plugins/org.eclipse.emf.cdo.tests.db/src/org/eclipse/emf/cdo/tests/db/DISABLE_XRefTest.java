@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.tests.XRefTest;
-import org.eclipse.emf.cdo.tests.db.AllTestsDBH2.H2;
 
 /**
  * @author Eike Stepper
@@ -22,7 +21,7 @@ public class DISABLE_XRefTest extends XRefTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    skipConfig(H2.ReusableFolder.RANGE_INSTANCE);
+    // skipConfig(H2Config.RANGE_INSTANCE);
   }
 
   // @Override

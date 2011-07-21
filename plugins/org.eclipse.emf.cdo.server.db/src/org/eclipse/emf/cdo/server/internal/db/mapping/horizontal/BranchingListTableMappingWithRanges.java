@@ -1321,8 +1321,14 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
   {
     IRepository repository = accessor.getStore().getRepository();
     CDOBranchPoint base = repository.getBranchManager().getBranch(branchID).getBase();
-    InternalCDORevision baseRevision = (InternalCDORevision)repository.getRevisionManager()
-        .getRevision(id, base, /* referenceChunk = */0, /* prefetchDepth = */CDORevision.DEPTH_NONE, true);
+    InternalCDORevision baseRevision = (InternalCDORevision)repository.getRevisionManager().getRevision(id, base, /*
+                                                                                                                   * referenceChunk
+                                                                                                                   * =
+                                                                                                                   */0, /*
+                                                                                                                         * prefetchDepth
+                                                                                                                         * =
+                                                                                                                         */
+        CDORevision.DEPTH_NONE, true);
     IStoreChunkReader chunkReader = accessor.createChunkReader(baseRevision, getFeature());
     return chunkReader;
   }

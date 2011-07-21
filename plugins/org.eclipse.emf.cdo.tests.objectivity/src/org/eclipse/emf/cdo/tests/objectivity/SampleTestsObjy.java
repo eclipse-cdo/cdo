@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.objectivity;
 
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.BranchingWithCacheClearTest;
 import org.eclipse.emf.cdo.tests.InitialTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
@@ -19,10 +18,10 @@ import org.eclipse.emf.cdo.tests.RevisionDeltaCascadingBranchesTest;
 import org.eclipse.emf.cdo.tests.RevisionDeltaInBranchTest;
 import org.eclipse.emf.cdo.tests.UnsetTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_261218_Test;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
-import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -40,16 +39,12 @@ public class SampleTestsObjy extends ObjyDBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    ObjyStoreRepositoryConfig repConfig = ObjySampleConfig.INSTANCE;
-    addScenario(parent, COMBINED, repConfig, JVM, NATIVE);
+    addScenario(parent, COMBINED, new ObjyConfig(false, false), JVM, NATIVE);
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    // super.initTestClasses(testClasses);
-    // testClasses.remove(XATransactionTest.class);
-
     testClasses.clear();
 
     // testClasses.add(ComplexTest.class);
@@ -110,40 +105,4 @@ public class SampleTestsObjy extends ObjyDBConfigs
     // testClasses.add(Bugzilla_259949_Test.class);
     testClasses.add(Bugzilla_261218_Test.class);
   }
-
-  @Override
-  protected boolean hasBranchingSupport()
-  {
-    return true;
-  }
-
-  @Override
-  protected boolean hasAuditSupport()
-  {
-    return true;
-  }
-
-  public static class ObjySampleConfig extends ObjyStoreRepositoryConfig
-  {
-    private static final long serialVersionUID = 1L;
-
-    public static final SampleTestsObjy.ObjySampleConfig INSTANCE = new ObjySampleConfig("ObjectivityStore: (sample)"); //$NON-NLS-1$
-
-    public ObjySampleConfig(String name)
-    {
-      super(name);
-
-      org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM.DEBUG.setEnabled(true);
-      org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM.INFO.setEnabled(true);
-    }
-
-    @Override
-    protected void initRepositoryProperties(Map<String, String> props)
-    {
-      super.initRepositoryProperties(props);
-      props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
-      props.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
-    }
-  }
-
 }

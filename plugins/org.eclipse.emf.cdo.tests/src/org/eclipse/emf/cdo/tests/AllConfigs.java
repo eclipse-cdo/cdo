@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.tests.bugzilla.*;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public abstract class AllConfigs extends ConfigTestSuite
 {
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // General
     testClasses.add(InitialTest.class);

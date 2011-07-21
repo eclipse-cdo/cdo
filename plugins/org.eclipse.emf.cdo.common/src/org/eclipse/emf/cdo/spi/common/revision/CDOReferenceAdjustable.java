@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.spi.common.revision;
 
-
 /**
  * @author Simon McDuff
  * @since 4.0

@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
@@ -25,8 +26,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public class HorizontalBranchingMappingStrategyWithRanges extends AbstractHorizontalMappingStrategy
 {
-  private static final String PROP_COPY_ON_BRANCH = "copyOnBranch";
-
   private boolean copyOnBranch;
 
   public HorizontalBranchingMappingStrategyWithRanges()
@@ -90,7 +89,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends AbstractHorizo
   {
     super.doAfterActivate();
 
-    String value = getProperties().get(PROP_COPY_ON_BRANCH);
+    String value = getProperties().get(CDODBUtil.PROP_COPY_ON_BRANCH);
     copyOnBranch = value == null ? false : Boolean.valueOf(value);
   }
 }

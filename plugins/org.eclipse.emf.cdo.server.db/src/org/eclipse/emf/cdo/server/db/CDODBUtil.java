@@ -18,7 +18,10 @@ import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.SmartPreparedStatementCache;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategyWithRanges;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalBranchingMappingStrategyWithRanges;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalNonAuditMappingStrategy;
 
 import org.eclipse.net4j.db.IDBAdapter;
@@ -46,6 +49,16 @@ public final class CDODBUtil
    * @since 2.0
    */
   public static final String EXT_POINT_MAPPING_STRATEGIES = "mappingStrategies"; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   */
+  public static final String PROP_WITH_RANGES = "withRanges";
+
+  /**
+   * @since 4.1
+   */
+  public static final String PROP_COPY_ON_BRANCH = "copyOnBranch";
 
   private CDODBUtil()
   {
@@ -77,12 +90,7 @@ public final class CDODBUtil
    */
   public static IMappingStrategy createHorizontalMappingStrategy(boolean auditing)
   {
-    if (auditing)
-    {
-      return new HorizontalAuditMappingStrategy();
-    }
-
-    return new HorizontalNonAuditMappingStrategy();
+    return createHorizontalMappingStrategy(auditing, false, false);
   }
 
   /**
@@ -90,17 +98,51 @@ public final class CDODBUtil
    */
   public static IMappingStrategy createHorizontalMappingStrategy(boolean auditing, boolean branching)
   {
+    return createHorizontalMappingStrategy(auditing, branching, false);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static IMappingStrategy createHorizontalMappingStrategy(boolean auditing, boolean branching, boolean withRanges)
+  {
     if (branching)
     {
       if (auditing)
       {
+        if (withRanges)
+        {
+          return new HorizontalBranchingMappingStrategyWithRanges();
+        }
+
         return new HorizontalBranchingMappingStrategy();
       }
 
       throw new IllegalArgumentException("Misconfiguration: Branching requires Auditing!");
     }
 
-    return createHorizontalMappingStrategy(auditing);
+    if (auditing)
+    {
+      if (withRanges)
+      {
+        return new HorizontalAuditMappingStrategyWithRanges();
+      }
+
+      return new HorizontalAuditMappingStrategy();
+    }
+
+    return new HorizontalNonAuditMappingStrategy();
+  }
+
+  /**
+   * Creates a horizontal {@link IMappingStrategy mapping strategy} that supports all valid combinations of auditing and
+   * branching.
+   * 
+   * @since 4.1
+   */
+  public static IMappingStrategy createHorizontalMappingStrategy()
+  {
+    return new HorizontalMappingStrategy();
   }
 
   /**

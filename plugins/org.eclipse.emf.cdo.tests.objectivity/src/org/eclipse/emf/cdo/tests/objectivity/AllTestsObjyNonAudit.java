@@ -11,12 +11,11 @@
  */
 package org.eclipse.emf.cdo.tests.objectivity;
 
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
-import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -34,51 +33,14 @@ public class AllTestsObjyNonAudit extends ObjyDBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // ObjyStoreRepositoryConfig repoConfig = ObjyNonAuditConfig.INSTANCE;
-    ObjyStoreRepositoryConfig repoConfig = new ObjyNonAuditConfig("ObjectivityStore: (non-audit)"); //$NON-NLS-1$
-    addScenario(parent, COMBINED, repoConfig, JVM, NATIVE);
+    addScenario(parent, COMBINED, new ObjyConfig(false, false), JVM, NATIVE);
   }
 
   @Override
-  protected boolean hasAuditSupport()
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    return false;
-  }
+    super.initTestClasses(testClasses, scenario);
 
-  @Override
-  protected boolean hasBranchingSupport()
-  {
-    return false;
-  }
-
-  public static class ObjyNonAuditConfig extends ObjyStoreRepositoryConfig
-  {
-    private static final long serialVersionUID = 1L;
-
-    public static final AllTestsObjyNonAudit.ObjyNonAuditConfig INSTANCE = new ObjyNonAuditConfig(
-        "ObjectivityStore: (non-audit)"); //$NON-NLS-1$
-
-    public ObjyNonAuditConfig(String name)
-    {
-      super(name);
-
-      org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM.DEBUG.setEnabled(true);
-      org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM.INFO.setEnabled(true);
-    }
-
-    @Override
-    protected void initRepositoryProperties(Map<String, String> props)
-    {
-      super.initRepositoryProperties(props);
-      props.put(IRepository.Props.SUPPORTING_AUDITS, "false"); //$NON-NLS-1$
-      props.put(IRepository.Props.SUPPORTING_BRANCHES, "false"); //$NON-NLS-1$
-    }
-  }
-
-  @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
-  {
-    super.initTestClasses(testClasses);
     // There is a problem with the root resource sharing, so for now we're commenting
     // out ExternalReferenceTest and Bugzilla_259869_Test
     testClasses.remove(ExternalReferenceTest.class);

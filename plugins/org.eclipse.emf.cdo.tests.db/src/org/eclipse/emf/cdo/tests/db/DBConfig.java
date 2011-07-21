@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -29,13 +30,30 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public abstract class DBStoreRepositoryConfig extends RepositoryConfig
+public abstract class DBConfig extends RepositoryConfig
 {
   private static final long serialVersionUID = 1L;
 
-  public DBStoreRepositoryConfig(String name)
+  private boolean withRanges;
+
+  private boolean copyOnBranch;
+
+  public DBConfig(String name, boolean supportingAudits, boolean supportingBranches, boolean withRanges,
+      boolean copyOnBranch, IDGenerationLocation idGenerationLocation)
   {
-    super(name);
+    super(name, supportingAudits, supportingBranches, idGenerationLocation);
+    this.withRanges = withRanges;
+    this.copyOnBranch = copyOnBranch;
+  }
+
+  public boolean isWithRanges()
+  {
+    return withRanges;
+  }
+
+  public boolean isCopyOnBranch()
+  {
+    return copyOnBranch;
   }
 
   @Override
@@ -65,10 +83,20 @@ public abstract class DBStoreRepositoryConfig extends RepositoryConfig
   {
     Map<String, String> props = new HashMap<String, String>();
     props.put(IMappingStrategy.PROP_QUALIFIED_NAMES, "true");
+    props.put(CDODBUtil.PROP_COPY_ON_BRANCH, Boolean.toString(copyOnBranch));
     return props;
   }
 
-  protected abstract IMappingStrategy createMappingStrategy();
+  protected IMappingStrategy createMappingStrategy()
+  {
+    return CDODBUtil.createHorizontalMappingStrategy(isSupportingAudits(), isSupportingBranches(), withRanges);
+  }
+
+  @Override
+  protected String getMappingStrategySpecialization()
+  {
+    return (withRanges ? "-ranges" : "") + (copyOnBranch ? "-copy" : "");
+  }
 
   protected abstract IDBAdapter createDBAdapter();
 

@@ -27,7 +27,7 @@ public class DISABLE_XATransactionTest extends XATransactionTest
   public void testCommitFromTransactionDisabled() throws Exception
   {
     // XXX disabled because of Bug 290097
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
     super.testCommitFromTransactionDisabled();
   }
 
@@ -36,7 +36,7 @@ public class DISABLE_XATransactionTest extends XATransactionTest
   public void test_ExceptionInReadingStream() throws Exception
   {
     // XXX disabled because of Bug 290097
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
     super.test_ExceptionInReadingStream();
   }
 }

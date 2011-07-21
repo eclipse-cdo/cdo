@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.dawn.tests.common.DawnWrapperResourceTest;
 import org.eclipse.emf.cdo.dawn.tests.common.GMFTest;
 import org.eclipse.emf.cdo.dawn.tests.common.TestFrameworkTest;
 import org.eclipse.emf.cdo.tests.AllTests;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -35,17 +36,17 @@ public class AllTestsDawn extends AllTests
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initConfigSuites(TestSuite parent)
+  {
+    addScenario(parent, COMBINED, MEM, JVM, NATIVE);
+  }
+
+  @Override
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     testClasses.add(TestFrameworkTest.class);
     testClasses.add(GMFTest.class);
     testClasses.add(DawnWrapperResourceTest.class);
     testClasses.add(DawnCodeGenGMFFragmentTest.class);
-  }
-
-  @Override
-  protected void initConfigSuites(TestSuite parent)
-  {
-    addScenario(parent, COMBINED, MEM, JVM, NATIVE);
   }
 }

@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -93,6 +94,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private static final long serialVersionUID = 1L;
 
+  private boolean supportingAudits;
+
+  private boolean supportingBranches;
+
+  private IDGenerationLocation idGenerationLocation;
+
   protected transient Map<String, InternalRepository> repositories;
 
   /**
@@ -107,9 +114,41 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private transient IRepository.WriteAccessHandler resourcePathChecker;
 
-  public RepositoryConfig(String name)
+  public RepositoryConfig(String name, boolean supportingAudits, boolean supportingBranches,
+      IDGenerationLocation idGenerationLocation)
   {
     super(name);
+
+    this.supportingAudits = supportingAudits;
+    this.supportingBranches = supportingBranches;
+    this.idGenerationLocation = idGenerationLocation;
+  }
+
+  public boolean isSupportingAudits()
+  {
+    return supportingAudits;
+  }
+
+  public boolean isSupportingBranches()
+  {
+    return supportingBranches;
+  }
+
+  public IDGenerationLocation getIDGenerationLocation()
+  {
+    return idGenerationLocation;
+  }
+
+  @Override
+  public String getName()
+  {
+    return super.getName() + (supportingBranches ? "-branching" : supportingAudits ? "-auditing" : "")
+        + getMappingStrategySpecialization() + (idGenerationLocation == IDGenerationLocation.CLIENT ? "-uuids" : "");
+  }
+
+  protected String getMappingStrategySpecialization()
+  {
+    return "";
   }
 
   public void setRestarting(boolean restarting)
@@ -139,8 +178,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
     }
 
-    // int xxx;
-    // repositoryProperties.put(IRepository.Props.ID_GENERATION_LOCATION, IDGenerationLocation.CLIENT.toString());
     return repositoryProperties;
   }
 
@@ -195,8 +232,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected void initRepositoryProperties(Map<String, String> props)
   {
     props.put(Props.OVERRIDE_UUID, ""); // UUID := name !!!
-    props.put(Props.SUPPORTING_AUDITS, "false");
-    props.put(Props.SUPPORTING_BRANCHES, "false");
+    props.put(Props.SUPPORTING_AUDITS, Boolean.toString(supportingAudits));
+    props.put(Props.SUPPORTING_BRANCHES, Boolean.toString(supportingBranches));
+    props.put(Props.ID_GENERATION_LOCATION, idGenerationLocation.toString());
+
   }
 
   public void registerRepository(final InternalRepository repository)
@@ -542,7 +581,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     public OfflineConfig(String name)
     {
-      super(name);
+      super(name, true, true, IDGenerationLocation.CLIENT);
     }
 
     @Override
@@ -557,14 +596,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     {
       super.deactivateRepositories();
       stopMasterTransport();
-    }
-
-    @Override
-    protected void initRepositoryProperties(Map<String, String> props)
-    {
-      super.initRepositoryProperties(props);
-      props.put(Props.SUPPORTING_AUDITS, "true");
-      props.put(Props.SUPPORTING_BRANCHES, "true");
     }
 
     @Override
@@ -755,97 +786,29 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   /**
    * @author Eike Stepper
    */
-  public static class MEM extends RepositoryConfig
+  public static class MEMConfig extends RepositoryConfig
   {
-    public static final MEM INSTANCE = new MEM();
-
     private static final long serialVersionUID = 1L;
 
-    public MEM()
+    public MEMConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
     {
-      super("MEM");
+      super("MEM", supportingAudits, supportingBranches, idGenerationLocation);
     }
 
     public IStore createStore(String repoName)
     {
       return MEMStoreUtil.createMEMStore();
     }
-
-    @Override
-    protected void initRepositoryProperties(Map<String, String> props)
-    {
-      super.initRepositoryProperties(props);
-      props.put(Props.SUPPORTING_AUDITS, "false");
-      props.put(Props.SUPPORTING_BRANCHES, "false");
-    }
   }
 
   /**
    * @author Eike Stepper
    */
-  public static class MEMAudits extends RepositoryConfig
+  public static class MEMOfflineConfig extends OfflineConfig
   {
-    public static final MEMAudits INSTANCE = new MEMAudits();
-
     private static final long serialVersionUID = 1L;
 
-    public MEMAudits()
-    {
-      super("MEMAudits");
-    }
-
-    public IStore createStore(String repoName)
-    {
-      return MEMStoreUtil.createMEMStore();
-    }
-
-    @Override
-    protected void initRepositoryProperties(Map<String, String> props)
-    {
-      super.initRepositoryProperties(props);
-      props.put(Props.SUPPORTING_AUDITS, "true");
-      props.put(Props.SUPPORTING_BRANCHES, "false");
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class MEMBranches extends RepositoryConfig
-  {
-    public static final MEMBranches INSTANCE = new MEMBranches();
-
-    private static final long serialVersionUID = 1L;
-
-    public MEMBranches()
-    {
-      super("MEMBranches");
-    }
-
-    public IStore createStore(String repoName)
-    {
-      return MEMStoreUtil.createMEMStore();
-    }
-
-    @Override
-    protected void initRepositoryProperties(Map<String, String> props)
-    {
-      super.initRepositoryProperties(props);
-      props.put(Props.SUPPORTING_AUDITS, "true");
-      props.put(Props.SUPPORTING_BRANCHES, "true");
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class MEMOffline extends OfflineConfig
-  {
-    public static final MEMOffline INSTANCE = new MEMOffline();
-
-    private static final long serialVersionUID = 1L;
-
-    public MEMOffline()
+    public MEMOfflineConfig()
     {
       super("MEMOffline");
     }

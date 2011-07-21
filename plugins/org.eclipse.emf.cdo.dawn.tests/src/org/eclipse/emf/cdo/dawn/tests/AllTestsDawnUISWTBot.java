@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnCreationWizardSWTBotTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.MultipleResourcesTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.SimpleDiagramTest;
 import org.eclipse.emf.cdo.tests.AllTests;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
@@ -51,9 +52,8 @@ public class AllTestsDawnUISWTBot extends ConfigTestSuite
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-
     /******************** GMF **********************/
     testClasses.add(DawnPreferencesTest.class);
     testClasses.add(DawnCreationWizardSWTBotTest.class);

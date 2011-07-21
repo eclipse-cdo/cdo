@@ -30,8 +30,8 @@ public class CDOIDAndBranchImpl implements CDOIDAndBranch
 
   public CDOIDAndBranchImpl(CDOID id, CDOBranch branch)
   {
-    CheckUtil.checkNull(id, "id");
-    CheckUtil.checkNull(branch, "branch");
+    CheckUtil.checkArg(id, "id");
+    CheckUtil.checkArg(branch, "branch");
 
     this.id = id;
     this.branch = branch;

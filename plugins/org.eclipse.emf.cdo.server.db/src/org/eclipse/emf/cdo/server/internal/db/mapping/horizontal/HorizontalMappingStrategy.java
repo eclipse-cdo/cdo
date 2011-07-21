@@ -240,7 +240,13 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
     boolean auditing = getBooleanProperty(Props.SUPPORTING_AUDITS);
     boolean branching = getBooleanProperty(Props.SUPPORTING_BRANCHES);
 
-    delegate = CDODBUtil.createHorizontalMappingStrategy(auditing, branching);
+    boolean withRanges = false;
+    if (auditing || branching)
+    {
+      withRanges = getBooleanProperty(CDODBUtil.PROP_WITH_RANGES);
+    }
+
+    delegate = CDODBUtil.createHorizontalMappingStrategy(auditing, branching, withRanges);
     delegate.setStore(store);
     delegate.setProperties(properties);
     LifecycleUtil.activate(delegate);

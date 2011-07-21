@@ -11,14 +11,15 @@
 package org.eclipse.emf.cdo.tests.objectivity;
 
 import org.eclipse.emf.cdo.tests.AllConfigs;
-import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
-import org.eclipse.emf.cdo.tests.BranchingTest;
+import org.eclipse.emf.cdo.tests.AuditTest;
 import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
+import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.XATransactionTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_303807_Test;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -29,13 +30,13 @@ import java.util.List;
 public abstract class ObjyDBConfigs extends AllConfigs
 {
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    super.initTestClasses(testClasses);
+    super.initTestClasses(testClasses, scenario);
 
     // remove BranchingTests because most mappings do not support it
     // Subclasses should add Banching tests if supported
-    if (!hasBranchingSupport())
+    if (!scenario.getRepositoryConfig().isSupportingBranches())
     {
       testClasses.remove(BranchingTest.class);
       testClasses.remove(BranchingSameSessionTest.class);
@@ -43,7 +44,7 @@ public abstract class ObjyDBConfigs extends AllConfigs
       testClasses.remove(Bugzilla_303807_Test.class);
     }
 
-    if (!hasAuditSupport())
+    if (!scenario.getRepositoryConfig().isSupportingAudits())
     {
       // non-audit mode - remove audit tests
       testClasses.remove(AuditTest.class);
@@ -58,8 +59,4 @@ public abstract class ObjyDBConfigs extends AllConfigs
     // sometime cause a crash (Investigate!!)
     testClasses.remove(XATransactionTest.class);
   }
-
-  protected abstract boolean hasBranchingSupport();
-
-  protected abstract boolean hasAuditSupport();
 }

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.dawn.tests;
 
 import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.InitialTest;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 
 import java.util.List;
@@ -30,14 +31,14 @@ public class TCPConfigStarter extends AllConfigs
   }
 
   @Override
-  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
-  {
-    testClasses.add(InitialTest.class);
-  }
-
-  @Override
   protected void initConfigSuites(TestSuite parent)
   {
     addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
+  }
+
+  @Override
+  protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
+  {
+    testClasses.add(InitialTest.class);
   }
 }

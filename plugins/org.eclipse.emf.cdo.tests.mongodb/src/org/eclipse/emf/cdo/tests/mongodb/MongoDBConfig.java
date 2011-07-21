@@ -10,10 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.mongodb;
 
-import org.eclipse.emf.cdo.server.CDOServerBrowser;
-import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
 import org.eclipse.emf.cdo.server.mongodb.CDOMongoDBUtil;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
@@ -24,51 +22,23 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 
-import java.util.Map;
-
 /**
  * @author Eike Stepper
  */
-public class MongoDBStoreRepositoryConfig extends RepositoryConfig
+public class MongoDBConfig extends RepositoryConfig
 {
-  public static final MongoDBStoreRepositoryConfig INSTANCE = new MongoDBStoreRepositoryConfig(false, false);
-
-  public static final MongoDBStoreRepositoryConfig AUDITING = new MongoDBStoreRepositoryConfig(true, false);
-
-  public static final MongoDBStoreRepositoryConfig BRANCHING = new MongoDBStoreRepositoryConfig(true, true);
-
   private static final long serialVersionUID = 1L;
 
-  private boolean auditing;
-
-  private boolean branching;
-
-  private transient CDOServerBrowser mongoBrowser;
-
-  public MongoDBStoreRepositoryConfig(boolean auditing, boolean branching)
+  public MongoDBConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
   {
-    super("MongoDBStore" + (branching ? " (branching)" : auditing ? " (auditing)" : ""));
-    this.auditing = auditing;
-    this.branching = branching;
+    super("MongoDB", supportingAudits, supportingBranches, idGenerationLocation);
   }
 
   @Override
   public void setUp() throws Exception
   {
     CDOMongoDBUtil.prepareContainer(IPluginContainer.INSTANCE);
-
-    mongoBrowser = new CDOServerBrowser(MongoDBStore.REPOS);
-    mongoBrowser.setPort(7778);
-    mongoBrowser.activate();
-
     super.setUp();
-  }
-
-  @Override
-  public void tearDown() throws Exception
-  {
-    mongoBrowser.deactivate();
-    super.tearDown();
   }
 
   public IStore createStore(String repoName)
@@ -106,13 +76,5 @@ public class MongoDBStoreRepositoryConfig extends RepositoryConfig
         mongo.close();
       }
     }
-  }
-
-  @Override
-  protected void initRepositoryProperties(Map<String, String> props)
-  {
-    super.initRepositoryProperties(props);
-    props.put(IRepository.Props.SUPPORTING_AUDITS, Boolean.toString(auditing));
-    props.put(IRepository.Props.SUPPORTING_BRANCHES, Boolean.toString(branching));
   }
 }

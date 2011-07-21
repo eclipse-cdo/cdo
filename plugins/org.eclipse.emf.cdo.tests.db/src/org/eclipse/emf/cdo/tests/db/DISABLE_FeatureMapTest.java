@@ -21,7 +21,7 @@ public class DISABLE_FeatureMapTest extends FeatureMapTest
   @Override
   public void testFeatureMaps() throws Exception
   {
-    skipConfig(AllTestsDBPsql.Psql.INSTANCE);
+    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
     super.testFeatureMaps();
   }
 }

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,11 +26,16 @@ public class AllTestsDBH2Branching extends DBConfigs
     return new AllTestsDBH2Branching().getTestSuite("CDO Tests (DBStore H2 Horizontal - branching mode)");
   }
 
+  public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)
+  {
+    suite.addScenario(parent, COMBINED, new H2Config(true, true, false, false, idGenerationLocation), JVM, NATIVE);
+    suite.addScenario(parent, COMBINED, new H2Config(true, true, true, false, idGenerationLocation), JVM, NATIVE);
+    suite.addScenario(parent, COMBINED, new H2Config(true, true, true, true, idGenerationLocation), JVM, NATIVE);
+  }
+
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new H2Config(true, true, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, COMBINED, new H2Config(true, true, true, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, COMBINED, new H2Config(true, true, true, true, IDGenerationLocation.STORE), JVM, NATIVE);
+    initConfigSuites(this, parent, IDGenerationLocation.STORE);
   }
 }

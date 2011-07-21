@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,9 +26,14 @@ public class AllTestsDBH2NonAudit extends DBConfigs
     return new AllTestsDBH2NonAudit().getTestSuite("CDO Tests (DBStore H2 Horizontal - non-audit mode)");
   }
 
+  public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)
+  {
+    suite.addScenario(parent, COMBINED, new H2Config(false, false, false, false, idGenerationLocation), JVM, NATIVE);
+  }
+
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new H2Config(false, false, false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    initConfigSuites(this, parent, IDGenerationLocation.STORE);
   }
 }

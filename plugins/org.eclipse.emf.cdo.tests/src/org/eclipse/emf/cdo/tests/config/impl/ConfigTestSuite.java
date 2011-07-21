@@ -53,7 +53,7 @@ public abstract class ConfigTestSuite implements IConstants
   // }
   // }
 
-  protected void addScenario(TestSuite parent, ContainerConfig containerConfig, RepositoryConfig repositoryConfig,
+  public void addScenario(TestSuite parent, ContainerConfig containerConfig, RepositoryConfig repositoryConfig,
       SessionConfig sessionConfig, ModelConfig modelConfig)
   {
     IScenario scenario = new Scenario();

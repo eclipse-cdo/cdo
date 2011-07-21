@@ -35,16 +35,8 @@ public class AllTestsDBH2All extends DBConfigs
 
   private void addScenarios(TestSuite parent, IDGenerationLocation idGenerationLocation)
   {
-    // Non-audit
-    addScenario(parent, COMBINED, new H2Config(false, false, false, false, idGenerationLocation), JVM, NATIVE);
-
-    // Audit
-    addScenario(parent, COMBINED, new H2Config(true, false, false, false, idGenerationLocation), JVM, NATIVE);
-    addScenario(parent, COMBINED, new H2Config(true, false, true, false, idGenerationLocation), JVM, NATIVE);
-
-    // Branching
-    addScenario(parent, COMBINED, new H2Config(true, true, false, false, idGenerationLocation), JVM, NATIVE);
-    addScenario(parent, COMBINED, new H2Config(true, true, true, false, idGenerationLocation), JVM, NATIVE);
-    addScenario(parent, COMBINED, new H2Config(true, true, true, true, idGenerationLocation), JVM, NATIVE);
+    AllTestsDBH2NonAudit.initConfigSuites(this, parent, idGenerationLocation);
+    AllTestsDBH2Audit.initConfigSuites(this, parent, idGenerationLocation);
+    AllTestsDBH2Branching.initConfigSuites(this, parent, idGenerationLocation);
   }
 }

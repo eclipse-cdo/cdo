@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util;
 
+import java.lang.reflect.Method;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.security.SecureRandom;
@@ -40,14 +41,18 @@ public final class UUIDGenerator
     {
       try
       {
-        nodeAddress = getHardwareAddressAddress();
+        nodeAddress = getHardwareAddress();
       }
       catch (Throwable ex)
       {
+        //$FALL-THROUGH$
+      }
+
+      if (nodeAddress == null || nodeAddress.length != NODE_ADDRESS_BYTES)
+      {
         // Generate a 48 bit node identifier;
         // This is an alternative to the IEEE 802 host address, which is not available in Java.
-        //
-        nodeAddress = new byte[6];
+        nodeAddress = new byte[NODE_ADDRESS_BYTES];
         random.nextBytes(nodeAddress);
       }
     }
@@ -188,8 +193,11 @@ public final class UUIDGenerator
     System.arraycopy(index, BASE64_INDEX_OFFSET, BASE64_INDEX, 0, length);
   }
 
-  private byte[] getHardwareAddressAddress() throws Throwable
+  private byte[] getHardwareAddress() throws Throwable
   {
+    // getHardwareAddress is a JRE 1.6 method and must be called reflectiviely
+    Method method = ReflectUtil.getMethod(NetworkInterface.class, "getHardwareAddress");
+
     Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
     while (networkInterfaces.hasMoreElements())
     {
@@ -197,8 +205,7 @@ public final class UUIDGenerator
 
       try
       {
-        // This is a call to a JRE 1.6 method!
-        byte[] nodeAddress = networkInterface.getHardwareAddress();
+        byte[] nodeAddress = (byte[])ReflectUtil.invokeMethod(method, networkInterface);
         if (nodeAddress != null && nodeAddress.length == NODE_ADDRESS_BYTES)
         {
           return nodeAddress;

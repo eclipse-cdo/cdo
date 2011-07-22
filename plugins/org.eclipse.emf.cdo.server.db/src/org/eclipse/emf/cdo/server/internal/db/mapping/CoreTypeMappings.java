@@ -853,6 +853,11 @@ public class CoreTypeMappings
     protected Object getDefaultValue()
     {
       Object defaultValue = getFeature().getDefaultValue();
+      if (defaultValue == null)
+      {
+        return null;
+      }
+      
       EFactory factory = getFeature().getEType().getEPackage().getEFactoryInstance();
       return factory.convertToString((EDataType)getFeature().getEType(), defaultValue);
     }

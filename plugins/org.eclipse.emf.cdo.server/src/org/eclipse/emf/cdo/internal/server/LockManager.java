@@ -8,6 +8,7 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Caspar De Groot - write options
  */
 package org.eclipse.emf.cdo.internal.server;
 
@@ -33,7 +34,7 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
@@ -51,7 +52,7 @@ import java.util.Map.Entry;
  * @author Simon McDuff
  * @since 3.0
  */
-public class LockManager extends RWLockManager<Object, IView> implements InternalLockManager
+public class LockManager extends RWOLockManager<Object, IView> implements InternalLockManager
 {
   private InternalRepository repository;
 
@@ -106,10 +107,10 @@ public class LockManager extends RWLockManager<Object, IView> implements Interna
     this.repository = repository;
   }
 
-  public Object getLockEntryObject(Object key)
+  public synchronized Object getLockEntryObject(Object key)
   {
-    LockEntry<Object, IView> lockEntry = getLockEntry(key);
-    return lockEntry.getObject();
+    LockState<Object, IView> lockState = getObjectToLocksMap().get(key);
+    return lockState.getLockedObject();
   }
 
   public Object getLockKey(CDOID id, CDOBranch branch)
@@ -122,35 +123,35 @@ public class LockManager extends RWLockManager<Object, IView> implements Interna
     return id;
   }
 
-  public Map<CDOID, LockGrade> getLocks(final IView view)
+  public synchronized Map<CDOID, LockGrade> getLocks(final IView view)
   {
     final Map<CDOID, LockGrade> result = new HashMap<CDOID, LockGrade>();
-    LockEntryHandler<Object, IView> handler = new LockEntryHandler<Object, IView>()
+
+    for (LockState<Object, IView> lockState : getObjectToLocksMap().values())
     {
-      public boolean handleLockEntry(LockEntry<Object, IView> lockEntry)
+      LockGrade grade = LockGrade.NONE;
+      if (lockState.hasLock(LockType.READ, view, false))
       {
-        CDOID id = getLockKeyID(lockEntry.getObject());
-        LockGrade grade = LockGrade.NONE;
-        if (lockEntry.isReadLock(view))
-        {
-          grade = grade.getUpdated(LockType.READ, true);
-        }
-
-        if (lockEntry.isWriteLock(view))
-        {
-          grade = grade.getUpdated(LockType.WRITE, true);
-        }
-
-        if (grade != LockGrade.NONE)
-        {
-          result.put(id, grade);
-        }
-
-        return true;
+        grade = grade.getUpdated(LockType.READ, true);
       }
-    };
 
-    handleLockEntries(view, handler);
+      if (lockState.hasLock(LockType.WRITE, view, false))
+      {
+        grade = grade.getUpdated(LockType.WRITE, true);
+      }
+
+      if (lockState.hasLock(LockType.OPTION, view, false))
+      {
+        grade = grade.getUpdated(LockType.OPTION, true);
+      }
+
+      if (grade != LockGrade.NONE)
+      {
+        CDOID id = getLockKeyID(lockState.getLockedObject());
+        result.put(id, grade);
+      }
+    }
+
     return result;
   }
 
@@ -482,6 +483,7 @@ public class LockManager extends RWLockManager<Object, IView> implements Interna
 
       Collection<Object> readLocks = new ArrayList<Object>();
       Collection<Object> writeLocks = new ArrayList<Object>();
+      Collection<Object> writeOptions = new ArrayList<Object>();
       for (Entry<CDOID, LockGrade> entry : area.getLocks().entrySet())
       {
         Object key = getLockKey(entry.getKey(), area.getBranch());
@@ -495,12 +497,18 @@ public class LockManager extends RWLockManager<Object, IView> implements Interna
         {
           writeLocks.add(key);
         }
+
+        if (grade.isOption())
+        {
+          writeOptions.add(key);
+        }
       }
 
       try
       {
         lock(LockType.READ, view, readLocks, 1000L);
         lock(LockType.WRITE, view, writeLocks, 1000L);
+        lock(LockType.OPTION, view, writeOptions, 1000L);
       }
       catch (InterruptedException ex)
       {

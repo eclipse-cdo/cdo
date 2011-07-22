@@ -111,7 +111,27 @@ public interface IDurableLockingManager
    */
   public enum LockGrade
   {
-    NONE(0), READ(1), WRITE(2), READ_WRITE(READ.getValue() | WRITE.getValue());
+    NONE(0), READ(1), WRITE(2), READ_WRITE(READ.getValue() | WRITE.getValue()),
+
+    /**
+     * @since 4.1
+     */
+    OPTION(4),
+
+    /**
+     * @since 4.1
+     */
+    READ_OPTION(READ.getValue() | OPTION.getValue()),
+
+    /**
+     * @since 4.1
+     */
+    WRITE_OPTION(WRITE.getValue() | OPTION.getValue()),
+
+    /**
+     * @since 4.1
+     */
+    READ_WRITE_OPTION(READ.getValue() | WRITE.getValue() | OPTION.getValue());
 
     private final int value;
 
@@ -133,6 +153,14 @@ public interface IDurableLockingManager
     public boolean isWrite()
     {
       return (value & 2) != 0;
+    }
+
+    /**
+     * @since 4.1
+     */
+    public boolean isOption()
+    {
+      return (value & 4) != 0;
     }
 
     public LockGrade getUpdated(LockType type, boolean on)
@@ -158,12 +186,29 @@ public interface IDurableLockingManager
         return WRITE;
       }
 
+      if (type == LockType.OPTION)
+      {
+        return OPTION;
+      }
+
       return NONE;
     }
 
+    /**
+     * @deprecated Use {@link #get(boolean, boolean, boolean)}
+     */
+    @Deprecated
     public static LockGrade get(boolean read, boolean write)
     {
       return get((read ? 1 : 0) | (write ? 2 : 0));
+    }
+
+    /**
+     * @since 4.1
+     */
+    public static LockGrade get(boolean read, boolean write, boolean option)
+    {
+      return get((read ? 1 : 0) | (write ? 2 : 0) | (option ? 4 : 0));
     }
 
     public static LockGrade get(int value)
@@ -181,6 +226,18 @@ public interface IDurableLockingManager
 
       case 3:
         return READ_WRITE;
+
+      case 4:
+        return OPTION;
+
+      case 1 | 4:
+        return READ_OPTION;
+
+      case 2 | 4:
+        return WRITE_OPTION;
+
+      case 1 | 2 | 4:
+        return READ_WRITE_OPTION;
 
       default:
         throw new IllegalArgumentException("Invalid lock grade: " + value);

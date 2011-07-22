@@ -126,6 +126,11 @@ public interface CDOObject extends EObject, CDOWithID
   public CDOLock cdoWriteLock();
 
   /**
+   * @since 4.1
+   */
+  public CDOLock cdoWriteOption();
+
+  /**
    * Ensures that the revisions of the contained objects up to the given depth are in the local
    * {@link CDORevisionManager revision cache}. Subsequent access to the respective contained objects will not lead to
    * server round-trips after calling this method.

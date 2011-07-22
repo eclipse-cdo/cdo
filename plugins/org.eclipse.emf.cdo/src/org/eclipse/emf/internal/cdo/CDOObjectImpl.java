@@ -205,6 +205,19 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return new CDOLockImpl(this, LockType.WRITE);
   }
 
+  /**
+   * @since 4.1
+   */
+  public CDOLock cdoWriteOption()
+  {
+    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    {
+      return CDOLockImpl.NOOP;
+    }
+
+    return new CDOLockImpl(this, LockType.OPTION);
+  }
+
   public void cdoInternalSetID(CDOID id)
   {
     if (TRACER.isEnabled())

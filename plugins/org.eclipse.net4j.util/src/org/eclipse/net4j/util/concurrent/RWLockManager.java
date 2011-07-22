@@ -32,7 +32,9 @@ import java.util.Set;
  * 
  * @author Simon McDuff
  * @since 2.0
+ * @deprecated Use {@link RWOLockManager}
  */
+@Deprecated
 public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLockManager<OBJECT, CONTEXT>
 {
   private LockStrategy<OBJECT, CONTEXT> readLockStrategy = new LockStrategy<OBJECT, CONTEXT>()
@@ -385,7 +387,9 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @author Simon McDuff
    * @since 3.1
+   * @deprecated Use {@link RWOLockManager}
    */
+  @Deprecated
   protected interface LockStrategy<OBJECT, CONTEXT>
   {
     public boolean isLocked(LockEntry<OBJECT, CONTEXT> entry, CONTEXT context);
@@ -402,7 +406,9 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @author Simon McDuff
    * @since 3.1
+   * @deprecated Use {@link RWOLockManager}
    */
+  @Deprecated
   protected interface LockEntry<OBJECT, CONTEXT>
   {
     public OBJECT getObject();
@@ -443,7 +449,9 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
   /**
    * @author Eike Stepper
    * @since 3.1
+   * @deprecated Use {@link RWOLockManager}
    */
+  @Deprecated
   protected interface LockEntryHandler<OBJECT, CONTEXT>
   {
     public boolean handleLockEntry(LockEntry<OBJECT, CONTEXT> lockEntry);

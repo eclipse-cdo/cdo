@@ -8,6 +8,7 @@
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
+ *    Caspar De Groot - write options 
  */
 package org.eclipse.emf.cdo.tests;
 
@@ -25,7 +26,7 @@ import org.eclipse.emf.cdo.util.LockTimeoutException;
 import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.Collections;
@@ -40,9 +41,73 @@ import java.util.concurrent.TimeUnit;
  */
 public class LockingManagerTest extends AbstractLockingTest
 {
+  public void testWriteOptions() throws Exception
+  {
+    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<Integer, Integer>();
+
+    Set<Integer> keys = new HashSet<Integer>();
+    keys.add(1);
+    lockingManager.lock(LockType.OPTION, 1, keys, 1000);
+
+    // (R=Read, W=Write, WO=WriteOption)
+    // Scenario 1: 1 has WO, 2 requests W -> fail
+    keys.clear();
+    keys.add(1);
+    
+    try
+    {
+      lockingManager.lock(LockType.WRITE, 2, keys, 1000); // Must fail
+      fail("Should have thrown an exception");
+    }
+    catch (Exception e)
+    {
+    }
+
+    // Scenario 2: 1 has WO, 2 requests R -> succeed
+    try
+    {
+      lockingManager.lock(LockType.READ, 2, keys, 1000); // Must succeed
+    }
+    catch (Exception e)
+    {
+      fail("Should not have thrown an exception");
+    }
+
+    // Scenario 3: 1 has WO, 2 has R, 1 requests W -> fail
+    try
+    {
+      lockingManager.lock(LockType.WRITE, 1, keys, 1000); // Must fail
+      fail("Should have thrown an exception");
+    }
+    catch (Exception e)
+    {
+    }
+
+    // Scenario 4: 1 has WO, 2 has R, 2 requests WO -> fail
+    try
+    {
+      lockingManager.lock(LockType.OPTION, 2, keys, 1000); // Must fail
+      fail("Should have thrown an exception");
+    }
+    catch (Exception e)
+    {
+    }
+
+    // Scenario 5: 1 has WO, 2 has nothing, 2 requests WO -> fail
+    lockingManager.unlock(LockType.READ, 2, keys);
+    try
+    {
+      lockingManager.lock(LockType.OPTION, 2, keys, 1000); // Must fail
+      fail("Should have thrown an exception");
+    }
+    catch (Exception e)
+    {
+    }
+  }
+
   public void testBasicUpgradeFromReadToWriteLock() throws Exception
   {
-    final RWLockManager<Integer, Integer> lockingManager = new RWLockManager<Integer, Integer>();
+    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<Integer, Integer>();
 
     Runnable step1 = new Runnable()
     {
@@ -127,7 +192,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
   public void testBasicWrongUnlock() throws Exception
   {
-    final RWLockManager<Integer, Integer> lockingManager = new RWLockManager<Integer, Integer>();
+    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<Integer, Integer>();
     Set<Integer> keys = new HashSet<Integer>();
     keys.add(1);
     lockingManager.lock(LockType.READ, 1, keys, 10000);
@@ -163,7 +228,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     start = System.currentTimeMillis();
     assertEquals(false, CDOUtil.getCDOObject(company2).cdoWriteLock().tryLock(2, TimeUnit.SECONDS));
-    assertEquals(true, System.currentTimeMillis() - start > 2000);
+    assertEquals(true, System.currentTimeMillis() - start >= 2000);
   }
 
   public void testReadLockByOthers() throws Exception

@@ -53,6 +53,11 @@ public interface IRWLockManager<OBJECT, CONTEXT>
    */
   public static enum LockType
   {
-    WRITE, READ
+    WRITE, READ,
+
+    /**
+     * @since 3.2
+     */
+    OPTION
   }
 }

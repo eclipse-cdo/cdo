@@ -46,6 +46,18 @@ public class AbstractLockingTest extends AbstractCDOTest
     cdoObject.cdoWriteLock().unlock();
   }
 
+  protected static void writeOption(EObject object) throws InterruptedException
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    assertEquals(true, cdoObject.cdoWriteOption().tryLock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+  }
+
+  protected static void writeUnoption(EObject object) throws InterruptedException
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    cdoObject.cdoWriteOption().unlock();
+  }
+
   protected static void assertReadLock(boolean expected, EObject object)
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
@@ -56,5 +68,11 @@ public class AbstractLockingTest extends AbstractCDOTest
   {
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
     assertEquals(expected, cdoObject.cdoWriteLock().isLocked());
+  }
+
+  protected static void assertWriteOption(boolean expected, EObject object)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    assertEquals(expected, cdoObject.cdoWriteOption().isLocked());
   }
 }

@@ -65,7 +65,7 @@ public class CDOLockImpl implements CDOLock
   {
     try
     {
-      object.cdoView().lockObjects(Collections.singletonList(object), type, CDOLock.WAIT);
+      object.cdoView().lockObjects(Collections.singletonList(object), type, WAIT);
     }
     catch (InterruptedException ex)
     {
@@ -112,7 +112,7 @@ public class CDOLockImpl implements CDOLock
   {
     try
     {
-      object.cdoView().lockObjects(Collections.singletonList(object), type, CDOLock.NO_WAIT);
+      object.cdoView().lockObjects(Collections.singletonList(object), type, NO_WAIT);
       return true;
     }
     catch (LockTimeoutException ex)

@@ -89,7 +89,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.RWLockManager;
+import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -183,7 +183,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   };
 
-  private IRWLockManager<CDOSessionImpl, Object> lockmanager = new RWLockManager<CDOSessionImpl, Object>();
+  private IRWLockManager<CDOSessionImpl, Object> lockManager = new RWOLockManager<CDOSessionImpl, Object>();
 
   @ExcludeFromDump
   private Set<CDOSessionImpl> singletonCollection = Collections.singleton(this);
@@ -530,7 +530,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     try
     {
-      lockmanager.lock(LockType.WRITE, key, this, RWLockManager.WAIT);
+      lockManager.lock(LockType.WRITE, key, this, IRWLockManager.WAIT);
     }
     catch (InterruptedException ex)
     {
@@ -540,7 +540,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   public void releaseAtomicRequestLock(Object key)
   {
-    lockmanager.unlock(LockType.WRITE, key, singletonCollection);
+    lockManager.unlock(LockType.WRITE, key, singletonCollection);
   }
 
   @Override

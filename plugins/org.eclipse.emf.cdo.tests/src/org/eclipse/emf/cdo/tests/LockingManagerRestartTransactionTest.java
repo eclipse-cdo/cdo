@@ -247,6 +247,36 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     assertWriteLock(true, company);
   }
 
+  public void testWriteOptionAfterEnable() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+
+    String durableLockingID = transaction.enableDurableLocking(true);
+    writeOption(company);
+
+    restart(durableLockingID);
+
+    company = (Company)resource.getContents().get(0);
+    assertWriteOption(true, company);
+  }
+
+  public void testWriteOptionBeforeEnable() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+
+    writeOption(company);
+    String durableLockingID = transaction.enableDurableLocking(true);
+
+    restart(durableLockingID);
+
+    company = (Company)resource.getContents().get(0);
+    assertWriteOption(true, company);
+  }
+
   public void testLockUpgradeAfterEnable() throws Exception
   {
     Company company = getModel1Factory().createCompany();

@@ -198,6 +198,19 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
     return new CDOLockImpl(this, LockType.WRITE);
   }
 
+  /**
+   * @since 4.1
+   */
+  public CDOLock cdoWriteOption()
+  {
+    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    {
+      return CDOLockImpl.NOOP;
+    }
+
+    return new CDOLockImpl(this, LockType.OPTION);
+  }
+
   public EList<Adapter> eAdapters()
   {
     return instance.eAdapters();

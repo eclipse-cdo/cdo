@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo" version="2">
+    <resource path="src/org/eclipse/emf/cdo/CDOObject.java" type="org.eclipse.emf.cdo.CDOObject">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.CDOObject"/>
+                <message_argument value="cdoWriteOption()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/CDOObjectReference.java" type="org.eclipse.emf.cdo.CDOObjectReference">
         <filter id="574619656">
             <message_arguments>

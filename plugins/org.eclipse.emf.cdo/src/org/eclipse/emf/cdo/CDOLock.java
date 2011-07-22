@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.RWLockManager;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -31,15 +31,9 @@ import java.util.concurrent.locks.Lock;
  */
 public interface CDOLock extends Lock
 {
-  /**
-   * TODO Simon: JavaDoc
-   */
-  public static final int WAIT = RWLockManager.WAIT;
+  public static final int WAIT = IRWLockManager.WAIT;
 
-  /**
-   * TODO Simon: JavaDoc
-   */
-  public static final int NO_WAIT = RWLockManager.NO_WAIT;
+  public static final int NO_WAIT = IRWLockManager.NO_WAIT;
 
   /**
    * TODO Simon: JavaDoc

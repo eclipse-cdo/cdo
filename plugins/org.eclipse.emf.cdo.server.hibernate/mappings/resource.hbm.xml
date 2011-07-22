@@ -19,19 +19,19 @@
 		<meta attribute="epackage">http://www.eclipse.org/emf/CDO/Eresource/4.0.0</meta>
 		<tuplizer entity-mode="pojo" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
 		<tuplizer entity-mode="dynamic-map" class="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDORevisionTuplizer"/>
-		<id type="long" name="e_id" column="e_id" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
+		<id type="long" name="e_id" column="`e_id`" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticIdPropertyHandler">
 			<meta attribute="syntheticId">true</meta>
 			<generator class="native"/>
 		</id>
 		<discriminator column="`dtype`" type="string"/>
-		<property name="e_version" column="e_version" type="java.lang.Integer" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
+		<property name="e_version" column="`e_version`" type="java.lang.Integer" access="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOSyntheticVersionPropertyHandler">
 			<meta attribute="version">true</meta>
 		</property>
 		<property name="resourceID" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOIDUserType">
-			<column name="resource_id"/>
+			<column name="`resource_id`"/>
 		</property>
 		<property name="containerID" type="string">
-			<column name="container_id" unique-key="c0"/>
+			<column name="`container_id`" unique-key="c0"/>
 		</property>
 		<many-to-one name="folder" entity-name="CDOResourceFolder" lazy="false" cascade="merge,persist,save-update,lock" foreign-key="cdoresourcenode_folder" insert="false" update="false" not-null="false">
 			<column not-null="false" unique="false" name="`cdoresourcenode_folder_e_id`"/>
@@ -70,11 +70,17 @@
 		</list>
 	</subclass>
 		
-	<class name="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreLob" table="cdo_lob" lazy="false">
+	<class name="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreLob" table="`cdo_lob`" lazy="false">
 		<id name="id"/>
-		<property name="clob"/>
-		<property name="blob"/>
-		<property name="size"/>
+		<property name="clob">
+			<column name="`clob`"/>
+		</property>
+		<property name="blob">
+			<column name="`blob`"/>
+		</property>
+		<property name="size">
+			<column name="`size`"/>
+		</property>
 	</class>
 
 </hibernate-mapping>

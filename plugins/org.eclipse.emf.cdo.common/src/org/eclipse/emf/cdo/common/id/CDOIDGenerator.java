@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.id;
 
+import org.eclipse.net4j.util.UUIDGenerator;
+
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -44,7 +46,7 @@ public interface CDOIDGenerator
     public CDOID generateCDOID()
     {
       byte[] bytes = new byte[16];
-      EcoreUtil.generateUUID(bytes);
+      UUIDGenerator.DEFAULT.generate(bytes);
       return CDOIDUtil.createUUID(bytes);
     }
 

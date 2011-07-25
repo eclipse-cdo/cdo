@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.common.id;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * Generates {@link CDOID IDs}.
  * 
@@ -59,28 +57,4 @@ public interface CDOIDGenerator
   public CDOID generateCDOID();
 
   public void reset();
-
-  /**
-   * Generates {@link CDOIDTemp temporary} ID values.
-   * 
-   * @author Eike Stepper
-   */
-  public static final class TempID implements CDOIDGenerator
-  {
-    private AtomicInteger lastTemporaryID = new AtomicInteger();
-
-    public TempID()
-    {
-    }
-
-    public CDOID generateCDOID()
-    {
-      return CDOIDUtil.createTempObject(lastTemporaryID.incrementAndGet());
-    }
-
-    public void reset()
-    {
-      lastTemporaryID.set(0);
-    }
-  }
 }

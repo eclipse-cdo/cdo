@@ -155,6 +155,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eike Stepper
@@ -2104,7 +2105,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     InternalCDOSession session = getSession();
     if (session.getRepositoryInfo().getIDGenerationLocation() == IDGenerationLocation.STORE)
     {
-      idGenerator = new CDOIDGenerator.TempID();
+      idGenerator = new TempIDGenerator();
     }
     else
     {
@@ -2289,6 +2290,30 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       return revision;
+    }
+  }
+
+  /**
+   * Generates {@link CDOIDTemp temporary} ID values.
+   * 
+   * @author Eike Stepper
+   */
+  private static final class TempIDGenerator implements CDOIDGenerator
+  {
+    private AtomicInteger lastTemporaryID = new AtomicInteger();
+
+    public TempIDGenerator()
+    {
+    }
+
+    public CDOID generateCDOID()
+    {
+      return CDOIDUtil.createTempObject(lastTemporaryID.incrementAndGet());
+    }
+
+    public void reset()
+    {
+      lastTemporaryID.set(0);
     }
   }
 

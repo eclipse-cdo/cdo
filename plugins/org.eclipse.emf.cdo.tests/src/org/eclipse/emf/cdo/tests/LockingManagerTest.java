@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -28,8 +29,10 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -79,6 +82,7 @@ public class LockingManagerTest extends AbstractLockingTest
     keys.add(1);
     keys.add(2);
     keys.add(3);
+
     msg("Context 2 have readlock 1,2,3");
     lockingManager.lock(LockType.READ, 2, keys, 1000);
     assertEquals(true, lockingManager.hasLock(LockType.READ, 2, 1));
@@ -89,6 +93,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     keys.clear();
     keys.add(4);
+
     msg("Context 1 have readlock 1,2,3,4 and writeLock 4");
     lockingManager.lock(LockType.WRITE, 1, keys, 1000);
     assertEquals(true, lockingManager.hasLock(LockType.READ, 1, 4));
@@ -96,6 +101,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     keys.clear();
     keys.add(1);
+
     try
     {
       lockingManager.lock(LockType.WRITE, 1, keys, 1000);
@@ -115,6 +121,7 @@ public class LockingManagerTest extends AbstractLockingTest
     keys.add(2);
     keys.add(3);
     lockingManager.unlock(LockType.READ, 2, keys);
+
     new PollingTimeOuter()
     {
       @Override
@@ -132,6 +139,7 @@ public class LockingManagerTest extends AbstractLockingTest
     keys.add(1);
     lockingManager.lock(LockType.READ, 1, keys, 10000);
     lockingManager.unlock(LockType.READ, 1, keys);
+
     try
     {
       lockingManager.unlock(LockType.READ, 1, keys);
@@ -318,7 +326,7 @@ public class LockingManagerTest extends AbstractLockingTest
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
 
-    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, CDOLock.WAIT);
+    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, DEFAULT_TIMEOUT);
 
     try
     {
@@ -327,6 +335,154 @@ public class LockingManagerTest extends AbstractLockingTest
     }
     catch (LockTimeoutException ex)
     {
+    }
+  }
+
+  public void testWriteLockMultiple() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+    List<CDOObject> objects = new ArrayList<CDOObject>();
+
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
+    res.getContents().add(company);
+    transaction.commit();
+
+    transaction.lockObjects(objects, LockType.WRITE, DEFAULT_TIMEOUT);
+
+    assertWriteLock(false, company);
+    assertReadLock(false, company);
+    for (CDOObject object : objects)
+    {
+      assertWriteLock(true, object);
+      assertReadLock(false, object);
+    }
+  }
+
+  public void testWriteUnlockMultiple() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+    List<CDOObject> objects = new ArrayList<CDOObject>();
+
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
+    res.getContents().add(company);
+    transaction.commit();
+
+    transaction.lockObjects(objects, LockType.WRITE, DEFAULT_TIMEOUT);
+
+    assertWriteLock(false, company);
+    assertReadLock(false, company);
+    for (CDOObject object : objects)
+    {
+      assertWriteLock(true, object);
+      assertReadLock(false, object);
+    }
+
+    transaction.unlockObjects(objects, LockType.WRITE);
+
+    assertWriteLock(false, company);
+    assertReadLock(false, company);
+    for (CDOObject object : objects)
+    {
+      assertWriteLock(false, object);
+      assertReadLock(false, object);
+    }
+  }
+
+  public void testReadLockMultiple() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+    List<CDOObject> objects = new ArrayList<CDOObject>();
+
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
+    res.getContents().add(company);
+    transaction.commit();
+
+    transaction.lockObjects(objects, LockType.READ, DEFAULT_TIMEOUT);
+
+    assertReadLock(false, company);
+    assertWriteLock(false, company);
+    for (CDOObject object : objects)
+    {
+      assertReadLock(true, object);
+      assertWriteLock(false, object);
+    }
+  }
+
+  public void testReadUnlockMultiple() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+    List<CDOObject> objects = new ArrayList<CDOObject>();
+
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+    addCategory(company, objects);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
+    res.getContents().add(company);
+    transaction.commit();
+
+    transaction.lockObjects(objects, LockType.READ, DEFAULT_TIMEOUT);
+
+    assertReadLock(false, company);
+    assertWriteLock(false, company);
+    for (CDOObject object : objects)
+    {
+      assertReadLock(true, object);
+      assertWriteLock(false, object);
+    }
+
+    transaction.unlockObjects(objects, LockType.READ);
+
+    assertWriteLock(false, company);
+    assertReadLock(false, company);
+    for (CDOObject object : objects)
+    {
+      assertWriteLock(false, object);
+      assertReadLock(false, object);
     }
   }
 
@@ -344,7 +500,7 @@ public class LockingManagerTest extends AbstractLockingTest
     Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
 
-    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.READ, CDOLock.WAIT);
+    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.READ, DEFAULT_TIMEOUT);
     company2.setCity("Ottawa");
 
     try
@@ -371,7 +527,7 @@ public class LockingManagerTest extends AbstractLockingTest
     Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
 
-    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, CDOLock.WAIT);
+    transaction.lockObjects(Collections.singletonList(cdoCompany), LockType.WRITE, DEFAULT_TIMEOUT);
     company2.setCity("Ottawa");
 
     try
@@ -735,5 +891,12 @@ public class LockingManagerTest extends AbstractLockingTest
     transaction.commit();
 
     session.close();
+  }
+
+  private void addCategory(Company company, List<CDOObject> objects)
+  {
+    Category category = getModel1Factory().createCategory();
+    company.getCategories().add(category);
+    objects.add(CDOUtil.getCDOObject(category));
   }
 }

@@ -13,7 +13,6 @@ package org.eclipse.emf.internal.cdo.util;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
@@ -308,15 +307,23 @@ public class CommitIntegrityCheck
 
   private boolean isNew(Object idOrObject)
   {
-    if (idOrObject instanceof CDOIDTemp)
+    CDOObject object = null;
+    if (idOrObject instanceof CDOObject)
     {
-      return true;
+      object = (CDOObject)idOrObject;
+    }
+    else if (idOrObject instanceof EObject)
+    {
+      object = CDOUtil.getCDOObject((EObject)idOrObject);
+    }
+    else if (idOrObject instanceof CDOID)
+    {
+      object = transaction.getObject((CDOID)idOrObject);
     }
 
-    if (idOrObject instanceof EObject)
+    if (object != null)
     {
-      CDOObject obj = CDOUtil.getCDOObject((EObject)idOrObject);
-      return obj.cdoState() == CDOState.NEW;
+      return object.cdoState() == CDOState.NEW;
     }
 
     return false;

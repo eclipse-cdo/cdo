@@ -69,7 +69,7 @@ public class TransactionTest extends AbstractCDOTest
     assertEquals(false, session.isClosed());
 
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getOrCreateResource("/test1");
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
     resource.getContents().add(getModel1Factory().createCompany());
     assertEquals(true, LifecycleUtil.isActive(transaction));
     assertEquals(false, transaction.isClosed());
@@ -525,5 +525,44 @@ public class TransactionTest extends AbstractCDOTest
     {
       ReflectUtil.setValue(field, null, 0L);
     }
+  }
+
+  public void testReattachCommit() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
+    resource.getContents().add(company);
+    transaction.commit();
+
+    resource.getContents().remove(company);
+    resource.getContents().add(company);
+    transaction.commit();
+  }
+
+  public void testReattachModifyCommit() throws Exception
+  {
+    {
+      Company company = getModel1Factory().createCompany();
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
+      resource.getContents().add(company);
+      transaction.commit();
+
+      resource.getContents().remove(company);
+      resource.getContents().add(company);
+      company.setName("ESC");
+      transaction.commit();
+    }
+
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+    CDOResource resource2 = transaction2.getOrCreateResource(getResourcePath("/test1"));
+    Company company2 = (Company)resource2.getContents().get(0);
+    assertEquals("ESC", company2.getName());
   }
 }

@@ -32,14 +32,14 @@ public class ConflictResolverMergingTest extends ConflictResolverTest
     CDOSession session = openSession();
 
     CDOTransaction transaction1 = session.openTransaction();
-    EList<EObject> contents1 = transaction1.getOrCreateResource("/res1").getContents();
+    EList<EObject> contents1 = transaction1.getOrCreateResource(getResourcePath("/res1")).getContents();
 
     contents1.add(getModel1Factory().createAddress());
     transaction1.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
     transaction2.options().addConflictResolver(createConflictResolver());
-    EList<EObject> contents2 = transaction2.getOrCreateResource("/res1").getContents();
+    EList<EObject> contents2 = transaction2.getOrCreateResource(getResourcePath("/res1")).getContents();
 
     // ----------------------------
     contents1.add(getModel1Factory().createAddress());
@@ -73,14 +73,14 @@ public class ConflictResolverMergingTest extends ConflictResolverTest
 
     CDOTransaction transaction1 = session.openTransaction();
     transaction1.options().addConflictResolver(createConflictResolver());
-    EList<EObject> contents1 = transaction1.getOrCreateResource("/res1").getContents();
+    EList<EObject> contents1 = transaction1.getOrCreateResource(getResourcePath("/res1")).getContents();
 
     contents1.add(getModel1Factory().createAddress());
     transaction1.commit();
 
     CDOTransaction transaction2 = session.openTransaction();
     transaction2.options().addConflictResolver(createConflictResolver());
-    EList<EObject> contents2 = transaction2.getOrCreateResource("/res1").getContents();
+    EList<EObject> contents2 = transaction2.getOrCreateResource(getResourcePath("/res1")).getContents();
 
     contents1.add(getModel1Factory().createAddress());
     contents2.add(getModel1Factory().createAddress());
@@ -104,7 +104,7 @@ public class ConflictResolverMergingTest extends ConflictResolverTest
 
     CDOTransaction transaction1 = session.openTransaction();
     transaction1.options().addConflictResolver(createConflictResolver());
-    EList<EObject> contents1 = transaction1.getOrCreateResource("/res1").getContents();
+    EList<EObject> contents1 = transaction1.getOrCreateResource(getResourcePath("/res1")).getContents();
 
     SalesOrder c1 = getModel1Factory().createSalesOrder();
     contents1.add(c1);
@@ -112,7 +112,7 @@ public class ConflictResolverMergingTest extends ConflictResolverTest
 
     CDOTransaction transaction2 = session.openTransaction();
     transaction2.options().addConflictResolver(createConflictResolver());
-    EList<EObject> contents2 = transaction2.getOrCreateResource("/res1").getContents();
+    EList<EObject> contents2 = transaction2.getOrCreateResource(getResourcePath("/res1")).getContents();
 
     SalesOrder c2 = (SalesOrder)contents2.get(0);
 

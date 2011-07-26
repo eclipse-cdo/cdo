@@ -34,7 +34,7 @@ public class AutoAttacherTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     new CDOAutoAttacher(transaction);
-    CDOResource resource1 = transaction.getOrCreateResource("/test1");
+    CDOResource resource1 = transaction.getOrCreateResource(getResourcePath("/test1"));
     Product1 product = getModel1Factory().createProduct1();
     product.setName("product");
 
@@ -62,7 +62,7 @@ public class AutoAttacherTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     new CDOAutoAttacher(transaction);
-    CDOResource resource1 = transaction.getOrCreateResource("/test1");
+    CDOResource resource1 = transaction.getOrCreateResource(getResourcePath("/test1"));
 
     Supplier supplier = getModel1Factory().createSupplier();
     PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();

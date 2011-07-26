@@ -762,7 +762,7 @@ public class InitialTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    CDOResource resource1 = transaction.getOrCreateResource("/test1");
+    CDOResource resource1 = transaction.getOrCreateResource(getResourcePath("/test1"));
     // Resource resource1 = new XMIResourceImpl();
 
     Category cat1 = getModel1Factory().createCategory();

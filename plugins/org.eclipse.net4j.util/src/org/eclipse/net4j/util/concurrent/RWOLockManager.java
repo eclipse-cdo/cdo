@@ -26,6 +26,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Keeps track of locks on objects. Locks are owned by contexts. A particular combination of locks and their owners, for
+ * a given object, is represented by instances of the {@link LockState} class. This class is also repsonsible for
+ * deciding whether or not a new lock can be granted, based on the locks already present.
+ * 
  * @author Caspar De Groot
  * @since 3.2
  */
@@ -284,7 +288,17 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
   }
 
   /**
-   * Represents a combination of locks for one OBJECT.
+   * Represents a combination of locks for one OBJECT. The different lock types are represented by the values of the
+   * enum {@link LockType}.
+   * <p>
+   * The locking semantics established by this class are as follows:
+   * <li>a read lock prevents a write lock by another, but allows read locks by others and allows a write option by
+   * another, and is therefore <b>non-exclusive</b></li>
+   * <li>a write lock prevents read locks by others, a write lock by another, and a write option by another, and is
+   * therefore <b>exclusive</b></li>
+   * <li>a write option prevents write locks by others and a write option by another, but allows read locks by others,
+   * and is therefore <b>exclusive</b></li>
+   * <p>
    * 
    * @author Caspar De Groot
    * @since 3.2
@@ -557,6 +571,11 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
     private boolean canWriteOption(CONTEXT context)
     {
       if (writeOptionOwner != null && writeOptionOwner != context)
+      {
+        return false;
+      }
+
+      if (writeLockOwner != null && writeLockOwner != context)
       {
         return false;
       }

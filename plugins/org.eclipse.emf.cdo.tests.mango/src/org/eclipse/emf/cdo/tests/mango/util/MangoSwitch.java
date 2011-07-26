@@ -15,9 +15,10 @@ import org.eclipse.emf.cdo.tests.mango.MangoParameter;
 import org.eclipse.emf.cdo.tests.mango.MangoValue;
 import org.eclipse.emf.cdo.tests.mango.MangoValueList;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.util.Switch;
+
+import java.util.List;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * @see org.eclipse.emf.cdo.tests.mango.MangoPackage
  * @generated
  */
-public class MangoSwitch<T> extends Switch<T>
+public class MangoSwitch<T>
 {
   /**
    * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -51,16 +52,15 @@ public class MangoSwitch<T> extends Switch<T>
   }
 
   /**
-   * Checks whether this is a switch for the given package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @parameter ePackage the package in question.
-   * @return whether this is a switch for the given package.
+   * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  @Override
-  protected boolean isSwitchFor(EPackage ePackage)
+  public T doSwitch(EObject theEObject)
   {
-    return ePackage == modelPackage;
+    return doSwitch(theEObject.eClass(), theEObject);
   }
 
   /**
@@ -70,7 +70,26 @@ public class MangoSwitch<T> extends Switch<T>
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  @Override
+  protected T doSwitch(EClass theEClass, EObject theEObject)
+  {
+    if (theEClass.eContainer() == modelPackage)
+    {
+      return doSwitch(theEClass.getClassifierID(), theEObject);
+    }
+    else
+    {
+      List<EClass> eSuperTypes = theEClass.getESuperTypes();
+      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+    }
+  }
+
+  /**
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * @generated
+   */
   protected T doSwitch(int classifierID, EObject theEObject)
   {
     switch (classifierID)
@@ -80,7 +99,9 @@ public class MangoSwitch<T> extends Switch<T>
       MangoValueList mangoValueList = (MangoValueList)theEObject;
       T result = caseMangoValueList(mangoValueList);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case MangoPackage.MANGO_VALUE:
@@ -88,7 +109,9 @@ public class MangoSwitch<T> extends Switch<T>
       MangoValue mangoValue = (MangoValue)theEObject;
       T result = caseMangoValue(mangoValue);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case MangoPackage.MANGO_PARAMETER:
@@ -96,7 +119,9 @@ public class MangoSwitch<T> extends Switch<T>
       MangoParameter mangoParameter = (MangoParameter)theEObject;
       T result = caseMangoParameter(mangoParameter);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -160,7 +185,6 @@ public class MangoSwitch<T> extends Switch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated
    */
-  @Override
   public T defaultCase(EObject object)
   {
     return null;

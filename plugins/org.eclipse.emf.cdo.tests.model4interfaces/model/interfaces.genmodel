@@ -7,7 +7,7 @@
     modelName="Interfaces" updateClasspath="false" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
     reflectiveDelegation="true" codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.cdo"
     featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.emf.cdo.tests.model4interfaces.edit"
-    editorPluginID="org.eclipse.emf.cdo.tests.model4interfaces.edit">
+    editorPluginID="org.eclipse.emf.cdo.tests.model4interfaces.edit" runtimeVersion="2.6">
   <foreignModel>interfaces.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="model4interfaces" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"

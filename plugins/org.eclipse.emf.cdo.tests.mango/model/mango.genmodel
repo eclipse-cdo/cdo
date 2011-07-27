@@ -6,7 +6,8 @@
     modelPluginID="org.eclipse.emf.cdo.tests.mango" modelName="Mango" modelPluginClass=""
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
     reflectiveDelegation="true" codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.cdo"
-    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter">
+    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter"
+    runtimeVersion="2.6">
   <foreignModel>mango.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Mango" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"

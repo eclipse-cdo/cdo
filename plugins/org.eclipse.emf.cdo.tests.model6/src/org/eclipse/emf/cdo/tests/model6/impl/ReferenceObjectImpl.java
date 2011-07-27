@@ -15,74 +15,74 @@ import org.eclipse.emf.cdo.tests.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Reference Object</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Reference Object</b></em>'. <!-- end-user-doc
+ * -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.ReferenceObjectImpl#getReferenceOptional <em>Reference Optional</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.ReferenceObjectImpl#getReferenceList <em>Reference List</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.ReferenceObjectImpl#getReferenceOptional <em>Reference Optional
+ * </em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.ReferenceObjectImpl#getReferenceList <em>Reference List</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
-public class ReferenceObjectImpl extends BaseObjectImpl implements
-		ReferenceObject {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ReferenceObjectImpl() {
-		super();
-	}
+public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObject
+{
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  protected ReferenceObjectImpl()
+  {
+    super();
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return Model6Package.Literals.REFERENCE_OBJECT;
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return Model6Package.Literals.REFERENCE_OBJECT;
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public BaseObject getReferenceOptional() {
-		return (BaseObject) eGet(
-				Model6Package.Literals.REFERENCE_OBJECT__REFERENCE_OPTIONAL,
-				true);
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public BaseObject getReferenceOptional()
+  {
+    return (BaseObject)eGet(Model6Package.Literals.REFERENCE_OBJECT__REFERENCE_OPTIONAL, true);
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setReferenceOptional(BaseObject newReferenceOptional) {
-		eSet(Model6Package.Literals.REFERENCE_OBJECT__REFERENCE_OPTIONAL,
-				newReferenceOptional);
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setReferenceOptional(BaseObject newReferenceOptional)
+  {
+    eSet(Model6Package.Literals.REFERENCE_OBJECT__REFERENCE_OPTIONAL, newReferenceOptional);
+  }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	public EList<BaseObject> getReferenceList() {
-		return (EList<BaseObject>) eGet(
-				Model6Package.Literals.REFERENCE_OBJECT__REFERENCE_LIST, true);
-	}
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  public EList<BaseObject> getReferenceList()
+  {
+    return (EList<BaseObject>)eGet(Model6Package.Literals.REFERENCE_OBJECT__REFERENCE_LIST, true);
+  }
 
-} //ReferenceObjectImpl
+} // ReferenceObjectImpl

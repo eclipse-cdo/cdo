@@ -23,9 +23,10 @@ import org.eclipse.emf.cdo.tests.model3.NodeD;
 import org.eclipse.emf.cdo.tests.model3.Polygon;
 import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.util.Switch;
+
+import java.util.List;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -36,7 +37,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * @see org.eclipse.emf.cdo.tests.model3.Model3Package
  * @generated
  */
-public class Model3Switch<T> extends Switch<T>
+public class Model3Switch<T>
 {
   /**
    * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -59,16 +60,15 @@ public class Model3Switch<T> extends Switch<T>
   }
 
   /**
-   * Checks whether this is a switch for the given package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @parameter ePackage the package in question.
-   * @return whether this is a switch for the given package.
+   * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  @Override
-  protected boolean isSwitchFor(EPackage ePackage)
+  public T doSwitch(EObject theEObject)
   {
-    return ePackage == modelPackage;
+    return doSwitch(theEObject.eClass(), theEObject);
   }
 
   /**
@@ -78,7 +78,26 @@ public class Model3Switch<T> extends Switch<T>
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  @Override
+  protected T doSwitch(EClass theEClass, EObject theEObject)
+  {
+    if (theEClass.eContainer() == modelPackage)
+    {
+      return doSwitch(theEClass.getClassifierID(), theEObject);
+    }
+    else
+    {
+      List<EClass> eSuperTypes = theEClass.getESuperTypes();
+      return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+    }
+  }
+
+  /**
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * @generated
+   */
   protected T doSwitch(int classifierID, EObject theEObject)
   {
     switch (classifierID)
@@ -88,7 +107,9 @@ public class Model3Switch<T> extends Switch<T>
       Class1 class1 = (Class1)theEObject;
       T result = caseClass1(class1);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.META_REF:
@@ -96,7 +117,9 @@ public class Model3Switch<T> extends Switch<T>
       MetaRef metaRef = (MetaRef)theEObject;
       T result = caseMetaRef(metaRef);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.POLYGON:
@@ -104,7 +127,9 @@ public class Model3Switch<T> extends Switch<T>
       Polygon polygon = (Polygon)theEObject;
       T result = casePolygon(polygon);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.POLYGON_WITH_DUPLICATES:
@@ -112,7 +137,9 @@ public class Model3Switch<T> extends Switch<T>
       PolygonWithDuplicates polygonWithDuplicates = (PolygonWithDuplicates)theEObject;
       T result = casePolygonWithDuplicates(polygonWithDuplicates);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.NODE_A:
@@ -120,7 +147,9 @@ public class Model3Switch<T> extends Switch<T>
       NodeA nodeA = (NodeA)theEObject;
       T result = caseNodeA(nodeA);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.NODE_B:
@@ -128,7 +157,9 @@ public class Model3Switch<T> extends Switch<T>
       NodeB nodeB = (NodeB)theEObject;
       T result = caseNodeB(nodeB);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.NODE_C:
@@ -136,7 +167,9 @@ public class Model3Switch<T> extends Switch<T>
       NodeC nodeC = (NodeC)theEObject;
       T result = caseNodeC(nodeC);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.NODE_D:
@@ -144,7 +177,9 @@ public class Model3Switch<T> extends Switch<T>
       NodeD nodeD = (NodeD)theEObject;
       T result = caseNodeD(nodeD);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.IMAGE:
@@ -152,7 +187,9 @@ public class Model3Switch<T> extends Switch<T>
       Image image = (Image)theEObject;
       T result = caseImage(image);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.FILE:
@@ -160,7 +197,9 @@ public class Model3Switch<T> extends Switch<T>
       File file = (File)theEObject;
       T result = caseFile(file);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case Model3Package.CLASS_WITH_ID_ATTRIBUTE:
@@ -168,7 +207,9 @@ public class Model3Switch<T> extends Switch<T>
       ClassWithIDAttribute classWithIDAttribute = (ClassWithIDAttribute)theEObject;
       T result = caseClassWithIDAttribute(classWithIDAttribute);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -354,7 +395,6 @@ public class Model3Switch<T> extends Switch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated
    */
-  @Override
   public T defaultCase(EObject object)
   {
     return null;

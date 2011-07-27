@@ -5,7 +5,7 @@
     modelDirectory="/org.eclipse.emf.cdo.tests.model3/src" editDirectory="" editorDirectory=""
     modelPluginID="org.eclipse.emf.cdo.tests.model3" modelName="Model3" updateClasspath="false"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes">
+    complianceLevel="5.0" copyrightFields="false" runtimeVersion="2.6" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes">
   <foreignModel>model3.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Model3" basePackage="org.eclipse.emf.cdo.tests.legacy" disposableProviderFactory="true"
@@ -57,6 +57,9 @@
     <genClasses ecoreClass="model3.ecore#//File">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//File/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//File/data"/>
+    </genClasses>
+    <genClasses ecoreClass="model3.ecore#//ClassWithIDAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//ClassWithIDAttribute/id"/>
     </genClasses>
     <nestedGenPackages prefix="Subpackage" basePackage="org.eclipse.emf.cdo.tests.legacy.model3"
         disposableProviderFactory="true" ecorePackage="model3.ecore#//subpackage">

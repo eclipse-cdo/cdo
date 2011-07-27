@@ -8,7 +8,7 @@
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
     reflectiveDelegation="true" codeFormatting="true" testsDirectory="" testSuiteClass="org.eclipse.emf.cdo.tests.model6.tests.model6AllTests"
     importerID="org.eclipse.emf.importer.cdo" featureDelegation="Reflective" complianceLevel="5.0"
-    copyrightFields="false" editPluginID="org.eclipse.emf.cdo.tests.model6.edit">
+    copyrightFields="false" editPluginID="org.eclipse.emf.cdo.tests.model6.edit" runtimeVersion="2.6">
   <foreignModel>model6.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Model6" basePackage="org.eclipse.emf.cdo.tests" disposableProviderFactory="true"

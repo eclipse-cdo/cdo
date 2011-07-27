@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.offline;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -308,7 +309,10 @@ public class OfflineTest extends AbstractSyncingTest
 
     assertEquals(1, transaction.getNewObjects().size());
     CDOObject offlineCompany = transaction.getNewObjects().values().iterator().next();
-    assertEquals(CDOID.Type.TEMP_OBJECT, offlineCompany.cdoID().getType());
+    if (getRepositoryConfig().getIDGenerationLocation() != IDGenerationLocation.CLIENT)
+    {
+      assertEquals(CDOID.Type.TEMP_OBJECT, offlineCompany.cdoID().getType());
+    }
 
     commitInfo = transaction.commit();
     assertEquals(CDOID.Type.OBJECT, offlineCompany.cdoID().getType());

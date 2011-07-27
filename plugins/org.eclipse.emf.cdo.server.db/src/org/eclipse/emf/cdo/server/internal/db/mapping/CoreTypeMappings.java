@@ -169,6 +169,11 @@ public class CoreTypeMappings
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
       String str = resultSet.getString(getField().getName());
+      if (str == null)
+      {
+        return null;
+      }
+      
       int pos = str.indexOf('-');
 
       byte[] id = HexUtil.hexToBytes(str.substring(0, pos));
@@ -216,6 +221,11 @@ public class CoreTypeMappings
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
       String str = resultSet.getString(getField().getName());
+      if (str == null)
+      {
+        return null;
+      }
+      
       int pos = str.indexOf('-');
 
       byte[] id = HexUtil.hexToBytes(str.substring(0, pos));

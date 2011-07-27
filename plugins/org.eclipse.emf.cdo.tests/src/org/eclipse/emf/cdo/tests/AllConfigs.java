@@ -235,5 +235,6 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_351921_Test.class);
     testClasses.add(Bugzilla_351200_Test.class);
     testClasses.add(Bugzilla_351202_Test.class);
+    testClasses.add(Bugzilla_352303_Test.class);
   }
 }

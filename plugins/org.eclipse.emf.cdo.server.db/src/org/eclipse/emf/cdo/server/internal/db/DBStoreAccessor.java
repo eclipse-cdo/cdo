@@ -1091,7 +1091,10 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       throws IOException
   {
     DBStore store = getStore();
-    out.writeCDOID(store.getIDHandler().getLastObjectID()); // See bug 325097
+    if (store.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+    {
+      out.writeCDOID(store.getIDHandler().getLastObjectID()); // See bug 325097
+    }
 
     String where = " WHERE " + CDODBSchema.BRANCHES_ID + " BETWEEN " + fromBranchID + " AND " + toBranchID;
     DBUtil.serializeTable(out, connection, CDODBSchema.BRANCHES, null, where);
@@ -1113,7 +1116,10 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       OMMonitor monitor) throws IOException
   {
     DBStore store = getStore();
-    store.getIDHandler().setLastObjectID(in.readCDOID()); // See bug 325097
+    if (store.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+    {
+      store.getIDHandler().setLastObjectID(in.readCDOID()); // See bug 325097
+    }
 
     IMappingStrategy mappingStrategy = store.getMappingStrategy();
     int size = mappingStrategy.getClassMappings().size();

@@ -527,6 +527,9 @@ public class TransactionTest extends AbstractCDOTest
     }
   }
 
+  /**
+   * Bug 353167.
+   */
   public void testReattachCommit() throws Exception
   {
     Company company = getModel1Factory().createCompany();
@@ -542,6 +545,9 @@ public class TransactionTest extends AbstractCDOTest
     transaction.commit();
   }
 
+  /**
+   * Bug 353167.
+   */
   public void testReattachModifyCommit() throws Exception
   {
     {
@@ -556,6 +562,59 @@ public class TransactionTest extends AbstractCDOTest
       resource.getContents().remove(company);
       resource.getContents().add(company);
       company.setName("ESC");
+      transaction.commit();
+    }
+
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+    CDOResource resource2 = transaction2.getOrCreateResource(getResourcePath("/test1"));
+    Company company2 = (Company)resource2.getContents().get(0);
+    assertEquals("ESC", company2.getName());
+  }
+
+  /**
+   * Bug 353167.
+   */
+  public void testReattachCommitWithSavepoints() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
+    resource.getContents().add(company);
+    transaction.commit();
+
+    resource.getContents().remove(company);
+    transaction.setSavepoint();
+
+    resource.getContents().add(company);
+    transaction.setSavepoint();
+    transaction.commit();
+  }
+
+  /**
+   * Bug 353167.
+   */
+  public void testReattachModifyCommitWithSavepoints() throws Exception
+  {
+    {
+      Company company = getModel1Factory().createCompany();
+
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
+      resource.getContents().add(company);
+      transaction.commit();
+
+      resource.getContents().remove(company);
+      // transaction.setSavepoint();
+
+      resource.getContents().add(company);
+      transaction.setSavepoint();
+
+      company.setName("ESC");
+
       transaction.commit();
     }
 

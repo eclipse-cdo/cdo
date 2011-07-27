@@ -1053,7 +1053,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private boolean isObjectDetached(CDOID id)
   {
-    return lastSavepoint.getSharedDetachedObjects().contains(id);
+    return lastSavepoint.getAllDetachedObjects().containsKey(id);
   }
 
   /**
@@ -1225,8 +1225,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private void loadSavepoint(CDOSavepoint savepoint, Set<CDOID> idsOfNewObjectWithDeltas)
   {
-    lastSavepoint.recalculateSharedDetachedObjects();
-
     Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
     Map<CDOID, CDOObject> newObjMaps = getNewObjects();
     Map<CDOID, CDORevision> newBaseRevision = getBaseNewObjects();
@@ -1732,7 +1730,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       lastSavepoint = firstSavepoint;
       firstSavepoint.clear();
       firstSavepoint.setNextSavepoint(null);
-      firstSavepoint.getSharedDetachedObjects().clear();
 
       cleanRevisions.clear();
       dirty = false;

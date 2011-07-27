@@ -35,7 +35,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -55,9 +54,8 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 
   private Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
 
-  private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
-
-  private ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
+  // Bug 283985 (Re-attachment)
+  private Map<CDOID, CDOObject> reattachedObjects = new HashMap<CDOID, CDOObject>();
 
   private Map<CDOID, CDOObject> detachedObjects = new HashMap<CDOID, CDOObject>()
   {
@@ -68,24 +66,19 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     {
       synchronized (transaction)
       {
-        sharedDetachedObjects.add(key);
-        dirtyObjects.remove(key);
         baseNewObjects.remove(key);
         newObjects.remove(key);
+        reattachedObjects.remove(key);
+        dirtyObjects.remove(key);
         revisionDeltas.remove(key);
         return super.put(key, object);
       }
     }
   };
 
-  // Bug 283985 (Re-attachment)
-  private Map<CDOID, CDOObject> reattachedObjects = new HashMap<CDOID, CDOObject>();
+  private Map<CDOID, CDOObject> dirtyObjects = new HashMap<CDOID, CDOObject>();
 
-  /**
-   * Contains all persistent CDOIDs that were removed. The same instance is shared between all save points that belong
-   * to the same transaction.
-   */
-  private Set<CDOID> sharedDetachedObjects;
+  private ConcurrentMap<CDOID, CDORevisionDelta> revisionDeltas = new ConcurrentHashMap<CDOID, CDORevisionDelta>();
 
   private boolean wasDirty;
 
@@ -93,16 +86,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   {
     super(transaction, lastSavepoint);
     this.transaction = transaction;
-
     wasDirty = transaction.isDirty();
-    if (lastSavepoint == null)
-    {
-      sharedDetachedObjects = new HashSet<CDOID>();
-    }
-    else
-    {
-      sharedDetachedObjects = lastSavepoint.getSharedDetachedObjects();
-    }
   }
 
   @Override
@@ -177,9 +161,16 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     return dirtyObjects;
   }
 
+  @Deprecated
   public Set<CDOID> getSharedDetachedObjects()
   {
-    return sharedDetachedObjects;
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  public void recalculateSharedDetachedObjects()
+  {
+    throw new UnsupportedOperationException();
   }
 
   public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas()
@@ -266,26 +257,14 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         return Collections.unmodifiableMap(getNewObjects());
       }
 
-      if (getSharedDetachedObjects().size() == 0)
-      {
-        MultiMap.ListBased<CDOID, CDOObject> newObjects = new MultiMap.ListBased<CDOID, CDOObject>();
-        for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-        {
-          newObjects.getDelegates().add(savepoint.getNewObjects());
-        }
-
-        return newObjects;
-      }
-
       Map<CDOID, CDOObject> newObjects = new HashMap<CDOID, CDOObject>();
-      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+      for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
+          .getNextSavepoint())
       {
-        for (Entry<CDOID, CDOObject> entry : savepoint.getNewObjects().entrySet())
+        newObjects.putAll(savepoint.getNewObjects());
+        for (CDOID removedID : savepoint.getDetachedObjects().keySet())
         {
-          if (!getSharedDetachedObjects().contains(entry.getKey()))
-          {
-            newObjects.put(entry.getKey(), entry.getValue());
-          }
+          newObjects.remove(removedID);
         }
       }
 
@@ -328,34 +307,37 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       }
 
       // We need to combined the result for all delta in different Savepoint
-      Map<CDOID, CDORevisionDelta> revisionDeltas = new HashMap<CDOID, CDORevisionDelta>();
+      Map<CDOID, CDORevisionDelta> allRevisionDeltas = new HashMap<CDOID, CDORevisionDelta>();
       for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
           .getNextSavepoint())
       {
-        for (Entry<CDOID, CDORevisionDelta> entry : savepoint.getRevisionDeltas().entrySet())
+        for (CDORevisionDelta revisionDelta : savepoint.getRevisionDeltas().values())
         {
-          // Skipping temporary
-          if (entry.getKey().isTemporary() || getSharedDetachedObjects().contains(entry.getKey()))
+          CDOID id = revisionDelta.getID();
+          if (!isNewObject(id))
           {
-            continue;
-          }
-
-          CDORevisionDeltaImpl revisionDelta = (CDORevisionDeltaImpl)revisionDeltas.get(entry.getKey());
-          if (revisionDelta == null)
-          {
-            revisionDeltas.put(entry.getKey(), entry.getValue().copy());
-          }
-          else
-          {
-            for (CDOFeatureDelta delta : entry.getValue().getFeatureDeltas())
+            CDORevisionDeltaImpl oldRevisionDelta = (CDORevisionDeltaImpl)allRevisionDeltas.get(id);
+            if (oldRevisionDelta == null)
             {
-              revisionDelta.addFeatureDelta(((InternalCDOFeatureDelta)delta).copy());
+              allRevisionDeltas.put(id, revisionDelta.copy());
+            }
+            else
+            {
+              for (CDOFeatureDelta delta : revisionDelta.getFeatureDeltas())
+              {
+                oldRevisionDelta.addFeatureDelta(((InternalCDOFeatureDelta)delta).copy());
+              }
             }
           }
         }
+
+        for (CDOID detachedID : savepoint.getDetachedObjects().keySet())
+        {
+          allRevisionDeltas.remove(detachedID);
+        }
       }
 
-      return Collections.unmodifiableMap(revisionDeltas);
+      return Collections.unmodifiableMap(allRevisionDeltas);
     }
   }
 
@@ -369,22 +351,22 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       }
 
       Map<CDOID, CDOObject> detachedObjects = new HashMap<CDOID, CDOObject>();
-      Set<CDOID> reattachedObjectIDs = new HashSet<CDOID>(); // Bug 283985 (Re-attachment)
-      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+      for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
+          .getNextSavepoint())
       {
-        reattachedObjectIDs.addAll(savepoint.getReattachedObjects().keySet());
-
         for (Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
         {
-          if (!entry.getKey().isTemporary())
+          CDOID detachedID = entry.getKey();
+          if (!isNewObject(detachedID))
           {
-            // Bug 283985 (Re-attachment):
-            // Object is only included if it was not reattached in a later savepoint
-            if (!reattachedObjectIDs.contains(entry.getKey()))
-            {
-              detachedObjects.put(entry.getKey(), entry.getValue());
-            }
+            CDOObject detachedObject = entry.getValue();
+            detachedObjects.put(detachedID, detachedObject);
           }
+        }
+
+        for (CDOID reattachedID : savepoint.getReattachedObjects().keySet())
+        {
+          detachedObjects.remove(reattachedID);
         }
       }
 
@@ -392,19 +374,14 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     }
   }
 
-  public void recalculateSharedDetachedObjects()
+  public boolean isNewObject(CDOID id)
   {
-    synchronized (transaction)
+    if (id.isTemporary())
     {
-      sharedDetachedObjects.clear();
-      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-      {
-        for (CDOID id : savepoint.getDetachedObjects().keySet())
-        {
-          sharedDetachedObjects.add(id);
-        }
-      }
+      return true;
     }
+
+    return false;
   }
 
   public void rollback()

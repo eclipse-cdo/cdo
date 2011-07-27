@@ -33,7 +33,15 @@ public interface InternalCDOSavepoint extends CDOSavepoint, InternalCDOUserSavep
 
   public void clear();
 
+  /**
+   * @deprecated
+   */
+  @Deprecated
   public Set<CDOID> getSharedDetachedObjects();
 
+  /**
+   * @deprecated
+   */
+  @Deprecated
   public void recalculateSharedDetachedObjects();
 }

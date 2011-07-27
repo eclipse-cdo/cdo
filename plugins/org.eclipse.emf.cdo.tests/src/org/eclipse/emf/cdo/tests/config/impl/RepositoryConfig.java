@@ -579,9 +579,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     private transient IAcceptor masterAcceptor;
 
-    public OfflineConfig(String name)
+    public OfflineConfig(String name, IDGenerationLocation idGenerationLocation)
     {
-      super(name, true, true, IDGenerationLocation.CLIENT);
+      super(name, true, true, idGenerationLocation);
     }
 
     @Override
@@ -808,9 +808,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   {
     private static final long serialVersionUID = 1L;
 
-    public MEMOfflineConfig()
+    public MEMOfflineConfig(IDGenerationLocation idGenerationLocation)
     {
-      super("MEMOffline");
+      super("MEMOffline", idGenerationLocation);
     }
 
     public IStore createStore(String repoName)

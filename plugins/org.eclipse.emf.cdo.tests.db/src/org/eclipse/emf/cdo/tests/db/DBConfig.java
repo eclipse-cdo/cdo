@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 import javax.sql.DataSource;
@@ -74,9 +75,13 @@ public abstract class DBConfig extends RepositoryConfig
   {
     IMappingStrategy mappingStrategy = createMappingStrategy();
     mappingStrategy.setProperties(createMappingStrategyProperties());
+
     IDBAdapter dbAdapter = createDBAdapter();
+
     DataSource dataSource = createDataSource(repoName);
-    return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource));
+    IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
+
+    return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
   }
 
   protected Map<String, String> createMappingStrategyProperties()

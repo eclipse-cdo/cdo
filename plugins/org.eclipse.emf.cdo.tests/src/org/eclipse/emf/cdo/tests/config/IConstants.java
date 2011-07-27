@@ -34,7 +34,7 @@ public interface IConstants
 
   public static final RepositoryConfig MEM_BRANCHES = new MEMConfig(true, true, IDGenerationLocation.STORE);
 
-  public static final RepositoryConfig MEM_OFFLINE = new MEMOfflineConfig();
+  public static final RepositoryConfig MEM_OFFLINE = new MEMOfflineConfig(IDGenerationLocation.CLIENT);
 
   public static final SessionConfig EMBEDDED = SessionConfig.Embedded.INSTANCE;
 

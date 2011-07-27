@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_319552_Test;
@@ -40,7 +41,8 @@ public class AllTestsDBH2Offline extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, new H2OfflineConfig(), JVM, NATIVE);
+    addScenario(parent, COMBINED, new H2OfflineConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, COMBINED, new H2OfflineConfig(false, false, IDGenerationLocation.CLIENT), JVM, NATIVE);
   }
 
   @Override

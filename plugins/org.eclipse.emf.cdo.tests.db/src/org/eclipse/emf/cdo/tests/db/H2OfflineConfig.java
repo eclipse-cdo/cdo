@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -17,6 +18,7 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -30,6 +32,8 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -42,22 +46,64 @@ public class H2OfflineConfig extends OfflineConfig
 
   private static JdbcDataSource defaultDataSource;
 
-  public H2OfflineConfig()
+  private boolean withRanges;
+
+  private boolean copyOnBranch;
+
+  public H2OfflineConfig(boolean withRanges, boolean copyOnBranch, IDGenerationLocation idGenerationLocation)
   {
-    super("H2Offline");
+    super("H2Offline", idGenerationLocation);
+    this.withRanges = withRanges;
+    this.copyOnBranch = copyOnBranch;
+  }
+
+  public boolean isWithRanges()
+  {
+    return withRanges;
+  }
+
+  public boolean isCopyOnBranch()
+  {
+    return copyOnBranch;
   }
 
   public IStore createStore(String repoName)
   {
     IMappingStrategy mappingStrategy = createMappingStrategy();
+    mappingStrategy.setProperties(createMappingStrategyProperties());
+
     IDBAdapter dbAdapter = createDBAdapter();
+
     DataSource dataSource = createDataSource(repoName);
-    return CDODBUtil.createStore(mappingStrategy, dbAdapter, DBUtil.createConnectionProvider(dataSource));
+    IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
+
+    return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
+  }
+
+  @Override
+  public void setUp() throws Exception
+  {
+    CDODBUtil.prepareContainer(IPluginContainer.INSTANCE);
+    super.setUp();
+  }
+
+  protected Map<String, String> createMappingStrategyProperties()
+  {
+    Map<String, String> props = new HashMap<String, String>();
+    props.put(IMappingStrategy.PROP_QUALIFIED_NAMES, "true");
+    props.put(CDODBUtil.PROP_COPY_ON_BRANCH, Boolean.toString(copyOnBranch));
+    return props;
   }
 
   protected IMappingStrategy createMappingStrategy()
   {
-    return CDODBUtil.createHorizontalMappingStrategy();
+    return CDODBUtil.createHorizontalMappingStrategy(isSupportingAudits(), isSupportingBranches(), withRanges);
+  }
+
+  @Override
+  protected String getMappingStrategySpecialization()
+  {
+    return (withRanges ? "-ranges" : "") + (copyOnBranch ? "-copy" : "");
   }
 
   protected IDBAdapter createDBAdapter()
@@ -102,13 +148,6 @@ public class H2OfflineConfig extends OfflineConfig
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL("jdbc:h2:" + reusableFolder.getAbsolutePath() + "/h2test;SCHEMA=" + repoName);
     return dataSource;
-  }
-
-  @Override
-  public void setUp() throws Exception
-  {
-    CDODBUtil.prepareContainer(IPluginContainer.INSTANCE);
-    super.setUp();
   }
 
   protected File createDBFolder()

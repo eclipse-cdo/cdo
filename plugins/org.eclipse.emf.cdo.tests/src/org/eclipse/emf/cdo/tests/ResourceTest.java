@@ -1636,6 +1636,24 @@ public class ResourceTest extends AbstractCDOTest
   }
 
   /**
+   * See bug 353249.
+   */
+  public void testGetResourceNodeContract()
+  {
+    CDOView view = openSession().openView();
+
+    try
+    {
+      view.getResourceNode("SomePath/That/DoesntExist");
+      fail("Exception expected");
+    }
+    catch (Exception expected)
+    {
+      // SUCCCESS
+    }
+  }
+
+  /**
    * @author Eike Stepper
    */
   private static class TestAdapter extends AdapterImpl

@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
@@ -186,9 +187,13 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
   public CDOResource getResource(String path);
 
   /**
-   * Returns the resource node with the given path, or <code>null</code> if no such resource node exists.
+   * Returns the resource node with the given path.
+   * 
+   * @return never <code>null</code>.
+   * @throws CDOException
+   *           if no such resource node exists.
    */
-  public CDOResourceNode getResourceNode(String path);
+  public CDOResourceNode getResourceNode(String path) throws CDOException;
 
   /**
    * Returns the root resource of the repository.

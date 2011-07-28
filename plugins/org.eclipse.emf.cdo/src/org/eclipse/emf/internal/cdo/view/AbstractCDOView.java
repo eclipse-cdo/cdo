@@ -310,18 +310,17 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
   public synchronized CDOResourceNode getResourceNode(String path)
   {
     CDOID id = getResourceNodeID(path);
-    if (id == null)
+    if (id != null) // Should always be true
     {
-      return null;
+
+      InternalCDOObject object = getObject(id);
+      if (object instanceof CDOResourceNode)
+      {
+        return (CDOResourceNode)object;
+      }
     }
 
-    InternalCDOObject object = getObject(id);
-    if (object instanceof CDOResourceNode)
-    {
-      return (CDOResourceNode)object;
-    }
-
-    return null;
+    throw new CDOException("Resource node not found: " + path);
   }
 
   /**

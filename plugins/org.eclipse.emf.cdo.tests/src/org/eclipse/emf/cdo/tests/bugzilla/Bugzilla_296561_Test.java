@@ -97,17 +97,17 @@ public class Bugzilla_296561_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
-      resource.getContents().add(customer);
 
+      resource.getContents().add(customer);
       transaction.commit();
       session.close();
     }
 
     {
       CDOSession session = openSession();
-
       CDOTransaction transaction = session.openTransaction();
       CDOResource res = transaction.getResource(getResourcePath("/test1"));
+
       Customer customer = (Customer)res.getContents().get(0);
       customer.setName("modified");
 
@@ -116,6 +116,7 @@ public class Bugzilla_296561_Test extends AbstractCDOTest
 
       res.getContents().add(customer2);
       CDOSavepoint savePoint = transaction.setSavepoint();
+
       res.getContents().remove(customer2);
       savePoint.rollback();
       assertEquals(true, res.getContents().contains(customer2));

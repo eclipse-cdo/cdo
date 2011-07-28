@@ -45,6 +45,19 @@ import java.util.concurrent.TimeUnit;
  */
 public class LockingManagerTest extends AbstractLockingTest
 {
+  public void testUnlockAll() throws Exception
+  {
+    final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<Integer, Integer>();
+
+    Set<Integer> keys = new HashSet<Integer>();
+    keys.add(1);
+    keys.add(2);
+    keys.add(3);
+
+    lockingManager.lock(LockType.READ, 1, keys, 100);
+    lockingManager.unlock(1);
+  }
+
   public void testWriteOptions() throws Exception
   {
     final RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<Integer, Integer>();

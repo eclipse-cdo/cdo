@@ -36,10 +36,10 @@ import java.util.Set;
 public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLockManager<OBJECT, CONTEXT>
 {
   // TODO (CD) Ensure that CDOID and CDOIDandBranch have good hashCode implementations
-  private final Map<OBJECT, LockState<OBJECT, CONTEXT>> objectToLocksMap = createObjectToLocksMap();
+  private final Map<OBJECT, LockState<OBJECT, CONTEXT>> objectToLockStateMap = createObjectToLocksMap();
 
   // TODO (CD) Ensure that IView has a good hashCode implementation
-  private final Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> contextToLocksMap = createContextToLocksMap();
+  private final Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> contextToLockStates = createContextToLocksMap();
 
   public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
       throws InterruptedException
@@ -97,7 +97,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
     while (it.hasNext())
     {
       OBJECT o = it.next();
-      LockState<OBJECT, CONTEXT> lockState = objectToLocksMap.get(o);
+      LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(o);
       if (lockState == null || !lockState.canUnlock(type, context))
       {
         throw new IllegalMonitorStateException();
@@ -111,12 +111,12 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
       lockState.unlock(type, context);
       if (!lockState.hasLocks(context))
       {
-        removeLockFromContext(context, lockState);
+        removeLockStateForContext(context, lockState);
       }
 
       if (lockState.hasNoLocks())
       {
-        objectToLocksMap.remove(lockState.getLockedObject());
+        objectToLockStateMap.remove(lockState.getLockedObject());
       }
     }
 
@@ -125,7 +125,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
 
   public synchronized void unlock(CONTEXT context)
   {
-    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLocksMap.get(context);
+    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
     if (lockStates == null)
     {
       return;
@@ -145,7 +145,6 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
         // TODO (CD) Consider whether WRITE_OPTIONs should be excluded from this...
       }
 
-      removeLockFromContext(context, lockState);
       if (lockState.hasNoLocks())
       {
         OBJECT o = lockState.getLockedObject();
@@ -153,10 +152,12 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
       }
     }
 
+    contextToLockStates.remove(context);
+
     // This must be done outside the above iteration, in order to avoid ConcurrentModEx
     for (OBJECT o : objectsWithoutLocks)
     {
-      objectToLocksMap.remove(o);
+      objectToLockStateMap.remove(o);
     }
 
     notifyAll();
@@ -165,20 +166,20 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
   public synchronized boolean hasLock(LockType type, CONTEXT context, OBJECT objectToLock)
   {
     // TODO (CD) Should this be synced?
-    LockState<OBJECT, CONTEXT> lockState = objectToLocksMap.get(objectToLock);
+    LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
     return lockState != null && lockState.hasLock(type, context, false);
   }
 
   public synchronized boolean hasLockByOthers(LockType type, CONTEXT context, OBJECT objectToLock)
   {
     // TODO (CD) Should this be synced?
-    LockState<OBJECT, CONTEXT> lockState = objectToLocksMap.get(objectToLock);
+    LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
     return lockState != null && lockState.hasLock(type, context, true);
   }
 
   protected synchronized void changeContext(CONTEXT oldContext, CONTEXT newContext)
   {
-    for (LockState<OBJECT, CONTEXT> lockState : objectToLocksMap.values())
+    for (LockState<OBJECT, CONTEXT> lockState : objectToLockStateMap.values())
     {
       lockState.replaceContext(oldContext, newContext);
     }
@@ -204,7 +205,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
    */
   protected final Map<OBJECT, LockState<OBJECT, CONTEXT>> getObjectToLocksMap()
   {
-    return objectToLocksMap;
+    return objectToLockStateMap;
   }
 
   /**
@@ -212,16 +213,16 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
    */
   protected final Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> getContextToLocksMap()
   {
-    return contextToLocksMap;
+    return contextToLockStates;
   }
 
   private LockState<OBJECT, CONTEXT> getOrCreateLockState(OBJECT o)
   {
-    LockState<OBJECT, CONTEXT> lockState = objectToLocksMap.get(o);
+    LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(o);
     if (lockState == null)
     {
       lockState = new LockState<OBJECT, CONTEXT>(o);
-      objectToLocksMap.put(o, lockState);
+      objectToLockStateMap.put(o, lockState);
     }
 
     return lockState;
@@ -248,23 +249,28 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
 
   private void addLockToContext(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
   {
-    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLocksMap.get(context);
+    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
     if (lockStates == null)
     {
       lockStates = new HashSet<LockState<OBJECT, CONTEXT>>();
-      contextToLocksMap.put(context, lockStates);
+      contextToLockStates.put(context, lockStates);
     }
 
     lockStates.add(lockState);
   }
 
-  private void removeLockFromContext(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
+  /**
+   * Removes a lockState from the set of all lockStates that the given context is involved in. If the lockState being
+   * removed is the last one for the given context, then the set becomes empty, and is therefore removed from the
+   * contextToLockStates mp.
+   */
+  private void removeLockStateForContext(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
   {
-    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLocksMap.get(context);
+    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
     lockStates.remove(lockState);
     if (lockStates.isEmpty())
     {
-      contextToLocksMap.remove(context);
+      contextToLockStates.remove(context);
     }
   }
 

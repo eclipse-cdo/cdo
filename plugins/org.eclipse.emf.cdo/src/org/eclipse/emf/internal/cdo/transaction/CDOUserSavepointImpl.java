@@ -11,6 +11,8 @@
  **************************************************************************/
 package org.eclipse.emf.internal.cdo.transaction;
 
+import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
+
 import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOUserTransaction;
 
@@ -79,5 +81,23 @@ public abstract class CDOUserSavepointImpl implements InternalCDOUserSavepoint
     }
 
     return false;
+  }
+
+  public int getNumber()
+  {
+    int number = 1;
+    CDOUserSavepoint savepoint = this;
+    while ((savepoint = savepoint.getPreviousSavepoint()) != null)
+    {
+      ++number;
+    }
+
+    return number;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "Savepoint #" + getNumber();
   }
 }

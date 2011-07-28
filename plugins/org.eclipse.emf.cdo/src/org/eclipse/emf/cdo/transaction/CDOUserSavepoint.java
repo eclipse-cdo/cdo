@@ -30,6 +30,11 @@ public interface CDOUserSavepoint
 
   public CDOUserSavepoint getPreviousSavepoint();
 
+  /**
+   * @since 4.1
+   */
+  public int getNumber();
+
   public boolean isValid();
 
   public void rollback();

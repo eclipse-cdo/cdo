@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.PackageRegistryTest;
+import org.eclipse.emf.cdo.tests.util.TestEMFUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
@@ -43,7 +43,7 @@ public class Bugzilla_303466_Test extends AbstractCDOTest
     CDOSession session = openSession();
 
     ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();
-    EPackage derivedPkg = PackageRegistryTest.loadModel("model/derived.ecore");
+    EPackage derivedPkg = TestEMFUtil.loadEcore("model/derived.ecore");
     Resource resource = derivedPkg.eResource();
     resourceSet.getResources().add(resource);
     resource.load(null);
@@ -94,12 +94,12 @@ public class Bugzilla_303466_Test extends AbstractCDOTest
 
     ResourceSet resourceSet = EMFUtil.newEcoreResourceSet();
 
-    EPackage basePkg = PackageRegistryTest.loadModel("model/base.ecore");
+    EPackage basePkg = TestEMFUtil.loadEcore("model/base.ecore");
     Resource resource1 = basePkg.eResource();
     resourceSet.getResources().add(resource1);
     resourceSet.getPackageRegistry().put(basePkg.getNsURI(), basePkg);
 
-    EPackage derivedPkg = PackageRegistryTest.loadModel("model/derived.ecore");
+    EPackage derivedPkg = TestEMFUtil.loadEcore("model/derived.ecore");
     Resource resource2 = derivedPkg.eResource();
     resourceSet.getResources().add(resource2);
     resourceSet.getPackageRegistry().put(basePkg.getNsURI(), derivedPkg);

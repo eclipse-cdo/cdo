@@ -697,10 +697,10 @@ public class PackageRegistryTest extends AbstractCDOTest
   {
     ResourceSet rs = new ResourceSetImpl();
     rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new XMIResourceFactoryImpl());
-    Resource r1 = rs.createResource(URI.createURI("file:///SubclassTest1.ecore"));
+    Resource r1 = rs.createResource(URI.createURI("SubclassTest1.ecore"));
     r1.load(OM.BUNDLE.getInputStream("SubclassTest1.ecore"), null);
     EPackage p1 = (EPackage)r1.getContents().get(0);
-    Resource r2 = rs.createResource(URI.createURI("file:///SubclassTest2.ecore"));
+    Resource r2 = rs.createResource(URI.createURI("SubclassTest2.ecore"));
     r2.load(OM.BUNDLE.getInputStream("SubclassTest2.ecore"), null);
     EPackage p2 = (EPackage)r2.getContents().get(0);
 
@@ -723,10 +723,10 @@ public class PackageRegistryTest extends AbstractCDOTest
   {
     ResourceSet rs = new ResourceSetImpl();
     rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore", new XMIResourceFactoryImpl());
-    Resource r1 = rs.createResource(URI.createURI("file:///SubclassTest1.ecore"));
+    Resource r1 = rs.createResource(URI.createURI("SubclassTest1.ecore"));
     r1.load(OM.BUNDLE.getInputStream("SubclassTest1.ecore"), null);
     EPackage p1 = (EPackage)r1.getContents().get(0);
-    Resource r2 = rs.createResource(URI.createURI("file:///SubclassTest2.ecore"));
+    Resource r2 = rs.createResource(URI.createURI("SubclassTest2.ecore"));
     r2.load(OM.BUNDLE.getInputStream("SubclassTest2.ecore"), null);
     EPackage p2 = (EPackage)r2.getContents().get(0);
 
@@ -772,7 +772,7 @@ public class PackageRegistryTest extends AbstractCDOTest
 
   public static EPackage loadModel(String fileName) throws IOException
   {
-    URI uri = URI.createURI("file://" + fileName);
+    URI uri = URI.createURI(fileName);
     XMIResource resource = new XMIResourceImpl(uri);
     resource.setEncoding("UTF-8");
     resource.load(OM.BUNDLE.getInputStream(fileName), null);

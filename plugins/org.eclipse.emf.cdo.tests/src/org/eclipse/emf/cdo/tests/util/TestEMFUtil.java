@@ -80,14 +80,14 @@ public final class TestEMFUtil
     return loadMultiple(fileName, resourceSet);
   }
 
-  public static EObject loadEcore(String fileName, EPackage.Registry packageRegistry)
+  public static EPackage loadEcore(String fileName, EPackage.Registry packageRegistry)
   {
-    return load(fileName, newEcoreResourceSet(packageRegistry));
+    return (EPackage)load(fileName, newEcoreResourceSet(packageRegistry));
   }
 
-  public static EObject loadEcore(String fileName)
+  public static EPackage loadEcore(String fileName)
   {
-    return load(fileName, newEcoreResourceSet());
+    return (EPackage)load(fileName, newEcoreResourceSet());
   }
 
   public static void save(String fileName, EObject root, ResourceSet resourceSet)

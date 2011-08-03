@@ -183,6 +183,12 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
     {
       lockState.replaceContext(oldContext, newContext);
     }
+
+    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.remove(oldContext);
+    if (lockStates != null)
+    {
+      contextToLockStates.put(newContext, lockStates);
+    }
   }
 
   protected long currentTimeMillis()

@@ -57,6 +57,16 @@ public class OSGiPlatform extends AbstractPlatform
     return property != null ? property : defaultValue;
   }
 
+  public String[] getCommandLineArgs()
+  {
+    return Platform.getCommandLineArgs();
+  }
+
+  public void setCommandLineArgs(String[] args)
+  {
+    throw new UnsupportedOperationException("Set command line arguements inside the OSGi enviorment is not needed.");
+  }
+
   @Override
   protected OMBundle createBundle(String bundleID, Class<?> accessor)
   {

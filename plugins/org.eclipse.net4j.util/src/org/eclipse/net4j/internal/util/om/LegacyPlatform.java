@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
+import org.eclipse.net4j.util.om.LegacyUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 
 import java.util.Map;
@@ -48,5 +49,10 @@ public class LegacyPlatform extends AbstractPlatform
   protected void setDebugOption(String bundleID, String option, String value)
   {
     debugOptions.put(bundleID + "/" + option, value); //$NON-NLS-1$
+  }
+
+  public String[] getCommandLineArgs()
+  {
+    return LegacyUtil.getCommandLineArgs();
   }
 }

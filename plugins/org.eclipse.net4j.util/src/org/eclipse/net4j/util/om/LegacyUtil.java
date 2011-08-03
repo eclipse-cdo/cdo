@@ -17,8 +17,33 @@ import org.eclipse.net4j.internal.util.om.LegacyBundle;
  */
 public final class LegacyUtil
 {
+  private static final String[] UNINITIALIZED = {};
+
+  private static String[] commandLineArgs = UNINITIALIZED;
+
   private LegacyUtil()
   {
+  }
+
+  /**
+   * @since 3.2
+   */
+  public static String[] getCommandLineArgs() throws IllegalStateException
+  {
+    if (commandLineArgs == UNINITIALIZED)
+    {
+      throw new IllegalStateException("Command line argumentshave not been set");
+    }
+
+    return commandLineArgs;
+  }
+
+  /**
+   * @since 3.2
+   */
+  public static void setCommandLineArgs(String[] commandLineArgs)
+  {
+    LegacyUtil.commandLineArgs = commandLineArgs;
   }
 
   public static void startBundles(OMBundle[] bundles) throws Exception

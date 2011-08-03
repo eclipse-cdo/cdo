@@ -65,4 +65,9 @@ public interface OMPlatform
    * @since 3.0
    */
   public String getProperty(String key, String defaultValue);
+
+  /**
+   * @since 3.2
+   */
+  public String[] getCommandLineArgs() throws IllegalStateException;
 }

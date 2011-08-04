@@ -87,7 +87,7 @@ public class LockObjectsIndication extends CDOServerWriteIndication
       }
     }
 
-    IView view = getSession().getView(viewID);
+    IView view = session.getView(viewID);
     InternalLockManager lockManager = getRepository().getLockManager();
 
     try

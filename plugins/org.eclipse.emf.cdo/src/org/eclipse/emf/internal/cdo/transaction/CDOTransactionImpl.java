@@ -2269,6 +2269,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return rev;
   }
 
+  @Override
+  protected InternalCDORevision getRevision(CDOObject object)
+  {
+    if (object.cdoState() == CDOState.TRANSIENT)
+    {
+      InternalCDORevision revision = cleanRevisions.get(object);
+      if (revision == null)
+      {
+        throw new IllegalStateException("No revision for transient object " + object);
+      }
+
+      return revision;
+    }
+
+    return super.getRevision(object);
+  }
+
   private final class ResolvingRevisionMap extends HashMap<InternalCDOObject, InternalCDORevision>
   {
     private static final long serialVersionUID = 1L;

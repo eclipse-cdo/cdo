@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -259,14 +260,9 @@ public class CDOViewImpl extends AbstractCDOView
     List<InternalCDORevision> revisions = new LinkedList<InternalCDORevision>();
     for (CDOObject object : objects)
     {
-      if (!FSMUtil.isNew(object))
+      InternalCDORevision revision = getRevision(object);
+      if (revision != null)
       {
-        InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
-        if (revision == null)
-        {
-          revision = CDOStateMachine.INSTANCE.read((InternalCDOObject)object);
-        }
-
         revisions.add(revision);
       }
     }
@@ -301,6 +297,22 @@ public class CDOViewImpl extends AbstractCDOView
       long requiredTimestamp = result.getRequiredTimestamp();
       waitForUpdate(requiredTimestamp);
     }
+  }
+
+  protected InternalCDORevision getRevision(CDOObject object)
+  {
+    if (object.cdoState() == CDOState.NEW)
+    {
+      return null;
+    }
+
+    InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+    if (revision == null)
+    {
+      revision = CDOStateMachine.INSTANCE.read((InternalCDOObject)object);
+    }
+
+    return revision;
   }
 
   /**

@@ -787,6 +787,42 @@ public class LockingManagerTest extends AbstractLockingTest
     assertWriteLock(false, company);
   }
 
+  /**
+   * Bug 352191.
+   */
+  public void testLockDetached() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
+    res.getContents().add(company);
+    transaction.commit();
+
+    res.getContents().remove(0);
+    assertTransient(company);
+
+    CDOObject cdoObject = CDOUtil.getCDOObject(company);
+    transaction.lockObjects(Collections.singleton(cdoObject), LockType.WRITE, DEFAULT_TIMEOUT);
+
+    // Verify
+    CDOTransaction transaction2 = session.openTransaction();
+    CDOResource res2 = transaction2.getResource(getResourcePath("/res1"));
+    Company company2 = (Company)res2.getContents().get(0);
+    company2.setName("NewName");
+
+    try
+    {
+      transaction2.commit();
+      fail("CommitException expected");
+    }
+    catch (CommitException expected)
+    {
+      // SUCCESS
+    }
+  }
+
   public void testTransactionClose() throws Exception
   {
     Company company = getModel1Factory().createCompany();

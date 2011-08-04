@@ -184,7 +184,12 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public CDOLock cdoReadLock()
   {
-    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    if (FSMUtil.isTransient(this))
+    {
+      throw new IllegalStateException("Call CDOView.lockObjects() for transient object " + this);
+    }
+
+    if (FSMUtil.isNew(this))
     {
       return CDOLockImpl.NOOP;
     }
@@ -197,7 +202,12 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public CDOLock cdoWriteLock()
   {
-    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    if (FSMUtil.isTransient(this))
+    {
+      throw new IllegalStateException("Call CDOView.lockObjects() for transient object " + this);
+    }
+
+    if (FSMUtil.isNew(this))
     {
       return CDOLockImpl.NOOP;
     }
@@ -210,7 +220,12 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public CDOLock cdoWriteOption()
   {
-    if (FSMUtil.isTransient(this) || FSMUtil.isNew(this))
+    if (FSMUtil.isTransient(this))
+    {
+      throw new IllegalStateException("Call CDOView.lockObjects() for transient object " + this);
+    }
+
+    if (FSMUtil.isNew(this))
     {
       return CDOLockImpl.NOOP;
     }

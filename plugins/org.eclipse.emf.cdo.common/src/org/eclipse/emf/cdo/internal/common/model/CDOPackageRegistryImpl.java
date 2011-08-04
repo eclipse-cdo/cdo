@@ -119,6 +119,8 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     this.packageLoader = packageLoader;
   }
 
+  static int lockCount;
+
   @Override
   public Object get(Object key)
   {
@@ -126,8 +128,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return super.get(key);
   }
 
-  public Set<String> getAllKeys()
+  public synchronized Set<String> getAllKeys()
   {
+    LifecycleUtil.checkActive(this);
     Set<String> result = new HashSet<String>();
     result.addAll(keySet());
     if (delegateRegistry != null)
@@ -145,8 +148,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return result;
   }
 
-  public Object getWithDelegation(String nsURI, boolean resolve)
+  public synchronized Object getWithDelegation(String nsURI, boolean resolve)
   {
+    LifecycleUtil.checkActive(this);
     Object result = getFrom(this, nsURI, resolve);
     if (result == null && delegateRegistry != null)
     {
@@ -166,7 +170,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return registry.get(nsURI);
   }
 
-  public Object basicPut(String nsURI, Object value)
+  public synchronized Object basicPut(String nsURI, Object value)
   {
     LifecycleUtil.checkActive(this);
     if (TRACER.isEnabled())
@@ -237,6 +241,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
   public synchronized Object putEPackage(EPackage ePackage)
   {
+    LifecycleUtil.checkActive(this);
     return put(ePackage.getNsURI(), ePackage);
   }
 
@@ -263,6 +268,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
   public synchronized void putPackageUnits(InternalCDOPackageUnit[] packageUnits, State state)
   {
+    LifecycleUtil.checkActive(this);
     for (InternalCDOPackageUnit packageUnit : packageUnits)
     {
       if (state != null)
@@ -339,8 +345,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return packageInfos;
   }
 
-  public InternalCDOPackageUnit getPackageUnit(EPackage ePackage)
+  public synchronized InternalCDOPackageUnit getPackageUnit(EPackage ePackage)
   {
+    LifecycleUtil.checkActive(this);
     CDOPackageInfo packageInfo = getPackageInfo(ePackage);
     if (packageInfo == null)
     {
@@ -383,7 +390,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return null;
   }
 
-  public InternalCDOPackageUnit[] getPackageUnits(long startTime, long endTime)
+  public synchronized InternalCDOPackageUnit[] getPackageUnits(long startTime, long endTime)
   {
     LifecycleUtil.checkActive(this);
     if (endTime == CDOBranchPoint.UNSPECIFIED_DATE)
@@ -421,7 +428,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return result.toArray(new InternalCDOPackageUnit[result.size()]);
   }
 
-  public InternalCDOPackageUnit[] getPackageUnits(boolean withSystemPackages)
+  public synchronized InternalCDOPackageUnit[] getPackageUnits(boolean withSystemPackages)
   {
     LifecycleUtil.checkActive(this);
     return collectPackageUnits(withSystemPackages);
@@ -490,8 +497,9 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
     return result.toArray(new EPackage[result.size()]);
   }
 
-  public EEnumLiteral getEnumLiteralFor(Enumerator value)
+  public synchronized EEnumLiteral getEnumLiteralFor(Enumerator value)
   {
+    LifecycleUtil.checkActive(this);
     EEnumLiteral result = enumLiterals.get(value);
     if (result != null)
     {
@@ -541,6 +549,7 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
 
   public synchronized Map<EClass, List<EClass>> getSubTypes()
   {
+    LifecycleUtil.checkActive(this);
     if (subTypes == null)
     {
       subTypes = CDOModelUtil.getSubTypes(this);

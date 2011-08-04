@@ -47,6 +47,7 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Semaphore;
 
 /**
  * @author Eike Stepper
@@ -72,6 +73,11 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   public InternalCDOBranchManager getBranchManager();
 
   public void setBranchManager(InternalCDOBranchManager branchManager);
+
+  /**
+   * @since 4.1
+   */
+  public Semaphore getPackageRegistryCommitLock();
 
   /**
    * Same as calling {@link #getPackageRegistry(boolean) getPackageRegistry(true)}.

@@ -111,6 +111,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.Semaphore;
 
 /**
  * @author Eike Stepper
@@ -139,6 +140,11 @@ public class Repository extends Container<Object> implements InternalRepository
   private boolean ensuringReferentialIntegrity;
 
   private IDGenerationLocation idGenerationLocation;
+
+  /**
+   * Must not be thread-bound to support XA commits.
+   */
+  private Semaphore packageRegistryCommitLock = new Semaphore(1);
 
   private InternalCDOPackageRegistry packageRegistry;
 
@@ -655,6 +661,11 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return packageRegistry;
+  }
+
+  public Semaphore getPackageRegistryCommitLock()
+  {
+    return packageRegistryCommitLock;
   }
 
   public InternalCDOPackageRegistry getPackageRegistry()

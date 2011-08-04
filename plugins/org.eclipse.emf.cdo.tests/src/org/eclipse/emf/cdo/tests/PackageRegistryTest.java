@@ -585,6 +585,33 @@ public class PackageRegistryTest extends AbstractCDOTest
     }
   }
 
+  /**
+   * Bug 353246.
+   * <p>
+   * Cannot reproduce the problem with MEMStore because MEMStoreAccessor.writePackageUnits() is empty.
+   */
+  @CleanRepositoriesBefore
+  public void testConcurrentPackageRegistration2() throws Exception
+  {
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource resource1 = transaction1.createResource(getResourcePath("/res1"));
+    transaction1.commit();
+
+    CDOSession session2 = openSession();
+    CDOTransaction transaction2 = session2.openTransaction();
+    CDOResource resource2 = transaction2.createResource(getResourcePath("/res2"));
+    transaction2.commit();
+
+    session2.options().setPassiveUpdateEnabled(false);
+
+    resource1.getContents().add(getModel1Factory().createCompany());
+    transaction1.commit();
+
+    resource2.getContents().add(getModel1Factory().createCompany());
+    transaction2.commit();
+  }
+
   @CleanRepositoriesBefore
   public void testPopulator() throws Exception
   {

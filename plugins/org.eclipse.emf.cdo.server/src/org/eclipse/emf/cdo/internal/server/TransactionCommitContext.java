@@ -67,6 +67,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -96,13 +97,17 @@ public class TransactionCommitContext implements InternalCommitContext
 {
   private static final InternalCDORevision DETACHED = new StubCDORevision(null);
 
-  private InternalTransaction transaction;
+  private final InternalTransaction transaction;
 
   private InternalRepository repository;
 
   private InternalCDORevisionManager revisionManager;
 
   private InternalLockManager lockManager;
+
+  private InternalCDOPackageRegistry repositoryPackageRegistry;
+
+  private boolean packageRegistryLocked;
 
   private TransactionPackageRegistry packageRegistry;
 
@@ -157,7 +162,8 @@ public class TransactionCommitContext implements InternalCommitContext
     lockManager = repository.getLockManager();
     ensuringReferentialIntegrity = repository.isEnsuringReferentialIntegrity();
 
-    packageRegistry = new TransactionPackageRegistry(repository.getPackageRegistry(false));
+    repositoryPackageRegistry = repository.getPackageRegistry(false);
+    packageRegistry = new TransactionPackageRegistry(repositoryPackageRegistry);
     packageRegistry.activate();
   }
 
@@ -408,6 +414,28 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.begin(107);
       dirtyObjects = new InternalCDORevision[dirtyObjectDeltas.length];
 
+      if (newPackageUnits.length != 0)
+      {
+        repository.getPackageRegistryCommitLock().acquire();
+        packageRegistryLocked = true;
+
+        List<InternalCDOPackageUnit> noDuplicates = new ArrayList<InternalCDOPackageUnit>();
+        for (InternalCDOPackageUnit newPackageUnit : newPackageUnits)
+        {
+          String id = newPackageUnit.getID();
+          if (!repositoryPackageRegistry.containsKey(id))
+          {
+            noDuplicates.add(newPackageUnit);
+          }
+        }
+
+        int newSize = noDuplicates.size();
+        if (newPackageUnits.length != newSize)
+        {
+          newPackageUnits = noDuplicates.toArray(new InternalCDOPackageUnit[newSize]);
+        }
+      }
+
       lockObjects(); // Can take long and must come before setTimeStamp()
       monitor.worked();
 
@@ -420,14 +448,13 @@ public class TransactionCommitContext implements InternalCommitContext
 
       checkXRefs();
       monitor.worked();
-      if (rollbackMessage != null)
-      {
-        return;
-      }
 
-      detachObjects(monitor.fork());
-      repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
-      accessor.write(this, monitor.fork(100));
+      if (rollbackMessage == null)
+      {
+        detachObjects(monitor.fork());
+        repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
+        accessor.write(this, monitor.fork(100));
+      }
     }
     catch (Throwable t)
     {
@@ -534,6 +561,11 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public void postCommit(boolean success)
   {
+    if (packageRegistryLocked)
+    {
+      repository.getPackageRegistryCommitLock().release();
+    }
+
     try
     {
       InternalSession sender = transaction.getSession();
@@ -648,7 +680,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
     try
     {
-
       final boolean supportingBranches = repository.isSupportingBranches();
 
       CDOFeatureDeltaVisitor deltaTargetLocker = null;
@@ -1140,6 +1171,7 @@ public class TransactionCommitContext implements InternalCommitContext
     @Override
     public synchronized void putPackageUnit(InternalCDOPackageUnit packageUnit)
     {
+      LifecycleUtil.checkActive(this);
       packageUnit.setPackageRegistry(this);
       for (InternalCDOPackageInfo packageInfo : packageUnit.getPackageInfos())
       {

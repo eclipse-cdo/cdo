@@ -319,6 +319,11 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
   private void prefetchRevisionChild(int depth, CDOID id, List<CDORevision> additionalRevisions,
       Map<CDOID, CDORevision> map)
   {
+    if (CDOIDUtil.isNull(id))
+    {
+      return;
+    }
+
     CDORevision child = map.get(id);
     if (child == null)
     {

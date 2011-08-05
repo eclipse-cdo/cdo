@@ -157,7 +157,7 @@ public class ExternalReferenceManager extends Lifecycle
     IDBStore store = idHandler.getStore();
     table = store.getDBSchema().addTable("cdo_external_refs"); //$NON-NLS-1$
     idField = table.addField("id", idHandler.getDBType()); //$NON-NLS-1$
-    uriField = table.addField("uri", DBType.VARCHAR); //$NON-NLS-1$
+    uriField = table.addField("uri", DBType.VARCHAR, 1024); //$NON-NLS-1$
     timestampField = table.addField("committime", DBType.BIGINT); //$NON-NLS-1$
 
     table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField);

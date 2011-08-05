@@ -99,6 +99,14 @@ public interface DawnGmfGenmodelPackage extends EPackage
   int DAWN_GMF_GENERATOR__DAWN_EDITOR_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME;
 
   /**
+   * The feature id for the '<em><b>Dawn Generator</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int DAWN_GMF_GENERATOR__DAWN_GENERATOR = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR;
+
+  /**
    * The feature id for the '<em><b>Dawn Document Provider Class Name</b></em>' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 

@@ -5,7 +5,7 @@
     modelDirectory="/org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf/src-gen" editorDirectory="/org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui/src-gen"
     modelPluginID="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf" modelName="DawnGenModel"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" editorPluginID="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.ui"
-    usedGenPackages="../../org.eclipse.emf.cdo.dawn.codegen.dawngenmodel/model/DawnCodeGen.genmodel#//dawngenmodel platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
+    runtimeVersion="2.6" usedGenPackages="../../org.eclipse.emf.cdo.dawn.codegen.dawngenmodel/model/DawnCodeGen.genmodel#//dawngenmodel platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>DawnGenModel.emf.ecore</foreignModel>
   <genPackages prefix="DawnEmfGenmodel" basePackage="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf"
       disposableProviderFactory="true" multipleEditorPages="false" generateModelWizard="false"

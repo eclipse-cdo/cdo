@@ -5,7 +5,7 @@
     modelDirectory="/org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf/src-gen" editorDirectory="/org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui/src-gen"
     modelPluginID="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf" modelName="DawnCodeGen"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" editorPluginID="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui"
-    language="" usedGenPackages="../../org.eclipse.emf.cdo.dawn.codegen.dawngenmodel/model/DawnCodeGen.genmodel#//dawngenmodel platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel#//genmodel platform:/plugin/org.eclipse.gmf.codegen/models/gmfgen.genmodel#//gmfgen">
+    runtimeVersion="2.6" language="" usedGenPackages="../../org.eclipse.emf.cdo.dawn.codegen.dawngenmodel/model/DawnCodeGen.genmodel#//dawngenmodel platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.genmodel#//genmodel platform:/plugin/org.eclipse.gmf.codegen/models/gmfgen.genmodel#//gmfgen">
   <foreignModel>DawnCodeGen.gmf.ecore</foreignModel>
   <genPackages prefix="DawnGmfGenmodel" basePackage="org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf"
       disposableProviderFactory="true" multipleEditorPages="false" generateModelWizard="false"

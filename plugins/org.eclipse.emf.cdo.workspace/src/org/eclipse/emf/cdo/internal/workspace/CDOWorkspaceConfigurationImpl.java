@@ -38,7 +38,7 @@ public class CDOWorkspaceConfigurationImpl implements CDOWorkspaceConfiguration
 
   private long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
 
-  private IDGenerationLocation idGenerationLocation = IDGenerationLocation.STORE;
+  private IDGenerationLocation idGenerationLocation = IDGenerationLocation.CLIENT;
 
   private CDOIDGenerator idGenerator;
 

@@ -424,16 +424,6 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   }
 
   @Override
-  protected void doBeforeActivate() throws Exception
-  {
-    super.doBeforeActivate();
-    if (userManager == null)
-    {
-      OM.LOG.info("No user manager configured. Users will not be authenticated");
-    }
-  }
-
-  @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();

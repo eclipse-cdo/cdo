@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.messages.Messages;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor;
 import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
@@ -611,10 +612,11 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   protected void firstStart()
   {
-    setCreationTime(getRepository().getTimeStamp());
+    InternalRepository repository = getRepository();
+    setCreationTime(repository.getTimeStamp());
     firstTime = true;
 
-    OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.8"), creationTime)); //$NON-NLS-1$
+    OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.8"), repository.getName(), creationTime)); //$NON-NLS-1$
   }
 
   protected void reStart()
@@ -630,7 +632,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     {
       names.clear();
 
-      boolean generatingIDs = getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
+      InternalRepository repository = getRepository();
+      boolean generatingIDs = repository.getIDGenerationLocation() == IDGenerationLocation.STORE;
       if (generatingIDs)
       {
         names.add(PROP_NEXT_LOCAL_CDOID);
@@ -653,6 +656,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       setLastLocalBranchID(Integer.valueOf(map.get(PROP_LAST_LOCAL_BRANCHID)));
       setLastCommitTime(Long.valueOf(map.get(PROP_LAST_COMMITTIME)));
       setLastNonLocalCommitTime(Long.valueOf(map.get(PROP_LAST_NONLOCAL_COMMITTIME)));
+
+      OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.8b"), repository.getName())); //$NON-NLS-1$
     }
     else
     {
@@ -664,17 +669,21 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
   protected void repairAfterCrash()
   {
+    String name = getRepository().getName();
+    OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.9"), name)); //$NON-NLS-1$
+
     Connection connection = getConnection();
 
     try
     {
       connection.setAutoCommit(false);
       connection.setReadOnly(true);
-      OM.LOG.info(Messages.getString("DBStore.9")); //$NON-NLS-1$
 
       mappingStrategy.repairAfterCrash(dbAdapter, connection); // Must update the idHandler
-      CDOID lastObjectID = idHandler.getLastObjectID();
-      CDOID nextLocalObjectID = idHandler.getNextLocalObjectID();
+
+      boolean storeIDs = getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
+      CDOID lastObjectID = storeIDs ? idHandler.getLastObjectID() : CDOID.NULL;
+      CDOID nextLocalObjectID = storeIDs ? idHandler.getNextLocalObjectID() : CDOID.NULL;
 
       int branchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
       setLastBranchID(branchID > 0 ? branchID : 0);
@@ -689,13 +698,22 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
           CDOBranch.MAIN_BRANCH_ID + "<=" + CDODBSchema.COMMIT_INFOS_BRANCH);
       setLastNonLocalCommitTime(lastNonLocalCommitTime);
 
-      OM.LOG
-          .info(MessageFormat.format(
-              Messages.getString("DBStore.10"), lastObjectID, nextLocalObjectID, getLastBranchID(), getLastCommitTime(), getLastNonLocalCommitTime())); //$NON-NLS-1$
+      if (storeIDs)
+      {
+        OM.LOG
+            .info(MessageFormat.format(
+                Messages.getString("DBStore.10"), name, lastObjectID, nextLocalObjectID, getLastBranchID(), getLastCommitTime(), getLastNonLocalCommitTime())); //$NON-NLS-1$
+      }
+      else
+      {
+        OM.LOG
+            .info(MessageFormat.format(
+                Messages.getString("DBStore.10b"), name, getLastBranchID(), getLastCommitTime(), getLastNonLocalCommitTime())); //$NON-NLS-1$
+      }
     }
     catch (SQLException e)
     {
-      OM.LOG.error(Messages.getString("DBStore.12"), e); //$NON-NLS-1$
+      OM.LOG.error(MessageFormat.format(Messages.getString("DBStore.11"), name), e); //$NON-NLS-1$
       throw new DBException(e);
     }
     finally

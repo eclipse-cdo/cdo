@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -20,6 +21,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
@@ -80,13 +82,17 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
   public void repairAfterCrash(IDBAdapter dbAdapter, Connection connection)
   {
-    IIDHandler idHandler = getStore().getIDHandler();
+    IDBStore store = getStore();
+    if (store.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+    {
+      IIDHandler idHandler = store.getIDHandler();
 
-    CDOID minLocalID = getMinLocalID(connection);
-    idHandler.setNextLocalObjectID(minLocalID);
+      CDOID minLocalID = getMinLocalID(connection);
+      idHandler.setNextLocalObjectID(minLocalID);
 
-    CDOID maxID = objectTypeMapper.getMaxID(connection, idHandler);
-    idHandler.setLastObjectID(maxID);
+      CDOID maxID = objectTypeMapper.getMaxID(connection, idHandler);
+      idHandler.setLastObjectID(maxID);
+    }
   }
 
   public void queryResources(IDBStoreAccessor accessor, QueryResourcesContext context)

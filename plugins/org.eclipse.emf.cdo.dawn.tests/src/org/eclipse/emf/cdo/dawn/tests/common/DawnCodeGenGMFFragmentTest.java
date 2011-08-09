@@ -52,7 +52,7 @@ public class DawnCodeGenGMFFragmentTest extends AbstractDawnTest
     String outputFolder = DawnTestPlatform.instance.getTestFolder();
     String diagramFolder = ouputFolder + "/" + "src/org/eclipse/emf/cdo/dawn/examples/acore/diagram";
 
-    assertEquals(true, new File(outputFolder + "/META-INF/Manifest.MF").exists());
+    assertEquals(true, new File(outputFolder + "/META-INF/MANIFEST.MF").exists());
     assertEquals(true, new File(outputFolder + "/fragment.xml").exists());
     assertEquals(true, new File(outputFolder + "/build.properties").exists());
 

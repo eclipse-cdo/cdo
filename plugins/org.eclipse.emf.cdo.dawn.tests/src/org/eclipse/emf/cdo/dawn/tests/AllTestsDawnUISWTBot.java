@@ -54,6 +54,9 @@ public class AllTestsDawnUISWTBot extends ConfigTestSuite
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
+    /******************** General **********************/
+    // testClasses.add(DawnCodeGenerationTest.class);
+
     /******************** GMF **********************/
     testClasses.add(DawnPreferencesTest.class);
     testClasses.add(DawnCreationWizardSWTBotTest.class);

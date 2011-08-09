@@ -8,9 +8,9 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.appearance.impl;
+package org.eclipse.emf.cdo.dawn.gmf.appearance.impl;
 
-import org.eclipse.emf.cdo.dawn.appearance.DawnAppearancer;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
 
 import org.eclipse.draw2d.Border;
 import org.eclipse.gef.EditPart;

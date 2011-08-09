@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.dawn.tests.ui.util;
 
-import org.eclipse.emf.cdo.dawn.appearance.DawnAppearancer;
 import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassAggregationsEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassAssociationsEditPart;
@@ -22,6 +21,7 @@ import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AInterfaceEdit
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreViewProvider;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
 

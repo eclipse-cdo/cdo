@@ -31,14 +31,14 @@ public class TCPConfigStarter extends AllConfigs
   }
 
   @Override
-  protected void initConfigSuites(TestSuite parent)
-  {
-    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
-  }
-
-  @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     testClasses.add(InitialTest.class);
+  }
+
+  @Override
+  protected void initConfigSuites(TestSuite parent)
+  {
+    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
   }
 }

@@ -10,9 +10,13 @@
  */
 package org.eclipse.emf.cdo.dawn.tests.ui.util;
 
+import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withMnemonic;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+
 import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassEditPart;
-import org.eclipse.emf.cdo.dawn.synchronize.DawnConflictHelper;
+import org.eclipse.emf.cdo.dawn.gmf.synchronize.DawnConflictHelper;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -33,18 +37,30 @@ import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.RelativeBendpoints;
 import org.eclipse.gmf.runtime.notation.datatype.RelativeBendpoint;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swtbot.eclipse.finder.SWTWorkbenchBot;
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefConnectionEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
+import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.matchers.AbstractMatcher;
+import org.eclipse.swtbot.swt.finder.results.WidgetResult;
+import org.eclipse.swtbot.swt.finder.widgets.AbstractSWTBot;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
 
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -52,6 +68,14 @@ import java.util.List;
  */
 public class DawnSWTBotUtil
 {
+  private static final String LABEL_OK = "OK";
+
+  private static final String LABEL_OTHERS = "Other...";
+
+  private static final String LABEL_WINDOW = "Window";
+
+  private static final String LABEL_SHOW_VIEW = "Show View";
+
   public static void initTest(SWTWorkbenchBot bot)
   {
     closeWelcomePage(bot);
@@ -73,7 +97,7 @@ public class DawnSWTBotUtil
   public static void setConnectorType(SWTWorkbenchBot bot, String serverName, String serverPort, String repository,
       String protocol)
   {
-    bot.menu("Window").menu("Preferences").click();
+    bot.menu(LABEL_WINDOW).menu("Preferences").click();
     SWTBotShell shell = bot.shell("Preferences");
     shell.activate();
 
@@ -88,7 +112,7 @@ public class DawnSWTBotUtil
     serverPortLabel.setText(serverPort);
     repositoryLabel.setText(repository);
     fileNameLabel.setText(protocol);
-    bot.button("OK").click();
+    bot.button(LABEL_OK).click();
   }
 
   public static List<SWTBotGefEditPart> getAllEditParts(SWTBotGefEditor editor)
@@ -275,6 +299,81 @@ public class DawnSWTBotUtil
     ret = checkNodeSize(node, height, width) && ret;
 
     return ret;
+  }
+
+  public static SWTBotView openView(SWTWorkbenchBot bot, String categoryName, String viewName)
+  {
+    bot.menu(LABEL_WINDOW).menu(LABEL_SHOW_VIEW).menu(LABEL_OTHERS).click();
+
+    SWTBotShell shell = bot.shell(LABEL_SHOW_VIEW);
+    shell.activate();
+    bot.tree().expandNode(categoryName).select(viewName);
+    bot.button(LABEL_OK).click();
+
+    return bot.activeView();
+  }
+
+  @SuppressWarnings("unchecked")
+  public static SWTBotMenu findContextMenu(final AbstractSWTBot<?> bot, final String... texts)
+  {
+    final Matcher<?>[] matchers = new Matcher<?>[texts.length];
+    for (int i = 0; i < texts.length; i++)
+    {
+      matchers[i] = allOf(instanceOf(MenuItem.class), withMnemonic(texts[i]));
+    }
+
+    final MenuItem menuItem = UIThreadRunnable.syncExec(new WidgetResult<MenuItem>()
+    {
+      public MenuItem run()
+      {
+        MenuItem menuItem = null;
+        Control control = (Control)bot.widget;
+        Menu menu = control.getMenu();
+        for (int i = 0; i < matchers.length; i++)
+        {
+          menuItem = show(menu, matchers[i]);
+          if (menuItem != null)
+          {
+            menu = menuItem.getMenu();
+          }
+        }
+
+        return menuItem;
+      }
+    });
+    if (menuItem == null)
+    {
+      throw new WidgetNotFoundException("Could not find menu: " + Arrays.asList(texts));
+    }
+
+    return new SWTBotMenu(menuItem);
+  }
+
+  private static MenuItem show(final Menu menu, final Matcher<?> matcher)
+  {
+    if (menu != null)
+    {
+      menu.notifyListeners(SWT.Show, new Event());
+      MenuItem[] items = menu.getItems();
+      for (final MenuItem menuItem : items)
+      {
+        if (matcher.matches(menuItem))
+        {
+          return menuItem;
+        }
+      }
+      menu.notifyListeners(SWT.Hide, new Event());
+    }
+    return null;
+  }
+
+  public static void setAutomaticBuild(SWTWorkbenchBot bot, boolean enabled)
+  {
+    SWTBotMenu menu = bot.menu("Project").menu("Build Automatically");
+    // if(menu.isEnabled()&&enabled)
+    {
+      menu.click();
+    }
   }
 
   // public static Edge createEdgeRemote(Node source, Node target, String type)

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.gef.EditPart;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -26,6 +25,9 @@ import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
 /**
+ * Since Dawn 0.2 this class is deprecated and replaced with "org.eclipse.emf.cdo.dawn.handlers.SolveConflictHandler".
+ * It will be removed soon.
+ * 
  * @author Martin Fluegge
  */
 @Deprecated
@@ -76,7 +78,7 @@ public class HandleConflictsAction implements IObjectActionDelegate
     if (selection instanceof IStructuredSelection)
     {
       IStructuredSelection structuredSelection = (IStructuredSelection)selection;
-      if (structuredSelection.getFirstElement() instanceof EditPart)
+      // if (structuredSelection.getFirstElement() instanceof EditPart)
       {
         selectedElement = structuredSelection.getFirstElement();
       }

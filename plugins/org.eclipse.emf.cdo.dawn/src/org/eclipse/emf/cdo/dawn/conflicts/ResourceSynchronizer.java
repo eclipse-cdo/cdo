@@ -13,15 +13,17 @@ package org.eclipse.emf.cdo.dawn.conflicts;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
-import org.eclipse.gmf.runtime.notation.View;
-
 import java.util.Map;
 import java.util.Observer;
 import java.util.Set;
 
 /**
+ * Since Dawn 2.0 this interface is deprecated and will be removed soon. Because it was never really used, there will be
+ * no surragote.
+ * 
  * @author Martin Fluegge
  */
+@Deprecated
 public interface ResourceSynchronizer
 {
   public static final int NO_CONFLICT = -1;
@@ -60,11 +62,11 @@ public interface ResourceSynchronizer
 
   void resolveDeletedRemotellyConflict(String xmiId);
 
-  void updateViewWithRemoteView(View obj);
-
-  void lastResourceDeleteView(View newView);
-
-  void lastResourceChangeView(View newView);
+  // void updateViewWithRemoteView(View obj);
+  //
+  // void lastResourceDeleteView(View newView);
+  //
+  // void lastResourceChangeView(View newView);
 
   boolean isConflicted();
 

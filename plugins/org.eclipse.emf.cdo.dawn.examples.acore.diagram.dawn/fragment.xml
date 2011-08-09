@@ -67,7 +67,7 @@
              point="org.eclipse.emf.cdo.dawn.editpartstylizers">
           <DawnEditPartStylizers
                 editpart="org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassEditPart"
-                stylizer="org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicNodeEditPartStylizerImpl">
+                stylizer="org.eclipse.emf.cdo.dawn.gmf.appearance.impl.DawnBasicNodeEditPartStylizerImpl">
           </DawnEditPartStylizers>
        </extension>
       <extension point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders" id="ep-provider">

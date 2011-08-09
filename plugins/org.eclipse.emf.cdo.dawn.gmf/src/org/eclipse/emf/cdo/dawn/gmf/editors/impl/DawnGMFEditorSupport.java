@@ -8,12 +8,13 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.editors.impl;
+package org.eclipse.emf.cdo.dawn.gmf.editors.impl;
 
-import org.eclipse.emf.cdo.dawn.appearance.DawnAppearancer;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
+import org.eclipse.emf.cdo.dawn.editors.impl.DawnAbstractEditorSupport;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
+import org.eclipse.emf.cdo.dawn.gmf.notifications.impl.DawnGMFHandler;
 import org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener;
-import org.eclipse.emf.cdo.dawn.notifications.impl.DawnGMFHandler;
 import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;

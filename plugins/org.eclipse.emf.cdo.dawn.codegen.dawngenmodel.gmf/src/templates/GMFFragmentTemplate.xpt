@@ -47,7 +47,7 @@ package  «this.GMFGenEditorGenerator.editor.packageName»;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
-import org.eclipse.emf.cdo.dawn.editors.impl.DawnGMFEditorSupport;
+import org.eclipse.emf.cdo.dawn.gmf.editors.impl.DawnGMFEditorSupport;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -208,7 +208,7 @@ public class «this.dawnEditorClassName» extends «GMFGenEditorGenerator.editor.cl
 «FILE "src/"+getDiagramPackagePath()+"/edit/parts/"+this.dawnDiagramEditPartClassName+".java"»
 package «this.GMFGenEditorGenerator.diagram.editPartsPackageName»;
 
-import org.eclipse.emf.cdo.dawn.synchronize.DawnConflictHelper;
+import org.eclipse.emf.cdo.dawn.gmf.synchronize.DawnConflictHelper;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -1008,11 +1008,11 @@ Bundle-SymbolicName: «this.fragmentName»;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: «this.GMFGenEditorGenerator.plugin.iD»;bundle-version="0.2.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.eclipse.emf.cdo.dawn;bundle-version="0.2.0",
- org.eclipse.emf.cdo.dawn.util;bundle-version="0.0",
- org.eclipse.emf.cdo.ui;bundle-version="3.0.0",
- org.eclipse.emf.cdo.dawn.ui;bundle-version="0.2.0"
-
+Require-Bundle: org.eclipse.emf.cdo.dawn;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.cdo.dawn.util;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.cdo.ui;bundle-version="[3.0.0,5.0.0)",
+ org.eclipse.emf.cdo.dawn.ui;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.cdo.dawn.gmf;bundle-version="[2.0.0,3.0.0)"
 «ENDFILE»
 «ENDDEFINE»
 

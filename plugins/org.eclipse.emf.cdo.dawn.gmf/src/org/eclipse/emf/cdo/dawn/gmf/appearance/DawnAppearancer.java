@@ -8,7 +8,7 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.appearance;
+package org.eclipse.emf.cdo.dawn.gmf.appearance;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.gef.EditPart;
@@ -18,6 +18,7 @@ import org.eclipse.swt.graphics.Color;
 
 /**
  * @author Martin Fluegge
+ * @since 2.0
  */
 public class DawnAppearancer
 {
@@ -49,7 +50,10 @@ public class DawnAppearancer
 
   public static final int TYPE_LOCKED_GLOBALLY = 4;
 
-  public static void setEdiPartConflicted(EditPart editPart, int type)
+  /**
+   * @since 2.0
+   */
+  public static void setEditPartConflicted(EditPart editPart, int type)
   {
     DawnEditPartStylizer stylizer = DawnEditPartStylizerRegistry.instance.getStylizer(editPart);
     if (stylizer != null)
@@ -58,6 +62,9 @@ public class DawnAppearancer
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public static void setEditPartDefaultAllChildren(EditPart editPart)
   {
     setEditPartDefault(editPart);
@@ -68,6 +75,9 @@ public class DawnAppearancer
     }
   }
 
+  /**
+   * @since 2.0
+   */
   public static void setEditPartDefault(EditPart editPart)
   {
     DawnEditPartStylizer stylizer = DawnEditPartStylizerRegistry.instance.getStylizer(editPart);
@@ -77,6 +87,9 @@ public class DawnAppearancer
     }
   }
 
+  /**
+   * @since 2.0
+   */
   protected static void setEditPartLocked(EditPart editPart, int type)
   {
     DawnEditPartStylizer stylizer = DawnEditPartStylizerRegistry.instance.getStylizer(editPart);

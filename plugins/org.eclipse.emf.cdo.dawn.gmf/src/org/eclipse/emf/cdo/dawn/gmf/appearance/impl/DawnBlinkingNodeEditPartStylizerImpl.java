@@ -8,9 +8,9 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.appearance.impl;
+package org.eclipse.emf.cdo.dawn.gmf.appearance.impl;
 
-import org.eclipse.emf.cdo.dawn.appearance.DawnAppearancer;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
 
 import org.eclipse.gef.EditPart;
 
@@ -19,10 +19,10 @@ import java.util.Map;
 
 /**
  * @author Martin Fluegge
+ * @since 2.0
  */
 public class DawnBlinkingNodeEditPartStylizerImpl extends DawnBasicGraphicalEditPartStylizerImpl
 {
-
   BlinkingThread blinkingThread;
 
   public DawnBlinkingNodeEditPartStylizerImpl()
@@ -50,6 +50,10 @@ public class DawnBlinkingNodeEditPartStylizerImpl extends DawnBasicGraphicalEdit
     setBorder(editPart, DawnAppearancer.COLOR_LOCKED_REMOTELY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
   }
 
+  /**
+   * @author Martin Fluegge
+   * @since 2.0
+   */
   protected class BlinkingThread extends Thread
   {
 
@@ -84,6 +88,9 @@ public class DawnBlinkingNodeEditPartStylizerImpl extends DawnBasicGraphicalEdit
       }
     }
 
+    /**
+     * @since 2.0
+     */
     public void start(EditPart editPart)
     {
       editParts.put(editPart, true);

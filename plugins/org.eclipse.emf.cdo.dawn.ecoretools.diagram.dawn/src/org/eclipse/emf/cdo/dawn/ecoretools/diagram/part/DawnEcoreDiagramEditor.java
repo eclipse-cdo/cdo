@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.dawn.ecoretools.diagram.part;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
-import org.eclipse.emf.cdo.dawn.editors.impl.DawnGMFEditorSupport;
+import org.eclipse.emf.cdo.dawn.gmf.editors.impl.DawnGMFEditorSupport;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.view.CDOView;

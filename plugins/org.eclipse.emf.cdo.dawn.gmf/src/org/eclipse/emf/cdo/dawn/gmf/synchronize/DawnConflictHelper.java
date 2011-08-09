@@ -8,12 +8,12 @@
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.synchronize;
+package org.eclipse.emf.cdo.dawn.gmf.synchronize;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
-import org.eclipse.emf.cdo.dawn.appearance.DawnAppearancer;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
 import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -47,7 +47,7 @@ public class DawnConflictHelper
       }
       EditPart editPart = DawnDiagramUpdater.createOrFindEditPartIfViewExists(view, editor);
       int typeConflictLocallyDeleted = evaluateConflictType(cdoObject);
-      DawnAppearancer.setEdiPartConflicted(editPart, typeConflictLocallyDeleted);
+      DawnAppearancer.setEditPartConflicted(editPart, typeConflictLocallyDeleted);
     }
     return cdoConflict;
   }

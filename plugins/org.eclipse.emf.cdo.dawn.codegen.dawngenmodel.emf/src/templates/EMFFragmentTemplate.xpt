@@ -39,7 +39,7 @@ import «this.emfGenModel.modelPluginID».presentation.«this.emfGenModel.modelName
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
-import org.eclipse.emf.cdo.dawn.editors.impl.DawnEMFEditorSupport;
+import org.eclipse.emf.cdo.dawn.emf.editors.impl.DawnEMFEditorSupport;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.DawnLabelProvider;
 import org.eclipse.emf.cdo.dawn.ui.DawnSelectionViewerAdapterFactoryContentProvider;
@@ -366,10 +366,11 @@ Bundle-SymbolicName: «this.fragmentName»;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: «this.emfGenModel.editorPluginID»
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.eclipse.emf.cdo.dawn;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.emf.cdo.dawn.ui;bundle-version="[1.0.0,2.0.0)",
+Require-Bundle: org.eclipse.emf.cdo.dawn;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.cdo.dawn.ui;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.cdo.dawn.util;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.emf.cdo.ui;bundle-version="[4.0.0,5.0.0)"
+ org.eclipse.emf.cdo.ui;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.emf.cdo.dawn.emf;bundle-version="[2.0.0,3.0.0)"
 «ENDFILE»
 «ENDDEFINE»
 

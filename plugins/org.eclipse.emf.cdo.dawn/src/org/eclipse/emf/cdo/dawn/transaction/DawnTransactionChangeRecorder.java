@@ -22,6 +22,9 @@ import org.eclipse.emf.transaction.impl.TransactionChangeRecorder;
  */
 public class DawnTransactionChangeRecorder extends TransactionChangeRecorder
 {
+  /**
+   * @since 2.0
+   */
   public DawnTransactionChangeRecorder(InternalTransactionalEditingDomain domain, ResourceSet rset)
   {
     super(domain, rset);

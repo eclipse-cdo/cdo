@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.dawn.tests.common;
 import org.eclipse.emf.cdo.dawn.resources.DawnWrapperResource;
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnTest;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -24,6 +25,7 @@ import java.util.Collections;
 /**
  * @author Martin Fluegge
  */
+@CleanRepositoriesBefore
 public class DawnWrapperResourceTest extends AbstractDawnTest
 {
   public void testPostEventTransactionHandler() throws Exception

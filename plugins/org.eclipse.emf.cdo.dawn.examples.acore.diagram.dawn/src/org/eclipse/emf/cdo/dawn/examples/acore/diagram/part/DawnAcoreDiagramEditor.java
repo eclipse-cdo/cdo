@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
-import org.eclipse.emf.cdo.dawn.editors.impl.DawnGMFEditorSupport;
+import org.eclipse.emf.cdo.dawn.gmf.editors.impl.DawnGMFEditorSupport;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -36,7 +36,6 @@ import org.eclipse.ui.IFileEditorInput;
  */
 public class DawnAcoreDiagramEditor extends AcoreDiagramEditor implements IDawnEditor
 {
-
   public static String ID = "org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.DawnAcoreDiagramEditor";
 
   private IDawnEditorSupport dawnEditorSupport;

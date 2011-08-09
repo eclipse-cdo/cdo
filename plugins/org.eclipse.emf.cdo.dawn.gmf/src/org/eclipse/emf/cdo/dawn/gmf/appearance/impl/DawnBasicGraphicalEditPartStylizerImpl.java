@@ -8,10 +8,10 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.appearance.impl;
+package org.eclipse.emf.cdo.dawn.gmf.appearance.impl;
 
-import org.eclipse.emf.cdo.dawn.appearance.DawnAppearancer;
-import org.eclipse.emf.cdo.dawn.appearance.DawnEditPartStylizer;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnEditPartStylizer;
 
 import org.eclipse.draw2d.Border;
 import org.eclipse.draw2d.IFigure;
@@ -22,30 +22,47 @@ import org.eclipse.swt.graphics.Color;
 
 /**
  * @author Martin Fluegge
+ * @since 2.0
  */
+
 public class DawnBasicGraphicalEditPartStylizerImpl implements DawnEditPartStylizer
 {
+  /**
+   * @since 2.0
+   */
   public void setDefault(EditPart editPart)
   {
     setBorder(editPart, null);
   }
 
+  /**
+   * @since 2.0
+   */
   public void setConflicted(EditPart editPart, int type)
   {
     setBorder(editPart, DawnAppearancer.COLOR_DELETE_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
   }
 
+  /**
+   * @since 2.0
+   */
   public void setLocked(EditPart editPart, int type)
   {
     setBorder(editPart, DawnAppearancer.COLOR_LOCKED_REMOTELY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
   }
 
+  /**
+   * @since 2.0
+   */
   protected void setBorder(EditPart editPart, Color color, int thickness)
   {
     Border thickBorder = new LineBorder(color, thickness);
     setBorder(editPart, thickBorder);
   }
 
+  /**
+   * @since 2.0
+   */
   protected void setBorder(EditPart editPart, Border border)
   {
     GraphicalEditPart e = (GraphicalEditPart)editPart;

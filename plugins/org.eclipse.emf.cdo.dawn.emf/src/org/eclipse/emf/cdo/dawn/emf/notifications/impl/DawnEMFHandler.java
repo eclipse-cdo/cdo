@@ -8,7 +8,7 @@
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.cdo.dawn.notifications.impl;
+package org.eclipse.emf.cdo.dawn.emf.notifications.impl;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener;

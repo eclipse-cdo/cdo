@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.dawn.transaction;
 
-import org.eclipse.emf.cdo.dawn.resources.DawnPathmapManager;
+import org.eclipse.emf.cdo.dawn.gmf.resources.DawnPathmapManager;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;

@@ -8,16 +8,23 @@
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.cdo.dawn.elementtypes;
+package org.eclipse.emf.cdo.dawn.gmf.elementtypes;
 
 /**
  * 
  * @author Martin Fluegge
+ *  @since 2.0
  */
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.notation.View;
 
+/**
+ * @since 2.0
+ */
 public interface DawnElementTypeHelper
 {
+  /**
+   * @since 2.0
+   */
   IElementType getElementType(View view);
 }

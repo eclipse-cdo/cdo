@@ -8,25 +8,35 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.appearance.impl;
+package org.eclipse.emf.cdo.dawn.gmf.appearance.impl;
 
-import org.eclipse.emf.cdo.dawn.appearance.DawnEditPartStylizer;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnEditPartStylizer;
 
 import org.eclipse.gef.EditPart;
 
 /**
  * @author Martin Fluegge
+ * @since 2.0
  */
 public class DawnBasicDiagramStylizerImpl implements DawnEditPartStylizer
 {
+  /**
+   * @since 2.0
+   */
   public void setDefault(EditPart editpart)
   {
   }
 
+  /**
+   * @since 2.0
+   */
   public void setConflicted(EditPart editpart, int type)
   {
   }
 
+  /**
+   * @since 2.0
+   */
   public void setLocked(EditPart editpart, int type)
   {
   }

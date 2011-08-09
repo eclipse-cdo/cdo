@@ -8,12 +8,12 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.appearance;
+package org.eclipse.emf.cdo.dawn.gmf.appearance;
 
-import org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicConnectionEditPartStylizerImpl;
-import org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicGraphicalEditPartStylizerImpl;
-import org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicNodeEditPartStylizerImpl;
-import org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicTextAwareEditPartStylizerImpl;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.impl.DawnBasicConnectionEditPartStylizerImpl;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.impl.DawnBasicGraphicalEditPartStylizerImpl;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.impl.DawnBasicNodeEditPartStylizerImpl;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.impl.DawnBasicTextAwareEditPartStylizerImpl;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -31,6 +31,10 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.ITextAwareEditPart;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Martin Fluegge
+ * @since 2.0
+ */
 public class DawnEditPartStylizerRegistry
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnEditPartStylizerRegistry.class);
@@ -41,6 +45,9 @@ public class DawnEditPartStylizerRegistry
 
   private Map<String, DawnEditPartStylizer> registeredStylizers = new HashMap<String, DawnEditPartStylizer>();
 
+  /**
+   * @since 2.0
+   */
   public DawnEditPartStylizer getStylizer(EditPart editPart)
   {
     DawnEditPartStylizer stylizer = registeredStylizers.get(editPart.getClass().getCanonicalName());

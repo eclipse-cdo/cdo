@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.emf.cdo.dawn" id="org.eclipse.emf.cdo.dawn.listeners" name="DawnListeners"/>
       </appinfo>
       <documentation>
-         This extension point allows to add a tranaction listener to the editor&apos;s related transaction. This Listener must extend org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener. This allows to change the editors behavior an transaction changes. 
+         This extension point allows to add a tranaction listener to the editor&apos;s related transaction. This Listener must extend org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener. This allows to change the editors behavior if a transaction changes.
       </documentation>
    </annotation>
 
@@ -98,7 +98,7 @@
                 class=&quot;org.eclipse.emf.cdo.dawn.notifications.DawnGMFTransactionListener&quot;&gt;
     &lt;/DawnTransactionListener&gt;
   &lt;/extension&gt;
-&lt;/pre&gt;       
+&lt;/pre&gt;
       </documentation>
    </annotation>
 
@@ -107,7 +107,7 @@
          <meta.section type="apiinfo"/>
       </appinfo>
       <documentation>
-         Extend org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener and override the method notifyEvent(IEvent event) to change the behavior. Set your implementation to the &lt;b&gt;class&lt;/b&gt; attribute of the extension point. 
+         Extend org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener and override the method notifyEvent(IEvent event) to change the behavior. Set your implementation to the &lt;b&gt;class&lt;/b&gt; attribute of the extension point.
       </documentation>
    </annotation>
 

@@ -8,7 +8,7 @@
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.cdo.dawn.elementtypes;
+package org.eclipse.emf.cdo.dawn.gmf.elementtypes;
 
 /**
  * @author Martin Fluegge

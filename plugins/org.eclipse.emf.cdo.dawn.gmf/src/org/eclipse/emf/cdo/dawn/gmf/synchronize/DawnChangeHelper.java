@@ -8,7 +8,7 @@
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.cdo.dawn.synchronize;
+package org.eclipse.emf.cdo.dawn.gmf.synchronize;
 
 import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.dawn.util.DawnResourceHelper;

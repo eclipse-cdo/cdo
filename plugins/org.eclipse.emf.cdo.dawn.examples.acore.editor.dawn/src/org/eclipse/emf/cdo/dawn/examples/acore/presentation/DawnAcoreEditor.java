@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.dawn.examples.acore.presentation;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditorSupport;
-import org.eclipse.emf.cdo.dawn.editors.impl.DawnEMFEditorSupport;
+import org.eclipse.emf.cdo.dawn.emf.editors.impl.DawnEMFEditorSupport;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.DawnLabelProvider;
 import org.eclipse.emf.cdo.dawn.ui.DawnSelectionViewerAdapterFactoryContentProvider;

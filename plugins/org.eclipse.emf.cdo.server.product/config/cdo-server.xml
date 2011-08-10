@@ -20,6 +20,7 @@
     <property name="supportingEcore" value="false"/>
     <property name="ensureReferentialIntegrity" value="false"/>
     <property name="allowInterruptRunningQueries" value="true"/>
+    <property name="idGenerationLocation" value="STORE"/> <!-- Possible values: STORE | CLIENT -->
 
     <!-- Example (see https://bugs.eclipse.org/bugs/show_bug.cgi?id=302775):
     <userManager type="file" description="_database/repo1.users"/>

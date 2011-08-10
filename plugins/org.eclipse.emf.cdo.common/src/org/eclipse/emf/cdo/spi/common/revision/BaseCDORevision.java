@@ -437,7 +437,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   {
     if (feature.isMany() && index != EStore.NO_INDEX)
     {
-      return getList(feature).get(index);
+      CDOList list = getList(feature);
+      return list.get(index);
     }
 
     return getValue(feature);
@@ -445,27 +446,32 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public boolean contains(EStructuralFeature feature, Object value)
   {
-    return getList(feature).contains(value);
+    CDOList list = getList(feature);
+    return list.contains(value);
   }
 
   public int indexOf(EStructuralFeature feature, Object value)
   {
-    return getList(feature).indexOf(value);
-  }
-
-  public boolean isEmpty(EStructuralFeature feature)
-  {
-    return getList(feature).isEmpty();
+    CDOList list = getList(feature);
+    return list.indexOf(value);
   }
 
   public int lastIndexOf(EStructuralFeature feature, Object value)
   {
-    return getList(feature).lastIndexOf(value);
+    CDOList list = getList(feature);
+    return list.lastIndexOf(value);
+  }
+
+  public boolean isEmpty(EStructuralFeature feature)
+  {
+    CDOList list = getList(feature);
+    return list.isEmpty();
   }
 
   public int size(EStructuralFeature feature)
   {
-    return getList(feature).size();
+    CDOList list = getList(feature);
+    return list.size();
   }
 
   public Object[] toArray(EStructuralFeature feature)
@@ -475,7 +481,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       throw new IllegalStateException("!feature.isMany()");
     }
 
-    return getList(feature).toArray();
+    CDOList list = getList(feature);
+    return list.toArray();
   }
 
   public <T> T[] toArray(EStructuralFeature feature, T[] array)
@@ -485,12 +492,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       throw new IllegalStateException("!feature.isMany()");
     }
 
-    return getList(feature).toArray(array);
+    CDOList list = getList(feature);
+    return list.toArray(array);
   }
 
   public void add(EStructuralFeature feature, int index, Object value)
   {
-    getList(feature).add(index, value);
+    CDOList list = getList(feature);
+    list.add(index, value);
   }
 
   public void clear(EStructuralFeature feature)
@@ -500,19 +509,22 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public Object move(EStructuralFeature feature, int targetIndex, int sourceIndex)
   {
-    return getList(feature).move(targetIndex, sourceIndex);
+    CDOList list = getList(feature);
+    return list.move(targetIndex, sourceIndex);
   }
 
   public Object remove(EStructuralFeature feature, int index)
   {
-    return getList(feature).remove(index);
+    CDOList list = getList(feature);
+    return list.remove(index);
   }
 
   public Object set(EStructuralFeature feature, int index, Object value)
   {
     if (feature.isMany())
     {
-      return getList(feature).set(index, value);
+      CDOList list = getList(feature);
+      return list.set(index, value);
     }
 
     return setValue(feature, value);

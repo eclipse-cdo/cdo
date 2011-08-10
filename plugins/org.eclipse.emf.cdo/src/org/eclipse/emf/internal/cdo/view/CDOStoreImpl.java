@@ -261,10 +261,18 @@ public final class CDOStoreImpl implements CDOStore
         TRACER.format("contains({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
       }
 
-      value = convertToCDO(cdoObject, feature, value);
+      Object convertedValue = convertToCDO(cdoObject, feature, value);
 
       InternalCDORevision revision = getRevisionForReading(cdoObject);
-      return revision.contains(feature, value);
+      boolean result = revision.contains(feature, convertedValue);
+
+      // Special handling of detached (TRANSIENT) objects, see bug 354395
+      if (!result && value != convertedValue && value instanceof EObject)
+      {
+        result = revision.contains(feature, value);
+      }
+
+      return result;
     }
   }
 

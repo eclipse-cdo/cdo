@@ -166,6 +166,7 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
     config.setRemote(remote);
     config.setBranchPath(branchPath);
     config.setTimeStamp(timeStamp);
+    config.setIDGenerationLocation(getRepository().getIDGenerationLocation());
 
     InternalCDOWorkspace workspace = (InternalCDOWorkspace)config.checkout();
     workspaces.add(workspace);

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.IStore;
+import org.eclipse.emf.cdo.server.IStore.CanHandleClientAssignedIDs;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -27,7 +28,7 @@ import org.eclipse.emf.ecore.EClass;
  * @noimplement This interface is not intended to be implemented by clients.
  * @since 4.0
  */
-public interface IMEMStore extends IStore, CDOAllRevisionsProvider
+public interface IMEMStore extends IStore, CDOAllRevisionsProvider, CanHandleClientAssignedIDs
 {
   public static final int UNLIMITED = -1;
 

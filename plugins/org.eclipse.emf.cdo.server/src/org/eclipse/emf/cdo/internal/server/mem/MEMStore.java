@@ -13,6 +13,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.mem;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -75,6 +76,7 @@ import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -132,6 +134,40 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
   public MEMStore()
   {
     this(UNLIMITED);
+  }
+
+  @Override
+  public CDOID createObjectID(String val)
+  {
+    if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+    {
+      byte[] decoded = CDOIDUtil.decodeUUID(val);
+      return CDOIDUtil.createUUID(decoded);
+    }
+
+    return super.createObjectID(val);
+  }
+
+  @Override
+  public boolean isLocal(CDOID id)
+  {
+    if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+    {
+      return false;
+    }
+
+    return super.isLocal(id);
+  }
+
+  @Override
+  public void ensureLastObjectID(CDOID id)
+  {
+    if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+    {
+      return;
+    }
+
+    super.ensureLastObjectID(id);
   }
 
   public synchronized Map<String, String> getPersistentProperties(Set<String> names)
@@ -966,7 +1002,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    creationTime = System.currentTimeMillis();
+    creationTime = getRepository().getTimeStamp();
+
+    if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+    {
+      setObjectIDTypes(Collections.singleton(CDOID.ObjectType.UUID));
+    }
   }
 
   @Override

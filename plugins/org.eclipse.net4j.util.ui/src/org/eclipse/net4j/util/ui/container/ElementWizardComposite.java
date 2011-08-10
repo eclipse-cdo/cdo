@@ -13,6 +13,10 @@ package org.eclipse.net4j.util.ui.container;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.ValidationContext;
 
@@ -39,7 +43,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 3.1
  */
-public abstract class ElementWizardComposite extends Composite
+public abstract class ElementWizardComposite extends Composite implements IListener
 {
   private static final IElementWizard NO_WIZARD = new ElementWizard()
   {
@@ -68,11 +72,24 @@ public abstract class ElementWizardComposite extends Composite
 
   private boolean firstLayout = true;
 
+  private Notifier notifier = new Notifier();
+
   public ElementWizardComposite(Composite parent, int style, String productGroup, String label)
+  {
+    this(parent, style, productGroup, label, null);
+  }
+
+  /**
+   * @since 3.2
+   */
+  public ElementWizardComposite(Composite parent, int style, String productGroup, String label,
+      ValidationContext validationContext)
   {
     super(parent, style);
     this.productGroup = productGroup;
     this.label = label;
+
+    setValidationContext(validationContext);
     create();
   }
 
@@ -122,12 +139,26 @@ public abstract class ElementWizardComposite extends Composite
             getProductGroup() + ":" + factoryType, description);
         wizards.add(wizard);
         wizardControls.put(wizard, new ArrayList<Control>());
+
+        if (wizard instanceof ElementWizard)
+        {
+          ElementWizard impl = (ElementWizard)wizard;
+          impl.addListener(this);
+        }
       }
       catch (FactoryNotFoundException ex)
       {
         it.remove();
       }
     }
+  }
+
+  /**
+   * @since 3.2
+   */
+  public void notifyEvent(IEvent event)
+  {
+    notifier.fireEvent(event);
   }
 
   protected List<String> getFactoryTypes()
@@ -157,7 +188,10 @@ public abstract class ElementWizardComposite extends Composite
       harvestControls(wizard);
     }
 
-    setFactoryType(factoryTypes.get(0));
+    if (!factoryTypes.isEmpty())
+    {
+      setFactoryType(factoryTypes.get(0));
+    }
   }
 
   protected void factoryTypeChanged()
@@ -189,6 +223,7 @@ public abstract class ElementWizardComposite extends Composite
     // layout(getChildren());
 
     layout();
+    notifier.fireEvent();
   }
 
   @Override
@@ -220,6 +255,14 @@ public abstract class ElementWizardComposite extends Composite
   protected IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
+  }
+
+  /**
+   * @since 3.2
+   */
+  public final INotifier getNotifier()
+  {
+    return notifier;
   }
 
   public String getDescription()

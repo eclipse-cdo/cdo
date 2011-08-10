@@ -10,7 +10,9 @@
  */
 package org.eclipse.net4j.util.ui.container;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.ValidationContext;
 
@@ -24,7 +26,7 @@ import org.eclipse.swt.widgets.Text;
  * @author Eike Stepper
  * @since 3.1
  */
-public abstract class ElementWizard implements IElementWizard, ValidationContext
+public abstract class ElementWizard extends Notifier implements IElementWizard, ValidationContext
 {
   private IManagedContainer container;
 
@@ -86,7 +88,12 @@ public abstract class ElementWizard implements IElementWizard, ValidationContext
 
   protected void setResultDescription(String resultDescription)
   {
-    this.resultDescription = resultDescription;
+    String oldDescription = this.resultDescription;
+    if (!ObjectUtil.equals(resultDescription, oldDescription))
+    {
+      this.resultDescription = resultDescription;
+      fireEvent();
+    }
   }
 
   public void setValidationError(Object source, String message)

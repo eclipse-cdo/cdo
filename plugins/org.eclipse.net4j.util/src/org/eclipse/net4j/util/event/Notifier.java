@@ -69,6 +69,14 @@ public class Notifier implements INotifier
     return listeners.get();
   }
 
+  /**
+   * @since 3.2
+   */
+  public void fireEvent()
+  {
+    fireEvent(new Event(this));
+  }
+
   public void fireEvent(IEvent event)
   {
     if (event != null)

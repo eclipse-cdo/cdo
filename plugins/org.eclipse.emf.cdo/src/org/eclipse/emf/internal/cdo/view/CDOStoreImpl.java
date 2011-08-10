@@ -14,6 +14,7 @@
  */
 package org.eclipse.emf.internal.cdo.view;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -32,6 +33,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 
@@ -261,10 +263,22 @@ public final class CDOStoreImpl implements CDOStore
         TRACER.format("contains({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
       }
 
-      value = convertToCDO(cdoObject, feature, value);
+      Object convertedValue = convertToCDO(cdoObject, feature, value);
 
       InternalCDORevision revision = getRevisionForReading(cdoObject);
-      return revision.contains(feature, value);
+      boolean result = revision.contains(feature, convertedValue);
+
+      // Special handling of detached (TRANSIENT) objects, see bug 354395
+      if (!result && value instanceof EObject)
+      {
+        CDOObject cdoObjectValue = CDOUtil.getCDOObject((EObject)value);
+        if (FSMUtil.isTransient(cdoObjectValue))
+        {
+          result = revision.contains(feature, value);
+        }
+      }
+
+      return result;
     }
   }
 

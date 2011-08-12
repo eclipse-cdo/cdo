@@ -2,30 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.util;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.dawn.internal.util.bundle.OM$Activator
 Require-Bundle: org.eclipse.ui;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j.tcp;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf;bundle-version="[2.6.0,3.0.0)",
- org.eclipse.emf.cdo.net4j;bundle-version="[4.0.0,5.0.0)",
- org.eclipse.gmf.runtime.common.core;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.gmf.runtime.common.ui;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.gmf.runtime.diagram.core;bundle-version="[1.3.0,2.0.0)",
- org.eclipse.gmf.runtime.diagram.ui;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.gmf.runtime.diagram.ui.actions;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.gmf.runtime.emf.core;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.gmf.runtime.notation;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.gmf.runtime.notation.edit;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.gmf.runtime.notation.providers;bundle-version="[1.3.0,2.0.0)",
- org.eclipse.gmf.runtime.diagram.ui.resources.editor;bundle-version="[1.3.0,2.0.0)",
- org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide;bundle-version="[1.2.0,2.0.0)"
+ org.eclipse.emf.cdo.net4j;bundle-version="[4.0.0,5.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.cdo.dawn.internal.util.bundle;version="1.0.0",
- org.eclipse.emf.cdo.dawn.util;version="1.0.0",
- org.eclipse.emf.cdo.dawn.util.connection;version="1.0.0",
- org.eclipse.emf.cdo.dawn.util.exceptions;version="1.0.0"
+Export-Package: org.eclipse.emf.cdo.dawn.internal.util.bundle;version="2.0.0",
+ org.eclipse.emf.cdo.dawn.util.connection;version="2.0.0",
+ org.eclipse.emf.cdo.dawn.util.exceptions;version="2.0.0"
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin

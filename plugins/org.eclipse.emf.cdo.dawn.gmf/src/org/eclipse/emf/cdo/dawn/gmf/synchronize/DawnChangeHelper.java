@@ -10,8 +10,8 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.gmf.synchronize;
 
-import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
-import org.eclipse.emf.cdo.dawn.util.DawnResourceHelper;
+import org.eclipse.emf.cdo.dawn.gmf.util.DawnDiagramUpdater;
+import org.eclipse.emf.cdo.dawn.gmf.util.DawnResourceHelper;
 import org.eclipse.emf.cdo.dawn.util.exceptions.EClassIncompatibleException;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 
@@ -91,7 +91,7 @@ public class DawnChangeHelper
   }
 
   /**
-   * genereic Method to create an EditPart by the given view
+   * generic Method to create an EditPart by the given view
    * 
    * @param node
    * @param elementType

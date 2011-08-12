@@ -10,9 +10,9 @@
  ******************************************************************************/
 package org.eclipse.emf.cdo.dawn.ecoretools.diagram.part;
 
+import org.eclipse.emf.cdo.dawn.gmf.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.dawn.transaction.DawnDiagramEditingDomainFactory;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
-import org.eclipse.emf.cdo.dawn.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 
 import org.eclipse.emf.common.notify.Adapter;

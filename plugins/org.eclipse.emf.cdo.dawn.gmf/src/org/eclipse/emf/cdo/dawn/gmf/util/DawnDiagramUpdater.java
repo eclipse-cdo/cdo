@@ -8,7 +8,7 @@
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.cdo.dawn.util;
+package org.eclipse.emf.cdo.dawn.gmf.util;
 
 import org.eclipse.emf.cdo.dawn.internal.util.bundle.OM;
 

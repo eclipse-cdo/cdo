@@ -36,7 +36,7 @@ public class CDOServerApplication extends OSGiApplication
 {
   public static final String ID = OM.BUNDLE_ID + ".app"; //$NON-NLS-1$
 
-  public static final String PROP_BROWSER_PORT = OM.BUNDLE_ID + ".browser.port"; //$NON-NLS-1$
+  public static final String PROP_BROWSER_PORT = "org.eclipse.emf.cdo.server.browser.port"; //$NON-NLS-1$
 
   private IRepository[] repositories;
 

@@ -311,7 +311,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
 
     public CDOCommitData getCommitData()
     {
-      storeAccessor.handleRevisions(null, null, timeStamp, true, this);
+      storeAccessor.handleRevisions(null, null, timeStamp, true, new CDORevisionHandler.Filtered.Undetached(this));
 
       List<CDOIDAndVersion> detachedObjects = detachCounter.getDetachedObjects();
       return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);

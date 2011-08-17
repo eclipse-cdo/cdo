@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.revision;
 
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
+
 /**
  * A call-back interface that indicates the ability to <i>handle</i> {@link CDORevision revisions} that are passed from
  * other entities.
@@ -26,4 +28,50 @@ public interface CDORevisionHandler
    * @since 4.0
    */
   public boolean handleRevision(CDORevision revision);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public static class Filtered implements CDORevisionHandler
+  {
+    private final CDORevisionHandler delegate;
+
+    public Filtered(CDORevisionHandler delegate)
+    {
+      this.delegate = delegate;
+    }
+
+    public final boolean handleRevision(CDORevision revision)
+    {
+      if (filter(revision))
+      {
+        return true;
+      }
+
+      return delegate.handleRevision(revision);
+    }
+
+    protected boolean filter(CDORevision revision)
+    {
+      return false;
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class Undetached extends Filtered
+    {
+      public Undetached(CDORevisionHandler delegate)
+      {
+        super(delegate);
+      }
+
+      @Override
+      protected boolean filter(CDORevision revision)
+      {
+        return revision instanceof DetachedCDORevision;
+      }
+    }
+  }
 }

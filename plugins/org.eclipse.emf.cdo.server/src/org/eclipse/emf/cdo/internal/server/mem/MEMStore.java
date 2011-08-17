@@ -345,11 +345,6 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
   private boolean handleRevision(InternalCDORevision revision, EClass eClass, CDOBranch branch, long timeStamp,
       boolean exactTime, CDORevisionHandler handler)
   {
-    if (revision instanceof DetachedCDORevision)
-    {
-      return true;
-    }
-
     if (eClass != null && revision.getEClass() != eClass)
     {
       return true;

@@ -93,28 +93,29 @@ public class HandleRevisionsIndication extends CDOServerReadIndication
     final IOException[] ioException = { null };
     final RuntimeException[] runtimeException = { null };
 
-    getRepository().handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, new CDORevisionHandler()
-    {
-      public boolean handleRevision(CDORevision revision)
-      {
-        try
+    getRepository().handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime,
+        new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
         {
-          out.writeBoolean(true);
-          out.writeCDORevision(revision, CDORevision.UNCHUNKED);
-          return true;
-        }
-        catch (IOException ex)
-        {
-          ioException[0] = ex;
-        }
-        catch (RuntimeException ex)
-        {
-          runtimeException[0] = ex;
-        }
+          public boolean handleRevision(CDORevision revision)
+          {
+            try
+            {
+              out.writeBoolean(true);
+              out.writeCDORevision(revision, CDORevision.UNCHUNKED);
+              return true;
+            }
+            catch (IOException ex)
+            {
+              ioException[0] = ex;
+            }
+            catch (RuntimeException ex)
+            {
+              runtimeException[0] = ex;
+            }
 
-        return false;
-      }
-    });
+            return false;
+          }
+        }));
 
     if (ioException[0] != null)
     {

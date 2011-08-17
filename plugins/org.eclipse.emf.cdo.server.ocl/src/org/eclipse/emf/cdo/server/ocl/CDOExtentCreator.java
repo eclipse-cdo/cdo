@@ -106,28 +106,29 @@ public class CDOExtentCreator implements OCLExtentCreator
       }
     }
 
-    accessor.handleRevisions(eClass, branch, timeStamp, false, new CDORevisionHandler()
-    {
-      public boolean handleRevision(CDORevision revision)
-      {
-        if (revisionCacheAdder != null)
+    accessor.handleRevisions(eClass, branch, timeStamp, false, new CDORevisionHandler.Filtered.Undetached(
+        new CDORevisionHandler()
         {
-          revisionCacheAdder.addRevision(revision);
-        }
-
-        CDOID id = revision.getID();
-        if (!isDetached(id))
-        {
-          EObject object = getEObject(id);
-          if (object != null)
+          public boolean handleRevision(CDORevision revision)
           {
-            extent.add(object);
-          }
-        }
+            if (revisionCacheAdder != null)
+            {
+              revisionCacheAdder.addRevision(revision);
+            }
 
-        return !canceled.get();
-      }
-    });
+            CDOID id = revision.getID();
+            if (!isDetached(id))
+            {
+              EObject object = getEObject(id);
+              if (object != null)
+              {
+                extent.add(object);
+              }
+            }
+
+            return !canceled.get();
+          }
+        }));
 
     return extent;
   }
@@ -248,28 +249,29 @@ public class CDOExtentCreator implements OCLExtentCreator
 
             private void handlePersistentState()
             {
-              accessor.handleRevisions(eClass, branch, timeStamp, false, new CDORevisionHandler()
-              {
-                public boolean handleRevision(CDORevision revision)
-                {
-                  empty = false;
-                  emptyKnown.countDown();
-
-                  CDORevisionCacheAdder revisionCacheAdder = getRevisionCacheAdder();
-                  if (revisionCacheAdder != null)
+              accessor.handleRevisions(eClass, branch, timeStamp, false, new CDORevisionHandler.Filtered.Undetached(
+                  new CDORevisionHandler()
                   {
-                    revisionCacheAdder.addRevision(revision);
-                  }
+                    public boolean handleRevision(CDORevision revision)
+                    {
+                      empty = false;
+                      emptyKnown.countDown();
 
-                  CDOID id = revision.getID();
-                  if (!isDetached(id))
-                  {
-                    enqueue(id);
-                  }
+                      CDORevisionCacheAdder revisionCacheAdder = getRevisionCacheAdder();
+                      if (revisionCacheAdder != null)
+                      {
+                        revisionCacheAdder.addRevision(revision);
+                      }
 
-                  return !canceled.get();
-                }
-              });
+                      CDOID id = revision.getID();
+                      if (!isDetached(id))
+                      {
+                        enqueue(id);
+                      }
+
+                      return !canceled.get();
+                    }
+                  }));
             }
 
             private void enqueue(CDOID id)

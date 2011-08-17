@@ -177,21 +177,22 @@ public abstract class CDOServerExporter<OUT>
 
   protected void exportRevisions(final OUT out, CDOBranch branch) throws Exception
   {
-    repository.handleRevisions(null, branch, true, CDOBranchPoint.INVALID_DATE, false, new CDORevisionHandler()
-    {
-      public boolean handleRevision(CDORevision revision)
-      {
-        try
+    repository.handleRevisions(null, branch, true, CDOBranchPoint.INVALID_DATE, false,
+        new CDORevisionHandler.Filtered.Undetached(new CDORevisionHandler()
         {
-          exportRevision(out, revision);
-          return true;
-        }
-        catch (Exception ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
-      }
-    });
+          public boolean handleRevision(CDORevision revision)
+          {
+            try
+            {
+              exportRevision(out, revision);
+              return true;
+            }
+            catch (Exception ex)
+            {
+              throw WrappedException.wrap(ex);
+            }
+          }
+        }));
   }
 
   protected abstract void exportRevision(OUT out, CDORevision revision) throws Exception;

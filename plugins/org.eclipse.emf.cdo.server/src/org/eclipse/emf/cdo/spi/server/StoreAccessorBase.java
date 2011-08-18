@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
+import org.eclipse.emf.cdo.internal.common.revision.FilteredRevisionHandler;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -311,7 +312,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
 
     public CDOCommitData getCommitData()
     {
-      storeAccessor.handleRevisions(null, null, timeStamp, true, this);
+      storeAccessor.handleRevisions(null, null, timeStamp, true, new FilteredRevisionHandler.Undetached(this));
 
       List<CDOIDAndVersion> detachedObjects = detachCounter.getDetachedObjects();
       return new CDOCommitDataImpl(newPackageUnits, newObjects, changedObjects, detachedObjects);

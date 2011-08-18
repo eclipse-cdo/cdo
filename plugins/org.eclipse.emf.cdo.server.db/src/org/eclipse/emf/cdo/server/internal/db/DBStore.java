@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.internal.common.revision.FilteredRevisionHandler;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -429,22 +430,23 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
 
     try
     {
-      accessor.handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, true, new CDORevisionHandler()
-      {
-        public boolean handleRevision(CDORevision revision)
-        {
-          CDOBranch branch = revision.getBranch();
-          List<CDORevision> list = result.get(branch);
-          if (list == null)
+      accessor.handleRevisions(null, null, CDOBranchPoint.UNSPECIFIED_DATE, true,
+          new FilteredRevisionHandler.Undetached(new CDORevisionHandler()
           {
-            list = new ArrayList<CDORevision>();
-            result.put(branch, list);
-          }
+            public boolean handleRevision(CDORevision revision)
+            {
+              CDOBranch branch = revision.getBranch();
+              List<CDORevision> list = result.get(branch);
+              if (list == null)
+              {
+                list = new ArrayList<CDORevision>();
+                result.put(branch, list);
+              }
 
-          list.add(revision);
-          return true;
-        }
-      });
+              list.add(revision);
+              return true;
+            }
+          }));
     }
     finally
     {

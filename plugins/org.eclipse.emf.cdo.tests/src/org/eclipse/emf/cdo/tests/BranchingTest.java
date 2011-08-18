@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.AbstractCDORevisionCache;
@@ -41,6 +42,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -855,6 +857,71 @@ public class BranchingTest extends AbstractCDOTest
     }
 
     session.close();
+  }
+
+  @CleanRepositoriesBefore
+  public void testhandleRevisionsAfterDetachInSubBranch() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranchManager branchManager = session.getBranchManager();
+
+    // Commit to main branch
+    CDOBranch mainBranch = branchManager.getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+    assertEquals(mainBranch, transaction.getBranch());
+    assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
+
+    Product1 product = getModel1Factory().createProduct1();
+    product.setName("CDO");
+
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
+    resource.getContents().add(product);
+
+    CDOCommitInfo commitInfo = transaction.commit();
+    assertEquals(mainBranch, commitInfo.getBranch());
+    long commitTime1 = commitInfo.getTimeStamp();
+    transaction.close();
+
+    // Commit to sub branch
+    CDOBranch subBranch = mainBranch.createBranch("subBranch", commitTime1);
+    transaction = session.openTransaction(subBranch);
+    assertEquals(subBranch, transaction.getBranch());
+    assertEquals(CDOBranchPoint.UNSPECIFIED_DATE, transaction.getTimeStamp());
+
+    resource = transaction.getResource(getResourcePath("/res"));
+    product = (Product1)resource.getContents().get(0);
+    assertEquals("CDO", product.getName());
+
+    product.setName("handleRevisions");
+    commitInfo = transaction.commit();
+    assertEquals(subBranch, commitInfo.getBranch());
+
+    resource.getContents().remove(0);
+    commitInfo = transaction.commit();
+    assertEquals(subBranch, commitInfo.getBranch());
+
+    transaction.close();
+    closeSession1();
+
+    session = openSession2();
+    branchManager = session.getBranchManager();
+    mainBranch = branchManager.getMainBranch();
+    subBranch = mainBranch.getBranch("subBranch");
+
+    final List<CDORevision> revisions = new ArrayList<CDORevision>();
+
+    ((InternalCDOSession)session).getSessionProtocol().handleRevisions(null, subBranch, false,
+        CDOBranchPoint.UNSPECIFIED_DATE, false, new CDORevisionHandler()
+        {
+          public boolean handleRevision(CDORevision revision)
+          {
+            assertNotSame("Product1", revision.getEClass().getName());
+            revisions.add(revision);
+            return true;
+          }
+        });
+
+    assertEquals(3, revisions.size());
   }
 
   public void testSwitchViewTarget() throws CommitException

@@ -48,6 +48,7 @@ import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -870,14 +871,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-          builder.append(">=?"); //$NON-NLS-1$
-          builder.append(" AND ("); //$NON-NLS-1$
+          builder.append("<=? AND ("); //$NON-NLS-1$
           builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-          builder.append("<=? OR "); //$NON-NLS-1$
+          builder.append("=0 OR "); //$NON-NLS-1$
           builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-          builder.append("="); //$NON-NLS-1$
-          builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
-          builder.append(")"); //$NON-NLS-1$
+          builder.append(">=?)"); //$NON-NLS-1$
           timeParameters = 2;
         }
         else
@@ -918,10 +916,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       {
         CDOID id = idHandler.getCDOID(resultSet, 1);
         int version = resultSet.getInt(2);
-        int branchID = resultSet.getInt(3);
 
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
+          int branchID = resultSet.getInt(3);
           CDOBranchVersion branchVersion = branchManager.getBranch(branchID).getVersion(Math.abs(version));
           InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion,
               CDORevision.UNCHUNKED, true);
@@ -930,6 +928,12 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
           {
             break;
           }
+        }
+        else
+        {
+          // Tell handler about detached IDs
+          InternalCDORevision revision = new DetachedCDORevision(null, id, null, version, 0);
+          handler.handleRevision(revision);
         }
       }
     }

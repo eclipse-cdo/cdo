@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.internal.common.revision.FilteredRevisionHandler;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -93,28 +94,29 @@ public class HandleRevisionsIndication extends CDOServerReadIndication
     final IOException[] ioException = { null };
     final RuntimeException[] runtimeException = { null };
 
-    getRepository().handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, new CDORevisionHandler()
-    {
-      public boolean handleRevision(CDORevision revision)
-      {
-        try
+    getRepository().handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime,
+        new FilteredRevisionHandler.Undetached(new CDORevisionHandler()
         {
-          out.writeBoolean(true);
-          out.writeCDORevision(revision, CDORevision.UNCHUNKED);
-          return true;
-        }
-        catch (IOException ex)
-        {
-          ioException[0] = ex;
-        }
-        catch (RuntimeException ex)
-        {
-          runtimeException[0] = ex;
-        }
+          public boolean handleRevision(CDORevision revision)
+          {
+            try
+            {
+              out.writeBoolean(true);
+              out.writeCDORevision(revision, CDORevision.UNCHUNKED);
+              return true;
+            }
+            catch (IOException ex)
+            {
+              ioException[0] = ex;
+            }
+            catch (RuntimeException ex)
+            {
+              runtimeException[0] = ex;
+            }
 
-        return false;
-      }
-    });
+            return false;
+          }
+        }));
 
     if (ioException[0] != null)
     {

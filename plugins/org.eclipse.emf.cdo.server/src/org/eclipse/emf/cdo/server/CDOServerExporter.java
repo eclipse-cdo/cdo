@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.internal.common.revision.FilteredRevisionHandler;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -177,21 +178,22 @@ public abstract class CDOServerExporter<OUT>
 
   protected void exportRevisions(final OUT out, CDOBranch branch) throws Exception
   {
-    repository.handleRevisions(null, branch, true, CDOBranchPoint.INVALID_DATE, false, new CDORevisionHandler()
-    {
-      public boolean handleRevision(CDORevision revision)
-      {
-        try
+    repository.handleRevisions(null, branch, true, CDOBranchPoint.INVALID_DATE, false,
+        new FilteredRevisionHandler.Undetached(new CDORevisionHandler()
         {
-          exportRevision(out, revision);
-          return true;
-        }
-        catch (Exception ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
-      }
-    });
+          public boolean handleRevision(CDORevision revision)
+          {
+            try
+            {
+              exportRevision(out, revision);
+              return true;
+            }
+            catch (Exception ex)
+            {
+              throw WrappedException.wrap(ex);
+            }
+          }
+        }));
   }
 
   protected abstract void exportRevision(OUT out, CDORevision revision) throws Exception;

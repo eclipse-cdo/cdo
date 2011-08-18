@@ -1277,7 +1277,7 @@ public class Repository extends Container<Object> implements InternalRepository
       final CDORevisionHandler handler)
   {
     CDORevisionHandler wrapper = handler;
-    if (!exactBranch)
+    if (!exactBranch && !branch.isMainBranch())
     {
       if (exactTime && timeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
       {
@@ -1290,7 +1290,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
         public boolean handleRevision(CDORevision revision)
         {
-          if (handled.add(revision.getID()))
+          CDOID id = revision.getID();
+          if (handled.add(id))
           {
             return handler.handleRevision(revision);
           }

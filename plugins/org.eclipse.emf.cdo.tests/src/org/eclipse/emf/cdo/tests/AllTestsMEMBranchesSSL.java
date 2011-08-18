@@ -26,8 +26,6 @@ public class AllTestsMEMBranchesSSL extends AllConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // addScenario(parent, COMBINED, MEM, JVM, NATIVE);
-    // addScenario(parent, COMBINED, MEM_AUDITS, JVM, NATIVE);
     addScenario(parent, SEPARATED, MEM_BRANCHES, SSL, NATIVE);
   }
 }

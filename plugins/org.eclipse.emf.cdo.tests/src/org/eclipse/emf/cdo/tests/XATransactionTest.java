@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -193,6 +194,7 @@ public class XATransactionTest extends AbstractCDOTest
     // Skip this test until the problems with XATransactions are solved.
     skipConfig(LEGACY);
     skipExternalReferences();
+    skipTest(getRepositoryConfig().getIDGenerationLocation() == IDGenerationLocation.CLIENT);
     getRepository(REPOSITORY2_NAME);
 
     {
@@ -219,7 +221,7 @@ public class XATransactionTest extends AbstractCDOTest
 
       try
       {
-        transactionA.commit();
+        transactionA.commit(); // Would not fail with IDGenerationLocation.CLIENT!
         fail("CommitException expected");
       }
       catch (CommitException expected)

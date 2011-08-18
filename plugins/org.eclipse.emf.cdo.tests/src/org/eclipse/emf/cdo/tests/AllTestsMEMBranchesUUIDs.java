@@ -16,16 +16,16 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsMEMBranches extends AllConfigs
+public class AllTestsMEMBranchesUUIDs extends AllConfigs
 {
   public static Test suite()
   {
-    return new AllTestsMEMBranches().getTestSuite(AllConfigs.class.getName());
+    return new AllTestsMEMBranchesUUIDs().getTestSuite(AllConfigs.class.getName());
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, NATIVE);
+    addScenario(parent, COMBINED, MEM_BRANCHES_UUIDS, JVM, NATIVE);
   }
 }

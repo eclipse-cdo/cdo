@@ -15,10 +15,13 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -29,6 +32,7 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -256,6 +260,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       {
         respondingResult(out);
         respondingMappingNewObjects(out);
+        respondingNewLockStates(out);
       }
     }
     finally
@@ -310,6 +315,24 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     }
 
     out.writeCDOID(CDOID.NULL);
+  }
+
+  protected void respondingNewLockStates(CDODataOutput out) throws Exception
+  {
+    List<LockState<Object, IView>> newLockStates = commitContext.getPostCommmitLockStates();
+    if (newLockStates != null)
+    {
+      out.writeInt(newLockStates.size());
+      for (LockState<Object, IView> lockState : newLockStates)
+      {
+        CDOLockState cdoLockState = CDOLockUtil.createLockState(lockState);
+        out.writeCDOLockState(cdoLockState);
+      }
+    }
+    else
+    {
+      out.writeInt(0);
+    }
   }
 
   protected InternalTransaction getTransaction(int viewID)

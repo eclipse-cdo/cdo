@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -63,6 +64,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -83,6 +85,8 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   private InternalCDOView view;
 
   private InternalCDORevision revision;
+
+  private CDOLockState lockState;
 
   /**
    * CDO uses this list instead of eSettings for transient objects. EMF uses eSettings as cache. CDO deactivates the
@@ -184,17 +188,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public CDOLock cdoReadLock()
   {
-    if (FSMUtil.isTransient(this))
-    {
-      throw new IllegalStateException("Call CDOView.lockObjects() for transient object " + this);
-    }
-
-    if (FSMUtil.isNew(this))
-    {
-      return CDOLockImpl.NOOP;
-    }
-
-    return new CDOLockImpl(this, LockType.READ);
+    return createCDOLock(LockType.READ);
   }
 
   /**
@@ -202,23 +196,18 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public CDOLock cdoWriteLock()
   {
-    if (FSMUtil.isTransient(this))
-    {
-      throw new IllegalStateException("Call CDOView.lockObjects() for transient object " + this);
-    }
-
-    if (FSMUtil.isNew(this))
-    {
-      return CDOLockImpl.NOOP;
-    }
-
-    return new CDOLockImpl(this, LockType.WRITE);
+    return createCDOLock(LockType.WRITE);
   }
 
   /**
    * @since 4.1
    */
   public CDOLock cdoWriteOption()
+  {
+    return createCDOLock(LockType.OPTION);
+  }
+
+  private CDOLock createCDOLock(LockType type)
   {
     if (FSMUtil.isTransient(this))
     {
@@ -230,7 +219,31 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       return CDOLockImpl.NOOP;
     }
 
-    return new CDOLockImpl(this, LockType.OPTION);
+    return new CDOLockImpl(this, type);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public synchronized CDOLockState cdoLockState()
+  {
+    if (lockState == null)
+    {
+      if (!FSMUtil.isTransient(this) && !FSMUtil.isNew(this))
+      {
+        lockState = view.getLockStates(Collections.singletonList(id))[0];
+      }
+    }
+
+    return lockState;
+  }
+
+  /**
+   * @since 4.1
+   */
+  public synchronized void cdoInternalSetLockState(CDOLockState lockState)
+  {
+    this.lockState = lockState;
   }
 
   public void cdoInternalSetID(CDOID id)

@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -450,6 +451,23 @@ public class Session extends Container<IView> implements InternalSession
     synchronized (lastUpdateTimeLock)
     {
       lastUpdateTime = commitInfo.getTimeStamp();
+    }
+  }
+
+  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception
+  {
+    if (protocol != null)
+    {
+      // If this session has one (or more) views configured for this branch,
+      // only then do we send the lockChangeInfo.
+      for (InternalView view : getViews())
+      {
+        if (view.isLockNotificationEnabled() && view.getBranch().equals(lockChangeInfo.getBranch()))
+        {
+          protocol.sendLockNotification(lockChangeInfo);
+          break;
+        }
+      }
     }
   }
 

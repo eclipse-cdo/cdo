@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.text.MessageFormat;
@@ -37,7 +38,10 @@ public class View extends Lifecycle implements InternalView
 {
   private InternalSession session;
 
-  private int viewID;
+  private final int viewID;
+
+  private final int sessionID; // Needed here so we can compute the hashCode even after session becomes null due to
+                               // deactivation!
 
   private CDOBranchPoint branchPoint;
 
@@ -47,6 +51,8 @@ public class View extends Lifecycle implements InternalView
 
   private Set<CDOID> changeSubscriptionIDs = new HashSet<CDOID>();
 
+  private boolean lockNotificationsEnabled;
+
   /**
    * @since 2.0
    */
@@ -54,6 +60,7 @@ public class View extends Lifecycle implements InternalView
   {
     this.session = session;
     this.viewID = viewID;
+    sessionID = session.getSessionID();
 
     repository = session.getManager().getRepository();
     setBranchPoint(branchPoint);
@@ -193,6 +200,12 @@ public class View extends Lifecycle implements InternalView
   }
 
   @Override
+  public int hashCode()
+  {
+    return ObjectUtil.hashCode(sessionID, viewID);
+  }
+
+  @Override
   public String toString()
   {
     int sessionID = session == null ? 0 : session.getSessionID();
@@ -248,5 +261,15 @@ public class View extends Lifecycle implements InternalView
     {
       throw new IllegalStateException("View closed"); //$NON-NLS-1$
     }
+  }
+
+  public boolean isLockNotificationEnabled()
+  {
+    return lockNotificationsEnabled;
+  }
+
+  public void setLockNotificationEnabled(boolean enable)
+  {
+    lockNotificationsEnabled = enable;
   }
 }

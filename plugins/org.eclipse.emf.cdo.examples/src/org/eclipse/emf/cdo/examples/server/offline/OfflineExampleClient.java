@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.examples.server.offline;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -28,7 +30,10 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 import java.io.BufferedReader;
@@ -65,6 +70,42 @@ public class OfflineExampleClient
     {
       throw new RuntimeException(x);
     }
+  }
+
+  private static void lockObject(CDOTransaction tx)
+  {
+    EList<EObject> contents = tx.getOrCreateResource("/r1").getContents();
+    int size = contents.size();
+    if (size < 1)
+    {
+      System.out.println("There are no objects; can't lock anything.");
+    }
+
+    System.out.println("Locking last object");
+    CDOObject firstObject = CDOUtil.getCDOObject(contents.get(size - 1));
+    firstObject.cdoWriteLock().lock();
+    System.out.println("Locked last object");
+  }
+
+  private static void unlockObject(CDOTransaction tx)
+  {
+    EList<EObject> contents = tx.getOrCreateResource("/r1").getContents();
+    int size = contents.size();
+    if (size < 1)
+    {
+      System.out.println("There are no objects; can't lock anything.");
+    }
+
+    System.out.println("Unlocking last object");
+    CDOObject firstObject = CDOUtil.getCDOObject(contents.get(size - 1));
+    firstObject.cdoWriteLock().unlock();
+    System.out.println("Unlocked last object");
+  }
+
+  private static void createBranch(CDOTransaction tx)
+  {
+    CDOBranch subBranch = tx.getBranch().createBranch("sub.1");
+    tx.setBranch(subBranch);
   }
 
   private static boolean isAutoMerge(String[] args)
@@ -150,12 +191,44 @@ public class OfflineExampleClient
     System.out.println("Connected to " + repositoryInfo.getName());
 
     tx = session.openTransaction();
+    tx.enableDurableLocking(true);
     createSessionListener(session, autoMerging);
 
     for (;;)
     {
-      new BufferedReader(new InputStreamReader(System.in)).readLine();
-      addObject(tx);
+      System.out.println();
+      System.out.println("Enter a command:");
+      System.out.println("0 - exit");
+      System.out.println("1 - add an object to the repository");
+      System.out.println("2 - lock the last object in the repository");
+      System.out.println("3 - unlock the last object in the repository");
+      System.out.println("4 - create a branch");
+
+      String command = new BufferedReader(new InputStreamReader(System.in)).readLine();
+      if ("0".equals(command))
+      {
+        break;
+      }
+
+      if ("1".equals(command))
+      {
+        addObject(tx);
+      }
+      else if ("2".equals(command))
+      {
+        lockObject(tx);
+      }
+      else if ("3".equals(command))
+      {
+        unlockObject(tx);
+      }
+      else if ("4".equals(command))
+      {
+        createBranch(tx);
+      }
     }
+
+    session.close();
+    LifecycleUtil.deactivate(container);
   }
 }

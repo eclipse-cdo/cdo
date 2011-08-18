@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -209,6 +211,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo)
+  {
+    // Do nothing
+  }
+
   public void prefetchRevisions(CDOID id, int depth)
   {
     throw new UnsupportedOperationException();
@@ -279,6 +286,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
+  public boolean isLockNotificationEnabled()
+  {
+    return false;
+  }
+
+  public void setLockNotificationEnabled(boolean enabled)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public CDOAdapterPolicy[] getChangeSubscriptionPolicies()
   {
     return ADAPTER_POLICIES;
@@ -320,6 +337,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOLockState[] getLockStates(Collection<CDOID> ids)
   {
     throw new UnsupportedOperationException();
   }
@@ -780,6 +802,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     public void handleCommitNotification(CDOCommitInfo commitInfo)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void handleLockNotification(CDOLockChangeInfo lockChangeInfo)
     {
       throw new UnsupportedOperationException();
     }

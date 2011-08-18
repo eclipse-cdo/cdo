@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -229,6 +230,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
     result = confirmingResult(in);
     confirmingMappingNewObjects(in, result);
+    confirmingNewLockStates(in, result);
     return result;
   }
 
@@ -289,5 +291,18 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
         throw new ClassCastException("Not a temporary ID: " + id);
       }
     }
+  }
+
+  protected void confirmingNewLockStates(CDODataInput in, CommitTransactionResult result) throws IOException
+  {
+    int n = in.readInt();
+    CDOLockState[] newLockStates = new CDOLockState[n];
+
+    for (int i = 0; i < n; i++)
+    {
+      newLockStates[i] = in.readCDOLockState();
+    }
+
+    result.setNewLockStates(newLockStates);
   }
 }

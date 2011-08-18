@@ -7,13 +7,14 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Martin Flügge - enhancements
+ *    Martin Flï¿½gge - enhancements
  */
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry.CDOObjectMarker;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -54,6 +55,11 @@ public interface InternalCDOObject extends CDOObject, InternalEObject, InternalC
   public void cdoInternalSetRevision(CDORevision revision);
 
   public CDOState cdoInternalSetState(CDOState state);
+
+  /**
+   * @since 4.1
+   */
+  public void cdoInternalSetLockState(CDOLockState lockState);
 
   public InternalEObject cdoInternalInstance();
 

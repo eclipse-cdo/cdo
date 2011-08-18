@@ -11,20 +11,21 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
+
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,9 +33,16 @@ import java.util.List;
  */
 public class UnlockObjectsIndication extends CDOServerWriteIndication
 {
+  private UnlockObjectsResult result;
+
   public UnlockObjectsIndication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS);
+  }
+
+  protected UnlockObjectsIndication(CDOServerProtocol protocol, short signalID)
+  {
+    super(protocol, signalID);
   }
 
   @Override
@@ -45,33 +53,37 @@ public class UnlockObjectsIndication extends CDOServerWriteIndication
     int size = in.readInt();
 
     InternalRepository repository = getRepository();
-    InternalLockManager lockManager = repository.getLockManager();
-    IView view = getSession().getView(viewID);
+    IView view = getView(viewID);
 
     if (size == CDOProtocolConstants.RELEASE_ALL_LOCKS)
     {
-      lockManager.unlock(true, view);
+      result = repository.unlock((InternalView)view, null, null);
     }
     else
     {
-      boolean supportingBranches = repository.isSupportingBranches();
-      CDOBranch branch = view.getBranch();
-
-      List<Object> keys = new ArrayList<Object>(size);
+      List<CDOID> objectIDs = new LinkedList<CDOID>();
       for (int i = 0; i < size; i++)
       {
-        CDOID id = in.readCDOID();
-        Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, branch) : id;
-        keys.add(key);
+        objectIDs.add(in.readCDOID());
       }
 
-      lockManager.unlock(true, lockType, view, keys);
+      result = repository.unlock((InternalView)view, lockType, objectIDs);
     }
   }
 
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeBoolean(true);
+    CDOLockState[] newLockStates = result.getNewLockStates();
+    out.writeInt(newLockStates.length);
+    for (CDOLockState state : newLockStates)
+    {
+      out.writeCDOLockState(state);
+    }
+  }
+
+  protected IView getView(int viewID)
+  {
+    return getSession().getView(viewID);
   }
 }

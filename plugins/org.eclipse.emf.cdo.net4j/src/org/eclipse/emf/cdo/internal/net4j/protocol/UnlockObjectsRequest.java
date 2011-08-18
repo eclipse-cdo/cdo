@@ -10,16 +10,17 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -27,35 +28,40 @@ import java.util.Collection;
 /**
  * @author Simon McDuff
  */
-public class UnlockObjectsRequest extends CDOClientRequest<Boolean>
+public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, UnlockObjectsRequest.class);
 
-  private CDOView view;
+  private int viewID;
 
-  private Collection<? extends CDOObject> objects;
+  private Collection<CDOID> objectIDs;
 
   private LockType lockType;
 
-  public UnlockObjectsRequest(CDOClientProtocol protocol, CDOView view, Collection<? extends CDOObject> objects,
+  public UnlockObjectsRequest(CDOClientProtocol protocol, int viewID, Collection<CDOID> objects, LockType lockType)
+  {
+    this(protocol, CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS, viewID, objects, lockType);
+  }
+
+  protected UnlockObjectsRequest(CDOClientProtocol protocol, short signalID, int viewID, Collection<CDOID> objectIDs,
       LockType lockType)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS);
-    this.view = view;
-    this.objects = objects;
+    super(protocol, signalID);
+    this.viewID = viewID;
+    this.objectIDs = objectIDs;
     this.lockType = lockType;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    out.writeInt(view.getViewID());
+    out.writeInt(viewID);
     out.writeCDOLockType(lockType);
-    if (objects == null)
+    if (objectIDs == null)
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Unlocking all objects for view {0}", view.getViewID()); //$NON-NLS-1$
+        TRACER.format("Unlocking all objects for view {0}", viewID); //$NON-NLS-1$
       }
 
       out.writeInt(CDOProtocolConstants.RELEASE_ALL_LOCKS);
@@ -65,13 +71,12 @@ public class UnlockObjectsRequest extends CDOClientRequest<Boolean>
       if (TRACER.isEnabled())
       {
         TRACER.format("Unlocking of type {0} requested for view {1}", lockType == LockType.READ ? "read" //$NON-NLS-1$ //$NON-NLS-2$
-            : "write", view.getViewID()); //$NON-NLS-1$
+            : "write", viewID); //$NON-NLS-1$
       }
 
-      out.writeInt(objects.size());
-      for (CDOObject object : objects)
+      out.writeInt(objectIDs.size());
+      for (CDOID id : objectIDs)
       {
-        CDOID id = object.cdoID();
         if (TRACER.isEnabled())
         {
           TRACER.format("Unlocking requested for object {0}", id); //$NON-NLS-1$
@@ -83,8 +88,14 @@ public class UnlockObjectsRequest extends CDOClientRequest<Boolean>
   }
 
   @Override
-  protected Boolean confirming(CDODataInput in) throws IOException
+  protected UnlockObjectsResult confirming(CDODataInput in) throws IOException
   {
-    return in.readBoolean();
+    int n = in.readInt();
+    CDOLockState[] newLockStates = new CDOLockState[n];
+    for (int i = 0; i < n; i++)
+    {
+      newLockStates[i] = in.readCDOLockState();
+    }
+    return new UnlockObjectsResult(newLockStates);
   }
 }

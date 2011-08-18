@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -393,6 +394,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @since 4.0
      */
     public List<CDOIDReference> getXRefs();
+
+    /**
+     * @since 4.1
+     */
+    public List<LockState<Object, IView>> getPostCommmitLockStates();
   }
 
   /**
@@ -699,5 +705,15 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock);
 
     public void unlock(String durableLockingID);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public interface DurableLocking2 extends DurableLocking
+  {
+    LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
+        Map<CDOID, LockGrade> locks);
   }
 }

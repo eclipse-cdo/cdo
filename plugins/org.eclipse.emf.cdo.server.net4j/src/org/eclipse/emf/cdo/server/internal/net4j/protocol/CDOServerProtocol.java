@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
@@ -154,6 +155,18 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception
+  {
+    if (LifecycleUtil.isActive(getChannel()))
+    {
+      new LockNotificationRequest(this, lockChangeInfo).sendAsync();
+    }
+    else
+    {
+      handleInactiveSession();
+    }
+  }
+
   protected void handleInactiveSession()
   {
     OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
@@ -251,6 +264,12 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS:
       return new UnlockObjectsIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_LOCK_DELEGATION:
+      return new LockDelegationIndication(this);
+
+    case CDOProtocolConstants.SIGNAL_UNLOCK_DELEGATION:
+      return new UnlockDelegationIndication(this);
+
     case CDOProtocolConstants.SIGNAL_OBJECT_LOCKED:
       return new ObjectLockedIndication(this);
 
@@ -286,6 +305,12 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
     case CDOProtocolConstants.SIGNAL_HANDLE_REVISIONS:
       return new HandleRevisionsIndication(this);
+
+    case CDOProtocolConstants.SIGNAL_LOCK_STATE:
+      return new LockStateIndication(this);
+
+    case CDOProtocolConstants.SIGNAL_ENABLE_LOCK_NOTIFICATION:
+      return new EnableLockNotificationIndication(this);
 
     default:
       return super.createSignalReactor(signalID);

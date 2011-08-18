@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -34,6 +35,7 @@ import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.options.IOptions;
 import org.eclipse.net4j.util.options.IOptionsContainer;
@@ -466,6 +468,27 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
     public void setInvalidationNotificationEnabled(boolean enabled);
 
     /**
+     * Returns <code>true</code> if this view will notify its {@link IListener listeners} about changes to the
+     * {@link CDOLockState lock states} of the objects in this view (due to lock operations in <i>other</i> views),
+     * <code>false</code> otherwise.
+     * 
+     * @see CDOLocksChangedEvent
+     * @see CDOLockState
+     * @since 4.1
+     */
+    public boolean isLockNotificationEnabled();
+
+    /**
+     * Specifies whether this view will notify its {@link IListener listeners} about changes to the {@link CDOLockState
+     * lock states} of the objects in this view (due to lock operations in <i>other</i> views), or not.
+     * 
+     * @see CDOLocksChangedEvent
+     * @see CDOLockState
+     * @since 4.1
+     */
+    public void setLockNotificationEnabled(boolean enabled);
+
+    /**
      * Returns the current set of {@link CDOAdapterPolicy change subscription policies}.
      * 
      * @return The current set of change subscription policies, never <code>null</code>.
@@ -642,6 +665,14 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier, IOption
      * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface InvalidationNotificationEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * @author Caspar De Groot
+     * @since 4.1
+     */
+    public interface LockNotificationEvent extends IOptionsEvent
     {
     }
 

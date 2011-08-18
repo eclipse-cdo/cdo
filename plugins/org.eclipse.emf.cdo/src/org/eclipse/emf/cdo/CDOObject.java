@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOWithID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -139,6 +140,13 @@ public interface CDOObject extends EObject, CDOWithID
    * @since 4.1
    */
   public CDOLock cdoWriteOption();
+
+  /**
+   * Returns the {@link CDOLockState} of this object.
+   * 
+   * @since 4.1
+   */
+  public CDOLockState cdoLockState();
 
   /**
    * Ensures that the revisions of the contained objects up to the given depth are in the local

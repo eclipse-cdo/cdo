@@ -12,6 +12,8 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOLock;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.util.LockTimeoutException;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -33,14 +35,17 @@ public class CDOLockImpl implements CDOLock
 {
   public static final CDOLock NOOP = new NOOPLockImpl();
 
-  private InternalCDOObject object;
+  private final InternalCDOObject object;
 
-  private LockType type;
+  private final LockType type;
+
+  private final CDOLockOwner owner;
 
   public CDOLockImpl(InternalCDOObject object, LockType type)
   {
     this.object = object;
     this.type = type;
+    owner = CDOLockUtil.createLockOwner(object.cdoView());
   }
 
   public LockType getType()
@@ -50,7 +55,7 @@ public class CDOLockImpl implements CDOLock
 
   public boolean isLocked()
   {
-    return object.cdoView().isObjectLocked(object, type, false);
+    return object.cdoLockState().isLocked(type, owner, false);
   }
 
   /**
@@ -58,7 +63,7 @@ public class CDOLockImpl implements CDOLock
    */
   public boolean isLockedByOthers()
   {
-    return object.cdoView().isObjectLocked(object, type, true);
+    return object.cdoLockState().isLocked(type, owner, true);
   }
 
   public void lock()

@@ -17,9 +17,11 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.util.concurrent.IRWLockManager;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager;
+import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,7 +33,7 @@ import java.util.Map;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalLockManager extends IRWLockManager<Object, IView>, IDurableLockingManager
+public interface InternalLockManager extends IRWOLockManager<Object, IView>, IDurableLockingManager
 {
   public InternalRepository getRepository();
 
@@ -60,8 +62,15 @@ public interface InternalLockManager extends IRWLockManager<Object, IView>, IDur
   /**
    * @since 4.0
    */
+  @Deprecated
   public void lock(boolean explicit, LockType type, IView context, Collection<? extends Object> objectsToLock,
       long timeout) throws InterruptedException;
+
+  /**
+   * @since 4.1
+   */
+  public List<LockState<Object, IView>> lock2(boolean explicit, LockType type, IView context,
+      Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException;
 
   /**
    * Attempts to release for a given locktype, view and objects.
@@ -70,14 +79,27 @@ public interface InternalLockManager extends IRWLockManager<Object, IView>, IDur
    *           Unlocking objects without lock.
    * @since 4.0
    */
+  @Deprecated
   public void unlock(boolean explicit, LockType type, IView context, Collection<? extends Object> objectsToUnlock);
+
+  /**
+   * @since 4.1
+   */
+  public List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView context,
+      Collection<? extends Object> objectsToUnlock);
 
   /**
    * Attempts to release all locks(read and write) for a given view.
    * 
    * @since 4.0
    */
+  @Deprecated
   public void unlock(boolean explicit, IView context);
+
+  /**
+   * @since 4.1
+   */
+  public List<LockState<Object, IView>> unlock2(boolean explicit, IView context);
 
   /**
    * @since 4.0
@@ -85,7 +107,22 @@ public interface InternalLockManager extends IRWLockManager<Object, IView>, IDur
   public LockArea createLockArea(InternalView view);
 
   /**
+   * @since 4.1
+   */
+  public LockArea createLockArea(InternalView view, String lockAreaID);
+
+  /**
    * @since 4.0
    */
   public IView openView(ISession session, int viewID, boolean readOnly, String durableLockingID);
+
+  /**
+   * @since 4.1
+   */
+  public LockGrade getLockGrade(Object key);
+
+  /**
+   * @since 4.1
+   */
+  public LockState<Object, IView> getLockState(Object key);
 }

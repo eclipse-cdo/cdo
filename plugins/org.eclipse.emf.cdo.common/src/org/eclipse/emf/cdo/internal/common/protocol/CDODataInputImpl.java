@@ -26,6 +26,10 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lob.CDOLobUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -52,6 +56,9 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
+import org.eclipse.emf.cdo.internal.common.lock.CDOLockChangeInfoImpl;
+import org.eclipse.emf.cdo.internal.common.lock.CDOLockOwnerImpl;
+import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDAndBranchImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDAndVersionImpl;
@@ -66,6 +73,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.id.AbstractCDOID;
+import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -253,6 +261,73 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     return new FailureCommitInfo(timeStamp, previousTimeStamp);
+  }
+
+  public CDOLockChangeInfo readCDOLockChangeInfo() throws IOException
+  {
+    CDOBranchPoint branchPoint = readCDOBranchPoint();
+    CDOLockOwner lockOwner = readCDOLockOwner();
+    Operation operation = readEnum(Operation.class);
+
+    int n = readInt();
+    CDOLockState[] lockStates = new CDOLockState[n];
+    for (int i = 0; i < n; i++)
+    {
+      lockStates[i] = readCDOLockState();
+    }
+
+    return new CDOLockChangeInfoImpl(branchPoint, lockOwner, lockStates, operation);
+  }
+
+  public CDOLockOwner readCDOLockOwner() throws IOException
+  {
+    boolean isUnknown = !readBoolean();
+    if (isUnknown)
+    {
+      return CDOLockOwner.UNKNOWN;
+    }
+    int session = readInt();
+    int view = readInt();
+    return new CDOLockOwnerImpl(session, view);
+  }
+
+  public CDOLockState readCDOLockState() throws IOException
+  {
+    Object target;
+    boolean sendingBranchWithID = readBoolean();
+    if (!sendingBranchWithID)
+    {
+      target = readCDOID();
+    }
+    else
+    {
+      target = readCDOIDAndBranch();
+    }
+
+    InternalCDOLockState lockState = new CDOLockStateImpl(target);
+
+    int nReadLockOwners = readInt();
+    for (int i = 0; i < nReadLockOwners; i++)
+    {
+      CDOLockOwner lockOwner = readCDOLockOwner();
+      lockState.addReadLockOwner(lockOwner);
+    }
+
+    boolean hasWriteLock = readBoolean();
+    if (hasWriteLock)
+    {
+      CDOLockOwner lockOwner = readCDOLockOwner();
+      lockState.setWriteLockOwner(lockOwner);
+    }
+
+    boolean hasWriteOption = readBoolean();
+    if (hasWriteOption)
+    {
+      CDOLockOwner lockOwner = readCDOLockOwner();
+      lockState.setWriteOptionOwner(lockOwner);
+    }
+
+    return lockState;
   }
 
   public CDOID readCDOID() throws IOException
@@ -514,7 +589,8 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public LockType readCDOLockType() throws IOException
   {
-    return readBoolean() ? LockType.WRITE : LockType.READ;
+    byte b = readByte();
+    return b == 0 ? null : LockType.values()[b - 1];
   }
 
   protected StringIO getPackageURICompressor()

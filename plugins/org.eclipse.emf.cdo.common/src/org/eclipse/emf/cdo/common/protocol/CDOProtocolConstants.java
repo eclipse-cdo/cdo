@@ -217,6 +217,31 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_HANDLE_REVISIONS = 48;
 
+  /**
+   * @since 4.1
+   */
+  public static final short SIGNAL_LOCK_DELEGATION = 49;
+
+  /**
+   * @since 4.1
+   */
+  public static final short SIGNAL_UNLOCK_DELEGATION = 50;
+
+  /**
+   * @since 4.1
+   */
+  public static final short SIGNAL_LOCK_NOTIFICATION = 51;
+
+  /**
+   * @since 4.1
+   */
+  public static final short SIGNAL_LOCK_STATE = 52;
+
+  /**
+   * @since 4.1
+   */
+  public static final short SIGNAL_ENABLE_LOCK_NOTIFICATION = 53;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh
 

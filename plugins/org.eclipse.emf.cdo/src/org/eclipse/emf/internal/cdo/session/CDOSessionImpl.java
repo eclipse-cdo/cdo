@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
@@ -89,6 +90,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -183,7 +185,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   };
 
-  private IRWLockManager<CDOSessionImpl, Object> lockManager = new RWOLockManager<CDOSessionImpl, Object>();
+  private IRWOLockManager<CDOSessionImpl, Object> lockManager = new RWOLockManager<CDOSessionImpl, Object>();
 
   @ExcludeFromDump
   private Set<CDOSessionImpl> singletonCollection = Collections.singleton(this);
@@ -715,17 +717,48 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public boolean waitForUpdate(long updateTime, long timeoutMillis)
   {
     long end = timeoutMillis == NO_TIMEOUT ? Long.MAX_VALUE : System.currentTimeMillis() + timeoutMillis;
-    for (CDOView view : getViews())
+    InternalCDOView views[] = getViews();
+    if (views.length > 0)
     {
-      long viewTimeoutMillis = timeoutMillis == NO_TIMEOUT ? NO_TIMEOUT : end - System.currentTimeMillis();
-      boolean ok = view.waitForUpdate(updateTime, viewTimeoutMillis);
-      if (!ok)
+      for (CDOView view : views)
       {
-        return false;
+        long viewTimeoutMillis = timeoutMillis == NO_TIMEOUT ? NO_TIMEOUT : end - System.currentTimeMillis();
+        boolean ok = view.waitForUpdate(updateTime, viewTimeoutMillis);
+        if (!ok)
+        {
+          return false;
+        }
       }
+
+      return true;
     }
 
-    return true;
+    // Session without views
+    for (;;)
+    {
+      synchronized (lastUpdateTimeLock)
+      {
+        if (lastUpdateTime >= updateTime)
+        {
+          return true;
+        }
+
+        long now = System.currentTimeMillis();
+        if (now >= end)
+        {
+          return false;
+        }
+
+        try
+        {
+          lastUpdateTimeLock.wait(end - now);
+        }
+        catch (InterruptedException ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+    }
   }
 
   /**
@@ -800,6 +833,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       {
         OM.LOG.info(Messages.getString("CDOSessionImpl.2")); //$NON-NLS-1$
       }
+    }
+  }
+
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo)
+  {
+    for (InternalCDOView view : getViews())
+    {
+      view.handleLockNotification(lockChangeInfo);
     }
   }
 

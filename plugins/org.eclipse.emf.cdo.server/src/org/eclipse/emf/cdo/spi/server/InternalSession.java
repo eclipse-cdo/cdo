@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -65,4 +66,9 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOCommonSessi
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception;
 
   public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception;
+
+  /**
+   * @since 4.1
+   */
+  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception;
 }

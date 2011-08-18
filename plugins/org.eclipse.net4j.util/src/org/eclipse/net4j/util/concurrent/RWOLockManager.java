@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,20 +34,26 @@ import java.util.Set;
  * @author Caspar De Groot
  * @since 3.2
  */
-public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLockManager<OBJECT, CONTEXT>
+public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLockManager<OBJECT, CONTEXT>
 {
-  // TODO (CD) Ensure that CDOID and CDOIDandBranch have good hashCode implementations
+  private final List<LockState<OBJECT, CONTEXT>> EMPTY_RESULT = Collections.emptyList();
+
   private final Map<OBJECT, LockState<OBJECT, CONTEXT>> objectToLockStateMap = createObjectToLocksMap();
 
-  // TODO (CD) Ensure that IView has a good hashCode implementation
   private final Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> contextToLockStates = createContextToLocksMap();
 
   public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
       throws InterruptedException
   {
+    lock2(type, context, objectsToLock, timeout);
+  }
+
+  public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context,
+      Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException
+  {
     if (objectsToLock.isEmpty())
     {
-      return;
+      return EMPTY_RESULT;
     }
 
     // Must come before the synchronized block!
@@ -56,7 +63,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
     synchronized (this)
     {
       int count = objectsToLock.size();
-      LockState<?, ?>[] lockStates = new LockState<?, ?>[count];
+      List<LockState<OBJECT, CONTEXT>> lockStates = new ArrayList<LockState<OBJECT, CONTEXT>>(count);
 
       for (;;)
       {
@@ -64,13 +71,12 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
         {
           for (int i = 0; i < count; i++)
           {
-            @SuppressWarnings("unchecked")
-            LockState<OBJECT, CONTEXT> lockState = (LockState<OBJECT, CONTEXT>)lockStates[i];
+            LockState<OBJECT, CONTEXT> lockState = lockStates.get(i);
             lockState.lock(type, context);
             addLockToContext(context, lockState);
           }
 
-          return;
+          return lockStates;
         }
 
         wait(startTime, timeout);
@@ -86,9 +92,15 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
 
   public synchronized void unlock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
   {
+    unlock2(type, context, objectsToUnlock);
+  }
+
+  public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context,
+      Collection<? extends OBJECT> objectsToUnlock)
+  {
     if (objectsToUnlock.isEmpty())
     {
-      return;
+      return EMPTY_RESULT;
     }
 
     List<LockState<OBJECT, CONTEXT>> lockStates = new LinkedList<LockState<OBJECT, CONTEXT>>();
@@ -121,14 +133,21 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
     }
 
     notifyAll();
+
+    return lockStates;
   }
 
   public synchronized void unlock(CONTEXT context)
   {
+    unlock2(context);
+  }
+
+  public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context)
+  {
     Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
     if (lockStates == null)
     {
-      return;
+      return EMPTY_RESULT;
     }
 
     List<OBJECT> objectsWithoutLocks = new LinkedList<OBJECT>();
@@ -141,8 +160,6 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
         {
           lockState.unlock(lockType, context);
         }
-
-        // TODO (CD) Consider whether WRITE_OPTIONs should be excluded from this...
       }
 
       if (lockState.hasNoLocks())
@@ -161,18 +178,35 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
     }
 
     notifyAll();
+
+    return toList(lockStates);
+  }
+
+  @SuppressWarnings("unchecked")
+  private List<LockState<OBJECT, CONTEXT>> toList(Set<LockState<OBJECT, CONTEXT>> lockStates)
+  {
+    if (lockStates instanceof List)
+    {
+      return (List<LockState<OBJECT, CONTEXT>>)lockStates;
+    }
+
+    List<LockState<OBJECT, CONTEXT>> list = new LinkedList<LockState<OBJECT, CONTEXT>>();
+    for (LockState<OBJECT, CONTEXT> lockState : lockStates)
+    {
+      list.add(lockState);
+    }
+
+    return list;
   }
 
   public synchronized boolean hasLock(LockType type, CONTEXT context, OBJECT objectToLock)
   {
-    // TODO (CD) Should this be synced?
     LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
     return lockState != null && lockState.hasLock(type, context, false);
   }
 
   public synchronized boolean hasLockByOthers(LockType type, CONTEXT context, OBJECT objectToLock)
   {
-    // TODO (CD) Should this be synced?
     LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
     return lockState != null && lockState.hasLock(type, context, true);
   }
@@ -222,6 +256,11 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
     return contextToLockStates;
   }
 
+  public LockState<OBJECT, CONTEXT> getLockState(Object key)
+  {
+    return objectToLockStateMap.get(key);
+  }
+
   private LockState<OBJECT, CONTEXT> getOrCreateLockState(OBJECT o)
   {
     LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(o);
@@ -235,10 +274,10 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
   }
 
   private boolean canLockInContext(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock,
-      LockState<?, ?>[] lockStatesToFill)
+      List<LockState<OBJECT, CONTEXT>> lockStatesToFill)
   {
     Iterator<? extends OBJECT> it = objectsToLock.iterator();
-    for (int i = 0; i < lockStatesToFill.length; i++)
+    for (int i = 0; i < objectsToLock.size(); i++)
     {
       OBJECT o = it.next();
       LockState<OBJECT, CONTEXT> lockState = getOrCreateLockState(o);
@@ -247,7 +286,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
         return false;
       }
 
-      lockStatesToFill[i] = lockState;
+      lockStatesToFill.add(lockState);
     }
 
     return true;
@@ -301,7 +340,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
 
   /**
    * Represents a combination of locks for one OBJECT. The different lock types are represented by the values of the
-   * enum {@link LockType}.
+   * enum {@link IRWLockManager.LockType}
    * <p>
    * The locking semantics established by this class are as follows:
    * <li>a read lock prevents a write lock by another, but allows read locks by others and allows a write option by
@@ -315,11 +354,10 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
    * @author Caspar De Groot
    * @since 3.2
    */
-  protected static class LockState<OBJECT, CONTEXT>
+  public static class LockState<OBJECT, CONTEXT>
   {
     private final OBJECT lockedObject;
 
-    // TODO (CD) Ensure that IView has a good hashCode implementation
     private final HashBag<CONTEXT> readLockOwners = new HashBag<CONTEXT>();
 
     private CONTEXT writeLockOwner;
@@ -369,6 +407,23 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
         }
 
         return writeOptionOwner == view;
+      }
+
+      return false;
+    }
+
+    public boolean hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType type)
+    {
+      switch (type)
+      {
+      case READ:
+        return readLockOwners.size() > 0;
+
+      case WRITE:
+        return writeLockOwner != null;
+
+      case OPTION:
+        return writeOptionOwner != null;
       }
 
       return false;
@@ -647,6 +702,21 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLoc
     private void doWriteUnoption(CONTEXT context)
     {
       writeOptionOwner = null;
+    }
+
+    public Set<CONTEXT> getReadLockOwners()
+    {
+      return Collections.unmodifiableSet(readLockOwners);
+    }
+
+    public CONTEXT getWriteLockOwner()
+    {
+      return writeLockOwner;
+    }
+
+    public CONTEXT getWriteOptionOwner()
+    {
+      return writeOptionOwner;
     }
   }
 }

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaAlreadyExistsException;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundException;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -102,12 +103,28 @@ public class DurableLockingManager extends Lifecycle
     this.store = store;
   }
 
-  public synchronized LockArea createLockArea(DBStoreAccessor accessor, String userID, CDOBranchPoint branchPoint,
-      boolean readOnly, Map<CDOID, LockGrade> locks)
+  public synchronized LockArea createLockArea(DBStoreAccessor accessor, String durableLockingID, String userID,
+      CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     try
     {
-      String durableLockingID = getNextDurableLockingID(accessor);
+      if (durableLockingID == null)
+      {
+        durableLockingID = getNextDurableLockingID(accessor);
+      }
+      else
+      {
+        // If the caller is specifying the ID, make sure there is no area with this ID yet
+        //
+        try
+        {
+          getLockArea(accessor, durableLockingID);
+          throw new LockAreaAlreadyExistsException(durableLockingID);
+        }
+        catch (LockAreaNotFoundException good)
+        {
+        }
+      }
 
       IPreparedStatementCache statementCache = accessor.getStatementCache();
       PreparedStatement stmt = null;

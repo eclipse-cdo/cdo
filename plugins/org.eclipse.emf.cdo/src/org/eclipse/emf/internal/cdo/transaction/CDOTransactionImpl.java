@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -2624,6 +2625,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             }
 
             fireEvent(new FinishedEvent(CDOTransactionFinishedEvent.Type.COMMITTED, idMappings), listeners);
+          }
+
+          CDOLockState[] newLockStates = result.getNewLockStates();
+          if (newLockStates != null)
+          {
+            updateLockStates(newLockStates);
           }
         }
         catch (RuntimeException ex)

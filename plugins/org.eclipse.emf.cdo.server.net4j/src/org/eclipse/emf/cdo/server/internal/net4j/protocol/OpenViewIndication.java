@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import java.io.IOException;
 
@@ -25,7 +26,7 @@ import java.io.IOException;
  */
 public class OpenViewIndication extends CDOServerReadIndication
 {
-  private CDOBranchPoint result;
+  private InternalView newView;
 
   private String message;
 
@@ -47,11 +48,11 @@ public class OpenViewIndication extends CDOServerReadIndication
       CDOBranchPoint branchPoint = in.readCDOBranchPoint();
       if (readOnly)
       {
-        session.openView(viewID, branchPoint);
+        newView = session.openView(viewID, branchPoint);
       }
       else
       {
-        session.openTransaction(viewID, branchPoint);
+        newView = session.openTransaction(viewID, branchPoint);
       }
     }
     else
@@ -61,7 +62,7 @@ public class OpenViewIndication extends CDOServerReadIndication
       try
       {
         String durableLockingID = in.readString();
-        result = lockManager.openView(session, viewID, readOnly, durableLockingID);
+        newView = (InternalView)lockManager.openView(session, viewID, readOnly, durableLockingID);
       }
       catch (LockAreaNotFoundException ex)
       {
@@ -77,10 +78,10 @@ public class OpenViewIndication extends CDOServerReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    if (result != null)
+    if (newView != null)
     {
       out.writeBoolean(true);
-      out.writeCDOBranchPoint(result);
+      out.writeCDOBranchPoint(newView);
     }
     else
     {

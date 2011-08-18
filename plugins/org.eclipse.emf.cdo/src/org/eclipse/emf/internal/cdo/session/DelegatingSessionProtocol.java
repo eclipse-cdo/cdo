@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -384,6 +385,38 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.getLockStates(viewID, ids);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public void enableLockNotifications(int viewID, boolean enable)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        delegate.enableLockNotifications(viewID, enable);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers)
   {
     int attempt = 0;
@@ -579,6 +612,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
       LockType lockType, long timeout) throws InterruptedException
   {
@@ -588,6 +622,60 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.lockObjects(viewedRevisions, viewID, viewedBranch, lockType, timeout);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  /**
+   * @since 4.1
+   */
+  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
+      LockType lockType, long timeout) throws InterruptedException
+
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.lockObjects2(revisionKeys, viewID, viewedBranch, lockType, timeout);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
+      CDOBranch viewedBranch, LockType lockType, long timeout) throws InterruptedException
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.delegateLockObjects(lockAreaID, revisionKeys, viewedBranch, lockType, timeout);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.delegateUnlockObjects(lockAreaID, objectIDs, lockType);
       }
       catch (Exception ex)
       {
@@ -665,15 +753,31 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public void unlockObjects(CDOView view, Collection<? extends CDOObject> objects, LockType lockType)
+  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        delegate.unlockObjects(view, objects, lockType);
+        delegate.unlockObjects(view, objectIDs, lockType);
         return;
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.unlockObjects2(view, objectIDs, lockType);
       }
       catch (Exception ex)
       {

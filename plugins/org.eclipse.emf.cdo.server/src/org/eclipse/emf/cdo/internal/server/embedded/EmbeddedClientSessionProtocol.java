@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -138,6 +139,16 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     result.setResponded(timeStamp);
     result.setConfirmed(timeStamp);
     return result;
+  }
+
+  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void enableLockNotifications(int viewID, boolean enable)
+  {
+    throw new UnsupportedOperationException();
   }
 
   public void disablePassiveUpdate()
@@ -329,13 +340,39 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
       LockType lockType, long timeout) throws InterruptedException
   {
     throw new UnsupportedOperationException();
   }
 
-  public void unlockObjects(CDOView view, Collection<? extends CDOObject> objects, LockType lockType)
+  /**
+   * @since 4.1
+   */
+  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
+      LockType lockType, long timeout) throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
+      CDOBranch viewedBranch, LockType lockType, long timeout) throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType)
   {
     throw new UnsupportedOperationException();
   }

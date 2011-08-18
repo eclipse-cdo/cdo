@@ -28,7 +28,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.ISession;
-import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking;
+import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.IStoreAccessor.Raw;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -62,7 +62,7 @@ import java.util.Set;
 /**
  * @author Simon McDuff
  */
-public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, DurableLocking
+public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, DurableLocking2
 {
   private final IQueryHandler testQueryHandler = new IQueryHandler()
   {
@@ -406,6 +406,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
       Map<CDOID, LockGrade> locks)
   {
     return getStore().createLockArea(userID, branchPoint, readOnly, locks);
+  }
+
+  public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
+      Map<CDOID, LockGrade> locks)
+  {
+    return getStore().createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
   }
 
   public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException

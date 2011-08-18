@@ -43,6 +43,23 @@ public final class ObjectUtil
     return o.hashCode();
   }
 
+  /**
+   * A collision-free hash code for small sets (<=4) of small, positive integers (<=128)
+   * 
+   * @since 3.2
+   */
+  public static int hashCode(int... values)
+  {
+    int hash = 0;
+    for (int i = 0; i < values.length; i++)
+    {
+      hash += values[i];
+      hash = (hash << 7) - hash;
+    }
+
+    return hash;
+  }
+
   public static int hashCode(long num)
   {
     return (int)(num >> 32) ^ (int)(num & 0xffffffff);

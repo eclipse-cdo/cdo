@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -66,6 +67,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitConte
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -218,7 +220,20 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     }
   }
 
-  public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
+  @Deprecated
+  public LockObjectsResult lockObjects(List<InternalCDORevision> revisions, int viewID, CDOBranch viewedBranch,
+      LockType lockType, long timeout) throws InterruptedException
+  {
+    List<CDORevisionKey> revisionKeys = new LinkedList<CDORevisionKey>();
+    for (InternalCDORevision rev : revisions)
+    {
+      revisionKeys.add(rev);
+    }
+    
+    return lockObjects2(revisionKeys, viewID, viewedBranch, lockType, timeout);
+  }
+
+  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
       LockType lockType, long timeout) throws InterruptedException
   {
     InterruptedException interruptedException = null;
@@ -226,7 +241,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
 
     try
     {
-      return new LockObjectsRequest(this, viewedRevisions, viewID, viewedBranch, lockType, timeout).send();
+      return new LockObjectsRequest(this, revisionKeys, viewID, viewedBranch, lockType, timeout).send();
     }
     catch (RemoteException ex)
     {
@@ -256,9 +271,57 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     throw runtimeException;
   }
 
-  public void unlockObjects(CDOView view, Collection<? extends CDOObject> objects, LockType lockType)
+  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
+      CDOBranch viewedBranch, LockType lockType, long timeout) throws InterruptedException
   {
-    send(new UnlockObjectsRequest(this, view, objects, lockType));
+    InterruptedException interruptedException = null;
+    RuntimeException runtimeException = null;
+
+    try
+    {
+      return new LockDelegationRequest(this, lockAreaID, revisionKeys, viewedBranch, lockType, timeout).send();
+    }
+    catch (RemoteException ex)
+    {
+      if (ex.getCause() instanceof RuntimeException)
+      {
+        runtimeException = (RuntimeException)ex.getCause();
+      }
+      else if (ex.getCause() instanceof InterruptedException)
+      {
+        interruptedException = (InterruptedException)ex.getCause();
+      }
+      else
+      {
+        runtimeException = WrappedException.wrap(ex);
+      }
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
+    if (interruptedException != null)
+    {
+      throw interruptedException;
+    }
+
+    throw runtimeException;
+  }
+
+  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType));
+  }
+
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    return send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType));
+  }
+
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    return send(new UnlockDelegationRequest(this, lockAreaID, objectIDs, lockType));
   }
 
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers)
@@ -398,6 +461,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     case CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION:
       return new RemoteMessageNotificationIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_LOCK_NOTIFICATION:
+      return new LockNotificationIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }
@@ -446,5 +512,15 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     {
       REVISION_LOADING.stop(request);
     }
+  }
+
+  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
+  {
+    return send(new LockStateRequest(this, viewID, ids));
+  }
+
+  public void enableLockNotifications(int viewID, boolean on)
+  {
+    send(new EnableLockNotificationRequest(this, viewID, on));
   }
 }

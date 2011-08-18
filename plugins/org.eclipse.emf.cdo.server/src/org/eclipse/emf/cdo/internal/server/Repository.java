@@ -15,6 +15,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -28,6 +29,10 @@ import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
@@ -36,6 +41,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
@@ -53,6 +59,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
@@ -81,13 +88,18 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -99,6 +111,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -107,6 +121,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1323,6 +1338,147 @@ public class Repository extends Container<Object> implements InternalRepository
       branch = base.getBranch();
       timeStamp = base.getTimeStamp();
     }
+  }
+
+  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revisionKeys,
+      CDOBranch viewedBranch, long timeout)
+  {
+    List<Object> objectsToLock = new ArrayList<Object>();
+    boolean isSupportingBranches = isSupportingBranches();
+    for (CDORevisionKey revKey : revisionKeys)
+    {
+      CDOID id = revKey.getID();
+      if (isSupportingBranches)
+      {
+        objectsToLock.add(CDOIDUtil.createIDAndBranch(id, viewedBranch));
+      }
+      else
+      {
+        objectsToLock.add(id);
+      }
+    }
+
+    InternalLockManager lockManager = getLockManager();
+    List<LockState<Object, IView>> newLockStates = null;
+
+    try
+    {
+      newLockStates = lockManager.lock2(true, lockType, view, objectsToLock, timeout);
+    }
+    catch (TimeoutRuntimeException ex)
+    {
+      return new LockObjectsResult(false, true, false, 0, new CDORevisionKey[0], new CDOLockState[0]);
+    }
+    catch (InterruptedException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
+    List<CDORevisionKey> staleRevisions = new LinkedList<CDORevisionKey>();
+    long requiredTimestamp = 0;
+
+    try
+    {
+      InternalCDORevisionManager revManager = getRevisionManager();
+
+      for (CDORevisionKey revKey : revisionKeys)
+      {
+        CDOID id = revKey.getID();
+        InternalCDORevision rev = revManager.getRevision(id, viewedBranch.getHead(), CDORevision.UNCHUNKED,
+            CDORevision.DEPTH_NONE, true);
+
+        if (rev == null)
+        {
+          throw new IllegalArgumentException(String.format("Object %s not found in branch %s (possibly detached)", id,
+              viewedBranch));
+        }
+
+        if (!revKey.equals(rev))
+        {
+          staleRevisions.add(revKey);
+          requiredTimestamp = Math.max(requiredTimestamp, rev.getTimeStamp());
+        }
+      }
+    }
+    catch (IllegalArgumentException ex)
+    {
+      lockManager.unlock2(true, lockType, view, objectsToLock);
+      throw ex;
+    }
+
+    // Convert the list to an array, to satisfy the API later
+    //
+    CDORevisionKey[] staleRevisionsArray = new CDORevisionKey[staleRevisions.size()];
+    staleRevisions.toArray(staleRevisionsArray);
+
+    // If some of the clients' revisions are stale and it has passiveUpdates disabled,
+    // then the locks are useless so we release them and report the stale revisions
+    InternalSession session = view.getSession();
+    boolean staleNoUpdate = staleRevisionsArray.length > 0 && !session.isPassiveUpdateEnabled();
+    if (staleNoUpdate)
+    {
+      lockManager.unlock2(true, lockType, view, objectsToLock);
+      return new LockObjectsResult(false, false, false, requiredTimestamp, staleRevisionsArray, new CDOLockState[0]);
+    }
+
+    CDOLockState[] cdoLockStates = toCDOLockStates(newLockStates);
+    sendLockNotifications(view, viewedBranch, Operation.LOCK, cdoLockStates);
+
+    boolean waitForUpdate = staleRevisionsArray.length > 0;
+    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp, staleRevisionsArray, cdoLockStates);
+  }
+
+  private void sendLockNotifications(IView view, CDOBranch viewedBranch, Operation operation,
+      CDOLockState[] cdoLockStates)
+  {
+    long timestamp = getTimeStamp();
+    CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo(timestamp, view, viewedBranch, operation,
+        cdoLockStates);
+    getSessionManager().sendLockNotification((InternalSession)view.getSession(), lockChangeInfo);
+  }
+
+  // TODO (CD) This doesn't really belong here.. but getting it into CDOLockUtil isn't possible
+  private CDOLockState[] toCDOLockStates(List<LockState<Object, IView>> lockStates)
+  {
+    CDOLockState[] cdoLockStates = new CDOLockState[lockStates.size()];
+    int i = 0;
+
+    for (LockState<Object, ? extends CDOCommonView> lockState : lockStates)
+    {
+      cdoLockStates[i++] = CDOLockUtil.createLockState(lockState);
+    }
+
+    return cdoLockStates;
+  }
+
+  public UnlockObjectsResult unlock(InternalView view, LockType lockType, List<CDOID> objectIDs)
+  {
+    List<Object> revisionKeys = null;
+    if (objectIDs != null)
+    {
+      revisionKeys = new ArrayList<Object>(objectIDs.size());
+      CDOBranch branch = view.getBranch();
+      for (CDOID id : objectIDs)
+      {
+        Object key = supportingBranches ? CDOIDUtil.createIDAndBranch(id, branch) : id;
+        revisionKeys.add(key);
+      }
+    }
+
+    List<LockState<Object, IView>> newLockStates = null;
+    if (lockType == null && revisionKeys == null)
+    {
+      newLockStates = lockManager.unlock2(true, view);
+    }
+    else
+    {
+      newLockStates = lockManager.unlock2(true, lockType, view, revisionKeys);
+    }
+
+    CDOLockState[] cdoLockStates = toCDOLockStates(newLockStates);
+    sendLockNotifications(view, view.getBranch(), Operation.UNLOCK, cdoLockStates);
+
+    return new UnlockObjectsResult(cdoLockStates);
   }
 
   @Override

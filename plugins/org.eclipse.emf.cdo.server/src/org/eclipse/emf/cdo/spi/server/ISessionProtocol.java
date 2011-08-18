@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
@@ -43,4 +44,9 @@ public interface ISessionProtocol extends CDOProtocol
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception;
 
   public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception;
+
+  /**
+   * @since 4.1
+   */
+  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception;
 }

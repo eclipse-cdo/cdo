@@ -14,6 +14,7 @@ package org.eclipse.emf.internal.cdo.object;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -57,6 +58,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -95,6 +97,8 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   protected InternalCDORevision revision;
 
+  protected CDOLockState lockState;
+
   /**
    * It could happen that while <i>revisionToInstance()</i> is executed externally the <i>internalPostLoad()</i> method
    * will be called. This happens for example if <i>internalPostInvalidate()</i> is called. The leads to another
@@ -119,6 +123,24 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   public InternalCDORevision cdoRevision()
   {
     return revision;
+  }
+
+  public synchronized CDOLockState cdoLockState()
+  {
+    if (lockState == null)
+    {
+      if (!FSMUtil.isTransient(this) && !FSMUtil.isNew(this))
+      {
+        lockState = view.getLockStates(Collections.singletonList(id))[0];
+      }
+    }
+
+    return lockState;
+  }
+
+  public synchronized void cdoInternalSetLockState(CDOLockState lockState)
+  {
+    this.lockState = lockState;
   }
 
   @Override

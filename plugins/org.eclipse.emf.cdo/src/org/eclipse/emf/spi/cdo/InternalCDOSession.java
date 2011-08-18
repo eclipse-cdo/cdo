@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -178,6 +179,11 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
    * @since 3.0
    */
   public void handleCommitNotification(CDOCommitInfo commitInfo);
+
+  /**
+   * @since 4.1
+   */
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo);
 
   /**
    * @since 3.0

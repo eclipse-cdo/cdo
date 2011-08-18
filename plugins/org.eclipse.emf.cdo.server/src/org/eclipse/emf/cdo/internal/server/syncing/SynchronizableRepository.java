@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
@@ -43,13 +44,20 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
+import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -418,6 +426,99 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   protected void initRootResource()
   {
     setState(INITIAL);
+  }
+
+  @Override
+  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revisionKeys,
+      CDOBranch viewedBranch, long timeout)
+  {
+    CheckUtil.checkState(view.getBranch().equals(viewedBranch),
+        "Client view's branch and server view's branch are different.");
+  
+    if (view.getBranch().isLocal())
+    {
+      return super.lock(view, lockType, revisionKeys, viewedBranch, timeout);
+    }
+  
+    if (getState() != ONLINE)
+    {
+      throw new CDOException("Cannot lock in a non-local branch when clone is not connected to master");
+    }
+  
+    return lockThrough(true, view, lockType, revisionKeys, viewedBranch, timeout);
+  }
+
+  private LockObjectsResult lockThrough(boolean explicit, InternalView view, LockType lockType,
+      List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, long timeout)
+  {
+    // Delegate locking to the master
+    InternalCDOSession remoteSession = getSynchronizer().getRemoteSession();
+    CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
+    try
+    {
+      String lockAreaID = view.getDurableLockingID();
+      if (lockAreaID == null)
+      {
+        throw new IllegalStateException("Durable locking is not enabled.");
+      }
+  
+      LockObjectsResult masterLockingResult = sessionProtocol.delegateLockObjects(lockAreaID, revisionKeys,
+          viewedBranch, lockType, timeout);
+      if (!masterLockingResult.isSuccessful())
+      {
+        return masterLockingResult;
+      }
+  
+      if (masterLockingResult.isWaitForUpdate())
+      {
+        if (!getSynchronizer().getRemoteSession().options().isPassiveUpdateEnabled())
+        {
+          throw new AssertionError(
+              "Master lock result requires clone to wait, but clone does not have passiveUpdates enabled.");
+        }
+  
+        long requiredTimestamp = masterLockingResult.getRequiredTimestamp();
+        remoteSession.waitForUpdate(requiredTimestamp);
+      }
+  
+      return super.lock(view, lockType, revisionKeys, viewedBranch, timeout);
+    }
+    catch (InterruptedException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  @Override
+  public UnlockObjectsResult unlock(InternalView view, LockType lockType, List<CDOID> objectIDs)
+  {
+    if (view.getBranch().isLocal())
+    {
+      return super.unlock(view, lockType, objectIDs);
+    }
+  
+    if (getState() != ONLINE)
+    {
+      throw new CDOException("Cannot unlock in a non-local branch when clone is not connected to master");
+    }
+  
+    return unlockThrough(view, lockType, objectIDs);
+  }
+
+  private UnlockObjectsResult unlockThrough(InternalView view, LockType lockType, List<CDOID> objectIDs)
+  {
+    // Delegate unlocking to the master
+    InternalCDOSession remoteSession = getSynchronizer().getRemoteSession();
+    CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
+  
+    String lockAreaID = view.getDurableLockingID();
+    if (lockAreaID == null)
+    {
+      throw new IllegalStateException("Durable locking is not enabled.");
+    }
+  
+    sessionProtocol.delegateUnlockObjects(lockAreaID, objectIDs, lockType);
+    return super.unlock(view, lockType, objectIDs);
   }
 
   /**

@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
@@ -28,6 +30,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -132,6 +135,16 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   public void unsubscribe(EObject eObject, Adapter adapter);
 
   public boolean hasSubscription(CDOID id);
+
+  /**
+   * @since 4.1
+   */
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo);
+
+  /**
+   * @since 4.1
+   */
+  public CDOLockState[] getLockStates(Collection<CDOID> ids);
 
   // /**
   // * Each time CDORevision or CDOState of an CDOObject is modified, ensure that no concurrent access is modifying it

@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ContainmentCycleDetectedException;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -66,6 +67,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -146,6 +148,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private String rollbackMessage;
 
   private List<CDOIDReference> xRefs;
+
+  private List<LockState<Object, IView>> postCommitLockStates;
 
   private boolean ensuringReferentialIntegrity;
 
@@ -485,6 +489,11 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       finishMonitor(monitor);
     }
+  }
+
+  public List<LockState<Object, IView>> getPostCommmitLockStates()
+  {
+    return postCommitLockStates;
   }
 
   private void handleException(Throwable ex)
@@ -1046,7 +1055,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
       if (isAutoReleaseLocksEnabled())
       {
-        repository.getLockManager().unlock(transaction);
+        postCommitLockStates = repository.getLockManager().unlock2(true, transaction);
       }
 
       monitor.worked();

@@ -19,6 +19,9 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -63,6 +66,7 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -214,6 +218,82 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     else
     {
       // FailureCommitInfo
+      writeBoolean(false);
+    }
+  }
+
+  public void writeCDOLockChangeInfo(CDOLockChangeInfo lockChangeInfo) throws IOException
+  {
+    writeCDOBranchPoint(lockChangeInfo);
+    writeCDOLockOwner(lockChangeInfo.getLockOwner());
+    writeEnum(lockChangeInfo.getOperation());
+
+    CDOLockState[] lockStates = lockChangeInfo.getLockStates();
+    writeInt(lockStates.length);
+    for (CDOLockState lockState : lockStates)
+    {
+      writeCDOLockState(lockState);
+    }
+  }
+
+  public void writeCDOLockOwner(CDOLockOwner lockOwner) throws IOException
+  {
+    if (lockOwner != CDOLockOwner.UNKNOWN)
+    {
+      writeBoolean(true);
+      writeInt(lockOwner.getSessionID());
+      writeInt(lockOwner.getViewID());
+    }
+    else
+    {
+      writeBoolean(false);
+    }
+  }
+
+  public void writeCDOLockState(CDOLockState lockState) throws IOException
+  {
+    Object o = lockState.getLockedObject();
+    if (o instanceof CDOID)
+    {
+      writeBoolean(false);
+      writeCDOID((CDOID)o);
+    }
+    else if (o instanceof CDOIDAndBranch)
+    {
+      writeBoolean(true);
+      writeCDOIDAndBranch((CDOIDAndBranch)o);
+    }
+    else
+    {
+      throw new AssertionError("Unexpected type: " + o.getClass().getSimpleName());
+    }
+
+    Set<CDOLockOwner> readLockOwners = lockState.getReadLockOwners();
+    writeInt(readLockOwners.size());
+    for (CDOLockOwner readLockOwner : readLockOwners)
+    {
+      writeCDOLockOwner(readLockOwner);
+    }
+
+    CDOLockOwner writeLockOwner = lockState.getWriteLockOwner();
+    if (writeLockOwner != null)
+    {
+      writeBoolean(true);
+      writeCDOLockOwner(writeLockOwner);
+    }
+    else
+    {
+      writeBoolean(false);
+    }
+
+    CDOLockOwner writeOptionOwner = lockState.getWriteOptionOwner();
+    if (writeOptionOwner != null)
+    {
+      writeBoolean(true);
+      writeCDOLockOwner(writeOptionOwner);
+    }
+    else
+    {
       writeBoolean(false);
     }
   }
@@ -438,7 +518,8 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
 
   public void writeCDOLockType(LockType lockType) throws IOException
   {
-    writeBoolean(lockType == LockType.WRITE ? true : false);
+    int b = lockType == null ? 0 : lockType.ordinal() + 1;
+    writeByte(b);
   }
 
   public CDOPackageRegistry getPackageRegistry()

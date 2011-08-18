@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking;
+import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -45,6 +46,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -155,8 +157,15 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     return result;
   }
 
+  @Deprecated
   public void lock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToLock, long timeout)
       throws InterruptedException
+  {
+    lock2(explicit, type, view, objectsToLock, timeout);
+  }
+
+  public List<LockState<Object, IView>> lock2(boolean explicit, LockType type, IView view,
+      Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
   {
     String durableLockingID = null;
     DurableLocking accessor = null;
@@ -170,15 +179,24 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       }
     }
 
-    super.lock(type, view, objectsToLock, timeout);
+    List<LockState<Object, IView>> newLockStates = super.lock2(type, view, objectsToLock, timeout);
 
     if (accessor != null)
     {
       accessor.lock(durableLockingID, type, objectsToLock);
     }
+
+    return newLockStates;
   }
 
+  @Deprecated
   public void unlock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToUnlock)
+  {
+    unlock2(explicit, type, view, objectsToUnlock);
+  }
+
+  public List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView view,
+      Collection<? extends Object> objectsToUnlock)
   {
     if (explicit)
     {
@@ -190,10 +208,16 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       }
     }
 
-    super.unlock(type, view, objectsToUnlock);
+    return super.unlock2(type, view, objectsToUnlock);
   }
 
+  @Deprecated
   public void unlock(boolean explicit, IView view)
+  {
+    unlock(explicit, view);
+  }
+
+  public List<LockState<Object, IView>> unlock2(boolean explicit, IView view)
   {
     if (explicit)
     {
@@ -205,24 +229,41 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       }
     }
 
-    super.unlock(view);
+    return super.unlock2(view);
   }
 
   public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
       Map<CDOID, LockGrade> locks)
   {
-    DurableLocking accessor = getDurableLocking();
-    return accessor.createLockArea(userID, branchPoint, readOnly, locks);
+    return createLockArea(userID, branchPoint, readOnly, locks, null);
+  }
+
+  private LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
+      Map<CDOID, LockGrade> locks, String lockAreaID)
+  {
+    if (lockAreaID == null)
+    {
+      DurableLocking accessor = getDurableLocking();
+      return accessor.createLockArea(userID, branchPoint, readOnly, locks);
+    }
+
+    DurableLocking2 accessor = getDurableLocking2();
+    return accessor.createLockArea(lockAreaID, userID, branchPoint, readOnly, locks);
   }
 
   public LockArea createLockArea(InternalView view)
+  {
+    return createLockArea(view, null);
+  }
+
+  public LockArea createLockArea(InternalView view, String lockAreaID)
   {
     String userID = view.getSession().getUserID();
     CDOBranchPoint branchPoint = CDOBranchUtil.copyBranchPoint(view);
     boolean readOnly = view.isReadOnly();
     Map<CDOID, LockGrade> locks = getLocks(view);
 
-    LockArea area = createLockArea(userID, branchPoint, readOnly, locks);
+    LockArea area = createLockArea(userID, branchPoint, readOnly, locks, lockAreaID);
     synchronized (openViews)
     {
       openViews.put(area.getDurableLockingID(), view);
@@ -328,7 +369,18 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       return (DurableLocking)accessor;
     }
 
-    throw new IllegalStateException("Store does not support durable locking");
+    throw new IllegalStateException("Store does not implement " + DurableLocking.class.getSimpleName());
+  }
+
+  private DurableLocking2 getDurableLocking2()
+  {
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    if (accessor instanceof DurableLocking2)
+    {
+      return (DurableLocking2)accessor;
+    }
+
+    throw new IllegalStateException("Store does not implement " + DurableLocking2.class.getSimpleName());
   }
 
   private void loadDurableLocks()
@@ -439,7 +491,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
 
     public ISession getSession()
     {
-      throw new UnsupportedOperationException();
+      return null;
     }
 
     @Override
@@ -517,5 +569,22 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
 
       return true;
     }
+  }
+
+  public LockGrade getLockGrade(Object key)
+  {
+    LockState<Object, IView> lockState = getObjectToLocksMap().get(key);
+    LockGrade grade = LockGrade.NONE;
+    if (lockState != null)
+    {
+      for (LockType type : LockType.values())
+      {
+        if (lockState.hasLock(type))
+        {
+          grade = grade.getUpdated(type, true);
+        }
+      }
+    }
+    return grade;
   }
 }

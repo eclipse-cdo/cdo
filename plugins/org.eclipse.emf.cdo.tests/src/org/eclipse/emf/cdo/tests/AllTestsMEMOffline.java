@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.offline.FailoverTest;
 import org.eclipse.emf.cdo.tests.offline.OfflineDelayed2Test;
+import org.eclipse.emf.cdo.tests.offline.OfflineLockingTest;
 import org.eclipse.emf.cdo.tests.offline.OfflineTest;
 
 import java.util.List;
@@ -43,6 +44,7 @@ public class AllTestsMEMOffline extends AllConfigs
     // MEM does not support raw replication
     // testClasses.add(OfflineRawTest.class);
 
+    testClasses.add(OfflineLockingTest.class);
     testClasses.add(OfflineTest.class);
     testClasses.add(OfflineDelayed2Test.class);
     testClasses.add(FailoverTest.class);

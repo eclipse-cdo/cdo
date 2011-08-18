@@ -40,14 +40,6 @@ public class OfflineExampleMaster extends AbstractOfflineExampleServer
     return CDOServerUtil.createRepository(name, store, props);
   }
 
-  protected void showMenu()
-  {
-    System.out.println("0 - exit");
-    System.out.println("1 - connect repository to network");
-    System.out.println("2 - disconnect repository from network");
-    System.out.println("3 - dump repository infos");
-  }
-
   public static void main(String[] args) throws Exception
   {
     System.out.println("Master repository starting...");

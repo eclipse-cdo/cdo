@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -37,10 +38,13 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader;
 
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -213,4 +217,15 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    * @since 4.0
    */
   public void initMainBranch(InternalCDOBranchManager branchManager, long timeStamp);
+
+  /**
+   * @since 4.1
+   */
+  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revisionKeys,
+      CDOBranch viewedBranch, long timeout);
+
+  /**
+   * @since 4.1
+   */
+  public UnlockObjectsResult unlock(InternalView view, LockType lockType, List<CDOID> objectIDs);
 }

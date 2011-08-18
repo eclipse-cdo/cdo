@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -45,6 +46,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -131,15 +133,41 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public boolean cancelQuery(int queryId);
 
   /**
+   * Use #lockObjects2 instead.
+   * 
    * @since 4.0
+   * @deprecated Not called anymore.
    */
+  @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
       LockType lockType, long timeout) throws InterruptedException;
 
   /**
+   * @since 4.1
+   */
+  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
+      LockType lockType, long timeout) throws InterruptedException;
+
+  /**
+   * @since 4.1
+   */
+  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
+      CDOBranch viewedBranch, LockType lockType, long timeout) throws InterruptedException;
+
+  /**
    * @since 3.0
    */
-  public void unlockObjects(CDOView view, Collection<? extends CDOObject> objects, LockType lockType);
+  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType);
+
+  /**
+   * @since 4.1
+   */
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType);
+
+  /**
+   * @since 4.1
+   */
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType);
 
   /**
    * @since 3.0
@@ -231,6 +259,16 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    */
   public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
       CDORevisionHandler handler);
+
+  /**
+   * @since 4.1
+   */
+  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids);
+
+  /**
+   * @since 4.1
+   */
+  public void enableLockNotifications(int viewID, boolean enable);
 
   /**
    * @author Eike Stepper
@@ -606,6 +644,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDOReferenceAdjuster referenceAdjuster;
 
+    private CDOLockState[] newLockStates;
+
     /**
      * @since 4.0
      */
@@ -697,6 +737,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       idMappings.put(oldID, newID);
     }
 
+    /**
+     * @since 4.1
+     */
+    public CDOLockState[] getNewLockStates()
+    {
+      return newLockStates;
+    }
+
     protected PostCommitReferenceAdjuster createReferenceAdjuster()
     {
       return new PostCommitReferenceAdjuster(idProvider, new CDOIDMapper(idMappings));
@@ -735,6 +783,15 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
         return idMapper.adjustReference(id, feature, index);
       }
     }
+
+    /**
+     * @since 4.1
+     */
+    public void setNewLockStates(CDOLockState[] newLockStates)
+    {
+      CheckUtil.checkArg(newLockStates, "newLockStates");
+      this.newLockStates = newLockStates;
+    }
   }
 
   /**
@@ -752,14 +809,27 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDORevisionKey[] staleRevisions;
 
+    private CDOLockState[] newLockStates;
+
+    @Deprecated
     public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp,
         CDORevisionKey[] staleRevisions)
+    {
+      throw new AssertionError("Deprecated"); // TODO (CD) What to do about this??
+    }
+
+    /**
+     * @since 4.1
+     */
+    public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp,
+        CDORevisionKey[] staleRevisions, CDOLockState[] newLockStates)
     {
       this.successful = successful;
       this.timedOut = timedOut;
       this.waitForUpdate = waitForUpdate;
       this.requiredTimestamp = requiredTimestamp;
       this.staleRevisions = staleRevisions;
+      this.newLockStates = newLockStates;
     }
 
     public boolean isSuccessful()
@@ -785,6 +855,32 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public CDORevisionKey[] getStaleRevisions()
     {
       return staleRevisions;
+    }
+
+    /**
+     * @since 4.1
+     */
+    public CDOLockState[] getNewLockStates()
+    {
+      return newLockStates;
+    }
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static final class UnlockObjectsResult
+  {
+    private CDOLockState[] newLockStates;
+
+    public UnlockObjectsResult(CDOLockState[] newLockStates)
+    {
+      this.newLockStates = newLockStates;
+    }
+
+    public CDOLockState[] getNewLockStates()
+    {
+      return newLockStates;
     }
   }
 }

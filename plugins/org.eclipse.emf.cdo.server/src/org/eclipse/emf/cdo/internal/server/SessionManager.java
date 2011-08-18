@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.ISession;
@@ -303,6 +304,23 @@ public class SessionManager extends Container<ISession> implements InternalSessi
         {
           handleNotificationProblem(session, ex);
         }
+      }
+    }
+  }
+
+  public void sendLockNotification(InternalSession sender, CDOLockChangeInfo lockChangeInfo)
+  {
+    for (InternalSession session : getSessions())
+    {
+      // TODO Exclude the sender and notify locally there
+
+      try
+      {
+        session.sendLockNotification(lockChangeInfo);
+      }
+      catch (Exception ex)
+      {
+        handleNotificationProblem(session, ex);
       }
     }
   }

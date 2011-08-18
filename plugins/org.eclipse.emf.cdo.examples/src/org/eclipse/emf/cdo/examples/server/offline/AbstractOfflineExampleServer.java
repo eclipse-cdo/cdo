@@ -124,10 +124,10 @@ public abstract class AbstractOfflineExampleServer
   {
     for (;;)
     {
-      // System.out.println();
-      // System.out.println("Enter a command:");
-      // showMenu();
-      // System.out.println();
+      System.out.println();
+      System.out.println("Enter a command:");
+      showMenu();
+      System.out.println();
 
       String command = new BufferedReader(new InputStreamReader(System.in)).readLine();
       if (handleCommand(command))
@@ -142,6 +142,14 @@ public abstract class AbstractOfflineExampleServer
     LifecycleUtil.deactivate(acceptor);
     LifecycleUtil.deactivate(repository);
     container.deactivate();
+  }
+
+  protected void showMenu()
+  {
+    System.out.println("0 - exit");
+    System.out.println("1 - connect repository to network");
+    System.out.println("2 - disconnect repository from network");
+    System.out.println("3 - dump repository infos");
   }
 
   protected boolean handleCommand(String command)

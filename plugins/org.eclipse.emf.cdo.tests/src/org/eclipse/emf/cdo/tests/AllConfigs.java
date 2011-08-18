@@ -74,6 +74,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(LockingManagerRestartTransactionTest.class);
     testClasses.add(LockingManagerRestartSessionTest.class);
     testClasses.add(LockingManagerRestartRepositoryTest.class);
+    testClasses.add(LockingNotificationsTest.class);
     testClasses.add(MultiValuedOfAttributeTest.class);
     testClasses.add(MapTest.class);
     testClasses.add(FeatureMapTest.class);

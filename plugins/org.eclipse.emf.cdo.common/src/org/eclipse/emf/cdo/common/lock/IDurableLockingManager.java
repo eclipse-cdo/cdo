@@ -24,8 +24,6 @@ import java.util.Map;
  * 
  * @author Eike Stepper
  * @since 4.0
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IDurableLockingManager
 {
@@ -104,6 +102,28 @@ public interface IDurableLockingManager
   }
 
   /**
+   * @author Caspar De Groot
+   * @since 4.1
+   */
+  public static class LockAreaAlreadyExistsException extends IllegalStateException
+  {
+    private static final long serialVersionUID = 1L;
+
+    private String durableLockingID;
+
+    public LockAreaAlreadyExistsException(String durableLockingID)
+    {
+      super("A lock area with ID=" + durableLockingID + " already exists");
+      this.durableLockingID = durableLockingID;
+    }
+
+    public String getDurableLockingID()
+    {
+      return durableLockingID;
+    }
+  }
+
+  /**
    * Enumerates the possible combinations of read and write locks on a single CDO object.
    * 
    * @author Eike Stepper
@@ -165,13 +185,31 @@ public interface IDurableLockingManager
 
     public LockGrade getUpdated(LockType type, boolean on)
     {
-      int mask = type == LockType.READ ? 1 : 2;
+      int mask = getMask(type);
+
       if (on)
       {
         return get(value | mask);
       }
 
       return get(value & ~mask);
+    }
+
+    private int getMask(LockType type)
+    {
+      switch (type)
+      {
+      case READ:
+        return 1;
+
+      case WRITE:
+        return 2;
+
+      case OPTION:
+        return 4;
+      }
+
+      return 0;
     }
 
     public static LockGrade get(LockType type)

@@ -37,7 +37,7 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
-import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking;
+import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -108,7 +108,7 @@ import java.util.TimerTask;
 /**
  * @author Eike Stepper
  */
-public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, DurableLocking
+public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, DurableLocking2
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
@@ -1291,8 +1291,14 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
       Map<CDOID, LockGrade> locks)
   {
+    return createLockArea(null, userID, branchPoint, readOnly, locks);
+  }
+
+  public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
+      Map<CDOID, LockGrade> locks)
+  {
     DurableLockingManager manager = getStore().getDurableLockingManager();
-    return manager.createLockArea(this, userID, branchPoint, readOnly, locks);
+    return manager.createLockArea(this, durableLockingID, userID, branchPoint, readOnly, locks);
   }
 
   public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException

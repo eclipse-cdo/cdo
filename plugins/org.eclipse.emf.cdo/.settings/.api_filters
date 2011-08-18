@@ -4,6 +4,12 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.CDOObject"/>
+                <message_argument value="cdoLockState()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.CDOObject"/>
                 <message_argument value="cdoWriteOption()"/>
             </message_arguments>
         </filter>
@@ -82,6 +88,20 @@
             <message_arguments>
                 <message_argument value="CDOCommonTransaction"/>
                 <message_argument value="CDOTransaction"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/view/CDOLocksChangedEvent.java" type="org.eclipse.emf.cdo.view.CDOLocksChangedEvent">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="CDOLocksChangedEvent"/>
+            </message_arguments>
+        </filter>
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOLockChangeInfo"/>
+                <message_argument value="CDOLocksChangedEvent"/>
             </message_arguments>
         </filter>
     </resource>

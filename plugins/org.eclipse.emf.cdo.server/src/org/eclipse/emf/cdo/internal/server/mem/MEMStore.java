@@ -32,7 +32,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
-import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking;
+import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -88,7 +88,7 @@ import java.util.Set;
 /**
  * @author Simon McDuff
  */
-public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, DurableLocking
+public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, DurableLocking2
 {
   public static final String TYPE = "mem"; //$NON-NLS-1$
 
@@ -740,12 +740,27 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
   public synchronized LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
       Map<CDOID, LockGrade> locks)
   {
-    String durableLockingID;
+    return createLockArea(null, userID, branchPoint, readOnly, locks);
+  }
 
-    do
+  public synchronized LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint,
+      boolean readOnly, Map<CDOID, LockGrade> locks)
+  {
+    if (durableLockingID != null)
     {
-      durableLockingID = DurableLockArea.createDurableLockingID();
-    } while (lockAreas.containsKey(durableLockingID));
+      // If the caller is specifying the ID, make sure there is no area with this ID yet
+      if (lockAreas.containsKey(durableLockingID))
+      {
+        throw new LockAreaAlreadyExistsException(durableLockingID);
+      }
+    }
+    else
+    {
+      do
+      {
+        durableLockingID = DurableLockArea.createDurableLockingID();
+      } while (lockAreas.containsKey(durableLockingID));
+    }
 
     LockArea area = new DurableLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
     lockAreas.put(durableLockingID, area);

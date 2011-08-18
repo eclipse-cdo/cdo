@@ -948,6 +948,7 @@ public class CDOViewImpl extends AbstractCDOView
       return;
     }
 
+    updateLockStates(lockChangeInfo.getLockStates());
     fireLocksChangedEvent(lockChangeInfo);
   }
 

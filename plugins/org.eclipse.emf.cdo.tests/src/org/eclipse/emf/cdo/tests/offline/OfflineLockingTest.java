@@ -15,8 +15,10 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.util.TestListener2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOLocksChangedEvent;
 import org.eclipse.emf.cdo.view.CDOView;
 
 /**
@@ -26,11 +28,7 @@ public class OfflineLockingTest extends AbstractSyncingTest
 {
   public void testLockAndUnlockThrough() throws Exception
   {
-    // InternalRepository clone = getRepository();
-    // InternalRepository master = getRepository(clone.getName() + "_master");
-
     CDOSession masterSession = openSession(getRepository().getName() + "_master");
-    // CDOTransaction masterTx = masterSession.openTransaction();
 
     CDOSession cloneSession = openSession();
     waitForOnline(cloneSession.getRepositoryInfo());
@@ -42,18 +40,20 @@ public class OfflineLockingTest extends AbstractSyncingTest
     Company company = getModel1Factory().createCompany();
     res.getContents().add(company);
     cloneTx.commit();
-
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-    cdoCompany.cdoWriteLock().lock();
 
     CDOView masterView = masterSession.openView();
+    masterView.options().setLockNotificationEnabled(true);
+    TestListener2 masterViewListener = new TestListener2(CDOLocksChangedEvent.class);
+    masterView.addListener(masterViewListener);
     CDOObject cdoCompanyOnMaster = masterView.getObject(cdoCompany.cdoID());
+
+    cdoCompany.cdoWriteLock().lock();
+    masterViewListener.waitFor(1);
     assertEquals(true, cdoCompanyOnMaster.cdoWriteLock().isLockedByOthers());
 
-    // int viewID = cloneTx.getViewID();
-    // master.getLockManager().hasLock(LockType.WRITE, context, objectToLock);
-
     cdoCompany.cdoWriteLock().unlock();
+    masterViewListener.waitFor(2);
     assertEquals(false, cdoCompanyOnMaster.cdoWriteLock().isLockedByOthers());
 
     cloneSession.close();
@@ -62,6 +62,5 @@ public class OfflineLockingTest extends AbstractSyncingTest
 
   public void testMasterLocks_ArrivalInClone() throws Exception
   {
-
   }
 }

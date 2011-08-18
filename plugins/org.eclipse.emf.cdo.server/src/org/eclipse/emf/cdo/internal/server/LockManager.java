@@ -190,14 +190,17 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
   }
 
   @Deprecated
-  public void unlock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToUnlock)
+  public synchronized void unlock(boolean explicit, LockType type, IView view,
+      Collection<? extends Object> objectsToUnlock)
   {
     unlock2(explicit, type, view, objectsToUnlock);
   }
 
-  public List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView view,
+  public synchronized List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView view,
       Collection<? extends Object> objectsToUnlock)
   {
+    List<LockState<Object, IView>> newLockStates = super.unlock2(type, view, objectsToUnlock);
+
     if (explicit)
     {
       String durableLockingID = view.getDurableLockingID();
@@ -208,16 +211,16 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       }
     }
 
-    return super.unlock2(type, view, objectsToUnlock);
+    return newLockStates;
   }
 
   @Deprecated
-  public void unlock(boolean explicit, IView view)
+  public synchronized void unlock(boolean explicit, IView view)
   {
     unlock(explicit, view);
   }
 
-  public List<LockState<Object, IView>> unlock2(boolean explicit, IView view)
+  public synchronized List<LockState<Object, IView>> unlock2(boolean explicit, IView view)
   {
     if (explicit)
     {

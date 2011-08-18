@@ -969,12 +969,14 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       builder.append("=? AND "); //$NON-NLS-1$
 
       builder.append(CDODBSchema.ATTRIBUTES_CREATED);
-      builder.append("<=?"); //$NON-NLS-1$
+      builder.append(">=?"); //$NON-NLS-1$
       builder.append(" AND ("); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append("=0 OR "); //$NON-NLS-1$
+      builder.append("<=? OR "); //$NON-NLS-1$
       builder.append(CDODBSchema.ATTRIBUTES_REVISED);
-      builder.append(">=?)"); //$NON-NLS-1$
+      builder.append("="); //$NON-NLS-1$
+      builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
+      builder.append(")"); //$NON-NLS-1$
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();

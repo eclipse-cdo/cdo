@@ -39,12 +39,8 @@ import org.eclipse.ui.PartInitException;
  */
 public class DawnExplorer extends CDOSessionsView
 {
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnExplorer.class);
 
-  /**
-   * The ID of the view as specified by the extension.
-   */
   public static final String ID = "org.eclipse.emf.cdo.dawn.ui.views.DawnExplorer";
 
   private CDOView view;

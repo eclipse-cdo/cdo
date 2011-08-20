@@ -63,12 +63,6 @@ public class UUIDHandler extends Lifecycle implements IIDHandler
 
   public int compare(CDOID id1, CDOID id2)
   {
-    // if (id1.getType() == CDOID.Type.OBJECT && id2.getType() == CDOID.Type.OBJECT)
-    // {
-    // return Long.valueOf(value(id1)).compareTo(Long.valueOf(value(id2)));
-    // }
-    //
-    // return id1.compareTo(id2);
     throw new UnsupportedOperationException();
   }
 

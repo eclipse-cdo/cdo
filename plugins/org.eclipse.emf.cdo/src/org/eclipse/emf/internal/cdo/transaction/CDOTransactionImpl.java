@@ -538,7 +538,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       if (revision.getBranch().isLocal())
       {
         CDOID oldID = revision.getID();
-        CDOID newID = createIDForNewObject();
+        CDOID newID = createIDForNewObject(null);
         idMappings.put(oldID, newID);
 
         revision.setID(newID);
@@ -756,7 +756,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   /**
-   * @deprecated {@link #createIDForNewObject()} is called since 4.1.
+   * @deprecated {@link #createIDForNewObject(EObject object)} is called since 4.1.
    */
   @Deprecated
   public synchronized CDOIDTemp getNextTemporaryID()
@@ -764,9 +764,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     throw new UnsupportedOperationException();
   }
 
-  public CDOID createIDForNewObject()
+  public CDOID createIDForNewObject(EObject object)
   {
-    return idGenerator.generateCDOID();
+    return idGenerator.generateCDOID(object);
   }
 
   public synchronized CDOResourceFolder createResourceFolder(String path)
@@ -1943,7 +1943,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOID oldID = revision.getID();
       if (oldID.isTemporary())
       {
-        CDOID newID = createIDForNewObject();
+        CDOID newID = createIDForNewObject(null);
         idMappings.put(oldID, newID);
         revision.setID(newID);
       }
@@ -2321,7 +2321,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
     }
 
-    public CDOID generateCDOID()
+    public CDOID generateCDOID(EObject object)
     {
       return CDOIDUtil.createTempObject(lastTemporaryID.incrementAndGet());
     }

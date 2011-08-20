@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.collection.Pair;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public void detachObject(InternalCDOObject object);
 
   /**
-   * @deprecated {@link #createIDForNewObject()} is called since 4.1.
+   * @deprecated {@link #createIDForNewObject(EObject)} is called since 4.1.
    */
   @Deprecated
   public CDOIDTemp getNextTemporaryID();
@@ -85,7 +86,7 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   /**
    * @since 4.1
    */
-  public CDOID createIDForNewObject();
+  public CDOID createIDForNewObject(EObject object);
 
   /**
    * @since 4.0

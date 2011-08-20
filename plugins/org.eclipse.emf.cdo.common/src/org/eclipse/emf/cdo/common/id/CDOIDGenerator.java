@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.id;
 
 import org.eclipse.net4j.util.UUIDGenerator;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -27,7 +28,7 @@ public interface CDOIDGenerator
    */
   public static final CDOIDGenerator NULL = new CDOIDGenerator()
   {
-    public CDOID generateCDOID()
+    public CDOID generateCDOID(EObject object)
     {
       return CDOID.NULL;
     }
@@ -43,7 +44,7 @@ public interface CDOIDGenerator
    */
   public static final CDOIDGenerator UUID = new CDOIDGenerator()
   {
-    public CDOID generateCDOID()
+    public CDOID generateCDOID(EObject object)
     {
       byte[] bytes = new byte[16];
       UUIDGenerator.DEFAULT.generate(bytes);
@@ -56,7 +57,16 @@ public interface CDOIDGenerator
     }
   };
 
-  public CDOID generateCDOID();
+  /**
+   * Generates a {@link CDOID}.
+   * 
+   * @param object
+   *          the object to generate a new CDOID for if available, <code>null</code> otherwise.
+   */
+  public CDOID generateCDOID(EObject object);
 
+  /**
+   * Called at the end of a commit operation to give this ID generator a chance to reset its sequence of IDs.
+   */
   public void reset();
 }

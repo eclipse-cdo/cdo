@@ -526,7 +526,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       if (!reattaching)
       {
         // Prepare object
-        CDOID id = transaction.createIDForNewObject();
+        CDOID id = transaction.createIDForNewObject(object.cdoInternalInstance());
         object.cdoInternalSetID(id);
         object.cdoInternalSetView(transaction);
         changeState(object, CDOState.PREPARED);

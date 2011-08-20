@@ -1595,7 +1595,6 @@ public class Repository extends Container<Object> implements InternalRepository
   protected void initRootResource()
   {
     CDOBranchPoint head = branchManager.getMainBranch().getHead();
-    CDOID id = createRootResourceID();
 
     CDORevisionFactory factory = getRevisionManager().getFactory();
     InternalCDORevision rootResource = (InternalCDORevision)factory
@@ -1604,6 +1603,8 @@ public class Repository extends Container<Object> implements InternalRepository
     rootResource.setBranchPoint(head);
     rootResource.setContainerID(CDOID.NULL);
     rootResource.setContainingFeatureID(0);
+
+    CDOID id = createRootResourceID();
     rootResource.setID(id);
     rootResource.setResourceID(id);
 
@@ -1656,7 +1657,7 @@ public class Repository extends Container<Object> implements InternalRepository
       return CDOIDUtil.createTempObject(1);
     }
 
-    return CDOIDGenerator.UUID.generateCDOID();
+    return CDOIDGenerator.UUID.generateCDOID(null);
   }
 
   protected void readRootResource()

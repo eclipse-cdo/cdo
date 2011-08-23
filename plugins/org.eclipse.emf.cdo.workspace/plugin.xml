@@ -21,4 +21,14 @@
             type="folder"/>
    </extension>
 
+  <extension
+  			point="org.eclipse.core.expressions.propertyTesters">
+    <propertyTester
+      id="org.eclipse.emf.cdo.workspace.WorkspaceTester"
+      type="org.eclipse.emf.cdo.workspace.CDOWorkspace"
+      namespace="org.eclipse.emf.cdo.workspace"
+      properties="open,branchPath,timeStamp,fixed,dirty"
+      class="org.eclipse.emf.cdo.internal.workspace.WorkspacePropertyTester"/>
+  </extension>
+
 </plugin>

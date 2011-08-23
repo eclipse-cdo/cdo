@@ -10,90 +10,233 @@
  */
 package org.eclipse.emf.internal.cdo.session;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 
-import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.emf.internal.cdo.messages.Messages;
 
-import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.net4j.util.properties.DefaultPropertyTester;
+import org.eclipse.net4j.util.properties.Property;
 
 /**
  * @author Eike Stepper
  */
-public class SessionPropertyTester extends PropertyTester
+public class SessionPropertyTester extends DefaultPropertyTester<CDOSession>
 {
+  private static final String CATEGORY_SESSION = "Session"; //$NON-NLS-1$
+
+  private static final String CATEGORY_REPOSITORY = "Repository"; //$NON-NLS-1$
+
   public SessionPropertyTester()
   {
-  }
-
-  public boolean test(Object receiver, String property, Object[] args, Object expectedValue)
-  {
-    CDOSession session = (CDOSession)receiver;
-    if ("sessionID".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("open", Messages.getString("SessionPropertyTester_34"),//
+        Messages.getString("SessionPropertyTester_35"), //$NON-NLS-1$
+        CATEGORY_SESSION)
     {
-      int expected = (Integer)expectedValue;
-      return session.getSessionID() == expected;
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return !session.isClosed();
+      }
+    });
 
-    if ("userID".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("sessionID", Messages.getString("SessionPropertyTester_0"),//
+        Messages.getString("SessionPropertyTester_3"), //$NON-NLS-1$
+        CATEGORY_SESSION)
     {
-      String expected = (String)expectedValue;
-      return ObjectUtil.equals(session.getUserID(), expected);
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getSessionID();
+      }
+    });
 
-    if ("passiveUpdateEnabled".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("userID", Messages.getString("SessionPropertyTester_4"), //
+        Messages.getString("SessionPropertyTester_5"), //$NON-NLS-1$ 
+        CATEGORY_SESSION)
     {
-      boolean expected = (Boolean)expectedValue;
-      return session.options().isPassiveUpdateEnabled() == expected;
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getUserID();
+      }
+    });
 
-    if ("passiveUpdateMode".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("passiveUpdateEnabled", Messages.getString("SessionPropertyTester_6"), //
+        Messages.getString("SessionPropertyTester_7"), //$NON-NLS-1$
+        CATEGORY_SESSION)
     {
-      String expected = (String)expectedValue;
-      return ObjectUtil.equals(session.options().getPassiveUpdateMode().toString(), expected);
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.options().isPassiveUpdateEnabled();
+      }
+    });
 
-    if ("supportingAudits".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("lastUpdateTime", Messages.getString("SessionPropertyTester_36"), //
+        Messages.getString("SessionPropertyTester_37"), //$NON-NLS-1$
+        CATEGORY_SESSION)
     {
-      boolean expected = (Boolean)expectedValue;
-      return session.getRepositoryInfo().isSupportingAudits() == expected;
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return CDOCommonUtil.formatTimeStamp(session.getLastUpdateTime());
+      }
+    });
 
-    if ("supportingBranches".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("passiveUpdateMode", Messages.getString("SessionPropertyTester_8"), //
+        Messages.getString("SessionPropertyTester_9"), //$NON-NLS-1$
+        CATEGORY_SESSION)
     {
-      boolean expected = (Boolean)expectedValue;
-      return session.getRepositoryInfo().isSupportingBranches() == expected;
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.options().getPassiveUpdateMode();
+      }
+    });
 
-    if ("repositoryName".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("repositoryName", Messages.getString("SessionPropertyTester_10"), //
+        Messages.getString("SessionPropertyTester_11"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
     {
-      String expected = (String)expectedValue;
-      return ObjectUtil.equals(session.getRepositoryInfo().getName(), expected);
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().getName();
+      }
+    });
 
-    if ("repositoryUUID".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("repositoryUUID", Messages.getString("SessionPropertyTester_12"), //
+        Messages.getString("SessionPropertyTester_13"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
     {
-      String expected = (String)expectedValue;
-      return ObjectUtil.equals(session.getRepositoryInfo().getUUID(), expected);
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().getUUID();
+      }
+    });
 
-    if ("repositoryType".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("repositoryType", Messages.getString("SessionPropertyTester_14"), //
+        Messages.getString("SessionPropertyTester_15"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
     {
-      String expected = (String)expectedValue;
-      return ObjectUtil.equals(session.getRepositoryInfo().getType().toString(), expected);
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().getType();
+      }
+    });
 
-    if ("repositoryState".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("repositoryState", Messages.getString("SessionPropertyTester_16"), //
+        Messages.getString("SessionPropertyTester_17"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
     {
-      String expected = (String)expectedValue;
-      return ObjectUtil.equals(session.getRepositoryInfo().getState().toString(), expected);
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().getState();
+      }
+    });
 
-    if ("repositoryCreationTime".equals(property)) //$NON-NLS-1$
+    add(new Property<CDOSession>("repositoryCreationTime", Messages.getString("SessionPropertyTester_18"), //
+        Messages.getString("SessionPropertyTester_19"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
     {
-      long expected = (Long)expectedValue;
-      return session.getRepositoryInfo().getCreationTime() == expected;
-    }
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return CDOCommonUtil.formatTimeStamp(session.getRepositoryInfo().getCreationTime());
+      }
+    });
 
-    return false;
+    add(new Property<CDOSession>("supportingAudits", Messages.getString("SessionPropertyTester_20"), //
+        Messages.getString("SessionPropertyTester_21"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().isSupportingAudits();
+      }
+    });
+
+    add(new Property<CDOSession>("supportingBranches", Messages.getString("SessionPropertyTester_22"), //
+        Messages.getString("SessionPropertyTester_23"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().isSupportingBranches();
+      }
+    });
+
+    add(new Property<CDOSession>("supportingEcore", Messages.getString("SessionPropertyTester_28"), //
+        Messages.getString("SessionPropertyTester_29"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().isSupportingEcore();
+      }
+    });
+
+    add(new Property<CDOSession>("ensureReferentialIntegrity", Messages.getString("SessionPropertyTester_30"), //
+        Messages.getString("SessionPropertyTester_31"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().isEnsuringReferentialIntegrity();
+      }
+    });
+
+    add(new Property<CDOSession>("idGenerationLocation", Messages.getString("SessionPropertyTester_32"), //
+        Messages.getString("SessionPropertyTester_33"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().getIDGenerationLocation();
+      }
+    });
+
+    add(new Property<CDOSession>("storeType", Messages.getString("SessionPropertyTester_24"), //
+        Messages.getString("SessionPropertyTester_25"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().getStoreType();
+      }
+    });
+
+    add(new Property<CDOSession>("objectIDTypes", Messages.getString("SessionPropertyTester_26"), //
+        Messages.getString("SessionPropertyTester_27"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        StringBuilder builder = new StringBuilder();
+        for (CDOID.ObjectType objectIDType : session.getRepositoryInfo().getObjectIDTypes())
+        {
+          if (builder.length() != 0)
+          {
+            builder.append(", "); //$NON-NLS-1$
+          }
+
+          builder.append(objectIDType);
+        }
+
+        return builder;
+      }
+    });
   }
 }

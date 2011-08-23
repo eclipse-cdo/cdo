@@ -8,9 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.ui.properties;
-
-import org.eclipse.emf.cdo.session.CDOSession;
+package org.eclipse.net4j.util.ui;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -18,27 +16,34 @@ import org.eclipse.ui.views.properties.IPropertySourceProvider;
 
 /**
  * @author Eike Stepper
+ * @since 3.2
  */
 @SuppressWarnings("rawtypes")
-public class CDOSessionAdapterFactory implements IAdapterFactory
+public abstract class AbstractPropertyAdapterFactory implements IAdapterFactory
 {
-  public static final Class[] CLASSES = { IPropertySourceProvider.class };
+  private static final Class[] CLASSES = { IPropertySourceProvider.class };
 
-  public CDOSessionAdapterFactory()
+  public AbstractPropertyAdapterFactory()
   {
+  }
+
+  public Class[] getAdapterList()
+  {
+    return CLASSES;
   }
 
   public Object getAdapter(Object adaptableObject, Class adapterType)
   {
-    if (adaptableObject instanceof CDOSession)
+    if (adapterType == CLASSES[0])
     {
-      if (adapterType == CLASSES[0])
+      final IPropertySource propertySource = createPropertySource(adaptableObject);
+      if (propertySource != null)
       {
         return new IPropertySourceProvider()
         {
           public IPropertySource getPropertySource(Object object)
           {
-            return new CDOSessionPropertySource((CDOSession)object);
+            return propertySource;
           }
         };
       }
@@ -47,8 +52,5 @@ public class CDOSessionAdapterFactory implements IAdapterFactory
     return null;
   }
 
-  public Class[] getAdapterList()
-  {
-    return CLASSES;
-  }
+  protected abstract IPropertySource createPropertySource(Object object);
 }

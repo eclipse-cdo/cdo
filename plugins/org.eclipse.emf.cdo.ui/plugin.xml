@@ -135,10 +135,13 @@
         point="org.eclipse.core.runtime.adapters">
      <factory
            adaptableType="org.eclipse.emf.cdo.session.CDOSession"
-           class="org.eclipse.emf.cdo.internal.ui.properties.CDOSessionAdapterFactory">
-        <adapter
-              type="org.eclipse.ui.views.properties.IPropertySourceProvider">
-        </adapter>
+           class="org.eclipse.emf.cdo.internal.ui.CDOPropertyAdapterFactory">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>
+     </factory>
+     <factory
+           adaptableType="org.eclipse.emf.cdo.view.CDOView"
+           class="org.eclipse.emf.cdo.internal.ui.CDOPropertyAdapterFactory">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>
      </factory>
   </extension>
 

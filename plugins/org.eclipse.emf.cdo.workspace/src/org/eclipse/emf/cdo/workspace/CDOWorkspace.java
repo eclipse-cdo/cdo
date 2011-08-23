@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.collection.Closeable;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.INotifier;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
@@ -29,7 +31,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOWorkspace extends CDORevisionProvider, Closeable
+public interface CDOWorkspace extends CDORevisionProvider, Closeable, INotifier
 {
   public String getBranchPath();
 
@@ -66,4 +68,18 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable
   public void replace(String branchPath, long timeStamp);
 
   public void revert();
+
+  /**
+   * @since 4.1
+   */
+  public boolean isDirty();
+
+  /**
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public interface DirtyStateChangedEvent extends IEvent
+  {
+    public boolean isDirty();
+  }
 }

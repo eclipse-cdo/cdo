@@ -60,6 +60,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.workspace.CDOWorkspace;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
@@ -69,8 +71,10 @@ import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -96,7 +100,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOWorkspaceImpl implements InternalCDOWorkspace
+public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 {
   private static final String PROP_BRANCH_PATH = "org.eclipse.emf.cdo.workspace.branchPath"; //$NON-NLS-1$
 
@@ -123,6 +127,8 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
   private long timeStamp;
 
   private boolean fixed;
+
+  private boolean dirty;
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
 
@@ -162,6 +168,12 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
 
     this.base = base;
     this.base.init(this);
+    setDirtyFromBase();
+  }
+
+  private void setDirtyFromBase()
+  {
+    setDirty(!CDOWorkspaceUtil.getWorkspaceBase2(base).isEmpty());
   }
 
   protected void checkout()
@@ -229,6 +241,31 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
   public boolean isFixed()
   {
     return fixed;
+  }
+
+  public boolean isDirty()
+  {
+    return dirty;
+  }
+
+  protected void setDirty(boolean dirty)
+  {
+    if (this.dirty != dirty)
+    {
+      this.dirty = dirty;
+      fireEvent(new DirtyStateChangedEventImpl(this, dirty));
+    }
+  }
+
+  protected void clearBase()
+  {
+    base.clear();
+    setDirty(false);
+  }
+
+  public IDGenerationLocation getIDGenerationLocation()
+  {
+    return idGenerationLocation;
   }
 
   public CDOIDGenerator getIDGenerator()
@@ -306,7 +343,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
         @Override
         public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
         {
-          base.clear();
+          clearBase();
         }
       });
 
@@ -378,7 +415,8 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
       // adjustLocalIDs(idMapper, result.getAdjustedObjects());
       // }
 
-      base.clear();
+      clearBase();
+
       timeStamp = info.getTimeStamp();
       saveProperties();
 
@@ -547,6 +585,11 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     return CDORevisionUtil.createChangeSetData(ids, base, this);
   }
 
+  public CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory()
+  {
+    return remoteSessionConfigurationFactory;
+  }
+
   protected IManagedContainer createContainer(IStore local)
   {
     IManagedContainer container = ContainerUtil.createContainer();
@@ -660,17 +703,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
       views.add((InternalCDOView)view);
     }
 
-    view.addListener(new LifecycleEventAdapter()
-    {
-      @Override
-      protected void onDeactivated(ILifecycle view)
-      {
-        synchronized (views)
-        {
-          views.remove(view);
-        }
-      }
-    });
+    view.addListener(new ViewAdapter());
 
     if (view instanceof CDOTransaction)
     {
@@ -706,11 +739,7 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
   protected void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
     base.updateAfterCommit(transaction);
-  }
-
-  protected CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory()
-  {
-    return remoteSessionConfigurationFactory;
+    setDirtyFromBase();
   }
 
   protected InternalCDOSession openRemoteSession()
@@ -751,5 +780,50 @@ public class CDOWorkspaceImpl implements InternalCDOWorkspace
     branchPath = props.get(PROP_BRANCH_PATH);
     timeStamp = Long.parseLong(props.get(PROP_TIME_STAMP));
     fixed = Boolean.parseBoolean(props.get(PROP_FIXED));
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class ViewAdapter extends LifecycleEventAdapter
+  {
+    public ViewAdapter()
+    {
+    }
+
+    public CDOWorkspace getWorkspace()
+    {
+      return CDOWorkspaceImpl.this;
+    }
+
+    @Override
+    protected void onDeactivated(ILifecycle view)
+    {
+      synchronized (views)
+      {
+        views.remove(view);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class DirtyStateChangedEventImpl extends Event implements DirtyStateChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private boolean dirty;
+
+    public DirtyStateChangedEventImpl(CDOWorkspace workspace, boolean dirty)
+    {
+      super(workspace);
+      this.dirty = dirty;
+    }
+
+    public boolean isDirty()
+    {
+      return dirty;
+    }
   }
 }

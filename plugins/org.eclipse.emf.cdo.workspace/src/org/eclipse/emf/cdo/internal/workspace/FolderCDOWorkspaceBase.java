@@ -48,14 +48,22 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
     return folder;
   }
 
-  public void clear()
+  @Override
+  public String toString()
+  {
+    return "FolderBase[" + folder.getAbsolutePath() + "]";
+  }
+
+  @Override
+  protected void doClear()
   {
     IOUtil.delete(folder);
     checkExists(folder, false);
     createFolder();
   }
 
-  public Set<CDOID> getIDs()
+  @Override
+  protected Set<CDOID> doGetIDs()
   {
     Set<CDOID> ids = new HashSet<CDOID>();
     for (String key : folder.list())
@@ -67,7 +75,7 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
     return ids;
   }
 
-  public CDORevision getRevision(CDOID id)
+  public final synchronized CDORevision getRevision(CDOID id)
   {
     File file = getFile(id);
     if (!file.exists() || file.length() == 0)

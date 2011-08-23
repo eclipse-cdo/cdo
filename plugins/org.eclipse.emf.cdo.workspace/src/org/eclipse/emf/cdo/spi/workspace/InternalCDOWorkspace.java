@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.spi.workspace;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
@@ -22,9 +24,19 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
  */
 public interface InternalCDOWorkspace extends CDOWorkspace
 {
+  /**
+   * @since 4.1
+   */
+  public IDGenerationLocation getIDGenerationLocation();
+
   public InternalCDOWorkspaceBase getBase();
 
   public InternalRepository getLocalRepository();
 
   public InternalCDOSession getLocalSession();
+
+  /**
+   * @since 4.1
+   */
+  public CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory();
 }

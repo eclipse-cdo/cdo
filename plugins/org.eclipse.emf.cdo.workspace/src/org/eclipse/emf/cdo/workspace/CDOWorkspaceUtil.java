@@ -10,13 +10,22 @@
  */
 package org.eclipse.emf.cdo.workspace;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceConfigurationImpl;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceBase;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.event.IListener;
+
+import org.eclipse.emf.ecore.EObject;
 
 import java.io.File;
+import java.util.Set;
 
 /**
  * Various static helper methods for dealing with {@link CDOWorkspace workspaces}.
@@ -29,6 +38,63 @@ public final class CDOWorkspaceUtil
   {
   }
 
+  /**
+   * @since 4.1
+   */
+  public static CDOWorkspace getWorkspace(EObject object)
+  {
+    CDOView view = CDOUtil.getCDOObject(object).cdoView();
+    if (view == null || view.isClosed())
+    {
+      return null;
+    }
+
+    IListener[] listeners = view.getListeners();
+    if (listeners != null)
+    {
+      for (int i = 0; i < listeners.length; i++)
+      {
+        IListener listener = listeners[i];
+        if (listener instanceof org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceImpl.ViewAdapter)
+        {
+          org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceImpl.ViewAdapter adapter = (org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceImpl.ViewAdapter)listener;
+          return adapter.getWorkspace();
+        }
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static boolean isDirty(EObject object)
+  {
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+    if (object == null)
+    {
+      return false;
+    }
+
+    CDOWorkspace workspace = getWorkspace(cdoObject);
+    CDOWorkspaceBase2 base = getWorkspaceBase2(workspace.getBase());
+    return base.containsID(cdoObject.cdoID());
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static CDOWorkspaceBase2 getWorkspaceBase2(final CDOWorkspaceBase base)
+  {
+    if (base instanceof CDOWorkspaceBase2)
+    {
+      return (CDOWorkspaceBase2)base;
+    }
+
+    return new DelegatingWorkspaceBase2(base);
+  }
+
   public static CDOWorkspaceBase createFolderWorkspaceBase(File folder)
   {
     return new FolderCDOWorkspaceBase(folder);
@@ -39,7 +105,7 @@ public final class CDOWorkspaceUtil
    */
   public static CDOWorkspaceConfiguration createWorkspaceConfiguration()
   {
-    return new CDOWorkspaceConfigurationImpl();
+    return new org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceConfigurationImpl();
   }
 
   /**
@@ -98,5 +164,43 @@ public final class CDOWorkspaceUtil
     config.setBranchPath(branchPath);
     config.setTimeStamp(timeStamp);
     return config.checkout();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class DelegatingWorkspaceBase2 implements CDOWorkspaceBase2
+  {
+    private final CDOWorkspaceBase delegate;
+
+    private DelegatingWorkspaceBase2(CDOWorkspaceBase base)
+    {
+      delegate = base;
+    }
+
+    public CDOWorkspace getWorkspace()
+    {
+      return delegate.getWorkspace();
+    }
+
+    public Set<CDOID> getIDs()
+    {
+      return delegate.getIDs();
+    }
+
+    public CDORevision getRevision(CDOID id)
+    {
+      return delegate.getRevision(id);
+    }
+
+    public boolean isEmpty()
+    {
+      return getIDs().isEmpty();
+    }
+
+    public boolean containsID(CDOID id)
+    {
+      return getIDs().contains(id);
+    }
   }
 }

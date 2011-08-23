@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase2;
 
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -38,7 +39,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBase
+public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBase, CDOWorkspaceBase2
 {
   private InternalCDOWorkspace workspace;
 
@@ -47,6 +48,8 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
   private InternalCDOPackageRegistry packageRegistry;
 
   private InternalCDOBranchManager branchManager;
+
+  private Set<CDOID> ids;
 
   protected AbstractCDOWorkspaceBase()
   {
@@ -61,12 +64,22 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
     branchManager = localRepository.getBranchManager();
   }
 
-  public InternalCDOWorkspace getWorkspace()
+  public final InternalCDOWorkspace getWorkspace()
   {
     return workspace;
   }
 
-  public void updateAfterCommit(CDOTransaction transaction)
+  public final synchronized Set<CDOID> getIDs()
+  {
+    if (ids == null)
+    {
+      ids = doGetIDs();
+    }
+
+    return ids;
+  }
+
+  public final synchronized void updateAfterCommit(CDOTransaction transaction)
   {
     InternalCDOTransaction tx = (InternalCDOTransaction)transaction;
     Set<CDOID> dirtyObjects = tx.getDirtyObjects().keySet();
@@ -78,10 +91,16 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
       {
         if (isAddedObject(id))
         {
+          if (ids != null)
+          {
+            ids.remove(id);
+          }
+
           deregisterObject(id);
         }
         else
         {
+          getIDs().add(id);
           registerChangedOrDetachedObject(revision);
         }
       }
@@ -90,8 +109,26 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
     // Don't use keySet() because only the values() are ID-mapped!
     for (CDOObject object : tx.getNewObjects().values())
     {
-      registerAddedObject(object.cdoID());
+      CDOID id = object.cdoID();
+      getIDs().add(id);
+      registerAddedObject(id);
     }
+  }
+
+  public final synchronized void clear()
+  {
+    ids = null;
+    doClear();
+  }
+
+  public final synchronized boolean isEmpty()
+  {
+    return ids == null || ids.isEmpty();
+  }
+
+  public final synchronized boolean containsID(CDOID id)
+  {
+    return getIDs().contains(id);
   }
 
   protected boolean isAddedObject(CDOID id)
@@ -113,6 +150,10 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
     CDOIDProvider idProvider = CDOIDProvider.NOOP;
     return CDOCommonUtil.createCDODataOutput(edos, packageRegistry, idProvider);
   }
+
+  protected abstract void doClear();
+
+  protected abstract Set<CDOID> doGetIDs();
 
   protected abstract void registerChangedOrDetachedObject(InternalCDORevision revision);
 

@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.internal.ui;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.session.SessionPropertyTester;
-import org.eclipse.emf.internal.cdo.view.ViewPropertyTester;
+import org.eclipse.emf.internal.cdo.session.SessionProperties;
+import org.eclipse.emf.internal.cdo.view.ViewProperties;
 
 import org.eclipse.net4j.util.ui.AbstractPropertyAdapterFactory;
 import org.eclipse.net4j.util.ui.DefaultPropertySource;
@@ -35,12 +35,12 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
   {
     if (object instanceof CDOSession)
     {
-      return new DefaultPropertySource<CDOSession>((CDOSession)object, new SessionPropertyTester());
+      return new DefaultPropertySource<CDOSession>((CDOSession)object, SessionProperties.INSTANCE);
     }
 
     if (object instanceof CDOView)
     {
-      return new DefaultPropertySource<CDOView>((CDOView)object, new ViewPropertyTester());
+      return new DefaultPropertySource<CDOView>((CDOView)object, ViewProperties.INSTANCE);
     }
 
     return null;

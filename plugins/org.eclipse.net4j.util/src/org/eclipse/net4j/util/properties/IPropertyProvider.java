@@ -18,7 +18,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 3.2
  */
-public interface PropertiesProvider<RECEIVER>
+public interface IPropertyProvider<RECEIVER>
 {
   public List<Property<RECEIVER>> getProperties();
 }

@@ -10,7 +10,7 @@
  */
 package org.eclipse.net4j.util.ui;
 
-import org.eclipse.net4j.util.properties.PropertiesProvider;
+import org.eclipse.net4j.util.properties.IPropertyProvider;
 import org.eclipse.net4j.util.properties.Property;
 
 import org.eclipse.jface.viewers.CellEditor;
@@ -39,7 +39,7 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     this.receiver = receiver;
   }
 
-  public DefaultPropertySource(RECEIVER object, PropertiesProvider<RECEIVER> provider)
+  public DefaultPropertySource(RECEIVER object, IPropertyProvider<RECEIVER> provider)
   {
     this(object);
     addDescriptors(provider);
@@ -60,7 +60,7 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     return descriptor;
   }
 
-  public void addDescriptors(PropertiesProvider<RECEIVER> provider)
+  public void addDescriptors(IPropertyProvider<RECEIVER> provider)
   {
     for (Property<RECEIVER> property : provider.getProperties())
     {

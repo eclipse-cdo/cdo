@@ -10,50 +10,38 @@
  */
 package org.eclipse.net4j.util.properties;
 
-import org.eclipse.net4j.util.CheckUtil;
-
 import org.eclipse.core.expressions.PropertyTester;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Tests properties of receiver objects against expected values
+ * Tests properties of receiver objects against expected values.
  * 
  * @author Eike Stepper
  * @since 3.2
  */
-public class DefaultPropertyTester<RECEIVER> extends PropertyTester implements PropertiesProvider<RECEIVER>
+public class DefaultPropertyTester<RECEIVER> extends PropertyTester implements IProperties<RECEIVER>
 {
-  private List<Property<RECEIVER>> properties = new ArrayList<Property<RECEIVER>>();
+  private final IProperties<RECEIVER> properties;
 
-  public DefaultPropertyTester()
+  public DefaultPropertyTester(IProperties<RECEIVER> properties)
   {
+    this.properties = properties;
   }
 
-  public final void add(Property<RECEIVER> property)
+  public Property<RECEIVER> getProperty(String name)
   {
-    CheckUtil.checkArg(property, "property");
-    CheckUtil.checkArg(property.getName(), "property.getName()");
+    return properties.getProperty(name);
+  }
+
+  public List<Property<RECEIVER>> getProperties()
+  {
+    return properties.getProperties();
+  }
+
+  public void add(Property<RECEIVER> property)
+  {
     properties.add(property);
-  }
-
-  public final List<Property<RECEIVER>> getProperties()
-  {
-    return properties;
-  }
-
-  public final Property<RECEIVER> getProperty(String name)
-  {
-    for (Property<RECEIVER> property : properties)
-    {
-      if (property.getName().equals(name))
-      {
-        return property;
-      }
-    }
-
-    return null;
   }
 
   public boolean test(Object receiver, String propertyName, Object[] args, Object expectedValue)

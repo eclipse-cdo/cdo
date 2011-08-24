@@ -44,13 +44,13 @@
       type="org.eclipse.emf.cdo.session.CDOSession"
       namespace="org.eclipse.emf.cdo.session"
       properties="open,sessionID,userID,passiveUpdateEnabled,passiveUpdateMode,supportingAudits,supportingBranches,repositoryName,repositoryUUID,repositoryType,repositoryState,repositoryCreationTime"
-      class="org.eclipse.emf.internal.cdo.session.SessionPropertyTester"/>
+      class="org.eclipse.emf.internal.cdo.session.SessionProperties$Tester"/>
     <propertyTester
       id="org.eclipse.emf.cdo.ViewTester"
       type="org.eclipse.emf.cdo.view.CDOView"
       namespace="org.eclipse.emf.cdo.view"
       properties="open,viewID,branchName,branchPath,timeStamp,readOnly,dirty,durable,sessionID,userID"
-      class="org.eclipse.emf.internal.cdo.view.ViewPropertyTester"/>
+      class="org.eclipse.emf.internal.cdo.view.ViewProperties$Tester"/>
   </extension>
 
 </plugin>

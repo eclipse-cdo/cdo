@@ -14,18 +14,22 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
+import org.eclipse.net4j.util.properties.IProperties;
+import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
 
 /**
  * @author Eike Stepper
  */
-public class ViewPropertyTester extends DefaultPropertyTester<CDOView>
+public class ViewProperties extends Properties<CDOView>
 {
+  public static final IProperties<CDOView> INSTANCE = new ViewProperties();
+
   private static final String CATEGORY_VIEW = "View"; //$NON-NLS-1$
 
   private static final String CATEGORY_SESSION = "Session"; //$NON-NLS-1$
 
-  public ViewPropertyTester()
+  private ViewProperties()
   {
     add(new Property<CDOView>("open", //$NON-NLS-1$
         "Open", "Whether this view is open or not.", CATEGORY_VIEW)
@@ -135,5 +139,16 @@ public class ViewPropertyTester extends DefaultPropertyTester<CDOView>
         return view.getSession().getUserID();
       }
     });
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Tester extends DefaultPropertyTester<CDOView>
+  {
+    public Tester()
+    {
+      super(INSTANCE);
+    }
   }
 }

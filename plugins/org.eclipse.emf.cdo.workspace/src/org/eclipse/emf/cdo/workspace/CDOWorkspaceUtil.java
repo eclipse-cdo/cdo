@@ -15,12 +15,14 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceBase;
+import org.eclipse.emf.cdo.internal.workspace.WorkspaceProperties;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.properties.IProperties;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -34,6 +36,11 @@ import java.util.Set;
  */
 public final class CDOWorkspaceUtil
 {
+  /**
+   * @since 4.1
+   */
+  public static final IProperties<CDOWorkspace> PROPERTIES = WorkspaceProperties.INSTANCE;
+
   private CDOWorkspaceUtil()
   {
   }

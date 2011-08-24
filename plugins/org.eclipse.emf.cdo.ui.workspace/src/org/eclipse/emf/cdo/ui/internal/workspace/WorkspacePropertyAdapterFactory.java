@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.ui.internal.workspace;
 
-import org.eclipse.emf.cdo.internal.workspace.WorkspacePropertyTester;
+import org.eclipse.emf.cdo.internal.workspace.WorkspaceProperties;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 import org.eclipse.net4j.util.ui.AbstractPropertyAdapterFactory;
@@ -32,7 +32,7 @@ public class WorkspacePropertyAdapterFactory extends AbstractPropertyAdapterFact
   {
     if (object instanceof CDOWorkspace)
     {
-      return new DefaultPropertySource<CDOWorkspace>((CDOWorkspace)object, new WorkspacePropertyTester());
+      return new DefaultPropertySource<CDOWorkspace>((CDOWorkspace)object, WorkspaceProperties.INSTANCE);
     }
 
     return null;

@@ -15,14 +15,18 @@ import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
+import org.eclipse.net4j.util.properties.IProperties;
+import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
 
 /**
  * @author Eike Stepper
  */
-public class WorkspacePropertyTester extends DefaultPropertyTester<CDOWorkspace>
+public class WorkspaceProperties extends Properties<CDOWorkspace>
 {
-  public WorkspacePropertyTester()
+  public static final IProperties<CDOWorkspace> INSTANCE = new WorkspaceProperties();
+
+  private WorkspaceProperties()
   {
     add(new Property<CDOWorkspace>("open", //$NON-NLS-1$
         "Open", "Whether this workspace is open or not.")
@@ -113,5 +117,16 @@ public class WorkspacePropertyTester extends DefaultPropertyTester<CDOWorkspace>
         return ((InternalCDOWorkspace)workspace).getRemoteSessionConfigurationFactory();
       }
     });
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Tester extends DefaultPropertyTester<CDOWorkspace>
+  {
+    public Tester()
+    {
+      super(INSTANCE);
+    }
   }
 }

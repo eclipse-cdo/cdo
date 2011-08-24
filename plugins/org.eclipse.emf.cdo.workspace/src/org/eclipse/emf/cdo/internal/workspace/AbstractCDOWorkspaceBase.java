@@ -34,6 +34,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -117,13 +118,13 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
 
   public final synchronized void clear()
   {
-    ids = null;
+    ids = new HashSet<CDOID>();
     doClear();
   }
 
   public final synchronized boolean isEmpty()
   {
-    return ids == null || ids.isEmpty();
+    return getIDs().isEmpty();
   }
 
   public final synchronized boolean containsID(CDOID id)

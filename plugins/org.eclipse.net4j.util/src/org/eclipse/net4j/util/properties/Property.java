@@ -75,12 +75,53 @@ public abstract class Property<RECEIVER>
   public final Object getValue(RECEIVER receiver)
   {
     Object value = eval(receiver);
-    if (value == null || value.getClass().isPrimitive())
+    if (value == null)
     {
       return value;
     }
 
-    if (value.getClass().isPrimitive())
+    Class<? extends Object> c = value.getClass();
+    if (c == Boolean.class)
+    {
+      return value;
+    }
+
+    if (c == Boolean.class)
+    {
+      return value;
+    }
+
+    if (c == Character.class)
+    {
+      return value;
+    }
+
+    if (c == Byte.class)
+    {
+      return value;
+    }
+
+    if (c == Short.class)
+    {
+      return value;
+    }
+
+    if (c == Integer.class)
+    {
+      return value;
+    }
+
+    if (c == Long.class)
+    {
+      return value;
+    }
+
+    if (c == Float.class)
+    {
+      return value;
+    }
+
+    if (c == Double.class)
     {
       return value;
     }

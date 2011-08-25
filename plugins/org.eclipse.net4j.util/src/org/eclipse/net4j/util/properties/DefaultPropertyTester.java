@@ -22,11 +22,19 @@ import java.util.List;
  */
 public class DefaultPropertyTester<RECEIVER> extends PropertyTester implements IProperties<RECEIVER>
 {
+  private final String namespace;
+
   private final IProperties<RECEIVER> properties;
 
-  public DefaultPropertyTester(IProperties<RECEIVER> properties)
+  public DefaultPropertyTester(String namespace, IProperties<RECEIVER> properties)
   {
+    this.namespace = namespace;
     this.properties = properties;
+  }
+
+  public final String getNamespace()
+  {
+    return namespace;
   }
 
   public Class<RECEIVER> getReceiverType()
@@ -66,9 +74,9 @@ public class DefaultPropertyTester<RECEIVER> extends PropertyTester implements I
   {
     System.out.println("   <extension point=\"org.eclipse.core.expressions.propertyTesters\">");
     System.out.println("      <propertyTester");
-    System.out.println("         id=\"" + getClass().getName() + "\"");
+    System.out.println("         id=\"" + getNamespace() + ".properties\"");
     System.out.println("         type=\"" + getReceiverType().getName() + "\"");
-    System.out.println("         namespace=\"" + getClass().getPackage().getName() + "\"");
+    System.out.println("         namespace=\"" + getNamespace() + "\"");
     System.out.print("         properties=\"");
 
     boolean first = true;

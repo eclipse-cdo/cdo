@@ -131,9 +131,11 @@ public class WorkspaceProperties extends Properties<CDOWorkspace>
    */
   public static final class Tester extends DefaultPropertyTester<CDOWorkspace>
   {
+    public static final String NAMESPACE = "org.eclipse.emf.cdo.workspace";
+
     public Tester()
     {
-      super(INSTANCE);
+      super(NAMESPACE, INSTANCE);
     }
   }
 }

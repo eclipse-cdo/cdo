@@ -23,7 +23,7 @@
 
    <extension point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-         id="org.eclipse.emf.cdo.internal.workspace.WorkspaceProperties$Tester"
+         id="org.eclipse.emf.cdo.workspace.properties"
          type="org.eclipse.emf.cdo.workspace.CDOWorkspace"
          namespace="org.eclipse.emf.cdo.workspace"
          properties="open,branchPath,timeStamp,fixed,dirty,idGenerationLocation,base,local,remote"

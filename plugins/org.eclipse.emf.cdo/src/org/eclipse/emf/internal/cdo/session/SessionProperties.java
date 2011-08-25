@@ -256,9 +256,11 @@ public class SessionProperties extends Properties<CDOSession>
    */
   public static final class Tester extends DefaultPropertyTester<CDOSession>
   {
+    public static final String NAMESPACE = "org.eclipse.emf.cdo.session";
+
     public Tester()
     {
-      super(INSTANCE);
+      super(NAMESPACE, INSTANCE);
     }
   }
 }

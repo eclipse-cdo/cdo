@@ -156,9 +156,11 @@ public class ViewProperties extends Properties<CDOView>
    */
   public static final class Tester extends DefaultPropertyTester<CDOView>
   {
+    public static final String NAMESPACE = "org.eclipse.emf.cdo.view";
+
     public Tester()
     {
-      super(INSTANCE);
+      super(NAMESPACE, INSTANCE);
     }
   }
 }

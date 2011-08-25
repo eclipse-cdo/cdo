@@ -28,6 +28,8 @@ public class WorkspaceProperties extends Properties<CDOWorkspace>
 
   private WorkspaceProperties()
   {
+    super(CDOWorkspace.class);
+
     add(new Property<CDOWorkspace>("open", //$NON-NLS-1$
         "Open", "Whether this workspace is open or not.")
     {
@@ -117,6 +119,11 @@ public class WorkspaceProperties extends Properties<CDOWorkspace>
         return ((InternalCDOWorkspace)workspace).getRemoteSessionConfigurationFactory();
       }
     });
+  }
+
+  public static void main(String[] args)
+  {
+    new Tester().dumpContributionMarkup();
   }
 
   /**

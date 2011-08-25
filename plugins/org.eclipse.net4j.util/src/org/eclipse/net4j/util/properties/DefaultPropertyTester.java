@@ -29,6 +29,11 @@ public class DefaultPropertyTester<RECEIVER> extends PropertyTester implements I
     this.properties = properties;
   }
 
+  public Class<RECEIVER> getReceiverType()
+  {
+    return properties.getReceiverType();
+  }
+
   public Property<RECEIVER> getProperty(String name)
   {
     return properties.getProperty(name);
@@ -55,5 +60,35 @@ public class DefaultPropertyTester<RECEIVER> extends PropertyTester implements I
     @SuppressWarnings("unchecked")
     RECEIVER typed = (RECEIVER)receiver;
     return property.testValue(typed, args, expectedValue);
+  }
+
+  public void dumpContributionMarkup()
+  {
+    System.out.println("   <extension point=\"org.eclipse.core.expressions.propertyTesters\">");
+    System.out.println("      <propertyTester");
+    System.out.println("         id=\"" + getClass().getName() + "\"");
+    System.out.println("         type=\"" + getReceiverType().getName() + "\"");
+    System.out.println("         namespace=\"" + getClass().getPackage().getName() + "\"");
+    System.out.print("         properties=\"");
+
+    boolean first = true;
+    for (Property<RECEIVER> property : getProperties())
+    {
+      if (first)
+      {
+        first = false;
+      }
+      else
+      {
+        System.out.print(",");
+      }
+
+      System.out.print(property.getName());
+    }
+
+    System.out.println("\"");
+    System.out.println("         class=\"" + getClass().getName() + "\"/>");
+    System.out.println("   </extension>");
+
   }
 }

@@ -34,6 +34,8 @@ public class SessionProperties extends Properties<CDOSession>
 
   private SessionProperties()
   {
+    super(CDOSession.class);
+
     add(new Property<CDOSession>("open", Messages.getString("SessionPropertyTester_34"),//
         Messages.getString("SessionPropertyTester_35"), //$NON-NLS-1$
         CATEGORY_SESSION)
@@ -242,6 +244,11 @@ public class SessionProperties extends Properties<CDOSession>
         return builder;
       }
     });
+  }
+
+  public static void main(String[] args)
+  {
+    new Tester().dumpContributionMarkup();
   }
 
   /**

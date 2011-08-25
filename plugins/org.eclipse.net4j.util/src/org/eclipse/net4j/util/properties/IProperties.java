@@ -18,6 +18,8 @@ package org.eclipse.net4j.util.properties;
  */
 public interface IProperties<RECEIVER> extends IPropertyProvider<RECEIVER>
 {
+  public Class<RECEIVER> getReceiverType();
+
   public Property<RECEIVER> getProperty(String name);
 
   public void add(Property<RECEIVER> property);

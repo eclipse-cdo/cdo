@@ -31,6 +31,8 @@ public class ViewProperties extends Properties<CDOView>
 
   private ViewProperties()
   {
+    super(CDOView.class);
+
     add(new Property<CDOView>("open", //$NON-NLS-1$
         "Open", "Whether this view is open or not.", CATEGORY_VIEW)
     {
@@ -139,6 +141,14 @@ public class ViewProperties extends Properties<CDOView>
         return view.getSession().getUserID();
       }
     });
+  }
+
+  /**
+   *
+   */
+  public static void main(String[] args)
+  {
+    new Tester().dumpContributionMarkup();
   }
 
   /**

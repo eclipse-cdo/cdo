@@ -616,8 +616,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
     InternalRepository repository = getRepository();
     setCreationTime(repository.getTimeStamp());
     firstTime = true;
-
-    OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.8"), repository.getName(), creationTime)); //$NON-NLS-1$
   }
 
   protected void reStart()
@@ -657,8 +655,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
       setLastLocalBranchID(Integer.valueOf(map.get(PROP_LAST_LOCAL_BRANCHID)));
       setLastCommitTime(Long.valueOf(map.get(PROP_LAST_COMMITTIME)));
       setLastNonLocalCommitTime(Long.valueOf(map.get(PROP_LAST_NONLOCAL_COMMITTIME)));
-
-      OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.8b"), repository.getName())); //$NON-NLS-1$
     }
     else
     {
@@ -671,7 +667,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider
   protected void repairAfterCrash()
   {
     String name = getRepository().getName();
-    OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.9"), name)); //$NON-NLS-1$
+    OM.LOG.warn(MessageFormat.format(Messages.getString("DBStore.9"), name)); //$NON-NLS-1$
 
     Connection connection = getConnection();
 

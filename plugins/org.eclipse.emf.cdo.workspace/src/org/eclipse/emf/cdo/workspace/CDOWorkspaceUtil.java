@@ -36,13 +36,16 @@ import java.util.Set;
  */
 public final class CDOWorkspaceUtil
 {
+  private CDOWorkspaceUtil()
+  {
+  }
+
   /**
    * @since 4.1
    */
-  public static final IProperties<CDOWorkspace> PROPERTIES = WorkspaceProperties.INSTANCE;
-
-  private CDOWorkspaceUtil()
+  public static IProperties<CDOWorkspace> getProperties()
   {
+    return WorkspaceProperties.INSTANCE;
   }
 
   /**

@@ -19,6 +19,8 @@ import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -73,6 +75,11 @@ public abstract class ContainerConfig extends Config implements IContainerConfig
       super(NAME);
     }
 
+    public void initCapabilities(Set<String> capabilities)
+    {
+      capabilities.add(CAPABILITY_COMBINED);
+    }
+
     public synchronized IManagedContainer getClientContainer()
     {
       if (clientContainer == null)
@@ -114,6 +121,11 @@ public abstract class ContainerConfig extends Config implements IContainerConfig
     public Separated()
     {
       super(NAME);
+    }
+
+    public void initCapabilities(Set<String> capabilities)
+    {
+      capabilities.add(CAPABILITY_SEPARATED);
     }
 
     public synchronized IManagedContainer getClientContainer()

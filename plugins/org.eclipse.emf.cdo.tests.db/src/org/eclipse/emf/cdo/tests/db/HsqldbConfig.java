@@ -37,6 +37,8 @@ import java.util.Map;
  */
 public class HsqldbConfig extends DBConfig
 {
+  public static final String DB_ADAPTER_NAME = "Hsqldb";
+
   private static final long serialVersionUID = 1L;
 
   public static boolean USE_VERIFIER = false;
@@ -45,7 +47,13 @@ public class HsqldbConfig extends DBConfig
 
   public HsqldbConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
   {
-    super("Hsqldb", supportingAudits, supportingBranches, false, false, idGenerationLocation);
+    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, idGenerationLocation);
+  }
+
+  @Override
+  protected String getDBAdapterName()
+  {
+    return DB_ADAPTER_NAME;
   }
 
   @Override

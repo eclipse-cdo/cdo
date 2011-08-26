@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -161,6 +162,8 @@ public class ExternalReferenceTest extends AbstractCDOTest
     }
   }
 
+  // XXX disabled because of Bug 290097
+  @Skips("Postgresql")
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
     skipStoreWithoutExternalReferences();
@@ -269,10 +272,11 @@ public class ExternalReferenceTest extends AbstractCDOTest
     }
   }
 
+  // Skip this test until the problems with XATransactions are solved.
+  // XXX disabled because of Bug 290097
+  @Skips({ IModelConfig.CAPABILITY_LEGACY, "Postgresql" })
   public void testManyViewsOnOneResourceSet() throws Exception
   {
-    // Skip this test until the problems with XATransactions are solved.
-    skipConfig(LEGACY);
     skipStoreWithoutExternalReferences();
 
     getRepository(REPOSITORY_B_NAME);

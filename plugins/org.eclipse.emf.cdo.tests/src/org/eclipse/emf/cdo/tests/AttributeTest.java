@@ -99,6 +99,8 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
+  // XXX disabled because of Bug 289445
+  @Skips("Postgresql")
   public void testByteArray() throws Exception
   {
     byte saveByteArray[] = new byte[] { 0, 1, 2, 3, 0, 1, 0, 100 };
@@ -139,6 +141,8 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
+  // XXX disabled because of Bug 289445
+  @Skips("Postgresql")
   public void testByteArrayEmpty() throws Exception
   {
     byte saveByteArray[] = new byte[0];
@@ -174,6 +178,8 @@ public class AttributeTest extends AbstractCDOTest
     }
   }
 
+  // XXX disabled because of Bug 289445
+  @Skips("Postgresql")
   public void testByteArrayNull() throws Exception
   {
     byte saveByteArray[] = null;

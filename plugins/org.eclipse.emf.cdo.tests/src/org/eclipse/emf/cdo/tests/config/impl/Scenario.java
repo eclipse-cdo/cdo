@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.CaseInsensitiveStringSet;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
@@ -134,6 +135,16 @@ public class Scenario implements IScenario
     }
 
     return configs;
+  }
+
+  public Set<String> getCapabilities()
+  {
+    Set<String> capabilities = new CaseInsensitiveStringSet();
+    containerConfig.initCapabilities(capabilities);
+    repositoryConfig.initCapabilities(capabilities);
+    sessionConfig.initCapabilities(capabilities);
+    modelConfig.initCapabilities(capabilities);
+    return capabilities;
   }
 
   public boolean isValid()

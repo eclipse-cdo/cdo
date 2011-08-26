@@ -217,6 +217,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       super(NAME);
     }
 
+    public void initCapabilities(Set<String> capabilities)
+    {
+      capabilities.add(CAPABILITY_EMBEDDED);
+    }
+
     public String getURIPrefix()
     {
       throw new UnsupportedOperationException();
@@ -246,6 +251,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     public Net4j(String name)
     {
       super(name);
+    }
+
+    public void initCapabilities(Set<String> capabilities)
+    {
+      capabilities.add(CAPABILITY_NET4J);
     }
 
     @Override
@@ -354,6 +364,13 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         super(NAME);
       }
 
+      @Override
+      public void initCapabilities(Set<String> capabilities)
+      {
+        super.initCapabilities(capabilities);
+        capabilities.add(CAPABILITY_NET4J_TCP);
+      }
+
       public String getURIPrefix()
       {
         return "cdo.net4j.tcp://" + CONNECTOR_HOST;
@@ -418,6 +435,13 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         super(NAME);
       }
 
+      @Override
+      public void initCapabilities(Set<String> capabilities)
+      {
+        super.initCapabilities(capabilities);
+        capabilities.add(CAPABILITY_NET4J_SSL);
+      }
+
       public String getURIPrefix()
       {
         return "cdo.net4j.ssl://" + CONNECTOR_HOST;
@@ -480,6 +504,13 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       public JVM()
       {
         super(NAME);
+      }
+
+      @Override
+      public void initCapabilities(Set<String> capabilities)
+      {
+        super.initCapabilities(capabilities);
+        capabilities.add(CAPABILITY_NET4J_JVM);
       }
 
       public String getURIPrefix()

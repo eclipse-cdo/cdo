@@ -33,6 +33,8 @@ import java.util.HashMap;
  */
 public class DerbyConfig extends DBConfig
 {
+  public static final String DB_ADAPTER_NAME = "Derby";
+
   private static final long serialVersionUID = 1L;
 
   private static HashMap<String, File> dbFolders = new HashMap<String, File>();
@@ -41,7 +43,13 @@ public class DerbyConfig extends DBConfig
 
   public DerbyConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
   {
-    super("Derby", supportingAudits, supportingBranches, false, false, idGenerationLocation);
+    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, idGenerationLocation);
+  }
+
+  @Override
+  protected String getDBAdapterName()
+  {
+    return DB_ADAPTER_NAME;
   }
 
   public Collection<File> getDBFolders()

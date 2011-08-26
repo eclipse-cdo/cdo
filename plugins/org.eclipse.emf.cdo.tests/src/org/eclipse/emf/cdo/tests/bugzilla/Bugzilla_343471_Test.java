@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -27,10 +28,9 @@ import java.util.Set;
  */
 public class Bugzilla_343471_Test extends AbstractCDOTest
 {
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void test() throws CommitException
   {
-    skipLegacy();
-
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
 

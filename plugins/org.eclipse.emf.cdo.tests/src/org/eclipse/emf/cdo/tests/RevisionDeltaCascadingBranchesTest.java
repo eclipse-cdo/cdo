@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -27,15 +29,9 @@ import org.eclipse.emf.common.util.EList;
 /**
  * @author Eike Stepper
  */
+@Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class RevisionDeltaCascadingBranchesTest extends RevisionDeltaTest
 {
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    super.doSetUp();
-    skipUnlessBranching();
-  }
-
   @Override
   protected void testStoreDelta(ListManipulator manipulator)
   {

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
@@ -75,10 +76,10 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
     super.tearDown();
   }
 
+  // TODO Fix bug 344072
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void test1() throws CommitException
   {
-    skipConfig(LEGACY); // TODO Fix bug 344072
-
     CDOID id = CDOUtil.getCDOObject(detail1).cdoID();
 
     order1.getOrderDetails().remove(detail1);
@@ -94,10 +95,10 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
     assertClean(detail1, transaction);
   }
 
+  // TODO Fix bug 344072
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void test2() throws CommitException
   {
-    skipConfig(LEGACY); // TODO Fix bug 344072
-
     InternalCDOSavepoint sp = (InternalCDOSavepoint)transaction.setSavepoint();
     order1.getOrderDetails().remove(detail1);
     assertTransient(detail1);
@@ -119,10 +120,10 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
     assertEquals(false, order1.getOrderDetails().contains(detail1));
   }
 
+  // TODO Fix bug 344072
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void test3() throws CommitException
   {
-    skipConfig(LEGACY); // TODO Fix bug 344072
-
     CDOID id = CDOUtil.getCDOObject(detail1).cdoID();
 
     transaction.setSavepoint();

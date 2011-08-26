@@ -23,6 +23,16 @@ public interface IRepositoryConfig extends IConfig
 {
   public static final String REPOSITORY_NAME = "repo1";
 
+  public static final String CAPABILITY_AUDITING = "repository.auditing";
+
+  public static final String CAPABILITY_BRANCHING = "repository.branching";
+
+  public static final String CAPABILITY_UUIDS = "repository.uuids";
+
+  public static final String CAPABILITY_OFFLINE = "repository.offline";
+
+  public static final String CAPABILITY_RESTARTABLE = "repository.restartable";
+
   public boolean isSupportingAudits();
 
   public boolean isSupportingBranches();

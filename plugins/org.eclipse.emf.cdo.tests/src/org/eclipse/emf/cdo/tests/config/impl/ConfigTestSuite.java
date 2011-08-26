@@ -12,11 +12,15 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.tests.config.IConstants;
 import org.eclipse.emf.cdo.tests.config.IScenario;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import junit.framework.Test;
 import junit.framework.TestResult;
@@ -56,8 +60,18 @@ public abstract class ConfigTestSuite implements IConstants
 
       for (Class<? extends ConfigTest> testClass : testClasses)
       {
-        TestWrapper configSuite = new TestWrapper(testClass, scenario);
-        suite.addTest(configSuite);
+        try
+        {
+          TestWrapper wrapper = new TestWrapper(testClass, scenario);
+          if (wrapper.testCount() != 0)
+          {
+            suite.addTest(wrapper);
+          }
+        }
+        catch (ConstraintsViolatedException ex)
+        {
+          //$FALL-THROUGH$
+        }
       }
 
       parent.addTest(suite);
@@ -71,11 +85,19 @@ public abstract class ConfigTestSuite implements IConstants
   /**
    * @author Eike Stepper
    */
+  private static final class ConstraintsViolatedException extends Exception
+  {
+    private static final long serialVersionUID = 1L;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private static final class TestWrapper extends TestSuite
   {
     private IScenario scenario;
 
-    public TestWrapper(Class<? extends ConfigTest> testClass, IScenario scenario)
+    public TestWrapper(Class<? extends ConfigTest> testClass, IScenario scenario) throws ConstraintsViolatedException
     {
       // super(testClass, testClass.getName()); // Important for the UI to set the *qualified* class name!
       this.scenario = scenario;
@@ -103,7 +125,7 @@ public abstract class ConfigTestSuite implements IConstants
       }
     }
 
-    private void addTestsFromTestCase(final Class<?> theClass)
+    private void addTestsFromTestCase(final Class<?> theClass) throws ConstraintsViolatedException
     {
       setName(theClass.getName());
 
@@ -124,22 +146,63 @@ public abstract class ConfigTestSuite implements IConstants
         return;
       }
 
+      Set<String> capabilities = scenario.getCapabilities();
+
       Class<?> superClass = theClass;
-      List<String> names = new ArrayList<String>();
       while (Test.class.isAssignableFrom(superClass))
       {
-        for (Method each : superClass.getDeclaredMethods())
+        if (!validateConstraints(superClass, capabilities))
         {
-          addTestMethod(each, names, theClass);
+          throw new ConstraintsViolatedException();
         }
 
         superClass = superClass.getSuperclass();
       }
 
-      if (testCount() == 0)
+      List<String> names = new ArrayList<String>();
+
+      superClass = theClass;
+      while (Test.class.isAssignableFrom(superClass))
       {
-        addTest(warning("No tests found in " + theClass.getName()));
+        for (Method method : superClass.getDeclaredMethods())
+        {
+          if (validateConstraints(method, capabilities))
+          {
+            addTestMethod(method, names, theClass);
+          }
+        }
+
+        superClass = superClass.getSuperclass();
       }
+    }
+
+    private boolean validateConstraints(AnnotatedElement element, Set<String> capabilities)
+    {
+      Requires requires = element.getAnnotation(Requires.class);
+      if (requires != null)
+      {
+        for (String require : requires.value())
+        {
+          if (!capabilities.contains(require))
+          {
+            return false;
+          }
+        }
+      }
+
+      Skips skips = element.getAnnotation(Skips.class);
+      if (skips != null)
+      {
+        for (String skip : skips.value())
+        {
+          if (capabilities.contains(skip))
+          {
+            return false;
+          }
+        }
+      }
+
+      return true;
     }
 
     private void addTestMethod(Method m, List<String> names, Class<?> theClass)

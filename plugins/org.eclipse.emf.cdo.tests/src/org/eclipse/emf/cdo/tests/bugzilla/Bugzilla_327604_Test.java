@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
@@ -54,6 +56,7 @@ import java.util.Map;
  * 
  * @author Martin Fluegge
  */
+@Requires(IRepositoryConfig.CAPABILITY_AUDITING)
 public class Bugzilla_327604_Test extends AbstractCDOTest
 {
   private static final String RESOURCE = "/test1";
@@ -97,7 +100,6 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
   {
     disableConsole();
     super.doSetUp();
-    skipUnlessAuditing();
     skipTest(!getRepository().getStore().getObjectIDTypes().equals(MEMStore.OBJECT_ID_TYPES));
 
     CDOSession session = openSession();

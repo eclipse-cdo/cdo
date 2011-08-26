@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
 import org.eclipse.emf.cdo.tests.model4.MultiContainedElement;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
@@ -30,10 +31,9 @@ import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
  */
 public class Bugzilla_324756_Test extends AbstractCDOTest
 {
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testReattachBranchVersion() throws Exception
   {
-    skipUnlessBranching();
-
     // setup transaction.
     final CDOSession session1 = openSession();
     final CDOTransaction s1Tr1 = session1.openTransaction();
@@ -84,10 +84,9 @@ public class Bugzilla_324756_Test extends AbstractCDOTest
     assertEquals(false, s1Tr3.isDirty());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testReattachBranchVersion2() throws Exception
   {
-    skipUnlessBranching();
-
     // setup transaction.
     final CDOSession session1 = openSession();
     final CDOTransaction s1Tr1 = session1.openTransaction();

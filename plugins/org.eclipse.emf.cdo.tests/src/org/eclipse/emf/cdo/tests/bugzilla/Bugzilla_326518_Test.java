@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model4.ContainedElementNoOpposite;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiContained;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -46,11 +47,10 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
     return map;
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   @CleanRepositoriesBefore
   public void testIndexBranchMerge() throws Exception
   {
-    skipUnlessBranching();
-
     // setup transaction.
     final CDOSession session = openSession();
     final CDOTransaction transaction1 = session.openTransaction();

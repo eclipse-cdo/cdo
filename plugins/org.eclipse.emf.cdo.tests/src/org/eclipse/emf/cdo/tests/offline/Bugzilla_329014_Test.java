@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -94,10 +95,9 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     super.doTearDown();
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_OFFLINE)
   public void testSynchronizationMasterCloneWithoutReplication() throws Exception
   {
-    skipUnlessConfig(getOfflineConfig());
-
     // open transactions.
     CDOTransaction masterTransaction = masterSession.openTransaction();
     CDOTransaction cloneTransaction = cloneSession.openTransaction();
@@ -140,10 +140,9 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     assertEquals(masterCompany.getName(), cloneCompany.getName());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_OFFLINE)
   public void testSynchronizationCloneMasterWithoutReplication() throws Exception
   {
-    skipUnlessConfig(getOfflineConfig());
-
     // open transactions.
     CDOTransaction masterTransaction = masterSession.openTransaction();
     CDOTransaction cloneTransaction = cloneSession.openTransaction();
@@ -186,10 +185,9 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     assertEquals(cloneCompany.getName(), masterCompany.getName());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_OFFLINE)
   public void testSynchronizationMasterCloneWithReplication() throws Exception
   {
-    skipUnlessConfig(getOfflineConfig());
-
     // open transactions.
     CDOTransaction masterTransaction = masterSession.openTransaction();
     CDOTransaction cloneTransaction = cloneSession.openTransaction();
@@ -244,10 +242,9 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     assertEquals(masterCompany.getName(), cloneCompany.getName());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_OFFLINE)
   public void testSynchronizationCloneMasterWithReplication() throws Exception
   {
-    skipUnlessConfig(getOfflineConfig());
-
     // open transactions.
     CDOTransaction masterTransaction = masterSession.openTransaction();
     CDOTransaction cloneTransaction = cloneSession.openTransaction();
@@ -297,5 +294,4 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     // check.
     assertEquals(cloneCompany.getName(), masterCompany.getName());
   }
-
 }

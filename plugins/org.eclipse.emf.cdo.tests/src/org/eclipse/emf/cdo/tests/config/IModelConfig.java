@@ -33,6 +33,10 @@ import org.eclipse.emf.cdo.tests.model6.Model6Package;
  */
 public interface IModelConfig extends IConfig
 {
+  public static final String CAPABILITY_NATIVE = "model.native";
+
+  public static final String CAPABILITY_LEGACY = "model.legacy";
+
   public MangoFactory getMangoFactory();
 
   public MangoPackage getMangoPackage();

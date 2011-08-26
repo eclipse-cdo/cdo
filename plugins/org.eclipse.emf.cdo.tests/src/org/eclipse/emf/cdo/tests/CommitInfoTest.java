@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -73,10 +74,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(transaction.getBranch(), commitInfo.getBranch());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testLocalSubBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
@@ -122,11 +122,10 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(comment, commitInfo.getComment());
   }
 
+  @Skips("MongoDB")
   @CleanRepositoriesBefore
   public void testServerTimestamp() throws Exception
   {
-    skipMongo();
-
     CDOSession session = openSession();
     InternalSession serverSession = getRepository().getSessionManager().getSession(session.getSessionID());
     StoreThreadLocal.setSession(serverSession);
@@ -146,11 +145,10 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
+  @Skips("MongoDB")
   @CleanRepositoriesBefore
   public void testServerBranch() throws Exception
   {
-    skipMongo();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -170,11 +168,10 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   @CleanRepositoriesBefore
   public void testServerSubBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -194,11 +191,10 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
+  @Skips("MongoDB")
   @CleanRepositoriesBefore
   public void testServerUser() throws Exception
   {
-    skipMongo();
-
     UserManager userManager = new UserManager();
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
@@ -227,11 +223,10 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
+  @Skips("MongoDB")
   @CleanRepositoriesBefore
   public void testServerComment() throws Exception
   {
-    skipMongo();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -253,11 +248,10 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
+  @Skips("MongoDB")
   @CleanRepositoriesBefore
   public void testServerTimestampWithBranch() throws Exception
   {
-    skipMongo();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -277,11 +271,10 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getTimeStamp(), infos.get(1).getTimeStamp());
   }
 
+  @Skips("MongoDB")
   @CleanRepositoriesBefore
   public void testServerBranchWithBranch() throws Exception
   {
-    skipMongo();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -301,10 +294,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testServerSubBranchWithBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -325,11 +317,10 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(0).getBranch());
   }
 
+  @Skips("MongoDB")
   @CleanRepositoriesBefore
   public void testServerUserWithBranch() throws Exception
   {
-    skipMongo();
-
     UserManager userManager = new UserManager();
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
@@ -359,11 +350,10 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getUserID(), infos.get(1).getUserID());
   }
 
+  @Skips("MongoDB")
   @CleanRepositoriesBefore
   public void testServerCommentWithBranch() throws Exception
   {
-    skipMongo();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -386,10 +376,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testServerTimestampWithWrongBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -408,10 +397,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testServerBranchWithWrongBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -430,10 +418,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testServerSubBranchWithWrongBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -453,10 +440,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testServerUserWithWrongBranch() throws Exception
   {
-    skipUnlessBranching();
-
     UserManager userManager = new UserManager();
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
@@ -485,10 +471,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testServerCommentWithWrongBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     StoreThreadLocal.setSession(getRepository().getSessionManager().getSession(session.getSessionID()));
 
@@ -548,11 +533,10 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   @CleanRepositoriesBefore
   public void testClientSubBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
@@ -659,10 +643,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getBranch(), infos.get(1).getBranch());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testClientSubBranchWithBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
     CDOTransaction transaction = session.openTransaction(branch);
@@ -731,10 +714,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(commitInfo.getComment(), infos.get(1).getComment());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testClientTimestampWithWrongBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
@@ -751,10 +733,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testClientBranchWithWrongBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
@@ -771,10 +752,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testClientSubBranchWithWrongBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOBranch branch = session.getBranchManager().getMainBranch().createBranch("sub");
@@ -792,10 +772,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testClientUserWithWrongBranch() throws Exception
   {
-    skipUnlessBranching();
-
     UserManager userManager = new UserManager();
     userManager.activate();
     userManager.addUser(USER_ID, PASSWORD);
@@ -822,10 +801,9 @@ public class CommitInfoTest extends AbstractCDOTest
     assertEquals(0, infos.size());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testClientCommentWithWrongBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch wrong = session.getBranchManager().getMainBranch().createBranch("wrong");
     CDOTransaction transaction = session.openTransaction();
@@ -874,10 +852,9 @@ public class CommitInfoTest extends AbstractCDOTest
     }
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
   public void testLogThroughClient() throws Exception
   {
-    skipUnlessAuditing();
-
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_PATH));
@@ -899,10 +876,9 @@ public class CommitInfoTest extends AbstractCDOTest
     System.out.println(baos.toString());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
   public void testLogThroughWriteAccessHandler() throws Exception
   {
-    skipUnlessAuditing();
-
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     final TextCommitInfoLog log = new TextCommitInfoLog(baos);
 
@@ -935,10 +911,9 @@ public class CommitInfoTest extends AbstractCDOTest
     System.out.println(baos.toString());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
   public void testLogThroughCommitInfoHandler() throws Exception
   {
-    skipUnlessAuditing();
-
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     getRepository().addCommitInfoHandler(new TextCommitInfoLog(baos));
 
@@ -957,10 +932,9 @@ public class CommitInfoTest extends AbstractCDOTest
     System.out.println(baos.toString());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
   public void testLogAsync() throws Exception
   {
-    skipUnlessAuditing();
-
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     AsyncCommitInfoHandler log = new AsyncCommitInfoHandler(new TextCommitInfoLog(baos));
     log.activate();

@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -29,15 +31,9 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 /**
  * @author Eike Stepper
  */
+@Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class MergingTest extends AbstractCDOTest
 {
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    super.doSetUp();
-    skipUnlessBranching();
-  }
-
   public void testFromEmptyBranches() throws Exception
   {
     CDOSession session = openSession();
@@ -422,7 +418,7 @@ public class MergingTest extends AbstractCDOTest
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
 
-    CDOResource resource = transaction.createResource(getResourcePath(("/res" + run)));
+    CDOResource resource = transaction.createResource(getResourcePath("/res" + run));
     EList<EObject> contents = resource.getContents();
     addCompany(contents);
     addCompany(contents);
@@ -638,11 +634,9 @@ public class MergingTest extends AbstractCDOTest
   /**
    * Bug 309467.
    */
-  @SuppressWarnings("unused")
+  @Requires(IRepositoryConfig.CAPABILITY_RESTARTABLE)
   public void test_Bugzilla_309467_ServerRestart() throws Exception
   {
-    skipMEM();
-
     {
       CDOSession session = openSession();
       CDOBranch mainBranch = session.getBranchManager().getMainBranch();
@@ -650,11 +644,11 @@ public class MergingTest extends AbstractCDOTest
 
       CDOResource resource = transaction.createResource(getResourcePath("/res"));
       EList<EObject> contents = resource.getContents();
-      Company company0 = addCompany(contents);
-      Company company1 = addCompany(contents);
-      Company company2 = addCompany(contents);
-      Company company3 = addCompany(contents);
-      Company company4 = addCompany(contents);
+      addCompany(contents);
+      addCompany(contents);
+      addCompany(contents);
+      addCompany(contents);
+      addCompany(contents);
       long time1 = transaction.commit().getTimeStamp();
       CDOBranch source1 = mainBranch.createBranch("source1", time1);
 

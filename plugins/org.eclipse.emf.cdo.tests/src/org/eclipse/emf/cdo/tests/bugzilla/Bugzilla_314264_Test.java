@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model2.TaskContainer;
 import org.eclipse.emf.cdo.tests.util.TestAdapter;
@@ -32,11 +33,10 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 @CleanRepositoriesBefore
 public class Bugzilla_314264_Test extends AbstractCDOTest
 {
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   @CleanRepositoriesBefore
   public void testMergeTest() throws Exception
   {
-    skipUnlessBranching();
-
     // setup transaction.
     final CDOSession session = openSession();
     final CDOTransaction tr1 = session.openTransaction();

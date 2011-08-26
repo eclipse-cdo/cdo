@@ -31,6 +31,8 @@ import java.sql.Statement;
  */
 public class H2Config extends DBConfig
 {
+  public static final String DB_ADAPTER_NAME = "H2";
+
   private static final long serialVersionUID = 1L;
 
   private static File reusableFolder;
@@ -42,7 +44,13 @@ public class H2Config extends DBConfig
   public H2Config(boolean supportingAudits, boolean supportingBranches, boolean withRanges, boolean copyOnBranch,
       IDGenerationLocation idGenerationLocation)
   {
-    super("H2", supportingAudits, supportingBranches, withRanges, copyOnBranch, idGenerationLocation);
+    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, withRanges, copyOnBranch, idGenerationLocation);
+  }
+
+  @Override
+  protected String getDBAdapterName()
+  {
+    return DB_ADAPTER_NAME;
   }
 
   @Override

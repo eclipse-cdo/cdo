@@ -27,12 +27,17 @@ import javax.sql.DataSource;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public abstract class DBConfig extends RepositoryConfig
 {
+  public static final String CAPABILITY_RANGES = "DB.ranges";
+
+  public static final String CAPABILITY_COPY_ON_BRANCH = "DB.copy.on.branch";
+
   private static final long serialVersionUID = 1L;
 
   private boolean withRanges;
@@ -45,6 +50,31 @@ public abstract class DBConfig extends RepositoryConfig
     super(name, supportingAudits, supportingBranches, idGenerationLocation);
     this.withRanges = withRanges;
     this.copyOnBranch = copyOnBranch;
+  }
+
+  @Override
+  public void initCapabilities(Set<String> capabilities)
+  {
+    super.initCapabilities(capabilities);
+    capabilities.add(getDBAdapterName());
+
+    if (isWithRanges())
+    {
+      capabilities.add(CAPABILITY_RANGES);
+    }
+
+    if (isCopyOnBranch())
+    {
+      capabilities.add(CAPABILITY_COPY_ON_BRANCH);
+    }
+  }
+
+  protected abstract String getDBAdapterName();
+
+  @Override
+  protected String getStoreName()
+  {
+    return "DB";
   }
 
   public boolean isWithRanges()

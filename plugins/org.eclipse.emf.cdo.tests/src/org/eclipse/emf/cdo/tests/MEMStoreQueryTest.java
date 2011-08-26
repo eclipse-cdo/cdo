@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -31,12 +32,11 @@ import java.util.Set;
 /**
  * @author Simon McDuff
  */
+@Requires("MEM")
 public class MEMStoreQueryTest extends AbstractCDOTest
 {
   public void testMEMStoreBasicQuery() throws Exception
   {
-    skipUnlessMEM();
-
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -71,8 +71,6 @@ public class MEMStoreQueryTest extends AbstractCDOTest
 
   public void testMEMStoreBasicQuery_EClassParameter() throws Exception
   {
-    skipUnlessConfig(MEM);
-
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -106,8 +104,6 @@ public class MEMStoreQueryTest extends AbstractCDOTest
 
   public void testMEMStoreQueryCancel_successful() throws Exception
   {
-    skipUnlessConfig(MEM);
-
     CDOTransaction transaction = initialize(500);
     CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
     query.setParameter("sleep", 1000L);
@@ -130,8 +126,6 @@ public class MEMStoreQueryTest extends AbstractCDOTest
 
   public void testMEMStoreQueryCancel_ViewClose() throws Exception
   {
-    skipUnlessConfig(MEM);
-
     CDOTransaction transaction = initialize(500);
     CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
     query.setParameter("sleep", 1000L);
@@ -152,8 +146,6 @@ public class MEMStoreQueryTest extends AbstractCDOTest
 
   public void testMEMStoreQueryCancel_SessionClose() throws Exception
   {
-    skipUnlessConfig(MEM);
-
     CDOTransaction transaction = initialize(500);
     CDOQuery query = transaction.createQuery("TEST", "QUERYSTRING");
     query.setParameter("sleep", 1000L);

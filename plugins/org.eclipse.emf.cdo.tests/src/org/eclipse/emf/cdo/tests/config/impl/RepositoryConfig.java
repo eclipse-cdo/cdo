@@ -74,6 +74,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -122,6 +123,37 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     this.supportingAudits = supportingAudits;
     this.supportingBranches = supportingBranches;
     this.idGenerationLocation = idGenerationLocation;
+  }
+
+  public void initCapabilities(Set<String> capabilities)
+  {
+    if (isSupportingAudits())
+    {
+      capabilities.add(CAPABILITY_AUDITING);
+      if (isSupportingBranches())
+      {
+        capabilities.add(CAPABILITY_BRANCHING);
+      }
+    }
+
+    if (getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+    {
+      capabilities.add(CAPABILITY_UUIDS);
+    }
+
+    if (isRestartable())
+    {
+      capabilities.add(CAPABILITY_RESTARTABLE);
+    }
+
+    capabilities.add(getStoreName());
+  }
+
+  protected abstract String getStoreName();
+
+  public boolean isRestartable()
+  {
+    return true;
   }
 
   public boolean isSupportingAudits()
@@ -585,6 +617,13 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     @Override
+    public void initCapabilities(Set<String> capabilities)
+    {
+      super.initCapabilities(capabilities);
+      capabilities.add(CAPABILITY_OFFLINE);
+    }
+
+    @Override
     public void setUp() throws Exception
     {
       JVMUtil.prepareContainer(getCurrentTest().getServerContainer());
@@ -788,11 +827,25 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
    */
   public static class MEMConfig extends RepositoryConfig
   {
+    public static final String STORE_NAME = "MEM";
+
     private static final long serialVersionUID = 1L;
 
     public MEMConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
     {
-      super("MEM", supportingAudits, supportingBranches, idGenerationLocation);
+      super(STORE_NAME, supportingAudits, supportingBranches, idGenerationLocation);
+    }
+
+    @Override
+    protected String getStoreName()
+    {
+      return STORE_NAME;
+    }
+
+    @Override
+    public boolean isRestartable()
+    {
+      return false;
     }
 
     public IStore createStore(String repoName)
@@ -810,7 +863,19 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     public MEMOfflineConfig(IDGenerationLocation idGenerationLocation)
     {
-      super("MEMOffline", idGenerationLocation);
+      super(MEMConfig.STORE_NAME + "Offline", idGenerationLocation);
+    }
+
+    @Override
+    protected String getStoreName()
+    {
+      return MEMConfig.STORE_NAME;
+    }
+
+    @Override
+    public boolean isRestartable()
+    {
+      return false;
     }
 
     public IStore createStore(String repoName)

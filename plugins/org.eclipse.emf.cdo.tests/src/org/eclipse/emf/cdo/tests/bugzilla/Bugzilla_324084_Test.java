@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
 import org.eclipse.emf.cdo.tests.model4.RefSingleContained;
@@ -44,10 +45,9 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     return map;
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testXRefMergeSingleValueTest() throws Exception
   {
-    skipUnlessBranching();
-
     // setup transaction.
     final CDOSession session = openSession();
     final CDOTransaction tr1 = session.openTransaction();
@@ -81,10 +81,9 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     assertEquals(false, tr1.isDirty());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testXRefMergeManyValueTest() throws Exception
   {
-    skipUnlessBranching();
-
     // setup transaction.
     final CDOSession session = openSession();
     final CDOTransaction tr1 = session.openTransaction();

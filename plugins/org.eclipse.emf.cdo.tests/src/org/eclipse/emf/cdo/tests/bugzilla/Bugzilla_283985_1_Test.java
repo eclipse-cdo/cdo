@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
@@ -345,10 +346,10 @@ public class Bugzilla_283985_1_Test extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
   }
 
+  // TODO Fix bug 344072
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testAddRemoveSequence() throws CommitException
   {
-    skipConfig(LEGACY); // TODO Fix bug 344072
-
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource r1 = tx.getOrCreateResource(getResourcePath("/r1"));

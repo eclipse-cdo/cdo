@@ -17,6 +17,10 @@ import org.eclipse.net4j.util.container.IManagedContainer;
  */
 public interface IContainerConfig extends IConfig
 {
+  public static final String CAPABILITY_COMBINED = "containers.combined";
+
+  public static final String CAPABILITY_SEPARATED = "containers.separated";
+
   public boolean hasClientContainer();
 
   public boolean hasServerContainer();

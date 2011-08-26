@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.util.TestListener2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -58,10 +59,9 @@ public class LockingNotificationsTest extends AbstractLockingTest
     session1.close();
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testDifferentBranchDifferentSession() throws CommitException
   {
-    skipUnlessBranching();
-
     CDOSession session1 = openSession();
     CDOBranch subBranch = session1.getBranchManager().getMainBranch().createBranch("sub1");
     CDOSession session2 = openSession();
@@ -71,10 +71,9 @@ public class LockingNotificationsTest extends AbstractLockingTest
     session2.close();
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testDifferentBranchSameSession() throws CommitException
   {
-    skipUnlessBranching();
-
     CDOSession session1 = openSession();
     CDOBranch subBranch = session1.getBranchManager().getMainBranch().createBranch("sub2");
     CDOView controlView = openViewWithLockNotifications(session1, subBranch);

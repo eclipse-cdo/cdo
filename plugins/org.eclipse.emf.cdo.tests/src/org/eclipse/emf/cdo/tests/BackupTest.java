@@ -254,12 +254,9 @@ public class BackupTest extends AbstractCDOTest
    * {@link org.eclipse.emf.cdo.server.IStoreAccessor.Raw#rawStore(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.net4j.util.om.monitor.OMMonitor)
    * rawStore()} is not adequate with range-based list mappings because they need deltas!
    */
+  @Skips("DB.ranges")
   public void testImport() throws Exception
   {
-    String configName = getRepositoryConfig().getName();
-    skipTest(configName.contains("range-based"));
-    skipTest(configName.contains("ranges"));
-
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/res1"));

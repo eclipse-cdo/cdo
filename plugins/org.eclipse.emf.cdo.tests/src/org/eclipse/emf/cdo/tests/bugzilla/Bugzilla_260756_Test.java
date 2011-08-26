@@ -33,10 +33,9 @@ public class Bugzilla_260756_Test extends AbstractCDOTest
 {
   private static final String LANGUAGE = "TEST";
 
+  @Requires("MEM")
   public void testBugzilla_260756() throws Exception
   {
-    skipUnlessMEM();
-
     Set<Object> objects = new HashSet<Object>();
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

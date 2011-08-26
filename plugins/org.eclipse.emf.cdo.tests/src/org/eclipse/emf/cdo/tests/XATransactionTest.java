@@ -11,9 +11,10 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder;
@@ -143,6 +144,8 @@ public class XATransactionTest extends AbstractCDOTest
     xaTransaction.commit();
   }
 
+  // XXX disabled because of Bug 290097
+  @Skips("Postgresql")
   public void testCommitFromTransactionDisabled() throws Exception
   {
     skipStoreWithoutExternalReferences();
@@ -189,12 +192,11 @@ public class XATransactionTest extends AbstractCDOTest
     }
   }
 
+  // Skip this test until the problems with XATransactions are solved.
+  @Skips({ IModelConfig.CAPABILITY_LEGACY, IRepositoryConfig.CAPABILITY_UUIDS, "DB" })
   public void testNotUsingXATransaction_Exception() throws Exception
   {
-    // Skip this test until the problems with XATransactions are solved.
-    skipConfig(LEGACY);
     skipStoreWithoutExternalReferences();
-    skipTest(getRepositoryConfig().getIDGenerationLocation() == IDGenerationLocation.CLIENT);
     getRepository(REPOSITORY2_NAME);
 
     {
@@ -235,6 +237,9 @@ public class XATransactionTest extends AbstractCDOTest
     }
   }
 
+  // XXX disabled because of Bug 290097
+  @Skips("Postgresql")
+  @CleanRepositoriesBefore
   public void test_ExceptionInReadingStream() throws Exception
   {
     skipStoreWithoutExternalReferences();
@@ -280,11 +285,10 @@ public class XATransactionTest extends AbstractCDOTest
     }
   }
 
+  // Skip this test until the problems with XATransactions are solved.
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void _test_ExceptionInWrite() throws Exception
   {
-    // Skip this test until the problems with XATransactions are solved.
-    skipConfig(LEGACY);
-
     getRepository(REPOSITORY2_NAME);
     getRepository("repo3");
 

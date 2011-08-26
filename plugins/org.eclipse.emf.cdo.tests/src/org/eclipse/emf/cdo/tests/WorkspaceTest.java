@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
@@ -27,6 +26,8 @@ import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
@@ -61,6 +62,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
+@Requires(IRepositoryConfig.CAPABILITY_AUDITING)
 public class WorkspaceTest extends AbstractCDOTest
 {
   private static final String RESOURCE = "/test1";
@@ -95,8 +97,6 @@ public class WorkspaceTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-
-    skipUnlessAuditing();
     skipStoreWithoutHandleRevisions();
 
     CDOSession session = openSession();
@@ -193,10 +193,9 @@ public class WorkspaceTest extends AbstractCDOTest
     }
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_UUIDS)
   public void testAddObjects() throws Exception
   {
-    skipTest(getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE);
-
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
@@ -320,10 +319,9 @@ public class WorkspaceTest extends AbstractCDOTest
     }
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_UUIDS)
   public void testAddObjects2() throws Exception
   {
-    skipTest(getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE);
-
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
@@ -462,10 +460,9 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, changes.getDetachedObjects().size());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_UUIDS)
   public void testLocalChangesAfterAdd() throws Exception
   {
-    skipTest(getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE);
-
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
@@ -544,10 +541,9 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(0, changes.getDetachedObjects().size());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_UUIDS)
   public void testLocalChangesAfterAdd2() throws Exception
   {
-    skipTest(getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE);
-
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
@@ -643,10 +639,9 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_UUIDS)
   public void testCheckinAfterAdd() throws Exception
   {
-    skipTest(getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE);
-
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     IOUtil.ERR().println("Checkout done");
 
@@ -741,10 +736,9 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_UUIDS)
   public void testCheckinAfterAdd2() throws Exception
   {
-    skipTest(getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE);
-
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
@@ -873,10 +867,9 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(info.getTimeStamp(), workspace.getTimeStamp());
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_UUIDS)
   public void testCheckin2AfterAdd() throws Exception
   {
-    skipTest(getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE);
-
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 
     CDOTransaction transaction = workspace.openTransaction();
@@ -1013,10 +1006,9 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(totalObjects, dumpObjects(null, resource));
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_UUIDS)
   public void testUpdateAfterMasterAdd() throws Exception
   {
-    skipTest(getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE);
-
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
 
@@ -1110,10 +1102,9 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(2, countModifiedProduct(view));
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_UUIDS)
   public void testUpdateAfterMasterAndLocalAdd() throws Exception
   {
-    skipTest(getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE);
-
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
     assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
 

@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.ObjectWriteAccessHandler;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -129,13 +130,12 @@ public class RepositoryTest extends AbstractCDOTest
   /**
    * See bug 329254
    */
+  @Requires(IRepositoryConfig.CAPABILITY_RESTARTABLE)
+  // hibernate will recreate the systeminfo table at repository
+  // restart (this is due to test settings)
+  @Skips("Hibernate")
   public void testLastCommitTime() throws Exception
   {
-    skipMEM();
-    // hibernate will recreate the systeminfo table at repository
-    // restart (this is due to test settings)
-    skipHibernate();
-
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/res1"));

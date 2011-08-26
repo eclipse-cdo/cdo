@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
@@ -57,11 +58,10 @@ public class ConflictResolverTest extends AbstractCDOTest
     transaction2.commit();
   }
 
+  // Does not work in legacy as long as there is not getter interception
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testMergeLocalChangesPerFeature_BasicException() throws Exception
   {
-    // Does not work in legacy as long as there is not getter interception
-    skipConfig(LEGACY);
-
     msg("Opening session");
     CDOSession session = openSession();
 

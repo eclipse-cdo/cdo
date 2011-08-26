@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -53,10 +54,9 @@ public class Bugzilla_330052_Test extends AbstractCDOTest
   /**
    * Tests whether an audit view in the same session fetches the correct historical version
    */
+  @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
   public void test_auditView() throws CommitException
   {
-    skipUnlessAuditing();
-
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
     CDOTransaction transaction = session.openTransaction();

@@ -26,6 +26,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
 
 import org.eclipse.net4j.util.ReflectUtil;
@@ -41,6 +43,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
+@Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class RevisionManagerTest extends AbstractCDOTest
 {
   private static final CDOID ID = CDOIDUtil.createLong(2);
@@ -92,8 +95,7 @@ public class RevisionManagerTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    skipUnlessBranching();
-    skipUnlessMEM();
+    // skipUnlessMEM();
 
     Field disableGC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, true);

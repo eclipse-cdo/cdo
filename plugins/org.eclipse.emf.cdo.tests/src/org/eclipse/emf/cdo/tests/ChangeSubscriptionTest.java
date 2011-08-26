@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
@@ -874,10 +875,9 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
   /**
    * See bug 315409.
    */
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void _testInvalidationWithDeltas_SubBranch() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 

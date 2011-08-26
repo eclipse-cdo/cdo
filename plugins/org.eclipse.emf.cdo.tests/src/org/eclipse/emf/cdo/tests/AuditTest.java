@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
@@ -31,16 +33,10 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
+@Requires(IRepositoryConfig.CAPABILITY_AUDITING)
 public class AuditTest extends AbstractCDOTest
 {
   protected CDOSession session1;
-
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    super.doSetUp();
-    skipUnlessAuditing();
-  }
 
   protected CDOSession openSession1()
   {
@@ -295,10 +291,9 @@ public class AuditTest extends AbstractCDOTest
     session.close();
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_RESTARTABLE)
   public void testConsistentHistoryForIsMany() throws Exception
   {
-    skipConfig(MEM);
-
     ArrayList<List<Integer>> history = new ArrayList<List<Integer>>();
     ArrayList<Long> timestamps = new ArrayList<Long>();
 

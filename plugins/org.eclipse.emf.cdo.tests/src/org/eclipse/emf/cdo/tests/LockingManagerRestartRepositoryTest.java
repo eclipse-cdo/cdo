@@ -10,18 +10,15 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
+
 /**
  * @author Eike Stepper
  */
+@Requires(IRepositoryConfig.CAPABILITY_RESTARTABLE)
 public class LockingManagerRestartRepositoryTest extends LockingManagerRestartSessionTest
 {
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    super.doSetUp();
-    skipMEM();
-  }
-
   @Override
   protected void doBetweenSessionCloseAndOpen()
   {

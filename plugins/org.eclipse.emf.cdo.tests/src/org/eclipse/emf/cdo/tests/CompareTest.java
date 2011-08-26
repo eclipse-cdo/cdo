@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -25,19 +27,12 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * @author Eike Stepper
  */
+@Requires(IRepositoryConfig.CAPABILITY_AUDITING)
 public class CompareTest extends AbstractCDOTest
 {
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    super.doSetUp();
-    skipUnlessAuditing();
-  }
-
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testFromEmptyBranches() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getProtocol().setTimeout(1000000000);
 
@@ -78,10 +73,9 @@ public class CompareTest extends AbstractCDOTest
     assertCompare(session, mainBranch.getHead(), mainBranch.getPoint(time3), 0, 0, 0);
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testFromBranchWithAdditions() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
@@ -121,10 +115,9 @@ public class CompareTest extends AbstractCDOTest
     assertCompare(session, mainBranch.getHead(), source1.getHead(), 7, 1, 2);
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testAdditionsInSourceAndTarget() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
@@ -175,10 +168,9 @@ public class CompareTest extends AbstractCDOTest
     assertCompare(session, source1.getHead(), source2.getHead(), 2, 1, 5);
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testFromBranchWithChangesInSource() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);
@@ -206,10 +198,9 @@ public class CompareTest extends AbstractCDOTest
     assertCompare(session, mainBranch.getHead(), source.getHead(), 0, 3, 0);
   }
 
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testFromBranchWithRemovalsInSource() throws Exception
   {
-    skipUnlessBranching();
-
     CDOSession session = openSession();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);

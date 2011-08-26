@@ -11,12 +11,17 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * @author Victor Roldan Betancort
  */
 public class DB4OConfig extends RepositoryConfig
 {
+  public static final String CAPABILITY_MEM = "DB4O.mem";
+
+  public static final String CAPABILITY_NET = "DB4O.net";
+
   private static final Random RANDOM = new Random(System.currentTimeMillis());
 
   private static final long serialVersionUID = 1L;
@@ -27,8 +32,28 @@ public class DB4OConfig extends RepositoryConfig
 
   public DB4OConfig(boolean mem)
   {
-    super("DB4O", false, false, IDGenerationLocation.STORE);
+    super("DB4O-" + (mem ? "mem" : "net"), false, false, IDGenerationLocation.STORE);
     this.mem = mem;
+  }
+
+  @Override
+  public void initCapabilities(Set<String> capabilities)
+  {
+    super.initCapabilities(capabilities);
+    if (mem)
+    {
+      capabilities.add(CAPABILITY_MEM);
+    }
+    else
+    {
+      capabilities.add(CAPABILITY_NET);
+    }
+  }
+
+  @Override
+  protected String getStoreName()
+  {
+    return "DB4O";
   }
 
   public boolean isMem()

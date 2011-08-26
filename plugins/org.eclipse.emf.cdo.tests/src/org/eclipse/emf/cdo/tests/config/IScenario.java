@@ -36,6 +36,8 @@ public interface IScenario extends ITestLifecycle, Serializable
 
   public Set<IConfig> getConfigs();
 
+  public Set<String> getCapabilities();
+
   public boolean isValid();
 
   public void save();

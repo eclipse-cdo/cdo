@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
@@ -23,15 +25,9 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  * 
  * @author Victor Roldan Betancort
  */
+@Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class Bugzilla_303807_Test extends AbstractCDOTest
 {
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    super.doSetUp();
-    skipUnlessBranching();
-  }
-
   public void testBugzilla_303807() throws Exception
   {
     CDOSession session = openSession();

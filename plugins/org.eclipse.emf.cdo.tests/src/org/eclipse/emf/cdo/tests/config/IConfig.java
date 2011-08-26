@@ -26,4 +26,6 @@ public interface IConfig extends ITestLifecycle, Serializable
   public Object getTestProperty(String key);
 
   public boolean isValid(Set<IConfig> configs);
+
+  public void initCapabilities(Set<String> capabilities);
 }

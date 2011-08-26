@@ -17,6 +17,16 @@ import org.eclipse.emf.cdo.session.CDOSession;
  */
 public interface ISessionConfig extends IConfig
 {
+  public static final String CAPABILITY_EMBEDDED = "session.embedded";
+
+  public static final String CAPABILITY_NET4J = "session.net4j";
+
+  public static final String CAPABILITY_NET4J_JVM = "session.net4j.jvm";
+
+  public static final String CAPABILITY_NET4J_TCP = "session.net4j.tcp";
+
+  public static final String CAPABILITY_NET4J_SSL = "session.net4j.ssl";
+
   public void startTransport() throws Exception;
 
   public void stopTransport() throws Exception;

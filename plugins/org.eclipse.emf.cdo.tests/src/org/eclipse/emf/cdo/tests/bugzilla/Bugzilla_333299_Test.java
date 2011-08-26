@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
@@ -26,10 +27,9 @@ import org.eclipse.emf.ecore.EcoreFactory;
  */
 public class Bugzilla_333299_Test extends AbstractCDOTest
 {
+  @Requires(IModelConfig.CAPABILITY_LEGACY)
   public void testMoveEcoreElement() throws CommitException
   {
-    skipUnlessConfig(LEGACY);
-
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();

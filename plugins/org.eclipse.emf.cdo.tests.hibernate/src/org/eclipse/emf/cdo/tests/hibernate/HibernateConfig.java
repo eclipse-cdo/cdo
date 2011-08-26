@@ -28,6 +28,8 @@ import java.util.Properties;
  */
 public class HibernateConfig extends RepositoryConfig
 {
+  public static final String STAORE_NAME = "Hibernate";
+
   public static final HibernateConfig INSTANCE = new HibernateConfig();
 
   public static final String MAPPING_FILE = "mappingfile";
@@ -38,7 +40,13 @@ public class HibernateConfig extends RepositoryConfig
 
   public HibernateConfig()
   {
-    super("Hibernate", false, false, IDGenerationLocation.STORE);
+    super(STAORE_NAME, false, false, IDGenerationLocation.STORE);
+  }
+
+  @Override
+  protected String getStoreName()
+  {
+    return STAORE_NAME;
   }
 
   @Override

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -40,11 +41,10 @@ import java.util.Set;
  */
 public class Bugzilla_315043_Test extends AbstractCDOTest
 {
+  @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
   @CleanRepositoriesBefore
   public void testReloadingRevisions() throws Exception
   {
-    skipUnlessAuditing();
-
     final String RESOURCE_NAME = "resource";
 
     Set<CDOID> ids = new HashSet<CDOID>();

@@ -33,11 +33,7 @@ import java.util.Map;
  */
 public class MysqlConfig extends DBConfig
 {
-  private static final long serialVersionUID = 1L;
-
-  private transient DataSource setupDataSource;
-
-  private transient List<String> databases = new ArrayList<String>();
+  public static final String DB_ADAPTER_NAME = "Mysql";
 
   /**
    * Instructions to test with MySQL: - create a mysql instance - set HOST to the host where the DB is running
@@ -50,9 +46,21 @@ public class MysqlConfig extends DBConfig
 
   public static final String PASS = "root";
 
+  private static final long serialVersionUID = 1L;
+
+  private transient DataSource setupDataSource;
+
+  private transient List<String> databases = new ArrayList<String>();
+
   public MysqlConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
   {
-    super("Mysql", supportingAudits, supportingBranches, false, false, idGenerationLocation);
+    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, idGenerationLocation);
+  }
+
+  @Override
+  protected String getDBAdapterName()
+  {
+    return DB_ADAPTER_NAME;
   }
 
   @Override

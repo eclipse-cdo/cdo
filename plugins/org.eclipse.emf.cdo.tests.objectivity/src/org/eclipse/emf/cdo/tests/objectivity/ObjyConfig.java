@@ -21,16 +21,24 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
  */
 public class ObjyConfig extends RepositoryConfig
 {
+  public static final String STORE_NAME = "Objy";
+
   private static final long serialVersionUID = 1L;
 
   private static ObjectivityStoreConfig storeConfig = new ObjectivityStoreConfig();
 
   public ObjyConfig(boolean supportingAudits, boolean supportingBranches)
   {
-    super("Objy", supportingAudits, supportingBranches, IDGenerationLocation.STORE);
+    super(STORE_NAME, supportingAudits, supportingBranches, IDGenerationLocation.STORE);
 
     org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM.DEBUG.setEnabled(true);
     org.eclipse.emf.cdo.server.internal.objectivity.bundle.OM.INFO.setEnabled(true);
+  }
+
+  @Override
+  protected String getStoreName()
+  {
+    return STORE_NAME;
   }
 
   @Override

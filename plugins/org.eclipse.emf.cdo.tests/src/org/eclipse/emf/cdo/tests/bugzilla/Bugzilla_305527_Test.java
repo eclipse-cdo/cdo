@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.mango.MangoValue;
 import org.eclipse.emf.cdo.tests.mango.MangoValueList;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -25,9 +26,9 @@ import org.eclipse.emf.cdo.view.CDOView;
  */
 public class Bugzilla_305527_Test extends AbstractCDOTest
 {
+  @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
   public void testAvoidReferencingDifferentViews() throws CommitException
   {
-    skipUnlessAuditing();
     final CDOSession session = openSession();
     long commitTime;
 

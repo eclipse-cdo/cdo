@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -26,10 +27,9 @@ import org.eclipse.emf.ecore.resource.Resource;
  */
 public class Bugzilla_329753_Test extends AbstractCDOTest
 {
+  @Requires(IModelConfig.CAPABILITY_LEGACY)
   public void testIncreasingVersion() throws Exception
   {
-    skipUnlessConfig(LEGACY);
-
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 

@@ -18,7 +18,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
@@ -40,6 +41,7 @@ import java.lang.reflect.Method;
 /**
  * @author Eike Stepper
  */
+@Requires(ISessionConfig.CAPABILITY_NET4J_JVM)
 public class StateMachineTest extends AbstractCDOTest
 {
   private static final long TIMESTAMP = 12345678;
@@ -409,151 +411,6 @@ public class StateMachineTest extends AbstractCDOTest
 
   public void test_NEW_with_ROLLBACK() throws Exception
   {
-  }
-
-  // // ///////////////////////////////////////////////////
-  //
-  // public void test_CLEAN_with_ATTACH() throws Exception
-  // {
-  // }
-  //
-  // public void test_CLEAN_with_DETACH() throws Exception
-  // {
-  // }
-  //
-  // public void test_CLEAN_with_READ() throws Exception
-  // {
-  // }
-  //
-  // public void test_CLEAN_with_WRITE() throws Exception
-  // {
-  // }
-  //
-  // public void test_CLEAN_with_INVALIDATE() throws Exception
-  // {
-  // }
-  //
-  // public void test_CLEAN_with_RELOAD() throws Exception
-  // {
-  // }
-  //
-  // public void test_CLEAN_with_COMMIT() throws Exception
-  // {
-  // }
-  //
-  // public void test_CLEAN_with_ROLLBACK() throws Exception
-  // {
-  // }
-  //
-  // // ///////////////////////////////////////////////////
-  //
-  // public void test_DIRTY_with_ATTACH() throws Exception
-  // {
-  // }
-  //
-  // public void test_DIRTY_with_DETACH() throws Exception
-  // {
-  // }
-  //
-  // public void test_DIRTY_with_READ() throws Exception
-  // {
-  // }
-  //
-  // public void test_DIRTY_with_WRITE() throws Exception
-  // {
-  // }
-  //
-  // public void test_DIRTY_with_INVALIDATE() throws Exception
-  // {
-  // }
-  //
-  // public void test_DIRTY_with_RELOAD() throws Exception
-  // {
-  // }
-  //
-  // public void test_DIRTY_with_COMMIT() throws Exception
-  // {
-  // }
-  //
-  // public void test_DIRTY_with_ROLLBACK() throws Exception
-  // {
-  // }
-  //
-  // // ///////////////////////////////////////////////////
-  //
-  // public void test_PROXY_with_ATTACH() throws Exception
-  // {
-  // }
-  //
-  // public void test_PROXY_with_DETACH() throws Exception
-  // {
-  // }
-  //
-  // public void test_PROXY_with_READ() throws Exception
-  // {
-  // }
-  //
-  // public void test_PROXY_with_WRITE() throws Exception
-  // {
-  // }
-  //
-  // public void test_PROXY_with_INVALIDATE() throws Exception
-  // {
-  // }
-  //
-  // public void test_PROXY_with_RELOAD() throws Exception
-  // {
-  // }
-  //
-  // public void test_PROXY_with_COMMIT() throws Exception
-  // {
-  // }
-  //
-  // public void test_PROXY_with_ROLLBACK() throws Exception
-  // {
-  // }
-  //
-  // // ///////////////////////////////////////////////////
-  //
-  // public void test_CONFLICT_with_ATTACH() throws Exception
-  // {
-  // }
-  //
-  // public void test_CONFLICT_with_DETACH() throws Exception
-  // {
-  // }
-  //
-  // public void test_CONFLICT_with_READ() throws Exception
-  // {
-  // }
-  //
-  // public void test_CONFLICT_with_WRITE() throws Exception
-  // {
-  // }
-  //
-  // public void test_CONFLICT_with_INVALIDATE() throws Exception
-  // {
-  // }
-  //
-  // public void test_CONFLICT_with_RELOAD() throws Exception
-  // {
-  // }
-  //
-  // public void test_CONFLICT_with_COMMIT() throws Exception
-  // {
-  // }
-  //
-  // public void test_CONFLICT_with_ROLLBACK() throws Exception
-  // {
-  // }
-
-  // ///////////////////////////////////////////////////
-
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    skipUnlessConfig(Net4j.JVM.INSTANCE);
-    super.doSetUp();
   }
 
   private static void assertFailure(IllegalStateException ex)

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleContained;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
@@ -32,9 +33,10 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class Bugzilla_279982_Test extends AbstractCDOTest
 {
+  // As log as there is no getter interception, stale reference cannot be detected for legacy
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testBugzilla_279982_Single() throws Exception
-  {// as log as there is no getter interception, stale reference cannot be detected for legacy
-    skipConfig(LEGACY);
+  {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
@@ -98,9 +100,10 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     assertNull(reference.getElement());
   }
 
+  // As log as there is no getter interception, stale reference cannot be detected for legacy
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testBugzilla_279982_Multi() throws Exception
-  {// as log as there is no getter interception, stale reference cannot be detected for legacy
-    skipConfig(LEGACY);
+  {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
@@ -148,9 +151,10 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     assertEquals(0, reference.getElements().size());
   }
 
+  // As log as there is no getter interception, stale reference cannot be detected for legacy
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testBugzilla_279982_Multi_RevisionPrefetchingPolicy() throws Exception
-  {// as log as there is no getter interception, stale reference cannot be detected for legacy
-    skipConfig(LEGACY);
+  {
     CDOSession session = openSession();
     {
       CDOTransaction tx = session.openTransaction();

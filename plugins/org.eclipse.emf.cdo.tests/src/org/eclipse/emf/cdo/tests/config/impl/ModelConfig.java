@@ -29,6 +29,8 @@ import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 
+import java.util.Set;
+
 /**
  * @author Eike Stepper
  */
@@ -55,6 +57,11 @@ public abstract class ModelConfig extends Config implements IModelConfig
     public Native()
     {
       super(NAME);
+    }
+
+    public void initCapabilities(Set<String> capabilities)
+    {
+      capabilities.add(CAPABILITY_NATIVE);
     }
 
     public MangoFactory getMangoFactory()
@@ -157,6 +164,11 @@ public abstract class ModelConfig extends Config implements IModelConfig
     public Legacy()
     {
       super(NAME);
+    }
+
+    public void initCapabilities(Set<String> capabilities)
+    {
+      capabilities.add(CAPABILITY_LEGACY);
     }
 
     public MangoFactory getMangoFactory()

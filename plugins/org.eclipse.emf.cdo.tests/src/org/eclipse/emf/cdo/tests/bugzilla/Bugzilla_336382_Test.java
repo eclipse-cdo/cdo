@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -25,11 +27,10 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  */
 public class Bugzilla_336382_Test extends AbstractCDOTest
 {
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testPromoteToBranch() throws Exception
   {
-    skipUnlessBranching();
-    skipConfig(LEGACY);
-
     CDOSession session = openSession();
 
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();

@@ -181,6 +181,7 @@ public class FeatureMapTest extends AbstractCDOTest
     assertEquals(ref2, fmDb.getEStructuralFeature(7));
   }
 
+  @Skips("Postgresql")
   public void testFeatureMaps() throws Exception
   {
     skipStoreWithoutFeatureMaps();

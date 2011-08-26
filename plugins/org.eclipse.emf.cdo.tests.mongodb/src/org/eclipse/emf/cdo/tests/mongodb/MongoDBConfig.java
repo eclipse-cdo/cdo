@@ -27,11 +27,19 @@ import com.mongodb.MongoURI;
  */
 public class MongoDBConfig extends RepositoryConfig
 {
+  public static final String STORE_NAME = "MongoDB";
+
   private static final long serialVersionUID = 1L;
 
   public MongoDBConfig(boolean supportingAudits, boolean supportingBranches, IDGenerationLocation idGenerationLocation)
   {
-    super("MongoDB", supportingAudits, supportingBranches, idGenerationLocation);
+    super(STORE_NAME, supportingAudits, supportingBranches, idGenerationLocation);
+  }
+
+  @Override
+  protected String getStoreName()
+  {
+    return STORE_NAME;
   }
 
   @Override

@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.db.verifier.DBStoreVerifier;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -35,6 +36,8 @@ import java.sql.ResultSet;
  * 
  * @author Kai Schlamp
  */
+// XXX PSQL fails, too - need to investigate
+@Skips("Postgresql")
 public class DBAnnotationsTest extends AbstractCDOTest
 {
   private static int modelCounter;
@@ -65,14 +68,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
     session.close();
   }
 
+  // HSQL does not support length annotations
+  @Skips("Hsqldb")
   public void testLengthAnnotationNegative() throws Exception
   {
-    // HSQL does not support length annotations
-    skipTest(getRepositoryConfig() instanceof HsqldbConfig);
-
-    // XXX PSQL fails, too - need to investigate
-    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
-
     msg("Opening session");
     EPackage model1 = createModel();
     addLengthAnnotation(model1, "8");
@@ -110,9 +109,6 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testLengthAnnotationByMetaData() throws CommitException
   {
-    // XXX [PSQL] disabled because of Bug 290095
-    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
-
     msg("Opening session");
     final EPackage model1 = createModel();
     addLengthAnnotation(model1, "8");
@@ -149,14 +145,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
     }.verify();
   }
 
+  // HSQL does not support type annotations
+  @Skips("Hsqldb")
   public void testTypeAnnotationByMetaData() throws CommitException
   {
-    // XXX [PSQL] disabled because of Bug 290095
-    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
-
-    // HSQL does not support type annotations
-    skipTest(getRepositoryConfig() instanceof HsqldbConfig);
-
     msg("Opening session");
     final EPackage model1 = createModel();
     addTypeAnnotation(model1, "CLOB");
@@ -195,9 +187,6 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testTableNameAnnotationByMetaData() throws CommitException
   {
-    // XXX [PSQL] disabled because of Bug 290095
-    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
-
     msg("Opening session");
     EPackage model1 = createModel();
     addTableNameAnnotation(model1, "Subject");
@@ -235,9 +224,6 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   public void testColumnNameAnnotationByMetaData() throws CommitException
   {
-    // XXX [PSQL] disabled because of Bug 290095
-    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
-
     msg("Opening session");
     final EPackage model1 = createModel();
     addColumnNameAnnotation(model1, "TOPIC");
@@ -274,14 +260,10 @@ public class DBAnnotationsTest extends AbstractCDOTest
     }.verify();
   }
 
+  // HSQL does not support type annotations
+  @Skips("Hsqldb")
   public void testColumnNameTypeAnnotationByMetaData() throws CommitException
   {
-    // HSQL does not support type annotations
-    skipTest(getRepositoryConfig() instanceof HsqldbConfig);
-
-    // XXX [PSQL] disabled because of Bug 290095
-    skipTest(getRepositoryConfig() instanceof PostgresqlConfig);
-
     msg("Opening session");
     final EPackage model1 = createModel();
     addColumnNameAndTypeAnnoation(model1, "TOPIC", "CLOB");

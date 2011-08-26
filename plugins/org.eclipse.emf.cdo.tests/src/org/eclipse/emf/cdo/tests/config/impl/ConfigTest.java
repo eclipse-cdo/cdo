@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.mem.IMEMStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -56,9 +55,11 @@ import org.eclipse.net4j.util.tests.AbstractOMTest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,14 +74,32 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
 {
   @Inherited
   @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.TYPE, ElementType.METHOD })
   public @interface CleanRepositoriesBefore
   {
   }
 
   @Inherited
   @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.TYPE, ElementType.METHOD })
   public @interface CleanRepositoriesAfter
   {
+  }
+
+  @Inherited
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.TYPE, ElementType.METHOD })
+  public @interface Requires
+  {
+    String[] value();
+  }
+
+  @Inherited
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.TYPE, ElementType.METHOD })
+  public @interface Skips
+  {
+    String[] value();
   }
 
   public ConfigTest()
@@ -554,70 +573,6 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
         || ObjectUtil.equals(getRepositoryConfig(), config) //
         || ObjectUtil.equals(getSessionConfig(), config) //
         || ObjectUtil.equals(getModelConfig(), config);
-  }
-
-  protected void skipConfig(Config config)
-  {
-    skipTest(isConfig(config));
-  }
-
-  protected void skipUnlessConfig(Config config)
-  {
-    skipTest(!ObjectUtil.equals(getContainerConfig(), config) //
-        && !ObjectUtil.equals(getRepositoryConfig(), config) //
-        && !ObjectUtil.equals(getSessionConfig(), config) //
-        && !ObjectUtil.equals(getModelConfig(), config));
-  }
-
-  protected void skipConfig(String name)
-  {
-    skipTest(ObjectUtil.equals(getContainerConfig().getName(), name) //
-        || ObjectUtil.equals(getRepositoryConfig().getName(), name) //
-        || ObjectUtil.equals(getSessionConfig().getName(), name) //
-        || ObjectUtil.equals(getModelConfig().getName(), name));
-  }
-
-  protected void skipUnlessConfig(String name)
-  {
-    skipTest(!ObjectUtil.equals(getContainerConfig().getName(), name) //
-        && !ObjectUtil.equals(getRepositoryConfig().getName(), name) //
-        && !ObjectUtil.equals(getSessionConfig().getName(), name) //
-        && !ObjectUtil.equals(getModelConfig().getName(), name));
-  }
-
-  protected void skipUnlessAuditing()
-  {
-    skipTest(!getRepository().isSupportingAudits());
-  }
-
-  protected void skipUnlessBranching()
-  {
-    skipTest(!getRepository().isSupportingBranches());
-  }
-
-  protected void skipMEM()
-  {
-    skipTest(getRepository().getStore() instanceof IMEMStore);
-  }
-
-  protected void skipUnlessMEM()
-  {
-    skipTest(!(getRepository().getStore() instanceof IMEMStore));
-  }
-
-  protected void skipMongo()
-  {
-    skipConfig("MongoDBStore");
-  }
-
-  protected void skipHibernate()
-  {
-    skipConfig("Hibernate");
-  }
-
-  protected void skipLegacy()
-  {
-    skipTest(getModelConfig() instanceof ModelConfig.Legacy);
   }
 
   protected void skipStoreWithoutExternalReferences()

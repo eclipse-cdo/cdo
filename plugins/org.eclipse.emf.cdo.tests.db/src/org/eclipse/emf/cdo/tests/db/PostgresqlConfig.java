@@ -31,6 +31,8 @@ import java.sql.SQLException;
  */
 public class PostgresqlConfig extends DBConfig
 {
+  public static final String DB_ADAPTER_NAME = "Postgresql";
+
   private static final long serialVersionUID = 1L;
 
   private transient Jdbc3SimpleDataSource dataSource;
@@ -42,7 +44,13 @@ public class PostgresqlConfig extends DBConfig
   public PostgresqlConfig(boolean supportingAudits, boolean supportingBranches,
       IDGenerationLocation idGenerationLocation)
   {
-    super("Postgresql", supportingAudits, supportingBranches, false, false, idGenerationLocation);
+    super(DB_ADAPTER_NAME, supportingAudits, supportingBranches, false, false, idGenerationLocation);
+  }
+
+  @Override
+  protected String getDBAdapterName()
+  {
+    return DB_ADAPTER_NAME;
   }
 
   @Override

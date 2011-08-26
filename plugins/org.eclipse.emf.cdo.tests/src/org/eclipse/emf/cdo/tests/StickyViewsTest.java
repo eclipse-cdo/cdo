@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -29,16 +30,12 @@ import org.eclipse.emf.common.util.EList;
 /**
  * @author Caspar De Groot
  */
+// Sticky behavior is only enabled when store supports auditing, so these tests are
+// meaningless and/or guaranteed to fail if this is not the case
+@Requires(IRepositoryConfig.CAPABILITY_AUDITING)
 public class StickyViewsTest extends AbstractCDOTest
 {
   private static final int N_CATEGORIES = 3;
-
-  private void checkSkip()
-  {
-    // Sticky behavior is only enabled when store supports auditing, so these tests are
-    // meaningless and/or guaranteed to fail if this is not the case
-    skipUnlessAuditing();
-  }
 
   public void test_removeLast() throws CommitException
   {
@@ -81,8 +78,6 @@ public class StickyViewsTest extends AbstractCDOTest
 
   private void test(Closure closure) throws CommitException
   {
-    checkSkip();
-
     // Create a company with N categories
     Company company1 = getModel1Factory().createCompany();
     company1.setName("company");
@@ -134,8 +129,6 @@ public class StickyViewsTest extends AbstractCDOTest
    */
   public void test_newCommittedObject() throws CommitException
   {
-    checkSkip();
-
     CDOSession session = openSession();
     session.options().setPassiveUpdateEnabled(false);
 
@@ -178,8 +171,6 @@ public class StickyViewsTest extends AbstractCDOTest
    */
   public void test_dirtyCommittedObject() throws CommitException
   {
-    checkSkip();
-
     // Put a company in the repo
     {
       CDOSession sess = openSession();
@@ -229,8 +220,6 @@ public class StickyViewsTest extends AbstractCDOTest
    */
   public void test_detachedCommittedObject() throws CommitException
   {
-    checkSkip();
-
     // Put a company in the repo
     {
       CDOSession sess = openSession();
@@ -281,8 +270,6 @@ public class StickyViewsTest extends AbstractCDOTest
 
   public void test_refresh() throws CommitException
   {
-    checkSkip();
-
     CDOSession sess = openSession();
     CDOTransaction tx = sess.openTransaction();
     sess.options().setPassiveUpdateEnabled(false);
@@ -313,8 +300,6 @@ public class StickyViewsTest extends AbstractCDOTest
 
   public void test_otherSessionCommittedLatest() throws CommitException
   {
-    checkSkip();
-
     CDOSession sess = openSession();
     CDOTransaction tx = sess.openTransaction();
     sess.options().setPassiveUpdateEnabled(false);

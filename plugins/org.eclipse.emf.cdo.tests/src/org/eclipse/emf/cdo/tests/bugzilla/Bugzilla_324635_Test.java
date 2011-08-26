@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model4.MultiContainedElement;
 import org.eclipse.emf.cdo.tests.model4.RefMultiContained;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -32,10 +33,9 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
  */
 public class Bugzilla_324635_Test extends AbstractCDOTest
 {
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testTargetGoalDeltaVersion() throws Exception
   {
-    skipUnlessBranching();
-
     // setup 2 transactions.
     final CDOSession session1 = openSession();
     final CDOTransaction s1Tr1 = session1.openTransaction();

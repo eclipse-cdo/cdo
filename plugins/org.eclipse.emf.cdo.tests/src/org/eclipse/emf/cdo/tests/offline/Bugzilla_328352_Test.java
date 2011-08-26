@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -43,9 +44,9 @@ public class Bugzilla_328352_Test extends AbstractSyncingTest
 
   private final int NUM_CLIENT_VIEWS = 10;
 
+  @Requires(IRepositoryConfig.CAPABILITY_OFFLINE)
   public void testOfflineCloneSynchronization() throws Exception
   {
-    skipUnlessConfig(getOfflineConfig());
     disableConsole();
 
     // create an offline clone.

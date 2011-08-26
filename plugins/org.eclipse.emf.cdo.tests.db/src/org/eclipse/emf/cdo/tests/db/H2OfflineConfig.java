@@ -57,6 +57,12 @@ public class H2OfflineConfig extends OfflineConfig
     this.copyOnBranch = copyOnBranch;
   }
 
+  @Override
+  protected String getStoreName()
+  {
+    return MEMConfig.STORE_NAME;
+  }
+
   public boolean isWithRanges()
   {
     return withRanges;

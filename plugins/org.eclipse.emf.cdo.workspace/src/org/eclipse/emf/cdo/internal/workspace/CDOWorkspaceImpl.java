@@ -582,7 +582,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   public CDOChangeSetData getLocalChanges()
   {
     Set<CDOID> ids = base.getIDs();
-    return CDORevisionUtil.createChangeSetData(ids, base, this);
+    return CDORevisionUtil.createChangeSetData(ids, base, this, true);
   }
 
   public CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory()

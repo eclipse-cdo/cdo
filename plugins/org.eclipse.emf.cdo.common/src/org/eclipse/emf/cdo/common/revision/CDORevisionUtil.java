@@ -222,6 +222,15 @@ public final class CDORevisionUtil
   public static CDOChangeSetData createChangeSetData(Set<CDOID> ids, CDORevisionProvider startProvider,
       CDORevisionProvider endProvider)
   {
+    return createChangeSetData(ids, startProvider, endProvider, false);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static CDOChangeSetData createChangeSetData(Set<CDOID> ids, CDORevisionProvider startProvider,
+      CDORevisionProvider endProvider, boolean useStartVersions)
+  {
     List<CDOIDAndVersion> newObjects = new ArrayList<CDOIDAndVersion>();
     List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
     List<CDOIDAndVersion> detachedObjects = new ArrayList<CDOIDAndVersion>();
@@ -232,9 +241,14 @@ public final class CDORevisionUtil
 
       if (startRevision == null && endRevision != null)
       {
+        if (useStartVersions)
+        {
+          ((InternalCDORevision)endRevision).setVersion(0);
+        }
+
         newObjects.add(endRevision);
       }
-      else if (endRevision == null && startRevision != null)
+      else if (startRevision != null && endRevision == null)
       {
         detachedObjects.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
       }
@@ -242,6 +256,11 @@ public final class CDORevisionUtil
       {
         if (!startRevision.equals(endRevision))
         {
+          if (useStartVersions)
+          {
+            ((InternalCDORevision)endRevision).setVersion(startRevision.getVersion());
+          }
+
           CDORevisionDelta delta = endRevision.compare(startRevision);
           if (!delta.isEmpty())
           {

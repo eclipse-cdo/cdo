@@ -183,7 +183,7 @@ public class FeatureMapTest extends AbstractCDOTest
 
   public void testFeatureMaps() throws Exception
   {
-    skipFeatureMaps();
+    skipStoreWithoutFeatureMaps();
 
     EReference feature = getModel5Package().getTestFeatureMap_Doctors();
 

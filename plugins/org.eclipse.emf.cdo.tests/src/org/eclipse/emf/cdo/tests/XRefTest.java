@@ -50,7 +50,7 @@ public class XRefTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    skipQueryXRefs();
+    skipStoreWithoutQueryXRefs();
   }
 
   public void testCrossReferenceMultivalueEReferenceQuery() throws Exception

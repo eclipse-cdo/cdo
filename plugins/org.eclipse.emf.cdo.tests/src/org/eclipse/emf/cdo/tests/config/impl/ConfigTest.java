@@ -620,32 +620,32 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     skipTest(getModelConfig() instanceof ModelConfig.Legacy);
   }
 
-  protected void skipExternalReferences()
+  protected void skipStoreWithoutExternalReferences()
   {
     skipTest(getRepository().getStore() instanceof NoExternalReferences);
   }
 
-  protected void skipQueryXRefs()
+  protected void skipStoreWithoutQueryXRefs()
   {
     skipTest(getRepository().getStore() instanceof NoQueryXRefs);
   }
 
-  protected void skipLargeObjects()
+  protected void skipStoreWithoutLargeObjects()
   {
     skipTest(getRepository().getStore() instanceof NoLargeObjects);
   }
 
-  protected void skipFeatureMaps()
+  protected void skipStoreWithoutFeatureMaps()
   {
     skipTest(getRepository().getStore() instanceof NoFeatureMaps);
   }
 
-  protected void skipHandleRevisions()
+  protected void skipStoreWithoutHandleRevisions()
   {
     skipTest(getRepository().getStore() instanceof NoHandleRevisions);
   }
 
-  protected void skipRawAccess()
+  protected void skipStoreWithoutRawAccess()
   {
     skipTest(getRepository().getStore() instanceof NoRawAccess);
   }

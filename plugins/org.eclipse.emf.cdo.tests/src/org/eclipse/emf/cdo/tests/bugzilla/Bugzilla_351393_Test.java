@@ -30,7 +30,7 @@ public class Bugzilla_351393_Test extends AbstractCDOTest
 {
   public void testExtRef() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());

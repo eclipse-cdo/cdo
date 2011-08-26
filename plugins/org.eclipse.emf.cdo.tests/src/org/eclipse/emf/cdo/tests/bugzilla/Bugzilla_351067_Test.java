@@ -29,7 +29,7 @@ public class Bugzilla_351067_Test extends AbstractCDOTest
 {
   public void testCommitBlob() throws Exception
   {
-    skipLargeObjects();
+    skipStoreWithoutLargeObjects();
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

@@ -38,7 +38,7 @@ public class Bugzilla_320690_Test extends AbstractCDOTest
 
   public void testLockRefTargets() throws Exception
   {
-    skipQueryXRefs();
+    skipStoreWithoutQueryXRefs();
 
     CDOSession session1 = openSession();
     session1.options().setPassiveUpdateEnabled(false);
@@ -117,7 +117,7 @@ public class Bugzilla_320690_Test extends AbstractCDOTest
 
   public void testDeleteTargetAndReferenceAtOnce() throws Exception
   {
-    skipQueryXRefs();
+    skipStoreWithoutQueryXRefs();
     NodeA a = getModel3Factory().createNodeA();
     NodeA b = getModel3Factory().createNodeA();
     NodeA c = getModel3Factory().createNodeA();

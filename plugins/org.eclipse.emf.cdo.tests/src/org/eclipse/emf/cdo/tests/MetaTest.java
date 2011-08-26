@@ -24,7 +24,7 @@ public class MetaTest extends AbstractCDOTest
 {
   public void testMetaReference() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     {
       CDOSession session = openSession();
@@ -48,7 +48,7 @@ public class MetaTest extends AbstractCDOTest
 
   public void testMetaReferenceAttachFirst() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     {
       CDOSession session = openSession();
@@ -72,7 +72,7 @@ public class MetaTest extends AbstractCDOTest
 
   public void testMetaReference2() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     EReference targetRef = getModel3SubpackagePackage().getClass2_Class1();
 

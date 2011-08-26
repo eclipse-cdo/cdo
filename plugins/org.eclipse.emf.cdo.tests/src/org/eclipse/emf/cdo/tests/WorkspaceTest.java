@@ -97,7 +97,7 @@ public class WorkspaceTest extends AbstractCDOTest
     super.doSetUp();
 
     skipUnlessAuditing();
-    skipHandleRevisions();
+    skipStoreWithoutHandleRevisions();
 
     CDOSession session = openSession();
     transaction = session.openTransaction();

@@ -58,7 +58,7 @@ public class BackupTest extends AbstractCDOTest
   {
     disableConsole();
     super.doSetUp();
-    skipRawAccess();
+    skipStoreWithoutRawAccess();
   }
 
   @Override
@@ -256,7 +256,9 @@ public class BackupTest extends AbstractCDOTest
    */
   public void testImport() throws Exception
   {
-    skipTest(getRepositoryConfig().getName().contains("range-based"));
+    String configName = getRepositoryConfig().getName();
+    skipTest(configName.contains("range-based"));
+    skipTest(configName.contains("ranges"));
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

@@ -40,7 +40,7 @@ public class LobTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    skipLargeObjects();
+    skipStoreWithoutLargeObjects();
     lobID = null;
   }
 

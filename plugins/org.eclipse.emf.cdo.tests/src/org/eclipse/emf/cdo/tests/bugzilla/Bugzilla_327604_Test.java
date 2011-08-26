@@ -137,7 +137,7 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
   @CleanRepositoriesBefore
   public void testReadObjects() throws Exception
   {
-    skipHandleRevisions();
+    skipStoreWithoutHandleRevisions();
 
     InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
 

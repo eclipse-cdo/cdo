@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.tests.config.impl;
 import org.eclipse.emf.cdo.tests.config.IConstants;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,23 +37,6 @@ public abstract class ConfigTestSuite implements IConstants
     initConfigSuites(suite);
     return suite;
   }
-
-  // protected void initConfigSuites(TestSuite parent)
-  // {
-  // for (ContainerConfig containerConfig : ContainerConfig.CONFIGS)
-  // {
-  // for (RepositoryConfig repositoryConfig : RepositoryConfig.CONFIGS)
-  // {
-  // for (SessionConfig sessionConfig : SessionConfig.CONFIGS)
-  // {
-  // for (ModelConfig modelConfig : ModelConfig.CONFIGS)
-  // {
-  // initConfigSuite(parent, containerConfig, repositoryConfig, sessionConfig, modelConfig);
-  // }
-  // }
-  // }
-  // }
-  // }
 
   public void addScenario(TestSuite parent, ContainerConfig containerConfig, RepositoryConfig repositoryConfig,
       SessionConfig sessionConfig, ModelConfig modelConfig)
@@ -81,23 +66,6 @@ public abstract class ConfigTestSuite implements IConstants
 
   protected abstract void initConfigSuites(TestSuite parent);
 
-  // protected void initConfigSuites(TestSuite parent)
-  // {
-  // for (ContainerConfig containerConfig : ContainerConfig.CONFIGS)
-  // {
-  // for (RepositoryConfig repositoryConfig : RepositoryConfig.CONFIGS)
-  // {
-  // for (SessionConfig sessionConfig : SessionConfig.CONFIGS)
-  // {
-  // for (ModelConfig modelConfig : ModelConfig.CONFIGS)
-  // {
-  // initConfigSuite(parent, containerConfig, repositoryConfig, sessionConfig, modelConfig);
-  // }
-  // }
-  // }
-  // }
-  // }
-
   protected abstract void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario);
 
   /**
@@ -109,8 +77,9 @@ public abstract class ConfigTestSuite implements IConstants
 
     public TestWrapper(Class<? extends ConfigTest> testClass, IScenario scenario)
     {
-      super(testClass, testClass.getName()); // Important for the UI to set the *qualified* class name!
+      // super(testClass, testClass.getName()); // Important for the UI to set the *qualified* class name!
       this.scenario = scenario;
+      addTestsFromTestCase(testClass);
     }
 
     @Override
@@ -119,8 +88,10 @@ public abstract class ConfigTestSuite implements IConstants
       if (test instanceof ConfigTest)
       {
         scenario.save();
+
         ConfigTest configTest = (ConfigTest)test;
         configTest.setScenario(scenario);
+
         if (configTest.isValid())
         {
           super.runTest(configTest, result);
@@ -130,6 +101,77 @@ public abstract class ConfigTestSuite implements IConstants
       {
         super.runTest(test, result);
       }
+    }
+
+    private void addTestsFromTestCase(final Class<?> theClass)
+    {
+      setName(theClass.getName());
+
+      try
+      {
+        getTestConstructor(theClass); // Avoid generating multiple error messages
+      }
+      catch (NoSuchMethodException e)
+      {
+        addTest(warning("Class " + theClass.getName()
+            + " has no public constructor TestCase(String name) or TestCase()"));
+        return;
+      }
+
+      if (!Modifier.isPublic(theClass.getModifiers()))
+      {
+        addTest(warning("Class " + theClass.getName() + " is not public"));
+        return;
+      }
+
+      Class<?> superClass = theClass;
+      List<String> names = new ArrayList<String>();
+      while (Test.class.isAssignableFrom(superClass))
+      {
+        for (Method each : superClass.getDeclaredMethods())
+        {
+          addTestMethod(each, names, theClass);
+        }
+
+        superClass = superClass.getSuperclass();
+      }
+
+      if (testCount() == 0)
+      {
+        addTest(warning("No tests found in " + theClass.getName()));
+      }
+    }
+
+    private void addTestMethod(Method m, List<String> names, Class<?> theClass)
+    {
+      String name = m.getName();
+      if (names.contains(name))
+      {
+        return;
+      }
+
+      if (!isPublicTestMethod(m))
+      {
+        if (isTestMethod(m))
+        {
+          addTest(warning("Test method isn't public: " + m.getName() + "(" + theClass.getCanonicalName() + ")"));
+        }
+
+        return;
+      }
+
+      names.add(name);
+      addTest(createTest(theClass, name));
+    }
+
+    private boolean isPublicTestMethod(Method m)
+    {
+      return isTestMethod(m) && Modifier.isPublic(m.getModifiers());
+    }
+
+    private boolean isTestMethod(Method m)
+    {
+      return m.getParameterTypes().length == 0 && m.getName().startsWith("test") && m.getReturnType().equals(Void.TYPE);
     }
   }
 }

@@ -62,7 +62,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
   @CleanRepositoriesBefore
   public void testExternalWithDynamicEObject() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("test", new XMIResourceFactoryImpl());
@@ -92,7 +92,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testExternalWithEClass() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     {
       ResourceSet resourceSet = new ResourceSetImpl();
@@ -127,7 +127,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testExternalWithEPackage() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     {
       CDOSession sessionA = openSession();
@@ -163,7 +163,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     byte[] dataOfresD = null;
     getRepository(REPOSITORY_B_NAME);
@@ -273,7 +273,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
   {
     // Skip this test until the problems with XATransactions are solved.
     skipConfig(LEGACY);
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     getRepository(REPOSITORY_B_NAME);
 
@@ -385,7 +385,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testWithXML() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     ResourceSet resourceSet = new ResourceSetImpl();
     Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
@@ -412,7 +412,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
   public void testWithXMLAndPrefetching() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
 
     {
       ResourceSet resourceSet = new ResourceSetImpl();

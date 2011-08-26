@@ -324,7 +324,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
   public void testDetachXRefExternal() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
     skipConfig("Hibernate");
 
     Customer customer = getModel1Factory().createCustomer();
@@ -391,7 +391,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
   public void testNewMakeExternal() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
     skipConfig("Hibernate");
     Customer customer = getModel1Factory().createCustomer();
     customer.setName("customer");
@@ -453,7 +453,7 @@ public class CrossReferenceTest extends AbstractCDOTest
 
   public void testExternalMakeDangling() throws Exception
   {
-    skipExternalReferences();
+    skipStoreWithoutExternalReferences();
     skipConfig("Hibernate");
 
     Customer customer = getModel1Factory().createCustomer();

@@ -43,7 +43,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-@Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+@Requires({ IRepositoryConfig.CAPABILITY_BRANCHING, "MEM" })
 public class RevisionManagerTest extends AbstractCDOTest
 {
   private static final CDOID ID = CDOIDUtil.createLong(2);
@@ -95,7 +95,6 @@ public class RevisionManagerTest extends AbstractCDOTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    // skipUnlessMEM();
 
     Field disableGC = ReflectUtil.getField(AbstractCDORevisionCache.class, "disableGC");
     ReflectUtil.setValue(disableGC, null, true);

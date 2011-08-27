@@ -107,7 +107,8 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    *          {@link #merge(CDOBranchPoint, org.eclipse.emf.cdo.transaction.CDOMerger) merge} or if the merge was not in
    *          a {@link CDOBranch#isLocal() local} branch.
    * @since 4.0
-   * @deprecated Use {@link #applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint)}
+   * @deprecated Use
+   *             {@link #applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)}
    */
   @Deprecated
   public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(
@@ -122,7 +123,8 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    * @since 4.1
    */
   public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider,
-      CDORevisionProvider targetProvider, CDOBranchPoint source);
+      CDORevisionProvider targetProvider, CDOBranchPoint source, boolean keepVersions)
+      throws ChangeSetOutdatedException;
 
   /**
    * @since 4.0
@@ -177,6 +179,20 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
     public List<CDOID> getAdjustedObjects()
     {
       return adjustedObjects;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public static final class ChangeSetOutdatedException extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public ChangeSetOutdatedException()
+    {
+      super("Change set is outdated");
     }
   }
 }

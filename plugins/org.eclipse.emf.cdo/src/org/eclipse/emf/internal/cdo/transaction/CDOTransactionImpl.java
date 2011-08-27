@@ -477,7 +477,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return null;
     }
 
-    return applyChangeSet(result, ancestorInfo, targetInfo, source).getChangeSetData();
+    return applyChangeSet(result, ancestorInfo, targetInfo, source, false).getChangeSetData();
   }
 
   private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo,
@@ -496,7 +496,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   public synchronized ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData,
-      CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider, CDOBranchPoint source)
+      CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider, CDOBranchPoint source,
+      boolean keepVersions) throws ChangeSetOutdatedException
   {
     ApplyChangeSetResult result = new ApplyChangeSetResult();
 
@@ -515,7 +516,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     // Changed objects
     Map<CDOID, InternalCDORevision> oldRevisions = applyChangedObjects(changeSetData.getChangedObjects(),
-        ancestorProvider, targetProvider, result.getChangeSetData().getChangedObjects());
+        ancestorProvider, targetProvider, keepVersions, result.getChangeSetData().getChangedObjects());
 
     // Delta notifications
     Collection<CDORevisionDelta> notificationDeltas = lastSavepoint.getRevisionDeltas().values();
@@ -612,7 +613,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   private Map<CDOID, InternalCDORevision> applyChangedObjects(List<CDORevisionKey> changedObjects,
-      CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider, List<CDORevisionKey> result)
+      CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider, boolean keepVersions,
+      List<CDORevisionKey> result) throws ChangeSetOutdatedException
   {
     Map<CDOID, InternalCDORevision> oldRevisions = new HashMap<CDOID, InternalCDORevision>();
 
@@ -641,7 +643,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       InternalCDORevision goalRevision = ancestorRevision.copy();
       goalRevision.setBranchPoint(this);
-      goalRevision.setVersion(targetRevision.getVersion());
+      if (!keepVersions)
+      {
+        goalRevision.setVersion(targetRevision.getVersion());
+      }
+
       goalRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
       ancestorGoalDelta.apply(goalRevision);
 
@@ -650,6 +656,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       if (!targetGoalDelta.isEmpty())
       {
+        if (keepVersions && targetGoalDelta.getVersion() != ancestorRevision.getVersion())
+        {
+          throw new ChangeSetOutdatedException();
+        }
+
         revisionDeltas.put(id, targetGoalDelta);
         result.add(targetGoalDelta);
 

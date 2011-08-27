@@ -87,6 +87,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.ApplyChangeSetResult;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.ChangeSetOutdatedException;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.Arrays;
@@ -359,7 +360,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
           return revision;
         }
-      }, this, null);
+      }, this, null, false);
 
       return transaction;
     }
@@ -397,10 +398,17 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
       CDOChangeSetData changes = getLocalChanges();
 
-      ApplyChangeSetResult result = transaction.applyChangeSet(changes, base, this, head);
-      if (!result.getIDMappings().isEmpty())
+      try
       {
-        throw new IllegalStateException("Attaching new objects is only supported for IDGenerationLocation.CLIENT");
+        ApplyChangeSetResult result = transaction.applyChangeSet(changes, base, this, head, true);
+        if (!result.getIDMappings().isEmpty())
+        {
+          throw new IllegalStateException("Attaching new objects is only supported for IDGenerationLocation.CLIENT");
+        }
+      }
+      catch (ChangeSetOutdatedException ex)
+      {
+        throw new CommitException(ex);
       }
 
       // Attaching new objects is only supported for IDGenerationLocation.CLIENT

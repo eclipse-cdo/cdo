@@ -3,6 +3,12 @@
     <resource path="src/org/eclipse/emf/cdo/internal/workspace/CDOWorkspaceImpl.java" type="org.eclipse.emf.cdo.internal.workspace.CDOWorkspaceImpl">
         <filter id="572522506">
             <message_arguments>
+                <message_argument value="CommitException"/>
+                <message_argument value="CDOWorkspaceImpl"/>
+            </message_arguments>
+        </filter>
+        <filter id="572522506">
+            <message_arguments>
                 <message_argument value="ReadOnlyException"/>
                 <message_argument value="CDOWorkspaceImpl"/>
             </message_arguments>

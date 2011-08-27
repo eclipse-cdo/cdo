@@ -176,8 +176,8 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
       CDOChangeSetData localChangeSet = transaction.getChangeSetData();
       transaction.rollback();
 
-      transaction.applyChangeSet(remoteChangeSet, transaction, transaction, transaction);
-      transaction.applyChangeSet(localChangeSet, transaction, transaction, transaction);
+      transaction.applyChangeSet(remoteChangeSet, transaction, transaction, transaction, false);
+      transaction.applyChangeSet(localChangeSet, transaction, transaction, transaction, false);
     }
 
     private CDOChangeSetData createChangeSet(List<CDORevisionDelta> revisionDeltas)

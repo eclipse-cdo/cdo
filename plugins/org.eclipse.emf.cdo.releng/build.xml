@@ -480,15 +480,7 @@
 			</fileset>
 		</copy>
 
-		<property name="zips" location="${hudson.WORKSPACE}/zips" />
-		<mkdir dir="${zips}" />
-
-		<if>
-			<equals arg1="${hudson.GENERATE_PRODUCTS}" arg2="true" />
-			<then>
-				<antcall target="-generate.all" />
-			</then>
-		</if>
+		<antcall target="-generate.all" />
 	</target>
 
 	<!-- ==== -->
@@ -524,10 +516,19 @@
 	<!-- ============ -->
 
 	<target name="-generate.all">
+		<property name="zips" location="${hudson.WORKSPACE}/zips" />
+		<mkdir dir="${zips}" />
+
 		<antcall target="-generate.index" />
 		<antcall target="-generate.bookmarks" />
 		<antcall target="-generate.dropins" />
-		<antcall target="-generate.products" />
+		
+		<if>
+			<equals arg1="${hudson.GENERATE_PRODUCTS}" arg2="true" />
+			<then>
+				<antcall target="-generate.products" />
+			</then>
+		</if>
 	</target>
 
 	<!-- ============== -->

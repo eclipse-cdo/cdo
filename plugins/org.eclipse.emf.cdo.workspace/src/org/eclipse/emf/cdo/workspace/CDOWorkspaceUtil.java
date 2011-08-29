@@ -212,5 +212,10 @@ public final class CDOWorkspaceUtil
     {
       return getIDs().contains(id);
     }
+
+    public boolean isAddedObject(CDOID id)
+    {
+      return containsID(id) && getRevision(id) == null;
+    }
   }
 }

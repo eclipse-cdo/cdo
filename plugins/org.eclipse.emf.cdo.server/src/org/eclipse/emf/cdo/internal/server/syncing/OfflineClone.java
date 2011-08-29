@@ -36,6 +36,7 @@ import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -204,14 +205,19 @@ public class OfflineClone extends SynchronizableRepository
       };
     }
 
-    public synchronized CDOChangeKind getChangeKind(CDOID id)
+    public synchronized Map<CDOID, CDOChangeKind> getChangeKinds()
     {
       if (changeKindCache == null)
       {
         changeKindCache = new CDOChangeKindCache(this);
       }
 
-      return changeKindCache.getChangeKind(id);
+      return changeKindCache;
+    }
+
+    public CDOChangeKind getChangeKind(CDOID id)
+    {
+      return getChangeKinds().get(id);
     }
   }
 

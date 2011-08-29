@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -91,6 +92,11 @@ public class FailureCommitInfo implements CDOCommitInfo
   public List<CDOIDAndVersion> getDetachedObjects()
   {
     return Collections.emptyList();
+  }
+
+  public Map<CDOID, CDOChangeKind> getChangeKinds()
+  {
+    return Collections.emptyMap();
   }
 
   public CDOChangeKind getChangeKind(CDOID id)

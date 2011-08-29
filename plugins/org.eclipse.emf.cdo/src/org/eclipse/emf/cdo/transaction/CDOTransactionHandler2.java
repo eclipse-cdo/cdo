@@ -13,6 +13,8 @@
  */
 package org.eclipse.emf.cdo.transaction;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+
 /**
  * A call-back interface that is called by a {@link CDOTransaction transcation} when it is about to be committed, has
  * been committed or rolled back.
@@ -33,6 +35,10 @@ public interface CDOTransactionHandler2 extends CDOTransactionHandlerBase
   /**
    * Called by a <code>CDOTransaction</code> <b>after</b> it is being committed. The implementor of this method is
    * <b>not</b> allowed to throw an unchecked exception.
+   * <p>
+   * If you're interested in the results of the commit operation consider to implement
+   * {@link CDOTransactionHandler3#committedTransaction(CDOTransaction, CDOCommitContext, CDOCommitInfo)
+   * CDOTransactionHandler3.committedTransaction()}.
    */
   public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext);
 

@@ -23,4 +23,9 @@ public interface CDOWorkspaceBase2 extends CDOWorkspaceBase
   public boolean isEmpty();
 
   public boolean containsID(CDOID id);
+
+  /**
+   * @since 4.1
+   */
+  public boolean isAddedObject(CDOID id);
 }

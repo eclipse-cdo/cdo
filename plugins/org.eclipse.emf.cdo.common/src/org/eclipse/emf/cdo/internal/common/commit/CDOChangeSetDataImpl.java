@@ -192,14 +192,19 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
     return detachedObjects;
   }
 
-  public synchronized CDOChangeKind getChangeKind(CDOID id)
+  public synchronized Map<CDOID, CDOChangeKind> getChangeKinds()
   {
     if (changeKindCache == null)
     {
       changeKindCache = new CDOChangeKindCache(this);
     }
 
-    return changeKindCache.getChangeKind(id);
+    return changeKindCache;
+  }
+
+  public CDOChangeKind getChangeKind(CDOID id)
+  {
+    return getChangeKinds().get(id);
   }
 
   @Override

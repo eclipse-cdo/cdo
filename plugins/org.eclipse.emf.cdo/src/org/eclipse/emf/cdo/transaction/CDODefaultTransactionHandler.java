@@ -16,8 +16,7 @@ package org.eclipse.emf.cdo.transaction;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class CDODefaultTransactionHandler extends CDODefaultTransactionHandler1 implements
-    CDOTransactionHandler
+public class CDODefaultTransactionHandler extends CDODefaultTransactionHandler1 implements CDOTransactionHandler
 {
   protected CDODefaultTransactionHandler()
   {
@@ -34,7 +33,7 @@ public abstract class CDODefaultTransactionHandler extends CDODefaultTransaction
   /**
    * This implementation does nothing. Clients may override to provide specialized behaviour.
    */
-  public void rolledBackTransaction(CDOTransaction transaction)
+  public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
     // Do nothing
   }
@@ -42,7 +41,7 @@ public abstract class CDODefaultTransactionHandler extends CDODefaultTransaction
   /**
    * This implementation does nothing. Clients may override to provide specialized behaviour.
    */
-  public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+  public void rolledBackTransaction(CDOTransaction transaction)
   {
     // Do nothing
   }

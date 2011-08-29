@@ -1701,6 +1701,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return commitInfo.getDetachedObjects();
     }
 
+    public Map<CDOID, CDOChangeKind> getChangeKinds()
+    {
+      return commitInfo.getChangeKinds();
+    }
+
     public CDOChangeKind getChangeKind(CDOID id)
     {
       return commitInfo.getChangeKind(id);

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -86,6 +87,11 @@ public abstract class DelegatingCommitInfo implements CDOCommitInfo
   public List<CDOIDAndVersion> getDetachedObjects()
   {
     return getDelegate().getDetachedObjects();
+  }
+
+  public Map<CDOID, CDOChangeKind> getChangeKinds()
+  {
+    return getDelegate().getChangeKinds();
   }
 
   public CDOChangeKind getChangeKind(CDOID id)

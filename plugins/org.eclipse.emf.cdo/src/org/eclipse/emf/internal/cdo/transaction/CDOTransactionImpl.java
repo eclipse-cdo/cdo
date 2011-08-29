@@ -82,6 +82,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler1;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler2;
+import org.eclipse.emf.cdo.transaction.CDOTransactionHandler3;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
@@ -2556,9 +2557,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         try
         {
           InternalCDOSession session = getSession();
+          long timeStamp = result.getTimeStamp();
+
           if (result.getRollbackMessage() != null)
           {
-            CDOCommitInfo commitInfo = new FailureCommitInfo(result.getTimeStamp(), result.getPreviousTimeStamp());
+            CDOCommitInfo commitInfo = new FailureCommitInfo(timeStamp, result.getPreviousTimeStamp());
             session.invalidate(commitInfo, transaction);
             return;
           }
@@ -2588,7 +2591,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             removeObject(id);
           }
 
-          CDOCommitInfo commitInfo = makeCommitInfo(result.getTimeStamp(), result.getPreviousTimeStamp());
+          CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, result.getPreviousTimeStamp());
           session.invalidate(commitInfo, transaction);
 
           // Bug 290032 - Sticky views
@@ -2618,7 +2621,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             for (int i = 0; i < handlers.length; i++)
             {
               CDOTransactionHandler2 handler = handlers[i];
-              handler.committedTransaction(transaction, this);
+              if (handler instanceof CDOTransactionHandler3)
+              {
+                CDOTransactionHandler3 handler3 = (CDOTransactionHandler3)handler;
+                handler3.committedTransaction(transaction, this, commitInfo);
+              }
+              else
+              {
+                handler.committedTransaction(transaction, this);
+              }
             }
           }
 

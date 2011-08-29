@@ -27,6 +27,7 @@ import org.eclipse.net4j.util.CheckUtil;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -113,6 +114,12 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   {
     loadCommitDataIfNeeded();
     return commitData.getDetachedObjects();
+  }
+
+  public Map<CDOID, CDOChangeKind> getChangeKinds()
+  {
+    loadCommitDataIfNeeded();
+    return commitData.getChangeKinds();
   }
 
   public CDOChangeKind getChangeKind(CDOID id)

@@ -48,33 +48,6 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
     return folder;
   }
 
-  @Override
-  public String toString()
-  {
-    return "FolderBase[" + folder.getAbsolutePath() + "]";
-  }
-
-  @Override
-  protected void doClear()
-  {
-    IOUtil.delete(folder);
-    checkExists(folder, false);
-    createFolder();
-  }
-
-  @Override
-  protected Set<CDOID> doGetIDs()
-  {
-    Set<CDOID> ids = new HashSet<CDOID>();
-    for (String key : folder.list())
-    {
-      CDOID id = getCDOID(key);
-      ids.add(id);
-    }
-
-    return ids;
-  }
-
   public final synchronized CDORevision getRevision(CDOID id)
   {
     File file = getFile(id);
@@ -102,8 +75,46 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
     }
   }
 
+  public boolean isAddedObject(CDOID id)
+  {
+    File file = getFile(id);
+    if (!file.exists())
+    {
+      return false;
+    }
+
+    return file.length() == 0;
+  }
+
   @Override
-  protected void registerChangedOrDetachedObject(InternalCDORevision revision)
+  public String toString()
+  {
+    return "FolderBase[" + folder.getAbsolutePath() + "]";
+  }
+
+  @Override
+  protected void doClear()
+  {
+    IOUtil.delete(folder);
+    checkExists(folder, false);
+    createFolder();
+  }
+
+  @Override
+  protected Set<CDOID> doGetIDs()
+  {
+    Set<CDOID> ids = new HashSet<CDOID>();
+    for (String key : folder.list())
+    {
+      CDOID id = getCDOID(key);
+      ids.add(id);
+    }
+
+    return ids;
+  }
+
+  @Override
+  protected void doRegisterChangedOrDetachedObject(InternalCDORevision revision)
   {
     File file = getFile(revision.getID());
     if (file.exists())
@@ -132,7 +143,7 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
   }
 
   @Override
-  protected void registerAddedObject(CDOID id)
+  protected void doRegisterAddedObject(CDOID id)
   {
     File file = getFile(id);
     if (file.exists())
@@ -157,7 +168,7 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
   }
 
   @Override
-  protected void deregisterObject(CDOID id)
+  protected void doDeregisterObject(CDOID id)
   {
     File file = getFile(id);
     file.delete();

@@ -11,12 +11,14 @@
 package org.eclipse.emf.cdo.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * A {@link CDOChangeKindProvider change kind provider} with detailed information about {@link #getNewObjects() new},
@@ -68,4 +70,9 @@ public interface CDOChangeSetData extends CDOChangeKindProvider
    * {@link CDOBranchVersion#UNSPECIFIED_VERSION unspecified}.
    */
   public List<CDOIDAndVersion> getDetachedObjects();
+
+  /**
+   * @since 4.1
+   */
+  public Map<CDOID, CDOChangeKind> getChangeKinds();
 }

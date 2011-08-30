@@ -56,6 +56,15 @@ public class Scenario implements IScenario
   {
   }
 
+  public Scenario(IContainerConfig containerConfig, IRepositoryConfig repositoryConfig, ISessionConfig sessionConfig,
+      IModelConfig modelConfig)
+  {
+    this.containerConfig = containerConfig;
+    this.repositoryConfig = repositoryConfig;
+    this.sessionConfig = sessionConfig;
+    this.modelConfig = modelConfig;
+  }
+
   public IContainerConfig getContainerConfig()
   {
     return containerConfig;

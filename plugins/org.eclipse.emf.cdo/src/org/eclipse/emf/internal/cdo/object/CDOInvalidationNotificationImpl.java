@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
@@ -25,7 +26,7 @@ public class CDOInvalidationNotificationImpl implements CDOInvalidationNotificat
 
   public CDOInvalidationNotificationImpl(EObject eObject)
   {
-    this.eObject = eObject;
+    this.eObject = CDOUtil.getEObject(eObject);
   }
 
   public Object getNotifier()

@@ -35,7 +35,14 @@ public class Bugzilla_355915_Test extends AbstractCDOTest
 {
   private static final String RESOURCE_PATH = "/test1";
 
-  private CountDownLatch latch = new CountDownLatch(1);
+  private CountDownLatch latch;
+
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    latch = new CountDownLatch(1);
+  }
 
   @Requires(IModelConfig.CAPABILITY_LEGACY)
   @CleanRepositoriesBefore

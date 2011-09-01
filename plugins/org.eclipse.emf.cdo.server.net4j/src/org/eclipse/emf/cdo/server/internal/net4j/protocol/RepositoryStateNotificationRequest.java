@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
@@ -23,16 +24,19 @@ import java.io.IOException;
  */
 public class RepositoryStateNotificationRequest extends CDOServerRequest
 {
-  private CDOCommonRepository.State oldState;
+  private final CDOCommonRepository.State oldState;
 
-  private CDOCommonRepository.State newState;
+  private final CDOCommonRepository.State newState;
+
+  private final CDOID rootResourceID;
 
   public RepositoryStateNotificationRequest(CDOServerProtocol serverProtocol, CDOCommonRepository.State oldState,
-      CDOCommonRepository.State newState)
+      CDOCommonRepository.State newState, CDOID rootResourceID)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_REPOSITORY_STATE_NOTIFICATION);
     this.oldState = oldState;
     this.newState = newState;
+    this.rootResourceID = rootResourceID;
   }
 
   @Override
@@ -40,5 +44,6 @@ public class RepositoryStateNotificationRequest extends CDOServerRequest
   {
     out.writeEnum(oldState);
     out.writeEnum(newState);
+    out.writeCDOID(rootResourceID);
   }
 }

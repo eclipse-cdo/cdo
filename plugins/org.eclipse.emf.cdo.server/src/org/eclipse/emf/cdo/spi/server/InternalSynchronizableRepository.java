@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfoHandler;
 import org.eclipse.emf.cdo.server.ISynchronizableRepository;
 import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
@@ -21,7 +22,7 @@ import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface InternalSynchronizableRepository extends ISynchronizableRepository, InternalRepository,
-    CDOReplicationContext, CDORawReplicationContext
+    CDOReplicationContext, CDORawReplicationContext, CDOLockChangeInfoHandler
 {
   public InternalRepositorySynchronizer getSynchronizer();
 

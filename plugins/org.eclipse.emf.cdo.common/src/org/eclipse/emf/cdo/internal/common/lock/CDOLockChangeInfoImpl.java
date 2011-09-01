@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+
 /**
  * @author Caspar De Groot
  */
@@ -29,13 +31,16 @@ public class CDOLockChangeInfoImpl implements CDOLockChangeInfo
 
   private final Operation operation;
 
+  private final LockType lockType;
+
   public CDOLockChangeInfoImpl(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, CDOLockState[] lockStates,
-      Operation operation)
+      Operation operation, LockType lockType)
   {
     this.branchPoint = branchPoint;
     this.lockOwner = lockOwner;
     this.lockStates = lockStates;
     this.operation = operation;
+    this.lockType = lockType;
   }
 
   public CDOBranch getBranch()
@@ -61,5 +66,10 @@ public class CDOLockChangeInfoImpl implements CDOLockChangeInfo
   public Operation getOperation()
   {
     return operation;
+  }
+
+  public LockType getLockType()
+  {
+    return lockType;
   }
 }

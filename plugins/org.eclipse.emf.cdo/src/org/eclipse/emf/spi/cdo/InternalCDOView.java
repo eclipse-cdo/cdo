@@ -139,39 +139,10 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   /**
    * @since 4.1
    */
-  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo);
+  public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo);
 
   /**
    * @since 4.1
    */
   public CDOLockState[] getLockStates(Collection<CDOID> ids);
-
-  // /**
-  // * Each time CDORevision or CDOState of an CDOObject is modified, ensure that no concurrent access is modifying it
-  // at
-  // * the same time. Uses {@link InternalCDOView#getStateLock()} to be thread safe.
-  // * <p>
-  // * In the case where {@link CDOObject#cdoRevision()} or {@link CDOObject#cdoState()} is called without using this
-  // * lock, it is not guarantee that the state didn't change immediately after.
-  // * <p>
-  // * <code>
-  // * if (cdoObject.cdoState() != CDOState.PROXY)
-  // * {
-  // * // At this point could be a proxy!
-  // * cdoObject.cdoRevision();
-  // * }
-  // * </code>
-  // * <p>
-  // * The reason were we didn't use {@link CDOView#getLock()} is to not allow the access of that lock to the users
-  // since
-  // * it is very critical. Instead of giving this API to the end-users, a better API should be given in the CDOObject
-  // to
-  // * give them want they need.
-  // */
-  // public ReentrantLock getStateLock();
-  //
-  // /**
-  // * @since 4.0
-  // */
-  // public Object getObjectsLock();
 }

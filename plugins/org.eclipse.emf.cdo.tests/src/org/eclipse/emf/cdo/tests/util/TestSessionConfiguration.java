@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.util;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
@@ -23,37 +24,7 @@ import org.eclipse.net4j.util.event.Notifier;
  */
 public abstract class TestSessionConfiguration extends Notifier implements CDOSessionConfiguration
 {
-  public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public void setIDGenerator(CDOIDGenerator idGenerator)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public void setActivateOnOpen(boolean activateOnOpen)
-  {
-    throw new UnsupportedOperationException();
-  }
-
   public boolean isSessionOpen()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  public boolean isPassiveUpdateEnabled()
   {
     throw new UnsupportedOperationException();
   }
@@ -63,7 +34,42 @@ public abstract class TestSessionConfiguration extends Notifier implements CDOSe
     throw new UnsupportedOperationException();
   }
 
+  public void setActivateOnOpen(boolean activateOnOpen)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOAuthenticator getAuthenticator()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isPassiveUpdateEnabled()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public PassiveUpdateMode getPassiveUpdateMode()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public LockNotificationMode getLockNotificationMode()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void setLockNotificationMode(LockNotificationMode mode)
   {
     throw new UnsupportedOperationException();
   }
@@ -73,12 +79,17 @@ public abstract class TestSessionConfiguration extends Notifier implements CDOSe
     throw new UnsupportedOperationException();
   }
 
+  public void setExceptionHandler(CDOSession.ExceptionHandler exceptionHandler)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public CDOIDGenerator getIDGenerator()
   {
     throw new UnsupportedOperationException();
   }
 
-  public CDOAuthenticator getAuthenticator()
+  public void setIDGenerator(CDOIDGenerator idGenerator)
   {
     throw new UnsupportedOperationException();
   }

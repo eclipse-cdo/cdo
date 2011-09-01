@@ -71,8 +71,7 @@ public class Bugzilla_312879_Test extends AbstractSyncingTest
   public void testSwitchMasterAndCommit() throws Exception
   {
 
-    InternalSynchronizableRepository repo1_master = (InternalSynchronizableRepository)getRepository(getRepository()
-        .getName() + "_master");
+    InternalSynchronizableRepository repo1_master = (InternalSynchronizableRepository)getRepository("master");
     InternalSynchronizableRepository repo1 = getRepository();
 
     InternalSynchronizableRepository master = repo1_master;

@@ -36,6 +36,12 @@ public class CommitDelegationIndication extends CommitTransactionIndication
   }
 
   @Override
+  protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
+  {
+    super.indicating(in, monitor);
+  }
+
+  @Override
   protected void initializeCommitContext(CDODataInput in) throws Exception
   {
     CDOBranch branch = in.readCDOBranch();

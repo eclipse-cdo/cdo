@@ -69,7 +69,7 @@ public class FailoverTest extends AbstractSyncingTest
 
   public void testMasterCommits_ArrivalInBackup() throws Exception
   {
-    CDOSession session = openSession(getRepository().getName() + "_master");
+    CDOSession session = openSession("master");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
@@ -112,7 +112,7 @@ public class FailoverTest extends AbstractSyncingTest
 
   public void testMasterCommits_NotificationsFromBackup() throws Exception
   {
-    CDOSession masterSession = openSession(getRepository().getName() + "_master");
+    CDOSession masterSession = openSession("master");
     CDOTransaction transaction = masterSession.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -158,8 +158,10 @@ public class FailoverTest extends AbstractSyncingTest
 
   public void testClientCommitsToBackupForbidden() throws Exception
   {
-    InternalRepository backup = getRepository();
-    InternalRepository master = getRepository(backup.getName() + "_master");
+    /* InternalRepository backup = */
+    getRepository();
+
+    InternalRepository master = getRepository("master");
 
     TestListener listener = new TestListener();
     CDOSession masterSession = openSession(master.getName());
@@ -189,7 +191,7 @@ public class FailoverTest extends AbstractSyncingTest
 
   public void testPauseMasterTransport() throws Exception
   {
-    CDOSession session = openSession(getRepository().getName() + "_master");
+    CDOSession session = openSession("master");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
@@ -229,7 +231,7 @@ public class FailoverTest extends AbstractSyncingTest
 
   public void testSwitchMaster() throws Exception
   {
-    CDOSession session = openSession(getRepository().getName() + "_master");
+    CDOSession session = openSession("master");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
@@ -262,7 +264,7 @@ public class FailoverTest extends AbstractSyncingTest
     try
     {
       getRepository().setType(CDOCommonRepository.Type.MASTER);
-      getRepository(getRepository().getName() + "_master").setType(CDOCommonRepository.Type.BACKUP);
+      getRepository("master").setType(CDOCommonRepository.Type.BACKUP);
       company.setName("Commit should fail");
 
       try
@@ -292,7 +294,7 @@ public class FailoverTest extends AbstractSyncingTest
 
   public void testSwitchMasterAndCommit() throws Exception
   {
-    CDOSession session = openSession(getRepository().getName() + "_master");
+    CDOSession session = openSession("master");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
 
@@ -315,7 +317,7 @@ public class FailoverTest extends AbstractSyncingTest
     try
     {
       getRepository().setType(CDOCommonRepository.Type.MASTER);
-      getRepository(getRepository().getName() + "_master").setType(CDOCommonRepository.Type.BACKUP);
+      getRepository("master").setType(CDOCommonRepository.Type.BACKUP);
 
       session.close();
       session = openSession();

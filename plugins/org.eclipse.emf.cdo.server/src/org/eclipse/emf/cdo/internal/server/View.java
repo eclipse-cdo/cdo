@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.options.IOptionsContainer;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
@@ -34,7 +36,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class View extends Lifecycle implements InternalView
+public class View extends Lifecycle implements InternalView, CDOCommonView.Options
 {
   private InternalSession session;
 
@@ -261,6 +263,16 @@ public class View extends Lifecycle implements InternalView
     {
       throw new IllegalStateException("View closed"); //$NON-NLS-1$
     }
+  }
+
+  public IOptionsContainer getContainer()
+  {
+    return this;
+  }
+
+  public Options options()
+  {
+    return this;
   }
 
   public boolean isLockNotificationEnabled()

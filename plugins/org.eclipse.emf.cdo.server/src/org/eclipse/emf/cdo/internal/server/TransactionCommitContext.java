@@ -20,6 +20,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
@@ -1056,6 +1060,10 @@ public class TransactionCommitContext implements InternalCommitContext
       if (isAutoReleaseLocksEnabled())
       {
         postCommitLockStates = repository.getLockManager().unlock2(true, transaction);
+        if (!postCommitLockStates.isEmpty())
+        {
+          sendLockNotifications(postCommitLockStates);
+        }
       }
 
       monitor.worked();
@@ -1065,6 +1073,19 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       monitor.done();
     }
+  }
+
+  private void sendLockNotifications(List<LockState<Object, IView>> newLockStates)
+  {
+    CDOLockState[] newStates = Repository.toCDOLockStates(newLockStates);
+
+    long timeStamp = getTimeStamp();
+    InternalTransaction tx = getTransaction();
+    CDOBranch branch = tx.getBranch();
+    Operation unlock = Operation.UNLOCK;
+
+    CDOLockChangeInfo info = CDOLockUtil.createLockChangeInfo(timeStamp, tx, branch, unlock, null, newStates);
+    repository.getSessionManager().sendLockNotification(tx.getSession(), info);
   }
 
   private void addNewPackageUnits(OMMonitor monitor)

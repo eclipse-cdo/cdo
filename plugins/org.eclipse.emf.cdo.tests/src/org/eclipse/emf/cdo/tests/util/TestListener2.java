@@ -24,18 +24,31 @@ import junit.framework.Assert;
  */
 public class TestListener2 implements IListener
 {
+  private final static long DEFAULT_TIMEOUT = 3000; // 3 seconds
+
   private List<IEvent> events = new LinkedList<IEvent>();
 
   private Class<? extends IEvent> eventClass;
 
+  private long timeout;
+
+  private String name;
+
   public TestListener2(Class<? extends IEvent> eventClass)
   {
+    this(eventClass, null);
+  }
+
+  public TestListener2(Class<? extends IEvent> eventClass, String name)
+  {
     this.eventClass = eventClass;
+    this.name = name;
+    timeout = DEFAULT_TIMEOUT;
   }
 
   public synchronized void notifyEvent(IEvent event)
   {
-    if (eventClass.isAssignableFrom(event.getClass()))
+    if (eventClass == null || eventClass.isAssignableFrom(event.getClass()))
     {
       events.add(event);
       notify();
@@ -47,9 +60,13 @@ public class TestListener2 implements IListener
     return events;
   }
 
-  public synchronized void waitFor(int n)
+  public void setTimeout(long timeout)
   {
-    long timeout = 2000;
+    this.timeout = timeout;
+  }
+
+  public synchronized void waitFor(int n, long timeout)
+  {
     long t = 0;
 
     while (events.size() < n)
@@ -71,5 +88,36 @@ public class TestListener2 implements IListener
 
       timeout -= System.currentTimeMillis() - t;
     }
+  }
+
+  public void waitFor(int i)
+  {
+    waitFor(i, timeout);
+  }
+
+  @Override
+  public String toString()
+  {
+    StringBuilder builder = new StringBuilder(TestListener2.class.getSimpleName());
+    builder.append('[');
+    if (name != null)
+    {
+      builder.append("name=\"");
+      builder.append(name);
+      builder.append('\"');
+    }
+    
+    if (eventClass != null)
+    {
+      if (builder.charAt(builder.length() - 1) != '[')
+      {
+        builder.append(';');
+      }
+      builder.append("eventClass=");
+      builder.append(eventClass.getSimpleName());
+    }
+    
+    builder.append(']');
+    return builder.toString();
   }
 }

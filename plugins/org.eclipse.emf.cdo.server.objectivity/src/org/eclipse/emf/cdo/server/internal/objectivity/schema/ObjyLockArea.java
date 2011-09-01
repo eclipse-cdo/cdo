@@ -164,19 +164,4 @@ public class ObjyLockArea extends ooObj
             durableLockingID, userID, branchPoint, readOnly, readLockSet.size(), writeLockSet.size(),
             readWriteLockSet.size());
   }
-
-  // public static String createDurableLockingID()
-  // {
-  // return createDurableLockingID(DEFAULT_DURABLE_LOCKING_ID_BYTES);
-  // }
-  //
-  // public static String createDurableLockingID(int bytes)
-  // {
-  // byte[] buffer = new byte[bytes];
-  //
-  // Random random = new Random(System.currentTimeMillis());
-  // random.nextBytes(buffer);
-  //
-  // return HexUtil.bytesToHex(buffer);
-  // }
 }

@@ -221,8 +221,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * @since 4.1
    */
-  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revisionKeys,
-      CDOBranch viewedBranch, long timeout);
+  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revisionKeys, long timeout);
 
   /**
    * @since 4.1

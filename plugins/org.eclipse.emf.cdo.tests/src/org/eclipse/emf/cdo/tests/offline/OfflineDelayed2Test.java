@@ -34,8 +34,7 @@ public class OfflineDelayed2Test extends AbstractSyncingTest
   {
     int nbrOfCommits = 5;
 
-    InternalRepository clone = getRepository();
-    InternalRepository master = getRepository(clone.getName() + "_master");
+    InternalRepository master = getRepository("master");
 
     CDOSession masterSession = openSession(master.getName());
     CDOTransaction masterTransaction = masterSession.openTransaction();

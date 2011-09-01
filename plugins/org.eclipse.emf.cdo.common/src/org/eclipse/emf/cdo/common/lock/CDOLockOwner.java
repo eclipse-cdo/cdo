@@ -31,25 +31,7 @@ public interface CDOLockOwner
    */
   public int getViewID();
 
-  /**
-   * A constant to represent on the client-side that a lock's owner cannot be represented as a viewID-sessionID pair.
-   */
-  public static final CDOLockOwner UNKNOWN = new CDOLockOwner()
-  {
-    public int getViewID()
-    {
-      return 0;
-    }
+  public String getDurableLockingID();
 
-    public int getSessionID()
-    {
-      return 0;
-    }
-
-    @Override
-    public String toString()
-    {
-      return CDOLockOwner.class.getSimpleName() + ".UNKNOWN";
-    }
-  };
+  public boolean isDurableView();
 }

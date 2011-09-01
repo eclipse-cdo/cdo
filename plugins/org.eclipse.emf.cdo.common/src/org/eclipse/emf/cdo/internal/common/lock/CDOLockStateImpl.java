@@ -58,12 +58,18 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   private boolean isReadLocked(CDOLockOwner by, boolean others)
   {
-    if (readLockOwners.size() == 0)
+    int n = readLockOwners.size();
+    if (n == 0)
     {
       return false;
     }
 
-    return readLockOwners.contains(by) ^ others;
+    if (!others)
+    {
+      return readLockOwners.contains(by);
+    }
+
+    return true;
   }
 
   private boolean isWriteLocked(CDOLockOwner by, boolean others)
@@ -89,6 +95,16 @@ public class CDOLockStateImpl implements InternalCDOLockState
   public Set<CDOLockOwner> getReadLockOwners()
   {
     return Collections.unmodifiableSet(readLockOwners);
+  }
+
+  public void addReadLockOwner(CDOLockOwner lockOwner)
+  {
+    readLockOwners.add(lockOwner);
+  }
+
+  public boolean removeReadLockOwner(CDOLockOwner lockOwner)
+  {
+    return readLockOwners.remove(lockOwner);
   }
 
   public CDOLockOwner getWriteLockOwner()
@@ -119,12 +135,12 @@ public class CDOLockStateImpl implements InternalCDOLockState
   @Override
   public String toString()
   {
-    StringBuilder builder = new StringBuilder("CDOLockState[lockedObject=");
+    StringBuilder builder = new StringBuilder("CDOLockState\nlockedObject=");
     builder.append(lockedObject);
 
+    builder.append("\nreadLockOwners=");
     if (readLockOwners.size() > 0)
     {
-      builder.append(", read=");
       boolean first = true;
       for (CDOLockOwner lockOwner : readLockOwners)
       {
@@ -142,30 +158,17 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
       builder.deleteCharAt(builder.length() - 1);
     }
-
-    if (writeLockOwner != null)
+    else
     {
-      builder.append(", write=");
-      builder.append(writeLockOwner);
+      builder.append("NONE");
     }
 
-    if (writeOptionOwner != null)
-    {
-      builder.append(", option=");
-      builder.append(writeOptionOwner);
-    }
+    builder.append("\nwriteLockOwner=");
+    builder.append(writeLockOwner != null ? writeLockOwner : "NONE");
 
-    builder.append(']');
+    builder.append("\nwriteOptionOwner=");
+    builder.append(writeOptionOwner != null ? writeOptionOwner : "NONE");
+
     return builder.toString();
-  }
-
-  public void addReadLockOwner(CDOLockOwner lockOwner)
-  {
-    readLockOwners.add(lockOwner);
-  }
-
-  public boolean removeReadLockOwner(CDOLockOwner lockOwner)
-  {
-    return readLockOwners.remove(lockOwner);
   }
 }

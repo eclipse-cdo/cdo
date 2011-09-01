@@ -69,7 +69,7 @@ public class OfflineRawTest extends OfflineTest
     transaction.addListener(transactionListener);
 
     {
-      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
       CDOResource masterResource = masterTransaction.getResource("/my/resource");
 
@@ -136,7 +136,7 @@ public class OfflineRawTest extends OfflineTest
     transaction.addListener(transactionListener);
 
     {
-      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
       CDOResource masterResource = masterTransaction.getResource("/my/resource");
 
@@ -198,7 +198,7 @@ public class OfflineRawTest extends OfflineTest
     waitForOffline(clone);
 
     {
-      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
       CDOResource masterResource = masterTransaction.getResource("/my/resource");
 

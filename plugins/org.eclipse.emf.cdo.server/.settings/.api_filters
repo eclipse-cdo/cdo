@@ -10,6 +10,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/LockManager.java" type="org.eclipse.emf.cdo.internal.server.LockManager$DurableView">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="DurableView"/>
+            </message_arguments>
+        </filter>
         <filter id="574660632">
             <message_arguments>
                 <message_argument value="IView"/>
@@ -28,6 +34,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/Repository.java" type="org.eclipse.emf.cdo.internal.server.Repository">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOReplicationInfo"/>
+                <message_argument value="Repository"/>
+            </message_arguments>
+        </filter>
         <filter id="574660632">
             <message_arguments>
                 <message_argument value="InternalRepository"/>
@@ -100,6 +112,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/View.java" type="org.eclipse.emf.cdo.internal.server.View">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="View"/>
+            </message_arguments>
+        </filter>
         <filter id="574660632">
             <message_arguments>
                 <message_argument value="InternalView"/>
@@ -283,6 +301,14 @@
             <message_arguments>
                 <message_argument value="Options"/>
                 <message_argument value="InternalSession"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.java" type="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="CDOReplicationContext"/>
+                <message_argument value="InternalSynchronizableRepository"/>
             </message_arguments>
         </filter>
     </resource>

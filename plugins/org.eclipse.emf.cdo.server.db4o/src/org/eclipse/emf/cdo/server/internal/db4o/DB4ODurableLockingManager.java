@@ -12,11 +12,11 @@ package org.eclipse.emf.cdo.server.internal.db4o;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundException;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
-import org.eclipse.emf.cdo.spi.server.DurableLockArea;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -42,7 +42,7 @@ public class DB4ODurableLockingManager extends Lifecycle
       boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     String durableLockingID = getNextDurableLockingID(accessor);
-    LockArea lockArea = new DurableLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
+    LockArea lockArea = CDOLockUtil.createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
     storeLockArea(accessor, lockArea);
     return lockArea;
   }
@@ -183,7 +183,7 @@ public class DB4ODurableLockingManager extends Lifecycle
   {
     for (;;)
     {
-      String durableLockingID = DurableLockArea.createDurableLockingID();
+      String durableLockingID = CDOLockUtil.createDurableLockingID();
 
       try
       {

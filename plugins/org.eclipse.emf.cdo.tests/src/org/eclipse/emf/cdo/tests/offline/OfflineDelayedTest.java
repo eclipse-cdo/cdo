@@ -43,7 +43,7 @@ public class OfflineDelayedTest extends AbstractSyncingTest
       getOfflineConfig().stopMasterTransport();
       waitForOffline(clone);
 
-      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
       CDOResource masterResource = masterTransaction.createResource("/master/resource");
       for (int i = 0; i < 10; i++)
@@ -81,7 +81,7 @@ public class OfflineDelayedTest extends AbstractSyncingTest
     waitForOnline(clone);
 
     {
-      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
       CDOResource masterResource = masterTransaction.createResource("/master/resource");
 
@@ -131,7 +131,7 @@ public class OfflineDelayedTest extends AbstractSyncingTest
       getOfflineConfig().stopMasterTransport();
       waitForOffline(clone);
 
-      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
       CDOResource masterResource = masterTransaction.createResource("/master/resource");
       for (int i = 0; i < 20; i++)

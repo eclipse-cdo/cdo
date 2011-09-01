@@ -250,6 +250,23 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       return rootResourceID;
     }
 
+    public void setRootResourceID(CDOID rootResourceID)
+    {
+      // The rootResourceID may only be set if it is currently null
+      if (this.rootResourceID == null || this.rootResourceID.isNull())
+      {
+        this.rootResourceID = rootResourceID;
+      }
+      else if (this.rootResourceID != null && this.rootResourceID.equals(rootResourceID))
+      {
+        // Do nothing; it is the same.
+      }
+      else
+      {
+        throw new IllegalStateException("rootResourceID must not be changed unless it is null");
+      }
+    }
+
     public boolean isSupportingAudits()
     {
       return supportingAudits;

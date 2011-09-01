@@ -11,10 +11,10 @@
 package org.eclipse.emf.cdo.server.internal.objectivity.schema;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.server.DurableLockArea;
 
 import com.objy.db.app.Iterator;
 import com.objy.db.app.ooId;
@@ -73,7 +73,7 @@ public class ObjyLockAreaManager extends ooObj
     ObjyBranch objyBranch = objyLockArea.getBranch();
     CDOBranchPoint branchPoint = branchManager.getBranch(objyBranch.getBranchId())
         .getPoint(objyLockArea.getTimeStamp());
-    return new DurableLockArea(objyLockArea.getDurableLockingID(), objyLockArea.getUserID(), branchPoint,
+    return CDOLockUtil.createLockArea(objyLockArea.getDurableLockingID(), objyLockArea.getUserID(), branchPoint,
         objyLockArea.isReadOnly(), objyLockArea.getLocks());
   }
 

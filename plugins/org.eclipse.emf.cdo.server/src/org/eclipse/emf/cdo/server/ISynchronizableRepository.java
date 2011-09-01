@@ -27,4 +27,14 @@ public interface ISynchronizableRepository extends IRepository
   public int getLastReplicatedBranchID();
 
   public long getLastReplicatedCommitTime();
+
+  /**
+   * @since 4.1
+   */
+  public void goOnline();
+
+  /**
+   * @since 4.1
+   */
+  public void goOffline();
 }

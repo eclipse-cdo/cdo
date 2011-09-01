@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -66,6 +68,7 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -227,6 +230,7 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     writeCDOBranchPoint(lockChangeInfo);
     writeCDOLockOwner(lockChangeInfo.getLockOwner());
     writeEnum(lockChangeInfo.getOperation());
+    writeCDOLockType(lockChangeInfo.getLockType());
 
     CDOLockState[] lockStates = lockChangeInfo.getLockStates();
     writeInt(lockStates.length);
@@ -236,18 +240,28 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     }
   }
 
+  public void writeCDOLockArea(LockArea lockArea) throws IOException
+  {
+    writeString(lockArea.getDurableLockingID());
+    writeCDOBranch(lockArea.getBranch());
+    writeLong(lockArea.getTimeStamp());
+    writeString(lockArea.getUserID());
+    writeBoolean(lockArea.isReadOnly());
+
+    writeInt(lockArea.getLocks().size());
+    for (Map.Entry<CDOID, LockGrade> entry : lockArea.getLocks().entrySet())
+    {
+      writeCDOID(entry.getKey());
+      writeEnum(entry.getValue());
+    }
+  }
+
   public void writeCDOLockOwner(CDOLockOwner lockOwner) throws IOException
   {
-    if (lockOwner != CDOLockOwner.UNKNOWN)
-    {
-      writeBoolean(true);
-      writeInt(lockOwner.getSessionID());
-      writeInt(lockOwner.getViewID());
-    }
-    else
-    {
-      writeBoolean(false);
-    }
+    writeInt(lockOwner.getSessionID());
+    writeInt(lockOwner.getViewID());
+    writeString(lockOwner.getDurableLockingID());
+    writeBoolean(lockOwner.isDurableView());
   }
 
   public void writeCDOLockState(CDOLockState lockState) throws IOException
@@ -296,6 +310,11 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
     {
       writeBoolean(false);
     }
+  }
+
+  public void writeCDOLockType(LockType lockType) throws IOException
+  {
+    writeEnum(lockType);
   }
 
   public void writeCDOID(CDOID id) throws IOException
@@ -514,12 +533,6 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
       writeBoolean(false);
       writeCDORevisionOrPrimitive(value);
     }
-  }
-
-  public void writeCDOLockType(LockType lockType) throws IOException
-  {
-    int b = lockType == null ? 0 : lockType.ordinal() + 1;
-    writeByte(b);
   }
 
   public CDOPackageRegistry getPackageRegistry()

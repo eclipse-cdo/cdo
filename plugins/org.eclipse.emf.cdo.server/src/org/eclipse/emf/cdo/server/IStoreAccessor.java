@@ -708,12 +708,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   }
 
   /**
-   * @author Eike Stepper
+   * @author Caspar De Groot
    * @since 4.1
    */
   public interface DurableLocking2 extends DurableLocking
   {
     LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
         Map<CDOID, LockGrade> locks);
+
+    public void updateLockArea(LockArea lockArea);
   }
 }

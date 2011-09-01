@@ -28,7 +28,7 @@ import java.util.Map;
 public interface IDurableLockingManager
 {
   public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
-      Map<CDOID, LockGrade> locks);
+      Map<CDOID, LockGrade> locks) throws LockAreaAlreadyExistsException;
 
   /**
    * Returns the {@link LockArea lock area} specified by the given durableLockingID, never <code>null</code>.
@@ -52,6 +52,11 @@ public interface IDurableLockingManager
    */
   public interface LockArea extends CDOBranchPoint
   {
+    /**
+     * @since 4.1
+     */
+    public static final int DEFAULT_DURABLE_LOCKING_ID_BYTES = 32;
+
     public String getDurableLockingID();
 
     public String getUserID();
@@ -59,6 +64,11 @@ public interface IDurableLockingManager
     public boolean isReadOnly();
 
     public Map<CDOID, LockGrade> getLocks();
+
+    /**
+     * @since 4.1
+     */
+    public boolean isDeleted();
 
     /**
      * A call-back interface for <em>handling</em> {@link LockArea lock area} objects.

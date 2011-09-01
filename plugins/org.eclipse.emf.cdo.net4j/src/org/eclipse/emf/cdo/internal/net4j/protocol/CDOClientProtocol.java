@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
@@ -97,9 +98,10 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   }
 
   public OpenSessionResult openSession(String repositoryName, boolean passiveUpdateEnabled,
-      PassiveUpdateMode passiveUpdateMode)
+      PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode)
   {
-    return send(new OpenSessionRequest(this, repositoryName, passiveUpdateEnabled, passiveUpdateMode));
+    return send(new OpenSessionRequest(this, repositoryName, passiveUpdateEnabled, passiveUpdateMode,
+        lockNotificationMode));
   }
 
   public void disablePassiveUpdate()
@@ -229,7 +231,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     {
       revisionKeys.add(rev);
     }
-    
+
     return lockObjects2(revisionKeys, viewID, viewedBranch, lockType, timeout);
   }
 
@@ -241,7 +243,7 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
 
     try
     {
-      return new LockObjectsRequest(this, revisionKeys, viewID, viewedBranch, lockType, timeout).send();
+      return new LockObjectsRequest(this, revisionKeys, viewID, lockType, timeout).send();
     }
     catch (RemoteException ex)
     {

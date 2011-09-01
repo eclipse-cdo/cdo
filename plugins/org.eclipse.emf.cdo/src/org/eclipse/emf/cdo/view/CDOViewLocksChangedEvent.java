@@ -13,12 +13,13 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 
 /**
- * A {@link CDOViewEvent view event} fired when lock notifications are being received from a repository.
- * {@link CDOView.Options#setLockNotificationEnabled(boolean)} must be enabled for this event to be fired.
- * 
  * @author Caspar De Groot
  * @since 4.1
  */
-public interface CDOLocksChangedEvent extends CDOViewEvent, CDOLockChangeInfo
+public interface CDOViewLocksChangedEvent extends CDOViewEvent, CDOLockChangeInfo
 {
+  /**
+   * Returns the view that caused the lock changes if this view is local, or <code>null</code> if the view was remote.
+   */
+  public CDOView getSender();
 }

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.internal.cdo.session;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
@@ -42,6 +43,8 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   private boolean passiveUpdateEnabled = true;
 
   private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
+
+  private LockNotificationMode lockNotificationMode = LockNotificationMode.IF_REQUIRED_BY_VIEWS;
 
   private CDOAuthenticator authenticator = new CDOAuthenticatorImpl();
 
@@ -118,6 +121,22 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   protected void uncheckedSetPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
   {
     this.passiveUpdateMode = passiveUpdateMode;
+  }
+
+  public LockNotificationMode getLockNotificationMode()
+  {
+    return lockNotificationMode;
+  }
+
+  public void setLockNotificationMode(LockNotificationMode lockNotificationMode)
+  {
+    checkNotOpen();
+    uncheckedSetLockNotificationMode(lockNotificationMode);
+  }
+
+  protected void uncheckedSetLockNotificationMode(LockNotificationMode lockNotificationMode)
+  {
+    this.lockNotificationMode = lockNotificationMode;
   }
 
   public CDOAuthenticator getAuthenticator()
@@ -272,6 +291,7 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   {
     session.options().setPassiveUpdateEnabled(passiveUpdateEnabled);
     session.options().setPassiveUpdateMode(passiveUpdateMode);
+    session.options().setLockNotificationMode(lockNotificationMode);
 
     session.setMainBranchLocal(mainBranchLocal);
     session.setExceptionHandler(exceptionHandler);

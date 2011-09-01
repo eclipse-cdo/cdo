@@ -8,4 +8,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/net4j/protocol/ReplicateRepositoryIndication.java" type="org.eclipse.emf.cdo.server.internal.net4j.protocol.ReplicateRepositoryIndication">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOReplicationContext"/>
+                <message_argument value="ReplicateRepositoryIndication"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

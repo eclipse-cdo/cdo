@@ -40,6 +40,13 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
   private final Map<OBJECT, LockState<OBJECT, CONTEXT>> objectToLockStateMap = createObjectToLocksMap();
 
+  /**
+   * A mapping of contexts (owners of locks) to the lock states that they are involved in. Here, an 'involvement' means
+   * that the context owns at least one lock on the object that the lock state is for. To determine exactly what kind of
+   * lock, the lock state object obtained from this map must be queried.
+   * <p>
+   * This map is a performance optimization to avoid having to scan all lock states.
+   */
   private final Map<CONTEXT, Set<LockState<OBJECT, CONTEXT>>> contextToLockStates = createContextToLocksMap();
 
   public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
@@ -73,7 +80,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
           {
             LockState<OBJECT, CONTEXT> lockState = lockStates.get(i);
             lockState.lock(type, context);
-            addLockToContext(context, lockState);
+            addContextToLockStateMapping(context, lockState);
           }
 
           return lockStates;
@@ -256,9 +263,29 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     return contextToLockStates;
   }
 
-  public LockState<OBJECT, CONTEXT> getLockState(Object key)
+  public LockState<OBJECT, CONTEXT> getLockState(OBJECT key)
   {
     return objectToLockStateMap.get(key);
+  }
+
+  public synchronized void setLockState(OBJECT key, LockState<OBJECT, CONTEXT> lockState)
+  {
+    objectToLockStateMap.put(key, lockState);
+
+    for (CONTEXT readLockOwner : lockState.getReadLockOwners())
+    {
+      addContextToLockStateMapping(readLockOwner, lockState);
+    }
+    CONTEXT writeLockOwner = lockState.getWriteLockOwner();
+    if (writeLockOwner != null)
+    {
+      addContextToLockStateMapping(writeLockOwner, lockState);
+    }
+    CONTEXT writeOptionOwner = lockState.getWriteOptionOwner();
+    if (writeOptionOwner != null)
+    {
+      addContextToLockStateMapping(writeOptionOwner, lockState);
+    }
   }
 
   private LockState<OBJECT, CONTEXT> getOrCreateLockState(OBJECT o)
@@ -292,7 +319,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     return true;
   }
 
-  private void addLockToContext(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
+  private void addContextToLockStateMapping(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
   {
     Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
     if (lockStates == null)

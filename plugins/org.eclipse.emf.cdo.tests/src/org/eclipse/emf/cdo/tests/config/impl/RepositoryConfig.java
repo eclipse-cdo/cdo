@@ -637,34 +637,39 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       stopMasterTransport();
     }
 
+    protected InternalRepository createMasterRepository(String masterName, String name, Map<String, String> props,
+        boolean failover)
+    {
+      IStore masterStore = createStore(masterName);
+      if (failover)
+      {
+        InternalRepositorySynchronizer synchronizer = createSynchronizer("backup", name);
+        return (InternalRepository)CDOServerUtil.createFailoverParticipant(masterName, masterStore, props,
+            synchronizer, true);
+      }
+
+      return (InternalRepository)CDOServerUtil.createRepository(masterName, masterStore, props);
+    }
+
     @Override
     protected InternalRepository createRepository(String name)
     {
       boolean failover = getTestFailover();
       Map<String, String> props = getRepositoryProperties();
 
-      final String masterName = name + "_master";
-      IStore masterStore = createStore(masterName);
-
+      final String masterName = "master";
       InternalRepository master;
-      if (failover)
-      {
-        InternalRepositorySynchronizer synchronizer = createSynchronizer("backup", name);
-        master = (InternalRepository)CDOServerUtil.createFailoverParticipant(masterName, masterStore, props,
-            synchronizer, true);
-      }
-      else
-      {
-        master = (InternalRepository)CDOServerUtil.createRepository(masterName, masterStore, props);
-      }
-
       synchronized (repositories)
       {
-        repositories.put(masterName, master);
+        master = repositories.get(masterName);
+        if (master == null)
+        {
+          master = createMasterRepository(masterName, name, props, failover);
+          repositories.put(masterName, master);
+          LifecycleUtil.activate(master);
+          startMasterTransport();
+        }
       }
-
-      LifecycleUtil.activate(master);
-      startMasterTransport();
 
       InternalRepositorySynchronizer synchronizer = createSynchronizer("master", masterName);
       IStore store = createStore(name);
@@ -673,33 +678,31 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       {
         return (InternalRepository)CDOServerUtil.createFailoverParticipant(name, store, props, synchronizer, false);
       }
-      else
+
+      OfflineClone repository = new OfflineClone()
       {
-        OfflineClone repository = new OfflineClone()
+        @Override
+        public void handleCommitInfo(CDOCommitInfo commitInfo)
         {
-          @Override
-          public void handleCommitInfo(CDOCommitInfo commitInfo)
-          {
-            waitIfLockAvailable();
-            super.handleCommitInfo(commitInfo);
-          }
+          waitIfLockAvailable();
+          super.handleCommitInfo(commitInfo);
+        }
 
-          private void waitIfLockAvailable()
+        private void waitIfLockAvailable()
+        {
+          long millis = getTestDelayedCommitHandling();
+          if (millis != 0L)
           {
-            long millis = getTestDelayedCommitHandling();
-            if (millis != 0L)
-            {
-              ConcurrencyUtil.sleep(millis);
-            }
+            ConcurrencyUtil.sleep(millis);
           }
-        };
+        }
+      };
 
-        repository.setName(name);
-        repository.setStore((InternalStore)store);
-        repository.setProperties(props);
-        repository.setSynchronizer(synchronizer);
-        return repository;
-      }
+      repository.setName(name);
+      repository.setStore((InternalStore)store);
+      repository.setProperties(props);
+      repository.setSynchronizer(synchronizer);
+      return repository;
     }
 
     protected InternalRepositorySynchronizer createSynchronizer(final String acceptorName, final String repositoryName)

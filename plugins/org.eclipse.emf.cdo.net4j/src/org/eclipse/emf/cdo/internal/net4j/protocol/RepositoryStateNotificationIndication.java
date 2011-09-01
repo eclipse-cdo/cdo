@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl.RepositoryInfo;
@@ -34,10 +35,13 @@ public class RepositoryStateNotificationIndication extends CDOClientIndication
   {
     CDOCommonRepository.State oldState = in.readEnum(CDOCommonRepository.State.class);
     CDOCommonRepository.State newState = in.readEnum(CDOCommonRepository.State.class);
+    CDOID rootResourceID = in.readCDOID();
 
     CDONet4jSessionImpl session = (CDONet4jSessionImpl)getSession();
     RepositoryInfo repositoryInfo = (RepositoryInfo)session.getRepositoryInfo();
     repositoryInfo.setState(newState);
+    repositoryInfo.setRootResourceID(rootResourceID);
+
     session.handleRepositoryStateChanged(oldState, newState);
   }
 }

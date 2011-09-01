@@ -324,4 +324,9 @@ public interface CDOProtocolConstants
    * @since 3.0
    */
   public static final byte REPLICATE_COMMIT = 2;
+
+  /**
+   * @since 4.1
+   */
+  public static final byte REPLICATE_LOCKAREA = 3;
 }

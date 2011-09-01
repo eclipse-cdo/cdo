@@ -34,7 +34,7 @@ public class EnableLockNotificationIndication extends CDOServerIndication
     boolean enable = in.readBoolean();
 
     InternalView view = getSession().getView(viewID);
-    view.setLockNotificationEnabled(enable);
+    view.options().setLockNotificationEnabled(enable);
   }
 
   @Override

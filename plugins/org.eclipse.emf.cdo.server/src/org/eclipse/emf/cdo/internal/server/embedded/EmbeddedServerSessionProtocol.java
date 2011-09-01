@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
@@ -65,7 +66,14 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
     clientSession.handleRepositoryTypeChanged(oldType, newType);
   }
 
+  @Deprecated
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
+  {
+    sendRepositoryStateNotification(oldState, newState, null);
+  }
+
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
+      CDOID rootResourceID)
   {
     EmbeddedClientSession clientSession = clientSessionProtocol.getSession();
     clientSession.handleRepositoryStateChanged(oldState, newState);
@@ -86,7 +94,7 @@ public class EmbeddedServerSessionProtocol extends Lifecycle implements ISession
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo)
   {
     EmbeddedClientSession clientSession = clientSessionProtocol.getSession();
-    clientSession.handleLockNotification(lockChangeInfo);
+    clientSession.handleLockNotification(lockChangeInfo, null);
   }
 
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode)

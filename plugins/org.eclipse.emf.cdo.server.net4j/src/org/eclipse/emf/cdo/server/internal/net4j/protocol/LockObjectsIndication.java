@@ -12,7 +12,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -53,7 +52,6 @@ public class LockObjectsIndication extends CDOServerWriteIndication
     int viewID = in.readInt();
     LockType lockType = in.readCDOLockType();
     long timeout = in.readLong();
-    CDOBranch viewedBranch = in.readCDOBranch();
 
     int nRevisions = in.readInt();
     List<CDORevisionKey> revisionKeys = new LinkedList<CDORevisionKey>();
@@ -63,11 +61,11 @@ public class LockObjectsIndication extends CDOServerWriteIndication
     }
 
     InternalRepository repository = getRepository();
-    IView view = getView(viewID, viewedBranch);
-    result = repository.lock((InternalView)view, lockType, revisionKeys, viewedBranch, timeout);
+    IView view = getView(viewID);
+    result = repository.lock((InternalView)view, lockType, revisionKeys, timeout);
   }
 
-  protected IView getView(int viewID, CDOBranch viewedBranch)
+  protected IView getView(int viewID)
   {
     return getSession().getView(viewID);
   }

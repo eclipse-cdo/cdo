@@ -23,10 +23,16 @@ public class CDOLockOwnerImpl implements CDOLockOwner
 
   private final int viewID;
 
-  public CDOLockOwnerImpl(int sessionID, int viewID)
+  private final String durableLockingID;
+
+  private final boolean isDurableView;
+
+  public CDOLockOwnerImpl(int sessionID, int viewID, String durableLockingID, boolean isDurableView)
   {
     this.sessionID = sessionID;
     this.viewID = viewID;
+    this.durableLockingID = durableLockingID;
+    this.isDurableView = isDurableView;
   }
 
   public int getSessionID()
@@ -37,6 +43,16 @@ public class CDOLockOwnerImpl implements CDOLockOwner
   public int getViewID()
   {
     return viewID;
+  }
+
+  public String getDurableLockingID()
+  {
+    return durableLockingID;
+  }
+
+  public boolean isDurableView()
+  {
+    return isDurableView;
   }
 
   @Override
@@ -66,9 +82,8 @@ public class CDOLockOwnerImpl implements CDOLockOwner
   public String toString()
   {
     StringBuilder builder = new StringBuilder("CDOLockOwner[");
-    builder.append("session=");
     builder.append(sessionID);
-    builder.append(", view=");
+    builder.append(':');
     builder.append(viewID);
     builder.append(']');
     return builder.toString();

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.session;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
@@ -50,6 +51,16 @@ public interface CDOSessionConfiguration extends INotifier
    * @since 3.0
    */
   public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode);
+
+  /**
+   * @since 4.1
+   */
+  public LockNotificationMode getLockNotificationMode();
+
+  /**
+   * @since 4.1
+   */
+  public void setLockNotificationMode(LockNotificationMode mode);
 
   /**
    * @see CDOSession#getExceptionHandler()

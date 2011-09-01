@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
@@ -94,12 +95,19 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     }
   }
 
+  @Deprecated
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
       throws Exception
   {
+    sendRepositoryStateNotification(oldState, newState, null);
+  }
+
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
+      CDOID rootResourceID) throws Exception
+  {
     if (LifecycleUtil.isActive(getChannel()))
     {
-      new RepositoryStateNotificationRequest(this, oldState, newState).sendAsync();
+      new RepositoryStateNotificationRequest(this, oldState, newState, rootResourceID).sendAsync();
     }
     else
     {

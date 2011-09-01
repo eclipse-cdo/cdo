@@ -8,13 +8,13 @@
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
-package org.eclipse.emf.cdo.spi.server;
+package org.eclipse.emf.cdo.common.lock;
 
 /**
  * @author Caspar De Groot
  * @since 4.1
  */
-public interface InternalLockingManagerContext
+public interface CDOLockChangeInfoHandler
 {
-
+  public void handleLockChangeInfo(CDOLockChangeInfo lockChangeInfo);
 }

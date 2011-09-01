@@ -27,17 +27,21 @@ public class LockDelegationRequest extends LockObjectsRequest
 {
   private String lockAreaID;
 
+  private CDOBranch viewedBranch;
+
   public LockDelegationRequest(CDOClientProtocol protocol, String lockAreaID, List<CDORevisionKey> revisionKeys,
       CDOBranch viewedBranch, LockType lockType, long timeout)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_LOCK_DELEGATION, revisionKeys, 0, viewedBranch, lockType, timeout);
+    super(protocol, CDOProtocolConstants.SIGNAL_LOCK_DELEGATION, revisionKeys, 0, lockType, timeout);
     this.lockAreaID = lockAreaID;
+    this.viewedBranch = viewedBranch;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
     out.writeString(lockAreaID);
+    out.writeCDOBranch(viewedBranch);
     super.requesting(out);
   }
 }

@@ -54,7 +54,7 @@ public class Bugzilla_328352_Test extends AbstractSyncingTest
     waitForOnline(clone);
 
     // create master session & transaction.
-    InternalRepository master = getRepository(clone.getName() + "_master");
+    InternalRepository master = getRepository("master");
     CDOSession masterSession = openSession(master.getName());
     CDOTransaction masterTransaction = masterSession.openTransaction();
 

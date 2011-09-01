@@ -208,6 +208,11 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     if (rootResource == null)
     {
       CDOID rootResourceID = getSession().getRepositoryInfo().getRootResourceID();
+      if (rootResourceID == null || rootResourceID.isNull())
+      {
+        throw new IllegalStateException("RootResourceID is null; is the repository not yet initialized?");
+      }
+      
       CDOResourceImpl resource = (CDOResourceImpl)getObject(rootResourceID);
       setRootResource(resource);
     }

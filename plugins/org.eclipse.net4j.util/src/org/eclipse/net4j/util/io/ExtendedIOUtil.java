@@ -40,6 +40,10 @@ public final class ExtendedIOUtil
 
   private static final int MAX_UTF_CHARS = MAX_UTF_LENGTH / 3;
 
+  private static final int MAX_ENUM_LITERALS = Byte.MAX_VALUE - Byte.MIN_VALUE;
+
+  private static final byte NO_ENUM_LITERAL = Byte.MIN_VALUE;
+
   private ExtendedIOUtil()
   {
   }
@@ -207,19 +211,16 @@ public final class ExtendedIOUtil
    */
   public static void writeEnum(DataOutput out, Enum<?> literal) throws IOException
   {
-    int ordinal = literal.ordinal();
-    int size = literal.getDeclaringClass().getEnumConstants().length;
-    if (size <= Byte.MAX_VALUE)
+    if (literal == null)
     {
-      out.writeByte(ordinal);
-    }
-    else if (size <= Short.MAX_VALUE)
-    {
-      out.writeShort(ordinal);
+      out.writeByte(NO_ENUM_LITERAL);
     }
     else
     {
-      out.writeInt(ordinal);
+      getEnumLiterals(literal.getDeclaringClass()); // Check valid size
+
+      int ordinal = literal.ordinal();
+      out.writeByte(ordinal + Byte.MIN_VALUE + 1);
     }
   }
 
@@ -228,23 +229,28 @@ public final class ExtendedIOUtil
    */
   public static <T extends Enum<?>> T readEnum(DataInput in, Class<T> type) throws IOException
   {
-    T[] literals = type.getEnumConstants();
-    int size = literals.length;
-    int ordinal;
-    if (size <= Byte.MAX_VALUE)
+    T[] literals = getEnumLiterals(type);
+
+    int ordinal = in.readByte();
+    if (ordinal == NO_ENUM_LITERAL)
     {
-      ordinal = in.readByte();
-    }
-    else if (size <= Short.MAX_VALUE)
-    {
-      ordinal = in.readShort();
-    }
-    else
-    {
-      ordinal = in.readInt();
+      return null;
     }
 
-    return literals[ordinal];
+    return literals[ordinal - Byte.MIN_VALUE - 1];
+  }
+
+  private static <T> T[] getEnumLiterals(Class<T> type)
+  {
+    T[] literals = type.getEnumConstants();
+
+    int size = literals.length;
+    if (size > MAX_ENUM_LITERALS)
+    {
+      throw new AssertionError("Enum too large: " + size + " literals");
+    }
+
+    return literals;
   }
 
   /**

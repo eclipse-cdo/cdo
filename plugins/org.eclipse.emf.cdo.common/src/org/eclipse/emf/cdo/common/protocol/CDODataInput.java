@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -153,4 +154,9 @@ public interface CDODataInput extends ExtendedDataInput
    * @since 4.1
    */
   public CDOLockState readCDOLockState() throws IOException;
+
+  /**
+   * @since 4.1
+   */
+  public LockArea readCDOLockArea() throws IOException;
 }

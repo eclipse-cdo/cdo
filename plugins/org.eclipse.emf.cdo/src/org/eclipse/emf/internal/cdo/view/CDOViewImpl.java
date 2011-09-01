@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
@@ -41,18 +42,19 @@ import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
-import org.eclipse.emf.cdo.view.CDOLocksChangedEvent;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewDurabilityChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
+import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDODeltaNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDOInvalidationNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
+import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -86,6 +88,7 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 
@@ -293,7 +296,8 @@ public class CDOViewImpl extends AbstractCDOView
       throw new AssertionError("Unexpected lock result state");
     }
 
-    updateLockStates(result.getNewLockStates());
+    // Update the lock states in this view
+    updateAndNotifyLockStates(Operation.LOCK, lockType, result.getNewLockStates());
 
     if (result.isWaitForUpdate())
     {
@@ -308,6 +312,15 @@ public class CDOViewImpl extends AbstractCDOView
     }
   }
 
+  protected void updateAndNotifyLockStates(Operation op, LockType type, CDOLockState[] newLockStates)
+  {
+    updateLockStates(newLockStates);
+    notifyOtherViewsAboutLockChanges(op, type, newLockStates);
+  }
+
+  /**
+   * Updates the lock states of objects held in this view
+   */
   protected void updateLockStates(CDOLockState[] newLockStates)
   {
     for (CDOLockState lockState : newLockStates)
@@ -328,6 +341,60 @@ public class CDOViewImpl extends AbstractCDOView
       {
         obj.cdoInternalSetLockState(lockState);
       }
+    }
+  }
+
+  /**
+   * Notifies other views of lock changes performed in this view
+   */
+  private void notifyOtherViewsAboutLockChanges(Operation op, LockType type, CDOLockState[] lockStates)
+  {
+    if (lockStates.length > 0)
+    {
+      CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(op, type, lockStates);
+      getSession().handleLockNotification(lockChangeInfo, this);
+    }
+  }
+
+  private CDOLockChangeInfo makeLockChangeInfo(Operation op, LockType type, CDOLockState[] newLockStates)
+  {
+    long timestamp = 0L; // TODO (CD) Get rid of timestamps; replace with sequential number
+    return CDOLockUtil.createLockChangeInfo(timestamp, this, getBranch(), op, type, newLockStates);
+  }
+
+  public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
+  {
+    if (!options().isLockNotificationEnabled())
+    {
+      return;
+    }
+
+    // If lockChangeInfo pertains to a different view, do nothing.
+    if (!lockChangeInfo.getBranch().equals(getBranch()))
+    {
+      return;
+    }
+
+    // If lockChangeInfo represents lock changes authored by this view itself, do nothing.
+    CDOLockOwner thisView = CDOLockUtil.createLockOwner(this);
+    if (lockChangeInfo.getLockOwner().equals(thisView))
+    {
+      return;
+    }
+
+    // TODO (CD) I know it is Eike's desideratum that this be done asynchronously.. but beware,
+    // this will require the tests to be fixed to listen for the view events instead of the
+    // session events.
+    updateLockStates(lockChangeInfo.getLockStates());
+    fireLocksChangedEvent(sender, lockChangeInfo);
+  }
+
+  private void fireLocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
+  {
+    IListener[] listeners = getListeners();
+    if (listeners != null)
+    {
+      fireEvent(new LocksChangedEvent(sender, lockChangeInfo), listeners);
     }
   }
 
@@ -367,7 +434,7 @@ public class CDOViewImpl extends AbstractCDOView
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
     UnlockObjectsResult result = sessionProtocol.unlockObjects2(this, objectIDs, lockType);
 
-    updateLockStates(result.getNewLockStates());
+    updateAndNotifyLockStates(Operation.UNLOCK, lockType, result.getNewLockStates());
   }
 
   /**
@@ -928,39 +995,6 @@ public class CDOViewImpl extends AbstractCDOView
     }
   }
 
-  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo)
-  {
-    if (!options().isLockNotificationEnabled())
-    {
-      return;
-    }
-
-    // If lockChangeInfo pertains to a different view, do nothing.
-    if (!lockChangeInfo.getBranch().equals(getBranch()))
-    {
-      return;
-    }
-
-    // If lockChangeInfo represents lock changes authored by this view itself, do nothing.
-    CDOLockOwner thisView = CDOLockUtil.createLockOwner(this);
-    if (lockChangeInfo.getLockOwner().equals(thisView))
-    {
-      return;
-    }
-
-    updateLockStates(lockChangeInfo.getLockStates());
-    fireLocksChangedEvent(lockChangeInfo);
-  }
-
-  private void fireLocksChangedEvent(CDOLockChangeInfo lockChangeInfo)
-  {
-    IListener[] listeners = getListeners();
-    if (listeners != null)
-    {
-      fireEvent(new LocksChangedEvent(lockChangeInfo), listeners);
-    }
-  }
-
   /**
    * @author Simon McDuff
    * @since 2.0
@@ -1392,40 +1426,19 @@ public class CDOViewImpl extends AbstractCDOView
    * @author Caspar De Groot
    * @since 4.1
    */
-  private final class LocksChangedEvent extends Event implements CDOLocksChangedEvent
+  private final class LocksChangedEvent extends DefaultLocksChangedEvent implements CDOViewLocksChangedEvent
   {
     private static final long serialVersionUID = 1L;
 
-    private CDOLockChangeInfo lockChangeInfo;
-
-    public LocksChangedEvent(CDOLockChangeInfo lockChangeInfo)
+    public LocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
     {
-      this.lockChangeInfo = lockChangeInfo;
+      super(CDOViewImpl.this, sender, lockChangeInfo);
     }
 
-    public CDOBranch getBranch()
+    @Override
+    public InternalCDOView getSource()
     {
-      return lockChangeInfo.getBranch();
-    }
-
-    public long getTimeStamp()
-    {
-      return lockChangeInfo.getTimeStamp();
-    }
-
-    public CDOLockOwner getLockOwner()
-    {
-      return lockChangeInfo.getLockOwner();
-    }
-
-    public CDOLockState[] getLockStates()
-    {
-      return lockChangeInfo.getLockStates();
-    }
-
-    public Operation getOperation()
-    {
-      return lockChangeInfo.getOperation();
+      return (InternalCDOView)super.getSource();
     }
   }
 
@@ -1524,7 +1537,7 @@ public class CDOViewImpl extends AbstractCDOView
           event = new LockNotificationEventImpl();
         }
       }
-    
+
       fireEvent(event);
     }
 
@@ -1817,7 +1830,7 @@ public class CDOViewImpl extends AbstractCDOView
     private final class LockNotificationEventImpl extends OptionsEvent implements LockNotificationEvent
     {
       private static final long serialVersionUID = 1L;
-    
+
       public LockNotificationEventImpl()
       {
         super(OptionsImpl.this);

@@ -61,7 +61,7 @@ public class Bugzilla_329014_Test extends AbstractSyncingTest
     cloneSession.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
     waitForOnline(clone);
 
-    master = getRepository(clone.getName() + "_master");
+    master = getRepository("master");
     masterSession = openSession(master.getName());
     masterSession.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
 

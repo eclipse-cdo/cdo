@@ -13,20 +13,20 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 
-import org.eclipse.net4j.util.HexUtil;
-
 import java.text.MessageFormat;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
+ * @deprecated Use {@link CDOLockUtil#createLockArea(String, String, CDOBranchPoint, boolean, Map)} instead
  */
+@Deprecated
 public class DurableLockArea implements LockArea
 {
   public static final int DEFAULT_DURABLE_LOCKING_ID_BYTES = 32;
@@ -84,22 +84,25 @@ public class DurableLockArea implements LockArea
   @Override
   public String toString()
   {
-    return MessageFormat.format("DurableLockArea[id={0}, user={1}, branchPoint={2}, readOnly={3}, locks={4}]",
+    return MessageFormat.format("DurableLockArea\nid={0}\nuser={1}\nbranchPoint={2}\nreadOnly={3}\nlocks={4}",
         durableLockingID, userID, branchPoint, readOnly, locks);
   }
 
   public static String createDurableLockingID()
   {
-    return createDurableLockingID(DEFAULT_DURABLE_LOCKING_ID_BYTES);
+    return CDOLockUtil.createDurableLockingID();
   }
 
   public static String createDurableLockingID(int bytes)
   {
-    byte[] buffer = new byte[bytes];
+    return CDOLockUtil.createDurableLockingID(bytes);
+  }
 
-    Random random = new Random(System.currentTimeMillis());
-    random.nextBytes(buffer);
-
-    return HexUtil.bytesToHex(buffer);
+  /**
+   * @since 4.1
+   */
+  public boolean isDeleted()
+  {
+    return false;
   }
 }

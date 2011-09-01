@@ -30,6 +30,8 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
@@ -56,6 +58,7 @@ import org.eclipse.emf.cdo.internal.common.id.CDOIDExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDObjectLongImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectImpl;
+import org.eclipse.emf.cdo.internal.common.lock.CDOLockAreaImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockChangeInfoImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockOwnerImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
@@ -95,7 +98,9 @@ import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -268,6 +273,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     CDOBranchPoint branchPoint = readCDOBranchPoint();
     CDOLockOwner lockOwner = readCDOLockOwner();
     Operation operation = readEnum(Operation.class);
+    LockType lockType = readCDOLockType();
 
     int n = readInt();
     CDOLockState[] lockStates = new CDOLockState[n];
@@ -276,19 +282,36 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
       lockStates[i] = readCDOLockState();
     }
 
-    return new CDOLockChangeInfoImpl(branchPoint, lockOwner, lockStates, operation);
+    return new CDOLockChangeInfoImpl(branchPoint, lockOwner, lockStates, operation, lockType);
+  }
+
+  public LockArea readCDOLockArea() throws IOException
+  {
+    String durableLockingID = readString();
+    CDOBranch branch = readCDOBranch();
+    long timestamp = readLong();
+    String userID = readString();
+    boolean readOnly = readBoolean();
+
+    int nLockStates = readInt();
+    Map<CDOID, LockGrade> locks = new HashMap<CDOID, LockGrade>();
+    for (int i = 0; i < nLockStates; i++)
+    {
+      CDOID key = readCDOID();
+      LockGrade value = readEnum(LockGrade.class);
+      locks.put(key, value);
+    }
+
+    return new CDOLockAreaImpl(durableLockingID, userID, branch.getPoint(timestamp), readOnly, locks);
   }
 
   public CDOLockOwner readCDOLockOwner() throws IOException
   {
-    boolean isUnknown = !readBoolean();
-    if (isUnknown)
-    {
-      return CDOLockOwner.UNKNOWN;
-    }
     int session = readInt();
     int view = readInt();
-    return new CDOLockOwnerImpl(session, view);
+    String lockAreaID = readString();
+    boolean isDurableView = readBoolean();
+    return new CDOLockOwnerImpl(session, view, lockAreaID, isDurableView);
   }
 
   public CDOLockState readCDOLockState() throws IOException
@@ -328,6 +351,11 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     return lockState;
+  }
+
+  public LockType readCDOLockType() throws IOException
+  {
+    return readEnum(LockType.class);
   }
 
   public CDOID readCDOID() throws IOException
@@ -585,12 +613,6 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     return readCDORevisionOrPrimitive();
-  }
-
-  public LockType readCDOLockType() throws IOException
-  {
-    byte b = readByte();
-    return b == 0 ? null : LockType.values()[b - 1];
   }
 
   protected StringIO getPackageURICompressor()

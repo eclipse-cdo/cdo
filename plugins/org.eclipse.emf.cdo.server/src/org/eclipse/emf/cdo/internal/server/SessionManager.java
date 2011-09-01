@@ -13,7 +13,9 @@
 package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -257,13 +259,20 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     }
   }
 
+  @Deprecated
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
+  {
+    sendRepositoryStateNotification(oldState, newState, null);
+  }
+
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
+      CDOID rootResourceID)
   {
     for (InternalSession session : getSessions())
     {
       try
       {
-        session.sendRepositoryStateNotification(oldState, newState);
+        session.sendRepositoryStateNotification(oldState, newState, rootResourceID);
       }
       catch (Exception ex)
       {
@@ -312,7 +321,10 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   {
     for (InternalSession session : getSessions())
     {
-      // TODO Exclude the sender and notify locally there
+      if (session == sender || session.options().getLockNotificationMode() == LockNotificationMode.OFF)
+      {
+        continue;
+      }
 
       try
       {

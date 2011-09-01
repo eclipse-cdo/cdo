@@ -53,14 +53,4 @@ public interface InternalView extends IView, ILifecycle
   public void clearChangeSubscription();
 
   public void doClose();
-
-  /**
-   * @since 4.1
-   */
-  public boolean isLockNotificationEnabled();
-
-  /**
-   * @since 4.1
-   */
-  public void setLockNotificationEnabled(boolean enable);
 }

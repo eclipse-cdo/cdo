@@ -77,6 +77,9 @@ public class Session extends Container<IView> implements InternalSession
 
   private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
 
+  private LockNotificationMode lockNotificationMode = LockNotificationMode.ALWAYS; // TODO (CD) Default should be
+                                                                                   // PER_VIEW
+
   private long lastUpdateTime;
 
   @ExcludeFromDump
@@ -201,6 +204,18 @@ public class Session extends Container<IView> implements InternalSession
     checkActive();
     checkArg(passiveUpdateMode, "passiveUpdateMode");
     this.passiveUpdateMode = passiveUpdateMode;
+  }
+
+  public LockNotificationMode getLockNotificationMode()
+  {
+    return lockNotificationMode;
+  }
+
+  public void setLockNotificationMode(LockNotificationMode lockNotificationMode)
+  {
+    checkActive();
+    checkArg(lockNotificationMode, "lockNotificationMode");
+    this.lockNotificationMode = lockNotificationMode;
   }
 
   public long getLastUpdateTime()
@@ -346,12 +361,19 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @Deprecated
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
       throws Exception
   {
+    sendRepositoryStateNotification(oldState, newState, null);
+  }
+
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
+      CDOID rootResourceID) throws Exception
+  {
     if (protocol != null)
     {
-      protocol.sendRepositoryStateNotification(oldState, newState);
+      protocol.sendRepositoryStateNotification(oldState, newState, rootResourceID);
     }
   }
 
@@ -458,14 +480,23 @@ public class Session extends Container<IView> implements InternalSession
   {
     if (protocol != null)
     {
-      // If this session has one (or more) views configured for this branch,
-      // only then do we send the lockChangeInfo.
-      for (InternalView view : getViews())
+      if (options().getLockNotificationMode() == LockNotificationMode.ALWAYS)
       {
-        if (view.isLockNotificationEnabled() && view.getBranch().equals(lockChangeInfo.getBranch()))
+        protocol.sendLockNotification(lockChangeInfo);
+        return;
+      }
+
+      if (options().getLockNotificationMode() == LockNotificationMode.IF_REQUIRED_BY_VIEWS)
+      {
+        // If this session has one (or more) views configured for this branch,
+        // only then do we send the lockChangeInfo.
+        for (InternalView view : getViews())
         {
-          protocol.sendLockNotification(lockChangeInfo);
-          break;
+          if (view.options().isLockNotificationEnabled() && view.getBranch().equals(lockChangeInfo.getBranch()))
+          {
+            protocol.sendLockNotification(lockChangeInfo);
+            break;
+          }
         }
       }
     }

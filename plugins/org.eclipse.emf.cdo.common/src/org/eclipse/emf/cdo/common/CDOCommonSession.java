@@ -85,6 +85,16 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
     public void setPassiveUpdateMode(PassiveUpdateMode mode);
 
     /**
+     * @since 4.1
+     */
+    public LockNotificationMode getLockNotificationMode();
+
+    /**
+     * @since 4.1
+     */
+    public void setLockNotificationMode(LockNotificationMode mode);
+
+    /**
      * Enumerates the possible {@link CDOCommonSession.Options#getPassiveUpdateMode() passive update modes} of a CDO
      * session.
      * 
@@ -109,6 +119,31 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
        * addition full revisions for new objects are delivered.
        */
       ADDITIONS
+    }
+
+    /**
+     * Enumerates the possible {@link CDOCommonSession.Options#getLockNotificationMode() lock notification modes} of a
+     * CDO session.
+     * 
+     * @since 4.1
+     */
+    public enum LockNotificationMode
+    {
+      /**
+       * This mode delivers no lock notifications
+       */
+      OFF,
+
+      /**
+       * This mode delivers lock notifications if one or more views have enabled them.
+       */
+      IF_REQUIRED_BY_VIEWS,
+
+      /**
+       * This mode always delivers lock notifications, even if no views have them enabled, and even if no views are
+       * open.
+       */
+      ALWAYS
     }
 
     /**

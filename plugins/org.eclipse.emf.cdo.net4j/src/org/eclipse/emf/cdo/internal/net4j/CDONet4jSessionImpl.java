@@ -235,7 +235,8 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
 
     // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
     OpenSessionResult result = protocol.openSession(repositoryName, options().isPassiveUpdateEnabled(), options()
-        .getPassiveUpdateMode());
+        .getPassiveUpdateMode(), options().getLockNotificationMode());
+
     setSessionID(result.getSessionID());
     setUserID(result.getUserID());
     setLastUpdateTime(result.getLastUpdateTime());

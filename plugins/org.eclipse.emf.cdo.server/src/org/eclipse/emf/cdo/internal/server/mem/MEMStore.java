@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.model.CDOModelConstants;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -46,7 +47,6 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
-import org.eclipse.emf.cdo.spi.server.DurableLockArea;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
@@ -758,13 +758,19 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
     {
       do
       {
-        durableLockingID = DurableLockArea.createDurableLockingID();
+        durableLockingID = CDOLockUtil.createDurableLockingID();
       } while (lockAreas.containsKey(durableLockingID));
     }
 
-    LockArea area = new DurableLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
+    LockArea area = CDOLockUtil.createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
     lockAreas.put(durableLockingID, area);
     return area;
+  }
+
+  public synchronized void updateLockArea(LockArea lockArea)
+  {
+    String durableLockingID = lockArea.getDurableLockingID();
+    lockAreas.put(durableLockingID, lockArea);
   }
 
   public synchronized LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
@@ -783,7 +789,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
     for (LockArea area : lockAreas.values())
     {
       String userID = area.getUserID();
-      if (userID != null && userID.startsWith(userIDPrefix))
+      if (userID == null || userID.startsWith(userIDPrefix))
+      // if (userID != null && userID.startsWith(userIDPrefix)) // TODO (CD) Used to be this. Any breakage?
       {
         if (!handler.handleLockArea(area))
         {

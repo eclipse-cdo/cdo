@@ -414,6 +414,11 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
     return getStore().createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
   }
 
+  public void updateLockArea(LockArea lockArea)
+  {
+    getStore().updateLockArea(lockArea);
+  }
+
   public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
   {
     return getStore().getLockArea(durableLockingID);

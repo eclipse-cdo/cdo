@@ -57,6 +57,7 @@ import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -83,6 +84,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
+import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -836,12 +838,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
-  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo)
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
   {
     for (InternalCDOView view : getViews())
     {
-      view.handleLockNotification(lockChangeInfo);
+      if (view != sender)
+      {
+        view.handleLockNotification(sender, lockChangeInfo);
+      }
     }
+
+    fireEvent(new LocksChangedEvent(sender, lockChangeInfo));
   }
 
   private void registerPackageUnits(List<CDOPackageUnit> packageUnits)
@@ -1334,6 +1341,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
 
+    private LockNotificationMode lockNotificationMode = LockNotificationMode.IF_REQUIRED_BY_VIEWS;
+
     private CDOCollectionLoadingPolicy collectionLoadingPolicy;
 
     private CDOLobStore lobCache = CDOLobStoreImpl.INSTANCE;
@@ -1427,6 +1436,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           }
         }
       }
+    }
+
+    public LockNotificationMode getLockNotificationMode()
+    {
+      return lockNotificationMode;
+    }
+
+    public void setLockNotificationMode(LockNotificationMode lockNotificationMode)
+    {
+      this.lockNotificationMode = lockNotificationMode;
     }
 
     public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
@@ -1715,6 +1734,26 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     public String toString()
     {
       return "CDOSessionInvalidationEvent[" + commitInfo + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+    }
+  }
+
+  /**
+   * @author Caspar De Groot
+   * @since 4.1
+   */
+  private final class LocksChangedEvent extends DefaultLocksChangedEvent implements CDOSessionLocksChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    public LocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
+    {
+      super(CDOSessionImpl.this, sender, lockChangeInfo);
+    }
+
+    @Override
+    public CDOSession getSource()
+    {
+      return (CDOSession)super.getSource();
     }
   }
 }

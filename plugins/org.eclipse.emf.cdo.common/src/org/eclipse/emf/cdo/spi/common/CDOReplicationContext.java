@@ -12,11 +12,14 @@ package org.eclipse.emf.cdo.spi.common;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 
 /**
  * @author Eike Stepper
- * @since 3.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOReplicationContext extends CDOReplicationInfo, CDOBranchHandler, CDOCommitInfoHandler
+public interface CDOReplicationContext extends CDOReplicationInfo, CDOBranchHandler, CDOCommitInfoHandler,
+    IDurableLockingManager.LockArea.Handler
 {
 }

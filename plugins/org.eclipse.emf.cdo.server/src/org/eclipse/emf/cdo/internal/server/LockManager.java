@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -32,6 +33,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
@@ -41,6 +43,7 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.options.IOptionsContainer;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -59,6 +62,8 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
   private InternalRepository repository;
 
   private Map<String, InternalView> openViews = new HashMap<String, InternalView>();
+
+  private Map<String, DurableView> durableViews = new HashMap<String, DurableView>();
 
   @ExcludeFromDump
   private transient IListener sessionListener = new ContainerEventAdapter<IView>()
@@ -112,7 +117,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
   public synchronized Object getLockEntryObject(Object key)
   {
     LockState<Object, IView> lockState = getObjectToLocksMap().get(key);
-    return lockState.getLockedObject();
+    return lockState == null ? null : lockState.getLockedObject();
   }
 
   public Object getLockKey(CDOID id, CDOBranch branch)
@@ -438,7 +443,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
   /**
    * @author Eike Stepper
    */
-  private final class DurableView implements IView
+  private final class DurableView implements IView, CDOCommonView.Options
   {
     private String durableLockingID;
 
@@ -525,6 +530,43 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     {
       return MessageFormat.format("DurableView[{0}]", durableLockingID);
     }
+
+    public IOptionsContainer getContainer()
+    {
+      return null;
+    }
+
+    public void addListener(IListener listener)
+    {
+    }
+
+    public void removeListener(IListener listener)
+    {
+    }
+
+    public boolean hasListeners()
+    {
+      return false;
+    }
+
+    public IListener[] getListeners()
+    {
+      return null;
+    }
+
+    public Options options()
+    {
+      return this;
+    }
+
+    public boolean isLockNotificationEnabled()
+    {
+      return false;
+    }
+
+    public void setLockNotificationEnabled(boolean enabled)
+    {
+    }
   }
 
   /**
@@ -532,9 +574,34 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
    */
   private final class DurableLockLoader implements LockArea.Handler
   {
+    // Note (CD) This field is a sneaky way of avoiding more API changes.
+    // The view should properly be an argument on #handleLockArea(LockArea)
+    private IView view;
+
+    public DurableLockLoader()
+    {
+    }
+
+    public DurableLockLoader(IView view)
+    {
+      this.view = view;
+    }
+
+    private IView getView(LockArea area)
+    {
+      if (view != null)
+      {
+        return view;
+      }
+
+      DurableView view = new DurableView(area.getDurableLockingID());
+      durableViews.put(area.getDurableLockingID(), view);
+      return view;
+    }
+
     public boolean handleLockArea(LockArea area)
     {
-      IView view = new DurableView(area.getDurableLockingID());
+      IView view = getView(area);
 
       Collection<Object> readLocks = new ArrayList<Object>();
       Collection<Object> writeLocks = new ArrayList<Object>();
@@ -589,5 +656,46 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       }
     }
     return grade;
+  }
+
+  public void updateLockArea(LockArea lockArea)
+  {
+    DurableLocking2 accessor = getDurableLocking2();
+    if (lockArea.isDeleted())
+    {
+      accessor.deleteLockArea(lockArea.getDurableLockingID());
+    }
+    else
+    {
+      accessor.updateLockArea(lockArea);
+    }
+
+    IView view = openViews.get(lockArea.getDurableLockingID());
+    if (view == null)
+    {
+      view = durableViews.get(lockArea.getDurableLockingID());
+
+      // If we already have this durableView, we remove all the locks first...
+      if (view != null)
+      {
+        unlock2(view);
+      }
+
+      // ...then reload from the new lockArea
+      //
+      if (lockArea.isDeleted())
+      {
+        DurableView deletedView = durableViews.remove(lockArea.getDurableLockingID());
+        CheckUtil.checkNull(deletedView, "deletedView");
+      }
+      else
+      {
+        DurableLockLoader handler = new DurableLockLoader(view);
+        handler.handleLockArea(lockArea);
+      }
+
+      view = durableViews.get(lockArea.getDurableLockingID());
+      CheckUtil.checkNull(view, "view");
+    }
   }
 }

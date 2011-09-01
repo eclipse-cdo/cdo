@@ -11,7 +11,6 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -39,19 +38,14 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
 
   private List<CDORevisionKey> revisionKeys;
 
-  /**
-   * The branch being viewed
-   */
-  private CDOBranch viewedBranch;
-
   public LockObjectsRequest(CDOClientProtocol protocol, List<CDORevisionKey> revisionKeys, int viewID,
-      CDOBranch viewedBranch, LockType lockType, long timeout)
+      LockType lockType, long timeout)
   {
-    this(protocol, CDOProtocolConstants.SIGNAL_LOCK_OBJECTS, revisionKeys, viewID, viewedBranch, lockType, timeout);
+    this(protocol, CDOProtocolConstants.SIGNAL_LOCK_OBJECTS, revisionKeys, viewID, lockType, timeout);
   }
 
   protected LockObjectsRequest(CDOClientProtocol protocol, short signalID, List<CDORevisionKey> revisionKeys,
-      int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
+      int viewID, LockType lockType, long timeout)
   {
     super(protocol, signalID);
 
@@ -59,7 +53,6 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
     this.lockType = lockType;
     this.timeout = timeout;
     this.revisionKeys = revisionKeys;
-    this.viewedBranch = viewedBranch;
   }
 
   @Override
@@ -68,7 +61,6 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
     out.writeInt(viewID);
     out.writeCDOLockType(lockType);
     out.writeLong(timeout);
-    out.writeCDOBranch(viewedBranch);
 
     out.writeInt(revisionKeys.size());
     for (CDORevisionKey revKey : revisionKeys)

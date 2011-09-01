@@ -112,6 +112,12 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, IDu
   public LockArea createLockArea(InternalView view, String lockAreaID);
 
   /**
+   * @since 4.1
+   */
+  // TODO (CD) I've also added this to DurableLocking2 Refactoring opportunity?
+  public void updateLockArea(LockArea lockArea);
+
+  /**
    * @since 4.0
    */
   public IView openView(ISession session, int viewID, boolean readOnly, String durableLockingID);
@@ -125,4 +131,9 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, IDu
    * @since 4.1
    */
   public LockState<Object, IView> getLockState(Object key);
+
+  /**
+   * @since 4.1
+   */
+  public void setLockState(Object key, LockState<Object, IView> lockState);
 }

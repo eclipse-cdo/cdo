@@ -56,8 +56,20 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOCommonSessi
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
       throws Exception;
 
+  /**
+   * @deprecated use
+   *             {@link #sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State, CDOID)}
+   *             instead
+   */
+  @Deprecated
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState)
       throws Exception;
+
+  /**
+   * @since 4.1
+   */
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState,
+      CDOID rootResourceID) throws Exception;
 
   public void sendBranchNotification(InternalCDOBranch branch) throws Exception;
 

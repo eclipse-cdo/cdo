@@ -211,7 +211,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
-  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo)
+  public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
   {
     // Do nothing
   }
@@ -806,7 +806,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
-    public void handleLockNotification(CDOLockChangeInfo lockChangeInfo)
+    public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
     {
       throw new UnsupportedOperationException();
     }

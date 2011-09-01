@@ -183,7 +183,7 @@ public interface InternalCDOSession extends CDOSession, PackageProcessor, Packag
   /**
    * @since 4.1
    */
-  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo);
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender);
 
   /**
    * @since 3.0

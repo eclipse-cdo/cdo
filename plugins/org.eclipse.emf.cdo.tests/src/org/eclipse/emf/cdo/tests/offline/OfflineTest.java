@@ -40,7 +40,7 @@ public class OfflineTest extends AbstractSyncingTest
 {
   public void testMasterCommits_ArrivalInClone() throws Exception
   {
-    CDOSession session = openSession(getRepository().getName() + "_master");
+    CDOSession session = openSession("master");
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -83,7 +83,7 @@ public class OfflineTest extends AbstractSyncingTest
 
   protected void masterCommits_NotificationsFromClone() throws Exception
   {
-    CDOSession masterSession = openSession(getRepository().getName() + "_master");
+    CDOSession masterSession = openSession("master");
     CDOTransaction transaction = masterSession.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 
@@ -130,7 +130,7 @@ public class OfflineTest extends AbstractSyncingTest
   public void testClientCommits() throws Exception
   {
     InternalRepository clone = getRepository();
-    InternalRepository master = getRepository(clone.getName() + "_master");
+    InternalRepository master = getRepository("master");
 
     TestListener listener = new TestListener();
     CDOSession masterSession = openSession(master.getName());
@@ -165,7 +165,7 @@ public class OfflineTest extends AbstractSyncingTest
       getOfflineConfig().stopMasterTransport();
       waitForOffline(clone);
 
-      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
       CDOResource masterResource = masterTransaction.createResource("/master/resource");
 
@@ -205,7 +205,7 @@ public class OfflineTest extends AbstractSyncingTest
       getOfflineConfig().stopMasterTransport();
       waitForOffline(clone);
 
-      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
       CDOResource masterResource = masterTransaction.createResource("/master/resource");
 
@@ -238,7 +238,7 @@ public class OfflineTest extends AbstractSyncingTest
       getOfflineConfig().stopMasterTransport();
       waitForOffline(clone);
 
-      CDOSession masterSession = openSession(clone.getName() + "_master");
+      CDOSession masterSession = openSession("master");
       CDOTransaction masterTransaction = masterSession.openTransaction();
       CDOResource masterResource = masterTransaction.createResource("/master/resource");
 
@@ -356,7 +356,7 @@ public class OfflineTest extends AbstractSyncingTest
     getOfflineConfig().stopMasterTransport();
     waitForOffline(clone);
 
-    CDOSession masterSession = openSession(clone.getName() + "_master");
+    CDOSession masterSession = openSession("master");
     CDOTransaction transaction = masterSession.openTransaction();
     CDOResource resource = transaction.createResource("/my/resource");
 

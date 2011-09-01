@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.common.lock;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+
 /**
  * Represents a change in the lock state of a set of objects. Instances are meant to be sent from the server to the
  * client for the purpose of notifying the latter.
@@ -49,6 +51,11 @@ public interface CDOLockChangeInfo extends CDOBranchPoint
    * @return the type of lock operation that caused the lock changes
    */
   public Operation getOperation();
+
+  /**
+   * @return the type of locks that were affected by the lock operation
+   */
+  public LockType getLockType();
 
   /**
    * Enumerates the possible locking operations.

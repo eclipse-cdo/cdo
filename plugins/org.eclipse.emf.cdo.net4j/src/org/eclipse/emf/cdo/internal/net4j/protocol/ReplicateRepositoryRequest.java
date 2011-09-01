@@ -10,6 +10,8 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -37,6 +39,13 @@ public class ReplicateRepositoryRequest extends CDOClientRequest<Boolean>
   {
     out.writeInt(context.getLastReplicatedBranchID());
     out.writeLong(context.getLastReplicatedCommitTime());
+
+    String[] lockAreaIDs = context.getLockAreaIDs();
+    out.writeInt(lockAreaIDs.length);
+    for (int i = 0; i < lockAreaIDs.length; i++)
+    {
+      out.writeString(lockAreaIDs[i]);
+    }
   }
 
   @Override
@@ -58,8 +67,22 @@ public class ReplicateRepositoryRequest extends CDOClientRequest<Boolean>
         context.handleCommitInfo(in.readCDOCommitInfo());
         break;
 
+      case CDOProtocolConstants.REPLICATE_LOCKAREA:
+        boolean deleted = !in.readBoolean();
+        if (deleted)
+        {
+          String deletedLockAreaID = in.readString();
+          LockArea area = CDOLockUtil.createLockArea(deletedLockAreaID);
+          context.handleLockArea(area);
+        }
+        else
+        {
+          context.handleLockArea(in.readCDOLockArea());
+        }
+        break;
+
       default:
-        throw new IOException("Invalid replicate opcode: " + opcode);
+        throw new IllegalStateException("Invalid replicate opcode: " + opcode);
       }
     }
   }

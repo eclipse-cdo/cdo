@@ -15,10 +15,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.server.db4o.IDB4OStore;
-import org.eclipse.emf.cdo.spi.server.DurableLockArea;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -82,7 +82,8 @@ public class DB4OLockArea
       lockMap.put(cdoid, lockGrade);
     }
 
-    LockArea lockArea = new DurableLockArea(primitive.id, primitive.userID, branchpoint, primitive.readOnly, lockMap);
+    LockArea lockArea = CDOLockUtil.createLockArea(primitive.id, primitive.userID, branchpoint, primitive.readOnly,
+        lockMap);
     map.put(lockArea, primitive);
     return lockArea;
   }

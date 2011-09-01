@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
@@ -46,15 +47,18 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
 
   private PassiveUpdateMode passiveUpdateMode;
 
+  private LockNotificationMode lockNotificationMode;
+
   private OpenSessionResult result;
 
   public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, boolean passiveUpdateEnabled,
-      PassiveUpdateMode passiveUpdateMode)
+      PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OPEN_SESSION);
     this.repositoryName = repositoryName;
     this.passiveUpdateEnabled = passiveUpdateEnabled;
     this.passiveUpdateMode = passiveUpdateMode;
+    this.lockNotificationMode = lockNotificationMode;
   }
 
   @Override
@@ -80,6 +84,13 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
     }
 
     out.writeEnum(passiveUpdateMode);
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing lockNotificationMode: {0}", lockNotificationMode); //$NON-NLS-1$
+    }
+
+    out.writeEnum(lockNotificationMode);
   }
 
   @Override

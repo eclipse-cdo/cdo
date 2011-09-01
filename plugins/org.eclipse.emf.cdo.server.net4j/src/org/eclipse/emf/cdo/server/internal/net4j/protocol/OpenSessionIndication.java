@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -41,6 +42,8 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
   private boolean passiveUpdateEnabled;
 
   private PassiveUpdateMode passiveUpdateMode;
+
+  private LockNotificationMode lockNotificationMode;
 
   private InternalRepository repository;
 
@@ -83,6 +86,12 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
     {
       TRACER.format("Read passiveUpdateMode: {0}", passiveUpdateMode); //$NON-NLS-1$
     }
+
+    lockNotificationMode = in.readEnum(LockNotificationMode.class);
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Read lockNotificationMode: {0}", lockNotificationMode); //$NON-NLS-1$
+    }
   }
 
   @Override
@@ -105,6 +114,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       session = sessionManager.openSession(protocol);
       session.setPassiveUpdateEnabled(passiveUpdateEnabled);
       session.setPassiveUpdateMode(passiveUpdateMode);
+      session.setLockNotificationMode(lockNotificationMode);
 
       protocol.setInfraStructure(session);
       if (TRACER.isEnabled())

@@ -275,7 +275,10 @@ public class AssembleJavaDocOptions
 
       try
       {
-        out = new FileWriter(new File(releng, "javadoc/javadocLib.ant"));
+        File target = new File(releng, "javadoc/javadocLib.ant");
+        System.out.println("Generating " + target.getCanonicalPath());
+
+        out = new FileWriter(target);
         BufferedWriter writer = new BufferedWriter(out);
 
         writer.write("<?xml version=\"1.0\"?>\n");
@@ -444,7 +447,10 @@ public class AssembleJavaDocOptions
 
       try
       {
-        out = new FileWriter(new File(project, "javadoc.ant"));
+        File target = new File(project, "javadoc.ant");
+        System.out.println("Generating " + target.getCanonicalPath());
+
+        out = new FileWriter(target);
         BufferedWriter writer = new BufferedWriter(out);
 
         try
@@ -565,7 +571,10 @@ public class AssembleJavaDocOptions
 
       try
       {
-        out = new FileWriter(new File(project, "toc.xml"));
+        File target = new File(project, "toc.xml");
+        System.out.println("Generating " + target.getCanonicalPath());
+
+        out = new FileWriter(target);
         BufferedWriter writer = new BufferedWriter(out);
 
         try

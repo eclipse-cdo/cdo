@@ -17,45 +17,51 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public class MakeHrefsRelative
+public class SortListItems
 {
+  private static final String PREFIX = "<LI TYPE=\"circle\">";
+
+  private static final String SUFFIX = "</UL>";
+
   public static void main(String[] args) throws IOException
   {
     String javadocFolder = args[0];
     System.out.println();
-    System.out.println("Making HREFs relative in " + new File(".").getCanonicalPath() + "/" + javadocFolder);
+    System.out.println("Sorting list items in " + new File(".").getCanonicalPath() + "/" + javadocFolder);
 
-    makeFolderRelative(new File(javadocFolder), "../..");
+    sortListItemsInFolder(new File(javadocFolder));
   }
 
-  private static void makeFolderRelative(File folder, String prefix) throws IOException
+  private static void sortListItemsInFolder(File folder) throws IOException
   {
     File[] children = folder.listFiles();
     for (File file : children)
     {
+      String name = file.getName();
       if (file.isDirectory())
       {
-        if (!file.getName().equals(".svn"))
+        if (!name.equals(".svn"))
         {
-          makeFolderRelative(file, prefix + "/..");
+          sortListItemsInFolder(file);
         }
       }
       else
       {
-        if (file.getName().endsWith(".html"))
+        if (name.equals("package-tree.html") || name.equals("overview-tree.html"))
         {
-          makeFileRelative(file, prefix);
+          sortListItems(file);
         }
       }
     }
   }
 
-  private static void makeFileRelative(File file, String prefix) throws IOException
+  private static void sortListItems(File file) throws IOException
   {
     FileReader in = null;
     int modifiedLines = 0;
@@ -69,10 +75,33 @@ public class MakeHrefsRelative
       String line;
       while ((line = reader.readLine()) != null)
       {
-        if (line.indexOf("MAKE-RELATIVE") != -1)
+        if (line.startsWith(PREFIX) && line.endsWith(SUFFIX))
         {
-          line = line.replace("MAKE-RELATIVE", prefix);
-          ++modifiedLines;
+          String trimmed = line.trim();
+          String truncated = trimmed.substring(PREFIX.length(), line.length() - SUFFIX.length());
+          String[] listItems = truncated.split(PREFIX);
+
+          if (listItems.length > 1)
+          {
+            Arrays.sort(listItems);
+
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < listItems.length; i++)
+            {
+              String listItem = listItems[i];
+              builder.append(PREFIX);
+              builder.append(listItem);
+            }
+
+            builder.append("</UL>");
+
+            String result = builder.toString();
+            if (!line.equals(result))
+            {
+              line = result;
+              ++modifiedLines;
+            }
+          }
         }
 
         lines.add(line);

@@ -77,8 +77,7 @@ public class SortListItems
       {
         if (line.startsWith(PREFIX) && line.endsWith(SUFFIX))
         {
-          String trimmed = line.trim();
-          String truncated = trimmed.substring(PREFIX.length(), line.length() - SUFFIX.length());
+          String truncated = line.substring(PREFIX.length(), line.length() - SUFFIX.length());
           String[] listItems = truncated.split(PREFIX);
 
           if (listItems.length > 1)

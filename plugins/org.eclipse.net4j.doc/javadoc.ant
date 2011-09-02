@@ -57,6 +57,7 @@
 		         author="true"
 		         version="true"
 		         use="true"
+		         notree="true"
 		         windowtitle="${javadoc.name}"
 		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
 		         overview="${javadoc.project}/javadocOverview.html"
@@ -162,10 +163,12 @@
 			<arg value="${destdir}" />
 		</java>
 
+		<!--
 		<java classname="org.eclipse.emf.cdo.releng.SortListItems" dir="${basedir}" fork="true">
 			<classpath path="plugins/org.eclipse.emf.cdo.releng/bin" />
 			<arg value="${destdir}" />
 		</java>
+		-->
 	</target>
 
 	<target name="build.clean" depends="clean,build" />

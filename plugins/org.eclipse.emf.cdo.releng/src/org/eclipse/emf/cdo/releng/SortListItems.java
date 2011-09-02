@@ -29,11 +29,13 @@ public class SortListItems
 
   private static final String SUFFIX = "</UL>";
 
+  private static final String NL = System.getProperty("line.separator");
+
   public static void main(String[] args) throws IOException
   {
     String javadocFolder = args[0];
     System.out.println();
-    System.out.println("Sorting list items in " + new File(".").getCanonicalPath() + "/" + javadocFolder);
+    System.out.println("Sorting list items in " + new File(javadocFolder).getCanonicalPath());
 
     sortListItemsInFolder(new File(javadocFolder));
   }
@@ -129,7 +131,7 @@ public class SortListItems
       for (String line : lines)
       {
         writer.write(line);
-        writer.write("\n");
+        writer.write(NL);
       }
 
       writer.flush();

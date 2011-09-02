@@ -24,11 +24,13 @@ import java.util.List;
  */
 public class MakeHrefsRelative
 {
+  private static final String NL = System.getProperty("line.separator");
+
   public static void main(String[] args) throws IOException
   {
     String javadocFolder = args[0];
     System.out.println();
-    System.out.println("Making HREFs relative in " + new File(".").getCanonicalPath() + "/" + javadocFolder);
+    System.out.println("Making HREFs relative in " + new File(javadocFolder).getCanonicalPath());
 
     makeFolderRelative(new File(javadocFolder), "../..");
   }
@@ -89,27 +91,28 @@ public class MakeHrefsRelative
     if (modifiedLines != 0)
     {
       System.out.println("Modified: " + file.getPath() + " (" + modifiedLines + ")");
-      FileWriter out = null;
+    }
 
-      try
+    FileWriter out = null;
+
+    try
+    {
+      out = new FileWriter(file);
+      BufferedWriter writer = new BufferedWriter(out);
+
+      for (String line : lines)
       {
-        out = new FileWriter(file);
-        BufferedWriter writer = new BufferedWriter(out);
-
-        for (String line : lines)
-        {
-          writer.write(line);
-          writer.write("\n");
-        }
-
-        writer.flush();
+        writer.write(line);
+        writer.write(NL);
       }
-      finally
+
+      writer.flush();
+    }
+    finally
+    {
+      if (out != null)
       {
-        if (out != null)
-        {
-          out.close();
-        }
+        out.close();
       }
     }
   }

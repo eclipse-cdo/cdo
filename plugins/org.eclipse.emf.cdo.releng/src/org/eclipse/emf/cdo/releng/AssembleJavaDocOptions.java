@@ -16,6 +16,7 @@ import org.osgi.framework.BundleException;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -170,6 +171,13 @@ public class AssembleJavaDocOptions
     return result;
   }
 
+  public static void writeGenerationWarning(BufferedWriter writer) throws IOException
+  {
+    writer.write("\t<!-- =========================================== -->\n");
+    writer.write("\t<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->\n");
+    writer.write("\t<!-- =========================================== -->\n");
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -272,7 +280,11 @@ public class AssembleJavaDocOptions
 
         writer.write("<?xml version=\"1.0\"?>\n");
         writer.write("<project name=\"JavaDocLib\" default=\"delegate\" basedir=\"..\">\n");
+
         writer.write("\n");
+        writeGenerationWarning(writer);
+        writer.write("\n");
+
         writer.write("\t<target name=\"delegate\">\n");
 
         for (JavaDoc javaDoc : (List<JavaDoc>)getJavaDocsSortedByDependencies())
@@ -448,9 +460,7 @@ public class AssembleJavaDocOptions
             String id = line.trim();
             if ("<!-- GENERATION WARNING -->".equals(id))
             {
-              writer.write("\t<!-- =========================================== -->\n");
-              writer.write("\t<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->\n");
-              writer.write("\t<!-- =========================================== -->\n");
+              writeGenerationWarning(writer);
             }
             else if ("<!-- SOURCE FOLDERS -->".equals(id))
             {
@@ -459,15 +469,30 @@ public class AssembleJavaDocOptions
                 writer.write("\t\t\t\t<include name=\"" + sourceFolder + "/*.java\" />\n");
               }
             }
-            else if ("<!-- DOC FILES -->".equals(id))
+            else if ("<!-- COPY DOC FILES -->".equals(id))
             {
+              CharArrayWriter buffer = new CharArrayWriter();
+              buffer.write("\t\t<copy todir=\"${destdir}\" verbose=\"true\" failonerror=\"false\">\n");
+              buffer.write("\t\t\t<cutdirsmapper dirs=\"2\" />\n");
+              buffer.write("\t\t\t<fileset dir=\"plugins\" defaultexcludes=\"true\">\n");
+
+              boolean exist = false;
               for (String sourceFolder : sort(sourceFolders))
               {
-                File docFiles = new File("../plugins/" + sourceFolder + "/doc-files");
+                File docFiles = new File("../../../plugins/" + sourceFolder + "/doc-files");
                 if (docFiles.isDirectory())
                 {
-                  writer.write("\t\t\t\t<include name=\"" + sourceFolder + "/doc-files/*\" />\n");
+                  exist = true;
+                  buffer.write("\t\t\t\t<include name=\"" + sourceFolder + "/doc-files/**\" />\n");
                 }
+              }
+
+              if (exist)
+              {
+                buffer.write("\t\t\t</fileset>\n");
+                buffer.write("\t\t</copy>\n");
+                buffer.write("\n");
+                writer.write(buffer.toCharArray());
               }
             }
             else if ("<!-- PACKAGE NAMES -->".equals(id))

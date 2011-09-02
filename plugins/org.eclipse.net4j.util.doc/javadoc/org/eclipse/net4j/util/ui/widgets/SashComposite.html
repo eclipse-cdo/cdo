@@ -147,7 +147,7 @@ Class SashComposite</H2>
 <TH ALIGN="left"><B>Fields inherited from class org.eclipse.swt.widgets.Control</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>handle</CODE></TD>
+<TD><CODE>view</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -226,8 +226,7 @@ Class SashComposite</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/SashComposite.html#dispose()">dispose</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Disposes of the operating system resources associated with
- the receiver and all its descendants.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -333,7 +332,7 @@ Class SashComposite</H2>
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.widgets.Scrollable</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>computeTrim, getBorderWidth, getClientArea, getHorizontalBar, getVerticalBar</CODE></TD>
+<TD><CODE>computeTrim, getClientArea, getHorizontalBar, getVerticalBar</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.widgets.Control"><!-- --></A>
@@ -342,7 +341,7 @@ Class SashComposite</H2>
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.widgets.Control</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>addControlListener, addDragDetectListener, addFocusListener, addGestureListener, addHelpListener, addKeyListener, addMenuDetectListener, addMouseListener, addMouseMoveListener, addMouseTrackListener, addMouseWheelListener, addPaintListener, addTouchListener, addTraverseListener, computeSize, dragDetect, dragDetect, forceFocus, getAccessible, getBackground, getBackgroundImage, getBounds, getCursor, getDragDetect, getEnabled, getFont, getForeground, getLayoutData, getLocation, getMenu, getMonitor, getOrientation, getParent, getRegion, getShell, getSize, getToolTipText, getTouchEnabled, getVisible, internal_dispose_GC, internal_new_GC, isEnabled, isFocusControl, isReparentable, isVisible, moveAbove, moveBelow, pack, pack, print, redraw, redraw, removeControlListener, removeDragDetectListener, removeFocusListener, removeGestureListener, removeHelpListener, removeKeyListener, removeMenuDetectListener, removeMouseListener, removeMouseMoveListener, removeMouseTrackListener, removeMouseWheelListener, removePaintListener, removeTouchListener, removeTraverseListener, setBackground, setBackgroundImage, setBounds, setBounds, setCapture, setCursor, setDragDetect, setEnabled, setFont, setForeground, setLayoutData, setLocation, setLocation, setMenu, setOrientation, setParent, setRedraw, setRegion, setSize, setSize, setToolTipText, setTouchEnabled, setVisible, toControl, toControl, toDisplay, toDisplay, traverse, traverse, traverse, update</CODE></TD>
+<TD><CODE>addControlListener, addDragDetectListener, addFocusListener, addGestureListener, addHelpListener, addKeyListener, addMenuDetectListener, addMouseListener, addMouseMoveListener, addMouseTrackListener, addMouseWheelListener, addPaintListener, addTouchListener, addTraverseListener, computeSize, dragDetect, dragDetect, forceFocus, getAccessible, getBackground, getBackgroundImage, getBorderWidth, getBounds, getCursor, getDragDetect, getEnabled, getFont, getForeground, getLayoutData, getLocation, getMenu, getMonitor, getOrientation, getParent, getRegion, getShell, getSize, getToolTipText, getTouchEnabled, getVisible, internal_dispose_GC, internal_new_GC, isEnabled, isFocusControl, isReparentable, isVisible, moveAbove, moveBelow, pack, pack, print, redraw, redraw, removeControlListener, removeDragDetectListener, removeFocusListener, removeGestureListener, removeHelpListener, removeKeyListener, removeMenuDetectListener, removeMouseListener, removeMouseMoveListener, removeMouseTrackListener, removeMouseWheelListener, removePaintListener, removeTouchListener, removeTraverseListener, setBackground, setBackgroundImage, setBounds, setBounds, setCapture, setCursor, setDragDetect, setEnabled, setFont, setForeground, setLayoutData, setLocation, setLocation, setMenu, setOrientation, setParent, setRedraw, setRegion, setSize, setSize, setToolTipText, setTouchEnabled, setVisible, toControl, toControl, toDisplay, toDisplay, traverse, traverse, traverse, update</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.widgets.Widget"><!-- --></A>
@@ -413,31 +412,13 @@ dispose</H3>
 <PRE>
 public void <B>dispose</B>()</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.swt.widgets.Widget</CODE></B></DD>
-<DD>Disposes of the operating system resources associated with
- the receiver and all its descendants. After this method has
- been invoked, the receiver and all descendants will answer
- <code>true</code> when sent the message <code>isDisposed()</code>.
- Any internal connections between the widgets in the tree will
- have been removed to facilitate garbage collection.
- This method does nothing if the widget is already disposed.
- <p>
- NOTE: This method is not called recursively on the descendants
- of the receiver. This means that, widget implementers can not
- detect when a widget is being disposed of by re-implementing
- this method, but should instead listen for the <code>Dispose</code>
- event.
- </p>
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>dispose</CODE> in class <CODE>org.eclipse.swt.widgets.Widget</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>2.0</DD>
-<DT><B>See Also:</B><DD><CODE>Widget.addDisposeListener(org.eclipse.swt.events.DisposeListener)</CODE>, 
-<CODE>Widget.removeDisposeListener(org.eclipse.swt.events.DisposeListener)</CODE>, 
-<CODE>Widget.checkWidget()</CODE></DL>
+</DL>
 </DD>
 </DL>
 <HR>

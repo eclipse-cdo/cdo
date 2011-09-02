@@ -146,8 +146,7 @@ Class CoolBarComposite.CoolBarLayout</H2>
             boolean&nbsp;flushCache)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Computes and returns the size of the specified
- composite's client area according to this layout.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -164,8 +163,7 @@ Class CoolBarComposite.CoolBarLayout</H2>
        boolean&nbsp;flushCache)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Lays out the children of the specified composite
- according to this layout.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.widgets.Layout"><!-- --></A>
@@ -224,36 +222,11 @@ protected org.eclipse.swt.graphics.Point <B>computeSize</B>(org.eclipse.swt.widg
                                                      int&nbsp;hHint,
                                                      boolean&nbsp;flushCache)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.swt.widgets.Layout</CODE></B></DD>
-<DD>Computes and returns the size of the specified
- composite's client area according to this layout.
- <p>
- This method computes the size that the client area 
- of the composite must be in order to position all 
- children at their preferred size inside the
- composite according to the layout algorithm
- encoded by this layout.
- </p>
- <p>
- When a width or height hint is supplied, it is
- used to constrain the result. For example, if a
- width hint is provided that is less than the
- width of the client area, the layout may choose
- to wrap and increase height, clip, overlap, or
- otherwise constrain the children.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>computeSize</CODE> in class <CODE>org.eclipse.swt.widgets.Layout</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>composite</CODE> - a composite widget using this layout<DD><CODE>wHint</CODE> - width (<code>SWT.DEFAULT</code> for preferred size)<DD><CODE>hHint</CODE> - height (<code>SWT.DEFAULT</code> for preferred size)<DD><CODE>flushCache</CODE> - <code>true</code> means flush cached layout values
-<DT><B>Returns:</B><DD>a point containing the computed size (width, height)<DT><B>See Also:</B><DD><CODE>Layout.layout(org.eclipse.swt.widgets.Composite, boolean)</CODE>, 
-<CODE>Control.getBorderWidth()</CODE>, 
-<CODE>Control.getBounds()</CODE>, 
-<CODE>Control.getSize()</CODE>, 
-<CODE>Control.pack(boolean)</CODE>, 
-"computeTrim, getClientArea for controls that implement them"</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -264,36 +237,11 @@ layout</H3>
 protected void <B>layout</B>(org.eclipse.swt.widgets.Composite&nbsp;composite,
                       boolean&nbsp;flushCache)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.swt.widgets.Layout</CODE></B></DD>
-<DD>Lays out the children of the specified composite
- according to this layout.
- <p>
- This method positions and sizes the children of a
- composite using the layout algorithm encoded by this
- layout. Children of the composite are positioned in
- the client area of the composite. The position of
- the composite is not altered by this method.
- </p>
- <p>
- When the flush cache hint is true, the layout is
- instructed to flush any cached values associated
- with the children. Typically, a layout will cache
- the preferred sizes of the children to avoid the
- expense of computing these values each time the
- widget is laid out.
- </p>
- <p>
- When layout is triggered explicitly by the programmer
- the flush cache hint is true. When layout is triggered
- by a resize, either caused by the programmer or by the
- user, the hint is false.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>layout</CODE> in class <CODE>org.eclipse.swt.widgets.Layout</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>composite</CODE> - a composite widget using this layout<DD><CODE>flushCache</CODE> - <code>true</code> means flush cached layout values</DL>
+</DL>
 </DD>
 </DL>
 <HR>

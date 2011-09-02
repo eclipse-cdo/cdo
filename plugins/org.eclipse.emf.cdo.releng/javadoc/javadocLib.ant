@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <project name="JavaDocLib" default="delegate" basedir="..">
 
+	<!-- =========================================== -->
+	<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->
+	<!-- =========================================== -->
+
 	<target name="delegate">
 		<ant antfile="plugins/org.eclipse.net4j.util.doc/javadoc.ant" target="${delegate.target}" />
 		<ant antfile="plugins/org.eclipse.net4j.db.doc/javadoc.ant" target="${delegate.target}" />

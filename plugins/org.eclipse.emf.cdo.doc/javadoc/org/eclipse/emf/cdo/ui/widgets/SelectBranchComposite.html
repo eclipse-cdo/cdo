@@ -132,7 +132,7 @@ Class SelectBranchComposite</H2>
 <TH ALIGN="left"><B>Fields inherited from class org.eclipse.swt.widgets.Control</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>handle</CODE></TD>
+<TD><CODE>view</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -170,8 +170,7 @@ Class SelectBranchComposite</H2>
             org.eclipse.swt.widgets.Listener&nbsp;listener)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds the listener to the collection of listeners who will
- be notified when an event of the given type occurs.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -236,8 +235,7 @@ Class SelectBranchComposite</H2>
                org.eclipse.swt.widgets.Listener&nbsp;listener)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the listener from the collection of listeners who will
- be notified when an event of the given type occurs.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -263,7 +261,7 @@ Class SelectBranchComposite</H2>
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.widgets.Scrollable</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>computeTrim, getBorderWidth, getClientArea, getHorizontalBar, getVerticalBar</CODE></TD>
+<TD><CODE>computeTrim, getClientArea, getHorizontalBar, getVerticalBar</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.widgets.Control"><!-- --></A>
@@ -272,7 +270,7 @@ Class SelectBranchComposite</H2>
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.widgets.Control</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>addControlListener, addDragDetectListener, addFocusListener, addGestureListener, addHelpListener, addKeyListener, addMenuDetectListener, addMouseListener, addMouseMoveListener, addMouseTrackListener, addMouseWheelListener, addPaintListener, addTouchListener, addTraverseListener, computeSize, dragDetect, dragDetect, forceFocus, getAccessible, getBackground, getBackgroundImage, getBounds, getCursor, getDragDetect, getEnabled, getFont, getForeground, getLayoutData, getLocation, getMenu, getMonitor, getOrientation, getParent, getRegion, getShell, getSize, getToolTipText, getTouchEnabled, getVisible, internal_dispose_GC, internal_new_GC, isEnabled, isFocusControl, isReparentable, isVisible, moveAbove, moveBelow, pack, pack, print, redraw, redraw, removeControlListener, removeDragDetectListener, removeFocusListener, removeGestureListener, removeHelpListener, removeKeyListener, removeMenuDetectListener, removeMouseListener, removeMouseMoveListener, removeMouseTrackListener, removeMouseWheelListener, removePaintListener, removeTouchListener, removeTraverseListener, setBackground, setBackgroundImage, setBounds, setBounds, setCapture, setCursor, setDragDetect, setEnabled, setFont, setForeground, setLayoutData, setLocation, setLocation, setMenu, setOrientation, setParent, setRedraw, setRegion, setSize, setSize, setToolTipText, setTouchEnabled, setVisible, toControl, toControl, toDisplay, toDisplay, traverse, traverse, traverse, update</CODE></TD>
+<TD><CODE>addControlListener, addDragDetectListener, addFocusListener, addGestureListener, addHelpListener, addKeyListener, addMenuDetectListener, addMouseListener, addMouseMoveListener, addMouseTrackListener, addMouseWheelListener, addPaintListener, addTouchListener, addTraverseListener, computeSize, dragDetect, dragDetect, forceFocus, getAccessible, getBackground, getBackgroundImage, getBorderWidth, getBounds, getCursor, getDragDetect, getEnabled, getFont, getForeground, getLayoutData, getLocation, getMenu, getMonitor, getOrientation, getParent, getRegion, getShell, getSize, getToolTipText, getTouchEnabled, getVisible, internal_dispose_GC, internal_new_GC, isEnabled, isFocusControl, isReparentable, isVisible, moveAbove, moveBelow, pack, pack, print, redraw, redraw, removeControlListener, removeDragDetectListener, removeFocusListener, removeGestureListener, removeHelpListener, removeKeyListener, removeMenuDetectListener, removeMouseListener, removeMouseMoveListener, removeMouseTrackListener, removeMouseWheelListener, removePaintListener, removeTouchListener, removeTraverseListener, setBackground, setBackgroundImage, setBounds, setBounds, setCapture, setCursor, setDragDetect, setEnabled, setFont, setForeground, setLayoutData, setLocation, setLocation, setMenu, setOrientation, setParent, setRedraw, setRegion, setSize, setSize, setToolTipText, setTouchEnabled, setVisible, toControl, toControl, toDisplay, toDisplay, traverse, traverse, traverse, update</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.widgets.Widget"><!-- --></A>
@@ -430,22 +428,11 @@ addListener</H3>
 public void <B>addListener</B>(int&nbsp;eventType,
                         org.eclipse.swt.widgets.Listener&nbsp;listener)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.swt.widgets.Widget</CODE></B></DD>
-<DD>Adds the listener to the collection of listeners who will
- be notified when an event of the given type occurs. When the
- event does occur in the widget, the listener is notified by
- sending it the <code>handleEvent()</code> message. The event
- type is one of the event constants defined in class <code>SWT</code>.
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>addListener</CODE> in class <CODE>org.eclipse.swt.widgets.Widget</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>eventType</CODE> - the type of event to listen for<DD><CODE>listener</CODE> - the listener which should be notified when the event occurs<DT><B>See Also:</B><DD><CODE>Listener</CODE>, 
-<CODE>SWT</CODE>, 
-<CODE>Widget.getListeners(int)</CODE>, 
-<CODE>Widget.removeListener(int, Listener)</CODE>, 
-<CODE>Widget.notifyListeners(int, org.eclipse.swt.widgets.Event)</CODE></DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -456,20 +443,11 @@ removeListener</H3>
 public void <B>removeListener</B>(int&nbsp;eventType,
                            org.eclipse.swt.widgets.Listener&nbsp;listener)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.swt.widgets.Widget</CODE></B></DD>
-<DD>Removes the listener from the collection of listeners who will
- be notified when an event of the given type occurs. The event
- type is one of the event constants defined in class <code>SWT</code>.
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>removeListener</CODE> in class <CODE>org.eclipse.swt.widgets.Widget</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>eventType</CODE> - the type of event to listen for<DT><B>See Also:</B><DD><CODE>Listener</CODE>, 
-<CODE>SWT</CODE>, 
-<CODE>Widget.addListener(int, org.eclipse.swt.widgets.Listener)</CODE>, 
-<CODE>Widget.getListeners(int)</CODE>, 
-<CODE>Widget.notifyListeners(int, org.eclipse.swt.widgets.Event)</CODE></DL>
+</DL>
 </DD>
 </DL>
 <HR>

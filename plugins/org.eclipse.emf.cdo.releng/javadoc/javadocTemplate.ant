@@ -11,10 +11,12 @@
 	<property file="${javadoc.project}/plugin.properties" />
 	<property name="javadoc.name" value="${pluginName}" />
 	<property name="destdir" value="${javadoc.project}/javadoc" />
+	<property name="additional.jars" value="/develop/bin/javadoc" />
 
 	<path id="javadoc.classpath">
 		<fileset dir="_target/plugins">
 			<include name="**/*.jar" />
+			<exclude name="**/*carbon*" />
 		</fileset>
 		<fileset dir="plugins">
 			<include name="**/*.jar" />
@@ -22,6 +24,11 @@
 		<dirset dir="plugins">
 			<include name="*/bin" />
 		</dirset>
+		<fileset dir="${additional.jars}">
+			<include name="cglib*.jar" />
+			<include name="org.apache.xalan*.jar" />
+			<include name="javax.security.jacc*.jar" />
+		</fileset>
 	</path>
 
 	<fileset dir="${destdir}" id="desthtml">
@@ -43,6 +50,8 @@
 		         maxmemory="1024m"
 		         source="1.5"
 		         useexternalfile="true"
+		         docfilessubdirs="true"
+		         includenosourcepackages="true"
 		         author="true"
 		         version="true"
 		         use="true"
@@ -62,12 +71,12 @@
 			<link href="http://download.eclipse.org/modeling/emf/emf/javadoc/${emf.version}" />
 			<!-- DEPENDENCIES -->
 
+			<tag name="ADDED" description="Added" />
 			<tag name="Singleton" description="Singleton" />
 			<tag name="generated" description="Generated" />
 			<tag name="extends" description="Extends" />
 			<tag name="model" description="Model" />
 			<tag name="ordered" description="Ordered" />
-			<tag name="ADDED" description="Added" />
 			<tag name="category" description="Category" />
 			<tag name="noimplement" description="No Implement" />
 			<tag name="noextend" description="No Extend" />
@@ -75,7 +84,8 @@
 			<tag name="noreference" description="No Reference" />
 		</javadoc>
 
-		<copy todir="${destdir}/resources" failonerror="false">
+		<!-- COPY DOC FILES -->
+		<copy todir="${destdir}/resources" verbose="true" failonerror="false">
 			<fileset dir="${javadoc.project}/javadocResources" defaultexcludes="true">
 				<include name="**/*" />
 				<exclude name="README.txt" />

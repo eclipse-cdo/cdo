@@ -143,8 +143,7 @@ Class DNDTransfer&lt;TYPE&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDTransfer.html#getTypeIds()">getTypeIds</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the platform specific ids of the  data types that can be converted using 
- this transfer agent.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -152,8 +151,7 @@ Class DNDTransfer&lt;TYPE&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDTransfer.html#getTypeNames()">getTypeNames</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the platform specific names of the  data types that can be converted 
- using this transfer agent.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -162,8 +160,7 @@ Class DNDTransfer&lt;TYPE&gt;</H2>
              org.eclipse.swt.dnd.TransferData&nbsp;transferData)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation of <code>javaToNative</code> converts a java 
- <code>byte[]</code> to a platform specific representation.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -171,8 +168,7 @@ Class DNDTransfer&lt;TYPE&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDTransfer.html#nativeToJava(org.eclipse.swt.dnd.TransferData)">nativeToJava</A></B>(org.eclipse.swt.dnd.TransferData&nbsp;transferData)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation of <code>nativeToJava</code> converts a platform specific 
- representation of a byte array to a java <code>byte[]</code>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -254,17 +250,11 @@ getTypeIds</H3>
 <PRE>
 protected int[] <B>getTypeIds</B>()</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.swt.dnd.Transfer</CODE></B></DD>
-<DD>Returns the platform specific ids of the  data types that can be converted using 
- this transfer agent.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getTypeIds</CODE> in class <CODE>org.eclipse.swt.dnd.Transfer</CODE></DL>
 </DD>
 <DD><DL>
-
-<DT><B>Returns:</B><DD>the platform specific ids of the data types that can be converted using 
- this transfer agent</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -274,17 +264,11 @@ getTypeNames</H3>
 <PRE>
 protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>[] <B>getTypeNames</B>()</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.swt.dnd.Transfer</CODE></B></DD>
-<DD>Returns the platform specific names of the  data types that can be converted 
- using this transfer agent.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getTypeNames</CODE> in class <CODE>org.eclipse.swt.dnd.Transfer</CODE></DL>
 </DD>
 <DD><DL>
-
-<DT><B>Returns:</B><DD>the platform specific names of the data types that can be converted 
- using this transfer agent.</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -295,16 +279,11 @@ javaToNative</H3>
 protected void <B>javaToNative</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object,
                             org.eclipse.swt.dnd.TransferData&nbsp;transferData)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.swt.dnd.ByteArrayTransfer</CODE></B></DD>
-<DD>This implementation of <code>javaToNative</code> converts a java 
- <code>byte[]</code> to a platform specific representation.
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>javaToNative</CODE> in class <CODE>org.eclipse.swt.dnd.ByteArrayTransfer</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>object</CODE> - a java <code>byte[]</code> containing the data to be converted<DD><CODE>transferData</CODE> - an empty <code>TransferData</code> object that will
-        be filled in on return with the platform specific format of the data<DT><B>See Also:</B><DD><CODE>Transfer.nativeToJava(org.eclipse.swt.dnd.TransferData)</CODE></DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -314,17 +293,11 @@ nativeToJava</H3>
 <PRE>
 protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>nativeToJava</B>(org.eclipse.swt.dnd.TransferData&nbsp;transferData)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.swt.dnd.ByteArrayTransfer</CODE></B></DD>
-<DD>This implementation of <code>nativeToJava</code> converts a platform specific 
- representation of a byte array to a java <code>byte[]</code>.
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>nativeToJava</CODE> in class <CODE>org.eclipse.swt.dnd.ByteArrayTransfer</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>transferData</CODE> - the platform specific representation of the data to be converted
-<DT><B>Returns:</B><DD>a java <code>byte[]</code> containing the converted data if the conversion was
-                successful; otherwise null<DT><B>See Also:</B><DD><CODE>Transfer.javaToNative(java.lang.Object, org.eclipse.swt.dnd.TransferData)</CODE></DL>
+</DL>
 </DD>
 </DL>
 <HR>

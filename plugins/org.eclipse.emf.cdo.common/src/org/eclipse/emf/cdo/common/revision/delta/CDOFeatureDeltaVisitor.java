@@ -12,6 +12,9 @@
 package org.eclipse.emf.cdo.common.revision.delta;
 
 /**
+ * Visits all {@link CDOFeatureDelta feature deltas} of a {@link CDORevisionDelta revision delta}.
+ * 
+ * @see CDORevisionDelta#accept(CDOFeatureDeltaVisitor)
  * @author Simon McDuff
  */
 public interface CDOFeatureDeltaVisitor

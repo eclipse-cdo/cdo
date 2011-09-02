@@ -55,6 +55,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Various static helper methods for dealing with CDO meta models.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

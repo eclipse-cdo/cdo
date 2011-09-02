@@ -30,6 +30,9 @@ public interface CDORevisionHandler
   public boolean handleRevision(CDORevision revision);
 
   /**
+   * A delegating {@link CDORevisionHandler revision handler} with a {@link #filter(CDORevision) filter()} method used
+   * to suppress specific revisions.
+   * 
    * @author Eike Stepper
    * @since 4.1
    */
@@ -58,6 +61,8 @@ public interface CDORevisionHandler
     }
 
     /**
+     * A delegating {@link Filtered revision handler} that filters detached revisions.
+     * 
      * @author Eike Stepper
      */
     public static final class Undetached extends Filtered

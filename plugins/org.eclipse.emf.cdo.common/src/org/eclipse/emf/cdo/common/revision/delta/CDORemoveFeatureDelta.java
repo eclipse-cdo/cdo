@@ -11,7 +11,12 @@
  */
 package org.eclipse.emf.cdo.common.revision.delta;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 /**
+ * A {@link CDOFeatureDelta feature delta} that represents a removal from a many-valued {@link EStructuralFeature
+ * feature}.
+ * 
  * @author Simon McDuff
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

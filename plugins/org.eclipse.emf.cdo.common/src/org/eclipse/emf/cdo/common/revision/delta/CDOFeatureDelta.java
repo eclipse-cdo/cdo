@@ -17,6 +17,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
+ * Represents a change delta between two values of a single {@link EStructuralFeature feature}.
+ * 
  * @author Simon McDuff
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -62,6 +64,8 @@ public interface CDOFeatureDelta
   public boolean isStructurallyEqual(Object obj);
 
   /**
+   * Enumerates the possible types of {@link CDOFeatureDelta feature deltas}.
+   * 
    * @author Simon McDuff
    */
   public enum Type

@@ -6,8 +6,8 @@
 	<!-- =========================================== -->
 
 	<property name="jdk.version" value="1.5.0" />
-	<property name="emf.version" value="2.6.0" />
-	<property name="platform.version" value="indigo" />
+	<property name="emf.version" value="2.7.0" />
+	<property name="platform.version" value="juno" />
 
 	<property name="javadoc.project" value="plugins/org.eclipse.net4j.db.doc" />
 	<property file="${javadoc.project}/plugin.properties" />
@@ -121,7 +121,7 @@
 		</replaceregexp>
 
 		<java classname="org.eclipse.emf.cdo.releng.MakeHrefsRelative" dir="${basedir}" fork="true">
-			<classpath path="org.eclipse.emf.cdo.releng/bin" />
+			<classpath path="plugins/org.eclipse.emf.cdo.releng/bin" />
 			<arg value="${destdir}" />
 		</java>
 	</target>

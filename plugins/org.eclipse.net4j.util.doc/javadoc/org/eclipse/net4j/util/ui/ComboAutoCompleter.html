@@ -55,8 +55,8 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/DelegatingContentProvider.html" title="class in org.eclipse.net4j.util.ui"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/AbstractPropertyAdapterFactory.html" title="class in org.eclipse.net4j.util.ui"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="class in org.eclipse.net4j.util.ui"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/util/ui/ComboAutoCompleter.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="ComboAutoCompleter.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -96,11 +96,11 @@ Class ComboAutoCompleter</H2>
   <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.ComboAutoCompleter</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/ModifyListener.html?is-external=true" title="class or interface in org.eclipse.swt.events">ModifyListener</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/internal.SWTEventListener.html?is-external=true" title="class or interface in org.eclipse.swt">org.eclipse.swt.internal.SWTEventListener</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, org.eclipse.swt.events.ModifyListener, org.eclipse.swt.internal.SWTEventListener</DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public class <B>ComboAutoCompleter</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/ModifyListener.html?is-external=true" title="class or interface in org.eclipse.swt.events">ModifyListener</A></DL>
+<DT><PRE>public class <B>ComboAutoCompleter</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements org.eclipse.swt.events.ModifyListener</DL>
 </PRE>
 
 <P>
@@ -121,7 +121,7 @@ Class ComboAutoCompleter</H2>
 <B>Constructor Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#ComboAutoCompleter(org.eclipse.jface.viewers.ComboViewer)">ComboAutoCompleter</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ComboViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ComboViewer</A>&nbsp;viewer)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#ComboAutoCompleter(org.eclipse.jface.viewers.ComboViewer)">ComboAutoCompleter</A></B>(org.eclipse.jface.viewers.ComboViewer&nbsp;viewer)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -139,7 +139,7 @@ Class ComboAutoCompleter</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#attach(org.eclipse.jface.viewers.ComboViewer)">attach</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ComboViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ComboViewer</A>&nbsp;viewer)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#attach(org.eclipse.jface.viewers.ComboViewer)">attach</A></B>(org.eclipse.jface.viewers.ComboViewer&nbsp;viewer)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -147,7 +147,7 @@ Class ComboAutoCompleter</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#attach(org.eclipse.jface.viewers.ComboViewer, org.eclipse.net4j.util.ui.ComboAutoCompleter)">attach</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ComboViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ComboViewer</A>&nbsp;viewer,
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#attach(org.eclipse.jface.viewers.ComboViewer, org.eclipse.net4j.util.ui.ComboAutoCompleter)">attach</A></B>(org.eclipse.jface.viewers.ComboViewer&nbsp;viewer,
        <A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html" title="class in org.eclipse.net4j.util.ui">ComboAutoCompleter</A>&nbsp;completer)</CODE>
 
 <BR>
@@ -155,7 +155,7 @@ Class ComboAutoCompleter</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ComboViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ComboViewer</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.jface.viewers.ComboViewer</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#getViewer()">getViewer</A></B>()</CODE>
 
 <BR>
@@ -164,7 +164,7 @@ Class ComboAutoCompleter</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#modifyText(org.eclipse.swt.events.ModifyEvent)">modifyText</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/ModifyEvent.html?is-external=true" title="class or interface in org.eclipse.swt.events">ModifyEvent</A>&nbsp;e)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#modifyText(org.eclipse.swt.events.ModifyEvent)">modifyText</A></B>(org.eclipse.swt.events.ModifyEvent&nbsp;e)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sent when the text is modified.</TD>
@@ -172,7 +172,7 @@ Class ComboAutoCompleter</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#setSelection(org.eclipse.jface.viewers.StructuredSelection)">setSelection</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredSelection</A>&nbsp;selection)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html#setSelection(org.eclipse.jface.viewers.StructuredSelection)">setSelection</A></B>(org.eclipse.jface.viewers.StructuredSelection&nbsp;selection)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -203,7 +203,7 @@ Class ComboAutoCompleter</H2>
 <A NAME="ComboAutoCompleter(org.eclipse.jface.viewers.ComboViewer)"><!-- --></A><H3>
 ComboAutoCompleter</H3>
 <PRE>
-public <B>ComboAutoCompleter</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ComboViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ComboViewer</A>&nbsp;viewer)</PRE>
+public <B>ComboAutoCompleter</B>(org.eclipse.jface.viewers.ComboViewer&nbsp;viewer)</PRE>
 <DL>
 </DL>
 
@@ -220,7 +220,7 @@ public <B>ComboAutoCompleter</B>(<A HREF="http://help.eclipse.org/indigo/topic/o
 <A NAME="getViewer()"><!-- --></A><H3>
 getViewer</H3>
 <PRE>
-public final <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ComboViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ComboViewer</A> <B>getViewer</B>()</PRE>
+public final org.eclipse.jface.viewers.ComboViewer <B>getViewer</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -234,13 +234,13 @@ public final <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.
 <A NAME="modifyText(org.eclipse.swt.events.ModifyEvent)"><!-- --></A><H3>
 modifyText</H3>
 <PRE>
-public final void <B>modifyText</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/ModifyEvent.html?is-external=true" title="class or interface in org.eclipse.swt.events">ModifyEvent</A>&nbsp;e)</PRE>
+public final void <B>modifyText</B>(org.eclipse.swt.events.ModifyEvent&nbsp;e)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/ModifyListener.html?is-external=true#modifyText(org.eclipse.swt.events.ModifyEvent)" title="class or interface in org.eclipse.swt.events">org.eclipse.swt.events.ModifyListener</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.swt.events.ModifyListener</CODE></B></DD>
 <DD>Sent when the text is modified.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/ModifyListener.html?is-external=true#modifyText(org.eclipse.swt.events.ModifyEvent)" title="class or interface in org.eclipse.swt.events">modifyText</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/ModifyListener.html?is-external=true" title="class or interface in org.eclipse.swt.events">ModifyListener</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>modifyText</CODE> in interface <CODE>org.eclipse.swt.events.ModifyListener</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>e</CODE> - an event containing information about the modify</DL>
@@ -251,7 +251,7 @@ public final void <B>modifyText</B>(<A HREF="http://help.eclipse.org/indigo/topi
 <A NAME="setSelection(org.eclipse.jface.viewers.StructuredSelection)"><!-- --></A><H3>
 setSelection</H3>
 <PRE>
-protected void <B>setSelection</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredSelection</A>&nbsp;selection)</PRE>
+protected void <B>setSelection</B>(org.eclipse.jface.viewers.StructuredSelection&nbsp;selection)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -265,7 +265,7 @@ protected void <B>setSelection</B>(<A HREF="http://help.eclipse.org/indigo/topic
 <A NAME="attach(org.eclipse.jface.viewers.ComboViewer, org.eclipse.net4j.util.ui.ComboAutoCompleter)"><!-- --></A><H3>
 attach</H3>
 <PRE>
-public static void <B>attach</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ComboViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ComboViewer</A>&nbsp;viewer,
+public static void <B>attach</B>(org.eclipse.jface.viewers.ComboViewer&nbsp;viewer,
                           <A HREF="../../../../../org/eclipse/net4j/util/ui/ComboAutoCompleter.html" title="class in org.eclipse.net4j.util.ui">ComboAutoCompleter</A>&nbsp;completer)</PRE>
 <DL>
 <DD><DL>
@@ -280,7 +280,7 @@ public static void <B>attach</B>(<A HREF="http://help.eclipse.org/indigo/topic/o
 <A NAME="attach(org.eclipse.jface.viewers.ComboViewer)"><!-- --></A><H3>
 attach</H3>
 <PRE>
-public static void <B>attach</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ComboViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ComboViewer</A>&nbsp;viewer)</PRE>
+public static void <B>attach</B>(org.eclipse.jface.viewers.ComboViewer&nbsp;viewer)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -320,8 +320,8 @@ public static void <B>attach</B>(<A HREF="http://help.eclipse.org/indigo/topic/o
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/DelegatingContentProvider.html" title="class in org.eclipse.net4j.util.ui"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/AbstractPropertyAdapterFactory.html" title="class in org.eclipse.net4j.util.ui"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="class in org.eclipse.net4j.util.ui"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/net4j/util/ui/ComboAutoCompleter.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="ComboAutoCompleter.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

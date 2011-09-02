@@ -56,6 +56,7 @@
 			<topic label="org.eclipse.emf.cdo.spi.common.branch" href="javadoc/org/eclipse/emf/cdo/spi/common/branch/package-summary.html" />
 			<topic label="org.eclipse.emf.cdo.spi.common.commit" href="javadoc/org/eclipse/emf/cdo/spi/common/commit/package-summary.html" />
 			<topic label="org.eclipse.emf.cdo.spi.common.id" href="javadoc/org/eclipse/emf/cdo/spi/common/id/package-summary.html" />
+			<topic label="org.eclipse.emf.cdo.spi.common.lock" href="javadoc/org/eclipse/emf/cdo/spi/common/lock/package-summary.html" />
 			<topic label="org.eclipse.emf.cdo.spi.common.model" href="javadoc/org/eclipse/emf/cdo/spi/common/model/package-summary.html" />
 			<topic label="org.eclipse.emf.cdo.spi.common.revision" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/package-summary.html" />
 		</topic>

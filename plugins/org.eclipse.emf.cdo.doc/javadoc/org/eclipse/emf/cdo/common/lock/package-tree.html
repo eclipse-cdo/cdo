@@ -92,12 +92,12 @@ Class Hierarchy
 </H2>
 <UL>
 <LI TYPE="circle">java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang"><B>Object</B></A><UL>
-<LI TYPE="circle">java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><B>Throwable</B></A> (implements java.io.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A>)
+<LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html" title="class in org.eclipse.emf.cdo.common.lock"><B>CDOLockUtil</B></A><LI TYPE="circle">java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang"><B>Throwable</B></A> (implements java.io.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A>)
 <UL>
 <LI TYPE="circle">java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang"><B>Exception</B></A><UL>
 <LI TYPE="circle">java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang"><B>RuntimeException</B></A><UL>
 <LI TYPE="circle">java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang"><B>IllegalStateException</B></A><UL>
-<LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockAreaNotFoundException.html" title="class in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager.LockAreaNotFoundException</B></A></UL>
+<LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockAreaAlreadyExistsException.html" title="class in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager.LockAreaAlreadyExistsException</B></A><LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockAreaNotFoundException.html" title="class in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager.LockAreaNotFoundException</B></A></UL>
 </UL>
 </UL>
 </UL>
@@ -108,8 +108,8 @@ Interface Hierarchy
 </H2>
 <UL>
 <LI TYPE="circle">org.eclipse.emf.cdo.common.branch.<A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><B>CDOBranchPoint</B></A><UL>
-<LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager.LockArea</B></A></UL>
-<LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.html" title="interface in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager</B></A><LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.Handler.html" title="interface in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager.LockArea.Handler</B></A></UL>
+<LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock"><B>CDOLockChangeInfo</B></A><LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager.LockArea</B></A></UL>
+<LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.lock"><B>CDOLockChangeInfoHandler</B></A><LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock"><B>CDOLockOwner</B></A><LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><B>CDOLockState</B></A><LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.html" title="interface in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager</B></A><LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.Handler.html" title="interface in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager.LockArea.Handler</B></A></UL>
 <H2>
 Enum Hierarchy
 </H2>
@@ -117,7 +117,7 @@ Enum Hierarchy
 <LI TYPE="circle">java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang"><B>Object</B></A><UL>
 <LI TYPE="circle">java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang"><B>Enum</B></A>&lt;E&gt; (implements java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</A>&lt;T&gt;, java.io.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</A>)
 <UL>
-<LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager.LockGrade</B></A></UL>
+<LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock"><B>CDOLockChangeInfo.Operation</B></A><LI TYPE="circle">org.eclipse.emf.cdo.common.lock.<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock"><B>IDurableLockingManager.LockGrade</B></A></UL>
 </UL>
 </UL>
 <HR>

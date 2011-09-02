@@ -160,7 +160,7 @@ Interface InternalCDOSavepoint</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getSharedDetachedObjects()">getSharedDetachedObjects</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -172,11 +172,19 @@ Interface InternalCDOSavepoint</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#isNewObject(org.eclipse.emf.cdo.common.id.CDOID)">isNewObject</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#recalculateSharedDetachedObjects()">recalculateSharedDetachedObjects</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.transaction.CDOSavepoint"><!-- --></A>
@@ -212,7 +220,7 @@ Interface InternalCDOSavepoint</H2>
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.transaction.<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html#isValid()">isValid</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html#rollback()">rollback</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html#getNumber()">getNumber</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html#isValid()">isValid</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html#rollback()">rollback</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -301,8 +309,11 @@ void <B>clear</B>()</PRE>
 <A NAME="getSharedDetachedObjects()"><!-- --></A><H3>
 getSharedDetachedObjects</H3>
 <PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt; <B>getSharedDetachedObjects</B>()</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt; <B>getSharedDetachedObjects</B>()</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -315,12 +326,31 @@ getSharedDetachedObjects</H3>
 <A NAME="recalculateSharedDetachedObjects()"><!-- --></A><H3>
 recalculateSharedDetachedObjects</H3>
 <PRE>
-void <B>recalculateSharedDetachedObjects</B>()</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>void <B>recalculateSharedDetachedObjects</B>()</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isNewObject(org.eclipse.emf.cdo.common.id.CDOID)"><!-- --></A><H3>
+isNewObject</H3>
+<PRE>
+boolean <B>isNewObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&nbsp;id)</PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

@@ -125,7 +125,7 @@ Class CDOSessionProtocol.OpenSessionResult</H2>
 <B>Constructor Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#CDOSessionProtocol.OpenSessionResult(int, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.CDOCommonRepository.Type, org.eclipse.emf.cdo.common.CDOCommonRepository.State, java.lang.String, java.util.Set, long, long, org.eclipse.emf.cdo.common.id.CDOID, boolean, boolean, boolean, boolean)">CDOSessionProtocol.OpenSessionResult</A></B>(int&nbsp;sessionID,
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#CDOSessionProtocol.OpenSessionResult(int, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.CDOCommonRepository.Type, org.eclipse.emf.cdo.common.CDOCommonRepository.State, java.lang.String, java.util.Set, long, long, org.eclipse.emf.cdo.common.id.CDOID, boolean, boolean, boolean, boolean, org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation)">CDOSessionProtocol.OpenSessionResult</A></B>(int&nbsp;sessionID,
                                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;userID,
                                      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;repositoryUUID,
                                      <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</A>&nbsp;repositoryType,
@@ -138,7 +138,8 @@ Class CDOSessionProtocol.OpenSessionResult</H2>
                                      boolean&nbsp;repositorySupportingAudits,
                                      boolean&nbsp;repositorySupportingBranches,
                                      boolean&nbsp;repositorySupportingEcore,
-                                     boolean&nbsp;repositoryEnsuringReferentialIntegrity)</CODE>
+                                     boolean&nbsp;repositoryEnsuringReferentialIntegrity,
+                                     <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</A>&nbsp;repositoryIDGenerationLocation)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -181,6 +182,14 @@ Class CDOSessionProtocol.OpenSessionResult</H2>
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;long</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryCreationTime()">getRepositoryCreationTime</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryIDGenerationLocation()">getRepositoryIDGenerationLocation</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -312,7 +321,7 @@ Class CDOSessionProtocol.OpenSessionResult</H2>
 </TR>
 </TABLE>
 
-<A NAME="CDOSessionProtocol.OpenSessionResult(int, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.CDOCommonRepository.Type, org.eclipse.emf.cdo.common.CDOCommonRepository.State, java.lang.String, java.util.Set, long, long, org.eclipse.emf.cdo.common.id.CDOID, boolean, boolean, boolean, boolean)"><!-- --></A><H3>
+<A NAME="CDOSessionProtocol.OpenSessionResult(int, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.CDOCommonRepository.Type, org.eclipse.emf.cdo.common.CDOCommonRepository.State, java.lang.String, java.util.Set, long, long, org.eclipse.emf.cdo.common.id.CDOID, boolean, boolean, boolean, boolean, org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation)"><!-- --></A><H3>
 CDOSessionProtocol.OpenSessionResult</H3>
 <PRE>
 public <B>CDOSessionProtocol.OpenSessionResult</B>(int&nbsp;sessionID,
@@ -328,11 +337,12 @@ public <B>CDOSessionProtocol.OpenSessionResult</B>(int&nbsp;sessionID,
                                             boolean&nbsp;repositorySupportingAudits,
                                             boolean&nbsp;repositorySupportingBranches,
                                             boolean&nbsp;repositorySupportingEcore,
-                                            boolean&nbsp;repositoryEnsuringReferentialIntegrity)</PRE>
+                                            boolean&nbsp;repositoryEnsuringReferentialIntegrity,
+                                            <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</A>&nbsp;repositoryIDGenerationLocation)</PRE>
 <DL>
 <DL>
 <DT><B>Since:</B></DT>
-  <DD>4.0</DD>
+  <DD>4.1</DD>
 </DL>
 </DL>
 
@@ -502,6 +512,19 @@ public boolean <B>isRepositoryEnsuringReferentialIntegrity</B>()</PRE>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getRepositoryIDGenerationLocation()"><!-- --></A><H3>
+getRepositoryIDGenerationLocation</H3>
+<PRE>
+public <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</A> <B>getRepositoryIDGenerationLocation</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

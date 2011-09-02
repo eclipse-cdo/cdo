@@ -103,7 +103,7 @@ Class CDODefaultTransactionHandler1</H2>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <B>CDODefaultTransactionHandler1</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</A></DL>
+<DT><PRE>public class <B>CDODefaultTransactionHandler1</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</A></DL>
 </PRE>
 
 <P>
@@ -154,7 +154,7 @@ An empty default implementation of <A HREF="../../../../../org/eclipse/emf/cdo/t
                 <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called by a <code>CDOTransaction</code> <b>before</b> an object is added.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation does nothing.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -163,7 +163,7 @@ An empty default implementation of <A HREF="../../../../../org/eclipse/emf/cdo/t
                 <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called by a <code>CDOTransaction</code> <b>before</b> an object is detached.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation does nothing.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -173,7 +173,7 @@ An empty default implementation of <A HREF="../../../../../org/eclipse/emf/cdo/t
                 <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;featureChange)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called by a <code>CDOTransaction</code> <b>before</b> an object is modified.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation does nothing.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -221,32 +221,7 @@ attachingObject</H3>
 public void <B>attachingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
                             <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">CDOTransactionHandler1</A></CODE></B></DD>
-<DD>Called by a <code>CDOTransaction</code> <b>before</b> an object is added. The implementor of this method is allowed
- to throw an unchecked exception that will propagate up to the operation that is about to add the object (thereby
- preventing the operation from successful completion).
- <p>
- <b>Note:</b> Implementors <b>must not</b> start threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> and wait for their
- completion since deadlocks can result. The following example causes a deadlock:<br>
- 
- <pre>
- getDisplay().syncExec(new Runnable()
- {
-   public void run()
-   {
-     try
-     {
-       cdoObject.getName();
-     }
-     catch (Exception ignore)
-     {
-     }
-   }
- });
- </pre>
- 
- If you need to synchronously execute threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> you should use
- <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOAsyncTransactionHandler</CODE></A>.
+<DD>This implementation does nothing. Clients may override to provide specialized behaviour.
 <P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</A></CODE></DL>
@@ -263,32 +238,7 @@ detachingObject</H3>
 public void <B>detachingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
                             <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">CDOTransactionHandler1</A></CODE></B></DD>
-<DD>Called by a <code>CDOTransaction</code> <b>before</b> an object is detached. The implementor of this method is
- allowed to throw an unchecked exception that will propagate up to the operation that is about to remove the object
- (thereby preventing the operation from completing successfully).
- <p>
- <b>Note:</b> Implementors <b>must not</b> start threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> and wait for their
- completion since deadlocks can result. The following example causes a deadlock:<br>
- 
- <pre>
- getDisplay().syncExec(new Runnable()
- {
-   public void run()
-   {
-     try
-     {
-       cdoObject.getName();
-     }
-     catch (Exception ignore)
-     {
-     }
-   }
- });
- </pre>
- 
- If you need to synchronously execute threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> you should use
- <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOAsyncTransactionHandler</CODE></A>.
+<DD>This implementation does nothing. Clients may override to provide specialized behaviour.
 <P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</A></CODE></DL>
@@ -306,32 +256,7 @@ public void <B>modifyingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/t
                             <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
                             <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;featureChange)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">CDOTransactionHandler1</A></CODE></B></DD>
-<DD>Called by a <code>CDOTransaction</code> <b>before</b> an object is modified. The implementor of this method is
- allowed to throw an unchecked exception that will propagate up to the operation that is about to modify the object
- (thereby preventing the operation from completing successfully).
- <p>
- <b>Note:</b> Implementors <b>must not</b> start threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> and wait for their
- completion since deadlocks can result. The following example causes a deadlock:<br>
- 
- <pre>
- getDisplay().syncExec(new Runnable()
- {
-   public void run()
-   {
-     try
-     {
-       cdoObject.getName();
-     }
-     catch (Exception ignore)
-     {
-     }
-   }
- });
- </pre>
- 
- If you need to synchronously execute threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> you should use
- <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOAsyncTransactionHandler</CODE></A>.
+<DD>This implementation does nothing. Clients may override to provide specialized behaviour.
 <P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</A></CODE></DL>

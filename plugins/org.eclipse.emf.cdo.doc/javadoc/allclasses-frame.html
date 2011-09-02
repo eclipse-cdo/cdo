@@ -23,6 +23,8 @@ All Classes (CDO Model Repository Documentation)
 <TR>
 <TD NOWRAP><FONT CLASS="FrameItemFont"><A HREF="org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html" title="class in org.eclipse.emf.cdo.spi.common.id" target="classFrame">AbstractCDOID</A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/spi/common/id/AbstractCDOIDByteArray.html" title="class in org.eclipse.emf.cdo.spi.common.id" target="classFrame">AbstractCDOIDByteArray</A>
+<BR>
 <A HREF="org/eclipse/emf/cdo/spi/common/id/AbstractCDOIDInteger.html" title="class in org.eclipse.emf.cdo.spi.common.id" target="classFrame">AbstractCDOIDInteger</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/spi/common/id/AbstractCDOIDLong.html" title="class in org.eclipse.emf.cdo.spi.common.id" target="classFrame">AbstractCDOIDLong</A>
@@ -153,6 +155,8 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common" target="classFrame"><I>CDOCommonRepository</I></A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common" target="classFrame">CDOCommonRepository.IDGenerationLocation</A>
+<BR>
 <A HREF="org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common" target="classFrame">CDOCommonRepository.State</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/CDOCommonRepository.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.common" target="classFrame"><I>CDOCommonRepository.StateChangedEvent</I></A>
@@ -165,6 +169,8 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common" target="classFrame"><I>CDOCommonSession.Options</I></A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common" target="classFrame">CDOCommonSession.Options.LockNotificationMode</A>
+<BR>
 <A HREF="org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateEvent.html" title="interface in org.eclipse.emf.cdo.common" target="classFrame"><I>CDOCommonSession.Options.PassiveUpdateEvent</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common" target="classFrame">CDOCommonSession.Options.PassiveUpdateMode</A>
@@ -174,6 +180,10 @@ All Classes (CDO Model Repository Documentation)
 <A HREF="org/eclipse/emf/cdo/common/util/CDOCommonUtil.html" title="class in org.eclipse.emf.cdo.common.util" target="classFrame">CDOCommonUtil</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common" target="classFrame"><I>CDOCommonView</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common" target="classFrame"><I>CDOCommonView.Options</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/common/CDOCommonView.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common" target="classFrame"><I>CDOCommonView.Options.LockNotificationEvent</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction" target="classFrame"><I>CDOConflictResolver</I></A>
 <BR>
@@ -192,6 +202,8 @@ All Classes (CDO Model Repository Documentation)
 <A HREF="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html" title="class in org.eclipse.emf.cdo.transaction" target="classFrame">CDODefaultTransactionHandler1</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html" title="class in org.eclipse.emf.cdo.transaction" target="classFrame">CDODefaultTransactionHandler2</A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html" title="class in org.eclipse.emf.cdo.transaction" target="classFrame">CDODefaultTransactionHandler3</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/CDODeltaNotification.html" title="interface in org.eclipse.emf.cdo" target="classFrame"><I>CDODeltaNotification</I></A>
 <BR>
@@ -246,6 +258,8 @@ All Classes (CDO Model Repository Documentation)
 <A HREF="org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision" target="classFrame"><I>CDOIDAndVersion</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/id/CDOIDExternal.html" title="interface in org.eclipse.emf.cdo.common.id" target="classFrame"><I>CDOIDExternal</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id" target="classFrame"><I>CDOIDGenerator</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/spi/common/revision/CDOIDMapper.html" title="class in org.eclipse.emf.cdo.spi.common.revision" target="classFrame">CDOIDMapper</A>
 <BR>
@@ -327,6 +341,18 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo" target="classFrame"><I>CDOLock</I></A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock" target="classFrame"><I>CDOLockChangeInfo</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock" target="classFrame">CDOLockChangeInfo.Operation</A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/common/lock/CDOLockChangeInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.lock" target="classFrame"><I>CDOLockChangeInfoHandler</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock" target="classFrame"><I>CDOLockOwner</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock" target="classFrame"><I>CDOLockState</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/common/lock/CDOLockUtil.html" title="class in org.eclipse.emf.cdo.common.lock" target="classFrame">CDOLockUtil</A>
+<BR>
 <A HREF="org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction" target="classFrame"><I>CDOMerger</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction" target="classFrame">CDOMerger.ConflictException</A>
@@ -344,6 +370,12 @@ All Classes (CDO Model Repository Documentation)
 <A HREF="org/eclipse/emf/cdo/common/revision/delta/CDOMoveFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta" target="classFrame"><I>CDOMoveFeatureDelta</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/server/net4j/CDONet4jServerUtil.html" title="class in org.eclipse.emf.cdo.server.net4j" target="classFrame">CDONet4jServerUtil</A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j" target="classFrame"><I>CDONet4jSession</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j" target="classFrame"><I>CDONet4jSession.Options</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j" target="classFrame"><I>CDONet4jSessionConfiguration</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jUtil.html" title="class in org.eclipse.emf.cdo.net4j" target="classFrame">CDONet4jUtil</A>
 <BR>
@@ -483,6 +515,10 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision" target="classFrame"><I>CDORevisionHandler</I></A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/common/revision/CDORevisionHandler.Filtered.html" title="class in org.eclipse.emf.cdo.common.revision" target="classFrame">CDORevisionHandler.Filtered</A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/common/revision/CDORevisionHandler.Filtered.Undetached.html" title="class in org.eclipse.emf.cdo.common.revision" target="classFrame">CDORevisionHandler.Filtered.Undetached</A>
+<BR>
 <A HREF="org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision" target="classFrame"><I>CDORevisionKey</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision" target="classFrame"><I>CDORevisionManager</I></A>
@@ -579,6 +615,8 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session" target="classFrame"><I>CDOSessionInvalidationEvent</I></A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/session/CDOSessionLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.session" target="classFrame"><I>CDOSessionLocksChangedEvent</I></A>
+<BR>
 <A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo" target="classFrame"><I>CDOSessionProtocol</I></A>
 <BR>
 <A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" title="class in org.eclipse.emf.spi.cdo" target="classFrame">CDOSessionProtocol.CommitTransactionResult</A>
@@ -592,6 +630,8 @@ All Classes (CDO Model Repository Documentation)
 <A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.RefreshSessionResult.html" title="class in org.eclipse.emf.spi.cdo" target="classFrame">CDOSessionProtocol.RefreshSessionResult</A>
 <BR>
 <A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo" target="classFrame">CDOSessionProtocol.RepositoryTimeResult</A>
+<BR>
+<A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo" target="classFrame">CDOSessionProtocol.UnlockObjectsResult</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/session/CDOSessionProvider.html" title="interface in org.eclipse.emf.cdo.session" target="classFrame"><I>CDOSessionProvider</I></A>
 <BR>
@@ -621,6 +661,8 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/transaction/CDOTransactionConflictEvent.html" title="interface in org.eclipse.emf.cdo.transaction" target="classFrame"><I>CDOTransactionConflictEvent</I></A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html" title="interface in org.eclipse.emf.cdo.transaction" target="classFrame"><I>CDOTransactionContainer</I></A>
+<BR>
 <A HREF="org/eclipse/emf/cdo/transaction/CDOTransactionFinishedEvent.html" title="interface in org.eclipse.emf.cdo.transaction" target="classFrame"><I>CDOTransactionFinishedEvent</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/transaction/CDOTransactionFinishedEvent.Type.html" title="enum in org.eclipse.emf.cdo.transaction" target="classFrame">CDOTransactionFinishedEvent.Type</A>
@@ -630,6 +672,8 @@ All Classes (CDO Model Repository Documentation)
 <A HREF="org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction" target="classFrame"><I>CDOTransactionHandler1</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction" target="classFrame"><I>CDOTransactionHandler2</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html" title="interface in org.eclipse.emf.cdo.transaction" target="classFrame"><I>CDOTransactionHandler3</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/transaction/CDOTransactionHandlerBase.html" title="interface in org.eclipse.emf.cdo.transaction" target="classFrame"><I>CDOTransactionHandlerBase</I></A>
 <BR>
@@ -675,11 +719,15 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/view/CDOViewAdaptersNotifiedEvent.html" title="interface in org.eclipse.emf.cdo.view" target="classFrame"><I>CDOViewAdaptersNotifiedEvent</I></A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/view/CDOViewContainer.html" title="interface in org.eclipse.emf.cdo.view" target="classFrame"><I>CDOViewContainer</I></A>
+<BR>
 <A HREF="org/eclipse/emf/cdo/view/CDOViewDurabilityChangedEvent.html" title="interface in org.eclipse.emf.cdo.view" target="classFrame"><I>CDOViewDurabilityChangedEvent</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view" target="classFrame"><I>CDOViewEvent</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.view" target="classFrame"><I>CDOViewInvalidationEvent</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.view" target="classFrame"><I>CDOViewLocksChangedEvent</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view" target="classFrame"><I>CDOViewProvider</I></A>
 <BR>
@@ -827,6 +875,8 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.Handler.html" title="interface in org.eclipse.emf.cdo.common.lock" target="classFrame"><I>IDurableLockingManager.LockArea.Handler</I></A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockAreaAlreadyExistsException.html" title="class in org.eclipse.emf.cdo.common.lock" target="classFrame">IDurableLockingManager.LockAreaAlreadyExistsException</A>
+<BR>
 <A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockAreaNotFoundException.html" title="class in org.eclipse.emf.cdo.common.lock" target="classFrame">IDurableLockingManager.LockAreaNotFoundException</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock" target="classFrame">IDurableLockingManager.LockGrade</A>
@@ -887,6 +937,8 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/spi/cdo/InternalCDOLoadable.html" title="interface in org.eclipse.emf.spi.cdo" target="classFrame"><I>InternalCDOLoadable</I></A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html" title="interface in org.eclipse.emf.cdo.spi.common.lock" target="classFrame"><I>InternalCDOLockState</I></A>
+<BR>
 <A HREF="org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo" target="classFrame"><I>InternalCDOObject</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model" target="classFrame"><I>InternalCDOPackageInfo</I></A>
@@ -922,6 +974,10 @@ All Classes (CDO Model Repository Documentation)
 <A HREF="org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo" target="classFrame"><I>InternalCDOSessionConfiguration</I></A>
 <BR>
 <A HREF="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo" target="classFrame"><I>InternalCDOTransaction</I></A>
+<BR>
+<A HREF="org/eclipse/emf/spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo" target="classFrame">InternalCDOTransaction.ApplyChangeSetResult</A>
+<BR>
+<A HREF="org/eclipse/emf/spi/cdo/InternalCDOTransaction.ChangeSetOutdatedException.html" title="class in org.eclipse.emf.spi.cdo" target="classFrame">InternalCDOTransaction.ChangeSetOutdatedException</A>
 <BR>
 <A HREF="org/eclipse/emf/spi/cdo/InternalCDOTransaction.InternalCDOCommitContext.html" title="interface in org.eclipse.emf.spi.cdo" target="classFrame"><I>InternalCDOTransaction.InternalCDOCommitContext</I></A>
 <BR>
@@ -1031,6 +1087,8 @@ All Classes (CDO Model Repository Documentation)
 <BR>
 <A HREF="org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server" target="classFrame"><I>IStore</I></A>
 <BR>
+<A HREF="org/eclipse/emf/cdo/server/IStore.CanHandleClientAssignedIDs.html" title="interface in org.eclipse.emf.cdo.server" target="classFrame"><I>IStore.CanHandleClientAssignedIDs</I></A>
+<BR>
 <A HREF="org/eclipse/emf/cdo/server/IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server" target="classFrame">IStore.ChangeFormat</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/server/IStore.RevisionParallelism.html" title="enum in org.eclipse.emf.cdo.server" target="classFrame">IStore.RevisionParallelism</A>
@@ -1042,6 +1100,8 @@ All Classes (CDO Model Repository Documentation)
 <A HREF="org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server" target="classFrame"><I>IStoreAccessor.CommitContext</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/server/IStoreAccessor.DurableLocking.html" title="interface in org.eclipse.emf.cdo.server" target="classFrame"><I>IStoreAccessor.DurableLocking</I></A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/server/IStoreAccessor.DurableLocking2.html" title="interface in org.eclipse.emf.cdo.server" target="classFrame"><I>IStoreAccessor.DurableLocking2</I></A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/server/IStoreAccessor.QueryResourcesContext.html" title="interface in org.eclipse.emf.cdo.server" target="classFrame"><I>IStoreAccessor.QueryResourcesContext</I></A>
 <BR>
@@ -1190,6 +1250,8 @@ All Classes (CDO Model Repository Documentation)
 <A HREF="org/eclipse/emf/cdo/server/StoreThreadLocal.html" title="class in org.eclipse.emf.cdo.server" target="classFrame">StoreThreadLocal</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/spi/common/revision/StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision" target="classFrame">StubCDORevision</A>
+<BR>
+<A HREF="org/eclipse/emf/cdo/spi/server/SyncingUtil.html" title="class in org.eclipse.emf.cdo.spi.server" target="classFrame">SyncingUtil</A>
 <BR>
 <A HREF="org/eclipse/emf/cdo/spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision" target="classFrame">SyntheticCDORevision</A>
 <BR>

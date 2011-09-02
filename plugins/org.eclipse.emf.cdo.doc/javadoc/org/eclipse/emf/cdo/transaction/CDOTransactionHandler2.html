@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandlerBase.html" title="interface in org.eclipse.emf.cdo.transaction"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html" title="interface in org.eclipse.emf.cdo.transaction"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="CDOTransactionHandler2.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -95,10 +95,10 @@ Interface CDOTransactionHandler2</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandlerBase.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandlerBase</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler3</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction">CDOAsyncTransactionHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler2</A></DD>
+<DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction">CDOAsyncTransactionHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler2</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler3</A></DD>
 </DL>
 <HR>
 <DL>
@@ -197,6 +197,9 @@ void <B>committedTransaction</B>(<A HREF="../../../../../org/eclipse/emf/cdo/tra
 <DL>
 <DD>Called by a <code>CDOTransaction</code> <b>after</b> it is being committed. The implementor of this method is
  <b>not</b> allowed to throw an unchecked exception.
+ <p>
+ If you're interested in the results of the commit operation consider to implement
+ <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext, org.eclipse.emf.cdo.common.commit.CDOCommitInfo)"><CODE>CDOTransactionHandler3.committedTransaction()</CODE></A>.
 <P>
 <DD><DL>
 </DL>
@@ -254,7 +257,7 @@ void <B>rolledBackTransaction</B>(<A HREF="../../../../../org/eclipse/emf/cdo/tr
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandlerBase.html" title="interface in org.eclipse.emf.cdo.transaction"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html" title="interface in org.eclipse.emf.cdo.transaction"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="CDOTransactionHandler2.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

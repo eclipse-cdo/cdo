@@ -101,7 +101,7 @@ Class CDODefaultTransactionHandler</H2>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <B>CDODefaultTransactionHandler</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler1</A><DT>implements <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler</A></DL>
+<DT><PRE>public class <B>CDODefaultTransactionHandler</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler1</A><DT>implements <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler</A></DL>
 </PRE>
 
 <P>
@@ -246,22 +246,6 @@ public void <B>committingTransaction</B>(<A HREF="../../../../../org/eclipse/emf
 </DL>
 <HR>
 
-<A NAME="rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)"><!-- --></A><H3>
-rolledBackTransaction</H3>
-<PRE>
-public void <B>rolledBackTransaction</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction)</PRE>
-<DL>
-<DD>This implementation does nothing. Clients may override to provide specialized behaviour.
-<P>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">rolledBackTransaction</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</A></CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
 <A NAME="committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)"><!-- --></A><H3>
 committedTransaction</H3>
 <PRE>
@@ -272,6 +256,22 @@ public void <B>committedTransaction</B>(<A HREF="../../../../../org/eclipse/emf/
 <P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)"><!-- --></A><H3>
+rolledBackTransaction</H3>
+<PRE>
+public void <B>rolledBackTransaction</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction)</PRE>
+<DL>
+<DD>This implementation does nothing. Clients may override to provide specialized behaviour.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">rolledBackTransaction</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</A></CODE></DL>
 </DD>
 <DD><DL>
 </DL>

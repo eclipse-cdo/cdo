@@ -138,6 +138,10 @@ Packages that use <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision
 <TD>Server concepts for dealing with mapping strategies and mappings for classes, lists and types.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.server.embedded"><B>org.eclipse.emf.cdo.server.embedded</B></A></TD>
+<TD>Server concepts for dealing with embedded sessions.&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.server.mem"><B>org.eclipse.emf.cdo.server.mem</B></A></TD>
 <TD>Server concepts for dealing with in-memory stores.&nbsp;</TD>
 </TR>
@@ -279,7 +283,7 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/packag
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDOList.html#org.eclipse.emf.cdo.common.protocol"><B>CDOList</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><CODE>moveable</CODE></A> <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>EList</CODE></A>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><CODE>moveable</CODE></A> <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>EList</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisable.html#org.eclipse.emf.cdo.common.protocol"><B>CDORevisable</B></A></B>
@@ -318,7 +322,7 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/packag
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDOList.html#org.eclipse.emf.cdo.common.revision"><B>CDOList</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><CODE>moveable</CODE></A> <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>EList</CODE></A>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><CODE>moveable</CODE></A> <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>EList</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDOListFactory.html#org.eclipse.emf.cdo.common.revision"><B>CDOListFactory</B></A></B>
@@ -362,6 +366,19 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/packag
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision</CODE></A> instances.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisionHandler.html#org.eclipse.emf.cdo.common.revision"><B>CDORevisionHandler</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back interface that indicates the ability to <i>handle</i> <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> that are passed from
+ other entities.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisionHandler.Filtered.html#org.eclipse.emf.cdo.common.revision"><B>CDORevisionHandler.Filtered</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisionKey.html#org.eclipse.emf.cdo.common.revision"><B>CDORevisionKey</B></A></B>
@@ -541,6 +558,22 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/packag
 </TABLE>
 &nbsp;
 <P>
+<A NAME="org.eclipse.emf.cdo.server.embedded"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</A> used by <A HREF="../../../../../../org/eclipse/emf/cdo/server/embedded/package-summary.html">org.eclipse.emf.cdo.server.embedded</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisionManager.html#org.eclipse.emf.cdo.server.embedded"><B>CDORevisionManager</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides access to <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> in a CDO <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><CODE>repository</CODE></A> by demand loading
+ and caching them.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="org.eclipse.emf.cdo.server.mem"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -650,7 +683,7 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/packag
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDOList.html#org.eclipse.emf.cdo.spi.common.revision"><B>CDOList</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><CODE>moveable</CODE></A> <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>EList</CODE></A>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><CODE>moveable</CODE></A> <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>EList</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisable.html#org.eclipse.emf.cdo.spi.common.revision"><B>CDORevisable</B></A></B>
@@ -732,6 +765,12 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/packag
  other entities.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisionKey.html#org.eclipse.emf.cdo.spi.server"><B>CDORevisionKey</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Uniquely identifies a <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision</CODE></A> by version in a <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisionProvider.html#org.eclipse.emf.cdo.spi.server"><B>CDORevisionProvider</B></A></B>
 
 <BR>
@@ -794,7 +833,7 @@ Classes in <A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/packag
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDOList.html#org.eclipse.emf.cdo.view"><B>CDOList</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><CODE>moveable</CODE></A> <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>EList</CODE></A>.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><CODE>moveable</CODE></A> <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>EList</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/revision/class-use/CDORevisionKey.html#org.eclipse.emf.cdo.view"><B>CDORevisionKey</B></A></B>

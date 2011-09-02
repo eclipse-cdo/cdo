@@ -93,13 +93,13 @@ org.eclipse.net4j.util.ui.dnd</FONT>
 Class DNDTransfer&lt;TYPE&gt;</H2>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">org.eclipse.swt.dnd.Transfer</A>
-      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">org.eclipse.swt.dnd.ByteArrayTransfer</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by ">org.eclipse.swt.dnd.Transfer
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by ">org.eclipse.swt.dnd.ByteArrayTransfer
           <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.dnd.DNDTransfer&lt;TYPE&gt;</B>
 </PRE>
 <HR>
 <DL>
-<DT><PRE>public abstract class <B>DNDTransfer&lt;TYPE&gt;</B><DT>extends <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">ByteArrayTransfer</A></DL>
+<DT><PRE>public abstract class <B>DNDTransfer&lt;TYPE&gt;</B><DT>extends org.eclipse.swt.dnd.ByteArrayTransfer</DL>
 </PRE>
 
 <P>
@@ -159,7 +159,7 @@ Class DNDTransfer&lt;TYPE&gt;</H2>
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDTransfer.html#javaToNative(java.lang.Object, org.eclipse.swt.dnd.TransferData)">javaToNative</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object,
-             <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/TransferData.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">TransferData</A>&nbsp;transferData)</CODE>
+             org.eclipse.swt.dnd.TransferData&nbsp;transferData)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation of <code>javaToNative</code> converts a java 
@@ -168,7 +168,7 @@ Class DNDTransfer&lt;TYPE&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDTransfer.html#nativeToJava(org.eclipse.swt.dnd.TransferData)">nativeToJava</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/TransferData.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">TransferData</A>&nbsp;transferData)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDTransfer.html#nativeToJava(org.eclipse.swt.dnd.TransferData)">nativeToJava</A></B>(org.eclipse.swt.dnd.TransferData&nbsp;transferData)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation of <code>nativeToJava</code> converts a platform specific 
@@ -195,19 +195,19 @@ Class DNDTransfer&lt;TYPE&gt;</H2>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.dnd.ByteArrayTransfer"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.dnd.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">ByteArrayTransfer</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.dnd.ByteArrayTransfer</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true#getSupportedTypes()" title="class or interface in org.eclipse.swt.dnd">getSupportedTypes</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true#isSupportedType(org.eclipse.swt.dnd.TransferData)" title="class or interface in org.eclipse.swt.dnd">isSupportedType</A></CODE></TD>
+<TD><CODE>getSupportedTypes, isSupportedType</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.dnd.Transfer"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.dnd.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.dnd.Transfer</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true#registerType(java.lang.String)" title="class or interface in org.eclipse.swt.dnd">registerType</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true#validate(java.lang.Object)" title="class or interface in org.eclipse.swt.dnd">validate</A></CODE></TD>
+<TD><CODE>registerType, validate</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -254,12 +254,12 @@ getTypeIds</H3>
 <PRE>
 protected int[] <B>getTypeIds</B>()</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true#getTypeIds()" title="class or interface in org.eclipse.swt.dnd">org.eclipse.swt.dnd.Transfer</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.swt.dnd.Transfer</CODE></B></DD>
 <DD>Returns the platform specific ids of the  data types that can be converted using 
  this transfer agent.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true#getTypeIds()" title="class or interface in org.eclipse.swt.dnd">getTypeIds</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getTypeIds</CODE> in class <CODE>org.eclipse.swt.dnd.Transfer</CODE></DL>
 </DD>
 <DD><DL>
 
@@ -274,12 +274,12 @@ getTypeNames</H3>
 <PRE>
 protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>[] <B>getTypeNames</B>()</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true#getTypeNames()" title="class or interface in org.eclipse.swt.dnd">org.eclipse.swt.dnd.Transfer</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.swt.dnd.Transfer</CODE></B></DD>
 <DD>Returns the platform specific names of the  data types that can be converted 
  using this transfer agent.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true#getTypeNames()" title="class or interface in org.eclipse.swt.dnd">getTypeNames</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getTypeNames</CODE> in class <CODE>org.eclipse.swt.dnd.Transfer</CODE></DL>
 </DD>
 <DD><DL>
 
@@ -293,18 +293,18 @@ protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/St
 javaToNative</H3>
 <PRE>
 protected void <B>javaToNative</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object,
-                            <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/TransferData.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">TransferData</A>&nbsp;transferData)</PRE>
+                            org.eclipse.swt.dnd.TransferData&nbsp;transferData)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true#javaToNative(java.lang.Object, org.eclipse.swt.dnd.TransferData)" title="class or interface in org.eclipse.swt.dnd">org.eclipse.swt.dnd.ByteArrayTransfer</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.swt.dnd.ByteArrayTransfer</CODE></B></DD>
 <DD>This implementation of <code>javaToNative</code> converts a java 
  <code>byte[]</code> to a platform specific representation.
 <P>
 <DD><DL>
-<DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true#javaToNative(java.lang.Object, org.eclipse.swt.dnd.TransferData)" title="class or interface in org.eclipse.swt.dnd">javaToNative</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">ByteArrayTransfer</A></CODE></DL>
+<DT><B>Overrides:</B><DD><CODE>javaToNative</CODE> in class <CODE>org.eclipse.swt.dnd.ByteArrayTransfer</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>object</CODE> - a java <code>byte[]</code> containing the data to be converted<DD><CODE>transferData</CODE> - an empty <code>TransferData</code> object that will
-        be filled in on return with the platform specific format of the data<DT><B>See Also:</B><DD><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true#nativeToJava(org.eclipse.swt.dnd.TransferData)" title="class or interface in org.eclipse.swt.dnd"><CODE>Transfer.nativeToJava(org.eclipse.swt.dnd.TransferData)</CODE></A></DL>
+        be filled in on return with the platform specific format of the data<DT><B>See Also:</B><DD><CODE>Transfer.nativeToJava(org.eclipse.swt.dnd.TransferData)</CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -312,19 +312,19 @@ protected void <B>javaToNative</B>(<A HREF="http://download.oracle.com/javase/1.
 <A NAME="nativeToJava(org.eclipse.swt.dnd.TransferData)"><!-- --></A><H3>
 nativeToJava</H3>
 <PRE>
-protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>nativeToJava</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/TransferData.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">TransferData</A>&nbsp;transferData)</PRE>
+protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>nativeToJava</B>(org.eclipse.swt.dnd.TransferData&nbsp;transferData)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true#nativeToJava(org.eclipse.swt.dnd.TransferData)" title="class or interface in org.eclipse.swt.dnd">org.eclipse.swt.dnd.ByteArrayTransfer</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.swt.dnd.ByteArrayTransfer</CODE></B></DD>
 <DD>This implementation of <code>nativeToJava</code> converts a platform specific 
  representation of a byte array to a java <code>byte[]</code>.
 <P>
 <DD><DL>
-<DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true#nativeToJava(org.eclipse.swt.dnd.TransferData)" title="class or interface in org.eclipse.swt.dnd">nativeToJava</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/ByteArrayTransfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">ByteArrayTransfer</A></CODE></DL>
+<DT><B>Overrides:</B><DD><CODE>nativeToJava</CODE> in class <CODE>org.eclipse.swt.dnd.ByteArrayTransfer</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>transferData</CODE> - the platform specific representation of the data to be converted
 <DT><B>Returns:</B><DD>a java <code>byte[]</code> containing the converted data if the conversion was
-                successful; otherwise null<DT><B>See Also:</B><DD><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true#javaToNative(java.lang.Object, org.eclipse.swt.dnd.TransferData)" title="class or interface in org.eclipse.swt.dnd"><CODE>Transfer.javaToNative(java.lang.Object, org.eclipse.swt.dnd.TransferData)</CODE></A></DL>
+                successful; otherwise null<DT><B>See Also:</B><DD><CODE>Transfer.javaToNative(java.lang.Object, org.eclipse.swt.dnd.TransferData)</CODE></DL>
 </DD>
 </DL>
 <HR>

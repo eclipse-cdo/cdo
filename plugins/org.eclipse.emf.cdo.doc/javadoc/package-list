@@ -40,6 +40,7 @@ org.eclipse.emf.cdo.spi.common
 org.eclipse.emf.cdo.spi.common.branch
 org.eclipse.emf.cdo.spi.common.commit
 org.eclipse.emf.cdo.spi.common.id
+org.eclipse.emf.cdo.spi.common.lock
 org.eclipse.emf.cdo.spi.common.model
 org.eclipse.emf.cdo.spi.common.revision
 org.eclipse.emf.cdo.spi.server

@@ -6,8 +6,8 @@
 	<!-- =========================================== -->
 
 	<property name="jdk.version" value="1.5.0" />
-	<property name="emf.version" value="2.6.0" />
-	<property name="platform.version" value="indigo" />
+	<property name="emf.version" value="2.7.0" />
+	<property name="platform.version" value="juno" />
 
 	<property name="javadoc.project" value="plugins/org.eclipse.emf.cdo.doc" />
 	<property file="${javadoc.project}/plugin.properties" />
@@ -70,6 +70,7 @@
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/branch/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/commit/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/id/*.java" />
+				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/lock/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/model/*.java" />
 				<include name="org.eclipse.emf.cdo.common/src/org/eclipse/emf/cdo/spi/common/revision/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/edit/*.java" />
@@ -161,6 +162,7 @@
 				<package name="org.eclipse.emf.cdo.spi.common.branch" />
 				<package name="org.eclipse.emf.cdo.spi.common.commit" />
 				<package name="org.eclipse.emf.cdo.spi.common.id" />
+				<package name="org.eclipse.emf.cdo.spi.common.lock" />
 				<package name="org.eclipse.emf.cdo.spi.common.model" />
 				<package name="org.eclipse.emf.cdo.spi.common.revision" />
 			</group>
@@ -229,7 +231,7 @@
 		</replaceregexp>
 
 		<java classname="org.eclipse.emf.cdo.releng.MakeHrefsRelative" dir="${basedir}" fork="true">
-			<classpath path="org.eclipse.emf.cdo.releng/bin" />
+			<classpath path="plugins/org.eclipse.emf.cdo.releng/bin" />
 			<arg value="${destdir}" />
 		</java>
 	</target>

@@ -53,10 +53,10 @@ public class AssembleJavaDocOptions
 
   public static void main(String[] args) throws Exception
   {
-    String workspacePath = args.length == 0 ? ".." : args[0];
-    workspace = new File(workspacePath);
+    String workspacePath = args.length == 0 ? "../../.." : args[0];
+    workspace = new File(workspacePath).getCanonicalFile();
     plugins = new File(workspace, "plugins");
-    releng = new File(workspace, "org.eclipse.emf.cdo.releng");
+    releng = new File(plugins, "org.eclipse.emf.cdo.releng");
 
     for (File plugin : plugins.listFiles())
     {
@@ -267,7 +267,7 @@ public class AssembleJavaDocOptions
 
       try
       {
-        out = new FileWriter(new File(releng, "javadocLib.ant"));
+        out = new FileWriter(new File(releng, "javadoc/javadocLib.ant"));
         BufferedWriter writer = new BufferedWriter(out);
 
         writer.write("<?xml version=\"1.0\"?>\n");
@@ -437,7 +437,7 @@ public class AssembleJavaDocOptions
 
         try
         {
-          in = new FileReader(new File(releng, "javadocTemplate.ant"));
+          in = new FileReader(new File(releng, "javadoc/javadocTemplate.ant"));
           BufferedReader reader = new BufferedReader(in);
 
           String line;

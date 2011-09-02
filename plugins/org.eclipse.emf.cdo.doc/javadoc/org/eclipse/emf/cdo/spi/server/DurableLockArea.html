@@ -99,8 +99,11 @@ Class DurableLockArea</H2>
 <DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></DD>
 </DL>
 <HR>
+<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockArea(java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean, java.util.Map)"><CODE>CDOLockUtil.createLockArea(String, String, CDOBranchPoint, boolean, Map)</CODE></A> instead</I>
+<P>
 <DL>
-<DT><PRE>public class <B>DurableLockArea</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></DL>
+<DT><PRE><FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public class <B>DurableLockArea</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></DL>
 </PRE>
 
 <P>
@@ -148,7 +151,7 @@ Class DurableLockArea</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#DEFAULT_DURABLE_LOCKING_ID_BYTES">DEFAULT_DURABLE_LOCKING_ID_BYTES</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="fields_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><!-- --></A>
@@ -177,7 +180,7 @@ Class DurableLockArea</H2>
                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A>&gt;&nbsp;locks)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -195,7 +198,7 @@ Class DurableLockArea</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#createDurableLockingID()">createDurableLockingID</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -203,7 +206,7 @@ Class DurableLockArea</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#createDurableLockingID(int)">createDurableLockingID</A></B>(int&nbsp;bytes)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -211,7 +214,7 @@ Class DurableLockArea</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#getBranch()">getBranch</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the branch of this branch point, or <code>null</code> if this branch point is the
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;Returns the branch of this branch point, or <code>null</code> if this branch point is the
  <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><CODE>base</CODE></A> of the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()"><CODE>main branch</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -220,7 +223,7 @@ Class DurableLockArea</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#getDurableLockingID()">getDurableLockingID</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -228,7 +231,7 @@ Class DurableLockArea</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#getLocks()">getLocks</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -236,7 +239,7 @@ Class DurableLockArea</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#getTimeStamp()">getTimeStamp</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the time stamp of this branch point, or the fixed special time stamp <i>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;Returns the time stamp of this branch point, or the fixed special time stamp <i>
  <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><CODE>unspecified</CODE></A></i> if this branch point marks the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()"><CODE>head</CODE></A> of a branch.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -245,7 +248,15 @@ Class DurableLockArea</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#getUserID()">getUserID</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#isDeleted()">isDeleted</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -253,7 +264,7 @@ Class DurableLockArea</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#isReadOnly()">isReadOnly</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -261,7 +272,7 @@ Class DurableLockArea</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#toString()">toString</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -291,7 +302,7 @@ DEFAULT_DURABLE_LOCKING_ID_BYTES</H3>
 <PRE>
 public static final int <B>DEFAULT_DURABLE_LOCKING_ID_BYTES</B></PRE>
 <DL>
-<DL>
+<DD><B>Deprecated.</B>&nbsp;<DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../../../constant-values.html#org.eclipse.emf.cdo.spi.server.DurableLockArea.DEFAULT_DURABLE_LOCKING_ID_BYTES">Constant Field Values</A></DL>
 </DL>
 
@@ -314,7 +325,7 @@ public <B>DurableLockArea</B>(<A HREF="http://download.oracle.com/javase/1.5.0/d
                        boolean&nbsp;readOnly,
                        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A>&gt;&nbsp;locks)</PRE>
 <DL>
-</DL>
+<DD><B>Deprecated.</B>&nbsp;</DL>
 
 <!-- ============ METHOD DETAIL ========== -->
 
@@ -331,7 +342,7 @@ getDurableLockingID</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getDurableLockingID</B>()</PRE>
 <DL>
-<DD><DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#getDurableLockingID()">getDurableLockingID</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></CODE></DL>
 </DD>
 <DD><DL>
@@ -345,7 +356,7 @@ getUserID</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getUserID</B>()</PRE>
 <DL>
-<DD><DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#getUserID()">getUserID</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></CODE></DL>
 </DD>
 <DD><DL>
@@ -359,7 +370,7 @@ getBranch</H3>
 <PRE>
 public <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</A> <B>getBranch</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()">CDOBranchPoint</A></CODE></B></DD>
+<DD><B>Deprecated.</B>&nbsp;<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()">CDOBranchPoint</A></CODE></B></DD>
 <DD>Returns the branch of this branch point, or <code>null</code> if this branch point is the
  <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><CODE>base</CODE></A> of the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()"><CODE>main branch</CODE></A>.
 <P>
@@ -377,7 +388,7 @@ getTimeStamp</H3>
 <PRE>
 public long <B>getTimeStamp</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()">CDOBranchPoint</A></CODE></B></DD>
+<DD><B>Deprecated.</B>&nbsp;<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()">CDOBranchPoint</A></CODE></B></DD>
 <DD>Returns the time stamp of this branch point, or the fixed special time stamp <i>
  <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><CODE>unspecified</CODE></A></i> if this branch point marks the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()"><CODE>head</CODE></A> of a branch.
 <P>
@@ -395,7 +406,7 @@ isReadOnly</H3>
 <PRE>
 public boolean <B>isReadOnly</B>()</PRE>
 <DL>
-<DD><DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#isReadOnly()">isReadOnly</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></CODE></DL>
 </DD>
 <DD><DL>
@@ -409,7 +420,7 @@ getLocks</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A>&gt; <B>getLocks</B>()</PRE>
 <DL>
-<DD><DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
 <DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#getLocks()">getLocks</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></CODE></DL>
 </DD>
 <DD><DL>
@@ -423,7 +434,7 @@ toString</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>toString</B>()</PRE>
 <DL>
-<DD><DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
 <DT><B>Overrides:</B><DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A></CODE> in class <CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></CODE></DL>
 </DD>
 <DD><DL>
@@ -437,7 +448,7 @@ createDurableLockingID</H3>
 <PRE>
 public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>createDurableLockingID</B>()</PRE>
 <DL>
-<DD><DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
 </DL>
 </DD>
 <DD><DL>
@@ -451,10 +462,26 @@ createDurableLockingID</H3>
 <PRE>
 public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>createDurableLockingID</B>(int&nbsp;bytes)</PRE>
 <DL>
-<DD><DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
 </DL>
 </DD>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="isDeleted()"><!-- --></A><H3>
+isDeleted</H3>
+<PRE>
+public boolean <B>isDeleted</B>()</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#isDeleted()">isDeleted</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></CODE></DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

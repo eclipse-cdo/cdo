@@ -97,14 +97,14 @@ Class ItemProvider&lt;INPUT&gt;</H2>
       <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.views.ItemProvider&lt;INPUT&gt;</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IColorProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IFontProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredContentProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, org.eclipse.jface.viewers.IBaseLabelProvider, org.eclipse.jface.viewers.IColorProvider, org.eclipse.jface.viewers.IContentProvider, org.eclipse.jface.viewers.IFontProvider, org.eclipse.jface.viewers.ILabelProvider, org.eclipse.jface.viewers.IStructuredContentProvider, org.eclipse.jface.viewers.ITreeContentProvider, <A HREF="../../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</A></DD>
 </DL>
 <DL>
 <DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <B>ItemProvider&lt;INPUT&gt;</B><DT>extends <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">StructuredContentProvider</A>&lt;INPUT&gt;<DT>implements <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IColorProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IFontProvider</A></DL>
+<DT><PRE>public abstract class <B>ItemProvider&lt;INPUT&gt;</B><DT>extends <A HREF="../../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html" title="class in org.eclipse.net4j.util.ui">StructuredContentProvider</A>&lt;INPUT&gt;<DT>implements org.eclipse.jface.viewers.ITreeContentProvider, org.eclipse.jface.viewers.ILabelProvider, org.eclipse.jface.viewers.IColorProvider, org.eclipse.jface.viewers.IFontProvider</DL>
 </PRE>
 
 <P>
@@ -156,7 +156,7 @@ Class ItemProvider&lt;INPUT&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#addListener(org.eclipse.jface.viewers.ILabelProviderListener)">addListener</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProviderListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProviderListener</A>&nbsp;listener)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#addListener(org.eclipse.jface.viewers.ILabelProviderListener)">addListener</A></B>(org.eclipse.jface.viewers.ILabelProviderListener&nbsp;listener)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds a listener to this label provider.</TD>
@@ -164,8 +164,8 @@ Class ItemProvider&lt;INPUT&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)">fillContextMenu</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
-                <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</A>&nbsp;selection)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)">fillContextMenu</A></B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
+                org.eclipse.jface.viewers.ITreeSelection&nbsp;selection)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -196,7 +196,7 @@ Class ItemProvider&lt;INPUT&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.swt.graphics.Color</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getBackground(java.lang.Object)">getBackground</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
 
 <BR>
@@ -213,7 +213,7 @@ Class ItemProvider&lt;INPUT&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.swt.graphics.Font</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getFont(java.lang.Object)">getFont</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
 
 <BR>
@@ -221,7 +221,7 @@ Class ItemProvider&lt;INPUT&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.swt.graphics.Color</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getForeground(java.lang.Object)">getForeground</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
 
 <BR>
@@ -229,7 +229,7 @@ Class ItemProvider&lt;INPUT&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.swt.graphics.Image</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getImage(java.lang.Object)">getImage</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</CODE>
 
 <BR>
@@ -237,7 +237,7 @@ Class ItemProvider&lt;INPUT&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProviderListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProviderListener</A>[]</CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.jface.viewers.ILabelProviderListener[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#getListeners()">getListeners</A></B>()</CODE>
 
 <BR>
@@ -272,7 +272,7 @@ Class ItemProvider&lt;INPUT&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)">removeListener</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProviderListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProviderListener</A>&nbsp;listener)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)">removeListener</A></B>(org.eclipse.jface.viewers.ILabelProviderListener&nbsp;listener)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes a listener to this label provider.</TD>
@@ -299,28 +299,28 @@ Class ItemProvider&lt;INPUT&gt;</H2>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.viewers.ITreeContentProvider"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.ITreeContentProvider</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getChildren</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getParent(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getParent</A></CODE></TD>
+<TD><CODE>getChildren, getParent</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.viewers.IContentProvider"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.IContentProvider</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers">dispose</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">inputChanged</A></CODE></TD>
+<TD><CODE>dispose, inputChanged</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.viewers.IBaseLabelProvider"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.IBaseLabelProvider</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers">dispose</A></CODE></TD>
+<TD><CODE>dispose</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -377,7 +377,7 @@ getElements</H3>
 <PRE>
 public final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>[] <B>getElements</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parent)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getElements(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ITreeContentProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></B></DD>
 <DD>Returns the elements to display in the viewer 
  when its input is set to the given element. 
  These elements can be presented as rows in a table, items in a list, etc.
@@ -385,12 +385,12 @@ public final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang
  <p>
  <b>NOTE:</b> The returned array must not contain the given
  <code>inputElement</code>, since this leads to recursion issues in
- <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/AbstractTreeViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><CODE>AbstractTreeViewer</CODE></A> (see
+ <CODE>AbstractTreeViewer</CODE> (see
  <a href="https://bugs.eclipse.org/9262">bug 9262</a>).
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true#getElements(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getElements</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredContentProvider</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getElements(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getElements</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getElements</CODE> in interface <CODE>org.eclipse.jface.viewers.IStructuredContentProvider</CODE><DT><B>Specified by:</B><DD><CODE>getElements</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>parent</CODE> - the input element
@@ -404,7 +404,7 @@ hasChildren</H3>
 <PRE>
 public boolean <B>hasChildren</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parent)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#hasChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ITreeContentProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></B></DD>
 <DD>Returns whether the given element has children.
  <p>
  Intended as an optimization for when the viewer does not
@@ -413,7 +413,7 @@ public boolean <B>hasChildren</B>(<A HREF="http://download.oracle.com/javase/1.5
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#hasChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">hasChildren</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>hasChildren</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>parent</CODE> - the element
@@ -428,11 +428,11 @@ getText</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getText</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getText(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ILabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ILabelProvider</CODE></B></DD>
 <DD>Returns the text for the label of the given element.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getText(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getText</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getText</CODE> in interface <CODE>org.eclipse.jface.viewers.ILabelProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>obj</CODE> - the element for which to provide the label text
@@ -445,15 +445,15 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Strin
 <A NAME="getImage(java.lang.Object)"><!-- --></A><H3>
 getImage</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A> <B>getImage</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
+public org.eclipse.swt.graphics.Image <B>getImage</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ILabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ILabelProvider</CODE></B></DD>
 <DD>Returns the image for the label of the given element.  The image
  is owned by the label provider and must not be disposed directly.
  Instead, dispose the label provider when no longer needed.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getImage</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getImage</CODE> in interface <CODE>org.eclipse.jface.viewers.ILabelProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>obj</CODE> - the element for which to provide the label image
@@ -466,13 +466,13 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="getBackground(java.lang.Object)"><!-- --></A><H3>
 getBackground</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</A> <B>getBackground</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+public org.eclipse.swt.graphics.Color <B>getBackground</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true#getBackground(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IColorProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IColorProvider</CODE></B></DD>
 <DD>Provides a background color for the given element.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true#getBackground(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getBackground</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IColorProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getBackground</CODE> in interface <CODE>org.eclipse.jface.viewers.IColorProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>element</CODE> - the element
@@ -485,13 +485,13 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="getForeground(java.lang.Object)"><!-- --></A><H3>
 getForeground</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</A> <B>getForeground</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+public org.eclipse.swt.graphics.Color <B>getForeground</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true#getForeground(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IColorProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IColorProvider</CODE></B></DD>
 <DD>Provides a foreground color for the given element.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true#getForeground(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getForeground</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IColorProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getForeground</CODE> in interface <CODE>org.eclipse.jface.viewers.IColorProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>element</CODE> - the element
@@ -504,13 +504,13 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="getFont(java.lang.Object)"><!-- --></A><H3>
 getFont</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A> <B>getFont</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+public org.eclipse.swt.graphics.Font <B>getFont</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IFontProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IFontProvider</CODE></B></DD>
 <DD>Provides a font for the given element.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getFont</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IFontProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getFont</CODE> in interface <CODE>org.eclipse.jface.viewers.IFontProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>element</CODE> - the element
@@ -526,7 +526,7 @@ isLabelProperty</H3>
 public boolean <B>isLabelProperty</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
                                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;property)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#isLabelProperty(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IBaseLabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></B></DD>
 <DD>Returns whether the label would be affected
  by a change to the given property of the given element.
  This can be used to optimize a non-structural viewer update.
@@ -534,7 +534,7 @@ public boolean <B>isLabelProperty</B>(<A HREF="http://download.oracle.com/javase
  then the viewer need not update the label.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#isLabelProperty(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.jface.viewers">isLabelProperty</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>isLabelProperty</CODE> in interface <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>element</CODE> - the element<DD><CODE>property</CODE> - the property
@@ -547,7 +547,7 @@ public boolean <B>isLabelProperty</B>(<A HREF="http://download.oracle.com/javase
 <A NAME="getListeners()"><!-- --></A><H3>
 getListeners</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProviderListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProviderListener</A>[] <B>getListeners</B>()</PRE>
+public org.eclipse.jface.viewers.ILabelProviderListener[] <B>getListeners</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -561,9 +561,9 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="addListener(org.eclipse.jface.viewers.ILabelProviderListener)"><!-- --></A><H3>
 addListener</H3>
 <PRE>
-public void <B>addListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProviderListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProviderListener</A>&nbsp;listener)</PRE>
+public void <B>addListener</B>(org.eclipse.jface.viewers.ILabelProviderListener&nbsp;listener)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#addListener(org.eclipse.jface.viewers.ILabelProviderListener)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IBaseLabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></B></DD>
 <DD>Adds a listener to this label provider.
  Has no effect if an identical listener is already registered.
  <p>
@@ -572,7 +572,7 @@ public void <B>addListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/org
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#addListener(org.eclipse.jface.viewers.ILabelProviderListener)" title="class or interface in org.eclipse.jface.viewers">addListener</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>addListener</CODE> in interface <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>listener</CODE> - a label provider listener</DL>
@@ -583,14 +583,14 @@ public void <B>addListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/org
 <A NAME="removeListener(org.eclipse.jface.viewers.ILabelProviderListener)"><!-- --></A><H3>
 removeListener</H3>
 <PRE>
-public void <B>removeListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProviderListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProviderListener</A>&nbsp;listener)</PRE>
+public void <B>removeListener</B>(org.eclipse.jface.viewers.ILabelProviderListener&nbsp;listener)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IBaseLabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></B></DD>
 <DD>Removes a listener to this label provider.
  Has no effect if an identical listener is not registered.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)" title="class or interface in org.eclipse.jface.viewers">removeListener</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>removeListener</CODE> in interface <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>listener</CODE> - a label provider listener</DL>
@@ -601,8 +601,8 @@ public void <B>removeListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/
 <A NAME="fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)"><!-- --></A><H3>
 fillContextMenu</H3>
 <PRE>
-protected void <B>fillContextMenu</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
-                               <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</A>&nbsp;selection)</PRE>
+protected void <B>fillContextMenu</B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
+                               org.eclipse.jface.viewers.ITreeSelection&nbsp;selection)</PRE>
 <DL>
 <DD><DL>
 </DL>

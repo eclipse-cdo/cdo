@@ -96,14 +96,14 @@ Class StructuredContentProvider&lt;INPUT&gt;</H2>
   <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.StructuredContentProvider&lt;INPUT&gt;</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredContentProvider</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, org.eclipse.jface.viewers.IContentProvider, org.eclipse.jface.viewers.IStructuredContentProvider, <A HREF="../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</A></DD>
 </DL>
 <DL>
 <DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</A>, <A HREF="../../../../../org/eclipse/net4j/util/ui/StaticContentProvider.html" title="class in org.eclipse.net4j.util.ui">StaticContentProvider</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <B>StructuredContentProvider&lt;INPUT&gt;</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredContentProvider</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</A></DL>
+<DT><PRE>public abstract class <B>StructuredContentProvider&lt;INPUT&gt;</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements org.eclipse.jface.viewers.IStructuredContentProvider, <A HREF="../../../../../org/eclipse/net4j/util/event/IListener.html" title="interface in org.eclipse.net4j.util.event">IListener</A></DL>
 </PRE>
 
 <P>
@@ -165,7 +165,7 @@ Class StructuredContentProvider&lt;INPUT&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</A></CODE></FONT></TD>
+<CODE>protected &nbsp;org.eclipse.swt.widgets.Display</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getDisplay()">getDisplay</A></B>()</CODE>
 
 <BR>
@@ -181,7 +181,7 @@ Class StructuredContentProvider&lt;INPUT&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A></CODE></FONT></TD>
+<CODE>protected &nbsp;org.eclipse.swt.graphics.Font</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getItalicFont()">getItalicFont</A></B>()</CODE>
 
 <BR>
@@ -189,7 +189,7 @@ Class StructuredContentProvider&lt;INPUT&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.jface.viewers.StructuredViewer</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#getViewer()">getViewer</A></B>()</CODE>
 
 <BR>
@@ -198,7 +198,7 @@ Class StructuredContentProvider&lt;INPUT&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)">inputChanged</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</A>&nbsp;viewer,
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)">inputChanged</A></B>(org.eclipse.jface.viewers.Viewer&nbsp;viewer,
              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;oldInput,
              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;newInput)</CODE>
 
@@ -278,10 +278,10 @@ Class StructuredContentProvider&lt;INPUT&gt;</H2>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.viewers.IStructuredContentProvider"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredContentProvider</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.IStructuredContentProvider</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true#getElements(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getElements</A></CODE></TD>
+<TD><CODE>getElements</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -319,7 +319,7 @@ dispose</H3>
 <PRE>
 public void <B>dispose</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IContentProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IContentProvider</CODE></B></DD>
 <DD>Disposes of this content provider.  
  This is called by the viewer when it is disposed.
  <p>
@@ -328,7 +328,7 @@ public void <B>dispose</B>()</PRE>
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers">dispose</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>dispose</CODE> in interface <CODE>org.eclipse.jface.viewers.IContentProvider</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -353,7 +353,7 @@ public <A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvid
 <A NAME="getViewer()"><!-- --></A><H3>
 getViewer</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</A> <B>getViewer</B>()</PRE>
+public org.eclipse.jface.viewers.StructuredViewer <B>getViewer</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -367,11 +367,11 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)"><!-- --></A><H3>
 inputChanged</H3>
 <PRE>
-public void <B>inputChanged</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</A>&nbsp;viewer,
+public void <B>inputChanged</B>(org.eclipse.jface.viewers.Viewer&nbsp;viewer,
                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;oldInput,
                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;newInput)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IContentProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IContentProvider</CODE></B></DD>
 <DD>Notifies this content provider that the given viewer's input
  has been switched to a different element.
  <p>
@@ -386,7 +386,7 @@ public void <B>inputChanged</B>(<A HREF="http://help.eclipse.org/indigo/topic/or
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">inputChanged</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>inputChanged</CODE> in interface <CODE>org.eclipse.jface.viewers.IContentProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>viewer</CODE> - the viewer<DD><CODE>oldInput</CODE> - the old input element, or <code>null</code> if the viewer
@@ -540,7 +540,7 @@ public void <B>selectElement</B>(<A HREF="http://download.oracle.com/javase/1.5.
 <A NAME="getDisplay()"><!-- --></A><H3>
 getDisplay</H3>
 <PRE>
-protected <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</A> <B>getDisplay</B>()</PRE>
+protected org.eclipse.swt.widgets.Display <B>getDisplay</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -554,7 +554,7 @@ protected <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc
 <A NAME="getItalicFont()"><!-- --></A><H3>
 getItalicFont</H3>
 <PRE>
-protected <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A> <B>getItalicFont</B>()</PRE>
+protected org.eclipse.swt.graphics.Font <B>getItalicFont</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>

@@ -76,9 +76,9 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;METHOD</FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;METHOD</FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_top"></A>
@@ -92,14 +92,17 @@ org.eclipse.emf.cdo.net4j</FONT>
 <BR>
 Interface CDOSessionConfiguration</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/net4j/FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">RecoveringCDOSessionConfiguration</A></DD>
 </DL>
 <HR>
+<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>CDONet4jSessionConfiguration</CODE></A>.</I>
+<P>
 <DL>
-<DT><PRE>public interface <B>CDOSessionConfiguration</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A></DL>
+<DT><PRE><FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public interface <B>CDOSessionConfiguration</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</A></DL>
 </PRE>
 
 <P>
@@ -144,125 +147,14 @@ Interface CDOSessionConfiguration</H2>
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
 </TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#getBranchManager()">getBranchManager</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.net4j.<A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#getConnector()">getConnector</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#getPackageRegistry()">getPackageRegistry</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#getRepositoryName()">getRepositoryName</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#getRevisionManager()">getRevisionManager</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;long</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#getSignalTimeout()">getSignalTimeout</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IStreamWrapper.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">IStreamWrapper</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#getStreamWrapper()">getStreamWrapper</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#openSession()">openSession</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Opens the session for this configuration.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">setBranchManager</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</A>&nbsp;branchManager)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#setConnector(org.eclipse.net4j.connector.IConnector)">setConnector</A></B>(<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</A>&nbsp;connector)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#setPackageRegistry(org.eclipse.emf.cdo.common.model.CDOPackageRegistry)">setPackageRegistry</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</A>&nbsp;packageRegistry)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A special package registry can be set <b>before</b> the session is opened and can not be changed thereafter.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#setRepositoryName(java.lang.String)">setRepositoryName</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;repositoryName)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#setRevisionManager(org.eclipse.emf.cdo.common.revision.CDORevisionManager)">setRevisionManager</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</A>&nbsp;revisionManager)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#setSignalTimeout(long)">setSignalTimeout</A></B>(long&nbsp;timeout)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html#setStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)">setStreamWrapper</A></B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IStreamWrapper.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">IStreamWrapper</A>&nbsp;streamWrapper)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#getBranchManager()">getBranchManager</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#getConnector()">getConnector</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#getPackageRegistry()">getPackageRegistry</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#getRepositoryName()">getRepositoryName</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#getRevisionManager()">getRevisionManager</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#getSignalTimeout()">getSignalTimeout</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#getStreamWrapper()">getStreamWrapper</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#openNet4jSession()">openNet4jSession</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#openSession()">openSession</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">setBranchManager</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#setConnector(org.eclipse.net4j.connector.IConnector)">setConnector</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#setPackageRegistry(org.eclipse.emf.cdo.common.model.CDOPackageRegistry)">setPackageRegistry</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#setRepositoryName(java.lang.String)">setRepositoryName</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#setRevisionManager(org.eclipse.emf.cdo.common.revision.CDORevisionManager)">setRevisionManager</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#setSignalTimeout(long)">setSignalTimeout</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#setStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)">setStreamWrapper</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.session.CDOSessionConfiguration"><!-- --></A>
@@ -271,7 +163,7 @@ Interface CDOSessionConfiguration</H2>
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.session.<A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getAuthenticator()">getAuthenticator</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getExceptionHandler()">getExceptionHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getPassiveUpdateMode()">getPassiveUpdateMode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#isActivateOnOpen()">isActivateOnOpen</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#isSessionOpen()">isSessionOpen</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setActivateOnOpen(boolean)">setActivateOnOpen</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)">setExceptionHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getAuthenticator()">getAuthenticator</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getExceptionHandler()">getExceptionHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getIDGenerator()">getIDGenerator</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getLockNotificationMode()">getLockNotificationMode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getPassiveUpdateMode()">getPassiveUpdateMode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#isActivateOnOpen()">isActivateOnOpen</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#isSessionOpen()">isSessionOpen</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setActivateOnOpen(boolean)">setActivateOnOpen</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)">setExceptionHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setIDGenerator(org.eclipse.emf.cdo.common.id.CDOIDGenerator)">setIDGenerator</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">setLockNotificationMode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
@@ -285,239 +177,6 @@ Interface CDOSessionConfiguration</H2>
 </TABLE>
 &nbsp;
 <P>
-
-<!-- ============ METHOD DETAIL ========== -->
-
-<A NAME="method_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Method Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="getRepositoryName()"><!-- --></A><H3>
-getRepositoryName</H3>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getRepositoryName</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setRepositoryName(java.lang.String)"><!-- --></A><H3>
-setRepositoryName</H3>
-<PRE>
-void <B>setRepositoryName</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;repositoryName)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getConnector()"><!-- --></A><H3>
-getConnector</H3>
-<PRE>
-<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</A> <B>getConnector</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setConnector(org.eclipse.net4j.connector.IConnector)"><!-- --></A><H3>
-setConnector</H3>
-<PRE>
-void <B>setConnector</B>(<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html?is-external=true" title="class or interface in org.eclipse.net4j.connector">IConnector</A>&nbsp;connector)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getStreamWrapper()"><!-- --></A><H3>
-getStreamWrapper</H3>
-<PRE>
-<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IStreamWrapper.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">IStreamWrapper</A> <B>getStreamWrapper</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)"><!-- --></A><H3>
-setStreamWrapper</H3>
-<PRE>
-void <B>setStreamWrapper</B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IStreamWrapper.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">IStreamWrapper</A>&nbsp;streamWrapper)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getSignalTimeout()"><!-- --></A><H3>
-getSignalTimeout</H3>
-<PRE>
-long <B>getSignalTimeout</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setSignalTimeout(long)"><!-- --></A><H3>
-setSignalTimeout</H3>
-<PRE>
-void <B>setSignalTimeout</B>(long&nbsp;timeout)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>4.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getPackageRegistry()"><!-- --></A><H3>
-getPackageRegistry</H3>
-<PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</A> <B>getPackageRegistry</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getPackageRegistry()"><CODE>CDOSession.getPackageRegistry()</CODE></A></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setPackageRegistry(org.eclipse.emf.cdo.common.model.CDOPackageRegistry)"><!-- --></A><H3>
-setPackageRegistry</H3>
-<PRE>
-void <B>setPackageRegistry</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</A>&nbsp;packageRegistry)</PRE>
-<DL>
-<DD>A special package registry can be set <b>before</b> the session is opened and can not be changed thereafter.
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getPackageRegistry()"><CODE>CDOSession.getPackageRegistry()</CODE></A></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getBranchManager()"><!-- --></A><H3>
-getBranchManager</H3>
-<PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</A> <B>getBranchManager</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)"><!-- --></A><H3>
-setBranchManager</H3>
-<PRE>
-void <B>setBranchManager</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</A>&nbsp;branchManager)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getRevisionManager()"><!-- --></A><H3>
-getRevisionManager</H3>
-<PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</A> <B>getRevisionManager</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRevisionManager()"><CODE>CDOSession.getRevisionManager()</CODE></A></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setRevisionManager(org.eclipse.emf.cdo.common.revision.CDORevisionManager)"><!-- --></A><H3>
-setRevisionManager</H3>
-<PRE>
-void <B>setRevisionManager</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</A>&nbsp;revisionManager)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRevisionManager()"><CODE>CDOSession.getRevisionManager()</CODE></A></DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="openSession()"><!-- --></A><H3>
-openSession</H3>
-<PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</A> <B>openSession</B>()</PRE>
-<DL>
-<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#openSession()">CDOSessionConfiguration</A></CODE></B></DD>
-<DD>Opens the session for this configuration. Once the session is openend this method always returns the same session
- instance. Therefore it is impossible to change this configuration while the session is open.
-<P>
-<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#openSession()">openSession</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</A></CODE></DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
 <!-- ========= END OF CLASS DATA ========= -->
 <HR>
 
@@ -570,9 +229,9 @@ openSession</H3>
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;METHOD</FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;METHOD</FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_bottom"></A>

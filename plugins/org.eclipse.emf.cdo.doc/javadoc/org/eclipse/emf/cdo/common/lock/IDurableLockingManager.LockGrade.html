@@ -136,7 +136,19 @@ Enumerates the possible combinations of read and write locks on a single CDO obj
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#OPTION">OPTION</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#READ">READ</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#READ_OPTION">READ_OPTION</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -148,7 +160,19 @@ Enumerates the possible combinations of read and write locks on a single CDO obj
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#READ_WRITE_OPTION">READ_WRITE_OPTION</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#WRITE">WRITE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#WRITE_OPTION">WRITE_OPTION</A></B></CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -168,6 +192,16 @@ Enumerates the possible combinations of read and write locks on a single CDO obj
 <CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean)">get</A></B>(boolean&nbsp;read,
     boolean&nbsp;write)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean, boolean)"><CODE>get(boolean, boolean, boolean)</CODE></A></I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;<A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean, boolean)">get</A></B>(boolean&nbsp;read,
+    boolean&nbsp;write,
+    boolean&nbsp;option)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -201,6 +235,14 @@ Enumerates the possible combinations of read and write locks on a single CDO obj
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#getValue()">getValue</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#isOption()">isOption</A></B>()</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -308,6 +350,54 @@ public static final <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/I
 <DL>
 </DL>
 </DL>
+<HR>
+
+<A NAME="OPTION"><!-- --></A><H3>
+OPTION</H3>
+<PRE>
+public static final <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A> <B>OPTION</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="READ_OPTION"><!-- --></A><H3>
+READ_OPTION</H3>
+<PRE>
+public static final <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A> <B>READ_OPTION</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="WRITE_OPTION"><!-- --></A><H3>
+WRITE_OPTION</H3>
+<PRE>
+public static final <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A> <B>WRITE_OPTION</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="READ_WRITE_OPTION"><!-- --></A><H3>
+READ_WRITE_OPTION</H3>
+<PRE>
+public static final <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A> <B>READ_WRITE_OPTION</B></PRE>
+<DL>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DL>
 
 <!-- ============ METHOD DETAIL ========== -->
 
@@ -394,6 +484,19 @@ public boolean <B>isWrite</B>()</PRE>
 </DL>
 <HR>
 
+<A NAME="isOption()"><!-- --></A><H3>
+isOption</H3>
+<PRE>
+public boolean <B>isOption</B>()</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getUpdated(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)"><!-- --></A><H3>
 getUpdated</H3>
 <PRE>
@@ -420,10 +523,28 @@ public static <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurabl
 <A NAME="get(boolean, boolean)"><!-- --></A><H3>
 get</H3>
 <PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A> <B>get</B>(boolean&nbsp;read,
+                                                              boolean&nbsp;write)</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean, boolean)"><CODE>get(boolean, boolean, boolean)</CODE></A></I>
+<P>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="get(boolean, boolean, boolean)"><!-- --></A><H3>
+get</H3>
+<PRE>
 public static <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html" title="enum in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</A> <B>get</B>(boolean&nbsp;read,
-                                                   boolean&nbsp;write)</PRE>
+                                                   boolean&nbsp;write,
+                                                   boolean&nbsp;option)</PRE>
 <DL>
 <DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

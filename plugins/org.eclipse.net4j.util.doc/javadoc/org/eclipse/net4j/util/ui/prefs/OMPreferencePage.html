@@ -93,16 +93,16 @@ org.eclipse.net4j.util.ui.prefs</FONT>
 Class OMPreferencePage</H2>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">org.eclipse.jface.dialogs.DialogPage</A>
-      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true" title="class or interface in org.eclipse.jface.preference">org.eclipse.jface.preference.PreferencePage</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by ">org.eclipse.jface.dialogs.DialogPage
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by ">org.eclipse.jface.preference.PreferencePage
           <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.prefs.OMPreferencePage</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">IDialogPage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IMessageProvider.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">IMessageProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferencePage.html?is-external=true" title="class or interface in org.eclipse.jface.preference">IPreferencePage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPreferencePage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPreferencePage</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD>org.eclipse.jface.dialogs.IDialogPage, org.eclipse.jface.dialogs.IMessageProvider, org.eclipse.jface.preference.IPreferencePage, org.eclipse.ui.IWorkbenchPreferencePage</DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <B>OMPreferencePage</B><DT>extends <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true" title="class or interface in org.eclipse.jface.preference">PreferencePage</A><DT>implements <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPreferencePage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPreferencePage</A></DL>
+<DT><PRE>public abstract class <B>OMPreferencePage</B><DT>extends org.eclipse.jface.preference.PreferencePage<DT>implements org.eclipse.ui.IWorkbenchPreferencePage</DL>
 </PRE>
 
 <P>
@@ -125,10 +125,10 @@ Class OMPreferencePage</H2>
 &nbsp;<A NAME="fields_inherited_from_class_org.eclipse.jface.dialogs.IMessageProvider"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.jface.dialogs.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IMessageProvider.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">IMessageProvider</A></B></TH>
+<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.jface.dialogs.IMessageProvider</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IMessageProvider.html?is-external=true#ERROR" title="class or interface in org.eclipse.jface.dialogs">ERROR</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IMessageProvider.html?is-external=true#INFORMATION" title="class or interface in org.eclipse.jface.dialogs">INFORMATION</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IMessageProvider.html?is-external=true#NONE" title="class or interface in org.eclipse.jface.dialogs">NONE</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IMessageProvider.html?is-external=true#WARNING" title="class or interface in org.eclipse.jface.dialogs">WARNING</A></CODE></TD>
+<TD><CODE>ERROR, INFORMATION, NONE, WARNING</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -159,15 +159,15 @@ Class OMPreferencePage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#addListeners(org.eclipse.swt.widgets.Control)">addListeners</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A>&nbsp;control)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#addListeners(org.eclipse.swt.widgets.Control)">addListeners</A></B>(org.eclipse.swt.widgets.Control&nbsp;control)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#createContents(org.eclipse.swt.widgets.Composite)">createContents</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent)</CODE>
+<CODE>protected &nbsp;org.eclipse.swt.widgets.Control</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#createContents(org.eclipse.swt.widgets.Composite)">createContents</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates and returns the SWT control for the customized body 
@@ -175,8 +175,8 @@ Class OMPreferencePage</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected abstract &nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#createUI(org.eclipse.swt.widgets.Composite)">createUI</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent)</CODE>
+<CODE>protected abstract &nbsp;org.eclipse.swt.widgets.Control</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#createUI(org.eclipse.swt.widgets.Composite)">createUI</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -191,7 +191,7 @@ Class OMPreferencePage</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferenceStore.html?is-external=true" title="class or interface in org.eclipse.jface.preference">IPreferenceStore</A></CODE></FONT></TD>
+<CODE>protected &nbsp;org.eclipse.jface.preference.IPreferenceStore</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#doGetPreferenceStore()">doGetPreferenceStore</A></B>()</CODE>
 
 <BR>
@@ -199,7 +199,7 @@ Class OMPreferencePage</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/ModifyListener.html?is-external=true" title="class or interface in org.eclipse.swt.events">ModifyListener</A></CODE></FONT></TD>
+<CODE>protected &nbsp;org.eclipse.swt.events.ModifyListener</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#getModifyListener()">getModifyListener</A></B>()</CODE>
 
 <BR>
@@ -215,7 +215,7 @@ Class OMPreferencePage</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/SelectionListener.html?is-external=true" title="class or interface in org.eclipse.swt.events">SelectionListener</A></CODE></FONT></TD>
+<CODE>protected &nbsp;org.eclipse.swt.events.SelectionListener</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#getSelectionListener()">getSelectionListener</A></B>()</CODE>
 
 <BR>
@@ -223,7 +223,7 @@ Class OMPreferencePage</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbench.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbench</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.ui.IWorkbench</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#getWorkbench()">getWorkbench</A></B>()</CODE>
 
 <BR>
@@ -232,7 +232,7 @@ Class OMPreferencePage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#init(org.eclipse.ui.IWorkbench)">init</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbench.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbench</A>&nbsp;workbench)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#init(org.eclipse.ui.IWorkbench)">init</A></B>(org.eclipse.ui.IWorkbench&nbsp;workbench)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Initializes this preference page for the given workbench.</TD>
@@ -241,19 +241,19 @@ Class OMPreferencePage</H2>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.preference.PreferencePage"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.preference.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true" title="class or interface in org.eclipse.jface.preference">PreferencePage</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.preference.PreferencePage</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#applyData(java.lang.Object)" title="class or interface in org.eclipse.jface.preference">applyData</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#applyDialogFont(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.preference">applyDialogFont</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#computeSize()" title="class or interface in org.eclipse.jface.preference">computeSize</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#contributeButtons(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.preference">contributeButtons</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#createControl(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.preference">createControl</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#createDescriptionLabel(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.preference">createDescriptionLabel</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#createNoteComposite(org.eclipse.swt.graphics.Font, org.eclipse.swt.widgets.Composite, java.lang.String, java.lang.String)" title="class or interface in org.eclipse.jface.preference">createNoteComposite</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#doComputeSize()" title="class or interface in org.eclipse.jface.preference">doComputeSize</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#getApplyButton()" title="class or interface in org.eclipse.jface.preference">getApplyButton</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#getContainer()" title="class or interface in org.eclipse.jface.preference">getContainer</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#getDefaultsButton()" title="class or interface in org.eclipse.jface.preference">getDefaultsButton</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#getPreferenceStore()" title="class or interface in org.eclipse.jface.preference">getPreferenceStore</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#isValid()" title="class or interface in org.eclipse.jface.preference">isValid</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#noDefaultAndApplyButton()" title="class or interface in org.eclipse.jface.preference">noDefaultAndApplyButton</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#okToLeave()" title="class or interface in org.eclipse.jface.preference">okToLeave</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#performApply()" title="class or interface in org.eclipse.jface.preference">performApply</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#performCancel()" title="class or interface in org.eclipse.jface.preference">performCancel</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#performDefaults()" title="class or interface in org.eclipse.jface.preference">performDefaults</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#performHelp()" title="class or interface in org.eclipse.jface.preference">performHelp</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#performOk()" title="class or interface in org.eclipse.jface.preference">performOk</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#setContainer(org.eclipse.jface.preference.IPreferencePageContainer)" title="class or interface in org.eclipse.jface.preference">setContainer</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#setErrorMessage(java.lang.String)" title="class or interface in org.eclipse.jface.preference">setErrorMessage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#setMessage(java.lang.String, int)" title="class or interface in org.eclipse.jface.preference">setMessage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#setPreferenceStore(org.eclipse.jface.preference.IPreferenceStore)" title="class or interface in org.eclipse.jface.preference">setPreferenceStore</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#setSize(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.jface.preference">setSize</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#setTitle(java.lang.String)" title="class or interface in org.eclipse.jface.preference">setTitle</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#setValid(boolean)" title="class or interface in org.eclipse.jface.preference">setValid</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#toString()" title="class or interface in org.eclipse.jface.preference">toString</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#updateApplyButton()" title="class or interface in org.eclipse.jface.preference">updateApplyButton</A></CODE></TD>
+<TD><CODE>applyData, applyDialogFont, computeSize, contributeButtons, createControl, createDescriptionLabel, createNoteComposite, doComputeSize, getApplyButton, getContainer, getDefaultsButton, getPreferenceStore, isValid, noDefaultAndApplyButton, okToLeave, performApply, performCancel, performDefaults, performHelp, performOk, setContainer, setErrorMessage, setMessage, setPreferenceStore, setSize, setTitle, setValid, toString, updateApplyButton</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.dialogs.DialogPage"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.dialogs.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">DialogPage</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.dialogs.DialogPage</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#convertHeightInCharsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs">convertHeightInCharsToPixels</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#convertHorizontalDLUsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs">convertHorizontalDLUsToPixels</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#convertVerticalDLUsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs">convertVerticalDLUsToPixels</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#convertWidthInCharsToPixels(int)" title="class or interface in org.eclipse.jface.dialogs">convertWidthInCharsToPixels</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.dialogs">dispose</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getControl()" title="class or interface in org.eclipse.jface.dialogs">getControl</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getDescription()" title="class or interface in org.eclipse.jface.dialogs">getDescription</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getDialogFontName()" title="class or interface in org.eclipse.jface.dialogs">getDialogFontName</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getErrorMessage()" title="class or interface in org.eclipse.jface.dialogs">getErrorMessage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getFont()" title="class or interface in org.eclipse.jface.dialogs">getFont</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getImage()" title="class or interface in org.eclipse.jface.dialogs">getImage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getMessage()" title="class or interface in org.eclipse.jface.dialogs">getMessage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getMessageType()" title="class or interface in org.eclipse.jface.dialogs">getMessageType</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getShell()" title="class or interface in org.eclipse.jface.dialogs">getShell</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getTitle()" title="class or interface in org.eclipse.jface.dialogs">getTitle</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#getToolTipText(int)" title="class or interface in org.eclipse.jface.dialogs">getToolTipText</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#initializeDialogUnits(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.jface.dialogs">initializeDialogUnits</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#isControlCreated()" title="class or interface in org.eclipse.jface.dialogs">isControlCreated</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#setButtonLayoutData(org.eclipse.swt.widgets.Button)" title="class or interface in org.eclipse.jface.dialogs">setButtonLayoutData</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#setControl(org.eclipse.swt.widgets.Control)" title="class or interface in org.eclipse.jface.dialogs">setControl</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#setDescription(java.lang.String)" title="class or interface in org.eclipse.jface.dialogs">setDescription</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#setImageDescriptor(org.eclipse.jface.resource.ImageDescriptor)" title="class or interface in org.eclipse.jface.dialogs">setImageDescriptor</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#setMessage(java.lang.String)" title="class or interface in org.eclipse.jface.dialogs">setMessage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/DialogPage.html?is-external=true#setVisible(boolean)" title="class or interface in org.eclipse.jface.dialogs">setVisible</A></CODE></TD>
+<TD><CODE>convertHeightInCharsToPixels, convertHorizontalDLUsToPixels, convertVerticalDLUsToPixels, convertWidthInCharsToPixels, dispose, getControl, getDescription, getDialogFontName, getErrorMessage, getFont, getImage, getMessage, getMessageType, getShell, getTitle, getToolTipText, initializeDialogUnits, isControlCreated, setButtonLayoutData, setControl, setDescription, setImageDescriptor, setMessage, setVisible</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -268,19 +268,19 @@ Class OMPreferencePage</H2>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.preference.IPreferencePage"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.preference.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferencePage.html?is-external=true" title="class or interface in org.eclipse.jface.preference">IPreferencePage</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.preference.IPreferencePage</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferencePage.html?is-external=true#computeSize()" title="class or interface in org.eclipse.jface.preference">computeSize</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferencePage.html?is-external=true#isValid()" title="class or interface in org.eclipse.jface.preference">isValid</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferencePage.html?is-external=true#okToLeave()" title="class or interface in org.eclipse.jface.preference">okToLeave</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferencePage.html?is-external=true#performCancel()" title="class or interface in org.eclipse.jface.preference">performCancel</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferencePage.html?is-external=true#performOk()" title="class or interface in org.eclipse.jface.preference">performOk</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferencePage.html?is-external=true#setContainer(org.eclipse.jface.preference.IPreferencePageContainer)" title="class or interface in org.eclipse.jface.preference">setContainer</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferencePage.html?is-external=true#setSize(org.eclipse.swt.graphics.Point)" title="class or interface in org.eclipse.jface.preference">setSize</A></CODE></TD>
+<TD><CODE>computeSize, isValid, okToLeave, performCancel, performOk, setContainer, setSize</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.dialogs.IDialogPage"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.dialogs.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true" title="class or interface in org.eclipse.jface.dialogs">IDialogPage</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.dialogs.IDialogPage</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#createControl(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.dialogs">createControl</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.dialogs">dispose</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#getControl()" title="class or interface in org.eclipse.jface.dialogs">getControl</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#getDescription()" title="class or interface in org.eclipse.jface.dialogs">getDescription</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#getErrorMessage()" title="class or interface in org.eclipse.jface.dialogs">getErrorMessage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#getImage()" title="class or interface in org.eclipse.jface.dialogs">getImage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#getMessage()" title="class or interface in org.eclipse.jface.dialogs">getMessage</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#getTitle()" title="class or interface in org.eclipse.jface.dialogs">getTitle</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#performHelp()" title="class or interface in org.eclipse.jface.dialogs">performHelp</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#setDescription(java.lang.String)" title="class or interface in org.eclipse.jface.dialogs">setDescription</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#setImageDescriptor(org.eclipse.jface.resource.ImageDescriptor)" title="class or interface in org.eclipse.jface.dialogs">setImageDescriptor</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#setTitle(java.lang.String)" title="class or interface in org.eclipse.jface.dialogs">setTitle</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/dialogs/IDialogPage.html?is-external=true#setVisible(boolean)" title="class or interface in org.eclipse.jface.dialogs">setVisible</A></CODE></TD>
+<TD><CODE>createControl, dispose, getControl, getDescription, getErrorMessage, getImage, getMessage, getTitle, performHelp, setDescription, setImageDescriptor, setTitle, setVisible</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -330,7 +330,7 @@ public <A HREF="../../../../../../org/eclipse/net4j/util/om/pref/OMPreferences.h
 <A NAME="getWorkbench()"><!-- --></A><H3>
 getWorkbench</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbench.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbench</A> <B>getWorkbench</B>()</PRE>
+public org.eclipse.ui.IWorkbench <B>getWorkbench</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -344,9 +344,9 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="init(org.eclipse.ui.IWorkbench)"><!-- --></A><H3>
 init</H3>
 <PRE>
-public void <B>init</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbench.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbench</A>&nbsp;workbench)</PRE>
+public void <B>init</B>(org.eclipse.ui.IWorkbench&nbsp;workbench)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPreferencePage.html?is-external=true#init(org.eclipse.ui.IWorkbench)" title="class or interface in org.eclipse.ui">org.eclipse.ui.IWorkbenchPreferencePage</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.ui.IWorkbenchPreferencePage</CODE></B></DD>
 <DD>Initializes this preference page for the given workbench.
  <p>
  This method is called automatically as the preference page is being created
@@ -354,7 +354,7 @@ public void <B>init</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclips
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPreferencePage.html?is-external=true#init(org.eclipse.ui.IWorkbench)" title="class or interface in org.eclipse.ui">init</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPreferencePage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPreferencePage</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>init</CODE> in interface <CODE>org.eclipse.ui.IWorkbenchPreferencePage</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>workbench</CODE> - the workbench</DL>
@@ -365,9 +365,9 @@ public void <B>init</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclips
 <A NAME="doGetPreferenceStore()"><!-- --></A><H3>
 doGetPreferenceStore</H3>
 <PRE>
-protected <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferenceStore.html?is-external=true" title="class or interface in org.eclipse.jface.preference">IPreferenceStore</A> <B>doGetPreferenceStore</B>()</PRE>
+protected org.eclipse.jface.preference.IPreferenceStore <B>doGetPreferenceStore</B>()</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#doGetPreferenceStore()" title="class or interface in org.eclipse.jface.preference">org.eclipse.jface.preference.PreferencePage</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.jface.preference.PreferencePage</CODE></B></DD>
 <DD>Returns the preference store of this preference page.
  <p>
  This is a framework hook method for subclasses to return a
@@ -376,7 +376,7 @@ protected <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc
  </p>
 <P>
 <DD><DL>
-<DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#doGetPreferenceStore()" title="class or interface in org.eclipse.jface.preference">doGetPreferenceStore</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true" title="class or interface in org.eclipse.jface.preference">PreferencePage</A></CODE></DL>
+<DT><B>Overrides:</B><DD><CODE>doGetPreferenceStore</CODE> in class <CODE>org.eclipse.jface.preference.PreferencePage</CODE></DL>
 </DD>
 <DD><DL>
 
@@ -388,7 +388,7 @@ protected <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc
 <A NAME="getSelectionListener()"><!-- --></A><H3>
 getSelectionListener</H3>
 <PRE>
-protected final <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/SelectionListener.html?is-external=true" title="class or interface in org.eclipse.swt.events">SelectionListener</A> <B>getSelectionListener</B>()</PRE>
+protected final org.eclipse.swt.events.SelectionListener <B>getSelectionListener</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -402,7 +402,7 @@ protected final <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platfo
 <A NAME="getModifyListener()"><!-- --></A><H3>
 getModifyListener</H3>
 <PRE>
-protected final <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/events/ModifyListener.html?is-external=true" title="class or interface in org.eclipse.swt.events">ModifyListener</A> <B>getModifyListener</B>()</PRE>
+protected final org.eclipse.swt.events.ModifyListener <B>getModifyListener</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -430,9 +430,9 @@ protected void <B>dialogChanged</B>()</PRE>
 <A NAME="createContents(org.eclipse.swt.widgets.Composite)"><!-- --></A><H3>
 createContents</H3>
 <PRE>
-protected final <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A> <B>createContents</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent)</PRE>
+protected final org.eclipse.swt.widgets.Control <B>createContents</B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#createContents(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.preference">org.eclipse.jface.preference.PreferencePage</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.jface.preference.PreferencePage</CODE></B></DD>
 <DD>Creates and returns the SWT control for the customized body 
  of this preference page under the given parent composite.
  <p>
@@ -443,7 +443,7 @@ protected final <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platfo
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true#createContents(org.eclipse.swt.widgets.Composite)" title="class or interface in org.eclipse.jface.preference">createContents</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/PreferencePage.html?is-external=true" title="class or interface in org.eclipse.jface.preference">PreferencePage</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>createContents</CODE> in class <CODE>org.eclipse.jface.preference.PreferencePage</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>parent</CODE> - the parent composite
@@ -455,7 +455,7 @@ protected final <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platfo
 <A NAME="addListeners(org.eclipse.swt.widgets.Control)"><!-- --></A><H3>
 addListeners</H3>
 <PRE>
-protected void <B>addListeners</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A>&nbsp;control)</PRE>
+protected void <B>addListeners</B>(org.eclipse.swt.widgets.Control&nbsp;control)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -469,7 +469,7 @@ protected void <B>addListeners</B>(<A HREF="http://help.eclipse.org/indigo/topic
 <A NAME="createUI(org.eclipse.swt.widgets.Composite)"><!-- --></A><H3>
 createUI</H3>
 <PRE>
-protected abstract <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</A> <B>createUI</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent)</PRE>
+protected abstract org.eclipse.swt.widgets.Control <B>createUI</B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</PRE>
 <DL>
 <DD><DL>
 </DL>

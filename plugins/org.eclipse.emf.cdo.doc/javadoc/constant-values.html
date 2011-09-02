@@ -250,6 +250,24 @@ org.eclipse.*</FONT></TH>
 
 <TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.common.lock.<A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.DEFAULT_DURABLE_LOCKING_ID_BYTES"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;int</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#DEFAULT_DURABLE_LOCKING_ID_BYTES">DEFAULT_DURABLE_LOCKING_ID_BYTES</A></CODE></TD>
+<TD ALIGN="right"><CODE>32</CODE></TD>
+</TR>
+</FONT></TD>
+</TR>
+</TABLE>
+
+<P>
+
+<P>
+
+<TABLE BORDER="1" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
 <TH ALIGN="left" COLSPAN="3">org.eclipse.emf.cdo.common.model.<A HREF="org/eclipse/emf/cdo/common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</A></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -505,6 +523,12 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>0</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REPLICATE_LOCKAREA"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;byte</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#REPLICATE_LOCKAREA">REPLICATE_LOCKAREA</A></CODE></TD>
+<TD ALIGN="right"><CODE>3</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_AUTHENTICATION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;short</CODE></FONT></TD>
 <TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_AUTHENTICATION">SIGNAL_AUTHENTICATION</A></CODE></TD>
@@ -557,6 +581,12 @@ org.eclipse.*</FONT></TH>
 <CODE>public&nbsp;static&nbsp;final&nbsp;short</CODE></FONT></TD>
 <TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_DISABLE_PASSIVE_UPDATE">SIGNAL_DISABLE_PASSIVE_UPDATE</A></CODE></TD>
 <TD ALIGN="right"><CODE>20</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_ENABLE_LOCK_NOTIFICATION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;short</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_ENABLE_LOCK_NOTIFICATION">SIGNAL_ENABLE_LOCK_NOTIFICATION</A></CODE></TD>
+<TD ALIGN="right"><CODE>53</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_GET_REMOTE_SESSIONS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
@@ -649,10 +679,28 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>27</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_DELEGATION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;short</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOCK_DELEGATION">SIGNAL_LOCK_DELEGATION</A></CODE></TD>
+<TD ALIGN="right"><CODE>49</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_NOTIFICATION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;short</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOCK_NOTIFICATION">SIGNAL_LOCK_NOTIFICATION</A></CODE></TD>
+<TD ALIGN="right"><CODE>51</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_OBJECTS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;short</CODE></FONT></TD>
 <TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOCK_OBJECTS">SIGNAL_LOCK_OBJECTS</A></CODE></TD>
 <TD ALIGN="right"><CODE>24</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_STATE"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;short</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_LOCK_STATE">SIGNAL_LOCK_STATE</A></CODE></TD>
+<TD ALIGN="right"><CODE>52</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_OBJECT_LOCKED"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
@@ -755,6 +803,12 @@ org.eclipse.*</FONT></TH>
 <CODE>public&nbsp;static&nbsp;final&nbsp;short</CODE></FONT></TD>
 <TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_SWITCH_TARGET">SIGNAL_SWITCH_TARGET</A></CODE></TD>
 <TD ALIGN="right"><CODE>4</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_UNLOCK_DELEGATION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;short</CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html#SIGNAL_UNLOCK_DELEGATION">SIGNAL_UNLOCK_DELEGATION</A></CODE></TD>
+<TD ALIGN="right"><CODE>50</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
@@ -1759,6 +1813,12 @@ org.eclipse.*</FONT></TH>
 <TD ALIGN="right"><CODE>"ensureReferentialIntegrity"</CODE></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.server.IRepository.Props.ID_GENERATION_LOCATION"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/server/IRepository.Props.html#ID_GENERATION_LOCATION">ID_GENERATION_LOCATION</A></CODE></TD>
+<TD ALIGN="right"><CODE>"idGenerationLocation"</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <A NAME="org.eclipse.emf.cdo.server.IRepository.Props.OVERRIDE_UUID"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
 <CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
 <TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/server/IRepository.Props.html#OVERRIDE_UUID">OVERRIDE_UUID</A></CODE></TD>
@@ -1823,6 +1883,18 @@ org.eclipse.*</FONT></TH>
 <CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
 <TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/server/db/CDODBUtil.html#EXT_POINT_MAPPING_STRATEGIES">EXT_POINT_MAPPING_STRATEGIES</A></CODE></TD>
 <TD ALIGN="right"><CODE>"mappingStrategies"</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.server.db.CDODBUtil.PROP_COPY_ON_BRANCH"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/server/db/CDODBUtil.html#PROP_COPY_ON_BRANCH">PROP_COPY_ON_BRANCH</A></CODE></TD>
+<TD ALIGN="right"><CODE>"copyOnBranch"</CODE></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<A NAME="org.eclipse.emf.cdo.server.db.CDODBUtil.PROP_WITH_RANGES"><!-- --></A><TD ALIGN="right"><FONT SIZE="-1">
+<CODE>public&nbsp;static&nbsp;final&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD ALIGN="left"><CODE><A HREF="org/eclipse/emf/cdo/server/db/CDODBUtil.html#PROP_WITH_RANGES">PROP_WITH_RANGES</A></CODE></TD>
+<TD ALIGN="right"><CODE>"withRanges"</CODE></TD>
 </TR>
 </FONT></TD>
 </TR>

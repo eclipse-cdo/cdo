@@ -56,7 +56,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.InternalCDOCommitContext.html" title="interface in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="InternalCDOTransaction.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -120,6 +120,22 @@ Interface InternalCDOTransaction</H2>
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ApplyChangeSetResult</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ChangeSetOutdatedException.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ChangeSetOutdatedException</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -187,6 +203,18 @@ Interface InternalCDOTransaction</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ApplyChangeSetResult</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)">applyChangeSet</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>&nbsp;changeSetData,
+               <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;ancestorProvider,
+               <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;targetProvider,
+               <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;source,
+               boolean&nbsp;keepVersions)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>,<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&gt;&gt;</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">applyChangeSetData</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>&nbsp;changeSetData,
                    <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;ancestorProvider,
@@ -194,12 +222,21 @@ Interface InternalCDOTransaction</H2>
                    <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;source)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Use
+             <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)</CODE></A></I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.InternalCDOCommitContext.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction.InternalCDOCommitContext</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#createCommitContext()">createCommitContext</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#createIDForNewObject(org.eclipse.emf.ecore.EObject)">createIDForNewObject</A></B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;object)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -234,7 +271,7 @@ Interface InternalCDOTransaction</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#getNextTemporaryID()">getNextTemporaryID</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#createIDForNewObject(org.eclipse.emf.ecore.EObject)"><CODE>createIDForNewObject(EObject)</CODE></A> is called since 4.1.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -363,7 +400,7 @@ Interface InternalCDOTransaction</H2>
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.spi.cdo.<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#attachResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)">attachResource</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#collectViewedRevisions(java.util.Map)">collectViewedRevisions</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertIDToObject(java.lang.Object)">convertIDToObject</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertObjectToID(java.lang.Object)">convertObjectToID</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertObjectToID(java.lang.Object, boolean)">convertObjectToID</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#deregisterObject(org.eclipse.emf.spi.cdo.InternalCDOObject)">deregisterObject</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getFeatureAnalyzer()">getFeatureAnalyzer</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getObjects()">getObjects</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getResourceNodeID(java.lang.String)">getResourceNodeID</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID, boolean)">getRevision</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getSession()">getSession</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getStore()">getStore</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getViewSet()">getViewSet</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleAddAdapter(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.common.notify.Adapter)">handleAddAdapter</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleObjectStateChanged(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.cdo.CDOState, org.eclipse.emf.cdo.CDOState)">handleObjectStateChanged</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleRemoveAdapter(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.common.notify.Adapter)">handleRemoveAdapter</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#hasSubscription(org.eclipse.emf.cdo.common.id.CDOID)">hasSubscription</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean)">invalidate</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectLocked(org.eclipse.emf.cdo.CDOObject, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">isObjectLocked</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID, int)">prefetchRevisions</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#registerObject(org.eclipse.emf.spi.cdo.InternalCDOObject)">registerObject</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#registerProxyResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)">registerProxyResource</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#remapObject(org.eclipse.emf.cdo.common.id.CDOID)">remapObject</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">setFeatureAnalyzer</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setLastUpdateTime(long)">setLastUpdateTime</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setSession(org.eclipse.emf.spi.cdo.InternalCDOSession)">setSession</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setViewID(int)">setViewID</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setViewSet(org.eclipse.emf.spi.cdo.InternalCDOViewSet)">setViewSet</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#subscribe(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">subscribe</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#toTransaction()">toTransaction</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#unsubscribe(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">unsubscribe</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#attachResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)">attachResource</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#collectViewedRevisions(java.util.Map)">collectViewedRevisions</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertIDToObject(java.lang.Object)">convertIDToObject</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertObjectToID(java.lang.Object)">convertObjectToID</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertObjectToID(java.lang.Object, boolean)">convertObjectToID</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#deregisterObject(org.eclipse.emf.spi.cdo.InternalCDOObject)">deregisterObject</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getFeatureAnalyzer()">getFeatureAnalyzer</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getLockStates(java.util.Collection)">getLockStates</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getObjects()">getObjects</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getResourceNodeID(java.lang.String)">getResourceNodeID</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID, boolean)">getRevision</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getSession()">getSession</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getStore()">getStore</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getViewSet()">getViewSet</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleAddAdapter(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.common.notify.Adapter)">handleAddAdapter</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleLockNotification(org.eclipse.emf.spi.cdo.InternalCDOView, org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)">handleLockNotification</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleObjectStateChanged(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.cdo.CDOState, org.eclipse.emf.cdo.CDOState)">handleObjectStateChanged</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleRemoveAdapter(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.common.notify.Adapter)">handleRemoveAdapter</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#hasSubscription(org.eclipse.emf.cdo.common.id.CDOID)">hasSubscription</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean)">invalidate</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectLocked(org.eclipse.emf.cdo.CDOObject, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">isObjectLocked</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectNew(org.eclipse.emf.cdo.common.id.CDOID)">isObjectNew</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID, int)">prefetchRevisions</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#registerObject(org.eclipse.emf.spi.cdo.InternalCDOObject)">registerObject</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#registerProxyResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)">registerProxyResource</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#remapObject(org.eclipse.emf.cdo.common.id.CDOID)">remapObject</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">setFeatureAnalyzer</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setLastUpdateTime(long)">setLastUpdateTime</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setSession(org.eclipse.emf.spi.cdo.InternalCDOSession)">setSession</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setViewID(int)">setViewID</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setViewSet(org.eclipse.emf.spi.cdo.InternalCDOViewSet)">setViewSet</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#subscribe(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">subscribe</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#toTransaction()">toTransaction</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#unsubscribe(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">unsubscribe</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.view.CDOView"><!-- --></A>
@@ -604,12 +641,31 @@ void <B>detachObject</B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/Interna
 <A NAME="getNextTemporaryID()"><!-- --></A><H3>
 getNextTemporaryID</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOIDTemp.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDTemp</A> <B>getNextTemporaryID</B>()</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT><A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOIDTemp.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDTemp</A> <B>getNextTemporaryID</B>()</PRE>
+<DL>
+<DD><B>Deprecated.</B>&nbsp;<I><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#createIDForNewObject(org.eclipse.emf.ecore.EObject)"><CODE>createIDForNewObject(EObject)</CODE></A> is called since 4.1.</I>
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createIDForNewObject(org.eclipse.emf.ecore.EObject)"><!-- --></A><H3>
+createIDForNewObject</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A> <B>createIDForNewObject</B>(<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</A>&nbsp;object)</PRE>
 <DL>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>
@@ -693,11 +749,15 @@ void <B>setConflict</B>(<A HREF="../../../../../org/eclipse/emf/spi/cdo/Internal
 <A NAME="applyChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><!-- --></A><H3>
 applyChangeSetData</H3>
 <PRE>
-<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>,<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&gt;&gt; <B>applyChangeSetData</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>&nbsp;changeSetData,
-                                                                             <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;ancestorProvider,
-                                                                             <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;targetProvider,
-                                                                             <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;source)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>,<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>,<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;&gt;&gt; <B>applyChangeSetData</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>&nbsp;changeSetData,
+                                                                                        <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;ancestorProvider,
+                                                                                        <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;targetProvider,
+                                                                                        <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;source)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>Use
+             <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)</CODE></A></I>
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -706,6 +766,31 @@ applyChangeSetData</H3>
           <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.transaction.CDOMerger)"><CODE>merge</CODE></A> or if the merge was not in
           a <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#isLocal()"><CODE>local</CODE></A> branch.<DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><!-- --></A><H3>
+applyChangeSet</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ApplyChangeSetResult</A> <B>applyChangeSet</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</A>&nbsp;changeSetData,
+                                                           <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;ancestorProvider,
+                                                           <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>&nbsp;targetProvider,
+                                                           <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>&nbsp;source,
+                                                           boolean&nbsp;keepVersions)
+                                                           throws <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ChangeSetOutdatedException.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ChangeSetOutdatedException</A></PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Parameters:</B><DD><CODE>source</CODE> - May be <code>null</code> if changeSetData does not result from a
+          <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.transaction.CDOMerger)"><CODE>merge</CODE></A> or if the merge was not in
+          a <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#isLocal()"><CODE>local</CODE></A> branch.
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ChangeSetOutdatedException.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ChangeSetOutdatedException</A></CODE><DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>
@@ -757,7 +842,7 @@ getCleanRevisions</H3>
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.InternalCDOCommitContext.html" title="interface in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="InternalCDOTransaction.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

@@ -89,6 +89,7 @@ function windowTitle()
 <LI><A HREF="#class">Deprecated Classes</A>
 <LI><A HREF="#field">Deprecated Fields</A>
 <LI><A HREF="#method">Deprecated Methods</A>
+<LI><A HREF="#constructor">Deprecated Constructors</A>
 </UL>
 
 <A NAME="interface"><!-- --></A>
@@ -96,6 +97,21 @@ function windowTitle()
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Deprecated Interfaces</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">org.eclipse.emf.cdo.net4j.CDOSession</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>CDONet4jSession</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/net4j/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">org.eclipse.emf.cdo.net4j.CDOSession.Options</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>CDONet4jSession.Options</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">org.eclipse.emf.cdo.net4j.CDOSessionConfiguration</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>CDONet4jSessionConfiguration</CODE></A>.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/view/CDOView.Options.ReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view.CDOView.Options.ReferencePolicyEvent</A>
@@ -141,6 +157,11 @@ function windowTitle()
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/DurableLockArea.html" title="class in org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server.DurableLockArea</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockArea(java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean, java.util.Map)"><CODE>CDOLockUtil.createLockArea(String, String, CDOBranchPoint, boolean, Map)</CODE></A> instead</I>&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -165,6 +186,32 @@ function windowTitle()
 <B>Deprecated Methods</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">org.eclipse.emf.spi.cdo.InternalCDOTransaction.applyChangeSetData(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use
+             <A HREF="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.revision.CDORevisionProvider, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean)"><CODE>InternalCDOTransaction.applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler3.committedTransaction(CDOTransaction, CDOCommitContext)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/net4j/CDONet4jUtil.html#createSessionConfiguration()">org.eclipse.emf.cdo.net4j.CDONet4jUtil.createSessionConfiguration()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jUtil.html#createNet4jSessionConfiguration()"><CODE>createNet4jSessionConfiguration()</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean)">org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade.get(boolean, boolean)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean, boolean)"><CODE>IDurableLockingManager.LockGrade.get(boolean, boolean, boolean)</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#getNextTemporaryID()">org.eclipse.emf.spi.cdo.InternalCDOTransaction.getNextTemporaryID()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I><A HREF="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#createIDForNewObject(org.eclipse.emf.ecore.EObject)"><CODE>InternalCDOTransaction.createIDForNewObject(EObject)</CODE></A> is called since 4.1.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/eresource/impl/EresourceFactoryImpl.html#getPackage()">org.eclipse.emf.cdo.eresource.impl.EresourceFactoryImpl.getPackage()</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I></I>&nbsp;&nbsp;</TD>
@@ -173,6 +220,26 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/cdo/etypes/impl/EtypesFactoryImpl.html#getPackage()">org.eclipse.emf.cdo.etypes.impl.EtypesFactoryImpl.getPackage()</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I></I>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getSession(org.eclipse.net4j.connector.IConnector, java.lang.String, java.lang.String, java.lang.String)">org.eclipse.emf.cdo.net4j.CDONet4jViewProvider.getSession(IConnector, String, String, String)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getNet4jSession(org.eclipse.net4j.connector.IConnector, java.lang.String, java.lang.String, java.lang.String)"><CODE>getNet4jSession()</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/net4j/CDONet4jUtil.html#getSession(org.eclipse.net4j.util.container.IManagedContainer, java.lang.String)">org.eclipse.emf.cdo.net4j.CDONet4jUtil.getSession(IManagedContainer, String)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jUtil.html#getNet4jSession(org.eclipse.net4j.util.container.IManagedContainer, java.lang.String)"><CODE>getNet4jSession()</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getSessionConfiguration(org.eclipse.net4j.connector.IConnector, java.lang.String, java.lang.String, java.lang.String)">org.eclipse.emf.cdo.net4j.CDONet4jViewProvider.getSessionConfiguration(IConnector, String, String, String)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html#getNet4jSessionConfiguration(org.eclipse.net4j.connector.IConnector, java.lang.String, java.lang.String, java.lang.String)"><CODE>getNet4jSessionConfiguration()</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getSharedDetachedObjects()">org.eclipse.emf.spi.cdo.InternalCDOSavepoint.getSharedDetachedObjects()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html#getView()">org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent.getView()</A>
@@ -185,9 +252,82 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.0 use CDOView.isInvalidationRunnerActive()</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalLockManager.html#lock(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection, long)">org.eclipse.emf.cdo.spi.server.InternalLockManager.lock(boolean, IRWLockManager.LockType, IView, Collection<? extends Object>, long)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#lockObjects(java.util.List, int, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.lockObjects(List<InternalCDORevision>, int, CDOBranch, IRWLockManager.LockType, long)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not called anymore.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#openSession()">org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration.openSession()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html#openNet4jSession()"><CODE>openNet4jSession()</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/net4j/CDOSession.html#options()">org.eclipse.emf.cdo.net4j.CDOSession.options()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSession.html#options()"><CODE>CDONet4jSession.options()</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawDelete(org.eclipse.emf.cdo.common.id.CDOID, int, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.ecore.EClass, org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.cdo.server.IStoreAccessor.Raw.rawDelete(CDOID, int, CDOBranch, EClass, OMMonitor)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not used anymore</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#recalculateSharedDetachedObjects()">org.eclipse.emf.spi.cdo.InternalCDOSavepoint.recalculateSharedDetachedObjects()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#rollbackObject(org.eclipse.emf.cdo.CDOObject)">org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.rollbackObject(CDOObject)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Don't call this method. Rolling back single objects is exremely risky.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/ISessionProtocol.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State)">org.eclipse.emf.cdo.spi.server.ISessionProtocol.sendRepositoryStateNotification(CDOCommonRepository.State, CDOCommonRepository.State)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I></I>&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalSession.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State)">org.eclipse.emf.cdo.spi.server.InternalSession.sendRepositoryStateNotification(CDOCommonRepository.State, CDOCommonRepository.State)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>use
+             <A HREF="org/eclipse/emf/cdo/spi/server/InternalSession.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.id.CDOID)"><CODE>InternalSession.sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State, CDOID)</CODE></A>
+             instead</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State)">org.eclipse.emf.cdo.spi.server.InternalSessionManager.sendRepositoryStateNotification(CDOCommonRepository.State, CDOCommonRepository.State)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>use
+             <A HREF="org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.id.CDOID)"><CODE>InternalSessionManager.sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State, CDOID)</CODE></A>
+             instead</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection)">org.eclipse.emf.cdo.spi.server.InternalLockManager.unlock(boolean, IRWLockManager.LockType, IView, Collection<? extends Object>)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock(boolean, org.eclipse.emf.cdo.server.IView)">org.eclipse.emf.cdo.spi.server.InternalLockManager.unlock(boolean, IView)</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="constructor"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Deprecated Constructors</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/spi/cdo/CDOSessionProtocol.LockObjectsResult.html#CDOSessionProtocol.LockObjectsResult(boolean, boolean, boolean, long, org.eclipse.emf.cdo.common.revision.CDORevisionKey[])">org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult(boolean, boolean, boolean, long, CDORevisionKey[])</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;

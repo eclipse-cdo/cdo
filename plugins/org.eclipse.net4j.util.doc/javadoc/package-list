@@ -15,6 +15,7 @@ org.eclipse.net4j.util.om.monitor
 org.eclipse.net4j.util.om.pref
 org.eclipse.net4j.util.om.trace
 org.eclipse.net4j.util.options
+org.eclipse.net4j.util.properties
 org.eclipse.net4j.util.ref
 org.eclipse.net4j.util.registry
 org.eclipse.net4j.util.security

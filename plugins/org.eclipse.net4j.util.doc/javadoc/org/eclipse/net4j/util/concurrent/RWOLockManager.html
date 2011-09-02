@@ -1,0 +1,762 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+RWOLockManager (Net4j Utilities Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="RWOLockManager (Net4j Utilities Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/RWOLockManager.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.LockStrategy.html" title="interface in org.eclipse.net4j.util.concurrent"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/concurrent/RWOLockManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="RWOLockManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.net4j.util.concurrent</FONT>
+<BR>
+Class RWOLockManager&lt;OBJECT,CONTEXT&gt;</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</A>
+      <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</A>
+          <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.concurrent.RWOLockManager&lt;OBJECT,CONTEXT&gt;</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</A>&lt;OBJECT,CONTEXT&gt;, <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWOLockManager</A>&lt;OBJECT,CONTEXT&gt;, <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></DD>
+</DL>
+<HR>
+<DL>
+<DT><PRE>public class <B>RWOLockManager&lt;OBJECT,CONTEXT&gt;</B><DT>extends <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</A><DT>implements <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWOLockManager</A>&lt;OBJECT,CONTEXT&gt;</DL>
+</PRE>
+
+<P>
+Keeps track of locks on objects. Locks are owned by contexts. A particular combination of locks and their owners, for
+ a given object, is represented by instances of the <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent"><CODE>RWOLockManager.LockState</CODE></A> class. This class is also repsonsible for
+ deciding whether or not a new lock can be granted, based on the locks already present.
+<P>
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>3.2</DD>
+<DT><B>Author:</B></DT>
+  <DD>Caspar De Groot</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="type parameter in RWOLockManager.LockState">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="type parameter in RWOLockManager.LockState">CONTEXT</A>&gt;</B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents a combination of locks for one OBJECT.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.util.concurrent.IRWLockManager"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.net4j.util.concurrent.<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- =========== FIELD SUMMARY =========== -->
+
+<A NAME="field_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Field Summary</B></FONT></TH>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#USE_LABEL">USE_LABEL</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.util.concurrent.IRWLockManager"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.net4j.util.concurrent.<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#NO_WAIT">NO_WAIT</A>, <A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#WAIT">WAIT</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#RWOLockManager()">RWOLockManager</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#changeContext(CONTEXT, CONTEXT)">changeContext</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;oldContext,
+              <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;newContext)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt;&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#createContextToLocksMap()">createContextToLocksMap</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#createObjectToLocksMap()">createObjectToLocksMap</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;long</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#currentTimeMillis()">currentTimeMillis</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt;&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#getContextToLocksMap()">getContextToLocksMap</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All access to the returned map must be properly synchronized on this <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><CODE>RWOLockManager</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#getLockState(OBJECT)">getLockState</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&nbsp;key)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected &nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#getObjectToLocksMap()">getObjectToLocksMap</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All access to the returned map must be properly synchronized on this <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><CODE>RWOLockManager</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, OBJECT)">hasLock</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+        <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+        <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&nbsp;objectToLock)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, OBJECT)">hasLockByOthers</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+                <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+                <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&nbsp;objectToLock)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection, long)">lock</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+     <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&gt;&nbsp;objectsToLock,
+     long&nbsp;timeout)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, OBJECT, long)">lock</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+     <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+     <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&nbsp;objectToLock,
+     long&nbsp;timeout)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#lock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection, long)">lock2</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+      <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+      <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&gt;&nbsp;objectsToLock,
+      long&nbsp;timeout)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#setLockState(OBJECT, org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)">setLockState</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&nbsp;key,
+             <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&nbsp;lockState)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#unlock(CONTEXT)">unlock</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Attempts to release all locks(read and write) for a given context.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection)">unlock</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+       <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+       <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&gt;&nbsp;objectsToUnlock)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Attempts to release for a given locktype, context and objects.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#unlock2(CONTEXT)">unlock2</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt;</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection)">unlock2</A></B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+        <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&gt;&nbsp;objectsToUnlock)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.lifecycle.<A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#activate()">activate</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkActive()">checkActive</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg(boolean, java.lang.String)">checkArg</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg(java.lang.Object, java.lang.String)">checkArg</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkInactive()">checkInactive</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkNull(java.lang.Object, java.lang.String)">checkNull</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState(boolean, java.lang.String)">checkState</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState(java.lang.Object, java.lang.String)">checkState</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deactivate()">deactivate</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deferredActivate(boolean)">deferredActivate</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doActivate()">doActivate</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeActivate()">doBeforeActivate</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeDeactivate()">doBeforeDeactivate</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doDeactivate()">doDeactivate</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#dump()">dump</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#getLifecycleState()">getLifecycleState</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isActive()">isActive</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isDeferredActivation()">isDeferredActivation</A>, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#toString()">toString</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.Notifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.event.<A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent()">fireEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])">fireEvent</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded()">firstListenerAdded</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners()">getListeners</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService()">getNotificationService</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners()">hasListeners</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.net4j.util.event.<A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html#getListeners()">getListeners</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html#hasListeners()">hasListeners</A>, <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="RWOLockManager()"><!-- --></A><H3>
+RWOLockManager</H3>
+<PRE>
+public <B>RWOLockManager</B>()</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.util.Collection,long)"><!-- --></A><A NAME="lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection, long)"><!-- --></A><H3>
+lock</H3>
+<PRE>
+public void <B>lock</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+                 <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+                 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&gt;&nbsp;objectsToLock,
+                 long&nbsp;timeout)
+          throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection, long)">lock</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="lock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.util.Collection,long)"><!-- --></A><A NAME="lock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection, long)"><!-- --></A><H3>
+lock2</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt; <B>lock2</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+                                                            <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+                                                            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&gt;&nbsp;objectsToLock,
+                                                            long&nbsp;timeout)
+                                                     throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html#lock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection, long)">lock2</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWOLockManager</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.lang.Object,long)"><!-- --></A><A NAME="lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, OBJECT, long)"><!-- --></A><H3>
+lock</H3>
+<PRE>
+public void <B>lock</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+                 <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+                 <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&nbsp;objectToLock,
+                 long&nbsp;timeout)
+          throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, OBJECT, long)">lock</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.util.Collection)"><!-- --></A><A NAME="unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection)"><!-- --></A><H3>
+unlock</H3>
+<PRE>
+public void <B>unlock</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+                   <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&gt;&nbsp;objectsToUnlock)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection)">IRWLockManager</A></CODE></B></DD>
+<DD>Attempts to release for a given locktype, context and objects.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection)">unlock</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.util.Collection)"><!-- --></A><A NAME="unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection)"><!-- --></A><H3>
+unlock2</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt; <B>unlock2</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+                                                              <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+                                                              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&gt;&nbsp;objectsToUnlock)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html#unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, java.util.Collection)">unlock2</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWOLockManager</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unlock(java.lang.Object)"><!-- --></A><A NAME="unlock(CONTEXT)"><!-- --></A><H3>
+unlock</H3>
+<PRE>
+public void <B>unlock</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#unlock(CONTEXT)">IRWLockManager</A></CODE></B></DD>
+<DD>Attempts to release all locks(read and write) for a given context.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#unlock(CONTEXT)">unlock</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unlock2(java.lang.Object)"><!-- --></A><A NAME="unlock2(CONTEXT)"><!-- --></A><H3>
+unlock2</H3>
+<PRE>
+public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt; <B>unlock2</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.lang.Object)"><!-- --></A><A NAME="hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, OBJECT)"><!-- --></A><H3>
+hasLock</H3>
+<PRE>
+public boolean <B>hasLock</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+                       <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+                       <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&nbsp;objectToLock)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, OBJECT)">hasLock</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.lang.Object)"><!-- --></A><A NAME="hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, OBJECT)"><!-- --></A><H3>
+hasLockByOthers</H3>
+<PRE>
+public boolean <B>hasLockByOthers</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;type,
+                               <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;context,
+                               <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&nbsp;objectToLock)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, OBJECT)">hasLockByOthers</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;</CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="changeContext(java.lang.Object,java.lang.Object)"><!-- --></A><A NAME="changeContext(CONTEXT, CONTEXT)"><!-- --></A><H3>
+changeContext</H3>
+<PRE>
+protected void <B>changeContext</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;oldContext,
+                             <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&nbsp;newContext)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="currentTimeMillis()"><!-- --></A><H3>
+currentTimeMillis</H3>
+<PRE>
+protected long <B>currentTimeMillis</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createObjectToLocksMap()"><!-- --></A><H3>
+createObjectToLocksMap</H3>
+<PRE>
+protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt; <B>createObjectToLocksMap</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="createContextToLocksMap()"><!-- --></A><H3>
+createContextToLocksMap</H3>
+<PRE>
+protected <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt;&gt; <B>createContextToLocksMap</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getObjectToLocksMap()"><!-- --></A><H3>
+getObjectToLocksMap</H3>
+<PRE>
+protected final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt; <B>getObjectToLocksMap</B>()</PRE>
+<DL>
+<DD>All access to the returned map must be properly synchronized on this <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><CODE>RWOLockManager</CODE></A>.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getContextToLocksMap()"><!-- --></A><H3>
+getContextToLocksMap</H3>
+<PRE>
+protected final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>,<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&gt;&gt; <B>getContextToLocksMap</B>()</PRE>
+<DL>
+<DD>All access to the returned map must be properly synchronized on this <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><CODE>RWOLockManager</CODE></A>.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLockState(java.lang.Object)"><!-- --></A><A NAME="getLockState(OBJECT)"><!-- --></A><H3>
+getLockState</H3>
+<PRE>
+public <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt; <B>getLockState</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&nbsp;key)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setLockState(java.lang.Object,org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)"><!-- --></A><A NAME="setLockState(OBJECT, org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)"><!-- --></A><H3>
+setLockState</H3>
+<PRE>
+public void <B>setLockState</B>(<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>&nbsp;key,
+                         <A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</A>,<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</A>&gt;&nbsp;lockState)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/RWOLockManager.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-tree.html"><FONT CLASS="NavBarFont1"><B>Tree</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWLockManager.LockStrategy.html" title="interface in org.eclipse.net4j.util.concurrent"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/net4j/util/concurrent/RWOLockManager.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="RWOLockManager.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;<A HREF="#fields_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

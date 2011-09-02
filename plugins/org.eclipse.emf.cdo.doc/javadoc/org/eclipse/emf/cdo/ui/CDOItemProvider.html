@@ -99,7 +99,7 @@ Class CDOItemProvider</H2>
               <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.ui.CDOItemProvider</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IColorProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IColorProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IFontProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredContentProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, org.eclipse.jface.viewers.IBaseLabelProvider, org.eclipse.jface.viewers.IColorProvider, org.eclipse.jface.viewers.IContentProvider, org.eclipse.jface.viewers.IFontProvider, org.eclipse.jface.viewers.ILabelProvider, org.eclipse.jface.viewers.IStructuredContentProvider, org.eclipse.jface.viewers.ITreeContentProvider, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</A></DD>
 </DL>
 <HR>
 <DL>
@@ -161,13 +161,13 @@ Class CDOItemProvider</H2>
 <B>Constructor Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#CDOItemProvider(org.eclipse.ui.IWorkbenchPage)">CDOItemProvider</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</A>&nbsp;page)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#CDOItemProvider(org.eclipse.ui.IWorkbenchPage)">CDOItemProvider</A></B>(org.eclipse.ui.IWorkbenchPage&nbsp;page)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#CDOItemProvider(org.eclipse.ui.IWorkbenchPage, org.eclipse.net4j.util.ui.views.IElementFilter)">CDOItemProvider</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</A>&nbsp;page,
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#CDOItemProvider(org.eclipse.ui.IWorkbenchPage, org.eclipse.net4j.util.ui.views.IElementFilter)">CDOItemProvider</A></B>(org.eclipse.ui.IWorkbenchPage&nbsp;page,
                 <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/IElementFilter.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">IElementFilter</A>&nbsp;rootElementFilter)</CODE>
 
 <BR>
@@ -211,8 +211,8 @@ Class CDOItemProvider</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)">fillContextMenu</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
-                <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</A>&nbsp;selection)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)">fillContextMenu</A></B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
+                org.eclipse.jface.viewers.ITreeSelection&nbsp;selection)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -220,7 +220,7 @@ Class CDOItemProvider</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillGenerated(org.eclipse.jface.action.MenuManager, org.eclipse.emf.cdo.session.CDOSession)">fillGenerated</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">MenuManager</A>&nbsp;manager,
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillGenerated(org.eclipse.jface.action.MenuManager, org.eclipse.emf.cdo.session.CDOSession)">fillGenerated</A></B>(org.eclipse.jface.action.MenuManager&nbsp;manager,
               <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session)</CODE>
 
 <BR>
@@ -229,7 +229,7 @@ Class CDOItemProvider</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillResource(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.eresource.CDOResource)">fillResource</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillResource(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.eresource.CDOResource)">fillResource</A></B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
              <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>&nbsp;resource)</CODE>
 
 <BR>
@@ -238,7 +238,7 @@ Class CDOItemProvider</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillResourceFolder(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.eresource.CDOResourceFolder)">fillResourceFolder</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillResourceFolder(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.eresource.CDOResourceFolder)">fillResourceFolder</A></B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
                    <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</A>&nbsp;folder)</CODE>
 
 <BR>
@@ -247,7 +247,7 @@ Class CDOItemProvider</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillSession(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.session.CDOSession)">fillSession</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillSession(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.session.CDOSession)">fillSession</A></B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
             <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session)</CODE>
 
 <BR>
@@ -256,7 +256,7 @@ Class CDOItemProvider</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillView(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.view.CDOView)">fillView</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#fillView(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.view.CDOView)">fillView</A></B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
          <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</CODE>
 
 <BR>
@@ -272,7 +272,7 @@ Class CDOItemProvider</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.swt.graphics.Font</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getFont(java.lang.Object)">getFont</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</CODE>
 
 <BR>
@@ -280,7 +280,7 @@ Class CDOItemProvider</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.swt.graphics.Image</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getImage(java.lang.Object)">getImage</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</CODE>
 
 <BR>
@@ -305,7 +305,7 @@ Class CDOItemProvider</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A></CODE></FONT></TD>
+<CODE>static&nbsp;org.eclipse.swt.graphics.Image</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getViewImage(org.eclipse.emf.cdo.view.CDOView)">getViewImage</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</CODE>
 
 <BR>
@@ -313,7 +313,7 @@ Class CDOItemProvider</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</A></CODE></FONT></TD>
+<CODE>static&nbsp;org.eclipse.jface.resource.ImageDescriptor</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOItemProvider.html#getViewImageDescriptor(org.eclipse.emf.cdo.view.CDOView)">getViewImageDescriptor</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</CODE>
 
 <BR>
@@ -367,10 +367,10 @@ Class CDOItemProvider</H2>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.viewers.IContentProvider"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IContentProvider</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.jface.viewers.IContentProvider</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IContentProvider.html?is-external=true#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">inputChanged</A></CODE></TD>
+<TD><CODE>inputChanged</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -389,7 +389,7 @@ Class CDOItemProvider</H2>
 <A NAME="CDOItemProvider(org.eclipse.ui.IWorkbenchPage, org.eclipse.net4j.util.ui.views.IElementFilter)"><!-- --></A><H3>
 CDOItemProvider</H3>
 <PRE>
-public <B>CDOItemProvider</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</A>&nbsp;page,
+public <B>CDOItemProvider</B>(org.eclipse.ui.IWorkbenchPage&nbsp;page,
                        <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/IElementFilter.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">IElementFilter</A>&nbsp;rootElementFilter)</PRE>
 <DL>
 </DL>
@@ -398,7 +398,7 @@ public <B>CDOItemProvider</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.
 <A NAME="CDOItemProvider(org.eclipse.ui.IWorkbenchPage)"><!-- --></A><H3>
 CDOItemProvider</H3>
 <PRE>
-public <B>CDOItemProvider</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbenchPage</A>&nbsp;page)</PRE>
+public <B>CDOItemProvider</B>(org.eclipse.ui.IWorkbenchPage&nbsp;page)</PRE>
 <DL>
 </DL>
 
@@ -445,7 +445,7 @@ getChildren</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>[] <B>getChildren</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ITreeContentProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></B></DD>
 <DD>Returns the child elements of the given parent element.
  <p>
  The difference between this method and <code>IStructuredContentProvider.getElements</code> 
@@ -456,7 +456,7 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Objec
  The result is not modified by the viewer.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getChildren</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">getChildren</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getChildren</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getChildren(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">getChildren</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>element</CODE> - the parent element
@@ -470,7 +470,7 @@ hasChildren</H3>
 <PRE>
 public boolean <B>hasChildren</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#hasChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ITreeContentProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></B></DD>
 <DD>Returns whether the given element has children.
  <p>
  Intended as an optimization for when the viewer does not
@@ -479,7 +479,7 @@ public boolean <B>hasChildren</B>(<A HREF="http://download.oracle.com/javase/1.5
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#hasChildren(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">hasChildren</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#hasChildren(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">hasChildren</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>hasChildren</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#hasChildren(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">hasChildren</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>element</CODE> - the element
@@ -494,14 +494,14 @@ getParent</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>getParent</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getParent(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ITreeContentProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></B></DD>
 <DD>Returns the parent for the given element, or <code>null</code> 
  indicating that the parent can't be computed. 
  In this case the tree-structured viewer can't expand
  a given node correctly if requested.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true#getParent(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getParent</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeContentProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeContentProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getParent(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">getParent</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getParent</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getParent(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">getParent</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>element</CODE> - the element
@@ -516,11 +516,11 @@ getText</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getText</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getText(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ILabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ILabelProvider</CODE></B></DD>
 <DD>Returns the text for the label of the given element.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getText(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getText</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#getText(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">getText</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getText</CODE> in interface <CODE>org.eclipse.jface.viewers.ILabelProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true#getText(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">getText</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>obj</CODE> - the element for which to provide the label text
@@ -533,15 +533,15 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Strin
 <A NAME="getImage(java.lang.Object)"><!-- --></A><H3>
 getImage</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A> <B>getImage</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
+public org.eclipse.swt.graphics.Image <B>getImage</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ILabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ILabelProvider</CODE></B></DD>
 <DD>Returns the image for the label of the given element.  The image
  is owned by the label provider and must not be disposed directly.
  Instead, dispose the label provider when no longer needed.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getImage</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">getImage</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getImage</CODE> in interface <CODE>org.eclipse.jface.viewers.ILabelProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getImage(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">getImage</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>obj</CODE> - the element for which to provide the label image
@@ -554,13 +554,13 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="getFont(java.lang.Object)"><!-- --></A><H3>
 getFont</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</A> <B>getFont</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
+public org.eclipse.swt.graphics.Font <B>getFont</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;obj)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IFontProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IFontProvider</CODE></B></DD>
 <DD>Provides a font for the given element.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">getFont</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IFontProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IFontProvider</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">getFont</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>getFont</CODE> in interface <CODE>org.eclipse.jface.viewers.IFontProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.net4j.util.ui.views">getFont</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>obj</CODE> - the element
@@ -573,8 +573,8 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)"><!-- --></A><H3>
 fillContextMenu</H3>
 <PRE>
-protected void <B>fillContextMenu</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
-                               <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ITreeSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ITreeSelection</A>&nbsp;selection)</PRE>
+protected void <B>fillContextMenu</B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
+                               org.eclipse.jface.viewers.ITreeSelection&nbsp;selection)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true#fillContextMenu(org.eclipse.jface.action.IMenuManager, org.eclipse.jface.viewers.ITreeSelection)" title="class or interface in org.eclipse.net4j.util.ui.views">fillContextMenu</A></CODE> in class <CODE><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider</A>&lt;<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;&gt;</CODE></DL>
@@ -588,7 +588,7 @@ protected void <B>fillContextMenu</B>(<A HREF="http://help.eclipse.org/indigo/to
 <A NAME="fillResourceFolder(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.eresource.CDOResourceFolder)"><!-- --></A><H3>
 fillResourceFolder</H3>
 <PRE>
-protected void <B>fillResourceFolder</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+protected void <B>fillResourceFolder</B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
                                   <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</A>&nbsp;folder)</PRE>
 <DL>
 <DD><DL>
@@ -602,7 +602,7 @@ protected void <B>fillResourceFolder</B>(<A HREF="http://help.eclipse.org/indigo
 <A NAME="fillResource(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.eresource.CDOResource)"><!-- --></A><H3>
 fillResource</H3>
 <PRE>
-protected void <B>fillResource</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+protected void <B>fillResource</B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
                             <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</A>&nbsp;resource)</PRE>
 <DL>
 <DD><DL>
@@ -616,7 +616,7 @@ protected void <B>fillResource</B>(<A HREF="http://help.eclipse.org/indigo/topic
 <A NAME="fillSession(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.session.CDOSession)"><!-- --></A><H3>
 fillSession</H3>
 <PRE>
-protected void <B>fillSession</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+protected void <B>fillSession</B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
                            <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session)</PRE>
 <DL>
 <DD><DL>
@@ -630,7 +630,7 @@ protected void <B>fillSession</B>(<A HREF="http://help.eclipse.org/indigo/topic/
 <A NAME="fillGenerated(org.eclipse.jface.action.MenuManager, org.eclipse.emf.cdo.session.CDOSession)"><!-- --></A><H3>
 fillGenerated</H3>
 <PRE>
-protected boolean <B>fillGenerated</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/MenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">MenuManager</A>&nbsp;manager,
+protected boolean <B>fillGenerated</B>(org.eclipse.jface.action.MenuManager&nbsp;manager,
                                 <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</A>&nbsp;session)</PRE>
 <DL>
 <DD><DL>
@@ -644,7 +644,7 @@ protected boolean <B>fillGenerated</B>(<A HREF="http://help.eclipse.org/indigo/t
 <A NAME="fillView(org.eclipse.jface.action.IMenuManager, org.eclipse.emf.cdo.view.CDOView)"><!-- --></A><H3>
 fillView</H3>
 <PRE>
-protected void <B>fillView</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/action/IMenuManager.html?is-external=true" title="class or interface in org.eclipse.jface.action">IMenuManager</A>&nbsp;manager,
+protected void <B>fillView</B>(org.eclipse.jface.action.IMenuManager&nbsp;manager,
                         <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</PRE>
 <DL>
 <DD><DL>
@@ -673,7 +673,7 @@ protected void <B>elementAdded</B>(<A HREF="http://download.oracle.com/javase/1.
 <A NAME="getViewImageDescriptor(org.eclipse.emf.cdo.view.CDOView)"><!-- --></A><H3>
 getViewImageDescriptor</H3>
 <PRE>
-public static <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/ImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource">ImageDescriptor</A> <B>getViewImageDescriptor</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</PRE>
+public static org.eclipse.jface.resource.ImageDescriptor <B>getViewImageDescriptor</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Since:</B></DT>
@@ -686,7 +686,7 @@ public static <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform
 <A NAME="getViewImage(org.eclipse.emf.cdo.view.CDOView)"><!-- --></A><H3>
 getViewImage</H3>
 <PRE>
-public static <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A> <B>getViewImage</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</PRE>
+public static org.eclipse.swt.graphics.Image <B>getViewImage</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&nbsp;view)</PRE>
 <DL>
 <DD><DL>
 <DT><B>Since:</B></DT>

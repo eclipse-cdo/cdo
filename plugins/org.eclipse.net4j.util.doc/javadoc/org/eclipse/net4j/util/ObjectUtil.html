@@ -145,6 +145,14 @@ Class ObjectUtil</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/util/ObjectUtil.html#hashCode(int...)">hashCode</A></B>(int...&nbsp;values)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A collision-free hash code for small sets (<=4) of small, positive integers (<=128)</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/util/ObjectUtil.html#hashCode(long)">hashCode</A></B>(long&nbsp;num)</CODE>
 
 <BR>
@@ -256,6 +264,21 @@ hashCode</H3>
 public static int <B>hashCode</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;o)</PRE>
 <DL>
 <DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="hashCode(int...)"><!-- --></A><H3>
+hashCode</H3>
+<PRE>
+public static int <B>hashCode</B>(int...&nbsp;values)</PRE>
+<DL>
+<DD>A collision-free hash code for small sets (<=4) of small, positive integers (<=128)
+<P>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.2</DD>
 </DL>
 </DD>
 </DL>

@@ -96,11 +96,11 @@ Class CDOLabelDecorator</H2>
   <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.ui.CDOLabelDecorator</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelDecorator</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD>org.eclipse.jface.viewers.IBaseLabelProvider, org.eclipse.jface.viewers.ILabelDecorator</DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public class <B>CDOLabelDecorator</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelDecorator</A></DL>
+<DT><PRE>public class <B>CDOLabelDecorator</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements org.eclipse.jface.viewers.ILabelDecorator</DL>
 </PRE>
 
 <P>
@@ -192,15 +192,15 @@ Decorates labels of <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" 
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOLabelDecorator.html#addListener(org.eclipse.jface.viewers.ILabelProviderListener)">addListener</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProviderListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProviderListener</A>&nbsp;listener)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOLabelDecorator.html#addListener(org.eclipse.jface.viewers.ILabelProviderListener)">addListener</A></B>(org.eclipse.jface.viewers.ILabelProviderListener&nbsp;listener)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds a listener to this label provider.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOLabelDecorator.html#decorateImage(org.eclipse.swt.graphics.Image, java.lang.Object)">decorateImage</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A>&nbsp;image,
+<CODE>&nbsp;org.eclipse.swt.graphics.Image</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOLabelDecorator.html#decorateImage(org.eclipse.swt.graphics.Image, java.lang.Object)">decorateImage</A></B>(org.eclipse.swt.graphics.Image&nbsp;image,
               <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
 
 <BR>
@@ -248,7 +248,7 @@ Decorates labels of <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" 
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOLabelDecorator.html#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)">removeListener</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProviderListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProviderListener</A>&nbsp;listener)</CODE>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOLabelDecorator.html#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)">removeListener</A></B>(org.eclipse.jface.viewers.ILabelProviderListener&nbsp;listener)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes a listener to this label provider.</TD>
@@ -355,7 +355,7 @@ dispose</H3>
 <PRE>
 public void <B>dispose</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IBaseLabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></B></DD>
 <DD>Disposes of this label provider.  When a label provider is
  attached to a viewer, the viewer will automatically call
  this method when the viewer is being closed.  When label providers
@@ -364,7 +364,7 @@ public void <B>dispose</B>()</PRE>
  provider is no longer needed.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.jface.viewers">dispose</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>dispose</CODE> in interface <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></DL>
 </DD>
 <DD><DL>
 </DL>
@@ -389,10 +389,10 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Strin
 <A NAME="decorateImage(org.eclipse.swt.graphics.Image, java.lang.Object)"><!-- --></A><H3>
 decorateImage</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A> <B>decorateImage</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</A>&nbsp;image,
-                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
+public org.eclipse.swt.graphics.Image <B>decorateImage</B>(org.eclipse.swt.graphics.Image&nbsp;image,
+                                                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true#decorateImage(org.eclipse.swt.graphics.Image, java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ILabelDecorator</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ILabelDecorator</CODE></B></DD>
 <DD>Returns an image that is based on the given image,
  but decorated with additional information relating to the state
  of the provided element.
@@ -403,13 +403,13 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
  the complete decoration.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true#decorateImage(org.eclipse.swt.graphics.Image, java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">decorateImage</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelDecorator</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>decorateImage</CODE> in interface <CODE>org.eclipse.jface.viewers.ILabelDecorator</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>image</CODE> - the input image to decorate, or <code>null</code> if the element has no image<DD><CODE>element</CODE> - the element whose image is being decorated
-<DT><B>Returns:</B><DD>the decorated image, or <code>null</code> if no decoration is to be applied<DT><B>See Also:</B><DD><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/LabelProviderChangedEvent.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><CODE>LabelProviderChangedEvent</CODE></A>, 
-<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#addListener(org.eclipse.jface.viewers.ILabelProviderListener)" title="class or interface in org.eclipse.jface.viewers"><CODE>IBaseLabelProvider.addListener(org.eclipse.jface.viewers.ILabelProviderListener)</CODE></A>, 
-<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/resource/CompositeImageDescriptor.html?is-external=true" title="class or interface in org.eclipse.jface.resource"><CODE>CompositeImageDescriptor</CODE></A></DL>
+<DT><B>Returns:</B><DD>the decorated image, or <code>null</code> if no decoration is to be applied<DT><B>See Also:</B><DD><CODE>LabelProviderChangedEvent</CODE>, 
+<CODE>IBaseLabelProvider.addListener(org.eclipse.jface.viewers.ILabelProviderListener)</CODE>, 
+<CODE>CompositeImageDescriptor</CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -420,7 +420,7 @@ decorateText</H3>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>decorateText</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;text,
                            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true#decorateText(java.lang.String, java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ILabelDecorator</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ILabelDecorator</CODE></B></DD>
 <DD>Returns a text label that is based on the given text label,
  but decorated with additional information relating to the state
  of the provided element.
@@ -431,12 +431,12 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Strin
  the complete decoration.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true#decorateText(java.lang.String, java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">decorateText</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelDecorator.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelDecorator</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>decorateText</CODE> in interface <CODE>org.eclipse.jface.viewers.ILabelDecorator</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>text</CODE> - the input text label to decorate<DD><CODE>element</CODE> - the element whose image is being decorated
-<DT><B>Returns:</B><DD>the decorated text label, or <code>null</code> if no decoration is to be applied<DT><B>See Also:</B><DD><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/LabelProviderChangedEvent.html?is-external=true" title="class or interface in org.eclipse.jface.viewers"><CODE>LabelProviderChangedEvent</CODE></A>, 
-<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#addListener(org.eclipse.jface.viewers.ILabelProviderListener)" title="class or interface in org.eclipse.jface.viewers"><CODE>IBaseLabelProvider.addListener(org.eclipse.jface.viewers.ILabelProviderListener)</CODE></A></DL>
+<DT><B>Returns:</B><DD>the decorated text label, or <code>null</code> if no decoration is to be applied<DT><B>See Also:</B><DD><CODE>LabelProviderChangedEvent</CODE>, 
+<CODE>IBaseLabelProvider.addListener(org.eclipse.jface.viewers.ILabelProviderListener)</CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -447,7 +447,7 @@ isLabelProperty</H3>
 public boolean <B>isLabelProperty</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element,
                                <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;property)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#isLabelProperty(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IBaseLabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></B></DD>
 <DD>Returns whether the label would be affected
  by a change to the given property of the given element.
  This can be used to optimize a non-structural viewer update.
@@ -455,7 +455,7 @@ public boolean <B>isLabelProperty</B>(<A HREF="http://download.oracle.com/javase
  then the viewer need not update the label.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#isLabelProperty(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.jface.viewers">isLabelProperty</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>isLabelProperty</CODE> in interface <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>element</CODE> - the element<DD><CODE>property</CODE> - the property
@@ -468,9 +468,9 @@ public boolean <B>isLabelProperty</B>(<A HREF="http://download.oracle.com/javase
 <A NAME="addListener(org.eclipse.jface.viewers.ILabelProviderListener)"><!-- --></A><H3>
 addListener</H3>
 <PRE>
-public void <B>addListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProviderListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProviderListener</A>&nbsp;listener)</PRE>
+public void <B>addListener</B>(org.eclipse.jface.viewers.ILabelProviderListener&nbsp;listener)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#addListener(org.eclipse.jface.viewers.ILabelProviderListener)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IBaseLabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></B></DD>
 <DD>Adds a listener to this label provider.
  Has no effect if an identical listener is already registered.
  <p>
@@ -479,7 +479,7 @@ public void <B>addListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/org
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#addListener(org.eclipse.jface.viewers.ILabelProviderListener)" title="class or interface in org.eclipse.jface.viewers">addListener</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>addListener</CODE> in interface <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>listener</CODE> - a label provider listener</DL>
@@ -490,14 +490,14 @@ public void <B>addListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/org
 <A NAME="removeListener(org.eclipse.jface.viewers.ILabelProviderListener)"><!-- --></A><H3>
 removeListener</H3>
 <PRE>
-public void <B>removeListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ILabelProviderListener.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ILabelProviderListener</A>&nbsp;listener)</PRE>
+public void <B>removeListener</B>(org.eclipse.jface.viewers.ILabelProviderListener&nbsp;listener)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.IBaseLabelProvider</A></CODE></B></DD>
+<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></B></DD>
 <DD>Removes a listener to this label provider.
  Has no effect if an identical listener is not registered.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)" title="class or interface in org.eclipse.jface.viewers">removeListener</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IBaseLabelProvider.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IBaseLabelProvider</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>removeListener</CODE> in interface <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>listener</CODE> - a label provider listener</DL>

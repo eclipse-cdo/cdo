@@ -93,16 +93,16 @@ org.eclipse.net4j.util.ui.dnd</FONT>
 Class DNDDropAdapter&lt;TYPE&gt;</H2>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DropTargetAdapter.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">org.eclipse.swt.dnd.DropTargetAdapter</A>
-      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ViewerDropAdapter</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by ">org.eclipse.swt.dnd.DropTargetAdapter
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by ">org.eclipse.jface.viewers.ViewerDropAdapter
           <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.dnd.DNDDropAdapter&lt;TYPE&gt;</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DropTargetListener.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DropTargetListener</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/internal.SWTEventListener.html?is-external=true" title="class or interface in org.eclipse.swt">org.eclipse.swt.internal.SWTEventListener</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, org.eclipse.swt.dnd.DropTargetListener, org.eclipse.swt.internal.SWTEventListener</DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <B>DNDDropAdapter&lt;TYPE&gt;</B><DT>extends <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerDropAdapter</A></DL>
+<DT><PRE>public abstract class <B>DNDDropAdapter&lt;TYPE&gt;</B><DT>extends org.eclipse.jface.viewers.ViewerDropAdapter</DL>
 </PRE>
 
 <P>
@@ -125,10 +125,10 @@ Class DNDDropAdapter&lt;TYPE&gt;</H2>
 &nbsp;<A NAME="fields_inherited_from_class_org.eclipse.jface.viewers.ViewerDropAdapter"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Fields inherited from class org.eclipse.jface.viewers.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerDropAdapter</A></B></TH>
+<TH ALIGN="left"><B>Fields inherited from class org.eclipse.jface.viewers.ViewerDropAdapter</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#LOCATION_AFTER" title="class or interface in org.eclipse.jface.viewers">LOCATION_AFTER</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#LOCATION_BEFORE" title="class or interface in org.eclipse.jface.viewers">LOCATION_BEFORE</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#LOCATION_NONE" title="class or interface in org.eclipse.jface.viewers">LOCATION_NONE</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#LOCATION_ON" title="class or interface in org.eclipse.jface.viewers">LOCATION_ON</A></CODE></TD>
+<TD><CODE>LOCATION_AFTER, LOCATION_BEFORE, LOCATION_NONE, LOCATION_ON</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -143,8 +143,8 @@ Class DNDDropAdapter&lt;TYPE&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected </CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDropAdapter.html#DNDDropAdapter(org.eclipse.swt.dnd.Transfer[], org.eclipse.jface.viewers.StructuredViewer)">DNDDropAdapter</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A>[]&nbsp;transfers,
-               <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</A>&nbsp;viewer)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDropAdapter.html#DNDDropAdapter(org.eclipse.swt.dnd.Transfer[], org.eclipse.jface.viewers.StructuredViewer)">DNDDropAdapter</A></B>(org.eclipse.swt.dnd.Transfer[]&nbsp;transfers,
+               org.eclipse.jface.viewers.StructuredViewer&nbsp;viewer)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -162,14 +162,14 @@ Class DNDDropAdapter&lt;TYPE&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDropAdapter.html#determineLocation(org.eclipse.swt.dnd.DropTargetEvent)">determineLocation</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DropTargetEvent.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DropTargetEvent</A>&nbsp;event)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDropAdapter.html#determineLocation(org.eclipse.swt.dnd.DropTargetEvent)">determineLocation</A></B>(org.eclipse.swt.dnd.DropTargetEvent&nbsp;event)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the position of the given event's coordinates relative to its target.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A>[]</CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.swt.dnd.Transfer[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDropAdapter.html#getTransfers()">getTransfers</A></B>()</CODE>
 
 <BR>
@@ -177,7 +177,7 @@ Class DNDDropAdapter&lt;TYPE&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.jface.viewers.StructuredViewer</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDropAdapter.html#getViewer()">getViewer</A></B>()</CODE>
 
 <BR>
@@ -221,7 +221,7 @@ Class DNDDropAdapter&lt;TYPE&gt;</H2>
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDropAdapter.html#validateDrop(java.lang.Object, int, org.eclipse.swt.dnd.TransferData)">validateDrop</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;target,
              int&nbsp;operation,
-             <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/TransferData.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">TransferData</A>&nbsp;type)</CODE>
+             org.eclipse.swt.dnd.TransferData&nbsp;type)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates dropping on the given object.</TD>
@@ -239,19 +239,19 @@ Class DNDDropAdapter&lt;TYPE&gt;</H2>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.viewers.ViewerDropAdapter"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.viewers.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerDropAdapter</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.viewers.ViewerDropAdapter</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#clearState()" title="class or interface in org.eclipse.jface.viewers">clearState</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#determineTarget(org.eclipse.swt.dnd.DropTargetEvent)" title="class or interface in org.eclipse.jface.viewers">determineTarget</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#dragEnter(org.eclipse.swt.dnd.DropTargetEvent)" title="class or interface in org.eclipse.jface.viewers">dragEnter</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#dragOperationChanged(org.eclipse.swt.dnd.DropTargetEvent)" title="class or interface in org.eclipse.jface.viewers">dragOperationChanged</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#dragOver(org.eclipse.swt.dnd.DropTargetEvent)" title="class or interface in org.eclipse.jface.viewers">dragOver</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#drop(org.eclipse.swt.dnd.DropTargetEvent)" title="class or interface in org.eclipse.jface.viewers">drop</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#dropAccept(org.eclipse.swt.dnd.DropTargetEvent)" title="class or interface in org.eclipse.jface.viewers">dropAccept</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#getBounds(org.eclipse.swt.widgets.Item)" title="class or interface in org.eclipse.jface.viewers">getBounds</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#getCurrentEvent()" title="class or interface in org.eclipse.jface.viewers">getCurrentEvent</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#getCurrentLocation()" title="class or interface in org.eclipse.jface.viewers">getCurrentLocation</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#getCurrentOperation()" title="class or interface in org.eclipse.jface.viewers">getCurrentOperation</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#getCurrentTarget()" title="class or interface in org.eclipse.jface.viewers">getCurrentTarget</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#getFeedbackEnabled()" title="class or interface in org.eclipse.jface.viewers">getFeedbackEnabled</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#getSelectedObject()" title="class or interface in org.eclipse.jface.viewers">getSelectedObject</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#handleException(java.lang.Throwable, org.eclipse.swt.dnd.DropTargetEvent)" title="class or interface in org.eclipse.jface.viewers">handleException</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#overrideOperation(int)" title="class or interface in org.eclipse.jface.viewers">overrideOperation</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#setExpandEnabled(boolean)" title="class or interface in org.eclipse.jface.viewers">setExpandEnabled</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#setFeedbackEnabled(boolean)" title="class or interface in org.eclipse.jface.viewers">setFeedbackEnabled</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#setScrollEnabled(boolean)" title="class or interface in org.eclipse.jface.viewers">setScrollEnabled</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#setScrollExpandEnabled(boolean)" title="class or interface in org.eclipse.jface.viewers">setScrollExpandEnabled</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#setSelectionFeedbackEnabled(boolean)" title="class or interface in org.eclipse.jface.viewers">setSelectionFeedbackEnabled</A></CODE></TD>
+<TD><CODE>clearState, determineTarget, dragEnter, dragOperationChanged, dragOver, drop, dropAccept, getBounds, getCurrentEvent, getCurrentLocation, getCurrentOperation, getCurrentTarget, getFeedbackEnabled, getSelectedObject, handleException, overrideOperation, setExpandEnabled, setFeedbackEnabled, setScrollEnabled, setScrollExpandEnabled, setSelectionFeedbackEnabled</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.dnd.DropTargetAdapter"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.dnd.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DropTargetAdapter.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DropTargetAdapter</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.dnd.DropTargetAdapter</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DropTargetAdapter.html?is-external=true#dragLeave(org.eclipse.swt.dnd.DropTargetEvent)" title="class or interface in org.eclipse.swt.dnd">dragLeave</A></CODE></TD>
+<TD><CODE>dragLeave</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -279,8 +279,8 @@ Class DNDDropAdapter&lt;TYPE&gt;</H2>
 <A NAME="DNDDropAdapter(org.eclipse.swt.dnd.Transfer[], org.eclipse.jface.viewers.StructuredViewer)"><!-- --></A><H3>
 DNDDropAdapter</H3>
 <PRE>
-protected <B>DNDDropAdapter</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A>[]&nbsp;transfers,
-                         <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</A>&nbsp;viewer)</PRE>
+protected <B>DNDDropAdapter</B>(org.eclipse.swt.dnd.Transfer[]&nbsp;transfers,
+                         org.eclipse.jface.viewers.StructuredViewer&nbsp;viewer)</PRE>
 <DL>
 <DL>
 <DT><B>Since:</B></DT>
@@ -301,7 +301,7 @@ protected <B>DNDDropAdapter</B>(<A HREF="http://help.eclipse.org/indigo/topic/or
 <A NAME="getTransfers()"><!-- --></A><H3>
 getTransfers</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A>[] <B>getTransfers</B>()</PRE>
+public org.eclipse.swt.dnd.Transfer[] <B>getTransfers</B>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Since:</B></DT>
@@ -314,10 +314,10 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="getViewer()"><!-- --></A><H3>
 getViewer</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</A> <B>getViewer</B>()</PRE>
+public org.eclipse.jface.viewers.StructuredViewer <B>getViewer</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#getViewer()" title="class or interface in org.eclipse.jface.viewers">getViewer</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerDropAdapter</A></CODE></DL>
+<DT><B>Overrides:</B><DD><CODE>getViewer</CODE> in class <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></DL>
 </DD>
 <DD><DL>
 
@@ -351,15 +351,15 @@ public void <B>setDropBetweenEnabled</B>(boolean&nbsp;dropBetweenEnabled)</PRE>
 <A NAME="determineLocation(org.eclipse.swt.dnd.DropTargetEvent)"><!-- --></A><H3>
 determineLocation</H3>
 <PRE>
-protected int <B>determineLocation</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DropTargetEvent.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DropTargetEvent</A>&nbsp;event)</PRE>
+protected int <B>determineLocation</B>(org.eclipse.swt.dnd.DropTargetEvent&nbsp;event)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#determineLocation(org.eclipse.swt.dnd.DropTargetEvent)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ViewerDropAdapter</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></B></DD>
 <DD>Returns the position of the given event's coordinates relative to its target.
  The position is determined to be before, after, or on the item, based on
  some threshold value.
 <P>
 <DD><DL>
-<DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#determineLocation(org.eclipse.swt.dnd.DropTargetEvent)" title="class or interface in org.eclipse.jface.viewers">determineLocation</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerDropAdapter</A></CODE></DL>
+<DT><B>Overrides:</B><DD><CODE>determineLocation</CODE> in class <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>event</CODE> - the event
@@ -373,14 +373,14 @@ performDrop</H3>
 <PRE>
 public boolean <B>performDrop</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;data)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#performDrop(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ViewerDropAdapter</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></B></DD>
 <DD>Performs any work associated with the drop.
  <p>
  Subclasses must implement this method to provide drop behavior.
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#performDrop(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers">performDrop</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerDropAdapter</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>performDrop</CODE> in class <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>data</CODE> - the drop data
@@ -395,9 +395,9 @@ validateDrop</H3>
 <PRE>
 public boolean <B>validateDrop</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;target,
                             int&nbsp;operation,
-                            <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/TransferData.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">TransferData</A>&nbsp;type)</PRE>
+                            org.eclipse.swt.dnd.TransferData&nbsp;type)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#validateDrop(java.lang.Object, int, org.eclipse.swt.dnd.TransferData)" title="class or interface in org.eclipse.jface.viewers">org.eclipse.jface.viewers.ViewerDropAdapter</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></B></DD>
 <DD>Validates dropping on the given object. This method is called whenever some 
  aspect of the drop operation changes.
  <p>
@@ -405,7 +405,7 @@ public boolean <B>validateDrop</B>(<A HREF="http://download.oracle.com/javase/1.
  </p>
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true#validateDrop(java.lang.Object, int, org.eclipse.swt.dnd.TransferData)" title="class or interface in org.eclipse.jface.viewers">validateDrop</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ViewerDropAdapter.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ViewerDropAdapter</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>validateDrop</CODE> in class <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>target</CODE> - the object that the mouse is currently hovering over, or

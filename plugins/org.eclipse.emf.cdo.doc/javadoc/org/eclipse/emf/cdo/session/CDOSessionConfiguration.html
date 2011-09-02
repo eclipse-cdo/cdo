@@ -95,7 +95,7 @@ Interface CDOSessionConfiguration</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">RecoveringCDOSessionConfiguration</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">RecoveringCDOSessionConfiguration</A></DD>
 </DL>
 <HR>
 <DL>
@@ -165,6 +165,22 @@ Configures and opens new <A HREF="../../../../../org/eclipse/emf/cdo/session/CDO
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getIDGenerator()">getIDGenerator</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getLockNotificationMode()">getLockNotificationMode</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#getPassiveUpdateMode()">getPassiveUpdateMode</A></B>()</CODE>
 
@@ -219,6 +235,22 @@ Configures and opens new <A HREF="../../../../../org/eclipse/emf/cdo/session/CDO
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A special exception handler can be set <b>before</b> the session is opened and can not be changed thereafter.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setIDGenerator(org.eclipse.emf.cdo.common.id.CDOIDGenerator)">setIDGenerator</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</A>&nbsp;idGenerator)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">setLockNotificationMode</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</A>&nbsp;mode)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -323,6 +355,38 @@ void <B>setPassiveUpdateMode</B>(<A HREF="../../../../../org/eclipse/emf/cdo/com
 </DL>
 <HR>
 
+<A NAME="getLockNotificationMode()"><!-- --></A><H3>
+getLockNotificationMode</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</A> <B>getLockNotificationMode</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)"><!-- --></A><H3>
+setLockNotificationMode</H3>
+<PRE>
+void <B>setLockNotificationMode</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</A>&nbsp;mode)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="getExceptionHandler()"><!-- --></A><H3>
 getExceptionHandler</H3>
 <PRE>
@@ -349,6 +413,41 @@ void <B>setExceptionHandler</B>(<A HREF="../../../../../org/eclipse/emf/cdo/sess
 </DD>
 <DD><DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getExceptionHandler()"><CODE>CDOSession.getExceptionHandler()</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getIDGenerator()"><!-- --></A><H3>
+getIDGenerator</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</A> <B>getIDGenerator</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getIDGenerator()"><CODE>CDOSession.getIDGenerator()</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setIDGenerator(org.eclipse.emf.cdo.common.id.CDOIDGenerator)"><!-- --></A><H3>
+setIDGenerator</H3>
+<PRE>
+void <B>setIDGenerator</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</A>&nbsp;idGenerator)</PRE>
+<DL>
+<DD>A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter. If not
+ <code>null</code>, the passed generator <b>must be</b> thread-safe.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getIDGenerator()"><CODE>CDOSession.getIDGenerator()</CODE></A></DL>
 </DD>
 </DL>
 <HR>

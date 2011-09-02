@@ -93,14 +93,15 @@ org.eclipse.net4j.util.ui.container</FONT>
 Class ElementWizard</H2>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.container.ElementWizard</B>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</A>
+      <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.container.ElementWizard</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/IElementWizard.html" title="interface in org.eclipse.net4j.util.ui.container">IElementWizard</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/container/IElementWizard.html" title="interface in org.eclipse.net4j.util.ui.container">IElementWizard</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <B>ElementWizard</B><DT>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements <A HREF="../../../../../../org/eclipse/net4j/util/ui/container/IElementWizard.html" title="interface in org.eclipse.net4j.util.ui.container">IElementWizard</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</A></DL>
+<DT><PRE>public abstract class <B>ElementWizard</B><DT>extends <A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</A><DT>implements <A HREF="../../../../../../org/eclipse/net4j/util/ui/container/IElementWizard.html" title="interface in org.eclipse.net4j.util.ui.container">IElementWizard</A>, <A HREF="../../../../../../org/eclipse/net4j/util/ui/ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</A></DL>
 </PRE>
 
 <P>
@@ -159,8 +160,8 @@ Class ElementWizard</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Combo.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Combo</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizard.html#addCombo(org.eclipse.swt.widgets.Composite, java.lang.String, java.lang.String...)">addCombo</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+<CODE>static&nbsp;org.eclipse.swt.widgets.Combo</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizard.html#addCombo(org.eclipse.swt.widgets.Composite, java.lang.String, java.lang.String...)">addCombo</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent,
          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;label,
          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>...&nbsp;choices)</CODE>
 
@@ -169,8 +170,8 @@ Class ElementWizard</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Label.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Label</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizard.html#addLabel(org.eclipse.swt.widgets.Composite, java.lang.String)">addLabel</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+<CODE>static&nbsp;org.eclipse.swt.widgets.Label</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizard.html#addLabel(org.eclipse.swt.widgets.Composite, java.lang.String)">addLabel</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent,
          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;label)</CODE>
 
 <BR>
@@ -178,8 +179,8 @@ Class ElementWizard</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Text.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Text</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizard.html#addText(org.eclipse.swt.widgets.Composite, java.lang.String)">addText</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+<CODE>static&nbsp;org.eclipse.swt.widgets.Text</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizard.html#addText(org.eclipse.swt.widgets.Composite, java.lang.String)">addText</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent,
         <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;label)</CODE>
 
 <BR>
@@ -188,7 +189,7 @@ Class ElementWizard</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected abstract &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizard.html#create(org.eclipse.swt.widgets.Composite)">create</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizard.html#create(org.eclipse.swt.widgets.Composite)">create</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -196,7 +197,7 @@ Class ElementWizard</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizard.html#create(org.eclipse.swt.widgets.Composite, org.eclipse.net4j.util.container.IManagedContainer, java.lang.String, java.lang.String, java.lang.String, org.eclipse.net4j.util.ui.ValidationContext)">create</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/container/ElementWizard.html#create(org.eclipse.swt.widgets.Composite, org.eclipse.net4j.util.container.IManagedContainer, java.lang.String, java.lang.String, java.lang.String, org.eclipse.net4j.util.ui.ValidationContext)">create</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent,
        <A HREF="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container,
        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;productGroup,
        <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;factoryType,
@@ -270,6 +271,15 @@ Class ElementWizard</H2>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.Notifier"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.util.event.<A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent()">fireEvent</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])">fireEvent</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded()">firstListenerAdded</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners()">getListeners</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService()">getNotificationService</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners()">hasListeners</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</A>, <A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -398,7 +408,7 @@ public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Objec
 <A NAME="create(org.eclipse.swt.widgets.Composite, org.eclipse.net4j.util.container.IManagedContainer, java.lang.String, java.lang.String, java.lang.String, org.eclipse.net4j.util.ui.ValidationContext)"><!-- --></A><H3>
 create</H3>
 <PRE>
-public void <B>create</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
+public void <B>create</B>(org.eclipse.swt.widgets.Composite&nbsp;parent,
                    <A HREF="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</A>&nbsp;container,
                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;productGroup,
                    <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;factoryType,
@@ -446,7 +456,7 @@ public void <B>setValidationError</B>(<A HREF="http://download.oracle.com/javase
 <A NAME="create(org.eclipse.swt.widgets.Composite)"><!-- --></A><H3>
 create</H3>
 <PRE>
-protected abstract void <B>create</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent)</PRE>
+protected abstract void <B>create</B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -460,8 +470,8 @@ protected abstract void <B>create</B>(<A HREF="http://help.eclipse.org/indigo/to
 <A NAME="addLabel(org.eclipse.swt.widgets.Composite, java.lang.String)"><!-- --></A><H3>
 addLabel</H3>
 <PRE>
-public static <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Label.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Label</A> <B>addLabel</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
-                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;label)</PRE>
+public static org.eclipse.swt.widgets.Label <B>addLabel</B>(org.eclipse.swt.widgets.Composite&nbsp;parent,
+                                                     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;label)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -475,8 +485,8 @@ public static <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform
 <A NAME="addText(org.eclipse.swt.widgets.Composite, java.lang.String)"><!-- --></A><H3>
 addText</H3>
 <PRE>
-public static <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Text.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Text</A> <B>addText</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
-                           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;label)</PRE>
+public static org.eclipse.swt.widgets.Text <B>addText</B>(org.eclipse.swt.widgets.Composite&nbsp;parent,
+                                                   <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;label)</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -490,9 +500,9 @@ public static <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform
 <A NAME="addCombo(org.eclipse.swt.widgets.Composite, java.lang.String, java.lang.String...)"><!-- --></A><H3>
 addCombo</H3>
 <PRE>
-public static <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Combo.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Combo</A> <B>addCombo</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</A>&nbsp;parent,
-                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;label,
-                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>...&nbsp;choices)</PRE>
+public static org.eclipse.swt.widgets.Combo <B>addCombo</B>(org.eclipse.swt.widgets.Composite&nbsp;parent,
+                                                     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;label,
+                                                     <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>...&nbsp;choices)</PRE>
 <DL>
 <DD><DL>
 </DL>

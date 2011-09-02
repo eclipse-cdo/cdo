@@ -140,6 +140,10 @@ Client concepts for dealing with transactions, distributed transactions and thei
  <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionConflictEvent.html#getConflictingObject()"><CODE>object</CODE></A> that enters the <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#hasConflict()"><CODE>conflict</CODE></A> state.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionContainer</A></B></TD>
+<TD>Can open new <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transactions</CODE></A> and provide access to openend transactions.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionFinishedEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionFinishedEvent</A></B></TD>
 <TD>A <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view event</CODE></A> fired from a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A> when it becomes
  <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#isDirty()"><CODE>clean</CODE></A> after a sucessful <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>commit</CODE></A> or
@@ -156,6 +160,11 @@ Client concepts for dealing with transactions, distributed transactions and thei
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</A></B></TD>
+<TD>A call-back interface that is called by a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transcation</CODE></A> when it is about to be committed, has
+ been committed or rolled back.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler3</A></B></TD>
 <TD>A call-back interface that is called by a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transcation</CODE></A> when it is about to be committed, has
  been committed or rolled back.</TD>
 </TR>
@@ -183,7 +192,7 @@ Client concepts for dealing with transactions, distributed transactions and thei
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXATransaction</A></B></TD>
-<TD>A distributed (XA) transaction that can atomically commit the changes to multiple <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.6.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resource sets</CODE></A>,
+<TD>A distributed (XA) transaction that can atomically commit the changes to multiple <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resource sets</CODE></A>,
  each represented by a registered <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view set</CODE></A>.</TD>
 </TR>
 </TABLE>
@@ -216,6 +225,10 @@ Client concepts for dealing with transactions, distributed transactions and thei
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler2</A></B></TD>
 <TD>An empty default implementation of <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>CDOTransactionHandler2</CODE></A>.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler3</A></B></TD>
+<TD>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</A></B></TD>

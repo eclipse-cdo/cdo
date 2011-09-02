@@ -76,9 +76,9 @@ function windowTitle()
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;METHOD</FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;METHOD</FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_top"></A>
@@ -92,14 +92,17 @@ org.eclipse.emf.cdo.net4j</FONT>
 <BR>
 Interface CDOSession.Options</H2>
 <DL>
-<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</A></DD>
+<DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession.Options</A>, <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</A></DD>
 </DL>
 <DL>
 <DT><B>Enclosing interface:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</A></DD>
 </DL>
 <HR>
+<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>CDONet4jSession.Options</CODE></A>.</I>
+<P>
 <DL>
-<DT><PRE>public static interface <B>CDOSession.Options</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options</A></DL>
+<DT><PRE><FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static interface <B>CDOSession.Options</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession.Options</A></DL>
 </PRE>
 
 <P>
@@ -139,7 +142,7 @@ Interface CDOSession.Options</H2>
 <TH ALIGN="left"><B>Nested classes/interfaces inherited from interface org.eclipse.emf.cdo.common.<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateEvent</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateEvent</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -152,46 +155,14 @@ Interface CDOSession.Options</H2>
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
 </TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.Options.html#getCommitTimeout()">getCommitTimeout</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the timeout for commit operations in <b>seconds</b>.</TD>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.net4j.CDONet4jSession.Options"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.net4j.<A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession.Options</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;int</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.Options.html#getProgressInterval()">getProgressInterval</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the interval for progress reports of commit operations in <b>seconds</b>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/signal/ISignalProtocol.html?is-external=true" title="class or interface in org.eclipse.net4j.signal">ISignalProtocol</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</A>&gt;</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.Options.html#getProtocol()">getProtocol</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the Net4j <A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><CODE>protocol</CODE></A> instance that represents the underlying
- <em>signalling connection</em> to the repository of this session.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.Options.html#setCommitTimeout(int)">setCommitTimeout</A></B>(int&nbsp;commitTimeout)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the timeout for commit operations in <b>seconds</b>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.Options.html#setProgressInterval(int)">setProgressInterval</A></B>(int&nbsp;progressInterval)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the interval for progress reports of commit operations in <b>seconds</b>.</TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html#getCommitTimeout()">getCommitTimeout</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html#getProgressInterval()">getProgressInterval</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html#getProtocol()">getProtocol</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html#setCommitTimeout(int)">setCommitTimeout</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html#setProgressInterval(int)">setProgressInterval</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.session.CDOSession.Options"><!-- --></A>
@@ -209,7 +180,7 @@ Interface CDOSession.Options</H2>
 <TH ALIGN="left"><B>Methods inherited from interface org.eclipse.emf.cdo.common.<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()">getPassiveUpdateMode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</A></CODE></TD>
+<TD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getLockNotificationMode()">getLockNotificationMode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()">getPassiveUpdateMode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">setLockNotificationMode</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier"><!-- --></A>
@@ -223,96 +194,6 @@ Interface CDOSession.Options</H2>
 </TABLE>
 &nbsp;
 <P>
-
-<!-- ============ METHOD DETAIL ========== -->
-
-<A NAME="method_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Method Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="getProtocol()"><!-- --></A><H3>
-getProtocol</H3>
-<PRE>
-<A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/signal/ISignalProtocol.html?is-external=true" title="class or interface in org.eclipse.net4j.signal">ISignalProtocol</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</A>&gt; <B>getProtocol</B>()</PRE>
-<DL>
-<DD>Returns the Net4j <A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><CODE>protocol</CODE></A> instance that represents the underlying
- <em>signalling connection</em> to the repository of this session.
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getCommitTimeout()"><!-- --></A><H3>
-getCommitTimeout</H3>
-<PRE>
-int <B>getCommitTimeout</B>()</PRE>
-<DL>
-<DD>Returns the timeout for commit operations in <b>seconds</b>.
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setCommitTimeout(int)"><!-- --></A><H3>
-setCommitTimeout</H3>
-<PRE>
-void <B>setCommitTimeout</B>(int&nbsp;commitTimeout)</PRE>
-<DL>
-<DD>Sets the timeout for commit operations in <b>seconds</b>.
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getProgressInterval()"><!-- --></A><H3>
-getProgressInterval</H3>
-<PRE>
-int <B>getProgressInterval</B>()</PRE>
-<DL>
-<DD>Returns the interval for progress reports of commit operations in <b>seconds</b>.
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setProgressInterval(int)"><!-- --></A><H3>
-setProgressInterval</H3>
-<PRE>
-void <B>setProgressInterval</B>(int&nbsp;progressInterval)</PRE>
-<DL>
-<DD>Sets the interval for progress reports of commit operations in <b>seconds</b>.
-<P>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-</DL>
-</DD>
-</DL>
 <!-- ========= END OF CLASS DATA ========= -->
 <HR>
 
@@ -365,9 +246,9 @@ void <B>setProgressInterval</B>(int&nbsp;progressInterval)</PRE>
 </TR>
 <TR>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+  SUMMARY:&nbsp;NESTED&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;METHOD</FONT></TD>
 <TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;METHOD</FONT></TD>
 </TR>
 </TABLE>
 <A NAME="skip-navbar_bottom"></A>

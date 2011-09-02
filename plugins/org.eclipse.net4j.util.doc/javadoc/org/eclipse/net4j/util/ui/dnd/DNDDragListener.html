@@ -93,15 +93,15 @@ org.eclipse.net4j.util.ui.dnd</FONT>
 Class DNDDragListener&lt;TYPE&gt;</H2>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceAdapter.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">org.eclipse.swt.dnd.DragSourceAdapter</A>
+  <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by ">org.eclipse.swt.dnd.DragSourceAdapter
       <IMG SRC="../../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.util.ui.dnd.DNDDragListener&lt;TYPE&gt;</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceListener.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceListener</A>, <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/internal.SWTEventListener.html?is-external=true" title="class or interface in org.eclipse.swt">org.eclipse.swt.internal.SWTEventListener</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/EventListener.html?is-external=true" title="class or interface in java.util">EventListener</A>, org.eclipse.swt.dnd.DragSourceListener, org.eclipse.swt.internal.SWTEventListener</DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <B>DNDDragListener&lt;TYPE&gt;</B><DT>extends <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceAdapter.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceAdapter</A></DL>
+<DT><PRE>public abstract class <B>DNDDragListener&lt;TYPE&gt;</B><DT>extends org.eclipse.swt.dnd.DragSourceAdapter</DL>
 </PRE>
 
 <P>
@@ -124,8 +124,8 @@ Class DNDDragListener&lt;TYPE&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected </CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html#DNDDragListener(org.eclipse.swt.dnd.Transfer[], org.eclipse.jface.viewers.StructuredViewer)">DNDDragListener</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A>[]&nbsp;transfers,
-                <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</A>&nbsp;viewer)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html#DNDDragListener(org.eclipse.swt.dnd.Transfer[], org.eclipse.jface.viewers.StructuredViewer)">DNDDragListener</A></B>(org.eclipse.swt.dnd.Transfer[]&nbsp;transfers,
+                org.eclipse.jface.viewers.StructuredViewer&nbsp;viewer)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
@@ -143,7 +143,7 @@ Class DNDDragListener&lt;TYPE&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html#dragSetData(org.eclipse.swt.dnd.DragSourceEvent)">dragSetData</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceEvent.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceEvent</A>&nbsp;event)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html#dragSetData(org.eclipse.swt.dnd.DragSourceEvent)">dragSetData</A></B>(org.eclipse.swt.dnd.DragSourceEvent&nbsp;event)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation of <code>dragSetData</code> does nothing.</TD>
@@ -151,7 +151,7 @@ Class DNDDragListener&lt;TYPE&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html#dragStart(org.eclipse.swt.dnd.DragSourceEvent)">dragStart</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceEvent.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceEvent</A>&nbsp;event)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html#dragStart(org.eclipse.swt.dnd.DragSourceEvent)">dragStart</A></B>(org.eclipse.swt.dnd.DragSourceEvent&nbsp;event)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This implementation of <code>dragStart</code> permits the drag operation to start.</TD>
@@ -159,14 +159,14 @@ Class DNDDragListener&lt;TYPE&gt;</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected abstract &nbsp;<A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html" title="type parameter in DNDDragListener">TYPE</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html#getObject(org.eclipse.jface.viewers.IStructuredSelection)">getObject</A></B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredSelection</A>&nbsp;selection)</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html#getObject(org.eclipse.jface.viewers.IStructuredSelection)">getObject</A></B>(org.eclipse.jface.viewers.IStructuredSelection&nbsp;selection)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A>[]</CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.swt.dnd.Transfer[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html#getTransfers()">getTransfers</A></B>()</CODE>
 
 <BR>
@@ -174,7 +174,7 @@ Class DNDDragListener&lt;TYPE&gt;</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.jface.viewers.StructuredViewer</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html#getViewer()">getViewer</A></B>()</CODE>
 
 <BR>
@@ -184,10 +184,10 @@ Class DNDDragListener&lt;TYPE&gt;</H2>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.swt.dnd.DragSourceAdapter"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.dnd.<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceAdapter.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceAdapter</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class org.eclipse.swt.dnd.DragSourceAdapter</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceAdapter.html?is-external=true#dragFinished(org.eclipse.swt.dnd.DragSourceEvent)" title="class or interface in org.eclipse.swt.dnd">dragFinished</A></CODE></TD>
+<TD><CODE>dragFinished</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -215,8 +215,8 @@ Class DNDDragListener&lt;TYPE&gt;</H2>
 <A NAME="DNDDragListener(org.eclipse.swt.dnd.Transfer[], org.eclipse.jface.viewers.StructuredViewer)"><!-- --></A><H3>
 DNDDragListener</H3>
 <PRE>
-protected <B>DNDDragListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A>[]&nbsp;transfers,
-                          <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</A>&nbsp;viewer)</PRE>
+protected <B>DNDDragListener</B>(org.eclipse.swt.dnd.Transfer[]&nbsp;transfers,
+                          org.eclipse.jface.viewers.StructuredViewer&nbsp;viewer)</PRE>
 <DL>
 <DL>
 <DT><B>Since:</B></DT>
@@ -237,7 +237,7 @@ protected <B>DNDDragListener</B>(<A HREF="http://help.eclipse.org/indigo/topic/o
 <A NAME="getTransfers()"><!-- --></A><H3>
 getTransfers</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/Transfer.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">Transfer</A>[] <B>getTransfers</B>()</PRE>
+public org.eclipse.swt.dnd.Transfer[] <B>getTransfers</B>()</PRE>
 <DL>
 <DD><DL>
 <DT><B>Since:</B></DT>
@@ -250,7 +250,7 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="getViewer()"><!-- --></A><H3>
 getViewer</H3>
 <PRE>
-public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</A> <B>getViewer</B>()</PRE>
+public org.eclipse.jface.viewers.StructuredViewer <B>getViewer</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>
@@ -261,17 +261,17 @@ public <A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.is
 <A NAME="dragSetData(org.eclipse.swt.dnd.DragSourceEvent)"><!-- --></A><H3>
 dragSetData</H3>
 <PRE>
-public void <B>dragSetData</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceEvent.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceEvent</A>&nbsp;event)</PRE>
+public void <B>dragSetData</B>(org.eclipse.swt.dnd.DragSourceEvent&nbsp;event)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceAdapter.html?is-external=true#dragSetData(org.eclipse.swt.dnd.DragSourceEvent)" title="class or interface in org.eclipse.swt.dnd">org.eclipse.swt.dnd.DragSourceAdapter</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.swt.dnd.DragSourceAdapter</CODE></B></DD>
 <DD>This implementation of <code>dragSetData</code> does nothing.
  For additional information see <code>DragSourceListener.dragSetData</code>.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceListener.html?is-external=true#dragSetData(org.eclipse.swt.dnd.DragSourceEvent)" title="class or interface in org.eclipse.swt.dnd">dragSetData</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceListener.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceListener</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceAdapter.html?is-external=true#dragSetData(org.eclipse.swt.dnd.DragSourceEvent)" title="class or interface in org.eclipse.swt.dnd">dragSetData</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceAdapter.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceAdapter</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>dragSetData</CODE> in interface <CODE>org.eclipse.swt.dnd.DragSourceListener</CODE><DT><B>Overrides:</B><DD><CODE>dragSetData</CODE> in class <CODE>org.eclipse.swt.dnd.DragSourceAdapter</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>event</CODE> - the information associated with the drag set data event<DT><B>See Also:</B><DD><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceEvent.html?is-external=true" title="class or interface in org.eclipse.swt.dnd"><CODE>DragSourceEvent</CODE></A></DL>
+<DT><B>Parameters:</B><DD><CODE>event</CODE> - the information associated with the drag set data event<DT><B>See Also:</B><DD><CODE>DragSourceEvent</CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -279,17 +279,17 @@ public void <B>dragSetData</B>(<A HREF="http://help.eclipse.org/indigo/topic/org
 <A NAME="dragStart(org.eclipse.swt.dnd.DragSourceEvent)"><!-- --></A><H3>
 dragStart</H3>
 <PRE>
-public void <B>dragStart</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceEvent.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceEvent</A>&nbsp;event)</PRE>
+public void <B>dragStart</B>(org.eclipse.swt.dnd.DragSourceEvent&nbsp;event)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceAdapter.html?is-external=true#dragStart(org.eclipse.swt.dnd.DragSourceEvent)" title="class or interface in org.eclipse.swt.dnd">org.eclipse.swt.dnd.DragSourceAdapter</A></CODE></B></DD>
+<DD><B>Description copied from class: <CODE>org.eclipse.swt.dnd.DragSourceAdapter</CODE></B></DD>
 <DD>This implementation of <code>dragStart</code> permits the drag operation to start.
  For additional information see <code>DragSourceListener.dragStart</code>.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceListener.html?is-external=true#dragStart(org.eclipse.swt.dnd.DragSourceEvent)" title="class or interface in org.eclipse.swt.dnd">dragStart</A></CODE> in interface <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceListener.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceListener</A></CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceAdapter.html?is-external=true#dragStart(org.eclipse.swt.dnd.DragSourceEvent)" title="class or interface in org.eclipse.swt.dnd">dragStart</A></CODE> in class <CODE><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceAdapter.html?is-external=true" title="class or interface in org.eclipse.swt.dnd">DragSourceAdapter</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE>dragStart</CODE> in interface <CODE>org.eclipse.swt.dnd.DragSourceListener</CODE><DT><B>Overrides:</B><DD><CODE>dragStart</CODE> in class <CODE>org.eclipse.swt.dnd.DragSourceAdapter</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>event</CODE> - the information associated with the drag start event<DT><B>See Also:</B><DD><A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/dnd/DragSourceEvent.html?is-external=true" title="class or interface in org.eclipse.swt.dnd"><CODE>DragSourceEvent</CODE></A></DL>
+<DT><B>Parameters:</B><DD><CODE>event</CODE> - the information associated with the drag start event<DT><B>See Also:</B><DD><CODE>DragSourceEvent</CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -297,7 +297,7 @@ public void <B>dragStart</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.e
 <A NAME="getObject(org.eclipse.jface.viewers.IStructuredSelection)"><!-- --></A><H3>
 getObject</H3>
 <PRE>
-protected abstract <A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html" title="type parameter in DNDDragListener">TYPE</A> <B>getObject</B>(<A HREF="http://help.eclipse.org/indigo/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/IStructuredSelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">IStructuredSelection</A>&nbsp;selection)</PRE>
+protected abstract <A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDragListener.html" title="type parameter in DNDDragListener">TYPE</A> <B>getObject</B>(org.eclipse.jface.viewers.IStructuredSelection&nbsp;selection)</PRE>
 <DL>
 <DD><DL>
 </DL>

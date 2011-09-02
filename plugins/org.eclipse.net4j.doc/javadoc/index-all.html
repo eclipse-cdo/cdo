@@ -405,6 +405,9 @@ Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/Channel.h
 <DT><A HREF="./org/eclipse/spi/net4j/Connector.html#doActivate()"><B>doActivate()</B></A> - 
 Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/Connector.html" title="class in org.eclipse.spi.net4j">Connector</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.html#doAfterActivate()"><B>doAfterActivate()</B></A> - 
+Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.Server.html#doBeforeActivate()"><B>doBeforeActivate()</B></A> - 
 Method in class org.eclipse.net4j.signal.heartbeat.<A HREF="./org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.Server.html" title="class in org.eclipse.net4j.signal.heartbeat">HeartBeatProtocol.Server</A>
 <DD>&nbsp;
@@ -854,9 +857,15 @@ Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/Connector
 <DT><A HREF="./org/eclipse/net4j/connector/IConnectorStateEvent.html#getNewState()"><B>getNewState()</B></A> - 
 Method in interface org.eclipse.net4j.connector.<A HREF="./org/eclipse/net4j/connector/IConnectorStateEvent.html" title="interface in org.eclipse.net4j.connector">IConnectorStateEvent</A>
 <DD>The new state of the <A HREF="./org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><CODE>IConnector</CODE></A> that sent this event.
+<DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html#getNewTimeout()"><B>getNewTimeout()</B></A> - 
+Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" title="class in org.eclipse.net4j.signal">SignalProtocol.TimeoutChangedEvent</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/connector/IConnectorStateEvent.html#getOldState()"><B>getOldState()</B></A> - 
 Method in interface org.eclipse.net4j.connector.<A HREF="./org/eclipse/net4j/connector/IConnectorStateEvent.html" title="interface in org.eclipse.net4j.connector">IConnectorStateEvent</A>
 <DD>The old state of the <A HREF="./org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><CODE>IConnector</CODE></A> that sent this event.
+<DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html#getOldTimeout()"><B>getOldTimeout()</B></A> - 
+Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" title="class in org.eclipse.net4j.signal">SignalProtocol.TimeoutChangedEvent</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/channel/IChannelMultiplexer.html#getOpenChannelTimeout()"><B>getOpenChannelTimeout()</B></A> - 
 Method in interface org.eclipse.net4j.channel.<A HREF="./org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A>
 <DD>&nbsp;
@@ -982,6 +991,9 @@ Method in interface org.eclipse.net4j.connector.<A HREF="./org/eclipse/net4j/con
 <DD>The <A HREF="./org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><CODE>IConnector</CODE></A> that sent this event.
 <DT><A HREF="./org/eclipse/net4j/signal/SignalFinishedEvent.html#getSource()"><B>getSource()</B></A> - 
 Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalFinishedEvent.html" title="class in org.eclipse.net4j.signal">SignalFinishedEvent</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html#getSource()"><B>getSource()</B></A> - 
+Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" title="class in org.eclipse.net4j.signal">SignalProtocol.TimeoutChangedEvent</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/SignalScheduledEvent.html#getSource()"><B>getSource()</B></A> - 
 Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalScheduledEvent.html" title="class in org.eclipse.net4j.signal">SignalScheduledEvent</A>
@@ -1258,6 +1270,9 @@ Method in class org.eclipse.spi.net4j.<A HREF="./org/eclipse/spi/net4j/Connector
 <DT><A HREF="./org/eclipse/net4j/buffer/BufferOutputStream.html#isPropagateClose()"><B>isPropagateClose()</B></A> - 
 Method in class org.eclipse.net4j.buffer.<A HREF="./org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.html#isSendingTimeoutChanges()"><B>isSendingTimeoutChanges()</B></A> - 
+Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</A>
+<DD>Returns <code>true</code> by default, override to change this behaviour.
 <DT><A HREF="./org/eclipse/net4j/ILocationAware.html#isServer()"><B>isServer()</B></A> - 
 Method in interface org.eclipse.net4j.<A HREF="./org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</A>
 <DD>Same as <code><A HREF="./org/eclipse/net4j/ILocationAware.html#getLocation()"><CODE>ILocationAware.getLocation()</CODE></A> == <A HREF="./org/eclipse/net4j/ILocationAware.Location.html#SERVER"><CODE>ILocationAware.Location.SERVER</CODE></A></code>.
@@ -1776,6 +1791,9 @@ Static variable in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/s
 <DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_REMOTE_EXCEPTION"><B>SIGNAL_REMOTE_EXCEPTION</B></A> - 
 Static variable in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_SET_TIMEOUT"><B>SIGNAL_SET_TIMEOUT</B></A> - 
+Static variable in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/SignalActor.html" title="class in org.eclipse.net4j.signal"><B>SignalActor</B></A> - Class in <A HREF="./org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/signal/SignalActor.html#SignalActor(org.eclipse.net4j.signal.SignalProtocol, short, java.lang.String)"><B>SignalActor(SignalProtocol&lt;?&gt;, short, String)</B></A> - 
 Constructor for class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalActor.html" title="class in org.eclipse.net4j.signal">SignalActor</A>
 <DD>&nbsp;
@@ -1791,7 +1809,7 @@ Constructor for class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/sign
 <DT><A HREF="./org/eclipse/net4j/signal/SignalFinishedEvent.html" title="class in org.eclipse.net4j.signal"><B>SignalFinishedEvent</B></A>&lt;<A HREF="./org/eclipse/net4j/signal/SignalFinishedEvent.html" title="type parameter in SignalFinishedEvent">INFRA_STRUCTURE</A>&gt; - Class in <A HREF="./org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal"><B>SignalProtocol</B></A>&lt;<A HREF="./org/eclipse/net4j/signal/SignalProtocol.html" title="type parameter in SignalProtocol">INFRA_STRUCTURE</A>&gt; - Class in <A HREF="./org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.html#SignalProtocol(java.lang.String)"><B>SignalProtocol(String)</B></A> - 
 Constructor for class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal"><B>SignalReactor</B></A> - Class in <A HREF="./org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/signal/SignalReactor.html#SignalReactor(org.eclipse.net4j.signal.SignalProtocol, short, java.lang.String)"><B>SignalReactor(SignalProtocol&lt;?&gt;, short, String)</B></A> - 
+<DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" title="class in org.eclipse.net4j.signal"><B>SignalProtocol.TimeoutChangedEvent</B></A> - Class in <A HREF="./org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal"><B>SignalReactor</B></A> - Class in <A HREF="./org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/signal/SignalReactor.html#SignalReactor(org.eclipse.net4j.signal.SignalProtocol, short, java.lang.String)"><B>SignalReactor(SignalProtocol&lt;?&gt;, short, String)</B></A> - 
 Constructor for class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/SignalReactor.html#SignalReactor(org.eclipse.net4j.signal.SignalProtocol, short)"><B>SignalReactor(SignalProtocol&lt;?&gt;, short)</B></A> - 
@@ -1837,6 +1855,9 @@ Method in class org.eclipse.net4j.channel.<A HREF="./org/eclipse/net4j/channel/C
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/Signal.html#toString()"><B>toString()</B></A> - 
 Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html#toString()"><B>toString()</B></A> - 
+Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" title="class in org.eclipse.net4j.signal">SignalProtocol.TimeoutChangedEvent</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/signal/SignalProtocol.html#toString()"><B>toString()</B></A> - 
 Method in class org.eclipse.net4j.signal.<A HREF="./org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</A>

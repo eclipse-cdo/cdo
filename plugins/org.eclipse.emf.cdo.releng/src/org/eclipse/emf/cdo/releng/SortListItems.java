@@ -118,27 +118,28 @@ public class SortListItems
     if (modifiedLines != 0)
     {
       System.out.println("Modified: " + file.getPath() + " (" + modifiedLines + ")");
-      FileWriter out = null;
+    }
 
-      try
+    FileWriter out = null;
+
+    try
+    {
+      out = new FileWriter(file);
+      BufferedWriter writer = new BufferedWriter(out);
+
+      for (String line : lines)
       {
-        out = new FileWriter(file);
-        BufferedWriter writer = new BufferedWriter(out);
-
-        for (String line : lines)
-        {
-          writer.write(line);
-          writer.write("\n");
-        }
-
-        writer.flush();
+        writer.write(line);
+        writer.write("\n");
       }
-      finally
+
+      writer.flush();
+    }
+    finally
+    {
+      if (out != null)
       {
-        if (out != null)
-        {
-          out.close();
-        }
+        out.close();
       }
     }
   }

@@ -30,6 +30,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
  * Note that, by contract, every instance of CDOObject can also be cast to {@link InternalCDOObject}.
  * 
  * @author Eike Stepper
+ * @apiviz.has CDOState
+ * @apiviz.owns CDOAdapter
  */
 public interface CDOObject extends EObject, CDOWithID
 {

@@ -88,6 +88,30 @@ The Net4j transport layer.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="#package_description"><B>Description</B></A>
 <P>
 
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="ContainerProtocolProvider.Client.html" title="ContainerProtocolProvider.Client" alt="" coords="444,671,652,697"/>
+<area shape="rect" id="node2" href="ContainerProtocolProvider.Server.html" title="ContainerProtocolProvider.Server" alt="" coords="443,721,653,746"/>
+<area shape="rect" id="node3" href="FactoriesProtocolProvider.html" title="FactoriesProtocolProvider" alt="" coords="240,647,411,673"/>
+<area shape="rect" id="node4" href="TransportConfigurator.html" title="TransportConfigurator" alt="" coords="34,609,179,634"/>
+<area shape="rect" id="node5" href="TransportInjector.html" title="TransportInjector" alt="" coords="266,545,385,570"/>
+<area shape="rect" id="node6" href="ContainerProtocolProvider.html" title="ContainerProtocolProvider" alt="" coords="239,697,411,722"/>
+<area shape="rect" id="node7" href="channel/IChannel.html" title="&#171;interface&#187; IChannel (org.eclipse.net4j.channel)" alt="" coords="238,309,413,363"/>
+<area shape="rect" id="node8" href="channel/IChannelMultiplexer.html" title="&#171;interface&#187; IChannelMultiplexer (org.eclipse.net4j.channel)" alt="" coords="238,387,413,442"/>
+<area shape="rect" id="node9" title="&#171;interface&#187; IElementProcessor (org.eclipse.net4j.util.container)" alt="" coords="5,530,208,585"/>
+<area shape="rect" id="node10" href="ILocationAware.html" title="&#171;interface&#187; ILocationAware" alt="" coords="51,395,162,435"/>
+<area shape="rect" id="node11" title="&#171;interface&#187; INegotiatorAware (org.eclipse.net4j.util.security)" alt="" coords="9,237,205,291"/>
+<area shape="rect" id="node12" href="protocol/IProtocol.html" title="&#171;interface&#187; IProtocol (org.eclipse.net4j.protocol)" alt="" coords="238,466,413,521"/>
+<area shape="rect" id="node13" href="protocol/IProtocolProvider.html" title="&#171;interface&#187; IProtocolProvider (org.eclipse.net4j.protocol)" alt="" coords="19,658,194,713"/>
+<area shape="rect" id="node14" href="ITransportConfig.html" title="&#171;interface&#187; ITransportConfig" alt="" coords="268,244,383,284"/>
+<area shape="rect" id="node15" href="ITransportConfigAware.html" title="&#171;interface&#187; ITransportConfigAware" alt="" coords="31,133,182,173"/>
+<area shape="rect" id="node16" href="../spi/net4j/InternalAcceptor.html" title="&#171;interface&#187; InternalAcceptor (org.eclipse.spi.net4j)" alt="" coords="252,86,399,141"/>
+<area shape="rect" id="node17" href="../spi/net4j/InternalChannelMultiplexer.html" title="&#171;interface&#187; InternalChannelMultiplexer (org.eclipse.spi.net4j)" alt="" coords="238,165,413,219"/>
+<area shape="rect" id="node18" href="Net4jUtil.html" title="&#171;static&#187; Net4jUtil" alt="" coords="71,69,142,109"/>
+<area shape="rect" id="node19" href="ILocationAware.Location.html" title="&#171;enum&#187; ILocationAware.Location" alt="" coords="25,5,188,45"/>
+</map>
+
+<CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+<BR>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
@@ -172,7 +196,7 @@ Package org.eclipse.net4j Description
 
 <P>
 The Net4j transport layer. 
-The five main interfaces of the transport layer are:
+ The five main interfaces of the transport layer are:
         <ul>
                 <li><A HREF="../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><CODE>IBuffer</CODE></A></li> 
                 <li><A HREF="../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><CODE>IChannel</CODE></A></li>
@@ -180,20 +204,19 @@ The five main interfaces of the transport layer are:
                 <li><A HREF="../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><CODE>IConnector</CODE></A></li> 
                 <li><A HREF="../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><CODE>IProtocol</CODE></A></li>
         </ul>
-<p>
-
-<dt><b>Sequence Diagram: Communication Process</b></dt>
-<dd> <img src="doc-files/CommunicationProcess.jpg" title="Communication Process" border="0"
-usemap="#CommunicationProcess.jpg"/></dd>
-<p>
-<MAP NAME="CommunicationProcess.jpg">
-<AREA SHAPE="RECT" COORDS="128,94,247,123" HREF="IConnector.html">
-<AREA SHAPE="RECT" COORDS="648,95,767,123" HREF="IConnector.html">
-<AREA SHAPE="RECT" COORDS="509,254,608,283" HREF="IChannel.html">
-<AREA SHAPE="RECT" COORDS="287,355,387,383" HREF="IChannel.html">
-<AREA SHAPE="RECT" COORDS="818,195,897,222" HREF="IProtocol.html">
-
-</MAP>
+ <p>
+ 
+ <dt><b>Sequence Diagram: Communication Process</b></dt>
+ <dd> <img src="doc-files/CommunicationProcess.jpg" title="Communication Process" border="0"
+ usemap="#CommunicationProcess.jpg"/></dd>
+ <p>
+ <MAP NAME="CommunicationProcess.jpg">
+ <AREA SHAPE="RECT" COORDS="128,94,247,123" HREF="IConnector.html">
+ <AREA SHAPE="RECT" COORDS="648,95,767,123" HREF="IConnector.html">
+ <AREA SHAPE="RECT" COORDS="509,254,608,283" HREF="IChannel.html">
+ <AREA SHAPE="RECT" COORDS="287,355,387,383" HREF="IChannel.html">
+ <AREA SHAPE="RECT" COORDS="818,195,897,222" HREF="IProtocol.html">
+ </MAP>
 <P>
 
 <P>

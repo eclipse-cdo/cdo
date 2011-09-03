@@ -11,5 +11,8 @@
 
 /**
  * A framework for factory based instance creation.
+ * 
+ * @apiviz.landmark
  */
 package org.eclipse.net4j.util.factory;
+

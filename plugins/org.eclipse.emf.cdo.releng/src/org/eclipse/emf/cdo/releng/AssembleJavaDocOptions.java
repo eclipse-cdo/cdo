@@ -36,6 +36,8 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
@@ -45,6 +47,11 @@ public class AssembleJavaDocOptions
   private static final String EXPORT_PACKAGE = "Export-Package";
 
   private static final AntLib ANTLIB = new AntLib();
+
+  private static final Pattern PACKAGE_INFO_PATTERN = Pattern.compile(".*<body[^>]*>\\s*(.*)\\s*<p>\\s*</body>.*",
+      Pattern.MULTILINE | Pattern.DOTALL);
+
+  private static final String NL = System.getProperty("line.separator");
 
   private static File workspace;
 
@@ -72,14 +79,24 @@ public class AssembleJavaDocOptions
       }
     }
 
-    Collection<JavaDoc> values = ANTLIB.getJavaDocs();
-    for (JavaDoc javaDoc : values)
+    for (JavaDoc javaDoc : ANTLIB.getJavaDocs())
     {
       javaDoc.generateAnt();
       javaDoc.generateToc();
     }
 
     ANTLIB.generate();
+    System.out.println();
+
+    for (JavaDoc javaDoc : ANTLIB.getJavaDocs())
+    {
+      for (SourcePlugin sourcePlugin : javaDoc.getSourcePlugins())
+      {
+        sourcePlugin.convertPackageInfos();
+      }
+    }
+
+    System.out.println();
   }
 
   private static void assembleJavaDocOptions(File plugin, String javadocProject) throws IOException, BundleException
@@ -333,6 +350,12 @@ public class AssembleJavaDocOptions
       }
     }
 
+    @Override
+    public String toString()
+    {
+      return projectName;
+    }
+
     public File getProject()
     {
       return new File(plugins, projectName);
@@ -359,6 +382,94 @@ public class AssembleJavaDocOptions
     {
       return getLabel().compareTo(o.getLabel());
     }
+
+    public void convertPackageInfos() throws IOException
+    {
+      Set<String> packageNames2 = getPackageNames();
+      for (String packageName : packageNames2)
+      {
+        File packageHtml = new File(getProject(), "src/" + packageName.replace('.', '/') + "/package.html");
+        if (packageHtml.isFile())
+        {
+          convertPackageInfo(packageHtml, packageName);
+        }
+      }
+    }
+
+    private void convertPackageInfo(File packageHtml, String packageName) throws IOException
+    {
+      int length = (int)packageHtml.length();
+      char[] content = new char[length];
+
+      FileReader reader = null;
+
+      try
+      {
+        reader = new FileReader(packageHtml);
+        if (reader.read(content) != length)
+        {
+          throw new IOException("Invalid file length: " + packageHtml.getCanonicalPath());
+        }
+      }
+      finally
+      {
+        if (reader != null)
+        {
+          reader.close();
+        }
+      }
+
+      String input = new String(content);
+      Matcher matcher = PACKAGE_INFO_PATTERN.matcher(input);
+      if (!matcher.matches())
+      {
+        System.err.println("No match: " + packageHtml.getCanonicalPath());
+        return;
+      }
+
+      System.out.println("Converting " + packageHtml.getCanonicalPath());
+      String comment = matcher.group(1);
+      File packageInfo = new File(packageHtml.getParentFile(), "package-info.java");
+      FileWriter out = null;
+
+      try
+      {
+        out = new FileWriter(packageInfo);
+        BufferedWriter writer = new BufferedWriter(out);
+
+        writer.write("/*" + NL);
+        writer.write(" * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others." + NL);
+        writer.write(" * All rights reserved. This program and the accompanying materials" + NL);
+        writer.write(" * are made available under the terms of the Eclipse Public License v1.0" + NL);
+        writer.write(" * which accompanies this distribution, and is available at" + NL);
+        writer.write(" * http://www.eclipse.org/legal/epl-v10.html" + NL);
+        writer.write(" * " + NL);
+        writer.write(" * Contributors:" + NL);
+        writer.write(" *    Eike Stepper - initial API and implementation" + NL);
+        writer.write(" */" + NL);
+        writer.write(NL);
+        writer.write("/**" + NL);
+
+        String[] lines = comment.split("\n");
+        for (String line : lines)
+        {
+          writer.write(" * ");
+          writer.write(line);
+          writer.write(NL);
+        }
+
+        writer.write(" */" + NL);
+        writer.write("package " + packageName + ";" + NL);
+        writer.flush();
+      }
+      finally
+      {
+        if (out != null)
+        {
+          out.close();
+        }
+      }
+    }
   }
 
   /**
@@ -381,6 +492,12 @@ public class AssembleJavaDocOptions
     public JavaDoc(String projectName)
     {
       this.projectName = projectName;
+    }
+
+    @Override
+    public String toString()
+    {
+      return projectName;
     }
 
     public File getProject()

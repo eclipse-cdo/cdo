@@ -4,7 +4,7 @@
 	<property name="releng.project" value="plugins/org.eclipse.emf.cdo.releng" />
 
 	<target name="assemble.options">
-		<java classname="org.eclipse.emf.cdo.releng.AssembleJavaDocOptions">
+		<java classname="org.eclipse.emf.cdo.releng.AssembleJavaDocOptions" failonerror="true">
 			<classpath path="plugins/org.eclipse.emf.cdo.releng/bin" />
 			<classpath>
 				<fileset dir="_target/plugins">

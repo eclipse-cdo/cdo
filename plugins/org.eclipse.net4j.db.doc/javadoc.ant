@@ -63,6 +63,16 @@
 		         overview="${javadoc.project}/javadocOverview.html"
 		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
+				<!--
+			<doclet name="org.jboss.apiviz.APIviz" path="${additional.jars}/apiviz-1.3.1.GA.jar">
+				-->
+			<doclet name="org.jboss.apiviz.APIviz" path="C:\develop\ws\cdo\APIVIZ\bin;${additional.jars}/jdepend-2.9.1.jar">
+				<!--
+				<param name="-foo" value="foovalue" />
+				<param name="-bar" value="barvalue" />
+				-->
+			</doclet>
+
 			<fileset dir="plugins" defaultexcludes="yes">
 				<include name="org.eclipse.net4j.db.derby/src/org/eclipse/net4j/db/derby/*.java" />
 				<include name="org.eclipse.net4j.db.h2/src/org/eclipse/net4j/db/h2/*.java" />

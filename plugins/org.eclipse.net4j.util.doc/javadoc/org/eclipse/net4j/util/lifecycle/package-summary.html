@@ -88,6 +88,40 @@ A framework for components with a simple lifecycle.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="#package_description"><B>Description</B></A>
 <P>
 
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="LifecycleException.html" title="&#171;exception&#187; LifecycleException" alt="" coords="241,779,372,819"/>
+<area shape="rect" id="node2" title="&#171;exception&#187; RuntimeException (java.lang)" alt="" coords="32,771,160,826"/>
+<area shape="rect" id="node3" href="../event/Event.html" title="Event (org.eclipse.net4j.util.event)" alt="" coords="217,636,397,676"/>
+<area shape="rect" id="node4" href="Lifecycle.html" title="Lifecycle" alt="" coords="495,479,569,505"/>
+<area shape="rect" id="node5" href="LifecycleEvent.html" title="LifecycleEvent" alt="" coords="479,675,585,701"/>
+<area shape="rect" id="node6" href="LifecycleEventAdapter.html" title="LifecycleEventAdapter" alt="" coords="231,419,382,445"/>
+<area shape="rect" id="node7" href="LifecycleUtil.Delegator.html" title="LifecycleUtil.Delegator" alt="" coords="231,341,382,366"/>
+<area shape="rect" id="node8" href="../container/ManagedContainer.html" title="ManagedContainer (org.eclipse.net4j.util.container)" alt="" coords="671,248,873,288"/>
+<area shape="rect" id="node9" href="../event/Notifier.html" title="Notifier (org.eclipse.net4j.util.event)" alt="" coords="217,469,397,509"/>
+<area shape="rect" id="node10" href="../concurrent/RWLockManager.html" title="RWLockManager (org.eclipse.net4j.util.concurrent)" alt="" coords="667,312,877,352"/>
+<area shape="rect" id="node11" href="../concurrent/RWOLockManager.html" title="RWOLockManager (org.eclipse.net4j.util.concurrent)" alt="" coords="667,376,877,416"/>
+<area shape="rect" id="node12" href="../security/Randomizer.html" title="Randomizer (org.eclipse.net4j.util.security)" alt="" coords="674,440,870,480"/>
+<area shape="rect" id="node13" href="../concurrent/TimerLifecycle.html" title="TimerLifecycle (org.eclipse.net4j.util.concurrent)" alt="" coords="427,532,637,572"/>
+<area shape="rect" id="node14" href="../security/UserManager.html" title="UserManager (org.eclipse.net4j.util.security)" alt="" coords="674,504,870,544"/>
+<area shape="rect" id="node15" href="../container/Container.html" title="Container (org.eclipse.net4j.util.container)" alt="" coords="671,568,873,608"/>
+<area shape="rect" id="node16" href="../fsm/FiniteStateMachine.html" title="FiniteStateMachine (org.eclipse.net4j.util.fsm)" alt="" coords="686,632,858,672"/>
+<area shape="rect" id="node17" href="../concurrent/Worker.html" title="Worker (org.eclipse.net4j.util.concurrent)" alt="" coords="667,696,877,736"/>
+<area shape="rect" id="node18" href="../event/IEvent.html" title="&#171;interface&#187; IEvent (org.eclipse.net4j.util.event)" alt="" coords="6,693,186,747"/>
+<area shape="rect" id="node19" href="ILifecycle.html" title="&#171;interface&#187; ILifecycle" alt="" coords="264,533,349,573"/>
+<area shape="rect" id="node20" href="ILifecycleEvent.html" title="&#171;interface&#187; ILifecycleEvent" alt="" coords="253,700,361,740"/>
+<area shape="rect" id="node21" href="../event/IListener.html" title="&#171;interface&#187; IListener (org.eclipse.net4j.util.event)" alt="" coords="6,405,186,459"/>
+<area shape="rect" id="node22" href="../container/IManagedContainer.html" title="&#171;interface&#187; IManagedContainer (org.eclipse.net4j.util.container)" alt="" coords="431,597,633,651"/>
+<area shape="rect" id="node23" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="6,526,186,581"/>
+<area shape="rect" id="node24" title="&#171;interface&#187; InvocationHandler (java.lang.reflect)" alt="" coords="35,326,157,381"/>
+<area shape="rect" id="node25" href="LifecycleUtil.html" title="&#171;static&#187; LifecycleUtil" alt="" coords="50,261,142,301"/>
+<area shape="rect" id="node26" href="ILifecycleEvent.Kind.html" title="&#171;enum&#187; ILifecycleEvent.Kind" alt="" coords="27,197,165,237"/>
+<area shape="rect" id="node27" href="LifecycleState.html" title="&#171;enum&#187; LifecycleState" alt="" coords="44,133,148,173"/>
+<area shape="rect" id="node28" href="LifecycleUtil.Activator.html" title="&#171;annotation&#187; LifecycleUtil.Activator" alt="" coords="23,69,169,109"/>
+<area shape="rect" id="node29" href="LifecycleUtil.Deactivator.html" title="&#171;annotation&#187; LifecycleUtil.Deactivator" alt="" coords="15,5,177,45"/>
+</map>
+
+<CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+<BR>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
@@ -191,30 +225,9 @@ Package org.eclipse.net4j.util.lifecycle Description
 
 <P>
 A framework for components with a simple lifecycle.
-Interfaces that describe the behaviour of objects with respect to their lifecycle. 
-A utility class to interact with such objects and an abstract class that can be
-used to implement such objects are provided as well.
-<p>
-
-<!--
-
-<h2>Package Specification</h2>
-
-##### FILL IN ANY SPECS NEEDED BY JAVA COMPATIBILITY KIT #####
-<ul>
-  <li><a href="">##### REFER TO ANY FRAMEMAKER SPECIFICATION HERE #####</a>
-</ul>
-
-<h2>Related Documentation</h2>
-
-For overviews, tutorials, examples, guides, and tool documentation, please see:
-<ul>
-  <li><a href="">##### REFER TO NON-SPEC DOCUMENTATION HERE #####</a>
-</ul>
-
--->
-
-<!-- Put @see and @since tags down here. -->
+ Interfaces that describe the behaviour of objects with respect to their lifecycle. 
+ A utility class to interact with such objects and an abstract class that can be
+ used to implement such objects are provided as well.
 <P>
 
 <P>

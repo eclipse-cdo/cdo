@@ -10,9 +10,13 @@
  */
 package org.eclipse.net4j.util.container.delegate;
 
+import org.eclipse.net4j.util.container.IContainer;
+
 import java.util.SortedSet;
 
 /**
+ * A {@link IContainer container} that is a {@link SortedSet}.
+ * 
  * @author Eike Stepper
  */
 public interface IContainerSortedSet<E> extends IContainerSet<E>, SortedSet<E>

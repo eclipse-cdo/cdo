@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.security.FileUserManagerFactory;
 import org.eclipse.net4j.util.security.RandomizerFactory;
 
 /**
+ * Various static helper methods for dealing with {@link IContainer containers}.
+ * 
  * @author Eike Stepper
  */
 public final class ContainerUtil

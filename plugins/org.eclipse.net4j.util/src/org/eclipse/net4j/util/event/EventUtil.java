@@ -11,6 +11,9 @@
 package org.eclipse.net4j.util.event;
 
 /**
+ * Various static helper methods for dealing with {@link IEvent events}, {@link INotifier notifiers} and
+ * {@link IListener listeners}.
+ * 
  * @author Eike Stepper
  */
 public final class EventUtil

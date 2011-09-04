@@ -12,7 +12,12 @@ package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.internal.util.container.PluginContainer;
 
+import org.eclipse.core.runtime.IExtensionRegistry;
+
 /**
+ * A {@link IManagedContainer managed container} that is configured by the {@link IExtensionRegistry extension registry}
+ * .
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

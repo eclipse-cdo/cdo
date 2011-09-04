@@ -11,6 +11,8 @@
 package org.eclipse.net4j.util.container;
 
 /**
+ * Describes the addition or removal of a single element from a {@link IContainer container}.
+ * 
  * @author Eike Stepper
  */
 public interface IContainerDelta<E>
@@ -20,7 +22,10 @@ public interface IContainerDelta<E>
   public Kind getKind();
 
   /**
+   * Enumerates the possible {@link IContainerDelta container delta} kinds {@link #ADDED} or {@link #REMOVED}.
+   * 
    * @author Eike Stepper
+   * @apiviz.exclude
    */
   public enum Kind
   {

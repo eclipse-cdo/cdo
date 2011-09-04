@@ -12,10 +12,26 @@ package org.eclipse.net4j.util.factory;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
 
 /**
+ * A {@link IFactory factory} that delegates to an {@link IExtensionRegistry extension registry} contribution.
+ * <p>
+ * Example contribution:
+ * 
+ * <pre>
+ *    &lt;extension
+ *          point="org.eclipse.net4j.util.factories">
+ *       &lt;factory
+ *             class="org.eclipse.net4j.util.concurrent.TimerLifecycle$DaemonFactory"
+ *             productGroup="org.eclipse.net4j.util.timers"
+ *             type="daemon"/>
+ *    &lt;/extension>
+ * </pre>
+ * 
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
+ * @apiviz.exclude
  */
 public class FactoryDescriptor extends Factory
 {

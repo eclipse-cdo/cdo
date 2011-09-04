@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.io.IORuntimeException;
 import java.io.IOException;
 
 /**
+ * Provides static methods that convert to and from hexadecimal string formats.
+ * 
  * @author Eike Stepper
  */
 public final class HexUtil

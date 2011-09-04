@@ -33,6 +33,8 @@ import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
 /**
+ * Various static helper methods for dealing with Java reflection.
+ * 
  * @author Eike Stepper
  */
 public final class ReflectUtil
@@ -587,7 +589,11 @@ public final class ReflectUtil
   }
 
   /**
+   * Annotates fields that are to be skipped in {@link ReflectUtil#collectFields(Class, List)
+   * ReflectUtil.collectFields()} and {@link ReflectUtil#toString(Object) ReflectUtil.toString()}.
+   * 
    * @author Eike Stepper
+   * @apiviz.exclude
    */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.FIELD)

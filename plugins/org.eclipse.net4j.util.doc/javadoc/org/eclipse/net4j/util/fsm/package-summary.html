@@ -81,7 +81,7 @@ function windowTitle()
 <H2>
 Package org.eclipse.net4j.util.fsm
 </H2>
-A framework for finite state machines.
+A framework for <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machines</a>.
 <P>
 <B>See:</B>
 <BR>
@@ -89,16 +89,11 @@ A framework for finite state machines.
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="FiniteStateMachine.ChangeStateTransition.html" title="FiniteStateMachine.ChangeStateTransition" alt="" coords="232,134,501,159"/>
-<area shape="rect" id="node2" href="FiniteStateMachine.FailTransition.html" title="FiniteStateMachine.FailTransition" alt="" coords="259,183,474,209"/>
-<area shape="rect" id="node3" href="FiniteStateMachine.IgnoreTransition.html" title="FiniteStateMachine.IgnoreTransition" alt="" coords="252,233,481,258"/>
-<area shape="rect" id="node4" href="FiniteStateMachine.StateChangedEvent.html" title="FiniteStateMachine.StateChangedEvent" alt="" coords="241,85,493,110"/>
-<area shape="rect" id="node5" href="../lifecycle/Lifecycle.html" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="5,5,203,45"/>
-<area shape="rect" id="node6" href="../security/ChallengeResponseNegotiator.Transition.html" title="ChallengeResponseNegotiator.Transition (org.eclipse.net4j.util.security)" alt="" coords="238,283,495,323"/>
-<area shape="rect" id="node7" href="FiniteStateMachine.html" title="FiniteStateMachine" alt="" coords="300,13,433,38"/>
-<area shape="rect" id="node8" href="../security/Negotiator.html" title="Negotiator (org.eclipse.net4j.util.security)" alt="" coords="531,5,725,45"/>
-<area shape="rect" id="node9" href="../event/IEvent.html" title="&#171;interface&#187; IEvent (org.eclipse.net4j.util.event)" alt="" coords="14,70,194,125"/>
-<area shape="rect" id="node10" href="ITransition.html" title="&#171;interface&#187; ITransition" alt="" coords="61,201,147,241"/>
+<area shape="rect" id="node1" href="FiniteStateMachine.ChangeStateTransition.html" title="FiniteStateMachine.ChangeStateTransition" alt="" coords="845,19,1115,45"/>
+<area shape="rect" id="node2" href="FiniteStateMachine.StateChangedEvent.html" title="FiniteStateMachine.StateChangedEvent" alt="" coords="219,19,471,45"/>
+<area shape="rect" id="node3" href="FiniteStateMachine.html" title="FiniteStateMachine" alt="" coords="528,19,661,45"/>
+<area shape="rect" id="node4" href="../event/IEvent.html" title="&#171;interface&#187; IEvent (org.eclipse.net4j.util.event)" alt="" coords="6,5,186,59"/>
+<area shape="rect" id="node5" href="ITransition.html" title="&#171;interface&#187; ITransition" alt="" coords="728,12,813,52"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -110,7 +105,7 @@ A framework for finite state machines.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/fsm/ITransition.html" title="interface in org.eclipse.net4j.util.fsm">ITransition&lt;STATE extends Enum&lt;?&gt;,EVENT extends Enum&lt;?&gt;,SUBJECT,DATA&gt;</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Encpsulates the logic to be executed when an <i>event</i> arrives for a <i>subject</i> in a particular <i>state</i>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -124,15 +119,16 @@ A framework for finite state machines.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine&lt;STATE extends Enum&lt;?&gt;,EVENT extends Enum&lt;?&gt;,SUBJECT&gt;</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machine</a> that is based on a matrix of
+ <A HREF="../../../../../org/eclipse/net4j/util/fsm/ITransition.html" title="interface in org.eclipse.net4j.util.fsm"><CODE>transitions</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.FailTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.FailTransition</A></B></TD>
-<TD>&nbsp;</TD>
+<TD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#FAIL"><CODE>FiniteStateMachine.FAIL</CODE></A></I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.IgnoreTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.IgnoreTransition</A></B></TD>
-<TD>&nbsp;</TD>
+<TD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#IGNORE"><CODE>FiniteStateMachine.IGNORE</CODE></A></I></TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -143,7 +139,7 @@ Package org.eclipse.net4j.util.fsm Description
 </H2>
 
 <P>
-A framework for finite state machines.
+A framework for <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machines</a>.
 <P>
 
 <P>

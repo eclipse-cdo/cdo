@@ -16,7 +16,17 @@ import org.eclipse.net4j.util.event.INotifier;
 import java.util.Collection;
 
 /**
+ * Contains a number of elements and notifies about element addition and removal.
+ * <p>
+ * Fires the following events:
+ * <ul>
+ * <li> {@link IContainerEvent} after the addition and/or removal of elements.
+ * </ul>
+ * 
  * @author Eike Stepper
+ * @apiviz.landmark
+ * @apiviz.composedOf java.lang.Object - - elements
+ * @apiviz.uses IContainerEvent - - fires
  */
 public interface IContainer<E> extends INotifier
 {

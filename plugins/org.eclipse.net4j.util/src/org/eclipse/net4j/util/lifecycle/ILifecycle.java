@@ -13,7 +13,19 @@ package org.eclipse.net4j.util.lifecycle;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
+ * An entity that has a well-defined {@link #getLifecycleState() lifecycle} and can be {@link #activate() activated} or
+ * {@link #deactivate() deactivated}.
+ * <p>
+ * Fires the following events:
+ * <ul>
+ * <li> {@link ILifecycleEvent} before and after the {@link #getLifecycleState() state} of this lifecycle changes.
+ * </ul>
+ * 
  * @author Eike Stepper
+ * @apiviz.landmark
+ * @apiviz.has LifecycleState
+ * @apiviz.uses ILifecycleEvent - - fires
+ * @apiviz.excludeSubtypes
  */
 public interface ILifecycle extends INotifier
 {

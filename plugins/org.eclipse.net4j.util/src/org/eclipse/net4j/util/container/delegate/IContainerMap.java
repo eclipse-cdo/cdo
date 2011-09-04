@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.container.IContainer;
 import java.util.Map;
 
 /**
+ * A {@link IContainer container} (of {@link java.util.Map.Entry map entries}) that is a {@link Map}.
+ * 
  * @author Eike Stepper
  */
 public interface IContainerMap<K, V> extends IContainer<Map.Entry<K, V>>, Map<K, V>

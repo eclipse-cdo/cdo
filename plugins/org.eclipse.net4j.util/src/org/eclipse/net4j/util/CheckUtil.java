@@ -11,7 +11,10 @@
 package org.eclipse.net4j.util;
 
 /**
+ * Provides static methods that check object states and invocation arguments.
+ * 
  * @author Eike Stepper
+ * @apiviz.exclude
  */
 public final class CheckUtil
 {

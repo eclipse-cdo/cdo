@@ -16,3 +16,4 @@
  * used to implement such objects are provided as well.
  */
 package org.eclipse.net4j.util.lifecycle;
+

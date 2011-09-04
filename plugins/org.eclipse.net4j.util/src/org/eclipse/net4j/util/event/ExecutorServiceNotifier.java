@@ -13,9 +13,13 @@ package org.eclipse.net4j.util.event;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * Deprecated.
+ * 
  * @author Eike Stepper
  * @since 2.0
+ * @apiviz.exclude
  */
+@Deprecated
 public class ExecutorServiceNotifier extends Notifier
 {
   private ExecutorService notificationExecutorService;
@@ -36,8 +40,12 @@ public class ExecutorServiceNotifier extends Notifier
   }
 
   /**
+   * Deprecated.
+   * 
    * @author Eike Stepper
+   * @apiviz.exclude
    */
+  @Deprecated
   public static class ThreadPool extends ExecutorServiceNotifier
   {
   }

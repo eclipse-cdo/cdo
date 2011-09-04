@@ -29,6 +29,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Various static helper methods for dealing with {@link ILifecycle lifecycles}.
+ * 
  * @author Eike Stepper
  */
 public final class LifecycleUtil
@@ -321,7 +323,11 @@ public final class LifecycleUtil
   }
 
   /**
+   * Annotates a method of a POJO class that's supposed to be called to <em>activate</em> a POJO object during
+   * {@link LifecycleUtil#activate(Object)}.
+   * 
    * @author Eike Stepper
+   * @apiviz.exclude
    */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.METHOD)
@@ -331,7 +337,11 @@ public final class LifecycleUtil
   }
 
   /**
+   * Annotates a method of a POJO class that's supposed to be called to <em>deactivate</em> a POJO object during
+   * {@link LifecycleUtil#deactivate(Object)}.
+   * 
    * @author Eike Stepper
+   * @apiviz.exclude
    */
   @Retention(RetentionPolicy.RUNTIME)
   @Target(ElementType.METHOD)
@@ -341,8 +351,12 @@ public final class LifecycleUtil
   }
 
   /**
+   * The {@link InvocationHandler invocation handler} of the {@link Proxy dynamic proxy} created in
+   * {@link LifecycleUtil#delegateLifecycle(ClassLoader, Object, ILifecycle) LifecycleUtil.delegateLifecycle()}.
+   * 
    * @author Eike Stepper
    * @since 2.0
+   * @apiviz.exclude
    */
   public static final class Delegator<T> implements InvocationHandler
   {

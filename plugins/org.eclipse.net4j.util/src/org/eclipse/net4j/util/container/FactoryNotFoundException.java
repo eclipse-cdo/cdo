@@ -10,9 +10,16 @@
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.util.factory.IFactory;
+import org.eclipse.net4j.util.factory.IFactoryKey;
+
 /**
+ * An unchecked exception that indicates the absence of a {@link IFactory factory} identified by
+ * {@link IFactoryKey#getProductGroup() product group} and {@link IFactoryKey#getType() type}.
+ * 
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
+ * @apiviz.exclude
  */
 public class FactoryNotFoundException extends RuntimeException
 {

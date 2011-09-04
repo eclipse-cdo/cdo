@@ -13,7 +13,10 @@ package org.eclipse.net4j.util.container.delegate;
 import java.util.Set;
 
 /**
+ * A default implementation of a {@link IContainerSet container set}.
+ * 
  * @author Eike Stepper
+ * @apiviz.exclude
  */
 public class ContainerSet<E> extends ContainerCollection<E> implements IContainerSet<E>
 {

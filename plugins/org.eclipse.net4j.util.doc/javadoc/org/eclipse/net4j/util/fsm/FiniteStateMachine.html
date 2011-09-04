@@ -106,14 +106,26 @@ Class FiniteStateMachine&lt;STATE extends <A HREF="http://download.oracle.com/ja
 <DL>
 <DT><PRE>public abstract class <B>FiniteStateMachine&lt;STATE extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</A>&lt;?&gt;,EVENT extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</A>&lt;?&gt;,SUBJECT&gt;</B><DT>extends <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</A></DL>
 </PRE><map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../security/Negotiator.html" title="Negotiator (org.eclipse.net4j.util.security)" alt="" coords="7,149,201,189"/>
-<area shape="rect" id="node2" href="FiniteStateMachine.html" title="FiniteStateMachine" alt="" coords="37,85,171,110"/>
-<area shape="rect" id="node3" href="../lifecycle/Lifecycle.html" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="5,5,203,45"/>
+<area shape="rect" id="node1" href="ITransition.html" title="&#171;interface&#187; ITransition" alt="" coords="104,184,189,224"/>
+<area shape="rect" id="node2" href="../security/Negotiator.html" title="Negotiator (org.eclipse.net4j.util.security)" alt="" coords="219,184,413,224"/>
+<area shape="rect" id="node3" href="FiniteStateMachine.html" title="FiniteStateMachine" alt="" coords="164,102,297,127"/>
+<area shape="rect" id="node4" href="../lifecycle/Lifecycle.html" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="5,5,203,45"/>
+<area shape="rect" id="node5" href="FiniteStateMachine.StateChangedEvent.html" title="FiniteStateMachine.StateChangedEvent" alt="" coords="233,13,484,38"/>
 </map>
 
 <CENTER><IMG SRC="FiniteStateMachine.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
 
 
+
+<P>
+A <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machine</a> that is based on a matrix of
+ <A HREF="../../../../../org/eclipse/net4j/util/fsm/ITransition.html" title="interface in org.eclipse.net4j.util.fsm"><CODE>transitions</CODE></A>.
+ <p>
+ Fires the following events:
+ <ul>
+ <li> <A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.StateChangedEvent.html" title="class in org.eclipse.net4j.util.fsm"><CODE>FiniteStateMachine.StateChangedEvent</CODE></A> after state changes of a <i>subject</i>.
+ </ul>
+<P>
 
 <P>
 <HR>
@@ -133,7 +145,7 @@ Class FiniteStateMachine&lt;STATE extends <A HREF="http://download.oracle.com/ja
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.ChangeStateTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.ChangeStateTransition</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/net4j/util/fsm/ITransition.html" title="interface in org.eclipse.net4j.util.fsm"><CODE>transition</CODE></A> that changes the <A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.ChangeStateTransition.html#getTargetState()"><CODE>state</CODE></A> of a <i>subject</i>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -141,7 +153,7 @@ Class FiniteStateMachine&lt;STATE extends <A HREF="http://download.oracle.com/ja
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.FailTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.FailTransition</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#FAIL"><CODE>FAIL</CODE></A></I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -149,7 +161,7 @@ Class FiniteStateMachine&lt;STATE extends <A HREF="http://download.oracle.com/ja
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.IgnoreTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.IgnoreTransition</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html#IGNORE"><CODE>IGNORE</CODE></A></I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">

@@ -18,8 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A default {@link IContainerEvent container event} implementation.
+ * 
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
+ * @apiviz.exclude
  */
 public class ContainerEvent<E> extends Event implements IContainerEvent<E>
 {

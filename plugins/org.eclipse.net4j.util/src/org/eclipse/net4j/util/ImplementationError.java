@@ -11,8 +11,11 @@
 package org.eclipse.net4j.util;
 
 /**
+ * Should not be used anymore in favour of {@link AssertionError}. Likely to be deprecated soon.
+ * 
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
+ * @apiviz.exclude
  */
 public class ImplementationError extends Error
 {

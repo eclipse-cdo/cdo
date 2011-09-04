@@ -11,5 +11,7 @@
 
 /**
  * Interfaces and classes for security, negotiation, authentication, authorization and cryptography.
+ * @apiviz.exclude .*
  */
 package org.eclipse.net4j.util.security;
+

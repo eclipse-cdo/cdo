@@ -103,20 +103,31 @@ Interface IContainer&lt;E&gt;</H2>
 <DL>
 <DT><PRE>public interface <B>IContainer&lt;E&gt;</B><DT>extends <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</A></DL>
 </PRE><map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="delegate/AbstractDelegator.html" title="AbstractDelegator (org.eclipse.net4j.util.container.delegate)" alt="" coords="464,5,720,45"/>
-<area shape="rect" id="node2" href="Container.html" title="Container" alt="" coords="553,65,631,90"/>
-<area shape="rect" id="node3" href="IContainer.html" title="&#171;interface&#187; IContainer" alt="" coords="283,176,368,216"/>
-<area shape="rect" id="node4" href="IContainer.Modifiable.html" title="&#171;interface&#187; IContainer.Modifiable" alt="" coords="521,109,663,149"/>
-<area shape="rect" id="node5" href="delegate/IContainerCollection.html" title="&#171;interface&#187; IContainerCollection (org.eclipse.net4j.util.container.delegate)" alt="" coords="464,169,720,223"/>
-<area shape="rect" id="node6" href="delegate/IContainerMap.html" title="&#171;interface&#187; IContainerMap (org.eclipse.net4j.util.container.delegate)" alt="" coords="464,242,720,297"/>
-<area shape="rect" id="node7" href="IManagedContainer.html" title="&#171;interface&#187; IManagedContainer" alt="" coords="525,316,659,356"/>
-<area shape="rect" id="node8" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="6,169,186,223"/>
-<area shape="rect" id="node9" href="../registry/IRegistry.html" title="&#171;interface&#187; IRegistry (org.eclipse.net4j.util.registry)" alt="" coords="495,375,689,430"/>
+<area shape="rect" id="node1" title="Object (java.lang)" alt="" coords="632,5,712,45"/>
+<area shape="rect" id="node2" href="delegate/AbstractDelegator.html" title="AbstractDelegator (org.eclipse.net4j.util.container.delegate)" alt="" coords="544,64,800,104"/>
+<area shape="rect" id="node3" href="Container.html" title="Container" alt="" coords="633,123,711,149"/>
+<area shape="rect" id="node4" href="IContainer.html" title="&#171;interface&#187; IContainer" alt="" coords="309,201,395,241"/>
+<area shape="rect" id="node5" href="IContainer.Modifiable.html" title="&#171;interface&#187; IContainer.Modifiable" alt="" coords="601,168,743,208"/>
+<area shape="rect" id="node6" href="delegate/IContainerCollection.html" title="&#171;interface&#187; IContainerCollection (org.eclipse.net4j.util.container.delegate)" alt="" coords="544,227,800,282"/>
+<area shape="rect" id="node7" href="IContainerEvent.html" title="&#171;interface&#187; IContainerEvent" alt="" coords="40,168,152,208"/>
+<area shape="rect" id="node8" href="delegate/IContainerMap.html" title="&#171;interface&#187; IContainerMap (org.eclipse.net4j.util.container.delegate)" alt="" coords="544,301,800,355"/>
+<area shape="rect" id="node9" href="IManagedContainer.html" title="&#171;interface&#187; IManagedContainer" alt="" coords="605,375,739,415"/>
+<area shape="rect" id="node10" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="6,227,186,282"/>
+<area shape="rect" id="node11" href="../registry/IRegistry.html" title="&#171;interface&#187; IRegistry (org.eclipse.net4j.util.registry)" alt="" coords="575,434,769,489"/>
 </map>
 
 <CENTER><IMG SRC="IContainer.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
 
 
+
+<P>
+Contains a number of elements and notifies about element addition and removal.
+ <p>
+ Fires the following events:
+ <ul>
+ <li> <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><CODE>IContainerEvent</CODE></A> after the addition and/or removal of elements.
+ </ul>
+<P>
 
 <P>
 <HR>

@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.collection.FastList;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * A default implementation of a {@link INotifier notifier}.
+ * 
  * @author Eike Stepper
  * @since 3.0
  */

@@ -16,6 +16,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 /**
+ * Various static helper methods for dealing with strings.
+ * 
  * @author Eike Stepper
  */
 public final class StringUtil

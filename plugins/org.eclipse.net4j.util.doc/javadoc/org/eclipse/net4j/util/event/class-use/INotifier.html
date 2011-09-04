@@ -114,7 +114,7 @@ Packages that use <A HREF="../../../../../../org/eclipse/net4j/util/event/INotif
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.net4j.util.fsm"><B>org.eclipse.net4j.util.fsm</B></A></TD>
-<TD>A framework for finite state machines.&nbsp;</TD>
+<TD>A framework for <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machines</a>.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.net4j.util.lifecycle"><B>org.eclipse.net4j.util.lifecycle</B></A></TD>
@@ -350,7 +350,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contains a number of elements and notifies about element addition and removal.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -366,7 +366,8 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that populates itself by means of element <A HREF="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry()"><CODE>factories</CODE></A> and
+ <A HREF="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors()"><CODE>post processors</CODE></A> .</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -374,7 +375,8 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/IPluginContainer.html" title="interface in org.eclipse.net4j.util.container">IPluginContainer</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>managed container</CODE></A> that is configured by the <CODE>extension registry</CODE>
+ .</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -390,7 +392,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/Container.html" title="class in org.eclipse.net4j.util.container">Container&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> implementation with a <A HREF="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><CODE>lifecycle</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -398,7 +400,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of a <A HREF="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>managed container</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -447,7 +449,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerCollection.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerCollection&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that is a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><CODE>Collection</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -455,7 +457,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerList.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerList&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that is a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util"><CODE>List</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -463,7 +465,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerMap.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerMap&lt;K,V&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> (of <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.Entry.html?is-external=true" title="class or interface in java.util"><CODE>map entries</CODE></A>) that is a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util"><CODE>Map</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -471,7 +473,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerQueue.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerQueue&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that is a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><CODE>Queue</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -479,7 +481,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerSet.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerSet&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that is a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util"><CODE>Set</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -487,7 +489,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerSortedSet.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerSortedSet&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that is a <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util"><CODE>SortedSet</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -503,7 +505,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/AbstractDelegator.html" title="class in org.eclipse.net4j.util.container.delegate">AbstractDelegator&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A delegating base class for <A HREF="../../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>containers</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -511,7 +513,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerBlockingQueue.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerBlockingQueue&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of a <A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerBlockingQueue.html" title="interface in org.eclipse.net4j.util.container.delegate"><CODE>container blocking queue</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -519,7 +521,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerCollection.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerCollection&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of a <A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerCollection.html" title="interface in org.eclipse.net4j.util.container.delegate"><CODE>container collection</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -527,7 +529,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerList.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerList&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of a <A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerList.html" title="interface in org.eclipse.net4j.util.container.delegate"><CODE>container list</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -535,7 +537,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerMap.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerMap&lt;K,V&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of a <A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerMap.html" title="interface in org.eclipse.net4j.util.container.delegate"><CODE>container map</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -543,7 +545,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerQueue.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerQueue&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of a <A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerQueue.html" title="interface in org.eclipse.net4j.util.container.delegate"><CODE>container queue</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -551,7 +553,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerSet.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerSet&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of a <A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerSet.html" title="interface in org.eclipse.net4j.util.container.delegate"><CODE>container set</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -559,7 +561,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/ContainerSortedSet.html" title="class in org.eclipse.net4j.util.container.delegate">ContainerSortedSet&lt;E&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of a <A HREF="../../../../../../org/eclipse/net4j/util/container/delegate/IContainerSortedSet.html" title="interface in org.eclipse.net4j.util.container.delegate"><CODE>container sorted set</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -584,7 +586,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/event/ExecutorServiceNotifier.html" title="class in org.eclipse.net4j.util.event">ExecutorServiceNotifier</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -592,7 +594,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/event/ExecutorServiceNotifier.ThreadPool.html" title="class in org.eclipse.net4j.util.event">ExecutorServiceNotifier.ThreadPool</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -600,7 +602,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of a <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event"><CODE>notifier</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -608,7 +610,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/event/ValueNotifier.html" title="class in org.eclipse.net4j.util.event">ValueNotifier&lt;VALUE&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event"><CODE>notifier</CODE></A> with an <A HREF="../../../../../../org/eclipse/net4j/util/event/ValueNotifier.html#getID()"><CODE>ID</CODE></A> and a single <A HREF="../../../../../../org/eclipse/net4j/util/event/ValueNotifier.html#getValue()"><CODE>value</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -671,7 +673,8 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine&lt;STATE extends Enum&lt;?&gt;,EVENT extends Enum&lt;?&gt;,SUBJECT&gt;</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machine</a> that is based on a matrix of
+ <A HREF="../../../../../../org/eclipse/net4j/util/fsm/ITransition.html" title="interface in org.eclipse.net4j.util.fsm"><CODE>transitions</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -712,7 +715,8 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An entity that has a well-defined <A HREF="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#getLifecycleState()"><CODE>lifecycle</CODE></A> and can be <A HREF="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#activate()"><CODE>activated</CODE></A> or
+ <A HREF="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#deactivate()"><CODE>deactivated</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -728,7 +732,7 @@ Uses of <A HREF="../../../../../../org/eclipse/net4j/util/event/INotifier.html" 
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of an entity with a <A HREF="../../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><CODE>lifecycle</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

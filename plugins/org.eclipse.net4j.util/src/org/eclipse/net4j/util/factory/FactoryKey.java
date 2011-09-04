@@ -17,7 +17,10 @@ import java.io.Serializable;
 import java.text.MessageFormat;
 
 /**
+ * A default implementation of a {@link IFactoryKey factory key}.
+ * 
  * @author Eike Stepper
+ * @apiviz.exclude
  */
 public final class FactoryKey implements IFactoryKey, Serializable, Comparable<FactoryKey>
 {

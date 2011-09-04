@@ -14,7 +14,11 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 /**
+ * A {@link IListener listener} that dispatches container {@link IContainerEvent events} to methods that can be
+ * overridden by extenders.
+ * 
  * @author Eike Stepper
+ * @apiviz.exclude
  */
 public class ContainerEventAdapter<E> implements IListener
 {

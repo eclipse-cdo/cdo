@@ -16,8 +16,11 @@ import org.eclipse.net4j.util.event.Event;
 import java.text.MessageFormat;
 
 /**
+ * A {@link IContainerEvent container event} with a single element {@link IContainerDelta delta}.
+ * 
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
+ * @apiviz.exclude
  */
 public class SingleDeltaContainerEvent<E> extends Event implements IContainerEvent<E>
 {

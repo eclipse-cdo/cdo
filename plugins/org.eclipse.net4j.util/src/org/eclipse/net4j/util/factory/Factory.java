@@ -13,6 +13,8 @@ package org.eclipse.net4j.util.factory;
 import java.text.MessageFormat;
 
 /**
+ * A default implementation of a {@link IFactory factory}.
+ * 
  * @author Eike Stepper
  */
 public abstract class Factory implements IFactory

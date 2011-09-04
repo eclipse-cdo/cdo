@@ -11,8 +11,11 @@
 package org.eclipse.net4j.util.lifecycle;
 
 /**
+ * An unchecked wrapper exception for checked exceptions being thrown from {@link Lifecycle#doActivate()}.
+ * 
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
+ * @apiviz.exclude
  */
 public class LifecycleException extends RuntimeException
 {

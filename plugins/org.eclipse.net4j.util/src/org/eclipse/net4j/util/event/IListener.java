@@ -13,7 +13,10 @@ package org.eclipse.net4j.util.event;
 import java.util.EventListener;
 
 /**
+ * A callback interface that {@link INotifier notifiers} use to pass {@link IEvent events} to.
+ * 
  * @author Eike Stepper
+ * @apiviz.landmark
  */
 public interface IListener extends EventListener
 {

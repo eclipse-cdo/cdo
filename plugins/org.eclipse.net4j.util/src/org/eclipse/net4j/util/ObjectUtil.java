@@ -15,6 +15,8 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
+ * Various static helper methods.
+ * 
  * @author Eike Stepper
  */
 public final class ObjectUtil

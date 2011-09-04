@@ -11,6 +11,9 @@
 package org.eclipse.net4j.util;
 
 /**
+ * Provides a single static {@link #adapt(Object, Class) adapt()} method that conveniently and safely wraps the
+ * Platform's adaptation framework.
+ * 
  * @author Eike Stepper
  */
 public final class AdapterUtil

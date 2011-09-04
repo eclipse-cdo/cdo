@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.container.IContainer;
 import java.util.Collection;
 
 /**
+ * A {@link IContainer container} that is a {@link Collection}.
+ * 
  * @author Eike Stepper
  */
 public interface IContainerCollection<E> extends IContainer<E>, Collection<E>

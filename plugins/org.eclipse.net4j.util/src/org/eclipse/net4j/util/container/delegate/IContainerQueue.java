@@ -10,9 +10,13 @@
  */
 package org.eclipse.net4j.util.container.delegate;
 
+import org.eclipse.net4j.util.container.IContainer;
+
 import java.util.Queue;
 
 /**
+ * A {@link IContainer container} that is a {@link Queue}.
+ * 
  * @author Eike Stepper
  */
 public interface IContainerQueue<E> extends IContainerCollection<E>, Queue<E>

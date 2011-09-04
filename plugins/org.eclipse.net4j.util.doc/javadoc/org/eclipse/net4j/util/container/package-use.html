@@ -129,7 +129,8 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/util/container/package-summ
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.html#org.eclipse.net4j.util.concurrent"><B>IManagedContainer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that populates itself by means of element <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry()"><CODE>factories</CODE></A> and
+ <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors()"><CODE>post processors</CODE></A> .</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -144,67 +145,69 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/util/container/package-summ
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/ContainerEvent.html#org.eclipse.net4j.util.container"><B>ContainerEvent</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><CODE>container event</CODE></A> implementation.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.html#org.eclipse.net4j.util.container"><B>IContainer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contains a number of elements and notifies about element addition and removal.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IContainerDelta.html#org.eclipse.net4j.util.container"><B>IContainerDelta</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Describes the addition or removal of a single element from a <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IContainerDelta.Kind.html#org.eclipse.net4j.util.container"><B>IContainerDelta.Kind</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><CODE>container delta</CODE></A> kinds <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html#ADDED"><CODE>IContainerDelta.Kind.ADDED</CODE></A> or <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html#REMOVED"><CODE>IContainerDelta.Kind.REMOVED</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IContainerEvent.html#org.eclipse.net4j.util.container"><B>IContainerEvent</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> when its contents have changed.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../org/eclipse/net4j/util/event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired from a <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> when its elements have changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IContainerEventVisitor.html#org.eclipse.net4j.util.container"><B>IContainerEventVisitor</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A callback interface for visiting <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><CODE>container deltas</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IElementProcessor.html#org.eclipse.net4j.util.container"><B>IElementProcessor</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Processes elements of a <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>managed container</CODE></A> when they're added to the container.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.html#org.eclipse.net4j.util.container"><B>IManagedContainer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that populates itself by means of element <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry()"><CODE>factories</CODE></A> and
+ <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors()"><CODE>post processors</CODE></A> .</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IPluginContainer.html#org.eclipse.net4j.util.container"><B>IPluginContainer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>managed container</CODE></A> that is configured by the <CODE>extension registry</CODE>
+ .</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/ManagedContainer.html#org.eclipse.net4j.util.container"><B>ManagedContainer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default implementation of a <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>managed container</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/SingleDeltaContainerEvent.html#org.eclipse.net4j.util.container"><B>SingleDeltaContainerEvent</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><CODE>container event</CODE></A> with a single element <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><CODE>delta</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -219,19 +222,19 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/util/container/package-summ
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/ContainerEvent.html#org.eclipse.net4j.util.container.delegate"><B>ContainerEvent</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><CODE>container event</CODE></A> implementation.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.html#org.eclipse.net4j.util.container.delegate"><B>IContainer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contains a number of elements and notifies about element addition and removal.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IContainerDelta.Kind.html#org.eclipse.net4j.util.container.delegate"><B>IContainerDelta.Kind</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><CODE>container delta</CODE></A> kinds <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html#ADDED"><CODE>IContainerDelta.Kind.ADDED</CODE></A> or <A HREF="../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html#REMOVED"><CODE>IContainerDelta.Kind.REMOVED</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -246,13 +249,13 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/util/container/package-summ
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/Container.html#org.eclipse.net4j.util.registry"><B>Container</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A default <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> implementation with a <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><CODE>lifecycle</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.html#org.eclipse.net4j.util.registry"><B>IContainer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contains a number of elements and notifies about element addition and removal.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -267,13 +270,14 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/util/container/package-summ
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IElementProcessor.html#org.eclipse.net4j.util.security"><B>IElementProcessor</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Processes elements of a <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>managed container</CODE></A> when they're added to the container.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.html#org.eclipse.net4j.util.security"><B>IManagedContainer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that populates itself by means of element <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry()"><CODE>factories</CODE></A> and
+ <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors()"><CODE>post processors</CODE></A> .</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -288,7 +292,8 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/util/container/package-summ
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IManagedContainer.html#org.eclipse.net4j.util.ui.container"><B>IManagedContainer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that populates itself by means of element <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry()"><CODE>factories</CODE></A> and
+ <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors()"><CODE>post processors</CODE></A> .</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -303,7 +308,7 @@ Classes in <A HREF="../../../../../org/eclipse/net4j/util/container/package-summ
 <TD><B><A HREF="../../../../../org/eclipse/net4j/util/container/class-use/IContainer.html#org.eclipse.net4j.util.ui.views"><B>IContainer</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contains a number of elements and notifies about element addition and removal.</TD>
 </TR>
 </TABLE>
 &nbsp;

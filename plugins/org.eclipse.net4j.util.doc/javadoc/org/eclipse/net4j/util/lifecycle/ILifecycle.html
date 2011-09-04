@@ -103,16 +103,25 @@ Interface ILifecycle</H2>
 <DL>
 <DT><PRE>public interface <B>ILifecycle</B><DT>extends <A HREF="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</A></DL>
 </PRE><map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="253,6,432,61"/>
-<area shape="rect" id="node2" href="../container/IManagedContainer.html" title="&#171;interface&#187; IManagedContainer (org.eclipse.net4j.util.container)" alt="" coords="5,179,208,234"/>
-<area shape="rect" id="node3" href="ILifecycle.html" title="&#171;interface&#187; ILifecycle" alt="" coords="300,100,385,140"/>
-<area shape="rect" id="node4" href="../concurrent/TimerLifecycle.html" title="TimerLifecycle (org.eclipse.net4j.util.concurrent)" alt="" coords="237,187,448,227"/>
-<area shape="rect" id="node5" href="Lifecycle.html" title="Lifecycle" alt="" coords="478,194,551,219"/>
+<area shape="rect" id="node1" href="LifecycleState.html" title="&#171;enum&#187; LifecycleState" alt="" coords="129,200,233,240"/>
+<area shape="rect" id="node2" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="5,6,184,61"/>
+<area shape="rect" id="node3" href="ILifecycleEvent.html" title="&#171;interface&#187; ILifecycleEvent" alt="" coords="214,13,321,53"/>
+<area shape="rect" id="node4" href="ILifecycle.html" title="&#171;interface&#187; ILifecycle" alt="" coords="139,117,224,157"/>
 </map>
 
 <CENTER><IMG SRC="ILifecycle.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
 
 
+
+<P>
+An entity that has a well-defined <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#getLifecycleState()"><CODE>lifecycle</CODE></A> and can be <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#activate()"><CODE>activated</CODE></A> or
+ <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#deactivate()"><CODE>deactivated</CODE></A>.
+ <p>
+ Fires the following events:
+ <ul>
+ <li> <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle"><CODE>ILifecycleEvent</CODE></A> before and after the <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html#getLifecycleState()"><CODE>state</CODE></A> of this lifecycle changes.
+ </ul>
+<P>
 
 <P>
 <HR>

@@ -10,7 +10,9 @@
  */
 
 /**
- * A framework for <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machines</a>.
+ * A framework to describe and access properties of POJOs and to support Eclipse 
+ * {@link org.eclipse.core.expressions.PropertyTester property testers} and 
+ * <code>IPropertySources</code> in a uniform way.
  */
-package org.eclipse.net4j.util.fsm;
+package org.eclipse.net4j.util.properties;
 

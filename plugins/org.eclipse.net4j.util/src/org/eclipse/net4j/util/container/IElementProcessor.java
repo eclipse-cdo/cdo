@@ -11,6 +11,8 @@
 package org.eclipse.net4j.util.container;
 
 /**
+ * Processes elements of a {@link IManagedContainer managed container} when they're added to the container.
+ * 
  * @author Eike Stepper
  */
 public interface IElementProcessor

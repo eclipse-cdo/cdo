@@ -103,16 +103,23 @@ Interface IManagedContainer</H2>
 <DL>
 <DT><PRE>public interface <B>IManagedContainer</B><DT>extends <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&gt;, <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</A></DL>
 </PRE><map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="IPluginContainer.html" title="&#171;interface&#187; IPluginContainer" alt="" coords="55,179,171,219"/>
-<area shape="rect" id="node2" href="IManagedContainer.html" title="&#171;interface&#187; IManagedContainer" alt="" coords="123,100,256,140"/>
-<area shape="rect" id="node3" href="../lifecycle/ILifecycle.html" title="&#171;interface&#187; ILifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="5,6,203,61"/>
-<area shape="rect" id="node4" href="IContainer.html" title="&#171;interface&#187; IContainer" alt="" coords="232,13,317,53"/>
-<area shape="rect" id="node5" href="ManagedContainer.html" title="ManagedContainer" alt="" coords="201,186,332,211"/>
+<area shape="rect" id="node1" href="IPluginContainer.html" title="&#171;interface&#187; IPluginContainer" alt="" coords="5,208,120,248"/>
+<area shape="rect" id="node2" href="IManagedContainer.html" title="&#171;interface&#187; IManagedContainer" alt="" coords="273,104,407,144"/>
+<area shape="rect" id="node3" href="../lifecycle/ILifecycle.html" title="&#171;interface&#187; ILifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="156,6,353,61"/>
+<area shape="rect" id="node4" href="../factory/IFactory.html" title="&#171;interface&#187; IFactory (org.eclipse.net4j.util.factory)" alt="" coords="151,201,340,255"/>
+<area shape="rect" id="node5" href="IElementProcessor.html" title="&#171;interface&#187; IElementProcessor" alt="" coords="370,208,501,248"/>
+<area shape="rect" id="node6" href="IContainer.html" title="&#171;interface&#187; IContainer" alt="" coords="383,13,468,53"/>
+<area shape="rect" id="node7" href="ManagedContainer.html" title="ManagedContainer" alt="" coords="532,215,663,241"/>
 </map>
 
 <CENTER><IMG SRC="IManagedContainer.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
 
 
+
+<P>
+A <A HREF="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><CODE>container</CODE></A> that populates itself by means of element <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryRegistry()"><CODE>factories</CODE></A> and
+ <A HREF="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getPostProcessors()"><CODE>post processors</CODE></A> .
+<P>
 
 <P>
 <DL>

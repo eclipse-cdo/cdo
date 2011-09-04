@@ -11,8 +11,12 @@
 package org.eclipse.net4j.util.factory;
 
 /**
+ * An unchecked exception that may be thrown from {@link IFactory factories} to indicate the inability to create a
+ * product.
+ * 
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
+ * @apiviz.exclude
  */
 public class ProductCreationException extends RuntimeException
 {

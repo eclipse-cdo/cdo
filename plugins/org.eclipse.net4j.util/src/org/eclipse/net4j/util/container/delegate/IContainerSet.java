@@ -10,9 +10,13 @@
  */
 package org.eclipse.net4j.util.container.delegate;
 
+import org.eclipse.net4j.util.container.IContainer;
+
 import java.util.Set;
 
 /**
+ * A {@link IContainer container} that is a {@link Set}.
+ * 
  * @author Eike Stepper
  */
 public interface IContainerSet<E> extends IContainerCollection<E>, Set<E>

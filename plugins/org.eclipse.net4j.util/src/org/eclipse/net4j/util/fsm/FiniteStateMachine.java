@@ -20,14 +20,25 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import java.text.MessageFormat;
 
 /**
+ * A <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machine</a> that is based on a matrix of
+ * {@link ITransition transitions}.
+ * <p>
+ * Fires the following events:
+ * <ul>
+ * <li> {@link StateChangedEvent} after state changes of a <i>subject</i>.
+ * </ul>
+ * 
  * @author Eike Stepper
+ * @apiviz.landmark
+ * @apiviz.owns ITransition - - matrix
+ * @apiviz.uses FiniteStateMachine.StateChangedEvent - - fires
  */
 public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT> extends Lifecycle
 {
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "deprecation" })
   public static final ITransition IGNORE = new IgnoreTransition();
 
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "deprecation" })
   public static final ITransition FAIL = new FailTransition();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, FiniteStateMachine.class);
@@ -224,8 +235,13 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
   }
 
   /**
+   * A {@link ITransition transition} that does nothing.
+   * 
    * @author Eike Stepper
+   * @deprecated Use {@link FiniteStateMachine#IGNORE}
+   * @apiviz.exclude
    */
+  @Deprecated
   public static class IgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
     public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
@@ -241,8 +257,13 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
   }
 
   /**
+   * A {@link ITransition transition} that throws an {@link IllegalStateException}.
+   * 
    * @author Eike Stepper
+   * @deprecated Use {@link FiniteStateMachine#FAIL}
+   * @apiviz.exclude
    */
+  @Deprecated
   public static class FailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
     public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
@@ -258,6 +279,8 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
   }
 
   /**
+   * A {@link ITransition transition} that changes the {@link #getTargetState() state} of a <i>subject</i>.
+   * 
    * @author Eike Stepper
    */
   public class ChangeStateTransition implements ITransition<STATE, EVENT, SUBJECT, Object>

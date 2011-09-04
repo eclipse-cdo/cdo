@@ -106,6 +106,10 @@ Class LifecycleUtil</H2>
 
 
 <P>
+Various static helper methods for dealing with <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><CODE>lifecycles</CODE></A>.
+<P>
+
+<P>
 <HR>
 
 <P>
@@ -123,7 +127,8 @@ Class LifecycleUtil</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Activator.html" title="annotation in org.eclipse.net4j.util.lifecycle">LifecycleUtil.Activator</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Annotates a method of a POJO class that's supposed to be called to <em>activate</em> a POJO object during
+ <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#activate(java.lang.Object)"><CODE>activate(Object)</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -131,7 +136,8 @@ Class LifecycleUtil</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Deactivator.html" title="annotation in org.eclipse.net4j.util.lifecycle">LifecycleUtil.Deactivator</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Annotates a method of a POJO class that's supposed to be called to <em>deactivate</em> a POJO object during
+ <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#deactivate(java.lang.Object)"><CODE>deactivate(Object)</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -139,7 +145,8 @@ Class LifecycleUtil</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleUtil.Delegator</A>&lt;<A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html" title="type parameter in LifecycleUtil.Delegator">T</A>&gt;</B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/InvocationHandler.html?is-external=true" title="class or interface in java.lang.reflect"><CODE>invocation handler</CODE></A> of the <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/Proxy.html?is-external=true" title="class or interface in java.lang.reflect"><CODE>dynamic proxy</CODE></A> created in
+ <A HREF="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#delegateLifecycle(java.lang.ClassLoader, T, org.eclipse.net4j.util.lifecycle.ILifecycle)"><CODE>LifecycleUtil.delegateLifecycle()</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

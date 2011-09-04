@@ -19,7 +19,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
+ * A default implementation of a {@link IContainerList container list}.
+ * 
  * @author Eike Stepper
+ * @apiviz.exclude
  */
 public class ContainerList<E> extends ContainerCollection<E> implements IContainerList<E>
 {
@@ -134,7 +137,10 @@ public class ContainerList<E> extends ContainerCollection<E> implements IContain
   }
 
   /**
+   * A delegating {@link ListIterator list iterator}.
+   * 
    * @author Eike Stepper
+   * @apiviz.exclude
    */
   public class DelegatingListIterator extends DelegatingIterator implements ListIterator<E>
   {

@@ -11,7 +11,11 @@
 package org.eclipse.net4j.util.container;
 
 /**
+ * A callback interface for visiting {@link IContainerDelta container deltas}.
+ * 
+ * @see IContainerEvent#accept(IContainerEventVisitor)
  * @author Eike Stepper
+ * @apiviz.exclude
  */
 public interface IContainerEventVisitor<E>
 {
@@ -20,7 +24,12 @@ public interface IContainerEventVisitor<E>
   public void removed(E element);
 
   /**
+   * An extension interface for {@link IContainerEventVisitor container event visitors} that can {@link #filter(Object)
+   * filter} deltas from being visited.
+   * 
+   * @see IContainerEvent#accept(IContainerEventVisitor)
    * @author Eike Stepper
+   * @apiviz.exclude
    */
   public interface Filtered<E> extends IContainerEventVisitor<E>
   {

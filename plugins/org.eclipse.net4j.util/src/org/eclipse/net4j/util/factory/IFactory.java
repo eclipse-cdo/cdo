@@ -11,7 +11,11 @@
 package org.eclipse.net4j.util.factory;
 
 /**
+ * {@link #create(String) Creates} objects from a string {@link #getDescriptionFor(Object) description}.
+ * 
  * @author Eike Stepper
+ * @apiviz.landmark
+ * @apiviz.has IFactoryKey
  */
 public interface IFactory
 {

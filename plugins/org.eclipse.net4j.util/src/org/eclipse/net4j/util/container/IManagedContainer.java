@@ -22,9 +22,15 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * A {@link IContainer container} that populates itself by means of element {@link #getFactoryRegistry() factories} and
+ * {@link #getPostProcessors() post processors} .
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark
+ * @apiviz.composedOf org.eclipse.net4j.util.factory.IFactory - - factoryRegistry
+ * @apiviz.composedOf org.eclipse.net4j.util.container.IElementProcessor - - postProcessors
  */
 public interface IManagedContainer extends IContainer<Object>, ILifecycle
 {

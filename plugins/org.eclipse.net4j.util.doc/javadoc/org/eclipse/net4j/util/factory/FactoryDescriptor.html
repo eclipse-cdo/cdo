@@ -111,6 +111,22 @@ Class FactoryDescriptor</H2>
 
 
 <P>
+A <A HREF="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory"><CODE>factory</CODE></A> that delegates to an <CODE>extension registry</CODE> contribution.
+ <p>
+ Example contribution:
+ 
+ <pre>
+    &lt;extension
+          point="org.eclipse.net4j.util.factories">
+       &lt;factory
+             class="org.eclipse.net4j.util.concurrent.TimerLifecycle$DaemonFactory"
+             productGroup="org.eclipse.net4j.util.timers"
+             type="daemon"/>
+    &lt;/extension>
+ </pre>
+<P>
+
+<P>
 <DL>
 <DT><B>No Extend</B></DT>
   <DD>This class is not intended to be subclassed by clients.</DD>

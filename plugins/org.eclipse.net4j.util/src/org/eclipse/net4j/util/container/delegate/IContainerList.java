@@ -10,9 +10,13 @@
  */
 package org.eclipse.net4j.util.container.delegate;
 
+import org.eclipse.net4j.util.container.IContainer;
+
 import java.util.List;
 
 /**
+ * A {@link IContainer container} that is a {@link List}.
+ * 
  * @author Eike Stepper
  */
 public interface IContainerList<E> extends IContainerCollection<E>, List<E>

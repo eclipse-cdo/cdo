@@ -12,11 +12,14 @@ package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.util.List;
 
 /**
+ * A default {@link IContainer container} implementation with a {@link ILifecycle lifecycle}.
+ * 
  * @author Eike Stepper
  */
 public abstract class Container<E> extends Lifecycle implements IContainer<E>

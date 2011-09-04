@@ -11,7 +11,10 @@
 package org.eclipse.net4j.util.container;
 
 /**
+ * A default {@link IContainerDelta container delta} implementation.
+ * 
  * @author Eike Stepper
+ * @apiviz.exclude
  */
 public class ContainerDelta<E> implements IContainerDelta<E>
 {

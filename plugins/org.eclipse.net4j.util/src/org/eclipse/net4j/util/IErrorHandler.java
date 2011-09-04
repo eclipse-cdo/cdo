@@ -11,6 +11,8 @@
 package org.eclipse.net4j.util;
 
 /**
+ * A callback interface with a {@link #handleError(Throwable) handleError()} method.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

@@ -21,7 +21,10 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import java.util.concurrent.Semaphore;
 
 /**
+ * A default implementation of an entity with a {@link ILifecycle lifecycle}.
+ * 
  * @author Eike Stepper
+ * @apiviz.exclude
  */
 public class Lifecycle extends Notifier implements ILifecycle
 {

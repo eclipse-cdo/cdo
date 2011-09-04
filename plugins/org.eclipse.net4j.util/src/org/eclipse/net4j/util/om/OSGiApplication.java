@@ -19,6 +19,8 @@ import org.eclipse.equinox.app.IApplicationContext;
 import java.util.concurrent.CountDownLatch;
 
 /**
+ * A default implementation of an OSGi {@link IApplication application}.
+ * 
  * @author Eike Stepper
  */
 public class OSGiApplication implements IApplication

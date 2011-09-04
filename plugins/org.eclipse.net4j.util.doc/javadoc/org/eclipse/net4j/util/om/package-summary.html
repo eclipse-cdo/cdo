@@ -81,25 +81,30 @@ function windowTitle()
 <H2>
 Package org.eclipse.net4j.util.om
 </H2>
-Interfaces and classes for environment independent operations and maintenance (O&amp;M).
-<P>
-<B>See:</B>
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="#package_description"><B>Description</B></A>
+<A NAME="package_description"><!-- --></A>
+Interfaces and classes for platform-independent <i>operations and maintenance</i> (O&amp;M).
+
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="OSGiApplication.html" title="OSGiApplication" alt="" coords="230,469,349,494"/>
-<area shape="rect" id="node2" href="OSGiActivator.html" title="OSGiActivator" alt="" coords="237,390,342,415"/>
-<area shape="rect" id="node3" href="OSGiActivator.StateHandler.html" title="OSGiActivator.StateHandler" alt="" coords="11,326,195,351"/>
-<area shape="rect" id="node4" href="OSGiActivator.WithState.html" title="OSGiActivator.WithState" alt="" coords="379,390,546,415"/>
-<area shape="rect" id="node5" title="&#171;interface&#187; BundleActivator (org.osgi.framework)" alt="" coords="33,375,172,430"/>
-<area shape="rect" id="node6" title="&#171;interface&#187; IApplication (org.eclipse.equinox.app)" alt="" coords="19,454,186,509"/>
-<area shape="rect" id="node7" href="OMBundle.html" title="&#171;interface&#187; OMBundle" alt="" coords="60,261,145,301"/>
-<area shape="rect" id="node8" href="OMBundle.DebugSupport.html" title="&#171;interface&#187; OMBundle.DebugSupport" alt="" coords="18,197,187,237"/>
-<area shape="rect" id="node9" href="OMBundle.TranslationSupport.html" title="&#171;interface&#187; OMBundle.TranslationSupport" alt="" coords="5,133,200,173"/>
-<area shape="rect" id="node10" href="OMPlatform.html" title="&#171;interface&#187; OMPlatform" alt="" coords="57,69,148,109"/>
-<area shape="rect" id="node11" href="LegacyUtil.html" title="&#171;static&#187; LegacyUtil" alt="" coords="61,5,144,45"/>
+<area shape="rect" id="node1" title="File (java.io)" alt="" coords="353,213,420,253"/>
+<area shape="rect" id="node2" href="OSGiApplication.html" title="OSGiApplication" alt="" coords="327,163,446,189"/>
+<area shape="rect" id="node3" title="Properties (java.util)" alt="" coords="647,143,729,183"/>
+<area shape="rect" id="node4" href="OSGiActivator.html" title="OSGiActivator" alt="" coords="334,85,439,110"/>
+<area shape="rect" id="node5" href="OSGiActivator.StateHandler.html" title="OSGiActivator.StateHandler" alt="" coords="893,85,1077,110"/>
+<area shape="rect" id="node6" href="OSGiActivator.WithState.html" title="OSGiActivator.WithState" alt="" coords="605,85,771,110"/>
+<area shape="rect" id="node7" title="&#171;interface&#187; BundleActivator (org.osgi.framework)" alt="" coords="20,70,159,125"/>
+<area shape="rect" id="node8" title="&#171;interface&#187; IApplication (org.eclipse.equinox.app)" alt="" coords="6,149,173,203"/>
+<area shape="rect" id="node9" href="OMBundle.html" title="&#171;interface&#187; OMBundle" alt="" coords="344,277,429,317"/>
+<area shape="rect" id="node10" href="OMBundle.DebugSupport.html" title="&#171;interface&#187; OMBundle.DebugSupport" alt="" coords="603,207,773,247"/>
+<area shape="rect" id="node11" href="OMBundle.TranslationSupport.html" title="&#171;interface&#187; OMBundle.TranslationSupport" alt="" coords="591,271,785,311"/>
+<area shape="rect" id="node12" href="log/OMLogHandler.html" title="&#171;interface&#187; OMLogHandler (org.eclipse.net4j.util.om.log)" alt="" coords="292,342,481,397"/>
+<area shape="rect" id="node13" href="log/OMLogger.html" title="&#171;interface&#187; OMLogger (org.eclipse.net4j.util.om.log)" alt="" coords="593,335,783,390"/>
+<area shape="rect" id="node14" href="OMPlatform.html" title="&#171;interface&#187; OMPlatform" alt="" coords="44,323,135,363"/>
+<area shape="rect" id="node15" href="pref/OMPreferences.html" title="&#171;interface&#187; OMPreferences (org.eclipse.net4j.util.om.pref)" alt="" coords="591,414,785,469"/>
+<area shape="rect" id="node16" href="trace/OMTraceHandler.html" title="&#171;interface&#187; OMTraceHandler (org.eclipse.net4j.util.om.trace)" alt="" coords="286,421,487,475"/>
+<area shape="rect" id="node17" href="trace/OMTracer.html" title="&#171;interface&#187; OMTracer (org.eclipse.net4j.util.om.trace)" alt="" coords="587,493,789,547"/>
+<area shape="rect" id="node18" href="LegacyUtil.html" title="&#171;static&#187; LegacyUtil" alt="" coords="48,5,131,45"/>
 </map>
 
 <CENTER><IMG SRC="package-summary.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -111,19 +116,21 @@ Interfaces and classes for environment independent operations and maintenance (O
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents a <CODE>bundle</CODE>, whether OSGi <A HREF="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning()"><CODE>is running</CODE></A> or not.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.DebugSupport.html" title="interface in org.eclipse.net4j.util.om">OMBundle.DebugSupport</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A facility for accessing OSGi <CODE>debug options</CODE>, whether OSGi <A HREF="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning()"><CODE>is
+ running</CODE></A> or not.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.TranslationSupport.html" title="interface in org.eclipse.net4j.util.om">OMBundle.TranslationSupport</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A facility for accessing <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/ResourceBundle.html?is-external=true" title="class or interface in java.util"><CODE>resource bundles</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/om/OMPlatform.html" title="interface in org.eclipse.net4j.util.om">OMPlatform</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents the platform that <A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om"><CODE>bundles</CODE></A> are deployed into, whether OSGi <A HREF="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning()"><CODE>is
+ running</CODE></A> or not.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -137,34 +144,29 @@ Interfaces and classes for environment independent operations and maintenance (O
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/om/LegacyUtil.html" title="class in org.eclipse.net4j.util.om">LegacyUtil</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Various static helper methods for dealing with <A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om"><CODE>bundles</CODE></A> if OSGi <A HREF="../../../../../org/eclipse/net4j/util/om/OMPlatform.html#isOSGiRunning()"><CODE>is
+ not running</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/om/OSGiActivator.html" title="class in org.eclipse.net4j.util.om">OSGiActivator</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A default implementation of an OSGi <CODE>bundle activator</CODE> for OM <A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om"><CODE>bundles</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/om/OSGiActivator.StateHandler.html" title="class in org.eclipse.net4j.util.om">OSGiActivator.StateHandler</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Saves and loads <A HREF="../../../../../org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om"><CODE>bundle</CODE></A> state.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/om/OSGiActivator.WithState.html" title="class in org.eclipse.net4j.util.om">OSGiActivator.WithState</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An OSGi <A HREF="../../../../../org/eclipse/net4j/util/om/OSGiActivator.html" title="class in org.eclipse.net4j.util.om"><CODE>activator</CODE></A> that stores <A HREF="../../../../../org/eclipse/net4j/util/om/OSGiActivator.StateHandler.html" title="class in org.eclipse.net4j.util.om"><CODE>bundle state</CODE></A> between sessions.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/net4j/util/om/OSGiApplication.html" title="class in org.eclipse.net4j.util.om">OSGiApplication</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A default implementation of an OSGi <CODE>application</CODE>.</TD>
 </TR>
 </TABLE>
 &nbsp;
 
 <P>
-<A NAME="package_description"><!-- --></A><H2>
-Package org.eclipse.net4j.util.om Description
-</H2>
-
-<P>
-Interfaces and classes for environment independent operations and maintenance (O&amp;M).
 <P>
 
 <P>

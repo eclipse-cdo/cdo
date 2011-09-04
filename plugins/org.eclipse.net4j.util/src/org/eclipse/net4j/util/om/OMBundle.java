@@ -14,16 +14,30 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
+import org.eclipse.osgi.service.debug.DebugOptions;
+
+import org.osgi.framework.Bundle;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
+ * Represents a {@link Bundle bundle}, whether OSGi {@link OMPlatform#isOSGiRunning() is running} or not.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark
+ * @apiviz.owns org.eclipse.net4j.util.om.pref.OMPreferences - - preferences
+ * @apiviz.owns org.eclipse.net4j.util.om.log.OMLogger - - logger
+ * @apiviz.owns org.eclipse.net4j.util.om.trace.OMTracer - - tracers
+ * @apiviz.owns OMBundle.DebugSupport
+ * @apiviz.owns OMBundle.TranslationSupport
+ * @apiviz.owns java.util.Properties - - config
  */
 public interface OMBundle
 {
@@ -54,6 +68,9 @@ public interface OMBundle
   public TranslationSupport getTranslationSupport();
 
   /**
+   * A facility for accessing OSGi {@link DebugOptions debug options}, whether OSGi {@link OMPlatform#isOSGiRunning() is
+   * running} or not.
+   * 
    * @author Eike Stepper
    */
   public interface DebugSupport
@@ -78,6 +95,8 @@ public interface OMBundle
   }
 
   /**
+   * A facility for accessing {@link ResourceBundle resource bundles}.
+   * 
    * @author Eike Stepper
    */
   public interface TranslationSupport

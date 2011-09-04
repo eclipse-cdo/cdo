@@ -18,9 +18,17 @@ import java.io.File;
 import java.util.Properties;
 
 /**
+ * Represents the platform that {@link OMBundle bundles} are deployed into, whether OSGi {@link #isOSGiRunning() is
+ * running} or not.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark
+ * @apiviz.owns OMBundle bundles platform
+ * @apiviz.owns org.eclipse.net4j.util.om.log.OMLogHandler - - logHandlers
+ * @apiviz.owns org.eclipse.net4j.util.om.trace.OMTraceHandler - - traceHandlers
+ * @apiviz.has java.io.File - - stateFolder
  */
 public interface OMPlatform
 {

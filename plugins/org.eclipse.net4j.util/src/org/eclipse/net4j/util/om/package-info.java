@@ -10,6 +10,7 @@
  */
 
 /**
- * Interfaces and classes for environment independent operations and maintenance (O&amp;M).
+ * Interfaces and classes for platform-independent <i>operations and maintenance</i> (O&amp;M).
  */
 package org.eclipse.net4j.util.om;
+

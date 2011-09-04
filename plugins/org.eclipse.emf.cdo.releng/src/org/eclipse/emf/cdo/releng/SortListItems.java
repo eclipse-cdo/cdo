@@ -25,11 +25,11 @@ import java.util.List;
  */
 public class SortListItems
 {
+  private static final String NL = System.getProperty("line.separator");
+
   private static final String PREFIX = "<LI TYPE=\"circle\">";
 
   private static final String SUFFIX = "</UL>";
-
-  private static final String NL = System.getProperty("line.separator");
 
   public static void main(String[] args) throws IOException
   {

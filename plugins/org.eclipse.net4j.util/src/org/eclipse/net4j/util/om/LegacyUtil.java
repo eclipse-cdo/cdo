@@ -13,6 +13,9 @@ package org.eclipse.net4j.util.om;
 import org.eclipse.net4j.internal.util.om.LegacyBundle;
 
 /**
+ * Various static helper methods for dealing with {@link OMBundle bundles} if OSGi {@link OMPlatform#isOSGiRunning() is
+ * not running}.
+ * 
  * @author Eike Stepper
  */
 public final class LegacyUtil

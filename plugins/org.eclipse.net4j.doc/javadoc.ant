@@ -173,6 +173,11 @@
 			<arg value="${destdir}" />
 		</java>
 
+		<java classname="org.eclipse.emf.cdo.releng.MovePackageDescriptions" dir="${basedir}" fork="true">
+			<classpath path="plugins/org.eclipse.emf.cdo.releng/bin" />
+			<arg value="${destdir}" />
+		</java>
+
 		<!--
 		<java classname="org.eclipse.emf.cdo.releng.SortListItems" dir="${basedir}" fork="true">
 			<classpath path="plugins/org.eclipse.emf.cdo.releng/bin" />

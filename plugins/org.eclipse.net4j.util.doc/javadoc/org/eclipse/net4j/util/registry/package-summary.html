@@ -81,11 +81,16 @@ function windowTitle()
 <H2>
 Package org.eclipse.net4j.util.registry
 </H2>
+<A NAME="package_description"><!-- --></A>
 Interfaces and classes for general purpose registries.
-<P>
-<B>See:</B>
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<A HREF="#package_description"><B>Description</B></A>
+ A registry is like a <code>Map</code> but has some additional features:
+ <ul>
+   <li>It provides a descriptor framework for registry elements that 
+          are to be instantiated lazily 
+   <li>It provides a notification framework that enables clients to 
+       react on events (including the resolution of a lazy descriptor)
+ <ul>
+
 <P>
 
 <map id="APIVIZ" name="APIVIZ">
@@ -153,19 +158,6 @@ Interfaces and classes for general purpose registries.
 &nbsp;
 
 <P>
-<A NAME="package_description"><!-- --></A><H2>
-Package org.eclipse.net4j.util.registry Description
-</H2>
-
-<P>
-Interfaces and classes for general purpose registries.
- A registry is like a <code>Map</code> but has some additional features:
- <ul>
-   <li>It provides a descriptor framework for registry elements that 
-          are to be instantiated lazily 
-   <li>It provides a notification framework that enables clients to 
-       react on events (including the resolution of a lazy descriptor)
- <ul>
 <P>
 
 <P>

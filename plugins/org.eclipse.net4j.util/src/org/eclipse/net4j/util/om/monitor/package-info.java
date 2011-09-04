@@ -10,6 +10,6 @@
  */
 
 /**
- * Interfaces and classes for environment independent progress monitoring.
+ * Interfaces and classes for platform-independent progress monitoring.
  */
 package org.eclipse.net4j.util.om.monitor;

@@ -10,6 +10,6 @@
  */
 
 /**
- * Interfaces and classes for environment independent logging.
+ * Interfaces and classes for platform-independent logging.
  */
 package org.eclipse.net4j.util.om.log;

@@ -10,6 +10,6 @@
  */
 
 /**
- * Interfaces and classes for environment independent preference management.
+ * Interfaces and classes for platform-independent preference management.
  */
 package org.eclipse.net4j.util.om.pref;

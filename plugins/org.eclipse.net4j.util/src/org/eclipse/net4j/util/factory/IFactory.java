@@ -15,7 +15,7 @@ package org.eclipse.net4j.util.factory;
  * 
  * @author Eike Stepper
  * @apiviz.landmark
- * @apiviz.has IFactoryKey
+ * @apiviz.has {@link IFactoryKey}
  */
 public interface IFactory
 {

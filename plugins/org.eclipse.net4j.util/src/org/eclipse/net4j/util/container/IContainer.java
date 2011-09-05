@@ -18,15 +18,15 @@ import java.util.Collection;
 /**
  * Contains a number of elements and notifies about element addition and removal.
  * <p>
- * Fires the following events:
+ * A container can fire the following events:
  * <ul>
  * <li> {@link IContainerEvent} after the addition and/or removal of elements.
  * </ul>
  * 
  * @author Eike Stepper
  * @apiviz.landmark
- * @apiviz.composedOf java.lang.Object - - elements
- * @apiviz.uses IContainerEvent - - fires
+ * @apiviz.composedOf {@link java.lang.Object} - - elements
+ * @apiviz.uses {@link IContainerEvent} - - fires
  */
 public interface IContainer<E> extends INotifier
 {

@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
  * 
  * @author Victor Roldan Betancort
  * @since 2.0
+ * @apiviz.exclude
  */
 public abstract class ManagedContainerViewProvider extends AbstractCDOViewProvider
 {

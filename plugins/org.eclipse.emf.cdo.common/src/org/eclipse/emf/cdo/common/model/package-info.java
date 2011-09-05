@@ -11,5 +11,8 @@
 
 /**
  * Common concepts for dealing with models and types.
+ * 
+ * @apiviz.exclude .*\.Comparable
  */
 package org.eclipse.emf.cdo.common.model;
+

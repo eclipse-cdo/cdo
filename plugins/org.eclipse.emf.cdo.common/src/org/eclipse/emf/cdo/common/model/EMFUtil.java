@@ -56,6 +56,7 @@ import java.util.Set;
  * 
  * @author Eike Stepper
  * @since 2.0
+ * @apiviz.exclude
  */
 public final class EMFUtil
 {
@@ -458,6 +459,7 @@ public final class EMFUtil
    * to be switched on/off as desired.
    * 
    * @since 4.0
+   * @apiviz.exclude
    */
   public static class ExtResourceSet extends ResourceSetImpl
   {

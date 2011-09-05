@@ -11,5 +11,11 @@
 
 /**
  * Common concepts that are differently extended in clients and servers.
+ * 
+ * @apiviz.exclude .*\.IOptions
+ * @apiviz.exclude .*\.IOptionsContainer
+ * @apiviz.exclude .*\.Closeable
+ * @apiviz.exclude .*Event
  */
 package org.eclipse.emf.cdo.common;
+

@@ -11,5 +11,13 @@
 
 /**
  * Server concepts for dealing with repositories and stores.
+ * 
+ * @apiviz.exclude .*\.CDOServerBrowser.*
+ * @apiviz.exclude .*\.CommitInfoLoader
+ * @apiviz.exclude .*\.BrancheLoader
+ * @apiviz.exclude .*\.IContainer
+ * @apiviz.exclude .*\.INotifier
+ * @apiviz.exclude .*Exception
  */
 package org.eclipse.emf.cdo.server;
+

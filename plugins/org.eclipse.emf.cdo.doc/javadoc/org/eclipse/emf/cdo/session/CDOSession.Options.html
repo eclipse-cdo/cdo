@@ -103,9 +103,15 @@ Interface CDOSession.Options</H2>
 <DL>
 <DT><PRE>public static interface <B>CDOSession.Options</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</A></DL>
 </PRE><map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="CDOSession.Options.html" title="&#171;interface&#187; CDOSession.Options" alt="" coords="31,100,177,140"/>
-<area shape="rect" id="node2" href="../net4j/CDONet4jSession.Options.html" title="&#171;interface&#187; CDONet4jSession.Options (org.eclipse.emf.cdo.net4j)" alt="" coords="16,179,192,234"/>
-<area shape="rect" id="node3" href="../common/CDOCommonSession.Options.html" title="&#171;interface&#187; CDOCommonSession.Options (org.eclipse.emf.cdo.common)" alt="" coords="5,6,203,61"/>
+<area shape="rect" id="node1" href="CDOSession.Options.LobCacheEvent.html" title="&#171;interface&#187; CDOSession.Options.LobCacheEvent" alt="" coords="5,13,245,53"/>
+<area shape="rect" id="node2" href="CDOSession.Options.GeneratedPackageEmulationEvent.html" title="&#171;interface&#187; CDOSession.Options.GeneratedPackageEmulationEvent" alt="" coords="275,13,625,53"/>
+<area shape="rect" id="node3" href="CDOSession.Options.CollectionLoadingPolicyEvent.html" title="&#171;interface&#187; CDOSession.Options.CollectionLoadingPolicyEvent" alt="" coords="656,13,976,53"/>
+<area shape="rect" id="node4" href="CDOSession.Options.html" title="&#171;interface&#187; CDOSession.Options" alt="" coords="743,117,889,157"/>
+<area shape="rect" id="node5" href="CDOSession.html" title="&#171;interface&#187; CDOSession" alt="" coords="1006,13,1103,53"/>
+<area shape="rect" id="node6" href="../net4j/CDONet4jSession.Options.html" title="&#171;interface&#187; CDONet4jSession.Options (org.eclipse.emf.cdo.net4j)" alt="" coords="501,214,677,269"/>
+<area shape="rect" id="node7" href="../common/lob/CDOLobStore.html" title="&#171;interface&#187; CDOLobStore (org.eclipse.emf.cdo.common.lob)" alt="" coords="707,214,925,269"/>
+<area shape="rect" id="node8" href="../common/CDOCommonSession.Options.html" title="&#171;interface&#187; CDOCommonSession.Options (org.eclipse.emf.cdo.common)" alt="" coords="1133,6,1331,61"/>
+<area shape="rect" id="node9" href="CDOCollectionLoadingPolicy.html" title="&#171;interface&#187; CDOCollectionLoadingPolicy" alt="" coords="955,221,1143,261"/>
 </map>
 
 <CENTER><IMG SRC="CDOSession.Options.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -114,6 +120,14 @@ Interface CDOSession.Options</H2>
 
 <P>
 Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> configuration options.
+ <p>
+ The session options can fire the following events:
+ <ul>
+ <li> <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.GeneratedPackageEmulationEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>CDOSession.Options.GeneratedPackageEmulationEvent</CODE></A> after the <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setGeneratedPackageEmulationEnabled(boolean)"><CODE>generated
+ package emulation mode</CODE></A> has changed.
+ <li> <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.CollectionLoadingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>CDOSession.Options.CollectionLoadingPolicyEvent</CODE></A> after the <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)"><CODE>collection loading policy</CODE></A> has changed.
+ <li> <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>CDOSession.Options.LobCacheEvent</CODE></A> after the <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)"><CODE>large object cache</CODE></A> has changed.
+ </ul>
 <P>
 
 <P>

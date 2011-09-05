@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 /**
  * @author Eike Stepper
  * @since 2.0
+ * @apiviz.uses {@link IQueryHandler} - - provides
  */
 public interface IQueryHandlerProvider
 {

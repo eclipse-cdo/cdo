@@ -31,6 +31,7 @@ import java.util.Map;
  * 
  * @author Eike Stepper
  * @since 2.0
+ * @apiviz.exclude
  */
 public final class CDOPackageTypeRegistry
 {
@@ -218,6 +219,7 @@ public final class CDOPackageTypeRegistry
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
+   * @apiviz.exclude
    */
   public static interface CDOObjectMarker
   {

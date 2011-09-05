@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
  * 
  * @author Eike Stepper
  * @since 3.0
+ * @apiviz.uses {@link CDORevision} - - provides
  */
 public interface CDORevisionProvider
 {

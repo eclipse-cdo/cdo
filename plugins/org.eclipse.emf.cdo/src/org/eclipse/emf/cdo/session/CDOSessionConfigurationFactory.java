@@ -15,6 +15,8 @@ package org.eclipse.emf.cdo.session;
  * 
  * @author Eike Stepper
  * @since 3.0
+ * @apiviz.landmark
+ * @apiviz.uses {@link CDOSessionConfiguration} - - creates
  */
 public interface CDOSessionConfigurationFactory
 {

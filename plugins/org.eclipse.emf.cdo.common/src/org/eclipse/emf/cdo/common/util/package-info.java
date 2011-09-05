@@ -11,5 +11,8 @@
 
 /**
  * Common utility classes, some common interfaces and exceptions.
+ * 
+ * @apiviz.exclude .*
  */
 package org.eclipse.emf.cdo.common.util;
+

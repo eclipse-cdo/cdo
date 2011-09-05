@@ -34,6 +34,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * Adds CDO-specific properties to {@link EObject objects}, such as {@link CDOObject#cdoID() ID},
+ * {@link CDORevision#getVersion() version} and {@link CDOObject#cdoState() state}.
+ * 
  * @author Eike Stepper
  */
 public class CDOItemProviderAdapter extends ItemProviderAdapter
@@ -277,6 +280,8 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     }
 
     /**
+     * A default implementation of {@link IItemLabelProvider}.
+     * 
      * @author Eike Stepper
      */
     public static class DefaultLabelProvider implements IItemLabelProvider

@@ -11,5 +11,9 @@
 
 /**
  * Common concepts for dealing with revisions and revision lists.
+ * 
+ * @apiviz.exclude .*\.INotifier
+ * @apiviz.exclude .*Event
  */
 package org.eclipse.emf.cdo.common.revision;
+

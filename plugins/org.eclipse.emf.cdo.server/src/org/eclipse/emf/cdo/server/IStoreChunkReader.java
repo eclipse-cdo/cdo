@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
+ * @apiviz.uses {@link IStoreChunkReader.Chunk} - - reads
  */
 public interface IStoreChunkReader
 {

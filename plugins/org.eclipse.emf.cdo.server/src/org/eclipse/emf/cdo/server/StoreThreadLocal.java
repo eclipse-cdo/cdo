@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 /**
  * @author Eike Stepper
  * @since 2.0
+ * @apiviz.exclude
  */
 public final class StoreThreadLocal
 {

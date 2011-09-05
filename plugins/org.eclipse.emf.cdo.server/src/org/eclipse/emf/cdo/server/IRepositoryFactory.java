@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server;
 
 /**
  * @author Eike Stepper
+ * @apiviz.uses {@link IRepository} - - creates
  */
 public interface IRepositoryFactory
 {

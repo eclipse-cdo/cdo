@@ -11,5 +11,10 @@
 
 /**
  * Common concepts for dealing with branches.
+ * 
+ * @apiviz.exclude .*\.IContainer
+ * @apiviz.exclude .*\.INotifier
+ * @apiviz.exclude .*Event
  */
 package org.eclipse.emf.cdo.common.branch;
+

@@ -22,6 +22,7 @@ import java.io.Reader;
  * 
  * @author Eike Stepper
  * @since 4.0
+ * @apiviz.landmark
  */
 public final class CDOClob extends CDOLob<Reader>
 {

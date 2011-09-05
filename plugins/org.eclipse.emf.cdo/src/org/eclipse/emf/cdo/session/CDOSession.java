@@ -13,6 +13,7 @@
  */
 package org.eclipse.emf.cdo.session;
 
+import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
@@ -51,13 +52,38 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  * <li> {@link CDOSession#getViews() View management}
  * </ul>
  * <p>
- * Note that, in order to retrieve, access and store {@link EObject objects} a {@link CDOView view} is needed. The
+ * Note that in order to retrieve, access and store {@link EObject objects} a {@link CDOView view} is needed. The
  * various <code>openXYZ</code> methods are provided for this purpose.
+ * <p>
+ * A session can fire the following events:
+ * <ul>
+ * <li> {@link CDOSessionInvalidationEvent} after {@link Options#setPassiveUpdateEnabled(boolean) commit notifications}
+ * have been received and processed.
+ * <li> {@link CDOSessionLocksChangedEvent} after {@link CDOLock locks} have been acquired or released.
+ * </ul>
  * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark
+ * @apiviz.has {@link org.eclipse.emf.cdo.session.CDORepositoryInfo}
+ * @apiviz.has {@link org.eclipse.emf.cdo.common.model.CDOPackageRegistry}
+ * @apiviz.has {@link org.eclipse.emf.cdo.common.branch.CDOBranchManager}
+ * @apiviz.has {@link org.eclipse.emf.cdo.common.revision.CDORevisionManager}
+ * @apiviz.has {@link org.eclipse.emf.cdo.view.CDOFetchRuleManager}
+ * @apiviz.has {@link org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager}
+ * @apiviz.has {@link org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager}
+ * @apiviz.has {@link org.eclipse.emf.cdo.common.id.CDOIDGenerator}
+ * @apiviz.has {@link CDOSession.Options}
+ * @apiviz.has {@link CDOSession.ExceptionHandler}
+ * @apiviz.has {@link CDOSession.ExceptionHandler}
+ * @apiviz.composedOf {@link org.eclipse.emf.cdo.view.CDOView} - - views
+ * @apiviz.composedOf {@link org.eclipse.emf.cdo.transaction.CDOTransaction} - - transactions
+ * @apiviz.uses {@link CDOSessionInvalidationEvent} - - fires
+ * @apiviz.uses {@link CDOSessionLocksChangedEvent} - - fires
+ * @apiviz.exclude .*\.CDOTransactionContainer
+ * @apiviz.exclude .*\.CDOUpdatable
  */
 public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransactionContainer
 {
@@ -154,10 +180,24 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
 
   /**
    * Encapsulates a set of notifying {@link CDOSession session} configuration options.
+   * <p>
+   * The session options can fire the following events:
+   * <ul>
+   * <li> {@link GeneratedPackageEmulationEvent} after the {@link #setGeneratedPackageEmulationEnabled(boolean) generated
+   * package emulation mode} has changed.
+   * <li> {@link CollectionLoadingPolicyEvent} after the {@link #setCollectionLoadingPolicy(CDOCollectionLoadingPolicy)
+   * collection loading policy} has changed.
+   * <li> {@link LobCacheEvent} after the {@link #setLobCache(CDOLobStore) large object cache} has changed.
+   * </ul>
    * 
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
+   * @apiviz.has {@link CDOCollectionLoadingPolicy}
+   * @apiviz.has {@link org.eclipse.emf.cdo.common.lob.CDOLobStore} oneway - - lobCache
+   * @apiviz.uses {@link CDOSession.Options.GeneratedPackageEmulationEvent} - - fires
+   * @apiviz.uses {@link CDOSession.Options.CollectionLoadingPolicyEvent} - - fires
+   * @apiviz.uses {@link CDOSession.Options.LobCacheEvent} - - fires
    */
   public interface Options extends CDOCommonSession.Options
   {

@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.common.commit;
  * 
  * @author Eike Stepper
  * @since 3.0
+ * @apiviz.uses {@link CDOCommitInfo} - - handles
  */
 public interface CDOCommitInfoHandler
 {

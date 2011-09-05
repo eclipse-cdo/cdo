@@ -63,6 +63,7 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @apiviz.uses {@link IStoreChunkReader} - - creates
  */
 public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, CommitInfoLoader
 {
@@ -267,6 +268,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @author Eike Stepper
    * @since 2.0
    * @noimplement This interface is not intended to be implemented by clients.
+   * @apiviz.exclude
    */
   public interface CommitContext extends CDORevisionProvider
   {
@@ -405,6 +407,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @author Eike Stepper
    * @since 2.0
    * @noimplement This interface is not intended to be implemented by clients.
+   * @apiviz.exclude
    */
   public interface QueryResourcesContext extends CDOBranchPoint
   {
@@ -431,6 +434,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     /**
      * @author Eike Stepper
      * @since 2.0
+     * @apiviz.exclude
      */
     public interface ExactMatch extends QueryResourcesContext
     {
@@ -442,6 +446,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @author Eike Stepper
    * @since 3.0
    * @noimplement This interface is not intended to be implemented by clients.
+   * @apiviz.exclude
    */
   public interface QueryXRefsContext extends CDOBranchPoint
   {
@@ -475,6 +480,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * @author Eike Stepper
    * @since 4.0
+   * @apiviz.exclude
    */
   public interface Raw extends IStoreAccessor
   {
@@ -697,6 +703,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * @author Eike Stepper
    * @since 4.0
+   * @apiviz.exclude
    */
   public interface DurableLocking extends IDurableLockingManager
   {
@@ -710,6 +717,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   /**
    * @author Caspar De Groot
    * @since 4.1
+   * @apiviz.exclude
    */
   public interface DurableLocking2 extends DurableLocking
   {

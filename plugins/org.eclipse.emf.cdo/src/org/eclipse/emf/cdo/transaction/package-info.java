@@ -11,5 +11,8 @@
 
 /**
  * Client concepts for dealing with transactions, distributed transactions and their save points.
+ * 
+ * @apiviz.exclude .*Event
  */
 package org.eclipse.emf.cdo.transaction;
+

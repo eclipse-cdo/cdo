@@ -11,5 +11,8 @@
 
 /**
  * Client concepts for dealing with repository locations and checkout sources.
+ * 
+ * @apiviz.exclude .*\.IContainer
  */
 package org.eclipse.emf.cdo.location;
+

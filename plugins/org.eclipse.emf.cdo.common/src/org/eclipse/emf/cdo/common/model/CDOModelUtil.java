@@ -59,6 +59,7 @@ import java.util.Map;
  * 
  * @author Eike Stepper
  * @since 2.0
+ * @apiviz.uses {@link CDOType} - - provides
  */
 public final class CDOModelUtil implements CDOModelConstants
 {

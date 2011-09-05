@@ -27,6 +27,8 @@ import org.eclipse.net4j.util.options.IOptionsEvent;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark
+ * @apiviz.has {@link CDOCommonView.Options}
  */
 public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, IOptionsContainer, Closeable
 {
@@ -58,6 +60,7 @@ public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, IOpt
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
    * @since 4.1
+   * @apiviz.has {@link CDOCommonView.Options.LockNotificationEvent}
    */
   public interface Options extends IOptions
   {

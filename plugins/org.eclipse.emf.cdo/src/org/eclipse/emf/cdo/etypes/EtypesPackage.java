@@ -25,10 +25,12 @@ import org.eclipse.emf.ecore.EReference;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
+ * <!-- end-user-doc -->
  * 
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.exclude
  * @see org.eclipse.emf.cdo.etypes.EtypesFactory
  * @model kind="package"
  * @generated
@@ -312,8 +314,9 @@ public interface EtypesPackage extends EPackage
   {
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.etypes.impl.ModelElementImpl <em>Model Element</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * class. <!-- begin-user-doc -->
      * 
+     * @apiviz.exclude <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.etypes.impl.ModelElementImpl
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getModelElement()
      * @generated

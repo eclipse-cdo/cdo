@@ -20,8 +20,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * 
  * @since 2.0
  * @author Victor Roldan Betancort
- * @see CDOView
- * @see CDOViewProviderRegistry
  */
 public interface CDOViewProvider
 {

@@ -11,5 +11,8 @@
 
 /**
  * The generated EMF edit support of the CDO system data types and native annotations.
+ * 
+ * @apiviz.exclude .*
  */
 package org.eclipse.emf.cdo.etypes.provider;
+

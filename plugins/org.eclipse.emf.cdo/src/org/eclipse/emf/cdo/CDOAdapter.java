@@ -27,6 +27,7 @@ import org.eclipse.emf.common.notify.Adapter;
  * 
  * @author Simon McDuff
  * @since 2.0
+ * @apiviz.uses {@link CDONotification} - - receives
  */
 public interface CDOAdapter extends Adapter
 {

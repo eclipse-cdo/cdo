@@ -16,6 +16,7 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
+ * @apiviz.uses {@link IStore} - - creates
  */
 public interface IStoreFactory
 {

@@ -23,6 +23,10 @@ import org.eclipse.net4j.util.security.IUserAware;
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark
+ * @apiviz.composedOf {@link CDOCommonView} - - views
+ * @apiviz.has {@link CDOCommonSession.Options}
+ * @apiviz.uses {@link CDOCommonRepository} - - connectsTo
  */
 public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeable
 {
@@ -43,6 +47,8 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
+   * @apiviz.has CDOCommonSession.Options.PassiveUpdateMode
+   * @apiviz.has CDOCommonSession.Options.LockNotificationMode
    */
   public interface Options extends IOptions
   {

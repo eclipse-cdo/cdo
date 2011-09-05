@@ -20,11 +20,19 @@ import org.eclipse.net4j.util.event.INotifier;
 
 /**
  * Configures and opens new {@link CDOSession sessions}.
+ * <p>
+ * A session configuration can fire the following events:
+ * <ul>
+ * <li> {@link CDOSessionConfiguration.SessionOpenedEvent} after a session has been opened by this configuration.
+ * </ul>
  * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark
+ * @apiviz.uses {@link CDOSession} - - opens
+ * @apiviz.uses {@link CDOSessionConfiguration.SessionOpenedEvent} - - fires
  */
 public interface CDOSessionConfiguration extends INotifier
 {

@@ -24,6 +24,7 @@ import java.util.Map;
  * 
  * @author Eike Stepper
  * @since 4.0
+ * @apiviz.uses {@link IDurableLockingManager.LockArea} - - manages
  */
 public interface IDurableLockingManager
 {
@@ -49,6 +50,7 @@ public interface IDurableLockingManager
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
+   * @apiviz.composedOf {@link IDurableLockingManager.LockGrade} - - locks
    */
   public interface LockArea extends CDOBranchPoint
   {
@@ -74,6 +76,7 @@ public interface IDurableLockingManager
      * A call-back interface for <em>handling</em> {@link LockArea lock area} objects.
      * 
      * @author Eike Stepper
+     * @apiviz.uses {@link IDurableLockingManager.LockArea} - - handles
      */
     public interface Handler
     {

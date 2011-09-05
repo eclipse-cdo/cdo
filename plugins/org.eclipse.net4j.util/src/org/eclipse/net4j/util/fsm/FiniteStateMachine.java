@@ -23,15 +23,15 @@ import java.text.MessageFormat;
  * A <a href="http://en.wikipedia.org/wiki/Finite-state_machine">finite state machine</a> that is based on a matrix of
  * {@link ITransition transitions}.
  * <p>
- * Fires the following events:
+ * A finite state machine can fire the following events:
  * <ul>
  * <li> {@link StateChangedEvent} after state changes of a <i>subject</i>.
  * </ul>
  * 
  * @author Eike Stepper
  * @apiviz.landmark
- * @apiviz.owns ITransition - - matrix
- * @apiviz.uses FiniteStateMachine.StateChangedEvent - - fires
+ * @apiviz.has {@link ITransition} oneway - - matrix
+ * @apiviz.uses {@link FiniteStateMachine.StateChangedEvent} - - fires
  */
 public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT> extends Lifecycle
 {

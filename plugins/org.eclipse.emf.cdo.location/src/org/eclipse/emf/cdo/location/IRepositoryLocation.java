@@ -20,6 +20,8 @@ import java.io.OutputStream;
 /**
  * @author Eike Stepper
  * @since 4.0
+ * @apiviz.landmark
+ * @apiviz.composedOf {@link ICheckoutSource}
  */
 public interface IRepositoryLocation extends IContainer<ICheckoutSource>, CDOSessionConfigurationFactory
 {

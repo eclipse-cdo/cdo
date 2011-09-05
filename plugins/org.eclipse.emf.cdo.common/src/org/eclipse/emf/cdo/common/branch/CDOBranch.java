@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.net4j.util.container.IContainer;
 
 /**
- * Represents a <i>stream of change</i> that is isolated from other streams of changes.
+ * Represents a <i>stream of changes</i> that is isolated from other streams of changes.
  * <p>
  * A branch starts at a fixed {@link #getBase() base} point and ends at a floating {@link #getHead() head} point.
  * Between these two points there can be a number of other {@link CDOBranchPoint branch points}:
@@ -32,6 +32,9 @@ import org.eclipse.net4j.util.container.IContainer;
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark
+ * @apiviz.has {@link CDOBranchPoint} oneway - - base
+ * @apiviz.composedOf {@link CDOBranch} - - subBranches
  */
 public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
 {

@@ -100,10 +100,14 @@ Interface CDOBranchManager</H2>
 <DL>
 <DT><PRE>public interface <B>CDOBranchManager</B><DT>extends <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A></DL>
 </PRE><map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../../spi/common/branch/InternalCDOBranchManager.html" title="&#171;interface&#187; InternalCDOBranchManager (org.eclipse.emf.cdo.spi.common.branch)" alt="" coords="57,201,319,255"/>
-<area shape="rect" id="node2" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="5,6,184,61"/>
-<area shape="rect" id="node3" href="CDOBranchManager.html" title="&#171;interface&#187; CDOBranchManager" alt="" coords="117,117,259,157"/>
-<area shape="rect" id="node4" href="CDOBranchHandler.html" title="&#171;interface&#187; CDOBranchHandler" alt="" coords="214,13,348,53"/>
+<area shape="rect" id="node1" href="../../spi/common/branch/InternalCDOBranchManager.html" title="&#171;interface&#187; InternalCDOBranchManager (org.eclipse.emf.cdo.spi.common.branch)" alt="" coords="289,214,551,269"/>
+<area shape="rect" id="node2" href="../../server/IRepository.html" title="&#171;interface&#187; IRepository (org.eclipse.emf.cdo.server)" alt="" coords="5,6,187,61"/>
+<area shape="rect" id="node3" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="217,6,396,61"/>
+<area shape="rect" id="node4" href="../../session/CDOSession.html" title="&#171;interface&#187; CDOSession (org.eclipse.emf.cdo.session)" alt="" coords="427,6,619,61"/>
+<area shape="rect" id="node5" href="CDOBranchManager.html" title="&#171;interface&#187; CDOBranchManager" alt="" coords="452,117,593,157"/>
+<area shape="rect" id="node6" href="CDOBranchHandler.html" title="&#171;interface&#187; CDOBranchHandler" alt="" coords="649,13,783,53"/>
+<area shape="rect" id="node7" href="CDOBranchCreatedEvent.html" title="&#171;interface&#187; CDOBranchCreatedEvent" alt="" coords="813,13,981,53"/>
+<area shape="rect" id="node8" href="CDOBranch.html" title="&#171;interface&#187; CDOBranch" alt="" coords="580,221,671,261"/>
 </map>
 
 <CENTER><IMG SRC="CDOBranchManager.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -118,10 +122,9 @@ Manages a tree of <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/C
  provides additional methods to find branches by their unique integer ID or by their fully qualified path name, as
  well as asynchronous bulk queries.
  <p>
- A branch manager fires <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>events</CODE></A> of the following types to
- <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><CODE>registered listeners</CODE></A>:
+ A branch manager can fire the following events:
  <ul>
- <li> <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchCreatedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>CDOBranchCreatedEvent</CODE></A>
+ <li> <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchCreatedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>CDOBranchCreatedEvent</CODE></A> after a new branch has been created.
  </ul>
  <p>
  Branch managers are usually associated with the following entities:

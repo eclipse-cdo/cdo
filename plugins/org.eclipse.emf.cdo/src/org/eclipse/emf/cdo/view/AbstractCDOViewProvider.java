@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
  * 
  * @author Victor Roldan Betancort
  * @since 2.0
+ * @apiviz.exclude
  */
 public abstract class AbstractCDOViewProvider implements CDOViewProvider
 {

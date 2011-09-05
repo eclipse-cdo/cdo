@@ -23,6 +23,7 @@ import java.util.List;
  * @author Simon McDuff
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.composedOf {@link CDOFeatureDelta} - - listChanges
  */
 public interface CDOListFeatureDelta extends CDOFeatureDelta
 {

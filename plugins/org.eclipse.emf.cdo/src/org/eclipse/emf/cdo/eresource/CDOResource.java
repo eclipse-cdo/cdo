@@ -25,22 +25,23 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * 
  * @extends Resource
  * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
- *              <p>
- *              The following features are supported:
- *              <ul>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}</li>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}</li>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getContents <em>Contents</em>}</li>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}</li>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}</li>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking Modification
- *              </em>}</li>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors <em>Errors</em>}</li>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}</li>
- *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}</li>
- *              </ul>
- *              </p>
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark <!-- end-user-doc -->
+ *                  <p>
+ *                  The following features are supported:
+ *                  <ul>
+ *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}</li>
+ *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}</li>
+ *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getContents <em>Contents</em>}</li>
+ *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}</li>
+ *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}</li>
+ *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking
+ *                  Modification </em>}</li>
+ *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors <em>Errors</em>}</li>
+ *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}</li>
+ *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}</li>
+ *                  </ul>
+ *                  </p>
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource()
  * @model
  * @generated

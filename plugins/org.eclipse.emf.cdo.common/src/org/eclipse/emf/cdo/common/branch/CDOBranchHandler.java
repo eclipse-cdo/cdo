@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.common.branch;
  * @see CDOBranchManager#getBranches(int, int, CDOBranchHandler)
  * @author Eike Stepper
  * @since 3.0
+ * @apiviz.uses {@link CDOBranch} - - handles
  */
 public interface CDOBranchHandler
 {

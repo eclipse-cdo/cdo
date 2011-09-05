@@ -15,15 +15,15 @@ import org.eclipse.net4j.util.ObjectUtil;
 /**
  * A {@link INotifier notifier} with an {@link #getID() ID} and a single {@link #getValue() value}.
  * <p>
- * Fires the following events:
+ * A value notifier can fire the following events:
  * <ul>
  * <li> {@link ValueEvent} after value changes.
  * </ul>
  * 
  * @author Eike Stepper
  * @since 3.1
- * @apiviz.owns java.lang.Object - - value
- * @apiviz.uses ValueEvent - - fires
+ * @apiviz.has {@link java.lang.Object} oneway - - value
+ * @apiviz.uses {@link ValueEvent} - - fires
  */
 public class ValueNotifier<VALUE> extends Notifier
 {

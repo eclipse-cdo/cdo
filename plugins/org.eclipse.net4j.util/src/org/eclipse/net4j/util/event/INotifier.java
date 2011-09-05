@@ -21,8 +21,8 @@ package org.eclipse.net4j.util.event;
  * 
  * @author Eike Stepper
  * @apiviz.landmark
- * @apiviz.owns IListener - - listeners
- * @apiviz.uses IEvent - - fires
+ * @apiviz.owns {@link IListener} - - listeners
+ * @apiviz.uses {@link IEvent} - - fires
  */
 public interface INotifier
 {

@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * 
  * @author Eike Stepper
  * @since 4.0
+ * @apiviz.uses {@link CDOList} - - resolves
  */
 public interface CDOListResolver
 {

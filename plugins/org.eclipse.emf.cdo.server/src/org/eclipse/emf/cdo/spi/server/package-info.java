@@ -11,5 +11,8 @@
 
 /**
  * Server service provider interfaces and useful base implementations.
+ * 
+ * @apiviz.exclude .*
  */
 package org.eclipse.emf.cdo.spi.server;
+

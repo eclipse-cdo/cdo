@@ -20,6 +20,8 @@ import java.io.InputStream;
 /**
  * @author Eike Stepper
  * @since 4.0
+ * @apiviz.landmark
+ * @apiviz.composedOf {@link IRepositoryLocation}
  */
 public interface IRepositoryLocationManager extends IContainer<IRepositoryLocation>
 {

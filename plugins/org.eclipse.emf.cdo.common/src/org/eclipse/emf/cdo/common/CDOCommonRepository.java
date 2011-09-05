@@ -19,11 +19,23 @@ import java.util.Set;
 
 /**
  * Abstracts the information about CDO repositories that is common to both client and server side.
+ * <p>
+ * A CDOCommonRepository can fire the following events:
+ * <ul>
+ * <li> {@link TypeChangedEvent} after the {@link #getType() repository type} has changed in a fail-over cluster.
+ * <li> {@link StateChangedEvent} after the {@link #getState() repository state} has changed in a replicating deployment.
+ * </ul>
  * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark
+ * @apiviz.has {@link CDOCommonRepository.IDGenerationLocation}
+ * @apiviz.has {@link CDOCommonRepository.Type}
+ * @apiviz.has {@link CDOCommonRepository.State}
+ * @apiviz.uses {@link CDOCommonRepository.TypeChangedEvent} - - fires
+ * @apiviz.uses {@link CDOCommonRepository.StateChangedEvent} - - fires
  */
 public interface CDOCommonRepository extends CDOTimeProvider
 {

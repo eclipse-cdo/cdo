@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.common.id;
  * 
  * @author Eike Stepper
  * @since 4.0
+ * @apiviz.has {@link CDOID}
  */
 public interface CDOWithID
 {

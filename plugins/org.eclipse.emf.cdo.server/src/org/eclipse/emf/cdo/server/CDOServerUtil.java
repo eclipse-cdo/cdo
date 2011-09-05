@@ -57,6 +57,7 @@ import java.util.Map;
 
 /**
  * @author Eike Stepper
+ * @apiviz.exclude
  */
 public final class CDOServerUtil
 {
@@ -235,6 +236,7 @@ public final class CDOServerUtil
   /**
    * @author Eike Stepper
    * @since 2.0
+   * @apiviz.exclude
    */
   public static abstract class RepositoryReadAccessValidator implements IRepository.ReadAccessHandler
   {

@@ -17,6 +17,7 @@ package org.eclipse.emf.cdo.view;
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.exclude
  */
 public interface CDOStaleObject
 {

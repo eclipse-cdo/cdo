@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.common.branch;
 
-import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
@@ -21,10 +20,9 @@ import org.eclipse.net4j.util.event.INotifier;
  * provides additional methods to find branches by their unique integer ID or by their fully qualified path name, as
  * well as asynchronous bulk queries.
  * <p>
- * A branch manager fires {@link IEvent events} of the following types to
- * {@link INotifier#addListener(org.eclipse.net4j.util.event.IListener) registered listeners}:
+ * A branch manager can fire the following events:
  * <ul>
- * <li> {@link CDOBranchCreatedEvent}
+ * <li> {@link CDOBranchCreatedEvent} after a new branch has been created.
  * </ul>
  * <p>
  * Branch managers are usually associated with the following entities:
@@ -37,6 +35,9 @@ import org.eclipse.net4j.util.event.INotifier;
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.landmark
+ * @apiviz.has {@link CDOBranch} oneway - - mainBranch
+ * @apiviz.uses {@link CDOBranchCreatedEvent} - - fires
  */
 public interface CDOBranchManager extends INotifier
 {

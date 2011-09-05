@@ -71,6 +71,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  * @since 4.0
+ * @apiviz.has {@link CDOServerImporter.Handler}
  */
 public abstract class CDOServerImporter
 {

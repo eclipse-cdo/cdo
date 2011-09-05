@@ -29,8 +29,8 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  * @apiviz.landmark
- * @apiviz.composedOf org.eclipse.net4j.util.factory.IFactory - - factoryRegistry
- * @apiviz.composedOf org.eclipse.net4j.util.container.IElementProcessor - - postProcessors
+ * @apiviz.composedOf {@link org.eclipse.net4j.util.factory.IFactory} - - factoryRegistry
+ * @apiviz.composedOf {@link org.eclipse.net4j.util.container.IElementProcessor} - - postProcessors
  */
 public interface IManagedContainer extends IContainer<Object>, ILifecycle
 {

@@ -27,6 +27,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @apiviz.exclude
+ * @apiviz.composedOf {@link CDOTransaction} - - transactions
  */
 public interface CDOTransactionContainer extends CDOViewContainer
 {

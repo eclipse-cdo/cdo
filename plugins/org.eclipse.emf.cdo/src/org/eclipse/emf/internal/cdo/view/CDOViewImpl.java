@@ -297,7 +297,7 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     // Update the lock states in this view
-    updateAndNotifyLockStates(Operation.LOCK, lockType, result.getNewLockStates());
+    updateAndNotifyLockStates(Operation.LOCK, lockType, result.getTimestamp(), result.getNewLockStates());
 
     if (result.isWaitForUpdate())
     {
@@ -312,10 +312,10 @@ public class CDOViewImpl extends AbstractCDOView
     }
   }
 
-  protected void updateAndNotifyLockStates(Operation op, LockType type, CDOLockState[] newLockStates)
+  protected void updateAndNotifyLockStates(Operation op, LockType type, long timestamp, CDOLockState[] newLockStates)
   {
     updateLockStates(newLockStates);
-    notifyOtherViewsAboutLockChanges(op, type, newLockStates);
+    notifyOtherViewsAboutLockChanges(op, type, timestamp, newLockStates);
   }
 
   /**
@@ -347,18 +347,17 @@ public class CDOViewImpl extends AbstractCDOView
   /**
    * Notifies other views of lock changes performed in this view
    */
-  private void notifyOtherViewsAboutLockChanges(Operation op, LockType type, CDOLockState[] lockStates)
+  private void notifyOtherViewsAboutLockChanges(Operation op, LockType type, long timestamp, CDOLockState[] lockStates)
   {
     if (lockStates.length > 0)
     {
-      CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(op, type, lockStates);
+      CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(op, type, timestamp, lockStates);
       getSession().handleLockNotification(lockChangeInfo, this);
     }
   }
 
-  private CDOLockChangeInfo makeLockChangeInfo(Operation op, LockType type, CDOLockState[] newLockStates)
+  private CDOLockChangeInfo makeLockChangeInfo(Operation op, LockType type, long timestamp, CDOLockState[] newLockStates)
   {
-    long timestamp = 0L; // TODO (CD) Get rid of timestamps; replace with sequential number
     return CDOLockUtil.createLockChangeInfo(timestamp, this, getBranch(), op, type, newLockStates);
   }
 
@@ -434,7 +433,7 @@ public class CDOViewImpl extends AbstractCDOView
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
     UnlockObjectsResult result = sessionProtocol.unlockObjects2(this, objectIDs, lockType);
 
-    updateAndNotifyLockStates(Operation.UNLOCK, lockType, result.getNewLockStates());
+    updateAndNotifyLockStates(Operation.UNLOCK, lockType, result.getTimestamp(), result.getNewLockStates());
   }
 
   /**
@@ -1534,7 +1533,7 @@ public class CDOViewImpl extends AbstractCDOView
           CDOSessionProtocol protocol = getSession().getSessionProtocol();
           protocol.enableLockNotifications(viewID, enabled);
           lockNotificationsEnabled = enabled;
-          event = new LockNotificationEventImpl();
+          event = new LockNotificationEventImpl(enabled);
         }
       }
 
@@ -1831,9 +1830,17 @@ public class CDOViewImpl extends AbstractCDOView
     {
       private static final long serialVersionUID = 1L;
 
-      public LockNotificationEventImpl()
+      private boolean enabled;
+
+      public LockNotificationEventImpl(boolean enabled)
       {
         super(OptionsImpl.this);
+        this.enabled = enabled;
+      }
+
+      public boolean getEnabled()
+      {
+        return enabled;
       }
     }
 

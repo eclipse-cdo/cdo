@@ -68,11 +68,11 @@ public class ReplicateRepositoryRequest extends CDOClientRequest<Boolean>
         break;
 
       case CDOProtocolConstants.REPLICATE_LOCKAREA:
-        boolean deleted = !in.readBoolean();
-        if (deleted)
+        boolean missing = !in.readBoolean();
+        if (missing)
         {
-          String deletedLockAreaID = in.readString();
-          LockArea area = CDOLockUtil.createLockArea(deletedLockAreaID);
+          String missingLockAreaID = in.readString();
+          LockArea area = CDOLockUtil.createLockArea(missingLockAreaID);
           context.handleLockArea(area);
         }
         else

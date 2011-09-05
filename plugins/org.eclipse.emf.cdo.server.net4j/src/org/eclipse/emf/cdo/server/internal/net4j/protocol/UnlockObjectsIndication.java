@@ -74,6 +74,7 @@ public class UnlockObjectsIndication extends CDOServerWriteIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
+    out.writeLong(result.getTimestamp());
     CDOLockState[] newLockStates = result.getNewLockStates();
     out.writeInt(newLockStates.length);
     for (CDOLockState state : newLockStates)

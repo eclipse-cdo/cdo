@@ -77,8 +77,7 @@ public class Session extends Container<IView> implements InternalSession
 
   private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
 
-  private LockNotificationMode lockNotificationMode = LockNotificationMode.ALWAYS; // TODO (CD) Default should be
-                                                                                   // PER_VIEW
+  private LockNotificationMode lockNotificationMode = LockNotificationMode.IF_REQUIRED_BY_VIEWS;
 
   private long lastUpdateTime;
 

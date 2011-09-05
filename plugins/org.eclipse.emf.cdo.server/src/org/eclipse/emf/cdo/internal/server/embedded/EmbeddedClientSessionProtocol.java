@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.embedded;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
@@ -162,6 +163,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   public void setPassiveUpdateMode(PassiveUpdateMode mode)
   {
     // TODO: implement EmbeddedClientSessionProtocol.setPassiveUpdateMode(mode)
+    throw new UnsupportedOperationException();
+  }
+
+  public void setLockNotificationMode(LockNotificationMode mode)
+  {
     throw new UnsupportedOperationException();
   }
 

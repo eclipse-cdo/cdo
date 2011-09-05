@@ -320,6 +320,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case CDOProtocolConstants.SIGNAL_ENABLE_LOCK_NOTIFICATION:
       return new EnableLockNotificationIndication(this);
 
+    case CDOProtocolConstants.SIGNAL_SET_LOCK_NOTIFICATION_MODE:
+      return new SetLockNotificationModeIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

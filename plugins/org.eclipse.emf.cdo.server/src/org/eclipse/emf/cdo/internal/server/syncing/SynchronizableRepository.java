@@ -192,7 +192,24 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
   public String[] getLockAreaIDs()
   {
-    return new String[0]; // TODO (CD)
+    try
+    {
+      StoreThreadLocal.setSession(replicatorSession);
+      final List<String> areaIDs = new LinkedList<String>();
+      getLockManager().getLockAreas(null, new LockArea.Handler()
+      {
+        public boolean handleLockArea(LockArea area)
+        {
+          areaIDs.add(area.getDurableLockingID());
+          return true;
+        }
+      });
+      return areaIDs.toArray(new String[areaIDs.size()]);
+    }
+    finally
+    {
+      StoreThreadLocal.release();
+    }
   }
 
   public void handleBranch(CDOBranch branch)
@@ -271,7 +288,11 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
       if (lockChangeInfo.getOperation() == Operation.LOCK)
       {
-        long timeout = 10000; // TODO (CD)
+        // If we can't lock immediately, there's a conflict, which means we're in big
+        // trouble: somehow locks were obtained on the clone but not on the master. What to do?
+        // TODO (CD) Consider this problem further
+        //
+        long timeout = 0;
         super.lock(view, lockType, lockables, null, timeout);
       }
       else if (lockChangeInfo.getOperation() == Operation.UNLOCK)

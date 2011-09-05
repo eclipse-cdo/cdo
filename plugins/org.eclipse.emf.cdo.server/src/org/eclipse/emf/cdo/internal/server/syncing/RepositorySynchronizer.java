@@ -506,25 +506,64 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     }
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  private final class CommitRunnable extends QueueRunnable
+  private final class CommitRunnable extends RetryingRunnable
   {
     private CDOCommitInfo commitInfo;
-
-    private List<Exception> failedRuns;
 
     public CommitRunnable(CDOCommitInfo commitInfo)
     {
       this.commitInfo = commitInfo;
     }
 
+    @Override
+    protected void doRun()
+    {
+      localRepository.handleCommitInfo(commitInfo);
+    }
+
+    @Override
+    public int compareTo(QueueRunnable o)
+    {
+      int result = super.compareTo(o);
+      if (result == 0)
+      {
+        Long timeStamp = commitInfo.getTimeStamp();
+        Long timeStamp2 = ((CommitRunnable)o).commitInfo.getTimeStamp();
+        result = timeStamp < timeStamp2 ? -1 : timeStamp == timeStamp2 ? 0 : 1;
+      }
+
+      return result;
+    }
+
+    @Override
+    protected Integer getPriority()
+    {
+      return COMMIT_PRIORITY;
+    }
+
+    @Override
+    protected String getErrorMessage()
+    {
+      return "Replication of master commit failed:" + commitInfo;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private abstract class RetryingRunnable extends QueueRunnable
+  {
+    private List<Exception> failedRuns;
+
+    protected abstract void doRun();
+
+    protected abstract String getErrorMessage();
+
     public void run()
     {
       try
       {
-        localRepository.handleCommitInfo(commitInfo);
+        doRun();
       }
       catch (Exception ex)
       {
@@ -553,7 +592,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
             {
               try
               {
-                addWork(CommitRunnable.this);
+                addWork(this);
               }
               catch (Exception ex)
               {
@@ -564,36 +603,16 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
         }
         else
         {
-          OM.LOG.error("Replication of master commit failed:" + commitInfo, ex);
+          OM.LOG.error(getErrorMessage(), ex);
         }
       }
-    }
-
-    @Override
-    public int compareTo(QueueRunnable o)
-    {
-      int result = super.compareTo(o);
-      if (result == 0)
-      {
-        Long timeStamp = commitInfo.getTimeStamp();
-        Long timeStamp2 = ((CommitRunnable)o).commitInfo.getTimeStamp();
-        result = timeStamp < timeStamp2 ? -1 : timeStamp == timeStamp2 ? 0 : 1;
-      }
-
-      return result;
-    }
-
-    @Override
-    protected Integer getPriority()
-    {
-      return COMMIT_PRIORITY;
     }
   }
 
   /**
    * @author Caspar De Groot
    */
-  private final class LocksRunnable extends QueueRunnable
+  private final class LocksRunnable extends RetryingRunnable
   {
     private CDOLockChangeInfo lockChangeInfo;
 
@@ -602,17 +621,19 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
       this.lockChangeInfo = lockChangeInfo;
     }
 
-    public void run()
+    @Override
+    protected Integer getPriority()
+    {
+      return LOCKS_PRIORITY;
+    }
+
+    @Override
+    protected void doRun()
     {
       try
       {
         StoreThreadLocal.setSession(localRepository.getReplicatorSession());
         localRepository.handleLockChangeInfo(lockChangeInfo);
-      }
-      catch (Exception ex)
-      {
-        // TODO (CD) Retry as for commit?
-        ex.printStackTrace();
       }
       finally
       {
@@ -621,9 +642,9 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
     }
 
     @Override
-    protected Integer getPriority()
+    protected String getErrorMessage()
     {
-      return LOCKS_PRIORITY;
+      return "Replication of master lock changes failed:" + lockChangeInfo;
     }
   }
 }

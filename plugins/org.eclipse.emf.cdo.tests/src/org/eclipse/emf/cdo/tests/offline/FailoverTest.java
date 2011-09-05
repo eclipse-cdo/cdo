@@ -71,7 +71,7 @@ public class FailoverTest extends AbstractSyncingTest
   {
     CDOSession session = openSession("master");
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
+    CDOResource resource = transaction.createResource(getResourcePath("test"));
 
     Company company = getModel1Factory().createCompany();
     company.setName("Test");

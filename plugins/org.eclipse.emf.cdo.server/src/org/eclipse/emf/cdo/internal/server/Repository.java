@@ -1150,7 +1150,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
       public String[] getLockAreaIDs()
       {
-        return null; // TODO (CD)
+        return null; // TODO (CD) Raw replication of lockAreas
       }
     };
   }
@@ -1382,7 +1382,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
     catch (TimeoutRuntimeException ex)
     {
-      return new LockObjectsResult(false, true, false, 0, new CDORevisionKey[0], new CDOLockState[0]);
+      return new LockObjectsResult(false, true, false, 0, new CDORevisionKey[0], new CDOLockState[0], getTimeStamp());
     }
     catch (InterruptedException ex)
     {
@@ -1400,14 +1400,16 @@ public class Repository extends Container<Object> implements InternalRepository
     if (staleNoUpdate)
     {
       lockManager.unlock2(true, type, view, lockables);
-      return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, new CDOLockState[0]);
+      return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, new CDOLockState[0],
+          getTimeStamp());
     }
 
     CDOLockState[] cdoLockStates = toCDOLockStates(newLockStates);
     sendLockNotifications(view, Operation.LOCK, type, cdoLockStates);
 
     boolean waitForUpdate = staleRevisionsArray.length > 0;
-    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, cdoLockStates);
+    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, cdoLockStates,
+        getTimeStamp());
   }
 
   private CDORevisionKey[] checkStaleRevisions(InternalView view, List<CDORevisionKey> revisionKeys,
@@ -1499,10 +1501,11 @@ public class Repository extends Container<Object> implements InternalRepository
       newLockStates = lockManager.unlock2(true, lockType, view, unlockables);
     }
 
+    long timestamp = getTimeStamp();
     CDOLockState[] cdoLockStates = toCDOLockStates(newLockStates);
     sendLockNotifications(view, Operation.UNLOCK, lockType, cdoLockStates);
 
-    return new UnlockObjectsResult(cdoLockStates);
+    return new UnlockObjectsResult(cdoLockStates, timestamp);
   }
 
   @Override

@@ -84,6 +84,8 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
       staleRevisions[i] = in.readCDORevisionKey();
     }
 
+    long timestamp = in.readLong();
+
     int n = in.readInt();
     CDOLockState[] newLockStates = new CDOLockState[n];
     for (int i = 0; i < n; i++)
@@ -91,6 +93,7 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
       newLockStates[i] = in.readCDOLockState();
     }
 
-    return new LockObjectsResult(succesful, timeout, waitForUpdate, requiredTimestamp, staleRevisions, newLockStates);
+    return new LockObjectsResult(succesful, timeout, waitForUpdate, requiredTimestamp, staleRevisions, newLockStates,
+        timestamp);
   }
 }

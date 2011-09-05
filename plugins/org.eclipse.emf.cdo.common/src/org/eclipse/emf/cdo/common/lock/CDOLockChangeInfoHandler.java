@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.common.lock;
 
 /**
+ * A call-back interface that indicates the ability to <i>handle</i> {@link CDOLockChangeInfo lock-change infos} that
+ * are passed from other entities.
+ * 
  * @author Caspar De Groot
  * @since 4.1
  */

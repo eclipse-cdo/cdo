@@ -574,34 +574,14 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
    */
   private final class DurableLockLoader implements LockArea.Handler
   {
-    // Note (CD) This field is a sneaky way of avoiding more API changes.
-    // The view should properly be an argument on #handleLockArea(LockArea)
-    private IView view;
-
     public DurableLockLoader()
     {
     }
 
-    public DurableLockLoader(IView view)
-    {
-      this.view = view;
-    }
-
-    private IView getView(LockArea area)
-    {
-      if (view != null)
-      {
-        return view;
-      }
-
-      DurableView view = new DurableView(area.getDurableLockingID());
-      durableViews.put(area.getDurableLockingID(), view);
-      return view;
-    }
-
     public boolean handleLockArea(LockArea area)
     {
-      IView view = getView(area);
+      IView view = durableViews.get(area.getDurableLockingID());
+      CheckUtil.checkNull(view, "view");
 
       Collection<Object> readLocks = new ArrayList<Object>();
       Collection<Object> writeLocks = new ArrayList<Object>();
@@ -658,44 +638,54 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     return grade;
   }
 
+  private IView getOrCreateView(String lockAreaID)
+  {
+    IView view = openViews.get(lockAreaID);
+    if (view == null)
+    {
+      view = durableViews.get(lockAreaID);
+    }
+    if (view == null)
+    {
+      view = new DurableView(lockAreaID);
+      durableViews.put(lockAreaID, (DurableView)view);
+    }
+    return view;
+  }
+
+  private LockArea getLockAreaNoEx(String durableLockingID)
+  {
+    try
+    {
+      return getLockArea(durableLockingID);
+    }
+    catch (LockAreaNotFoundException e)
+    {
+      return null;
+    }
+  }
+
   public void updateLockArea(LockArea lockArea)
   {
+    String durableLockingID = lockArea.getDurableLockingID();
     DurableLocking2 accessor = getDurableLocking2();
-    if (lockArea.isDeleted())
+
+    if (lockArea.isMissing())
     {
-      accessor.deleteLockArea(lockArea.getDurableLockingID());
+      LockArea localLockArea = getLockAreaNoEx(durableLockingID);
+      if (localLockArea != null && localLockArea.getLocks().size() > 0)
+      {
+        accessor.deleteLockArea(durableLockingID);
+        DurableView deletedView = durableViews.remove(durableLockingID);
+        CheckUtil.checkNull(deletedView, "deletedView");
+      }
     }
     else
     {
       accessor.updateLockArea(lockArea);
-    }
-
-    IView view = openViews.get(lockArea.getDurableLockingID());
-    if (view == null)
-    {
-      view = durableViews.get(lockArea.getDurableLockingID());
-
-      // If we already have this durableView, we remove all the locks first...
-      if (view != null)
-      {
-        unlock2(view);
-      }
-
-      // ...then reload from the new lockArea
-      //
-      if (lockArea.isDeleted())
-      {
-        DurableView deletedView = durableViews.remove(lockArea.getDurableLockingID());
-        CheckUtil.checkNull(deletedView, "deletedView");
-      }
-      else
-      {
-        DurableLockLoader handler = new DurableLockLoader(view);
-        handler.handleLockArea(lockArea);
-      }
-
-      view = durableViews.get(lockArea.getDurableLockingID());
-      CheckUtil.checkNull(view, "view");
+      IView view = getOrCreateView(durableLockingID);
+      unlock2(view);
+      new DurableLockLoader().handleLockArea(lockArea);
     }
   }
 }

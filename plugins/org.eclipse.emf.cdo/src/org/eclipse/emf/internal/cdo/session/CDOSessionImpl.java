@@ -1445,6 +1445,23 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     public void setLockNotificationMode(LockNotificationMode lockNotificationMode)
     {
+      checkArg(lockNotificationMode, "lockNotificationMode"); //$NON-NLS-1$
+      if (this.lockNotificationMode != lockNotificationMode)
+      {
+        LockNotificationMode oldMode = this.lockNotificationMode;
+        this.lockNotificationMode = lockNotificationMode;
+        CDOSessionProtocol protocol = getSessionProtocol();
+        if (protocol != null)
+        {
+          protocol.setLockNotificationMode(lockNotificationMode);
+
+          IListener[] listeners = getListeners();
+          if (listeners != null)
+          {
+            fireEvent(new LockNotificationModeEventImpl(oldMode, lockNotificationMode), listeners);
+          }
+        }
+      }
       this.lockNotificationMode = lockNotificationMode;
     }
 
@@ -1583,6 +1600,33 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
 
       public PassiveUpdateMode getNewMode()
+      {
+        return newMode;
+      }
+    }
+
+    /**
+     * @author Caspar De Groot
+     */
+    private final class LockNotificationModeEventImpl extends OptionsEvent implements LockNotificationModeEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      private LockNotificationMode oldMode, newMode;
+
+      public LockNotificationModeEventImpl(LockNotificationMode oldMode, LockNotificationMode newMode)
+      {
+        super(OptionsImpl.this);
+        this.oldMode = oldMode;
+        this.newMode = newMode;
+      }
+
+      public LockNotificationMode getOldMode()
+      {
+        return oldMode;
+      }
+
+      public LockNotificationMode getNewMode()
       {
         return newMode;
       }

@@ -790,7 +790,6 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
     {
       String userID = area.getUserID();
       if (userID == null || userID.startsWith(userIDPrefix))
-      // if (userID != null && userID.startsWith(userIDPrefix)) // TODO (CD) Used to be this. Any breakage?
       {
         if (!handler.handleLockArea(area))
         {

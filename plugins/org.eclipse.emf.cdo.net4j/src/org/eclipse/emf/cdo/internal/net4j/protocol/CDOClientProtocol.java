@@ -525,4 +525,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   {
     send(new EnableLockNotificationRequest(this, viewID, on));
   }
+
+  public void setLockNotificationMode(LockNotificationMode mode)
+  {
+    send(new SetLockNotificationModeRequest(this, mode));
+  }
 }

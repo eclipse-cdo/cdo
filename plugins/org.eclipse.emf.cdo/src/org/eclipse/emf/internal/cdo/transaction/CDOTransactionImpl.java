@@ -2653,7 +2653,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           CDOLockState[] newLockStates = result.getNewLockStates();
           if (newLockStates != null)
           {
-            updateAndNotifyLockStates(Operation.UNLOCK, null, newLockStates);
+            updateAndNotifyLockStates(Operation.UNLOCK, null, result.getTimeStamp(), newLockStates);
           }
         }
         catch (RuntimeException ex)

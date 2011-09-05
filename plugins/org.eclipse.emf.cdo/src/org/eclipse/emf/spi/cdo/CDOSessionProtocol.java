@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -84,6 +85,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @since 3.0
    */
   public void setPassiveUpdateMode(PassiveUpdateMode mode);
+
+  /**
+   * @since 4.1
+   */
+  public void setLockNotificationMode(LockNotificationMode mode);
 
   /**
    * @since 3.0
@@ -807,6 +813,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private long requiredTimestamp;
 
+    private long timestamp;
+
     private CDORevisionKey[] staleRevisions;
 
     private CDOLockState[] newLockStates;
@@ -815,14 +823,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp,
         CDORevisionKey[] staleRevisions)
     {
-      throw new AssertionError("Deprecated"); // TODO (CD) What to do about this??
+      throw new AssertionError("Deprecated");
     }
 
     /**
      * @since 4.1
      */
     public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp,
-        CDORevisionKey[] staleRevisions, CDOLockState[] newLockStates)
+        CDORevisionKey[] staleRevisions, CDOLockState[] newLockStates, long timestamp)
     {
       this.successful = successful;
       this.timedOut = timedOut;
@@ -830,6 +838,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       this.requiredTimestamp = requiredTimestamp;
       this.staleRevisions = staleRevisions;
       this.newLockStates = newLockStates;
+      this.timestamp = timestamp;
     }
 
     public boolean isSuccessful()
@@ -864,6 +873,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     {
       return newLockStates;
     }
+
+    /**
+     * @since 4.1
+     */
+    public long getTimestamp()
+    {
+      return timestamp;
+    }
   }
 
   /**
@@ -873,7 +890,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   {
     private CDOLockState[] newLockStates;
 
-    public UnlockObjectsResult(CDOLockState[] newLockStates)
+    private long timestamp;
+
+    public UnlockObjectsResult(CDOLockState[] newLockStates, long timestamp)
     {
       this.newLockStates = newLockStates;
     }
@@ -881,6 +900,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public CDOLockState[] getNewLockStates()
     {
       return newLockStates;
+    }
+
+    public long getTimestamp()
+    {
+      return timestamp;
     }
   }
 }

@@ -101,7 +101,7 @@ public class DurableLockArea implements LockArea
   /**
    * @since 4.1
    */
-  public boolean isDeleted()
+  public boolean isMissing()
   {
     return false;
   }

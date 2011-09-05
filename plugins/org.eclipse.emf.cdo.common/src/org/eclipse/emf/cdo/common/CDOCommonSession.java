@@ -169,5 +169,19 @@ public interface CDOCommonSession extends IUserAware, IOptionsContainer, Closeab
 
       public PassiveUpdateMode getNewMode();
     }
+
+    /**
+     * An {@link IOptionsEvent options event} fired when the {@link LockNotificationMode lock notification mode} of a
+     * CDO session has changed.
+     * 
+     * @author Caspar De Groot
+     * @since 4.1
+     */
+    public interface LockNotificationModeEvent extends IOptionsEvent
+    {
+      public LockNotificationMode getOldMode();
+
+      public LockNotificationMode getNewMode();
+    }
   }
 }

@@ -68,9 +68,12 @@ public interface IDurableLockingManager
     public Map<CDOID, LockGrade> getLocks();
 
     /**
+     * Returns <code>true</code> if this instance represents a lock area that is known to be missing (not present) on a
+     * master server. (Relevant only in a replicating configuration.)
+     * 
      * @since 4.1
      */
-    public boolean isDeleted();
+    public boolean isMissing();
 
     /**
      * A call-back interface for <em>handling</em> {@link LockArea lock area} objects.

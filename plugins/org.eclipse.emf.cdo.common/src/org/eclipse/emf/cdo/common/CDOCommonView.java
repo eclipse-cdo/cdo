@@ -86,6 +86,7 @@ public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, IOpt
      */
     public interface LockNotificationEvent extends IOptionsEvent
     {
+      boolean getEnabled();
     }
   }
 }

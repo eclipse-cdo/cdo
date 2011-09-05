@@ -39,7 +39,7 @@ public class CDOLockAreaImpl implements LockArea
 
   private final Map<CDOID, LockGrade> locks;
 
-  private final boolean deleted;
+  private final boolean missing;
 
   public CDOLockAreaImpl(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
       Map<CDOID, LockGrade> locks)
@@ -49,7 +49,7 @@ public class CDOLockAreaImpl implements LockArea
     this.branchPoint = branchPoint;
     this.readOnly = readOnly;
     this.locks = locks;
-    deleted = false;
+    missing = false;
   }
 
   public CDOLockAreaImpl(String durableLockingID)
@@ -59,7 +59,7 @@ public class CDOLockAreaImpl implements LockArea
     branchPoint = null;
     readOnly = false;
     locks = null;
-    deleted = true;
+    missing = true;
   }
 
   public String getDurableLockingID()
@@ -99,8 +99,8 @@ public class CDOLockAreaImpl implements LockArea
         durableLockingID, userID, branchPoint, readOnly, locks);
   }
 
-  public boolean isDeleted()
+  public boolean isMissing()
   {
-    return deleted;
+    return missing;
   }
 }

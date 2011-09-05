@@ -85,6 +85,8 @@ public class LockObjectsIndication extends CDOServerWriteIndication
       out.writeCDORevisionKey(revKey);
     }
 
+    out.writeLong(result.getTimestamp());
+
     CDOLockState[] newLockStates = result.getNewLockStates();
     out.writeInt(newLockStates.length);
     for (CDOLockState lockState : newLockStates)

@@ -14,6 +14,14 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.view.CDOView;
 
 /**
+ * A {@link CDOSessionEvent session event} fired when lock-change notifications are received from a remote repository.
+ * For this event to be fired,
+ * {@link CDOSession.Options#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)
+ * the lock notification mode} must either be set to ALWAYS, or it must be set to IF_REQUIRED_BY_VIEWS <i>and</i> at
+ * least one of this sessions' views must have
+ * {@link org.eclipse.emf.cdo.common.CDOCommonView.Options#setLockNotificationEnabled(boolean) its lock-notification
+ * enablement} set to <code>true</code>.
+ * 
  * @author Caspar De Groot
  * @since 4.1
  */

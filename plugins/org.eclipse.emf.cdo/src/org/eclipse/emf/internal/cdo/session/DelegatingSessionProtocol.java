@@ -11,6 +11,7 @@
 package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
@@ -726,6 +727,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         delegate.setPassiveUpdateMode(mode);
+        return;
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public void setLockNotificationMode(LockNotificationMode mode)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        delegate.setLockNotificationMode(mode);
         return;
       }
       catch (Exception ex)

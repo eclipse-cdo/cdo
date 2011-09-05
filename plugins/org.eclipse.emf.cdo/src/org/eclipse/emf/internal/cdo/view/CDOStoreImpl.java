@@ -671,7 +671,7 @@ public final class CDOStoreImpl implements CDOStore
     {
       if (value instanceof CDOID)
       {
-        value = view.options().getStaleReferenceBehaviour().processStaleReference(eObject, feature, index, ex.getID());
+        value = view.options().getStaleReferencePolicy().processStaleReference(eObject, feature, index, ex.getID());
       }
     }
 

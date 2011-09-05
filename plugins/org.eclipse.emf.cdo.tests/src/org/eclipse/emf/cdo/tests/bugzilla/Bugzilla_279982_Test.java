@@ -40,7 +40,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
-    tx.options().setStaleReferenceBehaviour(CDOStaleReferencePolicy.PROXY);
+    tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.PROXY);
     GenRefSingleContained container = getModel4Factory().createGenRefSingleContained();
     GenRefSingleNonContained reference = getModel4Factory().createGenRefSingleNonContained();
     GenRefSingleNonContained contained = getModel4Factory().createGenRefSingleNonContained();
@@ -71,7 +71,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
       fail("Should have an ObjectNotFoundException");
     }
 
-    tx.options().setStaleReferenceBehaviour(CDOStaleReferencePolicy.EXCEPTION);
+    tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
 
     try
     {
@@ -107,7 +107,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
     CDOResource res = tx.getOrCreateResource(getResourcePath("/resource1"));
-    tx.options().setStaleReferenceBehaviour(CDOStaleReferencePolicy.PROXY);
+    tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.PROXY);
     GenRefSingleContained container = getModel4Factory().createGenRefSingleContained();
     GenRefMultiNonContained reference = getModel4Factory().createGenRefMultiNonContained();
     GenRefSingleNonContained contained = getModel4Factory().createGenRefSingleNonContained();
@@ -122,7 +122,7 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     assertNull(container.getElement());
     assertNotNull(reference.getElements().get(0));
 
-    tx.options().setStaleReferenceBehaviour(CDOStaleReferencePolicy.EXCEPTION);
+    tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
 
     try
     {

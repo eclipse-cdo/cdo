@@ -72,7 +72,6 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  * @apiviz.landmark
- * @apiviz.has {@link org.eclipse.emf.cdo.common.branch.CDOBranchPoint} oneway - - target
  * @apiviz.has {@link CDOView.Options}
  * @apiviz.owns {@link CDOObjectHandler}
  * @apiviz.uses {@link CDOQuery} - - creates
@@ -412,11 +411,11 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
-   * @apiviz.has {@link org.eclipse.net4j.util.ref.ReferenceType} oneway - - cacheReferenceType
+   * @apiviz.has {@link org.eclipse.net4j.util.ref.ReferenceType} oneway - - cacheReferences
    * @apiviz.has {@link org.eclipse.emf.cdo.view.CDOInvalidationPolicy}
-   * @apiviz.composedOf {@link org.eclipse.emf.cdo.view.CDOAdapterPolicy} - - changeSubscriptionPolicies
-   * @apiviz.has {@link org.eclipse.emf.cdo.view.CDOAdapterPolicy} oneway - - strongReferencePolicy
-   * @apiviz.has {@link org.eclipse.emf.cdo.view.CDOStaleReferencePolicy} oneway - - staleReferenceBehaviour
+   * @apiviz.composedOf {@link org.eclipse.emf.cdo.view.CDOAdapterPolicy} - - changeSubscriptions
+   * @apiviz.has {@link org.eclipse.emf.cdo.view.CDOAdapterPolicy} oneway - - strongReferences
+   * @apiviz.has {@link org.eclipse.emf.cdo.view.CDOStaleReferencePolicy} oneway - - staleReferences
    * @apiviz.has {@link org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy}
    * @apiviz.uses {@link CDOView.Options.CacheReferenceTypeEvent} - - fires
    * @apiviz.uses {@link CDOView.Options.StrongReferencePolicyEvent} - - fires
@@ -551,15 +550,33 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
      * Returns the CDOStaleReferencePolicy in use.
      * 
      * @since 3.0
+     * @deprecated Use {@link #getStaleReferencePolicy()}
      */
+    @Deprecated
     public CDOStaleReferencePolicy getStaleReferenceBehaviour();
 
     /**
      * Sets a policy on how to deal with stale references.
      * 
      * @since 3.0
+     * @deprecated Use {@link #setStaleReferencePolicy(CDOStaleReferencePolicy)}
      */
+    @Deprecated
     public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy);
+
+    /**
+     * Returns the CDOStaleReferencePolicy in use.
+     * 
+     * @since 4.1
+     */
+    public CDOStaleReferencePolicy getStaleReferencePolicy();
+
+    /**
+     * Sets a policy on how to deal with stale references.
+     * 
+     * @since 4.1
+     */
+    public void setStaleReferencePolicy(CDOStaleReferencePolicy policy);
 
     /**
      * Returns the CDORevisionPrefetchingPolicy in use.

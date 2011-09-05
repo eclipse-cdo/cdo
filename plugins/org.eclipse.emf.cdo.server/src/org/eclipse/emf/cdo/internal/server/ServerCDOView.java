@@ -321,12 +321,24 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public CDOStaleReferencePolicy getStaleReferenceBehaviour()
+  {
+    return getStaleReferencePolicy();
+  }
+
+  @Deprecated
+  public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy)
+  {
+    setStaleReferencePolicy(policy);
+  }
+
+  public CDOStaleReferencePolicy getStaleReferencePolicy()
   {
     return CDOStaleReferencePolicy.EXCEPTION;
   }
 
-  public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy)
+  public void setStaleReferencePolicy(CDOStaleReferencePolicy policy)
   {
     throw new UnsupportedOperationException();
   }

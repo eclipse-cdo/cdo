@@ -1643,7 +1643,19 @@ public class CDOViewImpl extends AbstractCDOView
       fireEvent(event);
     }
 
+    @Deprecated
     public CDOStaleReferencePolicy getStaleReferenceBehaviour()
+    {
+      return getStaleReferencePolicy();
+    }
+
+    @Deprecated
+    public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy)
+    {
+      setStaleReferencePolicy(policy);
+    }
+
+    public CDOStaleReferencePolicy getStaleReferencePolicy()
     {
       synchronized (CDOViewImpl.this)
       {
@@ -1651,7 +1663,7 @@ public class CDOViewImpl extends AbstractCDOView
       }
     }
 
-    public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy)
+    public void setStaleReferencePolicy(CDOStaleReferencePolicy policy)
     {
       if (policy == null)
       {

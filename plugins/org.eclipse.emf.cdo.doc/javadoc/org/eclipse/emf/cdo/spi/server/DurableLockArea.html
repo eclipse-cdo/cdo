@@ -257,10 +257,11 @@ Class DurableLockArea</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#isDeleted()">isDeleted</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/spi/server/DurableLockArea.html#isMissing()">isMissing</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;Returns <code>true</code> if this instance represents a lock area that is known to be missing (not present) on a
+ master server.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -475,13 +476,17 @@ public static <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lan
 </DL>
 <HR>
 
-<A NAME="isDeleted()"><!-- --></A><H3>
-isDeleted</H3>
+<A NAME="isMissing()"><!-- --></A><H3>
+isMissing</H3>
 <PRE>
-public boolean <B>isDeleted</B>()</PRE>
+public boolean <B>isMissing</B>()</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;<DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#isDeleted()">isDeleted</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></CODE></DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><B>Description copied from interface: <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#isMissing()">IDurableLockingManager.LockArea</A></CODE></B></DD>
+<DD>Returns <code>true</code> if this instance represents a lock area that is known to be missing (not present) on a
+ master server. (Relevant only in a replicating configuration.)
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#isMissing()">isMissing</A></CODE> in interface <CODE><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A></CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>

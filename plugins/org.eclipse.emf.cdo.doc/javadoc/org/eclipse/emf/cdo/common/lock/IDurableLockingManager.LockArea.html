@@ -209,10 +209,11 @@ Encapsulates the persistable information about a single durable CDO view like <A
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#isDeleted()">isDeleted</A></B>()</CODE>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#isMissing()">isMissing</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <code>true</code> if this instance represents a lock area that is known to be missing (not present) on a
+ master server.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -322,11 +323,14 @@ getLocks</H3>
 </DL>
 <HR>
 
-<A NAME="isDeleted()"><!-- --></A><H3>
-isDeleted</H3>
+<A NAME="isMissing()"><!-- --></A><H3>
+isMissing</H3>
 <PRE>
-boolean <B>isDeleted</B>()</PRE>
+boolean <B>isMissing</B>()</PRE>
 <DL>
+<DD>Returns <code>true</code> if this instance represents a lock area that is known to be missing (not present) on a
+ master server. (Relevant only in a replicating configuration.)
+<P>
 <DD><DL>
 </DL>
 </DD>

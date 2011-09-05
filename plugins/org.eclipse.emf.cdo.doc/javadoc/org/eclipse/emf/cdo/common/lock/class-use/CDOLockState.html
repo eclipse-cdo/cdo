@@ -410,18 +410,20 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockSta
 <TH ALIGN="left" COLSPAN="2">Constructors in <A HREF="../../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A> with parameters of type <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</A></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.LockObjectsResult.html#CDOSessionProtocol.LockObjectsResult(boolean, boolean, boolean, long, org.eclipse.emf.cdo.common.revision.CDORevisionKey[], org.eclipse.emf.cdo.common.lock.CDOLockState[])">CDOSessionProtocol.LockObjectsResult</A></B>(boolean&nbsp;successful,
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.LockObjectsResult.html#CDOSessionProtocol.LockObjectsResult(boolean, boolean, boolean, long, org.eclipse.emf.cdo.common.revision.CDORevisionKey[], org.eclipse.emf.cdo.common.lock.CDOLockState[], long)">CDOSessionProtocol.LockObjectsResult</A></B>(boolean&nbsp;successful,
                                      boolean&nbsp;timedOut,
                                      boolean&nbsp;waitForUpdate,
                                      long&nbsp;requiredTimestamp,
                                      <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</A>[]&nbsp;staleRevisions,
-                                     <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</A>[]&nbsp;newLockStates)</CODE>
+                                     <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</A>[]&nbsp;newLockStates,
+                                     long&nbsp;timestamp)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html#CDOSessionProtocol.UnlockObjectsResult(org.eclipse.emf.cdo.common.lock.CDOLockState[])">CDOSessionProtocol.UnlockObjectsResult</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</A>[]&nbsp;newLockStates)</CODE>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html#CDOSessionProtocol.UnlockObjectsResult(org.eclipse.emf.cdo.common.lock.CDOLockState[], long)">CDOSessionProtocol.UnlockObjectsResult</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</A>[]&nbsp;newLockStates,
+                                       long&nbsp;timestamp)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>

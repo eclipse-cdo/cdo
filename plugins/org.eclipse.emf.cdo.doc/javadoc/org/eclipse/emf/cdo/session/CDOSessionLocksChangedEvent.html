@@ -108,6 +108,15 @@ Interface CDOSessionLocksChangedEvent</H2>
 
 
 <P>
+A <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session event</CODE></A> fired when lock-change notifications are received from a remote repository.
+ For this event to be fired,
+ <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)"><CODE>the lock notification mode</CODE></A> must either be set to ALWAYS, or it must be set to IF_REQUIRED_BY_VIEWS <i>and</i> at
+ least one of this sessions' views must have
+ <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options.html#setLockNotificationEnabled(boolean)"><CODE>its lock-notification
+ enablement</CODE></A> set to <code>true</code>.
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>4.1</DD>

@@ -14,7 +14,7 @@
  * 
  * @apiviz.exclude .*\.CDOServerBrowser.*
  * @apiviz.exclude .*\.CommitInfoLoader
- * @apiviz.exclude .*\.BrancheLoader
+ * @apiviz.exclude .*\.BranchLoader
  * @apiviz.exclude .*\.IContainer
  * @apiviz.exclude .*\.INotifier
  * @apiviz.exclude .*Exception

@@ -9,7 +9,6 @@
 			<topic label="org.eclipse.emf.cdo.eresource" href="javadoc/org/eclipse/emf/cdo/eresource/package-summary.html" />
 			<topic label="org.eclipse.emf.cdo.eresource.impl" href="javadoc/org/eclipse/emf/cdo/eresource/impl/package-summary.html" />
 			<topic label="org.eclipse.emf.cdo.eresource.util" href="javadoc/org/eclipse/emf/cdo/eresource/util/package-summary.html" />
-			<topic label="org.eclipse.emf.cdo.eresource.validation" href="javadoc/org/eclipse/emf/cdo/eresource/validation/package-summary.html" />
 			<topic label="org.eclipse.emf.cdo.etypes" href="javadoc/org/eclipse/emf/cdo/etypes/package-summary.html" />
 			<topic label="org.eclipse.emf.cdo.etypes.impl" href="javadoc/org/eclipse/emf/cdo/etypes/impl/package-summary.html" />
 			<topic label="org.eclipse.emf.cdo.etypes.util" href="javadoc/org/eclipse/emf/cdo/etypes/util/package-summary.html" />

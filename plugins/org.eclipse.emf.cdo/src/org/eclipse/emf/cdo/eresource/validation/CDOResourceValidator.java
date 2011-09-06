@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * 
  * @since 2.0
  */
+@Deprecated
 public interface CDOResourceValidator
 {
   boolean validate();

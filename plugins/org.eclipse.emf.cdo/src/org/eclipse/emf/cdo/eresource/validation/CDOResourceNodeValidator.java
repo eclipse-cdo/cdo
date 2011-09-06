@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
  * 
  * @since 2.0
  */
+@Deprecated
 public interface CDOResourceNodeValidator
 {
   boolean validate();

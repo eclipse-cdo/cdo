@@ -105,12 +105,12 @@ Interface CDOView.Options</H2>
 </PRE><map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="CDOAdapterPolicy.html" title="&#171;interface&#187; CDOAdapterPolicy" alt="" coords="103,5,233,45"/>
 <area shape="rect" id="node2" href="../common/CDOCommonView.Options.html" title="&#171;interface&#187; CDOCommonView.Options (org.eclipse.emf.cdo.common)" alt="" coords="69,65,267,119"/>
-<area shape="rect" id="node3" href="CDOInvalidationPolicy.html" title="&#171;interface&#187; CDOInvalidationPolicy" alt="" coords="988,112,1137,152"/>
-<area shape="rect" id="node4" href="CDORevisionPrefetchingPolicy.html" title="&#171;interface&#187; CDORevisionPrefetchingPolicy" alt="" coords="963,175,1162,215"/>
-<area shape="rect" id="node5" href="CDOStaleReferencePolicy.html" title="&#171;interface&#187; CDOStaleReferencePolicy" alt="" coords="975,233,1150,273"/>
-<area shape="rect" id="node6" href="../transaction/CDOTransaction.Options.html" title="&#171;interface&#187; CDOTransaction.Options (org.eclipse.emf.cdo.transaction)" alt="" coords="957,293,1168,347"/>
+<area shape="rect" id="node3" href="CDOInvalidationPolicy.html" title="&#171;interface&#187; CDOInvalidationPolicy" alt="" coords="905,112,1055,152"/>
+<area shape="rect" id="node4" href="CDORevisionPrefetchingPolicy.html" title="&#171;interface&#187; CDORevisionPrefetchingPolicy" alt="" coords="881,175,1079,215"/>
+<area shape="rect" id="node5" href="CDOStaleReferencePolicy.html" title="&#171;interface&#187; CDOStaleReferencePolicy" alt="" coords="893,233,1067,273"/>
+<area shape="rect" id="node6" href="../transaction/CDOTransaction.Options.html" title="&#171;interface&#187; CDOTransaction.Options (org.eclipse.emf.cdo.transaction)" alt="" coords="875,293,1085,347"/>
 <area shape="rect" id="node7" href="CDOView.html" title="&#171;interface&#187; CDOView" alt="" coords="125,139,211,179"/>
-<area shape="rect" id="node8" href="CDOView.Options.html" title="&#171;interface&#187; CDOView.Options" alt="" coords="590,227,717,267"/>
+<area shape="rect" id="node8" href="CDOView.Options.html" title="&#171;interface&#187; CDOView.Options" alt="" coords="550,227,677,267"/>
 <area shape="rect" id="node9" href="CDOView.Options.CacheReferenceTypeEvent.html" title="&#171;interface&#187; CDOView.Options.CacheReferenceTypeEvent" alt="" coords="25,197,311,237"/>
 <area shape="rect" id="node10" href="CDOView.Options.ChangeSubscriptionPoliciesEvent.html" title="&#171;interface&#187; CDOView.Options.ChangeSubscriptionPoliciesEvent" alt="" coords="5,256,331,296"/>
 <area shape="rect" id="node11" href="CDOView.Options.InvalidationNotificationEvent.html" title="&#171;interface&#187; CDOView.Options.InvalidationNotificationEvent" alt="" coords="23,315,313,355"/>
@@ -118,8 +118,8 @@ Interface CDOView.Options</H2>
 <area shape="rect" id="node13" href="CDOView.Options.RevisionPrefetchingPolicyEvent.html" title="&#171;interface&#187; CDOView.Options.RevisionPrefetchingPolicyEvent" alt="" coords="12,432,324,472"/>
 <area shape="rect" id="node14" href="CDOView.Options.StaleReferencePolicyEvent.html" title="&#171;interface&#187; CDOView.Options.StaleReferencePolicyEvent" alt="" coords="25,491,311,531"/>
 <area shape="rect" id="node15" href="CDOView.Options.StrongReferencePolicyEvent.html" title="&#171;interface&#187; CDOView.Options.StrongReferencePolicyEvent" alt="" coords="21,549,315,589"/>
-<area shape="rect" id="node16" href="CDOViewAdaptersNotifiedEvent.html" title="&#171;interface&#187; CDOViewAdaptersNotifiedEvent" alt="" coords="960,367,1165,407"/>
-<area shape="rect" id="node17" title="&#171;enum&#187; ReferenceType (org.eclipse.net4j.util.ref)" alt="" coords="981,426,1145,481"/>
+<area shape="rect" id="node16" href="CDOViewAdaptersNotifiedEvent.html" title="&#171;interface&#187; CDOViewAdaptersNotifiedEvent" alt="" coords="877,367,1083,407"/>
+<area shape="rect" id="node17" title="&#171;enum&#187; ReferenceType (org.eclipse.net4j.util.ref)" alt="" coords="898,426,1062,481"/>
 </map>
 
 <CENTER><IMG SRC="CDOView.Options.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -319,6 +319,14 @@ Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/view
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferenceBehaviour()">getStaleReferenceBehaviour</A></B>()</CODE>
 
 <BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy()"><CODE>getStaleReferencePolicy()</CODE></A></I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy()">getStaleReferencePolicy</A></B>()</CODE>
+
+<BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the CDOStaleReferencePolicy in use.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -386,6 +394,14 @@ Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/view
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferenceBehaviour(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">setStaleReferenceBehaviour</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</A>&nbsp;policy)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)"><CODE>setStaleReferencePolicy(CDOStaleReferencePolicy)</CODE></A></I></TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">setStaleReferencePolicy</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</A>&nbsp;policy)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets a policy on how to deal with stale references.</TD>
@@ -696,8 +712,11 @@ void <B>setStrongReferencePolicy</B>(<A HREF="../../../../../org/eclipse/emf/cdo
 <A NAME="getStaleReferenceBehaviour()"><!-- --></A><H3>
 getStaleReferenceBehaviour</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</A> <B>getStaleReferenceBehaviour</B>()</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</A> <B>getStaleReferenceBehaviour</B>()</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy()"><CODE>getStaleReferencePolicy()</CODE></A></I>
+<P>
 <DD>Returns the CDOStaleReferencePolicy in use.
 <P>
 <DD><DL>
@@ -714,8 +733,11 @@ getStaleReferenceBehaviour</H3>
 <A NAME="setStaleReferenceBehaviour(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)"><!-- --></A><H3>
 setStaleReferenceBehaviour</H3>
 <PRE>
-void <B>setStaleReferenceBehaviour</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</A>&nbsp;policy)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>void <B>setStaleReferenceBehaviour</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</A>&nbsp;policy)</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)"><CODE>setStaleReferencePolicy(CDOStaleReferencePolicy)</CODE></A></I>
+<P>
 <DD>Sets a policy on how to deal with stale references.
 <P>
 <DD><DL>
@@ -724,6 +746,42 @@ void <B>setStaleReferenceBehaviour</B>(<A HREF="../../../../../org/eclipse/emf/c
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getStaleReferencePolicy()"><!-- --></A><H3>
+getStaleReferencePolicy</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</A> <B>getStaleReferencePolicy</B>()</PRE>
+<DL>
+<DD>Returns the CDOStaleReferencePolicy in use.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)"><!-- --></A><H3>
+setStaleReferencePolicy</H3>
+<PRE>
+void <B>setStaleReferencePolicy</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</A>&nbsp;policy)</PRE>
+<DL>
+<DD>Sets a policy on how to deal with stale references.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

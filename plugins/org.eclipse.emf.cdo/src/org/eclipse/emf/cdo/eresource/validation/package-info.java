@@ -11,5 +11,8 @@
 
 /**
  * The generated EMF validation of the CDO repository file system.
+ * 
+ * @deprecated
  */
 package org.eclipse.emf.cdo.eresource.validation;
+

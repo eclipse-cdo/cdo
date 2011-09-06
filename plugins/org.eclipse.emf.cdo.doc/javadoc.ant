@@ -117,7 +117,6 @@
 				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/eresource/*.java" />
 				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/eresource/impl/*.java" />
 				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/eresource/util/*.java" />
-				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/eresource/validation/*.java" />
 				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/etypes/*.java" />
 				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/etypes/impl/*.java" />
 				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/etypes/util/*.java" />
@@ -135,7 +134,6 @@
 				<package name="org.eclipse.emf.cdo.eresource" />
 				<package name="org.eclipse.emf.cdo.eresource.impl" />
 				<package name="org.eclipse.emf.cdo.eresource.util" />
-				<package name="org.eclipse.emf.cdo.eresource.validation" />
 				<package name="org.eclipse.emf.cdo.etypes" />
 				<package name="org.eclipse.emf.cdo.etypes.impl" />
 				<package name="org.eclipse.emf.cdo.etypes.util" />

@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * 
  * @since 2.0
  */
+@Deprecated
 public interface CDOResourceFolderValidator
 {
   boolean validate();

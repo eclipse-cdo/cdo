@@ -74,7 +74,8 @@ public class AssembleJavaDocOptions
         String javadocProject = buildProperties.getProperty("org.eclipse.emf.cdo.releng.javadoc.project");
         if (javadocProject != null)
         {
-          assembleJavaDocOptions(plugin, javadocProject);
+          Set<String> excludedPackages = getExcludedPackages(buildProperties);
+          assembleJavaDocOptions(plugin, javadocProject, excludedPackages);
         }
       }
     }
@@ -99,7 +100,8 @@ public class AssembleJavaDocOptions
     System.out.println();
   }
 
-  private static void assembleJavaDocOptions(File plugin, String javadocProject) throws IOException, BundleException
+  private static void assembleJavaDocOptions(File plugin, String javadocProject, Set<String> excludedPackages)
+      throws IOException, BundleException
   {
     SourcePlugin sourcePlugin = ANTLIB.getSourcePlugin(plugin.getName());
 
@@ -110,7 +112,7 @@ public class AssembleJavaDocOptions
     for (ManifestElement manifestElement : getManifestElements(manifest))
     {
       String packageName = manifestElement.getValue().trim();
-      if (isPublic(manifestElement))
+      if (isPublic(manifestElement) && !excludedPackages.contains(packageName))
       {
         javaDoc.getSourceFolders().add(plugin.getName() + "/src/" + packageName.replace('.', '/'));
         javaDoc.getPackageNames().add(packageName);
@@ -126,6 +128,25 @@ public class AssembleJavaDocOptions
   private static boolean isPublic(ManifestElement manifestElement)
   {
     return manifestElement.getDirective("x-internal") == null && manifestElement.getDirective("x-friends") == null;
+  }
+
+  private static Set<String> getExcludedPackages(Properties buildProperties)
+  {
+    Set<String> excludedPackages = new HashSet<String>();
+
+    String javadocExclude = buildProperties.getProperty("org.eclipse.emf.cdo.releng.javadoc.exclude");
+    if (javadocExclude != null)
+    {
+      for (String exclude : javadocExclude.split(","))
+      {
+        exclude = exclude.trim();
+        if (exclude.length() != 0)
+        {
+          excludedPackages.add(exclude);
+        }
+      }
+    }
+    return excludedPackages;
   }
 
   private static ManifestElement[] getManifestElements(Manifest manifest) throws BundleException

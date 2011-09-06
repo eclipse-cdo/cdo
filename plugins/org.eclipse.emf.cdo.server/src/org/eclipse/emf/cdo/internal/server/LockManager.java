@@ -580,8 +580,13 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
 
     public boolean handleLockArea(LockArea area)
     {
-      IView view = durableViews.get(area.getDurableLockingID());
-      CheckUtil.checkNull(view, "view");
+      String durableLockingID = area.getDurableLockingID();
+      IView view = durableViews.get(durableLockingID);
+      if (view == null)
+      {
+        view = new DurableView(durableLockingID);
+        durableViews.put(durableLockingID, (DurableView)view);
+      }
 
       Collection<Object> readLocks = new ArrayList<Object>();
       Collection<Object> writeLocks = new ArrayList<Object>();
@@ -638,17 +643,12 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     return grade;
   }
 
-  private IView getOrCreateView(String lockAreaID)
+  private IView getView(String lockAreaID)
   {
     IView view = openViews.get(lockAreaID);
     if (view == null)
     {
       view = durableViews.get(lockAreaID);
-    }
-    if (view == null)
-    {
-      view = new DurableView(lockAreaID);
-      durableViews.put(lockAreaID, (DurableView)view);
     }
     return view;
   }
@@ -683,8 +683,11 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     else
     {
       accessor.updateLockArea(lockArea);
-      IView view = getOrCreateView(durableLockingID);
-      unlock2(view);
+      IView view = getView(durableLockingID);
+      if (view != null)
+      {
+        unlock2(view);
+      }
       new DurableLockLoader().handleLockArea(lockArea);
     }
   }

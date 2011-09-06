@@ -87,6 +87,7 @@ public class AssembleJavaDocOptions
     }
 
     ANTLIB.generate();
+    ANTLIB.generateDebug();
     System.out.println();
 
     for (JavaDoc javaDoc : ANTLIB.getJavaDocs())
@@ -337,6 +338,53 @@ public class AssembleJavaDocOptions
         writer.write("\t</target>\n");
         writer.write("\n");
         writer.write("</project>\n");
+        writer.flush();
+      }
+      finally
+      {
+        if (out != null)
+        {
+          out.close();
+        }
+      }
+    }
+
+    public void generateDebug() throws IOException
+    {
+      FileWriter out = null;
+
+      try
+      {
+        File target = new File(releng, "javadoc/debug-frame.html");
+        System.out.println("Generating " + target.getCanonicalPath());
+
+        out = new FileWriter(target);
+        BufferedWriter writer = new BufferedWriter(out);
+
+        List<JavaDoc> javaDocs = new ArrayList<JavaDoc>(getJavaDocsSortedByDependencies());
+        Collections.reverse(javaDocs);
+
+        for (JavaDoc javaDoc : javaDocs)
+        {
+          for (SourcePlugin sourcePlugin : javaDoc.getSortedSourcePlugins())
+          {
+            List<String> sortedPackageNames = sourcePlugin.getSortedPackageNames();
+            writer.write("<b><a href=\"../../" + javaDoc.getProject().getName() + "/javadoc/"
+                + sortedPackageNames.get(0).replace('.', '/') + "/package-summary.html\" target=\"debugDetails\">"
+                + sourcePlugin.getLabel() + "</a></b>\n");
+            writer.write("<ul>\n");
+
+            for (String packageName : sortedPackageNames)
+            {
+              writer.write("\t<li><a href=\"../../" + javaDoc.getProject().getName() + "/javadoc/"
+                  + packageName.replace('.', '/') + "/package-summary.html\" target=\"debugDetails\">" + packageName
+                  + "</a>\n");
+            }
+
+            writer.write("</ul>\n");
+          }
+        }
+
         writer.flush();
       }
       finally

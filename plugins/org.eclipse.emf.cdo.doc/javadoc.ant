@@ -63,7 +63,8 @@
 		         overview="${javadoc.project}/javadocOverview.html"
 		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
-			<doclet name="org.jboss.apiviz.APIviz" path="${additional.jars}/APIVIZ/bin;${additional.jars}/jdepend-2.9.1.jar">
+			<doclet name="org.jboss.apiviz.APIviz"
+			        path="${additional.jars}/APIVIZ/bin;${additional.jars}/APIVIZ/lib/jdepend-2.9.1.jar">
 				<param name="-nopackagediagram" />
 				<param name="-nosubtypes" />
 				<!--

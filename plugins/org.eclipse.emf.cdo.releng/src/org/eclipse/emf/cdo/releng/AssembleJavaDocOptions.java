@@ -94,7 +94,7 @@ public class AssembleJavaDocOptions
     {
       for (SourcePlugin sourcePlugin : javaDoc.getSourcePlugins())
       {
-        sourcePlugin.convertPackageInfos();
+        sourcePlugin.validatePackageInfos();
       }
     }
 
@@ -452,20 +452,30 @@ public class AssembleJavaDocOptions
       return getLabel().compareTo(o.getLabel());
     }
 
-    public void convertPackageInfos() throws IOException
+    public void validatePackageInfos() throws IOException
     {
       Set<String> packageNames2 = getPackageNames();
       for (String packageName : packageNames2)
       {
-        File packageHtml = new File(getProject(), "src/" + packageName.replace('.', '/') + "/package.html");
-        if (packageHtml.isFile())
+        File packageFolder = new File(getProject(), "src/" + packageName.replace('.', '/'));
+        File packageInfo = new File(packageFolder, "package-info.java");
+        if (!packageInfo.isFile())
         {
-          convertPackageInfo(packageHtml, packageName);
+          File packageHtml = new File(packageFolder, "package.html");
+          if (packageHtml.isFile())
+          {
+            convertPackageHTML(packageHtml, packageInfo, packageName);
+          }
+
+          if (!packageInfo.isFile())
+          {
+            System.err.println("Package info missing: " + packageInfo.getCanonicalPath());
+          }
         }
       }
     }
 
-    private void convertPackageInfo(File packageHtml, String packageName) throws IOException
+    private void convertPackageHTML(File packageHtml, File packageInfo, String packageName) throws IOException
     {
       int length = (int)packageHtml.length();
       char[] content = new char[length];
@@ -498,7 +508,6 @@ public class AssembleJavaDocOptions
 
       System.out.println("Converting " + packageHtml.getCanonicalPath());
       String comment = matcher.group(1);
-      File packageInfo = new File(packageHtml.getParentFile(), "package-info.java");
       FileWriter out = null;
 
       try

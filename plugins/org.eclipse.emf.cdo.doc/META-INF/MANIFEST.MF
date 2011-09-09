@@ -25,13 +25,7 @@ Require-Bundle: org.eclipse.help;bundle-version="[3.3.0,4.0.0)";resolution:=opti
  org.eclipse.emf.cdo.server.net4j;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.server.objectivity;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.server.ocl;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.team;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.ui;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.ui.efs;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.ui.ide;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.ui.location;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.ui.workspace;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.workspace;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.workspace.efs;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport
+ org.eclipse.emf.cdo.ui.ide;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport
 Export-Package: org.eclipse.emf.cdo.doc.connectors;version="4.1.0",
  org.eclipse.emf.cdo.doc.sessions;version="4.1.0"

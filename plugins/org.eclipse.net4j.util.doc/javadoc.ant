@@ -61,7 +61,8 @@
 		         windowtitle="${javadoc.name}"
 		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
 		         overview="${javadoc.project}/javadocOverview.html"
-		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
+		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>"
+		         failonerror="true">
 
 			<doclet name="org.jboss.apiviz.APIviz"
 			        path="${additional.jars}/APIVIZ/bin;${additional.jars}/APIVIZ/lib/jdepend-2.9.1.jar">
@@ -176,19 +177,22 @@
 			<fileset refid="desthtml" />
 		</replaceregexp>
 
-		<java classname="org.eclipse.emf.cdo.releng.MakeHrefsRelative" dir="${basedir}" fork="true">
-			<classpath path="plugins/org.eclipse.emf.cdo.releng/bin" />
+		<java classname="org.eclipse.emf.cdo.releng.doc.MakeHrefsRelative" dir="${basedir}" fork="true" failonerror="true">
+			<classpath path="plugins/org.eclipse.emf.cdo.releng.doc/bin" />
 			<arg value="${destdir}" />
 		</java>
 
-		<java classname="org.eclipse.emf.cdo.releng.MovePackageDescriptions" dir="${basedir}" fork="true">
-			<classpath path="plugins/org.eclipse.emf.cdo.releng/bin" />
+		<java classname="org.eclipse.emf.cdo.releng.doc.MovePackageDescriptions"
+		      dir="${basedir}"
+		      fork="true"
+		      failonerror="true">
+			<classpath path="plugins/org.eclipse.emf.cdo.releng.doc/bin" />
 			<arg value="${destdir}" />
 		</java>
 
 		<!--
-		<java classname="org.eclipse.emf.cdo.releng.SortListItems" dir="${basedir}" fork="true">
-			<classpath path="plugins/org.eclipse.emf.cdo.releng/bin" />
+		<java classname="org.eclipse.emf.cdo.releng.doc.SortListItems" dir="${basedir}" fork="true" failonerror="true">
+			<classpath path="plugins/org.eclipse.emf.cdo.releng.doc/bin" />
 			<arg value="${destdir}" />
 		</java>
 		-->

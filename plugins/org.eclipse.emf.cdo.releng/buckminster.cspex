@@ -2,7 +2,9 @@
 <cs:cspecExtension xmlns:cs="http://www.eclipse.org/buckminster/CSpec-1.0">
 	<cs:dependencies>
 		<cs:dependency name="org.eclipse.emf.cdo.site" componentType="eclipse.feature"/>
-		<cs:dependency name="org.eclipse.emf.cdo.efs" componentType="osgi.bundle"/>
+		<cs:dependency name="org.eclipse.emf.cdo.releng.doc" componentType="osgi.bundle"/>
+
+				<cs:dependency name="org.eclipse.emf.cdo.efs" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.ui.efs" componentType="osgi.bundle"/>
 
 		<cs:dependency name="org.eclipse.equinox.executable" componentType="eclipse.feature"/>

@@ -140,6 +140,7 @@ class Snippets
 
   /**
    * @example
+   * @marker 1 The channel must not be <code>null</code>.
    */
   public class JMSConnector extends Connector
   {
@@ -147,7 +148,7 @@ class Snippets
     {
     }
 
-    public void multiplexChannel(InternalChannel channel)
+    public void multiplexChannel(InternalChannel /* 1 */channel)
     {
     }
 

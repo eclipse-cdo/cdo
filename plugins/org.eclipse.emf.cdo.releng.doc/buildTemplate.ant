@@ -11,7 +11,7 @@
 	<property file="${javadoc.project}/plugin.properties" />
 	<property name="javadoc.name" value="${pluginName}" />
 	<property name="destdir" value="${javadoc.project}/javadoc" />
-	<property name="additional.code" value="/develop/bin/javadoc" />
+	<property name="supplemental" value="/develop/bin/org.eclipse.emf.cdo.releng.doc.supplemental" />
 
 	<path id="javadoc.classpath">
 		<fileset dir="_target/plugins">
@@ -24,11 +24,11 @@
 		<dirset dir="plugins">
 			<include name="*/bin" />
 		</dirset>
-		<fileset dir="${additional.code}">
+		<fileset dir="${supplemental}">
 			<include name="*.jar" />
 		</fileset>
-		<dirset dir="${additional.code}">
-			<include name="DOCS/bin" />
+		<dirset dir="${supplemental}">
+			<include name="bin" />
 		</dirset>
 	</path>
 
@@ -67,7 +67,7 @@
 		         failonerror="true">
 
 			<doclet name="org.jboss.apiviz.APIviz"
-			        path="${additional.code}/DOCS/bin">
+			        path="${supplemental}/bin">
 				<param name="-nopackagediagram" />
 				<param name="-nosubtypes" />
 				<param name="-warningsfile" value="${warningsfile}" />

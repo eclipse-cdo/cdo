@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.doc.article.util;
 
+import com.sun.javadoc.Doc;
 import com.sun.javadoc.SeeTag;
-import com.sun.javadoc.SourcePosition;
 
 import java.io.CharArrayWriter;
 import java.io.PrintWriter;
@@ -22,14 +22,16 @@ import java.lang.reflect.Method;
  */
 public class SnippetTag extends TextTag
 {
-  private final SourcePosition position;
+  private static Method writeExampleSnippet;
+
+  private final Doc snippet;
 
   private final boolean includeSignature;
 
-  public SnippetTag(SeeTag delegate, SourcePosition position, boolean includeSignature)
+  public SnippetTag(SeeTag delegate, Doc snippet, boolean includeSignature)
   {
     super(delegate, null);
-    this.position = position;
+    this.snippet = snippet;
     this.includeSignature = includeSignature;
   }
 
@@ -39,9 +41,9 @@ public class SnippetTag extends TextTag
     return (SeeTag)super.getDelegate();
   }
 
-  public final SourcePosition getPosition()
+  public final Doc getSnippet()
   {
-    return position;
+    return snippet;
   }
 
   public final boolean isIncludeSignature()
@@ -57,7 +59,6 @@ public class SnippetTag extends TextTag
     PrintWriter out = new PrintWriter(result);
     out.write("\n\n");
     writeExampleSnippet(out);
-    out.write("\n");
     out.flush();
 
     return result.toString();
@@ -65,25 +66,27 @@ public class SnippetTag extends TextTag
 
   private void writeExampleSnippet(PrintWriter out)
   {
-    Class<?>[] parameters = { PrintWriter.class, Boolean.class, SourcePosition.class };
+    try
+    {
+      writeExampleSnippet.invoke(null, new Object[] { out, includeSignature, snippet });
+    }
+    catch (Throwable ex)
+    {
+      ex.printStackTrace();
+    }
+  }
 
+  static
+  {
     try
     {
       Class<?> snippets = Class.forName("Snippets");
-      Method writeExampleSnippet = snippets.getMethod("writeExampleSnippet", parameters);
-      writeExampleSnippet.invoke(null, new Object[] { out, includeSignature, position });
+      Class<?>[] parameters = { PrintWriter.class, boolean.class, Doc.class };
+      writeExampleSnippet = snippets.getMethod("writeExampleSnippet", parameters);
     }
-    catch (Error ex)
+    catch (Throwable ex)
     {
-      throw ex;
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new RuntimeException(ex);
+      ex.printStackTrace();
     }
   }
 }

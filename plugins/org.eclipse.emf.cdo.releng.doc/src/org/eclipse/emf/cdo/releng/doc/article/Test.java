@@ -15,22 +15,22 @@ package org.eclipse.emf.cdo.releng.doc.article;
  */
 public class Test
 {
-  public static void main(String[] args)
-  {
-    ArticleJavaDoc javaDoc = new ArticleJavaDoc();
-
-    javaDoc.classPath("org.eclipse.net4j.jvm/bin");
-    javaDoc.classPath("org.eclipse.net4j.tcp/bin");
-    javaDoc.classPath("org.eclipse.net4j.http/bin");
-    javaDoc.classPath("org.eclipse.net4j.http.server/bin");
-    javaDoc.classPath("org.eclipse.net4j/bin");
-    javaDoc.classPath("org.eclipse.net4j.util/bin");
-
-    javaDoc.sourcePath("org.eclipse.emf.cdo.doc.tutorial/src");
-
-    javaDoc.subPackage("connectors");
-    javaDoc.subPackage("sessions");
-
-    javaDoc.start("/develop/ws/cdo/plugins", "org.eclipse.emf.cdo.doc.tutorial/output");
-  }
+  // public static void main(String[] args)
+  // {
+  // ArticleDoclet javaDoc = new ArticleDoclet();
+  //
+  // javaDoc.classPath("org.eclipse.net4j.jvm/bin");
+  // javaDoc.classPath("org.eclipse.net4j.tcp/bin");
+  // javaDoc.classPath("org.eclipse.net4j.http/bin");
+  // javaDoc.classPath("org.eclipse.net4j.http.server/bin");
+  // javaDoc.classPath("org.eclipse.net4j/bin");
+  // javaDoc.classPath("org.eclipse.net4j.util/bin");
+  //
+  // javaDoc.sourcePath("org.eclipse.emf.cdo.doc.tutorial/src");
+  //
+  // javaDoc.subPackage("connectors");
+  // javaDoc.subPackage("sessions");
+  //
+  // javaDoc.start("/develop/ws/cdo/plugins", "org.eclipse.emf.cdo.doc.tutorial/output");
+  // }
 }

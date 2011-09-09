@@ -140,7 +140,7 @@ public class JavaDoc
     return -1;
   }
 
-  protected static String getOption(RootDoc root, String optionName)
+  public static String getOption(RootDoc root, String optionName)
   {
     String[][] options = root.options();
     for (String[] option : options)

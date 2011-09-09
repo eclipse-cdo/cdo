@@ -63,7 +63,7 @@ public class DocumentationResolver extends Visitor
       if (documentation.isTutorialClass(referencedClass))
       {
         // Inline example method
-        return new SnippetTag(tag, referencedMember.position(), false);
+        return new SnippetTag(tag, referencedMember, false);
       }
 
       // Refer to Java method
@@ -78,7 +78,7 @@ public class DocumentationResolver extends Visitor
         if (documentation.isExampleClass(referencedClass))
         {
           // Inline example class
-          return new SnippetTag(tag, referencedClass.position(), true);
+          return new SnippetTag(tag, referencedClass, true);
         }
 
         // Refer to tutorial section

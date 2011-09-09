@@ -12,7 +12,9 @@
 	<property name="javadoc.project" value="plugins/org.eclipse.net4j.util.doc" />
 	<property file="${javadoc.project}/plugin.properties" />
 	<property name="javadoc.name" value="${pluginName}" />
-	<property name="destdir" value="${javadoc.project}/javadoc" />
+	<property name="javadoc.destdir" value="${javadoc.project}/javadoc" />
+	<property name="article.destdir" value="${javadoc.project}/html" />
+	<property name="article.sources" value="${javadoc.project}/src" />
 	<property name="supplemental" value="/develop/bin/org.eclipse.emf.cdo.releng.doc.supplemental" />
 
 	<path id="javadoc.classpath">
@@ -34,28 +36,34 @@
 		</dirset>
 	</path>
 
-	<fileset dir="${destdir}" id="desthtml">
+	<fileset dir="${javadoc.destdir}" id="desthtml">
 		<include name="**/*.html" />
 	</fileset>
 
 	<target name="clean">
-		<delete includeemptydirs="true">
-			<fileset dir="${destdir}" defaultexcludes="true">
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${javadoc.destdir}" defaultexcludes="true">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${article.destdir}" defaultexcludes="true">
 				<include name="**/*" />
 			</fileset>
 		</delete>
 	</target>
 
-	<target name="build">
+	<target name="build.java">
 		<property name="warningsfile"
 		          location="plugins/org.eclipse.emf.cdo.releng.doc/debug/org.eclipse.net4j.util.doc.warnings" />
 
-		<javadoc destdir="${destdir}"
+		<javadoc destdir="${javadoc.destdir}"
 		         encoding="ISO-8859-1"
 		         classpathref="javadoc.classpath"
 		         maxmemory="1024m"
 		         source="1.5"
 		         useexternalfile="true"
+		         failonerror="true"
 		         docfilessubdirs="true"
 		         includenosourcepackages="true"
 		         author="true"
@@ -65,11 +73,9 @@
 		         windowtitle="${javadoc.name}"
 		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
 		         overview="${javadoc.project}/overview.html"
-		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>"
-		         failonerror="true">
+		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
-			<doclet name="org.jboss.apiviz.APIviz"
-			        path="${supplemental}/bin">
+			<doclet name="org.jboss.apiviz.APIviz" path="${supplemental}/bin">
 				<param name="-nopackagediagram" />
 				<param name="-nosubtypes" />
 				<param name="-warningsfile" value="${warningsfile}" />
@@ -162,7 +168,7 @@
 			<tag name="noreference" description="No Reference" />
 		</javadoc>
 
-		<copy todir="${destdir}/resources" verbose="true" failonerror="false">
+		<copy todir="${javadoc.destdir}/resources" verbose="true" failonerror="false">
 			<fileset dir="${javadoc.project}/resources" defaultexcludes="true">
 				<include name="**/*" />
 				<exclude name="README.txt" />
@@ -183,7 +189,7 @@
 		      failonerror="true"
 		      id="MakeHrefsRelative">
 			<classpath path="plugins/org.eclipse.emf.cdo.releng.doc/bin" />
-			<arg value="${destdir}" />
+			<arg value="${javadoc.destdir}" />
 		</java>
 
 		<java classname="org.eclipse.emf.cdo.releng.doc.java.MovePackageDescriptions"
@@ -192,9 +198,42 @@
 		      failonerror="true"
 		      id="MovePackageDescriptions">
 			<classpath path="plugins/org.eclipse.emf.cdo.releng.doc/bin" />
-			<arg value="${destdir}" />
+			<arg value="${javadoc.destdir}" />
 		</java>
 	</target>
+
+	<target name="build.article">
+		<mkdir dir="${article.destdir}" />
+		<copy todir="${article.destdir}" verbose="true" failonerror="false">
+			<fileset dir="${article.sources}" defaultexcludes="true">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+
+		<javadoc encoding="ISO-8859-1"
+		         classpathref="javadoc.classpath"
+		         maxmemory="1024m"
+		         source="1.5"
+		         useexternalfile="true"
+		         failonerror="true"
+		         private="true">
+
+			<doclet name="org.eclipse.emf.cdo.releng.doc.article.ArticleDoclet"
+			        path="plugins/org.eclipse.emf.cdo.releng.doc/bin;${supplemental}/bin">
+				<param name="-basefolder" value="${basedir}" />
+				<param name="-outputpath" value="plugins/org.eclipse.emf.cdo.doc/html" />
+			</doclet>
+
+			<fileset dir="${article.sources}" defaultexcludes="yes">
+				<include name="**/*.java" />
+			</fileset>
+
+			<package name="org.eclipse.emf.cdo.doc.connectors" />
+			<package name="org.eclipse.emf.cdo.doc.sessions" />
+		</javadoc>
+	</target>
+
+	<target name="build" depends="build.java" />
 
 	<target name="build.clean" depends="clean,build" />
 

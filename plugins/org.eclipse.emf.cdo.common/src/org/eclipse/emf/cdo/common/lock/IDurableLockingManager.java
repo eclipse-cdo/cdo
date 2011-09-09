@@ -118,6 +118,8 @@ public interface IDurableLockingManager
   }
 
   /**
+   * Exception occurs when attempting to create a durable {@link LockArea} that already exists.
+   * 
    * @author Caspar De Groot
    * @since 4.1
    */

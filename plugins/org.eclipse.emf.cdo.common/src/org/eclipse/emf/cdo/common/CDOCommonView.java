@@ -60,7 +60,7 @@ public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, IOpt
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
    * @since 4.1
-   * @apiviz.has {@link CDOCommonView.Options.LockNotificationEvent}
+   * @apiviz.uses {@link CDOCommonView.Options.LockNotificationEvent} - - fires
    */
   public interface Options extends IOptions
   {
@@ -82,7 +82,13 @@ public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, IOpt
     public void setLockNotificationEnabled(boolean enabled);
 
     /**
+     * An {@link IOptionsEvent options event} fired from common view {@link CDOCommonView#options() options} when the
+     * {@link Options#setLockNotificationEnabled(boolean) lock notification enabled} option has changed.
+     * 
      * @author Caspar De Groot
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     * @since 4.1
      */
     public interface LockNotificationEvent extends IOptionsEvent
     {

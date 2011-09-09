@@ -22,7 +22,9 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
+ * @deprecated Does not catch all problems with tree generation.
  */
+@Deprecated
 public class SortListItems
 {
   private static final String NL = System.getProperty("line.separator");

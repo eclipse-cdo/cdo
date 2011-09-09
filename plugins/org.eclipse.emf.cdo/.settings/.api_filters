@@ -193,6 +193,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/view/CDOViewImpl.java" type="org.eclipse.emf.internal.cdo.view.CDOViewImpl$OptionsImpl$LockNotificationEventImpl">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="LockNotificationEvent"/>
+                <message_argument value="LockNotificationEventImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/spi/cdo/CDOSessionProtocol.java" type="org.eclipse.emf.spi.cdo.CDOSessionProtocol">
         <filter id="571473929">
             <message_arguments>

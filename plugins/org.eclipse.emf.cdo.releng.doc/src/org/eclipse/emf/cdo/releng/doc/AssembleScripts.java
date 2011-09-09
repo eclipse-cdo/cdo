@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
 /**
  * @author Eike Stepper
  */
-public class AssembleJavaDocOptions
+public class AssembleScripts
 {
   private static final String EXPORT_PACKAGE = "Export-Package";
 
@@ -322,7 +322,7 @@ public class AssembleJavaDocOptions
 
       try
       {
-        File target = new File(releng, "javadocLib.ant");
+        File target = new File(releng, "buildLib.ant");
         System.out.println("Generating " + target.getCanonicalPath());
 
         out = new FileWriter(target);
@@ -340,7 +340,7 @@ public class AssembleJavaDocOptions
         for (JavaDoc javaDoc : (List<JavaDoc>)getJavaDocsSortedByDependencies())
         {
           writer.write("\t\t<ant antfile=\"plugins/" + javaDoc.getProject().getName()
-              + "/javadoc.ant\" target=\"${delegate.target}\" />\n");
+              + "/build.xml\" target=\"${delegate.target}\" />\n");
         }
 
         writer.write("\t</target>\n");
@@ -650,7 +650,7 @@ public class AssembleJavaDocOptions
 
       try
       {
-        File target = new File(project, "javadoc.ant");
+        File target = new File(project, "build.xml");
         System.out.println("Generating " + target.getCanonicalPath());
 
         out = new FileWriter(target);
@@ -658,7 +658,7 @@ public class AssembleJavaDocOptions
 
         try
         {
-          in = new FileReader(new File(releng, "javadocTemplate.ant"));
+          in = new FileReader(new File(releng, "buildTemplate.ant"));
           BufferedReader reader = new BufferedReader(in);
 
           String line;
@@ -688,7 +688,7 @@ public class AssembleJavaDocOptions
               boolean exist = false;
               for (String sourceFolder : sort(sourceFolders))
               {
-                File docFiles = new File("../../../plugins/" + sourceFolder + "/doc-files");
+                File docFiles = new File("../../plugins/" + sourceFolder + "/doc-files");
                 if (docFiles.isDirectory())
                 {
                   exist = true;

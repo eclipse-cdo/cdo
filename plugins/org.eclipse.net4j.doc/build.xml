@@ -13,7 +13,7 @@
 	<property file="${javadoc.project}/plugin.properties" />
 	<property name="javadoc.name" value="${pluginName}" />
 	<property name="destdir" value="${javadoc.project}/javadoc" />
-	<property name="additional.jars" value="/develop/bin/javadoc" />
+	<property name="additional.code" value="/develop/bin/javadoc" />
 
 	<path id="javadoc.classpath">
 		<fileset dir="_target/plugins">
@@ -26,11 +26,12 @@
 		<dirset dir="plugins">
 			<include name="*/bin" />
 		</dirset>
-		<fileset dir="${additional.jars}">
-			<include name="cglib*.jar" />
-			<include name="org.apache.xalan*.jar" />
-			<include name="javax.security.jacc*.jar" />
+		<fileset dir="${additional.code}">
+			<include name="*.jar" />
 		</fileset>
+		<dirset dir="${additional.code}">
+			<include name="DOCS/bin" />
+		</dirset>
 	</path>
 
 	<fileset dir="${destdir}" id="desthtml">
@@ -46,6 +47,9 @@
 	</target>
 
 	<target name="build">
+		<property name="warningsfile"
+		          location="plugins/org.eclipse.emf.cdo.releng.doc/debug/org.eclipse.net4j.doc.warnings" />
+
 		<javadoc destdir="${destdir}"
 		         encoding="ISO-8859-1"
 		         classpathref="javadoc.classpath"
@@ -60,19 +64,15 @@
 		         notree="true"
 		         windowtitle="${javadoc.name}"
 		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
-		         overview="${javadoc.project}/javadocOverview.html"
+		         overview="${javadoc.project}/overview.html"
 		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>"
 		         failonerror="true">
 
 			<doclet name="org.jboss.apiviz.APIviz"
-			        path="${additional.jars}/APIVIZ/bin;${additional.jars}/APIVIZ/lib/jdepend-2.9.1.jar">
+			        path="${additional.code}/DOCS/bin;${additional.code}/jdepend-2.9.1.jar">
 				<param name="-nopackagediagram" />
 				<param name="-nosubtypes" />
-				<!--
-				<param name="-sourceclasspath" value="${pathlist}>" />
-				<param name="-category" value="<${category}>[:<${fillcolor}>[:<${linecolor}>]]" />
-				<param name="-help" />
-				-->
+				<param name="-warningsfile" value="${warningsfile}" />
 			</doclet>
 
 			<fileset dir="plugins" defaultexcludes="yes">
@@ -156,7 +156,7 @@
 		</copy>
 
 		<copy todir="${destdir}/resources" verbose="true" failonerror="false">
-			<fileset dir="${javadoc.project}/javadocResources" defaultexcludes="true">
+			<fileset dir="${javadoc.project}/resources" defaultexcludes="true">
 				<include name="**/*" />
 				<exclude name="README.txt" />
 			</fileset>
@@ -170,25 +170,23 @@
 			<fileset refid="desthtml" />
 		</replaceregexp>
 
-		<java classname="org.eclipse.emf.cdo.releng.doc.MakeHrefsRelative" dir="${basedir}" fork="true" failonerror="true">
-			<classpath path="plugins/org.eclipse.emf.cdo.releng.doc/bin" />
-			<arg value="${destdir}" />
-		</java>
-
-		<java classname="org.eclipse.emf.cdo.releng.doc.MovePackageDescriptions"
+		<java classname="org.eclipse.emf.cdo.releng.doc.java.MakeHrefsRelative"
 		      dir="${basedir}"
 		      fork="true"
-		      failonerror="true">
+		      failonerror="true"
+		      id="MakeHrefsRelative">
 			<classpath path="plugins/org.eclipse.emf.cdo.releng.doc/bin" />
 			<arg value="${destdir}" />
 		</java>
 
-		<!--
-		<java classname="org.eclipse.emf.cdo.releng.doc.SortListItems" dir="${basedir}" fork="true" failonerror="true">
+		<java classname="org.eclipse.emf.cdo.releng.doc.java.MovePackageDescriptions"
+		      dir="${basedir}"
+		      fork="true"
+		      failonerror="true"
+		      id="MovePackageDescriptions">
 			<classpath path="plugins/org.eclipse.emf.cdo.releng.doc/bin" />
 			<arg value="${destdir}" />
 		</java>
-		-->
 	</target>
 
 	<target name="build.clean" depends="clean,build" />

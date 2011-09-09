@@ -3,8 +3,8 @@
 
 	<property name="releng.project" value="plugins/org.eclipse.emf.cdo.releng.doc" />
 
-	<target name="assemble.options">
-		<java classname="org.eclipse.emf.cdo.releng.doc.AssembleJavaDocOptions" failonerror="true">
+	<target name="assemble.scripts">
+		<java classname="org.eclipse.emf.cdo.releng.doc.AssembleScripts" failonerror="true">
 			<classpath path="${releng.project}/bin" />
 			<classpath>
 				<fileset dir="_target/plugins">
@@ -14,20 +14,20 @@
 		</java>
 	</target>
 
-	<target name="clean" depends="assemble.options">
-		<ant antfile="${releng.project}/javadocLib.ant" target="delegate">
+	<target name="clean" depends="assemble.scripts">
+		<ant antfile="${releng.project}/buildLib.ant" target="delegate">
 			<property name="delegate.target" value="clean" />
 		</ant>
 	</target>
 
-	<target name="build" depends="assemble.options">
-		<ant antfile="${releng.project}/javadocLib.ant" target="delegate">
+	<target name="build" depends="assemble.scripts">
+		<ant antfile="${releng.project}/buildLib.ant" target="delegate">
 			<property name="delegate.target" value="build" />
 		</ant>
 	</target>
 
-	<target name="build.clean" depends="assemble.options">
-		<ant antfile="${releng.project}/javadocLib.ant" target="delegate">
+	<target name="build.clean" depends="assemble.scripts">
+		<ant antfile="${releng.project}/buildLib.ant" target="delegate">
 			<property name="delegate.target" value="build.clean" />
 		</ant>
 	</target>

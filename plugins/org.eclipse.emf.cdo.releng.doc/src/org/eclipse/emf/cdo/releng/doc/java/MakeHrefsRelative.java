@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.doc;
+package org.eclipse.emf.cdo.releng.doc.java;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

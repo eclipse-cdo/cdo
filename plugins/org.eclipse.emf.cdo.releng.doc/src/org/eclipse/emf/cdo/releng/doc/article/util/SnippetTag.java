@@ -15,23 +15,28 @@ import com.sun.javadoc.SeeTag;
 
 import java.io.CharArrayWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public class SnippetTag extends TextTag
 {
-  private static Method writeExampleSnippet;
+  private static Constructor<?> snippet;
 
-  private final Doc snippet;
+  private static Method write;
+
+  private final Doc snippetDoc;
 
   private final boolean includeSignature;
 
-  public SnippetTag(SeeTag delegate, Doc snippet, boolean includeSignature)
+  public SnippetTag(SeeTag delegate, Doc snippetDoc, boolean includeSignature)
   {
     super(delegate, null);
-    this.snippet = snippet;
+    this.snippetDoc = snippetDoc;
     this.includeSignature = includeSignature;
   }
 
@@ -39,16 +44,6 @@ public class SnippetTag extends TextTag
   public SeeTag getDelegate()
   {
     return (SeeTag)super.getDelegate();
-  }
-
-  public final Doc getSnippet()
-  {
-    return snippet;
-  }
-
-  public final boolean isIncludeSignature()
-  {
-    return includeSignature;
   }
 
   @Override
@@ -66,9 +61,14 @@ public class SnippetTag extends TextTag
 
   private void writeExampleSnippet(PrintWriter out)
   {
+    Map<String, Object> options = new HashMap<String, Object>();
+    options.put("includeSignature", includeSignature);
+    options.put("imagePath", "../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/");
+
     try
     {
-      writeExampleSnippet.invoke(null, new Object[] { out, includeSignature, snippet });
+      Object instance = snippet.newInstance(snippetDoc, options);
+      write.invoke(instance, out);
     }
     catch (Throwable ex)
     {
@@ -80,9 +80,9 @@ public class SnippetTag extends TextTag
   {
     try
     {
-      Class<?> snippets = Class.forName("Snippets");
-      Class<?>[] parameters = { PrintWriter.class, boolean.class, Doc.class };
-      writeExampleSnippet = snippets.getMethod("writeExampleSnippet", parameters);
+      Class<?> c = Class.forName("CodeSnippet");
+      snippet = c.getConstructor(Doc.class, Map.class);
+      write = c.getMethod("write", PrintWriter.class);
     }
     catch (Throwable ex)
     {

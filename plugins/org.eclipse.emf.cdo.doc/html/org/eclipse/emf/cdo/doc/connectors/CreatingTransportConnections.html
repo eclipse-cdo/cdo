@@ -28,8 +28,8 @@
  vulputate urna euismod. Proin pulvinar ornare nunc, ac auctor elit placerat eget. Integer eu erat ac risus
  ultricies mattis vel nec nunc. 
 
-<p>Example:</p>
 <div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_snippet1"/>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/editor-top-left.png"/></td>
@@ -44,14 +44,14 @@
         <div style="margin:10px 0px 10px 0px;">
           <code>
             <font color="#3f7f5f">//&nbsp;Create&nbsp;a&nbsp;dedicated&nbsp;container&nbsp;instance</font><br/>
-            IManagedContainer&nbsp;container&nbsp;=&nbsp;<img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-1.png"/>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ManagedContainer();<br/>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;<a name="callout_snippet1_1_code" href="callout_snippet1_1"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-1.png"/></a>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ManagedContainer();<br/>
             <br/>
             <font color="#3f7f5f">//&nbsp;Register&nbsp;your&nbsp;custom&nbsp;factories</font><br/>
-            container.registerFactory(&nbsp;<img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-2.png"/>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Factory(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;jms&#34;</font>)<br/>
+            container.registerFactory(&nbsp;<a name="callout_snippet1_2_code" href="callout_snippet1_2"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-2.png"/></a>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Factory(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;jms&#34;</font>)<br/>
             {<br/>
             &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font>IConnector&nbsp;create(String&nbsp;description)&nbsp;<font color="#7f0055"><b>throws&nbsp;</b></font>ProductCreationException<br/>
             &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;</b></font><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-3.png"/>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>JMSConnector(description);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;</b></font><a name="callout_snippet1_3_code" href="callout_snippet1_3"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-3.png"/></a>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>JMSConnector(description);<br/>
             &nbsp;&nbsp;}<br/>
             });<br/>
             <br/>
@@ -60,7 +60,7 @@
             TCPUtil.prepareContainer(container);<br/>
             <br/>
             <font color="#3f7f5f">//&nbsp;Do&nbsp;not&nbsp;forget&nbsp;to&nbsp;activate&nbsp;the&nbsp;container&nbsp;before&nbsp;you&nbsp;use&nbsp;it</font><br/>
-            <img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-4.png"/>&nbsp;container.activate();
+            <a name="callout_snippet1_4_code" href="callout_snippet1_4"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-4.png"/></a>&nbsp;container.activate();
           </code>
         </div>
       </td>
@@ -73,11 +73,11 @@
     </tr>
   </table>
 </div>
-<p>Explanations:</p>
-<div style="margin-left:24px;"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-1.png"/>&nbsp;Create a searate IManagedContainer.</div>
-<div style="margin-left:24px;"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-2.png"/>&nbsp;Create a factory with the <i>productGroup</i> "org.eclipse.net4j.connectors".</div>
-<div style="margin-left:24px;"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-3.png"/>&nbsp;Create a JMS connector.</div>
-<div style="margin-left:24px;"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-4.png"/>&nbsp;The new container can not be used when inactive.</div>
+<p/>
+<div style="margin-left:24px;"><a name="callout_snippet1_1" href="callout_snippet1_1_code"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-1.png"/></a>&nbsp;Create a searate IManagedContainer.</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_2" href="callout_snippet1_2_code"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-2.png"/></a>&nbsp;Create a factory with the <i>productGroup</i> "org.eclipse.net4j.connectors".</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_3" href="callout_snippet1_3_code"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-3.png"/></a>&nbsp;Create a JMS connector.</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_4" href="callout_snippet1_4_code"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-4.png"/></a>&nbsp;The new container can not be used when inactive.</div>
 <p/>
  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  Etiam eu nibh in erat dapibus accumsan. Aenean cursus lacinia dictum. Mauris non sem sapien. Vivamus sem ante,
@@ -96,8 +96,8 @@
 <a name="CreatingTransportConnections.AddConfigurationParameters.SetBufferCapacity"/><p>
  
 
-<p>Example:</p>
 <div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_JMSConnector"/>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/editor-top-left.png"/></td>
@@ -117,7 +117,7 @@
             &nbsp;&nbsp;{<br/>
             &nbsp;&nbsp;}<br/>
             <br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>multiplexChannel(InternalChannel&nbsp;<img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-1.png"/>&nbsp;channel)<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>multiplexChannel(InternalChannel&nbsp;<a name="callout_JMSConnector_1_code" href="callout_JMSConnector_1"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-1.png"/></a>&nbsp;channel)<br/>
             &nbsp;&nbsp;{<br/>
             &nbsp;&nbsp;}<br/>
             <br/>
@@ -135,8 +135,8 @@
     </tr>
   </table>
 </div>
-<p>Explanation:</p>
-<div style="margin-left:24px;"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-1.png"/>&nbsp;The channel must not be <code>null</code>.</div>
+<p/>
+<div style="margin-left:24px;"><a name="callout_JMSConnector_1" href="callout_JMSConnector_1_code"><img src="../../../../../../../../org.eclipse.emf.cdo.releng.doc/resources/callout-1.png"/></a>&nbsp;The channel must not be <code>null</code>.</div>
 <p/>
 
 

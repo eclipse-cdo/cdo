@@ -483,6 +483,16 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
+  public EAttribute getJavaElement_ClassFile()
+  {
+    return (EAttribute)javaElementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getStructuralElement()
   {
     return structuralElementEClass;
@@ -646,6 +656,16 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
   public EClass getExternalTarget()
   {
     return externalTargetEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getExternalTarget_Url()
+  {
+    return (EAttribute)externalTargetEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -915,6 +935,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     factoryEClass = createEClass(FACTORY);
 
     javaElementEClass = createEClass(JAVA_ELEMENT);
+    createEAttribute(javaElementEClass, JAVA_ELEMENT__CLASS_FILE);
 
     structuralElementEClass = createEClass(STRUCTURAL_ELEMENT);
     createEReference(structuralElementEClass, STRUCTURAL_ELEMENT__CHILDREN);
@@ -937,6 +958,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     createEReference(embeddableElementEClass, EMBEDDABLE_ELEMENT__DOCUMENTATION);
 
     externalTargetEClass = createEClass(EXTERNAL_TARGET);
+    createEAttribute(externalTargetEClass, EXTERNAL_TARGET__URL);
 
     identifiableEClass = createEClass(IDENTIFIABLE);
     createEAttribute(identifiableEClass, IDENTIFIABLE__ID);
@@ -1063,6 +1085,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     initEClass(javaElementEClass, JavaElement.class, "JavaElement", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getJavaElement_ClassFile(), this.getFile(), "classFile", null, 0, 1, JavaElement.class,
+        !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(structuralElementEClass, StructuralElement.class, "StructuralElement", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -1117,6 +1141,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     initEClass(externalTargetEClass, ExternalTarget.class, "ExternalTarget", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getExternalTarget_Url(), ecorePackage.getEString(), "url", null, 0, 1, ExternalTarget.class,
+        !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(identifiableEClass, Identifiable.class, "Identifiable", IS_ABSTRACT, IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

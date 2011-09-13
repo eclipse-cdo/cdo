@@ -13,8 +13,9 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Context;
+import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
-import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
 import org.eclipse.emf.common.util.EList;
@@ -24,11 +25,15 @@ import com.sun.javadoc.MemberDoc;
 import com.sun.javadoc.SeeTag;
 import com.sun.javadoc.Tag;
 
+import java.io.File;
+
 /**
  * @author Eike Stepper
  */
 public class UnresolvedBodyElement extends BodyElementImpl
 {
+  private static final boolean DEBUG = false;
+
   UnresolvedBodyElement(Body body, Tag tag)
   {
     super(body, tag);
@@ -36,7 +41,12 @@ public class UnresolvedBodyElement extends BodyElementImpl
 
   public final String getText()
   {
-    return "<b><code><font color=\"#ff000000\">{" + getTag() + "}</font></code></b>";
+    if (DEBUG)
+    {
+      return "<b><code><font color=\"#ff000000\">{" + getTag() + "}</font></code></b>";
+    }
+
+    return getTag().text();
   }
 
   @Override
@@ -51,7 +61,11 @@ public class UnresolvedBodyElement extends BodyElementImpl
     if (tag instanceof SeeTag)
     {
       SeeTag seeTag = (SeeTag)tag;
-      return resolveSeeTag(context, seeTag);
+      BodyElement resolved = resolveSeeTag(context, seeTag);
+      if (resolved != null)
+      {
+        return resolved;
+      }
     }
 
     System.err.println(ArticleUtil.makeConsoleLink("Warning: Unresolved link " + tag + " in ", tag.position()));
@@ -68,28 +82,56 @@ public class UnresolvedBodyElement extends BodyElementImpl
       {
         return createBodyElement(tag, target);
       }
-
-      return this;
     }
 
     ClassDoc referencedClass = tag.referencedClass();
     if (referencedClass != null)
     {
       Object target = context.lookup(referencedClass);
+      if (target == null)
+      {
+        target = resolveJavaElement(context, referencedClass, referencedMember);
+      }
+
       if (target != null)
       {
         return createBodyElement(tag, target);
       }
     }
 
-    return this;
+    return null;
+  }
+
+  private Object resolveJavaElement(Context context, ClassDoc classDoc, MemberDoc memberDoc)
+  {
+    String packageName = classDoc.containingPackage().name();
+    for (Documentation documentation : context.getDocumentations())
+    {
+      File projectFolder = documentation.getOutputFile().getParentFile();
+      File javadocFolder = new File(projectFolder, "javadoc");
+      File packageFolder = new File(javadocFolder, packageName.replace('.', '/'));
+      File classFile = new File(packageFolder, classDoc.typeName() + ".html");
+      if (classFile.isFile())
+      {
+        return new JavaElementImpl(documentation, classDoc, classFile);
+      }
+    }
+
+    String externalLink = context.getExternalLink(packageName);
+    if (externalLink != null)
+    {
+      String url = externalLink + "/" + classDoc.typeName() + ".html";
+      return new ExternalTargetImpl(context, classDoc, url);
+    }
+
+    return null;
   }
 
   private BodyElement createBodyElement(SeeTag tag, Object target)
   {
-    if (target instanceof StructuralElement)
+    if (target instanceof LinkTarget)
     {
-      return new LinkImpl(null, tag, (StructuralElement)target);
+      return new LinkImpl(null, tag, (LinkTarget)target);
     }
 
     if (target instanceof EmbeddableElement)

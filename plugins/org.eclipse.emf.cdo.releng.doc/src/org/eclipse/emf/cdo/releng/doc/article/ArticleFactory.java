@@ -8,10 +8,6 @@ package org.eclipse.emf.cdo.releng.doc.article;
 
 import org.eclipse.emf.ecore.EFactory;
 
-import com.sun.javadoc.RootDoc;
-
-import java.io.File;
-
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
  * the model. <!-- end-user-doc -->
@@ -43,8 +39,6 @@ public interface ArticleFactory extends EFactory
    * @generated
    */
   Context createContext();
-
-  Context createContext(RootDoc root, File baseFolder, String project);
 
   /**
    * Returns a new object of class '<em>Category</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->

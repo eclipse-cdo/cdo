@@ -31,8 +31,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import com.sun.javadoc.RootDoc;
-
 import java.io.File;
 
 /**
@@ -174,11 +172,6 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
   {
     ContextImpl context = new ContextImpl();
     return context;
-  }
-
-  public Context createContext(RootDoc root, File baseFolder, String project)
-  {
-    return new ContextImpl(root, baseFolder, project);
   }
 
   /**

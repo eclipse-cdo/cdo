@@ -228,7 +228,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
   private void writeHtml(Embedding embedder, PrintWriter out)
   {
     File source = embedder.getBody().getOutputFile();
-    File target = new File(getDocumentation().getOutputFile(), "resources");
+    File target = new File(getDocumentation().getOutputFile().getParentFile(), "images");
     String imagePath = ArticleUtil.createLink(source, target) + "/";
 
     Map<String, Object> options = new HashMap<String, Object>();

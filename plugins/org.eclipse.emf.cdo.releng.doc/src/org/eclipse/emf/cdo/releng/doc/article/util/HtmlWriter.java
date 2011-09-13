@@ -83,12 +83,4 @@ public class HtmlWriter extends PrintWriter
     write(label);
     write("</a>");
   }
-
-  public static void close(HtmlWriter writer)
-  {
-    if (writer != null)
-    {
-      writer.close();
-    }
-  }
 }

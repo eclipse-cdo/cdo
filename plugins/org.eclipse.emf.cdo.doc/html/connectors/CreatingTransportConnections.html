@@ -1,6 +1,6 @@
 <h1>Creating Transport Connections</h1>
 <a name="CreatingTransportConnections.html"/><p>
- This tutorial outlines the steps needed to create a Net4j <b><code><font color="#ff000000">{@link:IConnector}</font></code></b> and connect it to an <b><code><font color="#ff000000">{@link:IAcceptor}</font></code></b>.
+ This tutorial outlines the steps needed to create a Net4j <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html">IConnector</a> and connect it to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/acceptor/IAcceptor.html">IAcceptor</a>.
  <p>
  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu nibh in erat dapibus accumsan. Aenean cursus
  lacinia dictum. Mauris non sem sapien. Vivamus sem ante, posuere a rhoncus ac, varius in nisi. Sed pulvinar urna ac
@@ -15,10 +15,10 @@
 <a name="SelectTransportType"/><p>
  Currently supported transport types are:
  <ul>
- <li><b>JVM</b> to connect to an <b><code><font color="#ff000000">{@link:IJVMAcceptor}</font></code></b> in the same Java Virtual Machine.
- <li><b>TCP</b> to connect to an <b><code><font color="#ff000000">{@link:ITCPAcceptor}</font></code></b> by means of a <b><code><font color="#ff000000">{@link:SocketChannel}</font></code></b>.
+ <li><b>JVM</b> to connect to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/jvm/IJVMAcceptor.html">IJVMAcceptor</a> in the same Java Virtual Machine.
+ <li><b>TCP</b> to connect to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/tcp/ITCPAcceptor.html">ITCPAcceptor</a> by means of a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html">SocketChannel</a>.
  <li><b>SSL</b> an extension to the TCP transport that adds TLS/SSL security.
- <li><b>HTTP</b> to connect to an <b><code><font color="#ff000000">{@link:IHTTPAcceptor}</font></code></b> that is made available by a servlet.
+ <li><b>HTTP</b> to connect to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/http/server/IHTTPAcceptor.html">IHTTPAcceptor</a> that is made available by a servlet.
  </ul>
  Continue with <a href="../sessions/ConnectingToRepositories.html#SetConnectionTimeout">SetConnectionTimeout</a>.
 
@@ -32,26 +32,26 @@
   <a name="snippet_snippet1"/>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td><img src="../resources/editor-top-left.png"/></td>
-      <td style="background-image:url(../resources/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ContainerSetup.java</font></td>
-      <td width="1px"><img src="../resources/editor-close.png"/></td>
-      <td style="background-image:url(../resources/editor-top2.png); background-repeat:repeat-x;">&nbsp;</td>
-      <td><img src="../resources/editor-top-right.png"/></td>
+      <td><img src="../../images/editor-top-left.png"/></td>
+      <td style="background-image:url(../../images/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ContainerSetup.java</font></td>
+      <td width="1px"><img src="../../images/editor-close.png"/></td>
+      <td style="background-image:url(../../images/editor-top2.png); background-repeat:repeat-x;">&nbsp;</td>
+      <td><img src="../../images/editor-top-right.png"/></td>
     </tr>
     <tr>
-      <td style="background-image:url(../resources/editor-left.png); background-repeat:repeat-y;">&nbsp;</td>
+      <td style="background-image:url(../../images/editor-left.png); background-repeat:repeat-y;">&nbsp;</td>
       <td colspan="3" align="left" valign="top" nowrap>
         <div style="margin:10px 0px 10px 0px;">
           <code>
             <font color="#3f7f5f">//&nbsp;Create&nbsp;a&nbsp;dedicated&nbsp;container&nbsp;instance</font><br/>
-            IManagedContainer&nbsp;container&nbsp;=&nbsp;<a name="callout_snippet1_1_code" href="#callout_snippet1_1" alt="Create a separate IManagedContainer." title="Create a separate IManagedContainer."><img src="../resources/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ManagedContainer();<br/>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;<a name="callout_snippet1_1_code" href="#callout_snippet1_1" alt="Create a separate IManagedContainer." title="Create a separate IManagedContainer."><img src="../../images/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ManagedContainer();<br/>
             <br/>
             <font color="#3f7f5f">//&nbsp;Register&nbsp;your&nbsp;custom&nbsp;factories</font><br/>
-            container.registerFactory(&nbsp;<a name="callout_snippet1_2_code" href="#callout_snippet1_2" alt="Create a factory of type &quot;jms&quot; in the productGroup &quot;org.eclipse.net4j.connectors&quot;." title="Create a factory of type &quot;jms&quot; in the productGroup &quot;org.eclipse.net4j.connectors&quot;."><img src="../resources/callout-2.png" width="16" height="16" border="0" align="top"/></a>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Factory(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;jms&#34;</font>)<br/>
+            container.registerFactory(&nbsp;<a name="callout_snippet1_2_code" href="#callout_snippet1_2" alt="Create a factory of type &quot;jms&quot; in the productGroup &quot;org.eclipse.net4j.connectors&quot;." title="Create a factory of type &quot;jms&quot; in the productGroup &quot;org.eclipse.net4j.connectors&quot;."><img src="../../images/callout-2.png" width="16" height="16" border="0" align="top"/></a>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Factory(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;jms&#34;</font>)<br/>
             {<br/>
             &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font>IConnector&nbsp;create(String&nbsp;description)&nbsp;<font color="#7f0055"><b>throws&nbsp;</b></font>ProductCreationException<br/>
             &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;</b></font><a name="callout_snippet1_3_code" href="#callout_snippet1_3" alt="Create a JMS connector." title="Create a JMS connector."><img src="../resources/callout-3.png" width="16" height="16" border="0" align="top"/></a>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>JMSConnector(description);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;</b></font><a name="callout_snippet1_3_code" href="#callout_snippet1_3" alt="Create a JMS connector." title="Create a JMS connector."><img src="../../images/callout-3.png" width="16" height="16" border="0" align="top"/></a>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>JMSConnector(description);<br/>
             &nbsp;&nbsp;}<br/>
             });<br/>
             <br/>
@@ -60,24 +60,24 @@
             TCPUtil.prepareContainer(container);<br/>
             <br/>
             <font color="#3f7f5f">//&nbsp;Do&nbsp;not&nbsp;forget&nbsp;to&nbsp;activate&nbsp;the&nbsp;container&nbsp;before&nbsp;you&nbsp;use&nbsp;it</font><br/>
-            <a name="callout_snippet1_4_code" href="#callout_snippet1_4" alt="The new container can not be used when inactive." title="The new container can not be used when inactive."><img src="../resources/callout-4.png" width="16" height="16" border="0" align="top"/></a>&nbsp;container.activate();
+            <a name="callout_snippet1_4_code" href="#callout_snippet1_4" alt="The new container can not be used when inactive." title="The new container can not be used when inactive."><img src="../../images/callout-4.png" width="16" height="16" border="0" align="top"/></a>&nbsp;container.activate();
           </code>
         </div>
       </td>
-      <td style="background-image:url(../resources/editor-right.png); background-repeat:repeat-y;">&nbsp;</td>
+      <td style="background-image:url(../../images/editor-right.png); background-repeat:repeat-y;">&nbsp;</td>
     </tr>
     <tr>
-      <td><img src="../resources/editor-bottom-left.png"/></td>
-      <td style="background-image:url(../resources/editor-bottom.png); background-repeat:repeat-x;" colspan="3">&nbsp;</td>
-      <td><img src="../resources/editor-bottom-right.png"/></td>
+      <td><img src="../../images/editor-bottom-left.png"/></td>
+      <td style="background-image:url(../../images/editor-bottom.png); background-repeat:repeat-x;" colspan="3">&nbsp;</td>
+      <td><img src="../../images/editor-bottom-right.png"/></td>
     </tr>
   </table>
 </div>
 <p/>
-<div style="margin-left:24px;"><a name="callout_snippet1_1" href="#callout_snippet1_1_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../resources/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a separate IManagedContainer.</div>
-<div style="margin-left:24px;"><a name="callout_snippet1_2" href="#callout_snippet1_2_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../resources/callout-2.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a factory of <i>type</i> "jms" in the <i>productGroup</i> "org.eclipse.net4j.connectors".</div>
-<div style="margin-left:24px;"><a name="callout_snippet1_3" href="#callout_snippet1_3_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../resources/callout-3.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a JMS connector.</div>
-<div style="margin-left:24px;"><a name="callout_snippet1_4" href="#callout_snippet1_4_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../resources/callout-4.png" width="16" height="16" border="0" align="top"/></a>&nbsp;The new container can not be used when inactive.</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_1" href="#callout_snippet1_1_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a separate IManagedContainer.</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_2" href="#callout_snippet1_2_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-2.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a factory of <i>type</i> "jms" in the <i>productGroup</i> "org.eclipse.net4j.connectors".</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_3" href="#callout_snippet1_3_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-3.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a JMS connector.</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_4" href="#callout_snippet1_4_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-4.png" width="16" height="16" border="0" align="top"/></a>&nbsp;The new container can not be used when inactive.</div>
 <p/>
  Lorem ipsum dolor sit amet,
  consectetur adipiscing elit. Etiam eu nibh in erat dapibus accumsan. Aenean cursus lacinia dictum. Mauris non sem
@@ -100,14 +100,14 @@
   <a name="snippet_JMSConnector"/>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td><img src="../resources/editor-top-left.png"/></td>
-      <td style="background-image:url(../resources/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1"></font></td>
-      <td width="1px"><img src="../resources/editor-close.png"/></td>
-      <td style="background-image:url(../resources/editor-top2.png); background-repeat:repeat-x;">&nbsp;</td>
-      <td><img src="../resources/editor-top-right.png"/></td>
+      <td><img src="../../images/editor-top-left.png"/></td>
+      <td style="background-image:url(../../images/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1"></font></td>
+      <td width="1px"><img src="../../images/editor-close.png"/></td>
+      <td style="background-image:url(../../images/editor-top2.png); background-repeat:repeat-x;">&nbsp;</td>
+      <td><img src="../../images/editor-top-right.png"/></td>
     </tr>
     <tr>
-      <td style="background-image:url(../resources/editor-left.png); background-repeat:repeat-y;">&nbsp;</td>
+      <td style="background-image:url(../../images/editor-left.png); background-repeat:repeat-y;">&nbsp;</td>
       <td colspan="3" align="left" valign="top" nowrap>
         <div style="margin:10px 0px 10px 0px;">
           <code>
@@ -117,7 +117,7 @@
             &nbsp;&nbsp;{<br/>
             &nbsp;&nbsp;}<br/>
             <br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>multiplexChannel(InternalChannel&nbsp;<a name="callout_JMSConnector_1_code" href="#callout_JMSConnector_1" alt="The channel must not be null." title="The channel must not be null."><img src="../resources/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;channel)<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>multiplexChannel(InternalChannel&nbsp;<a name="callout_JMSConnector_1_code" href="#callout_JMSConnector_1" alt="The channel must not be null." title="The channel must not be null."><img src="../../images/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;channel)<br/>
             &nbsp;&nbsp;{<br/>
             &nbsp;&nbsp;}<br/>
             <br/>
@@ -126,17 +126,17 @@
           </code>
         </div>
       </td>
-      <td style="background-image:url(../resources/editor-right.png); background-repeat:repeat-y;">&nbsp;</td>
+      <td style="background-image:url(../../images/editor-right.png); background-repeat:repeat-y;">&nbsp;</td>
     </tr>
     <tr>
-      <td><img src="../resources/editor-bottom-left.png"/></td>
-      <td style="background-image:url(../resources/editor-bottom.png); background-repeat:repeat-x;" colspan="3">&nbsp;</td>
-      <td><img src="../resources/editor-bottom-right.png"/></td>
+      <td><img src="../../images/editor-bottom-left.png"/></td>
+      <td style="background-image:url(../../images/editor-bottom.png); background-repeat:repeat-x;" colspan="3">&nbsp;</td>
+      <td><img src="../../images/editor-bottom-right.png"/></td>
     </tr>
   </table>
 </div>
 <p/>
-<div style="margin-left:24px;"><a name="callout_JMSConnector_1" href="#callout_JMSConnector_1_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../resources/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;The channel must not be <code>null</code>.</div>
+<div style="margin-left:24px;"><a name="callout_JMSConnector_1" href="#callout_JMSConnector_1_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;The channel must not be <code>null</code>.</div>
 <p/>
 
 

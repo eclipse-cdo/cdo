@@ -19,6 +19,7 @@ import com.sun.javadoc.RootDoc;
 import com.sun.javadoc.SourcePosition;
 import com.sun.javadoc.Tag;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -125,6 +126,21 @@ public final class ArticleUtil
     }
 
     return null;
+  }
+
+  public static void close(Closeable closeable)
+  {
+    if (closeable != null)
+    {
+      try
+      {
+        closeable.close();
+      }
+      catch (IOException ex)
+      {
+        ex.printStackTrace();
+      }
+    }
   }
 
   public static boolean containsFile(File folder, File file)

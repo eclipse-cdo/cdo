@@ -23,7 +23,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.sun.javadoc.RootDoc;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -108,6 +113,8 @@ public class ContextImpl extends EObjectImpl implements Context
 
   protected final Map<Object, Object> registry = new HashMap<Object, Object>();
 
+  protected final Map<String, String> externalLinks = new HashMap<String, String>();
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -118,11 +125,37 @@ public class ContextImpl extends EObjectImpl implements Context
     super();
   }
 
-  ContextImpl(RootDoc root, File baseFolder, String project)
+  ContextImpl(RootDoc root, File baseFolder, String project, String externals)
   {
     this.root = root;
     this.baseFolder = ArticleUtil.canonify(baseFolder);
     this.project = project;
+
+    for (String external : externals.split(";"))
+    {
+      InputStream in = null;
+
+      try
+      {
+        URL url = new URL(external + "/package-list");
+        URLConnection connection = url.openConnection();
+        in = connection.getInputStream();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String line;
+        while ((line = reader.readLine()) != null)
+        {
+          externalLinks.put(line, external);
+        }
+      }
+      catch (Exception ex)
+      {
+        System.err.println("External link does not point to Javadocs: " + external);
+      }
+      finally
+      {
+        ArticleUtil.close(in);
+      }
+    }
 
     new DocumentationImpl(this, project);
 
@@ -367,4 +400,14 @@ public class ContextImpl extends EObjectImpl implements Context
     return registry.get(id);
   }
 
+  public String getExternalLink(String packageName)
+  {
+    String link = externalLinks.get(packageName);
+    if (link != null)
+    {
+      return link + "/" + packageName.replace('.', '/');
+    }
+
+    return null;
+  }
 } // ContextImpl

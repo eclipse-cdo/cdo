@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
-import org.eclipse.emf.cdo.releng.doc.article.ArticleFactory;
 import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleException;
@@ -32,9 +31,11 @@ public class ArticleDoclet
 
   public static final String OPTION_PRIVATE = "-private";
 
+  public static final String OPTION_BASE_FOLDER = "-basefolder";
+
   public static final String OPTION_PROJECT = "-project";
 
-  public static final String OPTION_BASE_FOLDER = "-basefolder";
+  public static final String OPTION_EXTERNALS = "-externals";
 
   public static boolean hasOption(RootDoc root, String optionName)
   {
@@ -125,6 +126,11 @@ public class ArticleDoclet
       return 2;
     }
 
+    if (OPTION_EXTERNALS.equals(option))
+    {
+      return 2;
+    }
+
     // Indicate we don't know about it
     return -1;
   }
@@ -157,8 +163,9 @@ public class ArticleDoclet
 
       File baseFolder = new File(getOption(root, OPTION_BASE_FOLDER));
       String project = getOption(root, OPTION_PROJECT);
+      String externals = getOption(root, OPTION_EXTERNALS);
 
-      Context context = ArticleFactory.eINSTANCE.createContext(root, baseFolder, project);
+      Context context = new ContextImpl(root, baseFolder, project, externals);
 
       Documentation documentation = context.getDocumentation();
       documentation.generate();

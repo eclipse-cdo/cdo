@@ -1157,13 +1157,21 @@ public interface ArticlePackage extends EPackage
   int JAVA_ELEMENT__LABEL = LINK_TARGET__LABEL;
 
   /**
+   * The feature id for the '<em><b>Class File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int JAVA_ELEMENT__CLASS_FILE = LINK_TARGET_FEATURE_COUNT + 0;
+
+  /**
    * The number of structural features of the '<em>Java Element</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    * 
    * @generated
    * @ordered
    */
-  int JAVA_ELEMENT_FEATURE_COUNT = LINK_TARGET_FEATURE_COUNT + 0;
+  int JAVA_ELEMENT_FEATURE_COUNT = LINK_TARGET_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.CalloutImpl <em>Callout</em>}'
@@ -1227,13 +1235,21 @@ public interface ArticlePackage extends EPackage
   int EXTERNAL_TARGET__LABEL = LINK_TARGET__LABEL;
 
   /**
+   * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_TARGET__URL = LINK_TARGET_FEATURE_COUNT + 0;
+
+  /**
    * The number of structural features of the '<em>External Target</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int EXTERNAL_TARGET_FEATURE_COUNT = LINK_TARGET_FEATURE_COUNT + 0;
+  int EXTERNAL_TARGET_FEATURE_COUNT = LINK_TARGET_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.TextImpl <em>Text</em>}' class. <!--
@@ -1426,6 +1442,14 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int SOURCE_CODE__LABEL = EXTERNAL_TARGET__LABEL;
+
+  /**
+   * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SOURCE_CODE__URL = EXTERNAL_TARGET__URL;
 
   /**
    * The number of structural features of the '<em>Source Code</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
@@ -1678,6 +1702,17 @@ public interface ArticlePackage extends EPackage
   EClass getJavaElement();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.JavaElement#getClassFile
+   * <em>Class File</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Class File</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.JavaElement#getClassFile()
+   * @see #getJavaElement()
+   * @generated
+   */
+  EAttribute getJavaElement_ClassFile();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement
    * <em>Structural Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -1867,6 +1902,17 @@ public interface ArticlePackage extends EPackage
    * @generated
    */
   EClass getExternalTarget();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalTarget#getUrl
+   * <em>Url</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Url</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ExternalTarget#getUrl()
+   * @see #getExternalTarget()
+   * @generated
+   */
+  EAttribute getExternalTarget_Url();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Identifiable
@@ -2288,6 +2334,14 @@ public interface ArticlePackage extends EPackage
     EClass JAVA_ELEMENT = eINSTANCE.getJavaElement();
 
     /**
+     * The meta object literal for the '<em><b>Class File</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute JAVA_ELEMENT__CLASS_FILE = eINSTANCE.getJavaElement_ClassFile();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl
      * <em>Structural Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -2432,6 +2486,14 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EClass EXTERNAL_TARGET = eINSTANCE.getExternalTarget();
+
+    /**
+     * The meta object literal for the '<em><b>Url</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute EXTERNAL_TARGET__URL = eINSTANCE.getExternalTarget_Url();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.Identifiable

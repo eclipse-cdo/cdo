@@ -94,9 +94,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   public Body getBody()
   {
     if (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__BODY)
-    {
       return null;
-    }
     return (Body)eContainer();
   }
 
@@ -118,32 +116,22 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    */
   public void setBody(Body newBody)
   {
-    if (newBody != eInternalContainer() || eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__BODY
-        && newBody != null)
+    if (newBody != eInternalContainer()
+        || (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__BODY && newBody != null))
     {
       if (EcoreUtil.isAncestor(this, newBody))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newBody != null)
-      {
         msgs = ((InternalEObject)newBody).eInverseAdd(this, ArticlePackage.BODY__ELEMENTS, Body.class, msgs);
-      }
       msgs = basicSetBody(newBody, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.BODY_ELEMENT__BODY, newBody, newBody));
-    }
   }
 
   /**
@@ -171,9 +159,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   public Callout getCallout()
   {
     if (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CALLOUT)
-    {
       return null;
-    }
     return (Callout)eContainer();
   }
 
@@ -195,33 +181,23 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    */
   public void setCallout(Callout newCallout)
   {
-    if (newCallout != eInternalContainer() || eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CALLOUT
-        && newCallout != null)
+    if (newCallout != eInternalContainer()
+        || (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CALLOUT && newCallout != null))
     {
       if (EcoreUtil.isAncestor(this, newCallout))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newCallout != null)
-      {
         msgs = ((InternalEObject)newCallout).eInverseAdd(this, ArticlePackage.CALLOUT__ELEMENTS, Callout.class, msgs);
-      }
       msgs = basicSetCallout(newCallout, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.BODY_ELEMENT__CALLOUT, newCallout,
           newCallout));
-    }
   }
 
   /**
@@ -236,15 +212,11 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
     {
     case ArticlePackage.BODY_ELEMENT__BODY:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetBody((Body)otherEnd, msgs);
     case ArticlePackage.BODY_ELEMENT__CALLOUT:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetCallout((Callout)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);

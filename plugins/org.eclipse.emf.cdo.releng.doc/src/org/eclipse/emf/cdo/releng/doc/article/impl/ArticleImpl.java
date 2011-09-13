@@ -9,6 +9,7 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.Article;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
@@ -68,7 +69,7 @@ public class ArticleImpl extends ChapterImpl implements Article
     }
     finally
     {
-      HtmlWriter.close(out);
+      ArticleUtil.close(out);
     }
   }
 } // ArticleImpl

@@ -7,10 +7,13 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 
 import org.eclipse.emf.ecore.EClass;
+
+import com.sun.javadoc.ClassDoc;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>External Target</b></em>'. <!-- end-user-doc
@@ -23,6 +26,26 @@ import org.eclipse.emf.ecore.EClass;
 public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
 {
   /**
+   * The default value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getUrl()
+   * @generated
+   * @ordered
+   */
+  protected static final String URL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getUrl()
+   * @generated
+   * @ordered
+   */
+  protected String url = URL_EDEFAULT;
+
+  private ClassDoc classDoc;
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -30,6 +53,13 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
   protected ExternalTargetImpl()
   {
     super();
+  }
+
+  ExternalTargetImpl(Context context, ClassDoc classDoc, String url)
+  {
+    this.classDoc = classDoc;
+    this.url = url;
+    context.register(getId(), this);
   }
 
   /**
@@ -43,18 +73,78 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
     return ArticlePackage.Literals.EXTERNAL_TARGET;
   }
 
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public String getUrl()
+  {
+    return url;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public Object eGet(int featureID, boolean resolve, boolean coreType)
+  {
+    switch (featureID)
+    {
+    case ArticlePackage.EXTERNAL_TARGET__URL:
+      return getUrl();
+    }
+    return super.eGet(featureID, resolve, coreType);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public boolean eIsSet(int featureID)
+  {
+    switch (featureID)
+    {
+    case ArticlePackage.EXTERNAL_TARGET__URL:
+      return URL_EDEFAULT == null ? url != null : !URL_EDEFAULT.equals(url);
+    }
+    return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy())
+    {
+      return super.toString();
+    }
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (url: ");
+    result.append(url);
+    result.append(')');
+    return result.toString();
+  }
+
   @Override
   public String linkFrom(StructuralElement source)
   {
-    // TODO: implement ExternalTargetImpl.linkFrom(source)
-    throw new UnsupportedOperationException();
+    return url;
   }
 
   @Override
   public Object getId()
   {
-    // TODO: implement ExternalTargetImpl.getId()
-    throw new UnsupportedOperationException();
+    return classDoc;
   }
 
   @Override

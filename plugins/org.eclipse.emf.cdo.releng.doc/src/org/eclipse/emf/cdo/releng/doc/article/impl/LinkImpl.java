@@ -10,7 +10,6 @@ import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
-import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -51,7 +50,7 @@ public class LinkImpl extends BodyElementImpl implements Link
     super();
   }
 
-  LinkImpl(Body body, SeeTag tag, StructuralElement target)
+  LinkImpl(Body body, SeeTag tag, LinkTarget target)
   {
     super(body, tag);
     this.target = target;

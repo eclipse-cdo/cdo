@@ -103,4 +103,6 @@ public interface Context extends EObject
   void register(Object id, Object value);
 
   Object lookup(Object id);
+
+  String getExternalLink(String packageName);
 } // Context

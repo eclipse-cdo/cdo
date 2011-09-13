@@ -40,7 +40,10 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Diagram" eSuperTypes="#//BodyElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Factory" eSuperTypes="#//EmbeddableElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="JavaElement" eSuperTypes="#//LinkTarget"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JavaElement" eSuperTypes="#//LinkTarget">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="classFile" eType="#//File"
+        changeable="false"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StructuralElement" abstract="true" eSuperTypes="#//LinkTarget">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//StructuralElement" containment="true" resolveProxies="false" eOpposite="#//StructuralElement/parent"/>
@@ -84,7 +87,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="documentation" lowerBound="1"
         eType="#//Documentation" resolveProxies="false" eOpposite="#//Documentation/embeddableElements"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExternalTarget" eSuperTypes="#//LinkTarget"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalTarget" eSuperTypes="#//LinkTarget">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Identifiable" abstract="true" interface="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
         changeable="false" volatile="true" transient="true" derived="true"/>

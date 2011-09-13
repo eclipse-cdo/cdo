@@ -78,7 +78,9 @@ public class LinkImpl extends BodyElementImpl implements Link
     LinkTarget oldTarget = target;
     target = newTarget;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.LINK__TARGET, oldTarget, target));
+    }
   }
 
   /**
@@ -145,6 +147,13 @@ public class LinkImpl extends BodyElementImpl implements Link
       return target != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  @Override
+  public String getHtml()
+  {
+    // TODO: implement LinkImpl.getHtml()
+    throw new UnsupportedOperationException();
   }
 
 } // LinkImpl

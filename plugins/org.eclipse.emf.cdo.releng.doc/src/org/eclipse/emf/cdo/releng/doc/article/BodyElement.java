@@ -63,7 +63,7 @@ public interface BodyElement extends EObject
    * 
    * @return the value of the '<em>Html</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getBodyElement_Html()
-   * @model changeable="false" derived="true"
+   * @model transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
   String getHtml();

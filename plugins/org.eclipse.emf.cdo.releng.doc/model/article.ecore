@@ -44,7 +44,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="Factory" eSuperTypes="#//EmbeddableElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="JavaElement" eSuperTypes="#//LinkTarget"/>
   <eClassifiers xsi:type="ecore:EClass" name="StructuralElement" abstract="true" eSuperTypes="#//LinkTarget">
-    <eOperations name="generate"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//StructuralElement" containment="true" resolveProxies="false" eOpposite="#//StructuralElement/parent"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//StructuralElement"
@@ -104,7 +103,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Body" resolveProxies="false"
         eOpposite="#//Body/elements"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="html" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        changeable="false" derived="true"/>
+        changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="callout" eType="#//Callout"
         resolveProxies="false" eOpposite="#//Callout/elements"/>
   </eClassifiers>

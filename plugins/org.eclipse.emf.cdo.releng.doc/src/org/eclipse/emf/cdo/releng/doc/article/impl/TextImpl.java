@@ -96,7 +96,9 @@ public class TextImpl extends BodyElementImpl implements Text
     String oldValue = value;
     value = newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.TEXT__VALUE, oldValue, value));
+    }
   }
 
   /**
@@ -174,13 +176,21 @@ public class TextImpl extends BodyElementImpl implements Text
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (value: ");
     result.append(value);
     result.append(')');
     return result.toString();
+  }
+
+  @Override
+  public String getHtml()
+  {
+    return getValue();
   }
 
 } // TextImpl

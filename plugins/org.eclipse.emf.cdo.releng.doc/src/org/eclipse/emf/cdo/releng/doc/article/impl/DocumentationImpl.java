@@ -34,7 +34,6 @@ import com.sun.javadoc.RootDoc;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Documentation</b></em>'. <!-- end-user-doc -->
@@ -113,8 +112,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     File projectFolder = getOutputFile().getParentFile();
     setTitle(AssembleScripts.getPluginName(projectFolder));
 
-    List<String> dependencies = AssembleScripts.getDependencies(projectFolder);
-    for (String dependency : dependencies)
+    for (String dependency : AssembleScripts.getDependencies(projectFolder))
     {
       if (context.getDocumentation(dependency) == null)
       {
@@ -151,12 +149,10 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       if (ArticleUtil.isDocumented(packageDoc))
       {
         StructuralElement parent = analyzePackage(parentDoc);
-        new CategoryImpl(parent, packageDoc);
+        return new CategoryImpl(parent, packageDoc);
       }
-      else
-      {
-        warnIfSubPackagesUndocumented(packageDoc, parentDoc);
-      }
+
+      warnIfSubPackagesUndocumented(packageDoc, parentDoc);
     }
 
     return this;

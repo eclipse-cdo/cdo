@@ -24,8 +24,6 @@ import com.sun.javadoc.PackageDoc;
  */
 public class CategoryImpl extends BodyImpl implements Category
 {
-  private PackageDoc packageDoc;
-
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -39,7 +37,6 @@ public class CategoryImpl extends BodyImpl implements Category
   CategoryImpl(StructuralElement parent, PackageDoc packageDoc)
   {
     super(parent, ArticleUtil.getSimplePackageName(packageDoc), packageDoc);
-    this.packageDoc = packageDoc;
     getDocumentation().getContext().register(getId(), this);
   }
 

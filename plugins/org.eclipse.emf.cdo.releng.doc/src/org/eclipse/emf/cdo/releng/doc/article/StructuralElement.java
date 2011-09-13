@@ -6,11 +6,14 @@
  */
 package org.eclipse.emf.cdo.releng.doc.article;
 
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
+
 import org.eclipse.emf.common.util.EList;
 
 import com.sun.javadoc.Doc;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Structural Element</b></em>'. <!-- end-user-doc
@@ -172,12 +175,8 @@ public interface StructuralElement extends LinkTarget
    */
   Doc getDoc();
 
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @model
-   * @generated
-   */
-  void generate();
+  void generate() throws IOException;
+
+  void generate(HtmlWriter out) throws IOException;
 
 } // StructuralElement

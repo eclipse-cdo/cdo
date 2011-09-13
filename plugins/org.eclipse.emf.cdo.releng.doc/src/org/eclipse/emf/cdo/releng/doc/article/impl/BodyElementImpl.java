@@ -46,15 +46,6 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    */
   protected static final String HTML_EDEFAULT = null;
 
-  /**
-   * The cached value of the '{@link #getHtml() <em>Html</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @see #getHtml()
-   * @generated
-   * @ordered
-   */
-  protected String html = HTML_EDEFAULT;
-
   // TODO Is tag needed?
   private Tag tag;
 
@@ -93,7 +84,9 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   public Body getBody()
   {
     if (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__BODY)
+    {
       return null;
+    }
     return (Body)eContainer();
   }
 
@@ -115,33 +108,40 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    */
   public void setBody(Body newBody)
   {
-    if (newBody != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__BODY && newBody != null))
+    if (newBody != eInternalContainer() || eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__BODY
+        && newBody != null)
     {
       if (EcoreUtil.isAncestor(this, newBody))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newBody != null)
+      {
         msgs = ((InternalEObject)newBody).eInverseAdd(this, ArticlePackage.BODY__ELEMENTS, Body.class, msgs);
+      }
       msgs = basicSetBody(newBody, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.BODY_ELEMENT__BODY, newBody, newBody));
+    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
-  public String getHtml()
-  {
-    return html;
-  }
+  public abstract String getHtml();
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -151,7 +151,9 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   public Callout getCallout()
   {
     if (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CALLOUT)
+    {
       return null;
+    }
     return (Callout)eContainer();
   }
 
@@ -173,23 +175,33 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    */
   public void setCallout(Callout newCallout)
   {
-    if (newCallout != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CALLOUT && newCallout != null))
+    if (newCallout != eInternalContainer() || eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CALLOUT
+        && newCallout != null)
     {
       if (EcoreUtil.isAncestor(this, newCallout))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newCallout != null)
+      {
         msgs = ((InternalEObject)newCallout).eInverseAdd(this, ArticlePackage.CALLOUT__ELEMENTS, Callout.class, msgs);
+      }
       msgs = basicSetCallout(newCallout, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.BODY_ELEMENT__CALLOUT, newCallout,
           newCallout));
+    }
   }
 
   /**
@@ -204,11 +216,15 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
     {
     case ArticlePackage.BODY_ELEMENT__BODY:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetBody((Body)otherEnd, msgs);
     case ArticlePackage.BODY_ELEMENT__CALLOUT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetCallout((Callout)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -323,29 +339,11 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
     case ArticlePackage.BODY_ELEMENT__BODY:
       return getBody() != null;
     case ArticlePackage.BODY_ELEMENT__HTML:
-      return HTML_EDEFAULT == null ? html != null : !HTML_EDEFAULT.equals(html);
+      return HTML_EDEFAULT == null ? getHtml() != null : !HTML_EDEFAULT.equals(getHtml());
     case ArticlePackage.BODY_ELEMENT__CALLOUT:
       return getCallout() != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy())
-      return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (html: ");
-    result.append(html);
-    result.append(')');
-    return result.toString();
   }
 
 } // BodyElementImpl

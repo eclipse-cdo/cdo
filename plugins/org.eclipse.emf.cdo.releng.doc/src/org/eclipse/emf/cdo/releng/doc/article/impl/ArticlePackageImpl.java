@@ -1083,8 +1083,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEAttribute(getStructuralElement_Doc(), this.getDoc(), "doc", null, 1, 1, StructuralElement.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    addEOperation(structuralElementEClass, null, "generate", 0, 1, IS_UNIQUE, IS_ORDERED);
-
     initEClass(linkTargetEClass, LinkTarget.class, "LinkTarget", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLinkTarget_Label(), ecorePackage.getEString(), "label", null, 1, 1, LinkTarget.class,
@@ -1135,7 +1133,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         BodyElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBodyElement_Html(), ecorePackage.getEString(), "html", null, 0, 1, BodyElement.class,
-        !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getBodyElement_Callout(), this.getCallout(), this.getCallout_Elements(), "callout", null, 0, 1,
         BodyElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

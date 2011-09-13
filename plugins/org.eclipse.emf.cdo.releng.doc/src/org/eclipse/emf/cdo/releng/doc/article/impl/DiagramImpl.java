@@ -86,7 +86,9 @@ public class DiagramImpl extends BodyElementImpl implements Diagram
     String oldCode = code;
     code = newCode;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.DIAGRAM__CODE, oldCode, code));
+    }
   }
 
   /**
@@ -164,13 +166,22 @@ public class DiagramImpl extends BodyElementImpl implements Diagram
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (code: ");
     result.append(code);
     result.append(')');
     return result.toString();
+  }
+
+  @Override
+  public String getHtml()
+  {
+    // TODO: implement DiagramImpl.getHtml()
+    throw new UnsupportedOperationException();
   }
 
 } // DiagramImpl

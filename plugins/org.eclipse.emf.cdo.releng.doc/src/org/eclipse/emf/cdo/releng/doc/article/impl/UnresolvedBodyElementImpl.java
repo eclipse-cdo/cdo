@@ -31,4 +31,10 @@ public class UnresolvedBodyElementImpl extends BodyElementImpl
   {
     return text;
   }
+
+  @Override
+  public String getHtml()
+  {
+    return "<b><i>UNRESOLVED</i></b>";
+  }
 }

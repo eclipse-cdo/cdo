@@ -8,12 +8,16 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.Article;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Chapter;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.ClassDoc;
+
+import java.io.IOException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Chapter</b></em>'. <!-- end-user-doc -->
@@ -28,8 +32,6 @@ import com.sun.javadoc.ClassDoc;
  */
 public class ChapterImpl extends BodyImpl implements Chapter
 {
-  private ClassDoc classDoc;
-
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -44,7 +46,6 @@ public class ChapterImpl extends BodyImpl implements Chapter
   {
     super(parent, classDoc.containingClass() == null ? classDoc.simpleTypeName() + ".html" : "#"
         + classDoc.simpleTypeName(), classDoc);
-    this.classDoc = classDoc;
     getDocumentation().getContext().register(getId(), this);
   }
 
@@ -111,4 +112,24 @@ public class ChapterImpl extends BodyImpl implements Chapter
   {
     return (ClassDoc)super.getDoc();
   }
+
+  @Override
+  public void generate(HtmlWriter out) throws IOException
+  {
+    ClassDoc classDoc = getDoc();
+
+    out.writeHeading(1, getTitle());
+    out.write("<a name=\"");
+    out.write(classDoc.typeName());
+    out.write("\"/>");
+
+    for (BodyElement element : getElements())
+    {
+      out.write(element.getHtml());
+    }
+
+    out.write("\n\n");
+    super.generate(out);
+  }
+
 } // ChapterImpl

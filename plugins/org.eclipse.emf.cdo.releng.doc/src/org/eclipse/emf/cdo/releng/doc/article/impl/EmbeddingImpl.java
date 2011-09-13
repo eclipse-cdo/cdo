@@ -78,7 +78,9 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
     EmbeddableElement oldElement = element;
     element = newElement;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.EMBEDDING__ELEMENT, oldElement, element));
+    }
   }
 
   /**
@@ -145,6 +147,13 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
       return element != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  @Override
+  public String getHtml()
+  {
+    // TODO: implement EmbeddingImpl.getHtml()
+    throw new UnsupportedOperationException();
   }
 
 } // EmbeddingImpl

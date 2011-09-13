@@ -59,7 +59,6 @@ public class Bugzilla_319552_Test extends AbstractSyncingTest
     transaction.commit();
 
     getOfflineConfig().stopMasterTransport();
-    // getOfflineConfig().stopMasterTransport();
     waitForOffline(clone);
 
     // do some online changes to increase the revision.

@@ -10,9 +10,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import com.sun.javadoc.Tag;
 
@@ -91,21 +89,6 @@ public class TextImpl extends BodyElementImpl implements Text
    * 
    * @generated
    */
-  public void setValue(String newValue)
-  {
-    String oldValue = value;
-    value = newValue;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.TEXT__VALUE, oldValue, value));
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -115,40 +98,6 @@ public class TextImpl extends BodyElementImpl implements Text
       return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-    case ArticlePackage.TEXT__VALUE:
-      setValue((String)newValue);
-      return;
-    }
-    super.eSet(featureID, newValue);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-    case ArticlePackage.TEXT__VALUE:
-      setValue(VALUE_EDEFAULT);
-      return;
-    }
-    super.eUnset(featureID);
   }
 
   /**
@@ -176,9 +125,7 @@ public class TextImpl extends BodyElementImpl implements Text
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (value: ");

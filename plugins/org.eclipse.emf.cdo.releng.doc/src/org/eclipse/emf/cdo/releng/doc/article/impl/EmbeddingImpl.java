@@ -78,9 +78,7 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
     EmbeddableElement oldElement = element;
     element = newElement;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.EMBEDDING__ELEMENT, oldElement, element));
-    }
   }
 
   /**

@@ -29,22 +29,10 @@ public interface Diagram extends BodyElement
    * <!-- end-user-doc -->
    * 
    * @return the value of the '<em>Code</em>' attribute.
-   * @see #setCode(String)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDiagram_Code()
-   * @model required="true"
+   * @model required="true" changeable="false"
    * @generated
    */
   String getCode();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.Diagram#getCode <em>Code</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Code</em>' attribute.
-   * @see #getCode()
-   * @generated
-   */
-  void setCode(String value);
 
 } // Diagram

@@ -9,9 +9,7 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Diagram;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Diagram</b></em>'. <!-- end-user-doc -->
@@ -81,21 +79,6 @@ public class DiagramImpl extends BodyElementImpl implements Diagram
    * 
    * @generated
    */
-  public void setCode(String newCode)
-  {
-    String oldCode = code;
-    code = newCode;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.DIAGRAM__CODE, oldCode, code));
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -105,40 +88,6 @@ public class DiagramImpl extends BodyElementImpl implements Diagram
       return getCode();
     }
     return super.eGet(featureID, resolve, coreType);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-    case ArticlePackage.DIAGRAM__CODE:
-      setCode((String)newValue);
-      return;
-    }
-    super.eSet(featureID, newValue);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-    case ArticlePackage.DIAGRAM__CODE:
-      setCode(CODE_EDEFAULT);
-      return;
-    }
-    super.eUnset(featureID);
   }
 
   /**
@@ -166,9 +115,7 @@ public class DiagramImpl extends BodyElementImpl implements Diagram
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (code: ");

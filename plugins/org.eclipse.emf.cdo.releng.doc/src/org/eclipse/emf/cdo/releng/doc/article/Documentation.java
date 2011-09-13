@@ -1,159 +1,109 @@
 /**
- * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors:
- *    Eike Stepper - initial API and implementation
+ * <copyright>
+ * </copyright>
+ *
+ * $Id$
  */
 package org.eclipse.emf.cdo.releng.doc.article;
 
-import com.sun.javadoc.ClassDoc;
-import com.sun.javadoc.PackageDoc;
-import com.sun.javadoc.RootDoc;
-import com.sun.javadoc.Tag;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import org.eclipse.emf.common.util.EList;
 
 /**
- * @author Eike Stepper
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Documentation</b></em>'. <!-- end-user-doc -->
+ * <p>
+ * The following features are supported:
+ * <ul>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getContext <em>Context</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getEmbeddableElements <em>Embeddable Elements</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getDependencies <em>Dependencies</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getProject <em>Project</em>}</li>
+ * </ul>
+ * </p>
+ * 
+ * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation()
+ * @model
+ * @generated
  */
-public class Documentation extends CategoryElement
+public interface Documentation extends StructuralElement
 {
-  private final RootDoc root;
+  /**
+   * Returns the value of the '<em><b>Context</b></em>' container reference. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.releng.doc.article.Context#getDocumentations <em>Documentations</em>}'. <!--
+   * begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Context</em>' container reference isn't clear, there really should be more of a
+   * description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Context</em>' container reference.
+   * @see #setContext(Context)
+   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation_Context()
+   * @see org.eclipse.emf.cdo.releng.doc.article.Context#getDocumentations
+   * @model opposite="documentations" resolveProxies="false" required="true" transient="false"
+   * @generated
+   */
+  Context getContext();
 
-  private final File baseFolder;
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getContext <em>Context</em>}'
+   * container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Context</em>' container reference.
+   * @see #getContext()
+   * @generated
+   */
+  void setContext(Context value);
 
-  private final String outputPath;
+  /**
+   * Returns the value of the '<em><b>Embeddable Elements</b></em>' containment reference list. The list contents are of
+   * type {@link org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDocumentation <em>Documentation</em>}'. <!--
+   * begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Embeddable Elements</em>' containment reference list isn't clear, there really should be
+   * more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Embeddable Elements</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation_EmbeddableElements()
+   * @see org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDocumentation
+   * @model opposite="documentation" containment="true"
+   * @generated
+   */
+  EList<EmbeddableElement> getEmbeddableElements();
 
-  private final Map<ClassDoc, ArticleElement> articleElements = new HashMap<ClassDoc, ArticleElement>();
+  /**
+   * Returns the value of the '<em><b>Dependencies</b></em>' reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.releng.doc.article.Documentation}. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Dependencies</em>' reference list isn't clear, there really should be more of a
+   * description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Dependencies</em>' reference list.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation_Dependencies()
+   * @model resolveProxies="false"
+   * @generated
+   */
+  EList<Documentation> getDependencies();
 
-  Documentation(RootDoc root, String base, String outputPath) throws IOException
-  {
-    super(null);
-    this.root = root;
-    this.outputPath = outputPath;
+  /**
+   * Returns the value of the '<em><b>Project</b></em>' attribute. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Project</em>' attribute isn't clear, there really should be more of a description
+   * here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Project</em>' attribute.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation_Project()
+   * @model required="true" changeable="false"
+   * @generated
+   */
+  String getProject();
 
-    baseFolder = new File(base).getCanonicalFile();
-    if (!baseFolder.exists())
-    {
-      if (!baseFolder.mkdirs())
-      {
-        throw new IOException("Could not create " + base);
-      }
-    }
-  }
-
-  void registerArticleElement(ArticleElement articleElement)
-  {
-    articleElements.put(articleElement.getClassDoc(), articleElement);
-  }
-
-  boolean isTutorialClass(ClassDoc classDoc)
-  {
-    for (ClassDoc doc : root.classes())
-    {
-      if (doc == classDoc)
-      {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  boolean isExampleClass(ClassDoc classDoc)
-  {
-    Tag[] exampleTags = classDoc.tags("@example");
-    return exampleTags != null && exampleTags.length != 0;
-  }
-
-  @Override
-  public Documentation getDocumentation()
-  {
-    return this;
-  }
-
-  public final Map<ClassDoc, ArticleElement> getArticleElements()
-  {
-    return articleElements;
-  }
-
-  public final RootDoc getRoot()
-  {
-    return root;
-  }
-
-  public final File getBaseFolder()
-  {
-    return baseFolder;
-  }
-
-  public final String getOutputPath()
-  {
-    return outputPath;
-  }
-
-  public File getOutputFolder()
-  {
-    return new File(baseFolder, outputPath);
-  }
-
-  @Override
-  public String getPath()
-  {
-    return "";
-  }
-
-  @Override
-  public String toString()
-  {
-    return Documentation.class.getSimpleName();
-  }
-
-  public void accept(Visitor visitor) throws Exception
-  {
-    visitor.visit(this);
-  }
-
-  public static Documentation create(RootDoc root, String base, String outputPath) throws Exception
-  {
-    Documentation documentation = new Documentation(root, base, outputPath);
-    processTopLevelClasses(documentation);
-    documentation.accept(new DocumentationResolver());
-
-    return documentation;
-  }
-
-  private static void processTopLevelClasses(Documentation documentation)
-  {
-    for (ClassDoc classDoc : documentation.getRoot().classes())
-    {
-      if (classDoc.containingClass() == null && !classDoc.isPackagePrivate())
-      {
-        PackageDoc containingPackage = classDoc.containingPackage();
-        Category category = documentation.getCategory(containingPackage.name());
-        category.setPackageDoc(containingPackage);
-
-        Article article = new Article(category, classDoc);
-        category.getArticles().add(article);
-        processClass(article);
-      }
-    }
-  }
-
-  private static void processClass(ArticleElement parent)
-  {
-    for (ClassDoc classDoc : parent.getClassDoc().innerClasses())
-    {
-      Section section = new Section(parent, classDoc);
-      parent.getSections().add(section);
-      processClass(section);
-    }
-  }
-}
+} // Documentation

@@ -26,12 +26,12 @@ public class MovePackageDescriptions
   private static final String NL = System.getProperty("line.separator");
 
   private static final Pattern PATTERN = Pattern.compile("(.*</H2>\\s*)" //
-  + "(.*<B>See:</B>.*<A HREF=\"#package_description\"><B>Description</B></A>)" // To be replaced...
-  + "(.*)" //
-  + "(<A NAME=\"package_description\"><!-- --></A><H2>.*</H2>.*<P>\\s*)" //
-  + "(.*)" // ... with full description
-  + "(<P>\\s*<P>\\s*<DL>\\s*</DL>\\s*<HR>.*)", //
-  Pattern.MULTILINE | Pattern.DOTALL);
+      + "(.*<B>See:</B>.*<A HREF=\"#package_description\"><B>Description</B></A>)" // To be replaced...
+      + "(.*)" //
+      + "(<A NAME=\"package_description\"><!-- --></A><H2>.*</H2>.*<P>\\s*)" //
+      + "(.*)" // ... with full description
+      + "(<P>\\s*<P>\\s*<DL>\\s*</DL>\\s*<HR>.*)", //
+      Pattern.MULTILINE | Pattern.DOTALL);
 
   public static void main(String[] args) throws IOException
   {

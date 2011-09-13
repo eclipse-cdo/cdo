@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="article"
+    nsURI="http://www.eclipse.org/ARTICLE/1.0" nsPrefix="article">
+  <eClassifiers xsi:type="ecore:EClass" name="Documentation" eSuperTypes="#//StructuralElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="context" lowerBound="1"
+        eType="#//Context" resolveProxies="false" eOpposite="#//Context/documentations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="embeddableElements" upperBound="-1"
+        eType="#//EmbeddableElement" containment="true" resolveProxies="false" eOpposite="#//EmbeddableElement/documentation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
+        eType="#//Documentation" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="project" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Context">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseFolder" lowerBound="1"
+        eType="#//File" changeable="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="project" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="documentations" lowerBound="1"
+        upperBound="-1" eType="#//Documentation" containment="true" resolveProxies="false"
+        eOpposite="#//Documentation/context"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="root" lowerBound="1" eType="#//RootDoc"
+        changeable="false" volatile="true" transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="RootDoc" instanceClassName="com.sun.javadoc.RootDoc"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="File" instanceClassName="java.io.File"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Category" eSuperTypes="#//Body"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Article" eSuperTypes="#//Chapter"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Chapter" eSuperTypes="#//Body">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="article" lowerBound="1"
+        eType="#//Article" changeable="false" volatile="true" transient="true" derived="true"
+        resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Snippet" eSuperTypes="#//EmbeddableElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callouts" upperBound="-1"
+        eType="#//Callout" containment="true" resolveProxies="false" eOpposite="#//Callout/snippet"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Diagram" eSuperTypes="#//BodyElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Factory" eSuperTypes="#//EmbeddableElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JavaElement" eSuperTypes="#//LinkTarget"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StructuralElement" abstract="true" eSuperTypes="#//LinkTarget">
+    <eOperations name="generate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//StructuralElement" containment="true" resolveProxies="false" eOpposite="#//StructuralElement/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//StructuralElement"
+        resolveProxies="false" eOpposite="#//StructuralElement/children"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullPath" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"
+        volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputFile" lowerBound="1"
+        eType="#//File" changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="documentation" lowerBound="1"
+        eType="#//Documentation" changeable="false" volatile="true" transient="true"
+        derived="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="doc" lowerBound="1" eType="#//Doc"
+        changeable="false" volatile="true" transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LinkTarget" abstract="true" eSuperTypes="#//Identifiable">
+    <eOperations name="linkFrom" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eParameters name="source" lowerBound="1" eType="#//StructuralElement"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Callout">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="snippet" lowerBound="1"
+        eType="#//Snippet" resolveProxies="false" eOpposite="#//Snippet/callouts"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" lowerBound="1"
+        upperBound="-1" eType="#//BodyElement" containment="true" resolveProxies="false"
+        eOpposite="#//BodyElement/callout"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Doc" instanceClassName="com.sun.javadoc.Doc"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EmbeddableElement" abstract="true" eSuperTypes="#//Identifiable">
+    <eOperations name="getHtml" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eParameters name="embedder" lowerBound="1" eType="#//Embedding"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="documentation" lowerBound="1"
+        eType="#//Documentation" resolveProxies="false" eOpposite="#//Documentation/embeddableElements"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalTarget" eSuperTypes="#//LinkTarget"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Identifiable" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Body" abstract="true" eSuperTypes="#//StructuralElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//BodyElement" containment="true" resolveProxies="false" eOpposite="#//BodyElement/body"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="html" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="#//Category"
+        changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BodyElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Body" resolveProxies="false"
+        eOpposite="#//Body/elements"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="html" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callout" eType="#//Callout"
+        resolveProxies="false" eOpposite="#//Callout/elements"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Text" eSuperTypes="#//BodyElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Link" eSuperTypes="#//BodyElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//LinkTarget"
+        resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Embedding" eSuperTypes="#//BodyElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="1"
+        eType="#//EmbeddableElement" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SourceCode" eSuperTypes="#//ExternalTarget"/>
+</ecore:EPackage>

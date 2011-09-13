@@ -65,15 +65,15 @@ public class CreatingTransportConnections
    * <p>
    * Ut eget massa felis, nec volutpat purus. In id aliquet mi. Duis euismod sapien sollicitudin nisi vestibulum nec
    * vulputate urna euismod. Proin pulvinar ornare nunc, ac auctor elit placerat eget. Integer eu erat ac risus
-   * ultricies mattis vel nec nunc. {@link Snippets#snippet1()} Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-   * Etiam eu nibh in erat dapibus accumsan. Aenean cursus lacinia dictum. Mauris non sem sapien. Vivamus sem ante,
-   * posuere a rhoncus ac, varius in nisi. Sed pulvinar urna ac est iaculis mattis. Ut eget massa felis, nec volutpat
-   * purus. In id aliquet mi. Duis euismod sapien sollicitudin nisi vestibulum nec vulputate urna euismod. Proin
-   * pulvinar ornare nunc, ac auctor elit placerat eget. Integer eu erat ac risus ultricies mattis vel nec nunc. Proin
-   * venenatis tellus sit amet dui congue nec vehicula urna sollicitudin. Donec porta, risus eu auctor semper, ante
-   * lectus lobortis sem, a luctus diam dui eu sapien. Sed at metus et dolor tincidunt convallis id a est. Donec quam
-   * nisl, scelerisque a feugiat id, mattis vel urna. Suspendisse facilisis, libero ac ultricies dictum, mi sem feugiat
-   * purus, ac aliquam metus purus sed leo. Sed a viverra metus.
+   * ultricies mattis vel nec nunc. {@link Snippets#snippet1() ContainerSetup.java} Lorem ipsum dolor sit amet,
+   * consectetur adipiscing elit. Etiam eu nibh in erat dapibus accumsan. Aenean cursus lacinia dictum. Mauris non sem
+   * sapien. Vivamus sem ante, posuere a rhoncus ac, varius in nisi. Sed pulvinar urna ac est iaculis mattis. Ut eget
+   * massa felis, nec volutpat purus. In id aliquet mi. Duis euismod sapien sollicitudin nisi vestibulum nec vulputate
+   * urna euismod. Proin pulvinar ornare nunc, ac auctor elit placerat eget. Integer eu erat ac risus ultricies mattis
+   * vel nec nunc. Proin venenatis tellus sit amet dui congue nec vehicula urna sollicitudin. Donec porta, risus eu
+   * auctor semper, ante lectus lobortis sem, a luctus diam dui eu sapien. Sed at metus et dolor tincidunt convallis id
+   * a est. Donec quam nisl, scelerisque a feugiat id, mattis vel urna. Suspendisse facilisis, libero ac ultricies
+   * dictum, mi sem feugiat purus, ac aliquam metus purus sed leo. Sed a viverra metus.
    */
   public class SetupWiringContainer
   {
@@ -114,11 +114,14 @@ public class CreatingTransportConnections
 
 // ----------------------------------------------------------------------------- //
 
+/**
+ * @snippet
+ */
 class Snippets
 {
   /**
-   * @callout Create a searate {@link IManagedContainer}.
-   * @callout Create a factory with the <i>productGroup</i> "org.eclipse.net4j.connectors".
+   * @callout Create a separate {@link IManagedContainer}.
+   * @callout Create a factory of <i>type</i> "jms" in the <i>productGroup</i> "org.eclipse.net4j.connectors".
    * @callout Create a JMS connector.
    * @callout The new container can not be used when inactive.
    */
@@ -145,7 +148,7 @@ class Snippets
   }
 
   /**
-   * @example
+   * @snippet
    * @callout The channel must not be <code>null</code>.
    */
   public class JMSConnector extends Connector

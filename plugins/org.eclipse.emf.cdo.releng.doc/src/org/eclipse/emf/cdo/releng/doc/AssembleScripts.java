@@ -73,7 +73,7 @@ public class AssembleScripts
         if (plugin.isDirectory())
         {
           Properties buildProperties = getProperties(new File(plugin, "build.properties"));
-          String javadocProject = buildProperties.getProperty("org.eclipse.emf.cdo.releng.javadoc.project");
+          String javadocProject = buildProperties.getProperty("doc.project");
           if (javadocProject != null)
           {
             Set<String> excludedPackages = getExcludedPackages(buildProperties);
@@ -84,6 +84,8 @@ public class AssembleScripts
 
       for (JavaDoc javaDoc : ANTLIB.getJavaDocs())
       {
+        assembleArticleOptions(javaDoc);
+
         javaDoc.generateAnt();
         javaDoc.generateToc();
       }
@@ -113,6 +115,7 @@ public class AssembleScripts
       throws IOException, BundleException
   {
     SourcePlugin sourcePlugin = ANTLIB.getSourcePlugin(plugin.getName());
+    Set<String> packageNames = sourcePlugin.getPackageNames();
 
     JavaDoc javaDoc = ANTLIB.getJavaDoc(javadocProject);
     javaDoc.getSourcePlugins().add(sourcePlugin);
@@ -125,11 +128,34 @@ public class AssembleScripts
       {
         javaDoc.getSourceFolders().add(plugin.getName() + "/src/" + packageName.replace('.', '/'));
         javaDoc.getPackageNames().add(packageName);
-        sourcePlugin.getPackageNames().add(packageName);
+        packageNames.add(packageName);
       }
       else
       {
         javaDoc.getPackageExcludes().add(packageName);
+      }
+    }
+  }
+
+  private static void assembleArticleOptions(JavaDoc javaDoc) throws IOException, BundleException
+  {
+    File plugin = javaDoc.getProject();
+    Manifest manifest = getManifest(plugin);
+
+    ManifestElement[] manifestElements = getManifestElements(manifest);
+    if (manifestElements == null || manifestElements.length == 0)
+    {
+      System.err.println("Warning: No public packages in " + plugin.getName());
+    }
+    else
+    {
+      for (ManifestElement manifestElement : manifestElements)
+      {
+        if (isPublic(manifestElement))
+        {
+          String packageName = manifestElement.getValue().trim();
+          javaDoc.getArticlePackages().add(packageName);
+        }
       }
     }
   }
@@ -162,8 +188,7 @@ public class AssembleScripts
   {
     Attributes attributes = manifest.getMainAttributes();
     String exportPackage = attributes.getValue(EXPORT_PACKAGE);
-    ManifestElement[] manifestElements = ManifestElement.parseHeader(EXPORT_PACKAGE, exportPackage);
-    return manifestElements;
+    return ManifestElement.parseHeader(EXPORT_PACKAGE, exportPackage);
   }
 
   private static Manifest getManifest(File plugin) throws IOException
@@ -186,7 +211,7 @@ public class AssembleScripts
     }
   }
 
-  private static Properties getProperties(File file) throws IOException
+  public static Properties getProperties(File file)
   {
     Properties properties = new Properties();
 
@@ -199,16 +224,58 @@ public class AssembleScripts
         in = new FileInputStream(file);
         properties.load(in);
       }
+      catch (IOException ex)
+      {
+        throw new RuntimeException(ex);
+      }
       finally
       {
         if (in != null)
         {
-          in.close();
+          try
+          {
+            in.close();
+          }
+          catch (IOException ex)
+          {
+            ex.printStackTrace();
+          }
         }
       }
     }
 
     return properties;
+  }
+
+  public static List<String> getDependencies(File projectFolder)
+  {
+    List<String> result = new ArrayList<String>();
+
+    Properties buildProperties = getProperties(new File(projectFolder, "build.properties"));
+    String depends = buildProperties.getProperty("doc.depends");
+    if (depends != null)
+    {
+      StringTokenizer tokenizer = new StringTokenizer(depends, ",");
+      while (tokenizer.hasMoreTokens())
+      {
+        String depend = tokenizer.nextToken().trim();
+        result.add(depend);
+      }
+    }
+
+    return result;
+  }
+
+  public static String getPluginName(File projectFolder)
+  {
+    Properties pluginProperties = getProperties(new File(projectFolder, "plugin.properties"));
+    String pluginName = pluginProperties.getProperty("pluginName");
+    if (pluginName == null)
+    {
+      pluginName = "Plugin " + projectFolder.getName();
+    }
+
+    return pluginName;
   }
 
   private static List<String> sort(Collection<String> collection)
@@ -289,17 +356,7 @@ public class AssembleScripts
         javaDoc = new JavaDoc(projectName);
         javaDocs.put(projectName, javaDoc);
 
-        Properties buildProperties = getProperties(new File(javaDoc.getProject(), "build.properties"));
-        String depends = buildProperties.getProperty("org.eclipse.emf.cdo.releng.javadoc.depends");
-        if (depends != null)
-        {
-          StringTokenizer tokenizer = new StringTokenizer(depends, ",");
-          while (tokenizer.hasMoreTokens())
-          {
-            String depend = tokenizer.nextToken().trim();
-            javaDoc.getDependencies().add(depend);
-          }
-        }
+        javaDoc.getDependencies().addAll(getDependencies(javaDoc.getProject()));
       }
 
       return javaDoc;
@@ -419,12 +476,7 @@ public class AssembleScripts
     public SourcePlugin(String projectName) throws IOException
     {
       this.projectName = projectName;
-      Properties pluginProperties = getProperties(new File(getProject(), "plugin.properties"));
-      label = pluginProperties.getProperty("pluginName");
-      if (label == null)
-      {
-        label = "Plugin " + projectName;
-      }
+      label = getPluginName(getProject());
     }
 
     @Override
@@ -575,6 +627,8 @@ public class AssembleScripts
 
     private Set<String> packageExcludes = new HashSet<String>();
 
+    private Set<String> articlePackages = new HashSet<String>();
+
     public JavaDoc(String projectName)
     {
       this.projectName = projectName;
@@ -642,6 +696,11 @@ public class AssembleScripts
       return packageExcludes;
     }
 
+    public Set<String> getArticlePackages()
+    {
+      return articlePackages;
+    }
+
     public void generateAnt() throws IOException
     {
       File project = getProject();
@@ -670,6 +729,13 @@ public class AssembleScripts
             if ("<!-- GENERATION WARNING -->".equals(id))
             {
               writeGenerationWarning(writer);
+            }
+            else if ("<!-- ARTICLE SKIP -->".equals(id))
+            {
+              if (articlePackages.isEmpty())
+              {
+                writer.write("\t<property name=\"article.skip\" value=\"true\" />\n");
+              }
             }
             else if ("<!-- SOURCE FOLDERS -->".equals(id))
             {
@@ -718,12 +784,35 @@ public class AssembleScripts
                 writer.write("\t\t\t<excludepackage name=\"" + packageExclude + "\" />\n");
               }
             }
-            else if ("<!-- DEPENDENCIES -->".equals(id))
+            else if ("<!-- ARTICLE PACKAGES -->".equals(id))
+            {
+              for (String articlePackage : sort(articlePackages))
+              {
+                writer.write("\t\t\t<package name=\"" + articlePackage + "\" />\n");
+              }
+
+              for (String dependency : sort(getAllDependencies()))
+              {
+                JavaDoc javaDoc = ANTLIB.getJavaDoc(dependency);
+                for (String articlePackage : sort(javaDoc.getArticlePackages()))
+                {
+                  writer.write("\t\t\t<package name=\"" + articlePackage + "\" />\n");
+                }
+              }
+            }
+            else if ("<!-- JAVADOC DEPENDENCIES -->".equals(id))
             {
               for (String dependency : sort(getAllDependencies()))
               {
                 writer.write("\t\t\t<link href=\"MAKE-RELATIVE/" + dependency
                     + "/javadoc\" offline=\"true\" packagelistloc=\"plugins/" + dependency + "/javadoc\" />\n");
+              }
+            }
+            else if ("<!-- ARTICLE DEPENDENCIES -->".equals(id))
+            {
+              for (String dependency : sort(getAllDependencies()))
+              {
+                writer.write("\t\t\t\t<include name=\"" + dependency + "/src/**/*.java\" />\n");
               }
             }
             else if ("<!-- GROUPS -->".equals(id))

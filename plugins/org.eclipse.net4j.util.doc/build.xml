@@ -9,12 +9,13 @@
 	<property name="emf.version" value="2.7.0" />
 	<property name="platform.version" value="juno" />
 
-	<property name="javadoc.project" value="plugins/org.eclipse.net4j.util.doc" />
-	<property file="${javadoc.project}/plugin.properties" />
+	<property name="project.path" value="plugins/org.eclipse.net4j.util.doc" />
+	<property file="${project.path}/plugin.properties" />
+	<property file="${project.path}/build.properties" />
 	<property name="javadoc.name" value="${pluginName}" />
-	<property name="javadoc.destdir" value="${javadoc.project}/javadoc" />
-	<property name="article.destdir" value="${javadoc.project}/html" />
-	<property name="article.sources" value="${javadoc.project}/src" />
+	<property name="javadoc.destdir" value="${project.path}/javadoc" />
+	<property name="article.destdir" value="${project.path}/html" />
+	<property name="article.sources" value="${project.path}/src" />
 	<property name="supplemental" value="/develop/bin/org.eclipse.emf.cdo.releng.doc.supplemental" />
 
 	<path id="javadoc.classpath">
@@ -72,7 +73,7 @@
 		         notree="true"
 		         windowtitle="${javadoc.name}"
 		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
-		         overview="${javadoc.project}/overview.html"
+		         overview="${project.path}/overview.html"
 		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
 			<doclet name="org.jboss.apiviz.APIviz" path="${supplemental}/bin">
@@ -169,7 +170,7 @@
 		</javadoc>
 
 		<copy todir="${javadoc.destdir}/resources" verbose="true" failonerror="false">
-			<fileset dir="${javadoc.project}/resources" defaultexcludes="true">
+			<fileset dir="${project.path}/resources" defaultexcludes="true">
 				<include name="**/*" />
 				<exclude name="README.txt" />
 			</fileset>
@@ -202,7 +203,11 @@
 		</java>
 	</target>
 
-	<target name="build.article">
+	<target name="build.article" unless="article.skip">
+		<tstamp>
+			<format property="start.time" pattern="y-M-D-H-m-s-S" />
+		</tstamp>
+
 		<mkdir dir="${article.destdir}" />
 		<copy todir="${article.destdir}" verbose="true" failonerror="false">
 			<fileset dir="${article.sources}" defaultexcludes="true">
@@ -218,18 +223,18 @@
 		         failonerror="true"
 		         private="true">
 
-			<doclet name="org.eclipse.emf.cdo.releng.doc.article.ArticleDoclet"
-			        path="plugins/org.eclipse.emf.cdo.releng.doc/bin;${supplemental}/bin">
+			<doclet name="org.eclipse.emf.cdo.releng.doc.article.impl.ArticleDoclet"
+			        path="plugins/org.eclipse.emf.cdo.releng.doc/bin;${supplemental}/bin;C:\develop\ws\cdo\_target\plugins\org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar;C:\develop\ws\cdo\_target\plugins\org.eclipse.emf.common_2.7.0.v20110605-0747.jar">
+				<param name="-starttime" value="${start.time}" />
 				<param name="-basefolder" value="${basedir}" />
-				<param name="-outputpath" value="plugins/org.eclipse.emf.cdo.doc/html" />
+				<param name="-project" value="org.eclipse.net4j.util.doc" />
 			</doclet>
 
-			<fileset dir="${article.sources}" defaultexcludes="yes">
-				<include name="**/*.java" />
+			<fileset dir="plugins">
+				<include name="org.eclipse.net4j.util.doc/src/**/*.java" />
 			</fileset>
 
-			<package name="org.eclipse.emf.cdo.doc.connectors" />
-			<package name="org.eclipse.emf.cdo.doc.sessions" />
+			<package name="org.eclipse.net4j.util.doc" />
 		</javadoc>
 	</target>
 

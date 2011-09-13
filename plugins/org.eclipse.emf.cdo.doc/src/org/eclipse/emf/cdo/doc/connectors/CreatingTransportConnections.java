@@ -148,7 +148,6 @@ class Snippets
   }
 
   /**
-   * @snippet
    * @callout The channel must not be <code>null</code>.
    */
   public class JMSConnector extends Connector

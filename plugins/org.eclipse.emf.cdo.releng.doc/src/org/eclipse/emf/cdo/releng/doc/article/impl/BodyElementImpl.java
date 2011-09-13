@@ -27,6 +27,7 @@ import com.sun.javadoc.Tag;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl#getBody <em>Body</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl#getTag <em>Tag</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl#getHtml <em>Html</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl#getCallout <em>Callout</em>}</li>
  * </ul>
@@ -36,6 +37,15 @@ import com.sun.javadoc.Tag;
  */
 public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
 {
+  /**
+   * The default value of the '{@link #getTag() <em>Tag</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getTag()
+   * @generated
+   * @ordered
+   */
+  protected static final Tag TAG_EDEFAULT = null;
+
   /**
    * The default value of the '{@link #getHtml() <em>Html</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
@@ -63,11 +73,6 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   {
     setBody(body);
     this.tag = tag;
-  }
-
-  public Tag getTag()
-  {
-    return tag;
   }
 
   /**
@@ -139,6 +144,16 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
     {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.BODY_ELEMENT__BODY, newBody, newBody));
     }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated NOT
+   */
+  public Tag getTag()
+  {
+    return tag;
   }
 
   /**
@@ -283,6 +298,8 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
     {
     case ArticlePackage.BODY_ELEMENT__BODY:
       return getBody();
+    case ArticlePackage.BODY_ELEMENT__TAG:
+      return getTag();
     case ArticlePackage.BODY_ELEMENT__HTML:
       return getHtml();
     case ArticlePackage.BODY_ELEMENT__CALLOUT:
@@ -343,6 +360,8 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
     {
     case ArticlePackage.BODY_ELEMENT__BODY:
       return getBody() != null;
+    case ArticlePackage.BODY_ELEMENT__TAG:
+      return TAG_EDEFAULT == null ? getTag() != null : !TAG_EDEFAULT.equals(getTag());
     case ArticlePackage.BODY_ELEMENT__HTML:
       return HTML_EDEFAULT == null ? getHtml() != null : !HTML_EDEFAULT.equals(getHtml());
     case ArticlePackage.BODY_ELEMENT__CALLOUT:

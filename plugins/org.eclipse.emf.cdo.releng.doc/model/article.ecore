@@ -100,6 +100,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="BodyElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Body" resolveProxies="false"
         eOpposite="#//Body/elements"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//Tag" changeable="false"
+        volatile="true" transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="html" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="callout" eType="#//Callout"
@@ -112,7 +114,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Embedding" eSuperTypes="#//BodyElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="1"
-        eType="#//EmbeddableElement" resolveProxies="false"/>
+        eType="#//EmbeddableElement" changeable="false" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SourceCode" eSuperTypes="#//ExternalTarget"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Tag" instanceClassName="com.sun.javadoc.Tag"
+      serializable="false"/>
 </ecore:EPackage>

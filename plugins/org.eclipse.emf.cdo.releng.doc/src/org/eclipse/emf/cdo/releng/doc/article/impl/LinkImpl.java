@@ -7,12 +7,16 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
+import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import com.sun.javadoc.SeeTag;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Link</b></em>'. <!-- end-user-doc -->
@@ -45,6 +49,12 @@ public class LinkImpl extends BodyElementImpl implements Link
   protected LinkImpl()
   {
     super();
+  }
+
+  LinkImpl(Body body, SeeTag tag, StructuralElement target)
+  {
+    super(body, tag);
+    this.target = target;
   }
 
   /**
@@ -148,10 +158,25 @@ public class LinkImpl extends BodyElementImpl implements Link
   }
 
   @Override
+  public SeeTag getTag()
+  {
+    return (SeeTag)super.getTag();
+  }
+
+  @Override
   public String getHtml()
   {
-    // TODO: implement LinkImpl.getHtml()
-    throw new UnsupportedOperationException();
+    Body body = getBody();
+    SeeTag tag = getTag();
+
+    String href = target.linkFrom(body);
+    String label = tag.label();
+    if (label == null || label.length() == 0)
+    {
+      label = tag.text();
+    }
+
+    return "<a href=\"" + href + "\">" + label + "</a>";
   }
 
 } // LinkImpl

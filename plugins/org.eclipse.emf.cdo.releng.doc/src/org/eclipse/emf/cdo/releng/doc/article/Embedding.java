@@ -30,22 +30,10 @@ public interface Embedding extends BodyElement
    * <!-- end-user-doc -->
    * 
    * @return the value of the '<em>Element</em>' reference.
-   * @see #setElement(EmbeddableElement)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getEmbedding_Element()
-   * @model resolveProxies="false" required="true"
+   * @model resolveProxies="false" required="true" changeable="false"
    * @generated
    */
   EmbeddableElement getElement();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.Embedding#getElement <em>Element</em>}'
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Element</em>' reference.
-   * @see #getElement()
-   * @generated
-   */
-  void setElement(EmbeddableElement value);
 
 } // Embedding

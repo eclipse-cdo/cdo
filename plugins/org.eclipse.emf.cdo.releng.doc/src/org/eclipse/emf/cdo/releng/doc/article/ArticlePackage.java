@@ -1013,12 +1013,20 @@ public interface ArticlePackage extends EPackage
   int BODY_ELEMENT__BODY = 0;
 
   /**
+   * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int BODY_ELEMENT__TAG = 1;
+
+  /**
    * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int BODY_ELEMENT__HTML = 1;
+  int BODY_ELEMENT__HTML = 2;
 
   /**
    * The feature id for the '<em><b>Callout</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1026,7 +1034,7 @@ public interface ArticlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int BODY_ELEMENT__CALLOUT = 2;
+  int BODY_ELEMENT__CALLOUT = 3;
 
   /**
    * The number of structural features of the '<em>Body Element</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
@@ -1035,7 +1043,7 @@ public interface ArticlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int BODY_ELEMENT_FEATURE_COUNT = 3;
+  int BODY_ELEMENT_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.DiagramImpl <em>Diagram</em>}'
@@ -1054,6 +1062,14 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int DIAGRAM__BODY = BODY_ELEMENT__BODY;
+
+  /**
+   * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int DIAGRAM__TAG = BODY_ELEMENT__TAG;
 
   /**
    * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1238,6 +1254,14 @@ public interface ArticlePackage extends EPackage
   int TEXT__BODY = BODY_ELEMENT__BODY;
 
   /**
+   * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TEXT__TAG = BODY_ELEMENT__TAG;
+
+  /**
    * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -1278,6 +1302,14 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int LINK__BODY = BODY_ELEMENT__BODY;
+
+  /**
+   * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int LINK__TAG = BODY_ELEMENT__TAG;
 
   /**
    * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1328,6 +1360,14 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int EMBEDDING__BODY = BODY_ELEMENT__BODY;
+
+  /**
+   * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EMBEDDING__TAG = BODY_ELEMENT__TAG;
 
   /**
    * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1422,6 +1462,15 @@ public interface ArticlePackage extends EPackage
    * @generated
    */
   int DOC = 23;
+
+  /**
+   * The meta object id for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see com.sun.javadoc.Tag
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
+   * @generated
+   */
+  int TAG = 24;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation
@@ -1907,6 +1956,17 @@ public interface ArticlePackage extends EPackage
   EReference getBodyElement_Body();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getTag
+   * <em>Tag</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Tag</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.BodyElement#getTag()
+   * @see #getBodyElement()
+   * @generated
+   */
+  EAttribute getBodyElement_Tag();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getHtml
    * <em>Html</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -2023,6 +2083,17 @@ public interface ArticlePackage extends EPackage
    * @generated
    */
   EDataType getDoc();
+
+  /**
+   * Returns the meta object for data type '{@link com.sun.javadoc.Tag <em>Tag</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for data type '<em>Tag</em>'.
+   * @see com.sun.javadoc.Tag
+   * @model instanceClass="com.sun.javadoc.Tag" serializeable="false"
+   * @generated
+   */
+  EDataType getTag();
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2433,6 +2504,14 @@ public interface ArticlePackage extends EPackage
     EReference BODY_ELEMENT__BODY = eINSTANCE.getBodyElement_Body();
 
     /**
+     * The meta object literal for the '<em><b>Tag</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute BODY_ELEMENT__TAG = eINSTANCE.getBodyElement_Tag();
+
+    /**
      * The meta object literal for the '<em><b>Html</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * 
@@ -2530,6 +2609,15 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EDataType DOC = eINSTANCE.getDoc();
+
+    /**
+     * The meta object literal for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see com.sun.javadoc.Tag
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
+     * @generated
+     */
+    EDataType TAG = eINSTANCE.getTag();
 
   }
 

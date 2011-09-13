@@ -7,12 +7,13 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import com.sun.javadoc.SeeTag;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Embedding</b></em>'. <!-- end-user-doc -->
@@ -47,6 +48,12 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
     super();
   }
 
+  EmbeddingImpl(Body body, SeeTag tag, EmbeddableElement element)
+  {
+    super(body, tag);
+    this.element = element;
+  }
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -73,19 +80,6 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
    * 
    * @generated
    */
-  public void setElement(EmbeddableElement newElement)
-  {
-    EmbeddableElement oldElement = element;
-    element = newElement;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.EMBEDDING__ELEMENT, oldElement, element));
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -95,40 +89,6 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
       return getElement();
     }
     return super.eGet(featureID, resolve, coreType);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public void eSet(int featureID, Object newValue)
-  {
-    switch (featureID)
-    {
-    case ArticlePackage.EMBEDDING__ELEMENT:
-      setElement((EmbeddableElement)newValue);
-      return;
-    }
-    super.eSet(featureID, newValue);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public void eUnset(int featureID)
-  {
-    switch (featureID)
-    {
-    case ArticlePackage.EMBEDDING__ELEMENT:
-      setElement((EmbeddableElement)null);
-      return;
-    }
-    super.eUnset(featureID);
   }
 
   /**
@@ -150,8 +110,7 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
   @Override
   public String getHtml()
   {
-    // TODO: implement EmbeddingImpl.getHtml()
-    throw new UnsupportedOperationException();
+    return element.getHtml(this);
   }
 
 } // EmbeddingImpl

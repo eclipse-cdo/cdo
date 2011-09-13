@@ -8,12 +8,15 @@ package org.eclipse.emf.cdo.releng.doc.article;
 
 import org.eclipse.emf.ecore.EObject;
 
+import com.sun.javadoc.Tag;
+
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Body Element</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are supported:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getBody <em>Body</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getTag <em>Tag</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getHtml <em>Html</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getCallout <em>Callout</em>}</li>
  * </ul>
@@ -53,6 +56,20 @@ public interface BodyElement extends EObject
    * @generated
    */
   void setBody(Body value);
+
+  /**
+   * Returns the value of the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Tag</em>' attribute isn't clear, there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Tag</em>' attribute.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getBodyElement_Tag()
+   * @model dataType="org.eclipse.emf.cdo.releng.doc.article.Tag" transient="true" changeable="false" volatile="true"
+   * @generated
+   */
+  Tag getTag();
 
   /**
    * Returns the value of the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc -->

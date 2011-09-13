@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.ClassDoc;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -43,9 +44,13 @@ public class ChapterImpl extends BodyImpl implements Chapter
 
   ChapterImpl(StructuralElement parent, ClassDoc classDoc)
   {
-    super(parent, classDoc.containingClass() == null ? classDoc.simpleTypeName() + ".html" : "#"
-        + classDoc.simpleTypeName(), classDoc);
+    super(parent, makePath(classDoc), classDoc);
     getDocumentation().getContext().register(getId(), this);
+  }
+
+  private static String makePath(ClassDoc classDoc)
+  {
+    return classDoc.simpleTypeName() + (classDoc.containingClass() == null ? ".html" : "");
   }
 
   /**
@@ -113,13 +118,33 @@ public class ChapterImpl extends BodyImpl implements Chapter
   }
 
   @Override
+  protected String createFullPath()
+  {
+    if (this instanceof Article)
+    {
+      return super.createFullPath();
+    }
+
+    return getArticle().getFullPath() + "#" + getPath();
+  }
+
+  @Override
+  protected File createOutputFile()
+  {
+    // if (this instanceof Article)
+    {
+      return super.createOutputFile();
+    }
+
+    // return getArticle().getOutputFile();
+  }
+
+  @Override
   public void generate(HtmlWriter out) throws IOException
   {
-    ClassDoc classDoc = getDoc();
-
     out.writeHeading(1, getTitle());
     out.write("<a name=\"");
-    out.write(classDoc.typeName());
+    out.write(getPath());
     out.write("\"/>");
 
     super.generate(out);

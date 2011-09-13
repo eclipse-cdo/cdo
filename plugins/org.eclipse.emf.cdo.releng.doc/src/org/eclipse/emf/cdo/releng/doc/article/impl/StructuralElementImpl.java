@@ -9,6 +9,7 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -25,9 +26,7 @@ import com.sun.javadoc.Doc;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Structural Element</b></em>'. <!-- end-user-doc
@@ -189,7 +188,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   public StructuralElement getParent()
   {
     if (eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT)
+    {
       return null;
+    }
     return (StructuralElement)eContainer();
   }
 
@@ -211,24 +212,34 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
    */
   public void setParent(StructuralElement newParent)
   {
-    if (newParent != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT && newParent != null))
+    if (newParent != eInternalContainer() || eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT
+        && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, ArticlePackage.STRUCTURAL_ELEMENT__CHILDREN,
             StructuralElement.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.STRUCTURAL_ELEMENT__PARENT, newParent,
           newParent));
+    }
   }
 
   /**
@@ -256,22 +267,25 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
    * 
    * @generated NOT
    */
-  public String getFullPath()
+  public final String getFullPath()
   {
     if (fullPath == null)
     {
-      StructuralElement parent = getParent();
-      if (parent != null)
-      {
-        fullPath = parent.getFullPath() + "/" + path;
-      }
-      else
-      {
-        fullPath = path;
-      }
+      fullPath = createFullPath();
     }
 
     return fullPath;
+  }
+
+  protected String createFullPath()
+  {
+    StructuralElement parent = getParent();
+    if (parent != null)
+    {
+      return parent.getFullPath() + "/" + path;
+    }
+
+    return path;
   }
 
   /**
@@ -279,14 +293,19 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
    * 
    * @generated NOT
    */
-  public File getOutputFile()
+  public final File getOutputFile()
   {
     if (outputFile == null)
     {
-      outputFile = new File(getDocumentation().getContext().getBaseFolder(), getFullPath());
+      outputFile = createOutputFile();
     }
 
     return outputFile;
+  }
+
+  protected File createOutputFile()
+  {
+    return new File(getDocumentation().getContext().getBaseFolder(), getFullPath());
   }
 
   /**
@@ -323,63 +342,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   @Override
   public String linkFrom(StructuralElement source)
   {
-    List<String> sourceSegments = getSegments(source.getOutputFile());
-    List<String> targetSegments = getSegments(getOutputFile());
-
-    int minSize = Math.min(sourceSegments.size(), targetSegments.size());
-    for (int i = 0; i < minSize; i++)
-    {
-      if (sourceSegments.get(0).equals(targetSegments.get(0)))
-      {
-        sourceSegments.remove(0);
-        targetSegments.remove(0);
-      }
-      else
-      {
-        break;
-      }
-    }
-
-    StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < sourceSegments.size(); i++)
-    {
-      builder.append("../");
-    }
-
-    boolean first = true;
-    for (String segment : targetSegments)
-    {
-      if (first)
-      {
-        first = false;
-      }
-      else
-      {
-        builder.append("/");
-      }
-
-      builder.append(segment);
-    }
-
-    return builder.toString();
-  }
-
-  private static List<String> getSegments(File file)
-  {
-    List<String> result = new ArrayList<String>();
-    getSegments(file, result);
-    return result;
-  }
-
-  private static void getSegments(File file, List<String> result)
-  {
-    File parent = file.getParentFile();
-    if (parent != null)
-    {
-      getSegments(parent, result);
-    }
-
-    result.add(file.getName());
+    return ArticleUtil.createLink(source.getOutputFile(), getOutputFile());
   }
 
   /**
@@ -397,7 +360,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
     case ArticlePackage.STRUCTURAL_ELEMENT__PARENT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetParent((StructuralElement)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -549,7 +514,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (title: ");

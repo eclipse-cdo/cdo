@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.RootDoc;
+import com.sun.javadoc.Tag;
 
 import java.io.File;
 
@@ -217,6 +218,13 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * @generated
    */
   private EDataType docEDataType = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EDataType tagEDataType = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -725,7 +733,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
-  public EAttribute getBodyElement_Html()
+  public EAttribute getBodyElement_Tag()
   {
     return (EAttribute)bodyElementEClass.getEStructuralFeatures().get(1);
   }
@@ -735,9 +743,19 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
+  public EAttribute getBodyElement_Html()
+  {
+    return (EAttribute)bodyElementEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EReference getBodyElement_Callout()
   {
-    return (EReference)bodyElementEClass.getEStructuralFeatures().get(2);
+    return (EReference)bodyElementEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -835,6 +853,16 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
+  public EDataType getTag()
+  {
+    return tagEDataType;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public ArticleFactory getArticleFactory()
   {
     return (ArticleFactory)getEFactoryInstance();
@@ -920,6 +948,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     bodyElementEClass = createEClass(BODY_ELEMENT);
     createEReference(bodyElementEClass, BODY_ELEMENT__BODY);
+    createEAttribute(bodyElementEClass, BODY_ELEMENT__TAG);
     createEAttribute(bodyElementEClass, BODY_ELEMENT__HTML);
     createEReference(bodyElementEClass, BODY_ELEMENT__CALLOUT);
 
@@ -937,6 +966,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     rootDocEDataType = createEDataType(ROOT_DOC);
     fileEDataType = createEDataType(FILE);
     docEDataType = createEDataType(DOC);
+    tagEDataType = createEDataType(TAG);
   }
 
   /**
@@ -1108,6 +1138,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEReference(getBodyElement_Body(), this.getBody(), this.getBody_Elements(), "body", null, 0, 1,
         BodyElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBodyElement_Tag(), this.getTag(), "tag", null, 0, 1, BodyElement.class, IS_TRANSIENT,
+        IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBodyElement_Html(), ecorePackage.getEString(), "html", null, 0, 1, BodyElement.class,
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getBodyElement_Callout(), this.getCallout(), this.getCallout_Elements(), "callout", null, 0, 1,
@@ -1123,7 +1155,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     initEClass(embeddingEClass, Embedding.class, "Embedding", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEmbedding_Element(), this.getEmbeddableElement(), null, "element", null, 1, 1, Embedding.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     initEClass(sourceCodeEClass, SourceCode.class, "SourceCode", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1133,6 +1165,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEDataType(rootDocEDataType, RootDoc.class, "RootDoc", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
     initEDataType(fileEDataType, File.class, "File", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
     initEDataType(docEDataType, Doc.class, "Doc", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+    initEDataType(tagEDataType, Tag.class, "Tag", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

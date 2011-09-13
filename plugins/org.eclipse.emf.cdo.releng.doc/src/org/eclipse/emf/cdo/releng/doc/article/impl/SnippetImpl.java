@@ -11,6 +11,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Callout;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
+import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -19,9 +20,18 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.Doc;
+import com.sun.javadoc.SeeTag;
 
+import java.io.CharArrayWriter;
+import java.io.File;
+import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Snippet</b></em>'. <!-- end-user-doc -->
@@ -36,6 +46,10 @@ import java.util.Collection;
  */
 public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 {
+  private static Constructor<?> snippet;
+
+  private static Method write;
+
   /**
    * The cached value of the '{@link #getCallouts() <em>Callouts</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
@@ -193,15 +207,62 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
   }
 
   @Override
-  public String getHtml(Embedding embedder)
-  {
-    // TODO: implement SnippetImpl.getHtml(embedder)
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public Object getId()
   {
     return doc;
+  }
+
+  @Override
+  public String getHtml(Embedding embedder)
+  {
+    CharArrayWriter result = new CharArrayWriter();
+
+    PrintWriter out = new PrintWriter(result);
+    out.write("\n\n");
+    writeHtml(embedder, out);
+    out.flush();
+
+    return result.toString();
+  }
+
+  private void writeHtml(Embedding embedder, PrintWriter out)
+  {
+    File source = embedder.getBody().getOutputFile();
+    File target = new File(getDocumentation().getOutputFile(), "resources");
+    String imagePath = ArticleUtil.createLink(source, target) + "/";
+
+    Map<String, Object> options = new HashMap<String, Object>();
+    String label = ((SeeTag)embedder.getTag()).label();
+    if (label != null)
+    {
+      options.put("title", label);
+    }
+
+    options.put("includeSignature", doc instanceof ClassDoc);
+    options.put("imagePath", imagePath);
+
+    try
+    {
+      Object instance = snippet.newInstance(doc, options);
+      write.invoke(instance, out);
+    }
+    catch (Throwable ex)
+    {
+      ex.printStackTrace();
+    }
+  }
+
+  static
+  {
+    try
+    {
+      Class<?> c = Class.forName("de.escnet.CodeSnippet");
+      snippet = c.getConstructor(Doc.class, Map.class);
+      write = c.getMethod("write", PrintWriter.class);
+    }
+    catch (Throwable ex)
+    {
+      ex.printStackTrace();
+    }
   }
 } // SnippetImpl

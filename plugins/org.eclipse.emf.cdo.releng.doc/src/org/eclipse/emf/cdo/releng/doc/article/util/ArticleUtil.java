@@ -14,12 +14,15 @@ import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.PackageDoc;
+import com.sun.javadoc.ProgramElementDoc;
 import com.sun.javadoc.RootDoc;
 import com.sun.javadoc.SourcePosition;
 import com.sun.javadoc.Tag;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -28,27 +31,6 @@ public final class ArticleUtil
 {
   private ArticleUtil()
   {
-  }
-
-  public static boolean containsFile(File folder, File file)
-  {
-    if (!folder.isDirectory())
-    {
-      return false;
-    }
-
-    File parent = file.getParentFile();
-    if (parent == null)
-    {
-      return false;
-    }
-
-    if (parent.equals(folder))
-    {
-      return true;
-    }
-
-    return containsFile(folder, parent);
   }
 
   public static boolean isDocumented(Doc doc)
@@ -68,9 +50,52 @@ public final class ArticleUtil
     return isTagged(doc, "@ignore");
   }
 
-  public static boolean isSnippet(Doc doc)
+  public static boolean isSnippet(RootDoc root, Doc doc)
   {
-    return isTagged(doc, "@snippet");
+    boolean snippet = isTagged(doc, "@snippet");
+    if (snippet)
+    {
+      return true;
+    }
+
+    if (doc instanceof ProgramElementDoc)
+    {
+      ProgramElementDoc programElementDoc = (ProgramElementDoc)doc;
+      ClassDoc containingClass = programElementDoc.containingClass();
+      if (containingClass != null)
+      {
+        snippet = isSnippet(root, containingClass);
+        if (snippet)
+        {
+          return true;
+        }
+      }
+
+      PackageDoc containingPackage = programElementDoc.containingPackage();
+      if (containingPackage != null)
+      {
+        snippet = isSnippet(root, containingPackage);
+        if (snippet)
+        {
+          return true;
+        }
+      }
+    }
+    else if (doc instanceof PackageDoc)
+    {
+      PackageDoc packageDoc = (PackageDoc)doc;
+      PackageDoc parentPackage = getParentPackage(root, packageDoc);
+      if (parentPackage != null)
+      {
+        snippet = isSnippet(root, parentPackage);
+        if (snippet)
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   public static boolean isFactory(MethodDoc doc)
@@ -102,6 +127,27 @@ public final class ArticleUtil
     return null;
   }
 
+  public static boolean containsFile(File folder, File file)
+  {
+    if (!folder.isDirectory())
+    {
+      return false;
+    }
+
+    File parent = file.getParentFile();
+    if (parent == null)
+    {
+      return false;
+    }
+
+    if (parent.equals(folder))
+    {
+      return true;
+    }
+
+    return containsFile(folder, parent);
+  }
+
   public static File canonify(File file)
   {
     try
@@ -112,6 +158,67 @@ public final class ArticleUtil
     {
       throw new ArticleException(ex);
     }
+  }
+
+  public static String createLink(File source, File target)
+  {
+    List<String> sourceSegments = getSegments(source);
+    List<String> targetSegments = getSegments(target);
+
+    int minSize = Math.min(sourceSegments.size(), targetSegments.size());
+    for (int i = 0; i < minSize; i++)
+    {
+      if (sourceSegments.get(0).equals(targetSegments.get(0)))
+      {
+        sourceSegments.remove(0);
+        targetSegments.remove(0);
+      }
+      else
+      {
+        break;
+      }
+    }
+
+    StringBuilder builder = new StringBuilder();
+    for (int i = 0; i < sourceSegments.size() - 1; i++)
+    {
+      builder.append("../");
+    }
+
+    boolean first = true;
+    for (String segment : targetSegments)
+    {
+      if (first)
+      {
+        first = false;
+      }
+      else
+      {
+        builder.append("/");
+      }
+
+      builder.append(segment);
+    }
+
+    return builder.toString();
+  }
+
+  private static List<String> getSegments(File file)
+  {
+    List<String> result = new ArrayList<String>();
+    getSegments(file, result);
+    return result;
+  }
+
+  private static void getSegments(File file, List<String> result)
+  {
+    File parent = file.getParentFile();
+    if (parent != null)
+    {
+      getSegments(parent, result);
+    }
+
+    result.add(file.getName());
   }
 
   public static String makeConsoleLink(Doc doc)

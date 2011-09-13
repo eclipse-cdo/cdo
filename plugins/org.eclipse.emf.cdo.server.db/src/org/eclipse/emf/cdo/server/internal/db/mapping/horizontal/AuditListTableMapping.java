@@ -62,6 +62,6 @@ public class AuditListTableMapping extends AbstractListTableMapping
 
   public void objectDetached(IDBStoreAccessor accessor, CDOID id, long revised)
   {
-    // the audit list mapping does not care about revised references -> NOP
+    // The audit list mapping does not care about revised references -> NOOP
   }
 }

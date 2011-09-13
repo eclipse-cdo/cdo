@@ -94,17 +94,27 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
   }
 
   @Override
+  protected InternalChannel createChannel()
+  {
+    return new JVMChannel();
+  }
+
+  @Override
   protected void registerChannelWithPeer(short channelID, long timeoutIgnored, IProtocol<?> protocol)
       throws ChannelException
   {
     try
     {
       String protocolID = protocol == null ? null : protocol.getType();
-      InternalChannel channel = getPeer().inverseOpenChannel(channelID, protocolID);
-      if (channel == null)
+      JVMChannel peerChannel = (JVMChannel)peer.inverseOpenChannel(channelID, protocolID);
+      if (peerChannel == null)
       {
         throw new ChannelException(Messages.getString("JVMConnector.2")); //$NON-NLS-1$
       }
+
+      JVMChannel c = (JVMChannel)getChannel(channelID);
+      c.setPeer(peerChannel);
+      peerChannel.setPeer(c);
     }
     catch (ChannelException ex)
     {

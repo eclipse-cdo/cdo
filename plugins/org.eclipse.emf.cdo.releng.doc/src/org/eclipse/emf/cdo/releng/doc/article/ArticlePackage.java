@@ -1072,20 +1072,12 @@ public interface ArticlePackage extends EPackage
   int DIAGRAM__CALLOUT = BODY_ELEMENT__CALLOUT;
 
   /**
-   * The feature id for the '<em><b>Code</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int DIAGRAM__CODE = BODY_ELEMENT_FEATURE_COUNT + 0;
-
-  /**
    * The number of structural features of the '<em>Diagram</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int DIAGRAM_FEATURE_COUNT = BODY_ELEMENT_FEATURE_COUNT + 1;
+  int DIAGRAM_FEATURE_COUNT = BODY_ELEMENT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.FactoryImpl <em>Factory</em>}'
@@ -1262,20 +1254,12 @@ public interface ArticlePackage extends EPackage
   int TEXT__CALLOUT = BODY_ELEMENT__CALLOUT;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int TEXT__VALUE = BODY_ELEMENT_FEATURE_COUNT + 0;
-
-  /**
    * The number of structural features of the '<em>Text</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int TEXT_FEATURE_COUNT = BODY_ELEMENT_FEATURE_COUNT + 1;
+  int TEXT_FEATURE_COUNT = BODY_ELEMENT_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkImpl <em>Link</em>}' class. <!--
@@ -1625,17 +1609,6 @@ public interface ArticlePackage extends EPackage
   EClass getDiagram();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Diagram#getCode
-   * <em>Code</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Code</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.Diagram#getCode()
-   * @see #getDiagram()
-   * @generated
-   */
-  EAttribute getDiagram_Code();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Factory <em>Factory</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -1967,17 +1940,6 @@ public interface ArticlePackage extends EPackage
   EClass getText();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Text#getValue
-   * <em>Value</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Value</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.Text#getValue()
-   * @see #getText()
-   * @generated
-   */
-  EAttribute getText_Value();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Link <em>Link</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -2233,14 +2195,6 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EClass DIAGRAM = eINSTANCE.getDiagram();
-
-    /**
-     * The meta object literal for the '<em><b>Code</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute DIAGRAM__CODE = eINSTANCE.getDiagram_Code();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.FactoryImpl <em>Factory</em>}
@@ -2503,14 +2457,6 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EClass TEXT = eINSTANCE.getText();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute TEXT__VALUE = eINSTANCE.getText_Value();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkImpl <em>Link</em>}'

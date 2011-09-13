@@ -12,6 +12,7 @@ import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Category;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.Tag;
 
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -102,7 +104,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
       if (blockPos != -1)
       {
         String rest = text.substring(blockPos);
-        addElement(firstTag, rest);
+        addElement(new TextTag(firstTag, rest));
 
         text = text.substring(0, blockPos);
       }
@@ -117,14 +119,20 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
 
     for (int i = bodyStart; i < tags.length; i++)
     {
-      Tag tag = tags[i];
-      addElement(tag, tag.text());
+      addElement(tags[i]);
     }
   }
 
-  private void addElement(Tag tag, String text)
+  private void addElement(Tag tag)
   {
-    getElements().add(new UnresolvedBodyElementImpl(this, tag, text));
+    if (tag.kind().equals("Text"))
+    {
+      getElements().add(new TextImpl(this, tag));
+    }
+    else
+    {
+      getElements().add(new UnresolvedBodyElement(this, tag));
+    }
   }
 
   private void titleMissing()
@@ -326,7 +334,9 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (html: ");
@@ -341,4 +351,18 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
     return getDoc();
   }
 
+  @Override
+  public void generate(HtmlWriter out) throws IOException
+  {
+    EList<BodyElement> elements = getElements();
+    UnresolvedBodyElement.resolve(getDocumentation().getContext(), elements);
+
+    for (BodyElement element : elements)
+    {
+      out.write(element.getHtml());
+    }
+
+    out.write("\n\n");
+    super.generate(out);
+  }
 } // BodyImpl

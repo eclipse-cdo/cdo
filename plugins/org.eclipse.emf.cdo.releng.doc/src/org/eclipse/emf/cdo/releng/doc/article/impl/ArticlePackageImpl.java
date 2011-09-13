@@ -455,16 +455,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
-  public EAttribute getDiagram_Code()
-  {
-    return (EAttribute)diagramEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   public EClass getFactory()
   {
     return factoryEClass;
@@ -765,16 +755,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
-  public EAttribute getText_Value()
-  {
-    return (EAttribute)textEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   public EClass getLink()
   {
     return linkEClass;
@@ -903,7 +883,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     createEReference(snippetEClass, SNIPPET__CALLOUTS);
 
     diagramEClass = createEClass(DIAGRAM);
-    createEAttribute(diagramEClass, DIAGRAM__CODE);
 
     factoryEClass = createEClass(FACTORY);
 
@@ -945,7 +924,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     createEReference(bodyElementEClass, BODY_ELEMENT__CALLOUT);
 
     textEClass = createEClass(TEXT);
-    createEAttribute(textEClass, TEXT__VALUE);
 
     linkEClass = createEClass(LINK);
     createEReference(linkEClass, LINK__TARGET);
@@ -1050,8 +1028,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(diagramEClass, Diagram.class, "Diagram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getDiagram_Code(), ecorePackage.getEString(), "code", null, 1, 1, Diagram.class, !IS_TRANSIENT,
-        !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(factoryEClass, Factory.class, "Factory", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1139,8 +1115,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(textEClass, Text.class, "Text", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getText_Value(), ecorePackage.getEString(), "value", null, 1, 1, Text.class, !IS_TRANSIENT,
-        !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(linkEClass, Link.class, "Link", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLink_Target(), this.getLinkTarget(), null, "target", null, 0, 1, Link.class, !IS_TRANSIENT,

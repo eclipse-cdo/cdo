@@ -8,7 +8,6 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.Article;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
-import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Chapter;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
@@ -123,12 +122,6 @@ public class ChapterImpl extends BodyImpl implements Chapter
     out.write(classDoc.typeName());
     out.write("\"/>");
 
-    for (BodyElement element : getElements())
-    {
-      out.write(element.getHtml());
-    }
-
-    out.write("\n\n");
     super.generate(out);
   }
 

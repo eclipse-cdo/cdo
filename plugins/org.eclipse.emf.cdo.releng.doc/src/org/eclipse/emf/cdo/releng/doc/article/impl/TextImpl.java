@@ -17,36 +17,12 @@ import com.sun.javadoc.Tag;
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Text</b></em>'. <!-- end-user-doc -->
  * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.TextImpl#getValue <em>Value</em>}</li>
- * </ul>
  * </p>
  * 
  * @generated
  */
 public class TextImpl extends BodyElementImpl implements Text
 {
-  /**
-   * The default value of the '{@link #getValue() <em>Value</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   * 
-   * @see #getValue()
-   * @generated
-   * @ordered
-   */
-  protected static final String VALUE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   * 
-   * @see #getValue()
-   * @generated
-   * @ordered
-   */
-  protected String value = VALUE_EDEFAULT;
-
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -57,10 +33,9 @@ public class TextImpl extends BodyElementImpl implements Text
     super();
   }
 
-  TextImpl(Body body, Tag tag, String value)
+  TextImpl(Body body, Tag tag)
   {
     super(body, tag);
-    this.value = value;
   }
 
   /**
@@ -74,70 +49,10 @@ public class TextImpl extends BodyElementImpl implements Text
     return ArticlePackage.Literals.TEXT;
   }
 
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public String getValue()
-  {
-    return value;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public Object eGet(int featureID, boolean resolve, boolean coreType)
-  {
-    switch (featureID)
-    {
-    case ArticlePackage.TEXT__VALUE:
-      return getValue();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public boolean eIsSet(int featureID)
-  {
-    switch (featureID)
-    {
-    case ArticlePackage.TEXT__VALUE:
-      return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
-    }
-    return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy())
-      return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (value: ");
-    result.append(value);
-    result.append(')');
-    return result.toString();
-  }
-
   @Override
   public String getHtml()
   {
-    return getValue();
+    return getTag().text();
   }
 
 } // TextImpl

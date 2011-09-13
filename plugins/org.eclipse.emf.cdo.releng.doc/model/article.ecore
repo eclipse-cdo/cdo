@@ -38,10 +38,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="callouts" upperBound="-1"
         eType="#//Callout" containment="true" resolveProxies="false" eOpposite="#//Callout/snippet"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Diagram" eSuperTypes="#//BodyElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        changeable="false"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Diagram" eSuperTypes="#//BodyElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Factory" eSuperTypes="#//EmbeddableElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="JavaElement" eSuperTypes="#//LinkTarget"/>
   <eClassifiers xsi:type="ecore:EClass" name="StructuralElement" abstract="true" eSuperTypes="#//LinkTarget">
@@ -108,10 +105,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="callout" eType="#//Callout"
         resolveProxies="false" eOpposite="#//Callout/elements"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Text" eSuperTypes="#//BodyElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        changeable="false"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Text" eSuperTypes="#//BodyElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Link" eSuperTypes="#//BodyElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//LinkTarget"
         resolveProxies="false"/>

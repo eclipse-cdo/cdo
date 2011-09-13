@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.offline.Bugzilla_325097_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_326047_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_328352_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_329014_Test;
+import org.eclipse.emf.cdo.tests.offline.Bugzilla_351078_Test;
 import org.eclipse.emf.cdo.tests.offline.FailoverTest;
 import org.eclipse.emf.cdo.tests.offline.OfflineDelayedTest;
 import org.eclipse.emf.cdo.tests.offline.OfflineLockingTest;
@@ -44,6 +45,7 @@ public class AllTestsDBH2Offline extends DBConfigs
   {
     addScenario(parent, COMBINED, new H2OfflineConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
     addScenario(parent, COMBINED, new H2OfflineConfig(false, false, IDGenerationLocation.CLIENT), JVM, NATIVE);
+    addScenario(parent, COMBINED, new H2OfflineConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 
   @Override
@@ -59,6 +61,7 @@ public class AllTestsDBH2Offline extends DBConfigs
     testClasses.add(Bugzilla_326047_Test.class);
     testClasses.add(Bugzilla_325097_Test.class);
     testClasses.add(Bugzilla_319552_Test.class);
+    testClasses.add(Bugzilla_351078_Test.class);
 
     testClasses.add(FailoverTest.class);
   }

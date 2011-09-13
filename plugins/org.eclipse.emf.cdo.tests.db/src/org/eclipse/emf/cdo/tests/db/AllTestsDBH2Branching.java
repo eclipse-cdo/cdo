@@ -28,9 +28,9 @@ public class AllTestsDBH2Branching extends DBConfigs
 
   public static void initConfigSuites(ConfigTestSuite suite, TestSuite parent, IDGenerationLocation idGenerationLocation)
   {
-    suite.addScenario(parent, COMBINED, new H2Config(true, true, false, false, idGenerationLocation), JVM, NATIVE);
+    // suite.addScenario(parent, COMBINED, new H2Config(true, true, false, false, idGenerationLocation), JVM, NATIVE);
     suite.addScenario(parent, COMBINED, new H2Config(true, true, true, false, idGenerationLocation), JVM, NATIVE);
-    suite.addScenario(parent, COMBINED, new H2Config(true, true, true, true, idGenerationLocation), JVM, NATIVE);
+    // suite.addScenario(parent, COMBINED, new H2Config(true, true, true, true, idGenerationLocation), JVM, NATIVE);
   }
 
   @Override

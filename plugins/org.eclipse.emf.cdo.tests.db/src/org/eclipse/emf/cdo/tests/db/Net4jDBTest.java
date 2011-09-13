@@ -395,7 +395,7 @@ public class Net4jDBTest extends AbstractCDOTest
 
     for (Pair<DBType, Object> column : columns)
     {
-      column.getElement1().readValue(ins, stmt, c++, false);
+      column.getElement1().readValueWithResult(ins, stmt, c++, false);
     }
 
     stmt.executeUpdate();

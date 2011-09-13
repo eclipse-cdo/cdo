@@ -762,35 +762,6 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       lastIndex = originalRevision.getList(getFeature()).size() - 1;
     }
 
-    public void visit(CDOMoveFeatureDelta delta)
-    {
-      int fromIdx = delta.getOldPosition();
-      int toIdx = delta.getNewPosition();
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Moving: {0} to {1}", fromIdx, toIdx); //$NON-NLS-1$
-      }
-
-      Object value = getValue(accessor, id, branchID, fromIdx, true);
-
-      // remove the item
-      removeEntry(accessor, id, branchID, oldVersion, newVersion, fromIdx);
-
-      // adjust indexes and shift either up or down
-      if (fromIdx < toIdx)
-      {
-        moveOneUp(accessor, id, branchID, oldVersion, newVersion, fromIdx + 1, toIdx);
-      }
-      else
-      { // fromIdx > toIdx here
-        moveOneDown(accessor, id, branchID, oldVersion, newVersion, toIdx, fromIdx - 1);
-      }
-
-      // create the item
-      addEntry(accessor, id, branchID, newVersion, toIdx, value);
-    }
-
     public void visit(CDOAddFeatureDelta delta)
     {
       int startIndex = delta.getIndex();
@@ -864,11 +835,6 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
       lastIndex = -1;
     }
 
-    public void visit(CDOListFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
     public void visit(CDOClearFeatureDelta delta)
     {
       if (TRACER.isEnabled())
@@ -878,6 +844,40 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
       clearList(accessor, id, branchID, oldVersion, newVersion, lastIndex);
       lastIndex = -1;
+    }
+
+    public void visit(CDOMoveFeatureDelta delta)
+    {
+      int fromIdx = delta.getOldPosition();
+      int toIdx = delta.getNewPosition();
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Delta Moving: {0} to {1}", fromIdx, toIdx); //$NON-NLS-1$
+      }
+
+      Object value = getValue(accessor, id, branchID, fromIdx, true);
+
+      // remove the item
+      removeEntry(accessor, id, branchID, oldVersion, newVersion, fromIdx);
+
+      // adjust indexes and shift either up or down
+      if (fromIdx < toIdx)
+      {
+        moveOneUp(accessor, id, branchID, oldVersion, newVersion, fromIdx + 1, toIdx);
+      }
+      else
+      { // fromIdx > toIdx here
+        moveOneDown(accessor, id, branchID, oldVersion, newVersion, toIdx, fromIdx - 1);
+      }
+
+      // create the item
+      addEntry(accessor, id, branchID, newVersion, toIdx, value);
+    }
+
+    public void visit(CDOListFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
     }
 
     public void visit(CDOContainerFeatureDelta delta)
@@ -1157,7 +1157,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
 
     try
     {
-      // try to delete a temporary entry first
+      // Try to delete a temporary entry first
       stmt = statementCache.getPreparedStatement(sqlDeleteEntry, ReuseProbability.HIGH);
 
       int column = 1;
@@ -1328,7 +1328,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
                                                                                                                          * prefetchDepth
                                                                                                                          * =
                                                                                                                          */
-        CDORevision.DEPTH_NONE, true);
+    CDORevision.DEPTH_NONE, true);
     IStoreChunkReader chunkReader = accessor.createChunkReader(baseRevision, getFeature());
     return chunkReader;
   }

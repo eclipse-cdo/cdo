@@ -65,6 +65,11 @@ public class HorizontalAuditMappingStrategy extends AbstractHorizontalMappingStr
   public String getListJoin(String attrTable, String listTable)
   {
     String join = super.getListJoin(attrTable, listTable);
+    return modifyListJoin(attrTable, listTable, join);
+  }
+
+  protected String modifyListJoin(String attrTable, String listTable, String join)
+  {
     join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
     join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_VERSION;
     return join;

@@ -144,6 +144,11 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
     builder.append("'");
   }
 
+  public void setCDOIDRaw(PreparedStatement stmt, int column, Object rawID) throws SQLException
+  {
+    stmt.setString(column, (String)rawID);
+  }
+
   public void setCDOID(PreparedStatement stmt, int column, CDOID id) throws SQLException
   {
     setCDOID(stmt, column, id, CDOBranchPoint.INVALID_DATE);

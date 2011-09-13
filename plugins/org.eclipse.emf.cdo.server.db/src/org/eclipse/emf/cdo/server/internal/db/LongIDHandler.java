@@ -153,6 +153,11 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     builder.append(value);
   }
 
+  public void setCDOIDRaw(PreparedStatement stmt, int column, Object rawID) throws SQLException
+  {
+    stmt.setLong(column, (Long)rawID);
+  }
+
   public void setCDOID(PreparedStatement stmt, int column, CDOID id) throws SQLException
   {
     setCDOID(stmt, column, id, CDOBranchPoint.INVALID_DATE);

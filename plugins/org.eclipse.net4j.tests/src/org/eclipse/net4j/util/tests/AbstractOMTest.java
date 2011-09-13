@@ -143,7 +143,11 @@ public abstract class AbstractOMTest extends TestCase
     testName = getClass().getName() + "." + getName() + "()";
     codeLink = null;
 
+    PrintTraceHandler.CONSOLE.setShortContext(true);
+    OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
+    OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     enableConsole();
+
     if (!SUPPRESS_OUTPUT)
     {
       IOUtil.OUT().println("*******************************************************"); //$NON-NLS-1$
@@ -287,9 +291,6 @@ public abstract class AbstractOMTest extends TestCase
   {
     if (!SUPPRESS_OUTPUT)
     {
-      PrintTraceHandler.CONSOLE.setShortContext(true);
-      OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
-      OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
       OMPlatform.INSTANCE.setDebugging(true);
       consoleEnabled = true;
     }
@@ -301,8 +302,8 @@ public abstract class AbstractOMTest extends TestCase
     {
       consoleEnabled = false;
       OMPlatform.INSTANCE.setDebugging(false);
-      OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
-      OMPlatform.INSTANCE.removeLogHandler(PrintLogHandler.CONSOLE);
+      // OMPlatform.INSTANCE.removeTraceHandler(PrintTraceHandler.CONSOLE);
+      // OMPlatform.INSTANCE.removeLogHandler(PrintLogHandler.CONSOLE);
     }
   }
 

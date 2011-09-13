@@ -766,6 +766,15 @@ public final class DBUtil
   public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String tableAlias,
       String sqlSuffix) throws DBException, IOException
   {
+    serializeTable(out, connection, table, tableAlias, sqlSuffix, null);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String tableAlias,
+      String sqlSuffix, SerializeRowHandler handler) throws DBException, IOException
+  {
     IDBField[] fields = table.getFields();
 
     StringBuilder builder = new StringBuilder();
@@ -802,6 +811,7 @@ public final class DBUtil
     String sql = trace(builder.toString());
     Statement statement = null;
     ResultSet resultSet = null;
+    boolean successful = false;
 
     try
     {
@@ -819,6 +829,8 @@ public final class DBUtil
           return;
         }
 
+        Object[] values = handler != null ? new Object[fields.length] : null;
+
         while (resultSet.next())
         {
           for (int i = 0; i < fields.length; i++)
@@ -826,9 +838,21 @@ public final class DBUtil
             IDBField field = fields[i];
             DBType type = field.getType();
             boolean canBeNull = !field.isNotNull();
-            type.writeValue(out, resultSet, i + 1, canBeNull);
+
+            Object value = type.writeValueWithResult(out, resultSet, i + 1, canBeNull);
+            if (values != null)
+            {
+              values[i] = value;
+            }
+          }
+
+          if (handler != null)
+          {
+            handler.handleRow(out, connection, fields, values);
           }
         }
+
+        successful = true;
       }
       catch (SQLException ex)
       {
@@ -845,7 +869,21 @@ public final class DBUtil
     }
     finally
     {
-      close(statement);
+      try
+      {
+        if (handler != null)
+        {
+          handler.done(successful);
+        }
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        close(statement);
+      }
     }
   }
 
@@ -854,6 +892,15 @@ public final class DBUtil
    */
   public static void deserializeTable(ExtendedDataInput in, Connection connection, IDBTable table, OMMonitor monitor)
       throws IOException
+  {
+    deserializeTable(in, connection, table, monitor, null);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static void deserializeTable(ExtendedDataInput in, Connection connection, IDBTable table, OMMonitor monitor,
+      DeserializeRowHandler handler) throws IOException
   {
     int size = in.readInt();
     if (size == 0)
@@ -888,6 +935,7 @@ public final class DBUtil
 
     String sql = trace(builder.toString());
     PreparedStatement statement = null;
+    boolean successful = false;
 
     monitor.begin(1 + 2 * size);
 
@@ -896,6 +944,8 @@ public final class DBUtil
       statement = connection.prepareStatement(sql);
       monitor.worked();
 
+      Object[] values = handler != null ? new Object[fields.length] : null;
+
       for (int row = 0; row < size; row++)
       {
         for (int i = 0; i < fields.length; i++)
@@ -903,10 +953,19 @@ public final class DBUtil
           IDBField field = fields[i];
           DBType type = field.getType();
           boolean canBeNull = !field.isNotNull();
-          type.readValue(in, statement, i + 1, canBeNull);
+          Object value = type.readValueWithResult(in, statement, i + 1, canBeNull);
+          if (values != null)
+          {
+            values[i] = value;
+          }
         }
 
         statement.addBatch();
+        if (handler != null)
+        {
+          handler.handleRow(in, connection, fields, values);
+        }
+
         monitor.worked();
       }
 
@@ -920,6 +979,8 @@ public final class DBUtil
       {
         async.stop();
       }
+
+      successful = true;
     }
     catch (SQLException ex)
     {
@@ -927,8 +988,22 @@ public final class DBUtil
     }
     finally
     {
-      close(statement);
-      monitor.done();
+      try
+      {
+        if (handler != null)
+        {
+          handler.done(successful);
+        }
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        close(statement);
+        monitor.done();
+      }
     }
   }
 
@@ -943,5 +1018,34 @@ public final class DBUtil
     }
 
     return sql;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public interface RowHandler
+  {
+    public void done(boolean successful) throws SQLException, IOException;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public interface SerializeRowHandler extends RowHandler
+  {
+    public void handleRow(ExtendedDataOutput out, Connection connection, IDBField[] fields, Object[] values)
+        throws SQLException, IOException;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public interface DeserializeRowHandler extends RowHandler
+  {
+    public void handleRow(ExtendedDataInput in, Connection connection, IDBField[] fields, Object[] values)
+        throws SQLException, IOException;
   }
 }

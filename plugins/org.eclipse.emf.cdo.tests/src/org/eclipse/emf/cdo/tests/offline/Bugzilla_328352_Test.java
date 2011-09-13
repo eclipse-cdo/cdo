@@ -45,6 +45,8 @@ public class Bugzilla_328352_Test extends AbstractSyncingTest
   private final int NUM_CLIENT_VIEWS = 10;
 
   @Requires(IRepositoryConfig.CAPABILITY_OFFLINE)
+  @Skips("DB.ranges")
+  // Too slow in DB.ranges (11 minutes), see bug 357441
   public void testOfflineCloneSynchronization() throws Exception
   {
     disableConsole();
@@ -126,6 +128,7 @@ public class Bugzilla_328352_Test extends AbstractSyncingTest
     System.out.println(MessageFormat.format("## Committing changes on {0} products took: {1}", NUM_PRODUCTS,
         System.currentTimeMillis() - start));
 
+    // session.waitForUpdate(masterTransaction.getLastCommitTime(), 5000);
     for (CDOView view : cloneViews)
     {
       view.waitForUpdate(masterTransaction.getLastCommitTime(), 5000);

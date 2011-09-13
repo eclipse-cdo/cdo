@@ -65,6 +65,11 @@ public interface IIDHandler extends Comparator<CDOID>
 
   public void appendCDOID(StringBuilder builder, CDOID id);
 
+  /**
+   * @since 4.1
+   */
+  public void setCDOIDRaw(PreparedStatement stmt, int column, Object id) throws SQLException;
+
   public void setCDOID(PreparedStatement stmt, int column, CDOID id) throws SQLException;
 
   public void setCDOID(PreparedStatement stmt, int column, CDOID id, long commitTime) throws SQLException;

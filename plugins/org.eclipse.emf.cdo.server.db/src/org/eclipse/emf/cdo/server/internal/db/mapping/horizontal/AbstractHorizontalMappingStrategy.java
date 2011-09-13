@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.DBUtil.DeserializeRowHandler;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -195,7 +196,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     for (IDBTable table : listMapping.getDBTables())
     {
       String listSuffix = ", " + attrTable + " a_t" + attrSuffix;
-      String listJoin = getListJoin("a_t", "l_t");
+      String listJoin = getListJoinForRawExport("a_t", "l_t");
       if (listJoin != null)
       {
         listSuffix += listJoin;
@@ -203,6 +204,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
       DBUtil.serializeTable(out, connection, table, "l_t", listSuffix);
     }
+  }
+
+  protected String getListJoinForRawExport(String attrTable, String listTable)
+  {
+    return getListJoin(attrTable, listTable);
   }
 
   public void rawImport(IDBStoreAccessor accessor, CDODataInput in, long fromCommitTime, long toCommitTime,
@@ -290,13 +296,19 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     {
       for (IDBTable table : tables)
       {
-        DBUtil.deserializeTable(in, connection, table, monitor.fork());
+        DBUtil.deserializeTable(in, connection, table, monitor.fork(), getImportListHandler());
       }
     }
     finally
     {
       monitor.done();
     }
+  }
+
+  protected DeserializeRowHandler getImportListHandler()
+  {
+    // Only needed with ranges
+    return null;
   }
 
   public String getListJoin(String attrTable, String listTable)

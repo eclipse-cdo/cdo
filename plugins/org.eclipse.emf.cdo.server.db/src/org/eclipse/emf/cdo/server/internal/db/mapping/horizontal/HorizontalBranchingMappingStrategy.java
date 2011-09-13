@@ -75,6 +75,29 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   }
 
   @Override
+  public String getListJoin(String attrTable, String listTable)
+  {
+    String join = super.getListJoin(attrTable, listTable);
+    return modifyListJoin(attrTable, listTable, join, false);
+  }
+
+  @Override
+  protected String getListJoinForRawExport(String attrTable, String listTable)
+  {
+    String join = super.getListJoin(attrTable, listTable);
+    return modifyListJoin(attrTable, listTable, join, true);
+  }
+
+  protected String modifyListJoin(String attrTable, String listTable, String join, boolean forRawExport)
+  {
+    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
+    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_VERSION;
+    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_BRANCH;
+    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_BRANCH;
+    return join;
+  }
+
+  @Override
   protected void rawImportReviseOldRevisions(Connection connection, IDBTable table, OMMonitor monitor)
   {
     String sqlUpdate = "UPDATE " + table + " SET " + CDODBSchema.ATTRIBUTES_REVISED + "=? WHERE "
@@ -181,16 +204,5 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
       DBUtil.close(stmtUpdate);
       monitor.done();
     }
-  }
-
-  @Override
-  public String getListJoin(String attrTable, String listTable)
-  {
-    String join = super.getListJoin(attrTable, listTable);
-    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
-    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_VERSION;
-    join += " AND " + attrTable + "." + CDODBSchema.ATTRIBUTES_BRANCH;
-    join += "=" + listTable + "." + CDODBSchema.LIST_REVISION_BRANCH;
-    return join;
   }
 }

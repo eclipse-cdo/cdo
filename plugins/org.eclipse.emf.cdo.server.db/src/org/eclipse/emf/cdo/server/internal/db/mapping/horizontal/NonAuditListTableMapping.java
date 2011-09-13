@@ -682,6 +682,25 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       }
     }
 
+    public void visit(CDOUnsetFeatureDelta delta)
+    {
+      if (delta.getFeature().isUnsettable())
+      {
+        Assert.isTrue(false);
+      }
+    
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("  - unset list"); //$NON-NLS-1$
+      }
+    
+      // set the clear-flag
+      clearFirst = true;
+    
+      // and also clear all manipulation items
+      manipulations.clear();
+    }
+
     public void visit(CDOClearFeatureDelta delta)
     {
       if (TRACER.isEnabled())
@@ -734,25 +753,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         // else we need to handle the move of an existing item
         e.addType(ManipulationConstants.MOVE);
       }
-    }
-
-    public void visit(CDOUnsetFeatureDelta delta)
-    {
-      if (delta.getFeature().isUnsettable())
-      {
-        Assert.isTrue(false);
-      }
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("  - unset list"); //$NON-NLS-1$
-      }
-
-      // set the clear-flag
-      clearFirst = true;
-
-      // and also clear all manipulation items
-      manipulations.clear();
     }
 
     public void visit(CDOListFeatureDelta delta)

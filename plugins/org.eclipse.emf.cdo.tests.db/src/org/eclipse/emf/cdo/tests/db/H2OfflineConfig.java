@@ -34,6 +34,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -71,6 +72,23 @@ public class H2OfflineConfig extends OfflineConfig
   public boolean isCopyOnBranch()
   {
     return copyOnBranch;
+  }
+
+  @Override
+  public void initCapabilities(Set<String> capabilities)
+  {
+    super.initCapabilities(capabilities);
+    capabilities.add(H2Config.DB_ADAPTER_NAME);
+
+    if (isWithRanges())
+    {
+      capabilities.add(DBConfig.CAPABILITY_RANGES);
+    }
+
+    if (isCopyOnBranch())
+    {
+      capabilities.add(DBConfig.CAPABILITY_COPY_ON_BRANCH);
+    }
   }
 
   public IStore createStore(String repoName)

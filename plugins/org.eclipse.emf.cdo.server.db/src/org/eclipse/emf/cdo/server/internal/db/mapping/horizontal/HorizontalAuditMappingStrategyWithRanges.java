@@ -23,22 +23,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * @author Eike Stepper
  * @since 2.0
  */
-public class HorizontalAuditMappingStrategyWithRanges extends AbstractHorizontalMappingStrategy
+public class HorizontalAuditMappingStrategyWithRanges extends HorizontalAuditMappingStrategy
 {
   public HorizontalAuditMappingStrategyWithRanges()
   {
   }
 
-  public boolean hasAuditSupport()
-  {
-    return true;
-  }
-
-  public boolean hasBranchingSupport()
-  {
-    return false;
-  }
-
+  @Override
   public boolean hasDeltaSupport()
   {
     return true;
@@ -63,9 +54,8 @@ public class HorizontalAuditMappingStrategyWithRanges extends AbstractHorizontal
   }
 
   @Override
-  public String getListJoin(String attrTable, String listTable)
+  protected String modifyListJoin(String attrTable, String listTable, String join)
   {
-    String join = super.getListJoin(attrTable, listTable);
     join += " AND " + listTable + "." + CDODBSchema.LIST_REVISION_VERSION_ADDED;
     join += "<=" + attrTable + "." + CDODBSchema.ATTRIBUTES_VERSION;
     join += " AND (" + listTable + "." + CDODBSchema.LIST_REVISION_VERSION_REMOVED;

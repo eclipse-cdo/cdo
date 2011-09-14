@@ -145,6 +145,30 @@ public interface ArticleFactory extends EFactory
   SourceCode createSourceCode();
 
   /**
+   * Returns a new object of class '<em>Javadoc Group</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Javadoc Group</em>'.
+   * @generated
+   */
+  JavadocGroup createJavadocGroup();
+
+  /**
+   * Returns a new object of class '<em>Javadoc Package</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Javadoc Package</em>'.
+   * @generated
+   */
+  JavadocPackage createJavadocPackage();
+
+  /**
+   * Returns a new object of class '<em>Javadoc</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Javadoc</em>'.
+   * @generated
+   */
+  Javadoc createJavadoc();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

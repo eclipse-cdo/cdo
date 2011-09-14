@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
+  <article:JavadocGroup name="Net4j Utilities">
+    <packages name="org.eclipse.net4j.util"/>
+    <packages name="org.eclipse.net4j.util.cache"/>
+    <packages name="org.eclipse.net4j.util.collection"/>
+    <packages name="org.eclipse.net4j.util.concurrent"/>
+    <packages name="org.eclipse.net4j.util.container"/>
+    <packages name="org.eclipse.net4j.util.container.delegate"/>
+    <packages name="org.eclipse.net4j.util.event"/>
+    <packages name="org.eclipse.net4j.util.factory"/>
+    <packages name="org.eclipse.net4j.util.fsm"/>
+    <packages name="org.eclipse.net4j.util.io"/>
+    <packages name="org.eclipse.net4j.util.lifecycle"/>
+    <packages name="org.eclipse.net4j.util.om"/>
+    <packages name="org.eclipse.net4j.util.om.log"/>
+    <packages name="org.eclipse.net4j.util.om.monitor"/>
+    <packages name="org.eclipse.net4j.util.om.pref"/>
+    <packages name="org.eclipse.net4j.util.om.trace"/>
+    <packages name="org.eclipse.net4j.util.options"/>
+    <packages name="org.eclipse.net4j.util.properties"/>
+    <packages name="org.eclipse.net4j.util.ref"/>
+    <packages name="org.eclipse.net4j.util.registry"/>
+    <packages name="org.eclipse.net4j.util.security"/>
+    <packages name="org.eclipse.net4j.util.transaction"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="Net4j Utilities UI">
+    <packages name="org.eclipse.net4j.util.ui"/>
+    <packages name="org.eclipse.net4j.util.ui.actions"/>
+    <packages name="org.eclipse.net4j.util.ui.container"/>
+    <packages name="org.eclipse.net4j.util.ui.dnd"/>
+    <packages name="org.eclipse.net4j.util.ui.prefs"/>
+    <packages name="org.eclipse.net4j.util.ui.proposals"/>
+    <packages name="org.eclipse.net4j.util.ui.security"/>
+    <packages name="org.eclipse.net4j.util.ui.views"/>
+    <packages name="org.eclipse.net4j.util.ui.widgets"/>
+  </article:JavadocGroup>
+</xmi:XMI>

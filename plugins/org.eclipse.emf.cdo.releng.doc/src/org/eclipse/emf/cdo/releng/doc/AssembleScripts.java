@@ -10,6 +10,17 @@
  */
 package org.eclipse.emf.cdo.releng.doc;
 
+import org.eclipse.emf.cdo.releng.doc.article.ArticleFactory;
+import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.JavadocGroup;
+import org.eclipse.emf.cdo.releng.doc.article.JavadocPackage;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+
 import org.eclipse.osgi.util.ManifestElement;
 
 import org.osgi.framework.BundleException;
@@ -295,7 +306,7 @@ public class AssembleScripts
   /**
    * @author Eike Stepper
    */
-  private static class AntLib
+  public static class AntLib
   {
     private Map<String, SourcePlugin> sourcePlugins = new HashMap<String, SourcePlugin>();
 
@@ -465,7 +476,7 @@ public class AssembleScripts
   /**
    * @author Eike Stepper
    */
-  private static class SourcePlugin implements Comparable<SourcePlugin>
+  public static class SourcePlugin implements Comparable<SourcePlugin>
   {
     private String projectName;
 
@@ -613,7 +624,7 @@ public class AssembleScripts
   /**
    * @author Eike Stepper
    */
-  private static class JavaDoc
+  public static class JavaDoc
   {
     private String projectName;
 
@@ -856,6 +867,45 @@ public class AssembleScripts
     }
 
     public void generateToc() throws IOException
+    {
+      Resource resource = getTocResource(getProject(), true);
+      System.out.println("Generating " + resource.getURI().path());
+
+      for (SourcePlugin sourcePlugin : getSortedSourcePlugins())
+      {
+        JavadocGroup javadocGroup = ArticleFactory.eINSTANCE.createJavadocGroup();
+        javadocGroup.setName(sourcePlugin.getLabel());
+        resource.getContents().add(javadocGroup);
+
+        for (String packageName : sourcePlugin.getSortedPackageNames())
+        {
+          JavadocPackage javadocPackage = ArticleFactory.eINSTANCE.createJavadocPackage();
+          javadocPackage.setName(packageName);
+          javadocGroup.getPackages().add(javadocPackage);
+        }
+      }
+
+      resource.save(null);
+    }
+
+    public static Resource getTocResource(File project, boolean create) throws IOException
+    {
+      ArticlePackage.eINSTANCE.eClass();
+
+      ResourceSet resourceSet = new ResourceSetImpl();
+      Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+      map.put("xmi", new XMIResourceFactoryImpl());
+
+      File javadoc = new File(project, "javadoc");
+      javadoc.mkdirs();
+
+      File target = new File(javadoc, "toc.xmi");
+
+      URI uri = URI.createFileURI(target.getCanonicalPath());
+      return create ? resourceSet.createResource(uri) : resourceSet.getResource(uri, true);
+    }
+
+    public void _generateToc() throws IOException
     {
       File project = getProject();
       FileWriter out = null;

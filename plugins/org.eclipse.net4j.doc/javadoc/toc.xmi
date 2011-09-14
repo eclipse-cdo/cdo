@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
+  <article:JavadocGroup name="Net4j Signalling Platform Transport">
+    <packages name="org.eclipse.net4j"/>
+    <packages name="org.eclipse.net4j.acceptor"/>
+    <packages name="org.eclipse.net4j.buffer"/>
+    <packages name="org.eclipse.net4j.channel"/>
+    <packages name="org.eclipse.net4j.connector"/>
+    <packages name="org.eclipse.net4j.protocol"/>
+    <packages name="org.eclipse.net4j.signal"/>
+    <packages name="org.eclipse.net4j.signal.heartbeat"/>
+    <packages name="org.eclipse.net4j.signal.wrapping"/>
+    <packages name="org.eclipse.spi.net4j"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="Net4j Signalling Platform Transport HTTP">
+    <packages name="org.eclipse.net4j.http"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="Net4j Signalling Platform Transport HTTP Common">
+    <packages name="org.eclipse.net4j.http.common"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="Net4j Signalling Platform Transport HTTP Server">
+    <packages name="org.eclipse.net4j.http.server"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="Net4j Signalling Platform Transport JVM">
+    <packages name="org.eclipse.net4j.jvm"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="Net4j Signalling Platform Transport TCP">
+    <packages name="org.eclipse.net4j.tcp"/>
+    <packages name="org.eclipse.net4j.tcp.ssl"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="Net4j Signalling Platform UI">
+    <packages name="org.eclipse.net4j.ui"/>
+  </article:JavadocGroup>
+</xmi:XMI>

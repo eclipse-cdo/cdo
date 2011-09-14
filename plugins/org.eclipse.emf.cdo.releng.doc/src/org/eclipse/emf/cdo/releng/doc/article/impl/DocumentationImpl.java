@@ -31,8 +31,12 @@ import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.RootDoc;
+import com.sun.javadoc.Tag;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -149,6 +153,13 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       if (ArticleUtil.isDocumented(packageDoc))
       {
         StructuralElement parent = analyzePackage(parentDoc);
+
+        Tag[] tags = packageDoc.tags("@javadoc");
+        if (tags != null && tags.length != 0)
+        {
+          return new JavadocImpl(parent, packageDoc);
+        }
+
         return new CategoryImpl(parent, packageDoc);
       }
 
@@ -252,7 +263,9 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   public Context getContext()
   {
     if (eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT)
+    {
       return null;
+    }
     return (Context)eContainer();
   }
 
@@ -274,24 +287,34 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
    */
   public void setContext(Context newContext)
   {
-    if (newContext != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT && newContext != null))
+    if (newContext != eInternalContainer() || eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT
+        && newContext != null)
     {
       if (EcoreUtil.isAncestor(this, newContext))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newContext != null)
+      {
         msgs = ((InternalEObject)newContext).eInverseAdd(this, ArticlePackage.CONTEXT__DOCUMENTATIONS, Context.class,
             msgs);
+      }
       msgs = basicSetContext(newContext, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.DOCUMENTATION__CONTEXT, newContext,
           newContext));
+    }
   }
 
   /**
@@ -347,7 +370,9 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     {
     case ArticlePackage.DOCUMENTATION__CONTEXT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetContext((Context)otherEnd, msgs);
     case ArticlePackage.DOCUMENTATION__EMBEDDABLE_ELEMENTS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getEmbeddableElements()).basicAdd(otherEnd, msgs);
@@ -491,7 +516,9 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (project: ");
@@ -518,4 +545,45 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     return project;
   }
 
+  @Override
+  public void generate() throws IOException
+  {
+    super.generate();
+    generateToc();
+  }
+
+  private void generateToc() throws IOException
+  {
+    File project = getOutputFile().getParentFile();
+    FileWriter out = null;
+
+    try
+    {
+      File target = new File(project, "toc.xml");
+      System.out.println("Generating " + target.getCanonicalPath());
+
+      out = new FileWriter(target);
+      BufferedWriter writer = new BufferedWriter(out);
+
+      try
+      {
+
+        writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n");
+        writer.write("<?NLS TYPE=\"org.eclipse.help.toc\"?>\n\n");
+        writer.write("<toc label=\"CDO Model Repository Documentation\" topic=\"javadoc/overview-summary.html\">\n");
+
+        generateTocEntries(writer, "\t");
+
+        writer.write("</toc>\n");
+        writer.flush();
+      }
+      finally
+      {
+      }
+    }
+    finally
+    {
+      ArticleUtil.close(out);
+    }
+  }
 } // DocumentationImpl

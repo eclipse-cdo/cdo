@@ -7,6 +7,7 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
@@ -24,9 +25,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.sun.javadoc.Doc;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Structural Element</b></em>'. <!-- end-user-doc
@@ -188,7 +194,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   public StructuralElement getParent()
   {
     if (eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT)
+    {
       return null;
+    }
     return (StructuralElement)eContainer();
   }
 
@@ -210,24 +218,34 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
    */
   public void setParent(StructuralElement newParent)
   {
-    if (newParent != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT && newParent != null))
+    if (newParent != eInternalContainer() || eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT
+        && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, ArticlePackage.STRUCTURAL_ELEMENT__CHILDREN,
             StructuralElement.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.STRUCTURAL_ELEMENT__PARENT, newParent,
           newParent));
+    }
   }
 
   /**
@@ -348,7 +366,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
     case ArticlePackage.STRUCTURAL_ELEMENT__PARENT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetParent((StructuralElement)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -500,7 +520,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (title: ");
@@ -539,5 +561,33 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
     {
       child.generate(out);
     }
+  }
+
+  protected void generateTocEntries(BufferedWriter writer, String prefix) throws IOException
+  {
+    List<StructuralElement> children = new ArrayList<StructuralElement>(getChildren());
+    Collections.sort(children, new Comparator<StructuralElement>()
+    {
+      public int compare(StructuralElement body1, StructuralElement body2)
+      {
+        return new Integer(((Body)body1).getNumber()).compareTo(((Body)body2).getNumber());
+      }
+    });
+
+    for (StructuralElement child : children)
+    {
+      BodyImpl body = (BodyImpl)child;
+      body.generateTocEntry(writer, prefix);
+    }
+  }
+
+  protected void generateTocEntry(BufferedWriter writer, String prefix) throws IOException
+  {
+    File projectFolder = getDocumentation().getOutputFile().getParentFile();
+    String href = ArticleUtil.createLink(projectFolder, getOutputFile());
+
+    writer.write(prefix + "<topic label=\"" + getTitle() + "\" href=\"" + href + "\">\n");
+    generateTocEntries(writer, prefix + "\t");
+    writer.write(prefix + "</topic>\n");
   }
 } // StructuralElementImpl

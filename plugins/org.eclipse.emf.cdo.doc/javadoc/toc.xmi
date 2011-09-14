@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
+  <article:JavadocGroup name="CDO Model Repository Client">
+    <packages name="org.eclipse.emf.cdo"/>
+    <packages name="org.eclipse.emf.cdo.eresource"/>
+    <packages name="org.eclipse.emf.cdo.eresource.impl"/>
+    <packages name="org.eclipse.emf.cdo.eresource.util"/>
+    <packages name="org.eclipse.emf.cdo.etypes"/>
+    <packages name="org.eclipse.emf.cdo.etypes.impl"/>
+    <packages name="org.eclipse.emf.cdo.etypes.util"/>
+    <packages name="org.eclipse.emf.cdo.session"/>
+    <packages name="org.eclipse.emf.cdo.session.remote"/>
+    <packages name="org.eclipse.emf.cdo.transaction"/>
+    <packages name="org.eclipse.emf.cdo.util"/>
+    <packages name="org.eclipse.emf.cdo.view"/>
+    <packages name="org.eclipse.emf.internal.cdo"/>
+    <packages name="org.eclipse.emf.spi.cdo"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Client Edit Support">
+    <packages name="org.eclipse.emf.cdo.edit"/>
+    <packages name="org.eclipse.emf.cdo.eresource.provider"/>
+    <packages name="org.eclipse.emf.cdo.etypes.provider"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Client Location">
+    <packages name="org.eclipse.emf.cdo.location"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Client Net4j Support">
+    <packages name="org.eclipse.emf.cdo.net4j"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Client UI">
+    <packages name="org.eclipse.emf.cdo.ui"/>
+    <packages name="org.eclipse.emf.cdo.ui.widgets"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Client UI IDE">
+    <packages name="org.eclipse.emf.cdo.ui.ide"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Common">
+    <packages name="org.eclipse.emf.cdo.common"/>
+    <packages name="org.eclipse.emf.cdo.common.branch"/>
+    <packages name="org.eclipse.emf.cdo.common.commit"/>
+    <packages name="org.eclipse.emf.cdo.common.commit.handler"/>
+    <packages name="org.eclipse.emf.cdo.common.id"/>
+    <packages name="org.eclipse.emf.cdo.common.lob"/>
+    <packages name="org.eclipse.emf.cdo.common.lock"/>
+    <packages name="org.eclipse.emf.cdo.common.model"/>
+    <packages name="org.eclipse.emf.cdo.common.protocol"/>
+    <packages name="org.eclipse.emf.cdo.common.revision"/>
+    <packages name="org.eclipse.emf.cdo.common.revision.delta"/>
+    <packages name="org.eclipse.emf.cdo.common.util"/>
+    <packages name="org.eclipse.emf.cdo.spi.common"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.branch"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.commit"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.id"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.lock"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.model"/>
+    <packages name="org.eclipse.emf.cdo.spi.common.revision"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Server">
+    <packages name="org.eclipse.emf.cdo.server"/>
+    <packages name="org.eclipse.emf.cdo.server.embedded"/>
+    <packages name="org.eclipse.emf.cdo.server.mem"/>
+    <packages name="org.eclipse.emf.cdo.spi.server"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Server DB">
+    <packages name="org.eclipse.emf.cdo.server.db"/>
+    <packages name="org.eclipse.emf.cdo.server.db.mapping"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Server DB4O">
+    <packages name="org.eclipse.emf.cdo.server.db4o"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Server Hibernate">
+    <packages name="org.eclipse.emf.cdo.server.hibernate"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Server MongoDB">
+    <packages name="org.eclipse.emf.cdo.server.mongodb"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Server Net4j Support">
+    <packages name="org.eclipse.emf.cdo.server.net4j"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Server OCL Support">
+    <packages name="org.eclipse.emf.cdo.server.ocl"/>
+  </article:JavadocGroup>
+  <article:JavadocGroup name="CDO Model Repository Server Objectivity">
+    <packages name="org.eclipse.emf.cdo.server.objectivity"/>
+  </article:JavadocGroup>
+</xmi:XMI>

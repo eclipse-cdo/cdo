@@ -23,6 +23,9 @@ import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
 import org.eclipse.emf.cdo.releng.doc.article.Identifiable;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
+import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
+import org.eclipse.emf.cdo.releng.doc.article.JavadocGroup;
+import org.eclipse.emf.cdo.releng.doc.article.JavadocPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
@@ -223,6 +226,24 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
     public Adapter caseSourceCode(SourceCode object)
     {
       return createSourceCodeAdapter();
+    }
+
+    @Override
+    public Adapter caseJavadocGroup(JavadocGroup object)
+    {
+      return createJavadocGroupAdapter();
+    }
+
+    @Override
+    public Adapter caseJavadocPackage(JavadocPackage object)
+    {
+      return createJavadocPackageAdapter();
+    }
+
+    @Override
+    public Adapter caseJavadoc(Javadoc object)
+    {
+      return createJavadocAdapter();
     }
 
     @Override
@@ -553,6 +574,48 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSourceCodeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.JavadocGroup
+   * <em>Javadoc Group</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.JavadocGroup
+   * @generated
+   */
+  public Adapter createJavadocGroupAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.JavadocPackage
+   * <em>Javadoc Package</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.JavadocPackage
+   * @generated
+   */
+  public Adapter createJavadocPackageAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Javadoc
+   * <em>Javadoc</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
+   * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Javadoc
+   * @generated
+   */
+  public Adapter createJavadocAdapter()
   {
     return null;
   }

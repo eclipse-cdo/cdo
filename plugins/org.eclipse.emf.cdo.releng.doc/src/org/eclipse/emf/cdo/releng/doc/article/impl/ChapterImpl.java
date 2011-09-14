@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.ClassDoc;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,6 +134,15 @@ public class ChapterImpl extends BodyImpl implements Chapter
     }
 
     return getArticle().getFullPath() + "#" + getPath();
+  }
+
+  @Override
+  protected void generateTocEntry(BufferedWriter writer, String prefix) throws IOException
+  {
+    if (this instanceof Article)
+    {
+      super.generateTocEntry(writer, prefix);
+    }
   }
 
   @Override

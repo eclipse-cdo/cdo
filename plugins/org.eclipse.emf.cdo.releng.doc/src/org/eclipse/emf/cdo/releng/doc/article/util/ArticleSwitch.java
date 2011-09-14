@@ -23,6 +23,9 @@ import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
 import org.eclipse.emf.cdo.releng.doc.article.Identifiable;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
+import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
+import org.eclipse.emf.cdo.releng.doc.article.JavadocGroup;
+import org.eclipse.emf.cdo.releng.doc.article.JavadocPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
@@ -348,6 +351,42 @@ public class ArticleSwitch<T> extends Switch<T>
         result = caseLinkTarget(sourceCode);
       if (result == null)
         result = caseIdentifiable(sourceCode);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ArticlePackage.JAVADOC_GROUP:
+    {
+      JavadocGroup javadocGroup = (JavadocGroup)theEObject;
+      T result = caseJavadocGroup(javadocGroup);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ArticlePackage.JAVADOC_PACKAGE:
+    {
+      JavadocPackage javadocPackage = (JavadocPackage)theEObject;
+      T result = caseJavadocPackage(javadocPackage);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ArticlePackage.JAVADOC:
+    {
+      Javadoc javadoc = (Javadoc)theEObject;
+      T result = caseJavadoc(javadoc);
+      if (result == null)
+        result = caseCategory(javadoc);
+      if (result == null)
+        result = caseBody(javadoc);
+      if (result == null)
+        result = caseStructuralElement(javadoc);
+      if (result == null)
+        result = caseBodyElementContainer(javadoc);
+      if (result == null)
+        result = caseLinkTarget(javadoc);
+      if (result == null)
+        result = caseIdentifiable(javadoc);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -684,6 +723,51 @@ public class ArticleSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseSourceCode(SourceCode object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Javadoc Group</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Javadoc Group</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJavadocGroup(JavadocGroup object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Javadoc Package</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Javadoc Package</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJavadocPackage(JavadocPackage object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Javadoc</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Javadoc</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJavadoc(Javadoc object)
   {
     return null;
   }

@@ -95,6 +95,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Body" abstract="true" eSuperTypes="#//StructuralElement #//BodyElementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="#//Category"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="number" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        changeable="false" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BodyElementContainer" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
@@ -118,4 +120,19 @@
   <eClassifiers xsi:type="ecore:EClass" name="SourceCode" eSuperTypes="#//ExternalTarget"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Tag" instanceClassName="com.sun.javadoc.Tag"
       serializable="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JavadocGroup">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="packages" lowerBound="1"
+        upperBound="-1" eType="#//JavadocPackage" containment="true" eOpposite="#//JavadocPackage/group"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JavadocPackage">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="group" lowerBound="1" eType="#//JavadocGroup"
+        eOpposite="#//JavadocGroup/packages"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Javadoc" eSuperTypes="#//Category">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="groups" lowerBound="1"
+        upperBound="-1" eType="#//JavadocGroup" changeable="false" volatile="true"
+        transient="true" derived="true"/>
+  </eClassifiers>
 </ecore:EPackage>

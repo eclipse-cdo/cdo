@@ -140,9 +140,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (classFile: ");

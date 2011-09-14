@@ -24,6 +24,9 @@ import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
 import org.eclipse.emf.cdo.releng.doc.article.Identifiable;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
+import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
+import org.eclipse.emf.cdo.releng.doc.article.JavadocGroup;
+import org.eclipse.emf.cdo.releng.doc.article.JavadocPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
@@ -205,6 +208,27 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * @generated
    */
   private EClass sourceCodeEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass javadocGroupEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass javadocPackageEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass javadocEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -721,6 +745,16 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
+  public EAttribute getBody_Number()
+  {
+    return (EAttribute)bodyEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getBodyElementContainer()
   {
     return bodyElementContainerEClass;
@@ -824,6 +858,86 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
   public EClass getSourceCode()
   {
     return sourceCodeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getJavadocGroup()
+  {
+    return javadocGroupEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getJavadocGroup_Name()
+  {
+    return (EAttribute)javadocGroupEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getJavadocGroup_Packages()
+  {
+    return (EReference)javadocGroupEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getJavadocPackage()
+  {
+    return javadocPackageEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getJavadocPackage_Name()
+  {
+    return (EAttribute)javadocPackageEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getJavadocPackage_Group()
+  {
+    return (EReference)javadocPackageEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getJavadoc()
+  {
+    return javadocEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getJavadoc_Groups()
+  {
+    return (EReference)javadocEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -953,6 +1067,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     bodyEClass = createEClass(BODY);
     createEReference(bodyEClass, BODY__CATEGORY);
+    createEAttribute(bodyEClass, BODY__NUMBER);
 
     bodyElementContainerEClass = createEClass(BODY_ELEMENT_CONTAINER);
     createEReference(bodyElementContainerEClass, BODY_ELEMENT_CONTAINER__ELEMENTS);
@@ -970,6 +1085,17 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     createEReference(embeddingEClass, EMBEDDING__ELEMENT);
 
     sourceCodeEClass = createEClass(SOURCE_CODE);
+
+    javadocGroupEClass = createEClass(JAVADOC_GROUP);
+    createEAttribute(javadocGroupEClass, JAVADOC_GROUP__NAME);
+    createEReference(javadocGroupEClass, JAVADOC_GROUP__PACKAGES);
+
+    javadocPackageEClass = createEClass(JAVADOC_PACKAGE);
+    createEAttribute(javadocPackageEClass, JAVADOC_PACKAGE__NAME);
+    createEReference(javadocPackageEClass, JAVADOC_PACKAGE__GROUP);
+
+    javadocEClass = createEClass(JAVADOC);
+    createEReference(javadocEClass, JAVADOC__GROUPS);
 
     // Create data types
     rootDocEDataType = createEDataType(ROOT_DOC);
@@ -1026,6 +1152,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     linkEClass.getESuperTypes().add(this.getBodyElement());
     embeddingEClass.getESuperTypes().add(this.getBodyElement());
     sourceCodeEClass.getESuperTypes().add(this.getExternalTarget());
+    javadocEClass.getESuperTypes().add(this.getCategory());
 
     // Initialize classes and features; add operations and parameters
     initEClass(documentationEClass, Documentation.class, "Documentation", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1139,6 +1266,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEReference(getBody_Category(), this.getCategory(), null, "category", null, 0, 1, Body.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
+    initEAttribute(getBody_Number(), ecorePackage.getEInt(), "number", null, 0, 1, Body.class, !IS_TRANSIENT,
+        !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEClass(bodyElementContainerEClass, BodyElementContainer.class, "BodyElementContainer", IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1168,6 +1297,27 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     initEClass(sourceCodeEClass, SourceCode.class, "SourceCode", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(javadocGroupEClass, JavadocGroup.class, "JavadocGroup", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getJavadocGroup_Name(), ecorePackage.getEString(), "name", null, 1, 1, JavadocGroup.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getJavadocGroup_Packages(), this.getJavadocPackage(), this.getJavadocPackage_Group(), "packages",
+        null, 1, -1, JavadocGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(javadocPackageEClass, JavadocPackage.class, "JavadocPackage", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getJavadocPackage_Name(), ecorePackage.getEString(), "name", null, 1, 1, JavadocPackage.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getJavadocPackage_Group(), this.getJavadocGroup(), this.getJavadocGroup_Packages(), "group", null,
+        1, 1, JavadocPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(javadocEClass, Javadoc.class, "Javadoc", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getJavadoc_Groups(), this.getJavadocGroup(), null, "groups", null, 1, -1, Javadoc.class,
+        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(rootDocEDataType, RootDoc.class, "RootDoc", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

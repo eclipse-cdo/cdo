@@ -1,6 +1,6 @@
 <h1>Creating Transport Connections</h1>
 <a name="CreatingTransportConnections.html"/><p>
- This tutorial outlines the steps needed to create a Net4j <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html">IConnector</a> and connect it to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/acceptor/IAcceptor.html">IAcceptor</a>.
+ This tutorial outlines the steps needed to create a Net4j <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/connector/IConnector.html" title="Interface in org.eclipse.net4j.connector"><code>IConnector</code></a> and connect it to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/acceptor/IAcceptor.html" title="Interface in org.eclipse.net4j.acceptor"><code>IAcceptor</code></a>.
  <p>
  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu nibh in erat dapibus accumsan. Aenean cursus
  lacinia dictum. Mauris non sem sapien. Vivamus sem ante, posuere a rhoncus ac, varius in nisi. Sed pulvinar urna ac
@@ -11,18 +11,18 @@
  convallis id a est. Donec quam nisl, scelerisque a feugiat id, mattis vel urna. Suspendisse facilisis, libero ac
  ultricies dictum, mi sem feugiat purus, ac aliquam metus purus sed leo. Sed a viverra metus.
 
-<h1>Select a Transport Type</h1>
+<h2>1 Select a Transport Type</h2>
 <a name="SelectTransportType"/><p>
  Currently supported transport types are:
  <ul>
- <li><b>JVM</b> to connect to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/jvm/IJVMAcceptor.html">IJVMAcceptor</a> in the same Java Virtual Machine.
- <li><b>TCP</b> to connect to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/tcp/ITCPAcceptor.html">ITCPAcceptor</a> by means of a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html">SocketChannel</a>.
+ <li><b>JVM</b> to connect to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/jvm/IJVMAcceptor.html" title="Interface in org.eclipse.net4j.jvm"><code>IJVMAcceptor</code></a> in the same Java Virtual Machine.
+ <li><b>TCP</b> to connect to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/tcp/ITCPAcceptor.html" title="Interface in org.eclipse.net4j.tcp"><code>ITCPAcceptor</code></a> by means of a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html" title="Class in java.nio.channels"><code>SocketChannel</code></a>.
  <li><b>SSL</b> an extension to the TCP transport that adds TLS/SSL security.
- <li><b>HTTP</b> to connect to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/http/server/IHTTPAcceptor.html">IHTTPAcceptor</a> that is made available by a servlet.
+ <li><b>HTTP</b> to connect to an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/http/server/IHTTPAcceptor.html" title="Interface in org.eclipse.net4j.http.server"><code>IHTTPAcceptor</code></a> that is made available by a servlet.
  </ul>
- Continue with <a href="../sessions/ConnectingToRepositories.html#SetConnectionTimeout">SetConnectionTimeout</a>.
+ Continue with <a href="../sessions/ConnectingToRepositories.html#SetConnectionTimeout" title="Chapter in CDO Model Repository Documentation">Set Connection Timeout</a>.
 
-<h1>Setup a Wiring Container</h1>
+<h2>2 Setup a Wiring Container</h2>
 <a name="SetupWiringContainer"/><p>
  Ut eget massa felis, nec volutpat purus. In id aliquet mi. Duis euismod sapien sollicitudin nisi vestibulum nec
  vulputate urna euismod. Proin pulvinar ornare nunc, ac auctor elit placerat eget. Integer eu erat ac risus
@@ -74,10 +74,18 @@
   </table>
 </div>
 <p/>
-<div style="margin-left:24px;"><a name="callout_snippet1_1" href="#callout_snippet1_1_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a separate IManagedContainer.</div>
-<div style="margin-left:24px;"><a name="callout_snippet1_2" href="#callout_snippet1_2_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-2.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a factory of <i>type</i> "jms" in the <i>productGroup</i> "org.eclipse.net4j.connectors".</div>
-<div style="margin-left:24px;"><a name="callout_snippet1_3" href="#callout_snippet1_3_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-3.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a JMS connector.</div>
-<div style="margin-left:24px;"><a name="callout_snippet1_4" href="#callout_snippet1_4_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-4.png" width="16" height="16" border="0" align="top"/></a>&nbsp;The new container can not be used when inactive.</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_1" href="#callout_snippet1_1_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a separate <a href="../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IManagedContainer</code></a>.
+
+</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_2" href="#callout_snippet1_2_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-2.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a factory of <i>type</i> "jms" in the <i>productGroup</i> "org.eclipse.net4j.connectors".
+
+</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_3" href="#callout_snippet1_3_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-3.png" width="16" height="16" border="0" align="top"/></a>&nbsp;Create a JMS connector.
+
+</div>
+<div style="margin-left:24px;"><a name="callout_snippet1_4" href="#callout_snippet1_4_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-4.png" width="16" height="16" border="0" align="top"/></a>&nbsp;The new container can not be used when inactive.
+
+</div>
 <p/>
  Lorem ipsum dolor sit amet,
  consectetur adipiscing elit. Etiam eu nibh in erat dapibus accumsan. Aenean cursus lacinia dictum. Mauris non sem
@@ -89,10 +97,10 @@
  a est. Donec quam nisl, scelerisque a feugiat id, mattis vel urna. Suspendisse facilisis, libero ac ultricies
  dictum, mi sem feugiat purus, ac aliquam metus purus sed leo. Sed a viverra metus.
 
-<h1>Add Configuration Parameters</h1>
+<h2>3 Add Configuration Parameters</h2>
 <a name="AddConfigurationParameters"/>
 
-<h1>Set the Buffer Capacity</h1>
+<h3>3.1 Set the Buffer Capacity</h3>
 <a name="SetBufferCapacity"/><p>
  
 
@@ -101,7 +109,7 @@
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td><img src="../../images/editor-top-left.png"/></td>
-      <td style="background-image:url(../../images/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1"></font></td>
+      <td style="background-image:url(../../images/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">JMSConnector.java</font></td>
       <td width="1px"><img src="../../images/editor-close.png"/></td>
       <td style="background-image:url(../../images/editor-top2.png); background-repeat:repeat-x;">&nbsp;</td>
       <td><img src="../../images/editor-top-right.png"/></td>
@@ -136,11 +144,13 @@
   </table>
 </div>
 <p/>
-<div style="margin-left:24px;"><a name="callout_JMSConnector_1" href="#callout_JMSConnector_1_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;The channel must not be <code>null</code>.</div>
+<div style="margin-left:24px;"><a name="callout_JMSConnector_1" href="#callout_JMSConnector_1_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../images/callout-1.png" width="16" height="16" border="0" align="top"/></a>&nbsp;The channel must not be <code>null</code>.
+
+</div>
 <p/>
 
 
-<h1>Set the Connection Timeout</h1>
+<h3>3.2 Set the Connection Timeout</h3>
 <a name="SetConnectionTimeout"/><p>
  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu nibh in erat dapibus accumsan. Aenean cursus
  lacinia dictum. Mauris non sem sapien. Vivamus sem ante, posuere a rhoncus ac, varius in nisi. Sed pulvinar urna

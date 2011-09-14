@@ -19,6 +19,9 @@ import org.eclipse.emf.cdo.releng.doc.article.Embedding;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
+import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
+import org.eclipse.emf.cdo.releng.doc.article.JavadocGroup;
+import org.eclipse.emf.cdo.releng.doc.article.JavadocPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
@@ -113,6 +116,12 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
       return createEmbedding();
     case ArticlePackage.SOURCE_CODE:
       return createSourceCode();
+    case ArticlePackage.JAVADOC_GROUP:
+      return createJavadocGroup();
+    case ArticlePackage.JAVADOC_PACKAGE:
+      return createJavadocPackage();
+    case ArticlePackage.JAVADOC:
+      return createJavadoc();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -315,6 +324,39 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
   {
     SourceCodeImpl sourceCode = new SourceCodeImpl();
     return sourceCode;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public JavadocGroup createJavadocGroup()
+  {
+    JavadocGroupImpl javadocGroup = new JavadocGroupImpl();
+    return javadocGroup;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public JavadocPackage createJavadocPackage()
+  {
+    JavadocPackageImpl javadocPackage = new JavadocPackageImpl();
+    return javadocPackage;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Javadoc createJavadoc()
+  {
+    JavadocImpl javadoc = new JavadocImpl();
+    return javadoc;
   }
 
   /**

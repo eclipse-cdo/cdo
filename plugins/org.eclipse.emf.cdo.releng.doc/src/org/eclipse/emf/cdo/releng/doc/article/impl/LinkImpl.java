@@ -87,7 +87,9 @@ public class LinkImpl extends BodyElementImpl implements Link
     LinkTarget oldTarget = target;
     target = newTarget;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.LINK__TARGET, oldTarget, target));
+    }
   }
 
   /**
@@ -172,10 +174,24 @@ public class LinkImpl extends BodyElementImpl implements Link
     String label = tag.label();
     if (label == null || label.length() == 0)
     {
-      label = tag.text();
+      label = target.getDefaultLabel();
+      if (label == null || label.length() == 0)
+      {
+        label = tag.text();
+      }
     }
 
-    return "<a href=\"" + href + "\">" + label + "</a>";
+    String tooltip = target.getTooltip();
+    if (tooltip != null && tooltip.length() != 0)
+    {
+      tooltip = " title=\"" + tooltip + "\"";
+    }
+    else
+    {
+      tooltip = "";
+    }
+
+    return "<a href=\"" + href + "\"" + tooltip + ">" + label + "</a>";
   }
 
 } // LinkImpl

@@ -199,8 +199,12 @@
   <children xmi:type="notation:Node" xmi:id="_x5KOgNxQEeCpIJpgvmzkYA" type="1001">
     <children xmi:type="notation:Node" xmi:id="_x5LcoNxQEeCpIJpgvmzkYA" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_x5LcodxQEeCpIJpgvmzkYA" type="5001">
+      <children xmi:type="notation:Node" xmi:id="_GoP24N55EeCgeMAkr6dR9Q" type="2001">
+        <element xmi:type="ecore:EAttribute" href="article.ecore#//LinkTarget/defaultLabel"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_GoP24d55EeCgeMAkr6dR9Q"/>
+      </children>
       <children xmi:type="notation:Node" xmi:id="_2UnMgNxYEeCpIJpgvmzkYA" type="2001">
-        <element xmi:type="ecore:EAttribute" href="article.ecore#//LinkTarget/label"/>
+        <element xmi:type="ecore:EAttribute" href="article.ecore#//LinkTarget/tooltip"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_2UnMgdxYEeCpIJpgvmzkYA"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_x5LcotxQEeCpIJpgvmzkYA"/>

@@ -118,6 +118,12 @@ public class ChapterImpl extends BodyImpl implements Chapter
   }
 
   @Override
+  protected String getKind()
+  {
+    return "Chapter";
+  }
+
+  @Override
   protected String createFullPath()
   {
     if (this instanceof Article)

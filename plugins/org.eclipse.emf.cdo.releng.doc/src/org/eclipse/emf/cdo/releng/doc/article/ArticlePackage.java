@@ -102,12 +102,20 @@ public interface ArticlePackage extends EPackage
   int LINK_TARGET__ID = IDENTIFIABLE__ID;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int LINK_TARGET__LABEL = IDENTIFIABLE_FEATURE_COUNT + 0;
+  int LINK_TARGET__DEFAULT_LABEL = IDENTIFIABLE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int LINK_TARGET__TOOLTIP = IDENTIFIABLE_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Link Target</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
@@ -116,7 +124,7 @@ public interface ArticlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int LINK_TARGET_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 1;
+  int LINK_TARGET_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl
@@ -137,12 +145,20 @@ public interface ArticlePackage extends EPackage
   int STRUCTURAL_ELEMENT__ID = LINK_TARGET__ID;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int STRUCTURAL_ELEMENT__LABEL = LINK_TARGET__LABEL;
+  int STRUCTURAL_ELEMENT__DEFAULT_LABEL = LINK_TARGET__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int STRUCTURAL_ELEMENT__TOOLTIP = LINK_TARGET__TOOLTIP;
 
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -237,12 +253,20 @@ public interface ArticlePackage extends EPackage
   int DOCUMENTATION__ID = STRUCTURAL_ELEMENT__ID;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int DOCUMENTATION__LABEL = STRUCTURAL_ELEMENT__LABEL;
+  int DOCUMENTATION__DEFAULT_LABEL = STRUCTURAL_ELEMENT__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int DOCUMENTATION__TOOLTIP = STRUCTURAL_ELEMENT__TOOLTIP;
 
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -421,12 +445,20 @@ public interface ArticlePackage extends EPackage
   int BODY__ID = STRUCTURAL_ELEMENT__ID;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int BODY__LABEL = STRUCTURAL_ELEMENT__LABEL;
+  int BODY__DEFAULT_LABEL = STRUCTURAL_ELEMENT__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int BODY__TOOLTIP = STRUCTURAL_ELEMENT__TOOLTIP;
 
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -545,12 +577,20 @@ public interface ArticlePackage extends EPackage
   int CATEGORY__ID = BODY__ID;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int CATEGORY__LABEL = BODY__LABEL;
+  int CATEGORY__DEFAULT_LABEL = BODY__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CATEGORY__TOOLTIP = BODY__TOOLTIP;
 
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -669,12 +709,20 @@ public interface ArticlePackage extends EPackage
   int CHAPTER__ID = BODY__ID;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int CHAPTER__LABEL = BODY__LABEL;
+  int CHAPTER__DEFAULT_LABEL = BODY__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CHAPTER__TOOLTIP = BODY__TOOLTIP;
 
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -801,12 +849,20 @@ public interface ArticlePackage extends EPackage
   int ARTICLE__ID = CHAPTER__ID;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int ARTICLE__LABEL = CHAPTER__LABEL;
+  int ARTICLE__DEFAULT_LABEL = CHAPTER__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ARTICLE__TOOLTIP = CHAPTER__TOOLTIP;
 
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -1149,12 +1205,20 @@ public interface ArticlePackage extends EPackage
   int JAVA_ELEMENT__ID = LINK_TARGET__ID;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int JAVA_ELEMENT__LABEL = LINK_TARGET__LABEL;
+  int JAVA_ELEMENT__DEFAULT_LABEL = LINK_TARGET__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int JAVA_ELEMENT__TOOLTIP = LINK_TARGET__TOOLTIP;
 
   /**
    * The feature id for the '<em><b>Class File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1227,12 +1291,20 @@ public interface ArticlePackage extends EPackage
   int EXTERNAL_TARGET__ID = LINK_TARGET__ID;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int EXTERNAL_TARGET__LABEL = LINK_TARGET__LABEL;
+  int EXTERNAL_TARGET__DEFAULT_LABEL = LINK_TARGET__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_TARGET__TOOLTIP = LINK_TARGET__TOOLTIP;
 
   /**
    * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1436,12 +1508,20 @@ public interface ArticlePackage extends EPackage
   int SOURCE_CODE__ID = EXTERNAL_TARGET__ID;
 
   /**
-   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int SOURCE_CODE__LABEL = EXTERNAL_TARGET__LABEL;
+  int SOURCE_CODE__DEFAULT_LABEL = EXTERNAL_TARGET__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SOURCE_CODE__TOOLTIP = EXTERNAL_TARGET__TOOLTIP;
 
   /**
    * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1827,15 +1907,27 @@ public interface ArticlePackage extends EPackage
   EClass getLinkTarget();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getLabel
-   * <em>Label</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '
+   * {@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getDefaultLabel <em>Default Label</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the meta object for the attribute '<em>Label</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getLabel()
+   * @return the meta object for the attribute '<em>Default Label</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getDefaultLabel()
    * @see #getLinkTarget()
    * @generated
    */
-  EAttribute getLinkTarget_Label();
+  EAttribute getLinkTarget_DefaultLabel();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getTooltip
+   * <em>Tooltip</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Tooltip</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getTooltip()
+   * @see #getLinkTarget()
+   * @generated
+   */
+  EAttribute getLinkTarget_Tooltip();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Callout <em>Callout</em>}'. <!--
@@ -2426,12 +2518,20 @@ public interface ArticlePackage extends EPackage
     EClass LINK_TARGET = eINSTANCE.getLinkTarget();
 
     /**
-     * The meta object literal for the '<em><b>Label</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Default Label</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * 
      * @generated
      */
-    EAttribute LINK_TARGET__LABEL = eINSTANCE.getLinkTarget_Label();
+    EAttribute LINK_TARGET__DEFAULT_LABEL = eINSTANCE.getLinkTarget_DefaultLabel();
+
+    /**
+     * The meta object literal for the '<em><b>Tooltip</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute LINK_TARGET__TOOLTIP = eINSTANCE.getLinkTarget_Tooltip();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.CalloutImpl <em>Callout</em>}

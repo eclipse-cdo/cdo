@@ -501,6 +501,12 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   }
 
   @Override
+  protected String getKind()
+  {
+    return "Documentation";
+  }
+
+  @Override
   public RootDoc getDoc()
   {
     return (RootDoc)super.getDoc();

@@ -124,9 +124,7 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");
@@ -148,10 +146,9 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
   }
 
   @Override
-  public String getLabel()
+  public String getTooltip()
   {
-    // TODO: implement ExternalTargetImpl.getLabel()
-    throw new UnsupportedOperationException();
+    return JavaElementImpl.getTooltip(classDoc);
   }
 
 } // ExternalTargetImpl

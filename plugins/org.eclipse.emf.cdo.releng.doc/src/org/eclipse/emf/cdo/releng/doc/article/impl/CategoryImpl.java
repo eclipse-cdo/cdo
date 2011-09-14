@@ -52,6 +52,12 @@ public class CategoryImpl extends BodyImpl implements Category
   }
 
   @Override
+  protected String getKind()
+  {
+    return "Category";
+  }
+
+  @Override
   public PackageDoc getDoc()
   {
     return (PackageDoc)super.getDoc();

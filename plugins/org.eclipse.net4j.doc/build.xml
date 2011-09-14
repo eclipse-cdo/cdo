@@ -5,9 +5,10 @@
 	<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->
 	<!-- =========================================== -->
 
-	<property name="jdk.version" value="1.5.0" />
-	<property name="emf.version" value="2.7.0" />
-	<property name="platform.version" value="juno" />
+	<property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />
+	<property name="platform.link"
+	          value="http://help.eclipse.org/juno/topic/org.eclipse.platform.doc.isv/reference/api" />
+	<property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0" />
 
 	<property name="project.path" value="plugins/org.eclipse.net4j.doc" />
 	<property file="${project.path}/plugin.properties" />
@@ -135,9 +136,9 @@
 				<package name="org.eclipse.net4j.ui" />
 			</group>
 
-			<link href="http://download.oracle.com/javase/${jdk.version}/docs/api" />
-			<link href="http://help.eclipse.org/${platform.version}/topic/org.eclipse.platform.doc.isv/reference/api" />
-			<link href="http://download.eclipse.org/modeling/emf/emf/javadoc/${emf.version}" />
+			<link href="${jdk.link}" />
+			<link href="${platform.link}" />
+			<link href="${emf.link}" />
 			<link href="MAKE-RELATIVE/org.eclipse.net4j.util.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.util.doc/javadoc" />
 
 			<tag name="ADDED" description="Added" />
@@ -208,6 +209,11 @@
 				<exclude name="**/*.java" />
 			</fileset>
 		</copy>
+		<copy todir="${project.path}/images" verbose="true" failonerror="false">
+			<fileset dir="plugins/org.eclipse.emf.cdo.releng.doc/resources" defaultexcludes="true">
+				<include name="**/*" />
+			</fileset>
+		</copy>
 
 		<javadoc encoding="ISO-8859-1"
 		         classpathref="javadoc.classpath"
@@ -222,6 +228,7 @@
 				<param name="-starttime" value="${start.time}" />
 				<param name="-basefolder" value="${basedir}" />
 				<param name="-project" value="org.eclipse.net4j.doc" />
+				<param name="-externals" value="${jdk.link};${platform.link};${emf.link}" />
 			</doclet>
 
 			<fileset dir="plugins">

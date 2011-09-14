@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.Doc;
+import com.sun.javadoc.PackageDoc;
+import com.sun.javadoc.ProgramElementDoc;
 
 import java.io.File;
 
@@ -158,10 +161,97 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
   }
 
   @Override
-  public String getLabel()
+  public String getTooltip()
   {
-    // TODO: implement JavaElementImpl.getLabel()
-    throw new UnsupportedOperationException();
+    return getTooltip(classDoc);
+  }
+
+  public static String getTooltip(Doc doc)
+  {
+    String kind = getKind(doc);
+    if (kind == null || kind.length() == 0)
+    {
+      return "";
+    }
+
+    if (doc instanceof ProgramElementDoc)
+    {
+      ProgramElementDoc programElementDoc = (ProgramElementDoc)doc;
+
+      ClassDoc containingClass = programElementDoc.containingClass();
+      if (containingClass != null)
+      {
+        return kind + " in " + containingClass.qualifiedTypeName();
+      }
+
+      PackageDoc containingPackage = programElementDoc.containingPackage();
+      if (containingPackage != null)
+      {
+        return kind + " in " + containingPackage.name();
+      }
+    }
+
+    return kind;
+  }
+
+  public static String getKind(Doc doc)
+  {
+    if (doc.isAnnotationType())
+    {
+      return "Annotation type";
+    }
+
+    if (doc.isAnnotationTypeElement())
+    {
+      return "Annotation element";
+    }
+
+    if (doc.isOrdinaryClass())
+    {
+      return "Class";
+    }
+
+    if (doc.isConstructor())
+    {
+      return "Constructor";
+    }
+
+    if (doc.isEnum())
+    {
+      return "Enum";
+    }
+
+    if (doc.isEnumConstant())
+    {
+      return "Enum constant";
+    }
+
+    if (doc.isError())
+    {
+      return "Error";
+    }
+
+    if (doc.isException())
+    {
+      return "Exception";
+    }
+
+    if (doc.isField())
+    {
+      return "Field";
+    }
+
+    if (doc.isInterface())
+    {
+      return "Interface";
+    }
+
+    if (doc.isMethod())
+    {
+      return "Method";
+    }
+
+    return null;
   }
 
 } // JavaElementImpl

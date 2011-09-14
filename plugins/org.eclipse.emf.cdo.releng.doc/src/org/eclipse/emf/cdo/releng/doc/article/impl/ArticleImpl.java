@@ -55,6 +55,12 @@ public class ArticleImpl extends ChapterImpl implements Article
   }
 
   @Override
+  protected String getKind()
+  {
+    return "Article";
+  }
+
+  @Override
   public void generate() throws IOException
   {
     HtmlWriter out = null;

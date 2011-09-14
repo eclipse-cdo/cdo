@@ -11,7 +11,8 @@ package org.eclipse.emf.cdo.releng.doc.article;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getLabel <em>Label</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getDefaultLabel <em>Default Label</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getTooltip <em>Tooltip</em>}</li>
  * </ul>
  * </p>
  * 
@@ -22,18 +23,33 @@ package org.eclipse.emf.cdo.releng.doc.article;
 public interface LinkTarget extends Identifiable
 {
   /**
-   * Returns the value of the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Default Label</em>' attribute isn't clear, there really should be more of a description
+   * here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Default Label</em>' attribute.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getLinkTarget_DefaultLabel()
+   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  String getDefaultLabel();
+
+  /**
+   * Returns the value of the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Label</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Label</em>' attribute.
-   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getLinkTarget_Label()
+   * @return the value of the '<em>Tooltip</em>' attribute.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getLinkTarget_Tooltip()
    * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
-  String getLabel();
+  String getTooltip();
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

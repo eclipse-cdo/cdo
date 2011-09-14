@@ -593,9 +593,19 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
-  public EAttribute getLinkTarget_Label()
+  public EAttribute getLinkTarget_DefaultLabel()
   {
     return (EAttribute)linkTargetEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getLinkTarget_Tooltip()
+  {
+    return (EAttribute)linkTargetEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -948,7 +958,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     createEAttribute(structuralElementEClass, STRUCTURAL_ELEMENT__DOC);
 
     linkTargetEClass = createEClass(LINK_TARGET);
-    createEAttribute(linkTargetEClass, LINK_TARGET__LABEL);
+    createEAttribute(linkTargetEClass, LINK_TARGET__DEFAULT_LABEL);
+    createEAttribute(linkTargetEClass, LINK_TARGET__TOOLTIP);
 
     calloutEClass = createEClass(CALLOUT);
     createEReference(calloutEClass, CALLOUT__SNIPPET);
@@ -1115,7 +1126,10 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     initEClass(linkTargetEClass, LinkTarget.class, "LinkTarget", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getLinkTarget_Label(), ecorePackage.getEString(), "label", null, 1, 1, LinkTarget.class,
+    initEAttribute(getLinkTarget_DefaultLabel(), ecorePackage.getEString(), "defaultLabel", null, 0, 1,
+        LinkTarget.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED,
+        IS_ORDERED);
+    initEAttribute(getLinkTarget_Tooltip(), ecorePackage.getEString(), "tooltip", null, 1, 1, LinkTarget.class,
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     EOperation op = addEOperation(linkTargetEClass, ecorePackage.getEString(), "linkFrom", 1, 1, IS_UNIQUE, IS_ORDERED);

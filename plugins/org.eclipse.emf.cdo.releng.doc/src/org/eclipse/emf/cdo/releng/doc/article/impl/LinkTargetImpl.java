@@ -19,7 +19,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkTargetImpl#getId <em>Id</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkTargetImpl#getLabel <em>Label</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkTargetImpl#getDefaultLabel <em>Default Label</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkTargetImpl#getTooltip <em>Tooltip</em>}</li>
  * </ul>
  * </p>
  * 
@@ -37,14 +38,24 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
   protected static final Object ID_EDEFAULT = null;
 
   /**
-   * The default value of the '{@link #getLabel() <em>Label</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
+   * The default value of the '{@link #getDefaultLabel() <em>Default Label</em>}' attribute. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * 
-   * @see #getLabel()
+   * @see #getDefaultLabel()
    * @generated
    * @ordered
    */
-  protected static final String LABEL_EDEFAULT = null;
+  protected static final String DEFAULT_LABEL_EDEFAULT = null;
+
+  /**
+   * The default value of the '{@link #getTooltip() <em>Tooltip</em>}' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @see #getTooltip()
+   * @generated
+   * @ordered
+   */
+  protected static final String TOOLTIP_EDEFAULT = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -79,7 +90,17 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
    * 
    * @generated NOT
    */
-  public abstract String getLabel();
+  public String getDefaultLabel()
+  {
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated NOT
+   */
+  public abstract String getTooltip();
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -100,8 +121,10 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
     {
     case ArticlePackage.LINK_TARGET__ID:
       return getId();
-    case ArticlePackage.LINK_TARGET__LABEL:
-      return getLabel();
+    case ArticlePackage.LINK_TARGET__DEFAULT_LABEL:
+      return getDefaultLabel();
+    case ArticlePackage.LINK_TARGET__TOOLTIP:
+      return getTooltip();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -118,8 +141,11 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
     {
     case ArticlePackage.LINK_TARGET__ID:
       return ID_EDEFAULT == null ? getId() != null : !ID_EDEFAULT.equals(getId());
-    case ArticlePackage.LINK_TARGET__LABEL:
-      return LABEL_EDEFAULT == null ? getLabel() != null : !LABEL_EDEFAULT.equals(getLabel());
+    case ArticlePackage.LINK_TARGET__DEFAULT_LABEL:
+      return DEFAULT_LABEL_EDEFAULT == null ? getDefaultLabel() != null : !DEFAULT_LABEL_EDEFAULT
+          .equals(getDefaultLabel());
+    case ArticlePackage.LINK_TARGET__TOOLTIP:
+      return TOOLTIP_EDEFAULT == null ? getTooltip() != null : !TOOLTIP_EDEFAULT.equals(getTooltip());
     }
     return super.eIsSet(featureID);
   }

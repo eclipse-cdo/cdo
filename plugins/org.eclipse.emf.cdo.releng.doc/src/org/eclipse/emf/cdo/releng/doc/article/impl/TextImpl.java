@@ -10,10 +10,13 @@ import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.Tag;
+
+import java.io.IOException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Text</b></em>'. <!-- end-user-doc -->
@@ -50,10 +53,9 @@ public class TextImpl extends BodyElementImpl implements Text
     return ArticlePackage.Literals.TEXT;
   }
 
-  @Override
-  public String getHtml(StructuralElement linkSource)
+  public void generate(HtmlWriter out, StructuralElement linkSource) throws IOException
   {
-    return getTag().text();
+    out.write(getTag().text());
   }
 
 } // TextImpl

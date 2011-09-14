@@ -10,10 +10,13 @@ import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.MethodDoc;
+
+import java.io.IOException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Factory</b></em>'. <!-- end-user-doc -->
@@ -54,10 +57,9 @@ public class FactoryImpl extends EmbeddableElementImpl implements Factory
     return ArticlePackage.Literals.FACTORY;
   }
 
-  @Override
-  public String getHtml(Embedding embedder)
+  public void generate(HtmlWriter out, Embedding embedder) throws IOException
   {
-    // TODO: implement FactoryImpl.getHtml(embedder)
+    // TODO: implement FactoryImpl.generate(out, embedder)
     throw new UnsupportedOperationException();
   }
 

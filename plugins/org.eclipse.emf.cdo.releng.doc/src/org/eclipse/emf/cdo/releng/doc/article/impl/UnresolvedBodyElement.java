@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -27,6 +28,7 @@ import com.sun.javadoc.SeeTag;
 import com.sun.javadoc.Tag;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Eike Stepper
@@ -50,10 +52,9 @@ public class UnresolvedBodyElement extends BodyElementImpl
     return getTag().text();
   }
 
-  @Override
-  public String getHtml(StructuralElement linkSource)
+  public void generate(HtmlWriter out, StructuralElement linkSource) throws IOException
   {
-    return getText();
+    out.write(getText());
   }
 
   public BodyElement resolve(Context context)

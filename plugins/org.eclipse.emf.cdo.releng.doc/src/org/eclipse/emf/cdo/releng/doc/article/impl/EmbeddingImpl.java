@@ -11,10 +11,13 @@ import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.SeeTag;
+
+import java.io.IOException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Embedding</b></em>'. <!-- end-user-doc -->
@@ -108,10 +111,9 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
     return super.eIsSet(featureID);
   }
 
-  @Override
-  public String getHtml(StructuralElement linkSource)
+  public void generate(HtmlWriter out, StructuralElement linkSource) throws IOException
   {
-    return element.getHtml(this);
+    element.generate(out, this);
   }
 
 } // EmbeddingImpl

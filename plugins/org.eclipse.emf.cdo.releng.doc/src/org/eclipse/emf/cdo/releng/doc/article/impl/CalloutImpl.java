@@ -74,9 +74,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
   public Snippet getSnippet()
   {
     if (eContainerFeatureID() != ArticlePackage.CALLOUT__SNIPPET)
-    {
       return null;
-    }
     return (Snippet)eContainer();
   }
 
@@ -98,32 +96,22 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
    */
   public void setSnippet(Snippet newSnippet)
   {
-    if (newSnippet != eInternalContainer() || eContainerFeatureID() != ArticlePackage.CALLOUT__SNIPPET
-        && newSnippet != null)
+    if (newSnippet != eInternalContainer()
+        || (eContainerFeatureID() != ArticlePackage.CALLOUT__SNIPPET && newSnippet != null))
     {
       if (EcoreUtil.isAncestor(this, newSnippet))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newSnippet != null)
-      {
         msgs = ((InternalEObject)newSnippet).eInverseAdd(this, ArticlePackage.SNIPPET__CALLOUTS, Snippet.class, msgs);
-      }
       msgs = basicSetSnippet(newSnippet, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.CALLOUT__SNIPPET, newSnippet, newSnippet));
-    }
   }
 
   /**
@@ -138,9 +126,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
     {
     case ArticlePackage.CALLOUT__SNIPPET:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetSnippet((Snippet)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);

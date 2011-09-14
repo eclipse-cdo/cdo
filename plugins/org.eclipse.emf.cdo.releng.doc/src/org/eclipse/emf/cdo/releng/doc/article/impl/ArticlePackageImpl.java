@@ -1125,9 +1125,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
-    op = addEOperation(embeddableElementEClass, ecorePackage.getEString(), "getHtml", 1, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getEmbedding(), "embedder", 1, 1, IS_UNIQUE, IS_ORDERED);
-
     initEClass(externalTargetEClass, ExternalTarget.class, "ExternalTarget", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getExternalTarget_Url(), ecorePackage.getEString(), "url", null, 0, 1, ExternalTarget.class,
@@ -1156,9 +1153,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBodyElement_Tag(), this.getTag(), "tag", null, 0, 1, BodyElement.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    op = addEOperation(bodyElementEClass, ecorePackage.getEString(), "getHtml", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getStructuralElement(), "linkSource", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(textEClass, Text.class, "Text", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

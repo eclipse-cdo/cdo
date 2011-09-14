@@ -287,7 +287,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   public void generate(HtmlWriter out) throws IOException
   {
     EList<BodyElement> elements = getElements();
-    BodyElementContainerImpl.generate(this, elements, out);
+    BodyElementContainerImpl.generate(out, this, elements);
     super.generate(out);
   }
 } // BodyImpl

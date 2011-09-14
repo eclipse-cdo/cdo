@@ -9,8 +9,11 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Diagram;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
+
+import java.io.IOException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Diagram</b></em>'. <!-- end-user-doc -->
@@ -42,10 +45,9 @@ public class DiagramImpl extends BodyElementImpl implements Diagram
     return ArticlePackage.Literals.DIAGRAM;
   }
 
-  @Override
-  public String getHtml(StructuralElement linkSource)
+  public void generate(HtmlWriter out, StructuralElement linkSource) throws IOException
   {
-    // TODO: implement DiagramImpl.getHtml(linkSource)
+    // TODO: implement DiagramImpl.generate(out, linkSource)
     throw new UnsupportedOperationException();
   }
 

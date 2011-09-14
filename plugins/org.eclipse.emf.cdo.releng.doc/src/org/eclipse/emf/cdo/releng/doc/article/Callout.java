@@ -6,6 +6,8 @@
  */
 package org.eclipse.emf.cdo.releng.doc.article;
 
+import com.sun.javadoc.Tag;
+
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Callout</b></em>'. <!-- end-user-doc -->
  * <p>
@@ -50,4 +52,7 @@ public interface Callout extends BodyElementContainer
    */
   void setSnippet(Snippet value);
 
+  Tag getTag();
+
+  int getIndex();
 } // Callout

@@ -11,12 +11,15 @@ import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import com.sun.javadoc.SeeTag;
+
+import java.io.IOException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Link</b></em>'. <!-- end-user-doc -->
@@ -88,7 +91,9 @@ public class LinkImpl extends BodyElementImpl implements Link
     LinkTarget oldTarget = target;
     target = newTarget;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.LINK__TARGET, oldTarget, target));
+    }
   }
 
   /**
@@ -163,8 +168,7 @@ public class LinkImpl extends BodyElementImpl implements Link
     return (SeeTag)super.getTag();
   }
 
-  @Override
-  public String getHtml(StructuralElement linkSource)
+  public void generate(HtmlWriter out, StructuralElement linkSource) throws IOException
   {
     String href = target.linkFrom(linkSource);
 
@@ -189,7 +193,7 @@ public class LinkImpl extends BodyElementImpl implements Link
       tooltip = "";
     }
 
-    return "<a href=\"" + href + "\"" + tooltip + ">" + label + "</a>";
+    out.write("<a href=\"" + href + "\"" + tooltip + ">" + label + "</a>");
   }
 
 } // LinkImpl

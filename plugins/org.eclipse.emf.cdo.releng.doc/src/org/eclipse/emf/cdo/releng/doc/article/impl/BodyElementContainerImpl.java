@@ -253,14 +253,14 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
     return result == Integer.MAX_VALUE ? -1 : result;
   }
 
-  public static void generate(StructuralElement linkSource, EList<BodyElement> elements, HtmlWriter out)
+  public static void generate(HtmlWriter out, StructuralElement linkSource, EList<BodyElement> elements)
       throws IOException
   {
     UnresolvedBodyElement.resolve(linkSource.getDocumentation().getContext(), elements);
 
     for (BodyElement element : elements)
     {
-      out.write(element.getHtml(linkSource));
+      element.generate(out, linkSource);
     }
 
     out.write("\n\n");

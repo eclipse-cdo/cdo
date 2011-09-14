@@ -81,9 +81,6 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Doc" instanceClassName="com.sun.javadoc.Doc"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EClass" name="EmbeddableElement" abstract="true" eSuperTypes="#//Identifiable">
-    <eOperations name="getHtml" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eParameters name="embedder" lowerBound="1" eType="#//Embedding"/>
-    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="documentation" lowerBound="1"
         eType="#//Documentation" resolveProxies="false" eOpposite="#//Documentation/embeddableElements"/>
   </eClassifiers>
@@ -104,9 +101,6 @@
         eType="#//BodyElement" containment="true" resolveProxies="false" eOpposite="#//BodyElement/container"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BodyElement" abstract="true">
-    <eOperations name="getHtml" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eParameters name="linkSource" eType="#//StructuralElement"/>
-    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="container" lowerBound="1"
         eType="#//BodyElementContainer" resolveProxies="false" eOpposite="#//BodyElementContainer/elements"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//Tag" changeable="false"

@@ -245,7 +245,7 @@
 		</javadoc>
 	</target>
 
-	<target name="build" depends="build.java" />
+	<target name="build" depends="build.java,build.article" />
 
 	<target name="build.clean" depends="clean,build" />
 

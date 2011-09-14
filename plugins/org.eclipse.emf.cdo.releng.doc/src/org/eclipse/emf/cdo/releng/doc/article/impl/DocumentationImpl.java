@@ -570,7 +570,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
         writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n");
         writer.write("<?NLS TYPE=\"org.eclipse.help.toc\"?>\n\n");
-        writer.write("<toc label=\"CDO Model Repository Documentation\" topic=\"javadoc/overview-summary.html\">\n");
+        writer.write("<toc label=\"" + getDocumentation().getTitle() + "\" topic=\"javadoc/overview-summary.html\">\n");
 
         generateTocEntries(writer, "\t");
 

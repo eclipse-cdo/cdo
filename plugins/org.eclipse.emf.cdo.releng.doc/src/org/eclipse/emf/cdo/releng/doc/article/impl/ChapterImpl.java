@@ -16,8 +16,9 @@ import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.ClassDoc;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Chapter</b></em>'. <!-- end-user-doc -->
@@ -135,20 +136,34 @@ public class ChapterImpl extends BodyImpl implements Chapter
   }
 
   @Override
-  protected File createOutputFile()
-  {
-    // if (this instanceof Article)
-    {
-      return super.createOutputFile();
-    }
-
-    // return getArticle().getOutputFile();
-  }
-
-  @Override
   public void generate(HtmlWriter out) throws IOException
   {
-    out.writeHeading(1, getTitle());
+    String title = getTitle();
+    if (this instanceof Article)
+    {
+      out.writeHeading(1, title);
+    }
+    else
+    {
+      int[] chapterNumber = getChapterNumber();
+
+      StringBuilder builder = new StringBuilder();
+      for (int number : chapterNumber)
+      {
+        if (builder.length() != 0)
+        {
+          builder.append(".");
+        }
+
+        builder.append(number);
+      }
+
+      builder.append(" ");
+      builder.append(title);
+      String result = builder.toString();
+      out.writeHeading(chapterNumber.length + 1, result);
+    }
+
     out.write("<a name=\"");
     out.write(getPath());
     out.write("\"/>");
@@ -156,4 +171,30 @@ public class ChapterImpl extends BodyImpl implements Chapter
     super.generate(out);
   }
 
+  public int[] getChapterNumber()
+  {
+    List<Integer> levelNumbers = new ArrayList<Integer>();
+    getLevelNumbers(this, levelNumbers);
+
+    int[] result = new int[levelNumbers.size()];
+    for (int i = 0; i < result.length; i++)
+    {
+      result[i] = levelNumbers.get(i);
+
+    }
+
+    return result;
+  }
+
+  private static void getLevelNumbers(ChapterImpl chapter, List<Integer> levelNumbers)
+  {
+    StructuralElement parent = chapter.getParent();
+    if (!(parent instanceof Article))
+    {
+      getLevelNumbers((ChapterImpl)parent, levelNumbers);
+    }
+
+    int number = parent.getChildren().indexOf(chapter) + 1;
+    levelNumbers.add(number);
+  }
 } // ChapterImpl

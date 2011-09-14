@@ -46,14 +46,9 @@ public final class ArticleUtil
     return tags != null && tags.length != 0;
   }
 
-  public static boolean isIgnore(Doc doc)
+  public static boolean isTagged(RootDoc root, Doc doc, String tag)
   {
-    return isTagged(doc, "@ignore");
-  }
-
-  public static boolean isSnippet(RootDoc root, Doc doc)
-  {
-    boolean snippet = isTagged(doc, "@snippet");
+    boolean snippet = isTagged(doc, tag);
     if (snippet)
     {
       return true;
@@ -65,7 +60,7 @@ public final class ArticleUtil
       ClassDoc containingClass = programElementDoc.containingClass();
       if (containingClass != null)
       {
-        snippet = isSnippet(root, containingClass);
+        snippet = isTagged(root, containingClass, tag);
         if (snippet)
         {
           return true;
@@ -75,7 +70,7 @@ public final class ArticleUtil
       PackageDoc containingPackage = programElementDoc.containingPackage();
       if (containingPackage != null)
       {
-        snippet = isSnippet(root, containingPackage);
+        snippet = isTagged(root, containingPackage, tag);
         if (snippet)
         {
           return true;
@@ -88,7 +83,7 @@ public final class ArticleUtil
       PackageDoc parentPackage = getParentPackage(root, packageDoc);
       if (parentPackage != null)
       {
-        snippet = isSnippet(root, parentPackage);
+        snippet = isTagged(root, parentPackage, tag);
         if (snippet)
         {
           return true;
@@ -97,6 +92,16 @@ public final class ArticleUtil
     }
 
     return false;
+  }
+
+  public static boolean isIgnore(Doc doc)
+  {
+    return isTagged(doc, "@ignore");
+  }
+
+  public static boolean isSnippet(RootDoc root, Doc doc)
+  {
+    return isTagged(root, doc, "@snippet");
   }
 
   public static boolean isFactory(MethodDoc doc)

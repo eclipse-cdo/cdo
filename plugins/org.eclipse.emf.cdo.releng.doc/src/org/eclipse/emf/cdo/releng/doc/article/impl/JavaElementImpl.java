@@ -75,7 +75,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
     this.classDoc = classDoc;
     this.classFile = classFile;
 
-    this.documentation.getContext().register(getId(), classDoc);
+    this.documentation.getContext().register(getId(), this);
   }
 
   /**
@@ -140,7 +140,9 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (classFile: ");

@@ -11,7 +11,9 @@
 
 /**
  * API Reference
- * @javadoc
  */
 package org.eclipse.emf.cdo.doc.reference.api;
 
+class Javadoc
+{
+}

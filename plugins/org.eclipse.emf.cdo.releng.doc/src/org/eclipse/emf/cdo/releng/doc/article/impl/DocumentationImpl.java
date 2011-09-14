@@ -13,6 +13,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Chapter;
 import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
+import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
@@ -31,7 +32,6 @@ import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.RootDoc;
-import com.sun.javadoc.Tag;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -56,6 +56,8 @@ import java.util.Collection;
  */
 public class DocumentationImpl extends StructuralElementImpl implements Documentation
 {
+  private static final String JAVADOC_MARKER_CLASS = "Javadoc";
+
   /**
    * The cached value of the '{@link #getEmbeddableElements() <em>Embeddable Elements</em>}' containment reference list.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -154,8 +156,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       {
         StructuralElement parent = analyzePackage(parentDoc);
 
-        Tag[] tags = packageDoc.tags("@javadoc");
-        if (tags != null && tags.length != 0)
+        ClassDoc javadocMarkerClass = packageDoc.findClass(JAVADOC_MARKER_CLASS);
+        if (javadocMarkerClass != null && javadocMarkerClass.isPackagePrivate())
         {
           return new JavadocImpl(parent, packageDoc);
         }
@@ -186,7 +188,13 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   private void analyzeClass(StructuralElement parent, ClassDoc classDoc)
   {
     // TODO Non-public classes?
+
     if (ArticleUtil.isIgnore(classDoc))
+    {
+      return;
+    }
+
+    if (parent instanceof Javadoc && classDoc.simpleTypeName().equals(JAVADOC_MARKER_CLASS))
     {
       return;
     }

@@ -7,11 +7,14 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer;
 import org.eclipse.emf.cdo.releng.doc.article.Callout;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
+import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -23,9 +26,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.SeeTag;
+import com.sun.javadoc.Tag;
 
 import java.io.CharArrayWriter;
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -77,6 +82,12 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     setDocumentation(documentation);
     this.doc = doc;
     documentation.getContext().register(getId(), this);
+
+    int index = 0;
+    for (Tag tag : doc.tags("@callout"))
+    {
+      new CalloutImpl(this, tag, ++index);
+    }
   }
 
   /**
@@ -217,22 +228,34 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
   {
     CharArrayWriter result = new CharArrayWriter();
 
-    PrintWriter out = new PrintWriter(result);
+    HtmlWriter out = new HtmlWriter(result);
     out.write("\n\n");
     writeHtml(embedder, out);
+
     out.flush();
 
     return result.toString();
   }
 
-  private void writeHtml(Embedding embedder, PrintWriter out)
+  private void writeHtml(Embedding embedder, HtmlWriter out)
   {
-    File source = embedder.getBody().getOutputFile();
+    Tag tag = embedder.getTag();
+
+    BodyElementContainer container = embedder.getContainer();
+    if (!(container instanceof StructuralElement))
+    {
+      System.err.println(ArticleUtil.makeConsoleLink("Nested embedding in ", tag.position()));
+      return;
+    }
+
+    StructuralElement structuralElement = (StructuralElement)container;
+
+    File source = structuralElement.getOutputFile();
     File target = new File(getDocumentation().getOutputFile().getParentFile(), "images");
     String imagePath = ArticleUtil.createLink(source, target) + "/";
 
     Map<String, Object> options = new HashMap<String, Object>();
-    String label = ((SeeTag)embedder.getTag()).label();
+    String label = ((SeeTag)tag).label();
     if (label != null)
     {
       options.put("title", label);
@@ -250,6 +273,25 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     {
       ex.printStackTrace();
     }
+
+    out.write("<ol>\n");
+    for (Callout callout : getCallouts())
+    {
+      out.write("<li>");
+
+      try
+      {
+        BodyElementContainerImpl.generate(structuralElement, callout.getElements(), out);
+      }
+      catch (IOException ex)
+      {
+        ex.printStackTrace();
+      }
+
+      out.write("</li>\n");
+    }
+
+    out.write("</ol>\n");
   }
 
   static

@@ -7,39 +7,37 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
-import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer;
-import org.eclipse.emf.cdo.releng.doc.article.Category;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
-import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import com.sun.javadoc.Doc;
+import com.sun.javadoc.Tag;
 
 import java.io.IOException;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Body</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Body Element Container</b></em>'. <!--
+ * end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyImpl#getElements <em>Elements</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyImpl#getCategory <em>Category</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public abstract class BodyImpl extends StructuralElementImpl implements Body
+public abstract class BodyElementContainerImpl extends EObjectImpl implements BodyElementContainer
 {
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list. <!-- begin-user-doc
@@ -56,31 +54,9 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
    * 
    * @generated
    */
-  protected BodyImpl()
+  protected BodyElementContainerImpl()
   {
     super();
-  }
-
-  BodyImpl(StructuralElement parent, String path, Doc doc)
-  {
-    super(parent, path, doc);
-
-    String title = BodyElementContainerImpl.analyzeTags(getElements(), doc.inlineTags(), true);
-    if (title != null)
-    {
-      setTitle(title);
-    }
-    else
-    {
-      titleMissing();
-    }
-  }
-
-  private void titleMissing()
-  {
-    Doc doc = getDoc();
-    System.err.println("Warning: Title is missing in " + ArticleUtil.makeConsoleLink(doc));
-    setTitle(doc.name());
   }
 
   /**
@@ -91,7 +67,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   @Override
   protected EClass eStaticClass()
   {
-    return ArticlePackage.Literals.BODY;
+    return ArticlePackage.Literals.BODY_ELEMENT_CONTAINER;
   }
 
   /**
@@ -104,30 +80,9 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
     if (elements == null)
     {
       elements = new EObjectContainmentWithInverseEList<BodyElement>(BodyElement.class, this,
-          ArticlePackage.BODY__ELEMENTS, ArticlePackage.BODY_ELEMENT__CONTAINER);
+          ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS, ArticlePackage.BODY_ELEMENT__CONTAINER);
     }
     return elements;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated NOT
-   */
-  public Category getCategory()
-  {
-    StructuralElement parent = getParent();
-    if (parent instanceof Category)
-    {
-      return (Category)parent;
-    }
-
-    if (parent instanceof Body)
-    {
-      return ((Body)parent).getCategory();
-    }
-
-    return null;
   }
 
   /**
@@ -141,7 +96,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY__ELEMENTS:
+    case ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getElements()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -157,7 +112,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY__ELEMENTS:
+    case ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS:
       return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -173,10 +128,8 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY__ELEMENTS:
+    case ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS:
       return getElements();
-    case ArticlePackage.BODY__CATEGORY:
-      return getCategory();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -192,7 +145,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY__ELEMENTS:
+    case ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS:
       getElements().clear();
       getElements().addAll((Collection<? extends BodyElement>)newValue);
       return;
@@ -210,7 +163,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY__ELEMENTS:
+    case ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS:
       getElements().clear();
       return;
     }
@@ -227,67 +180,90 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY__ELEMENTS:
+    case ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS:
       return elements != null && !elements.isEmpty();
-    case ArticlePackage.BODY__CATEGORY:
-      return getCategory() != null;
     }
     return super.eIsSet(featureID);
   }
 
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+  public static String analyzeTags(EList<BodyElement> elements, Tag[] tags, boolean withTitle)
   {
-    if (baseClass == BodyElementContainer.class)
+    String title = null;
+    if (tags != null && tags.length != 0)
     {
-      switch (derivedFeatureID)
+      int bodyStart = 0;
+
+      if (withTitle)
       {
-      case ArticlePackage.BODY__ELEMENTS:
-        return ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS;
-      default:
-        return -1;
+        Tag firstTag = tags[0];
+        if (firstTag.name().equals("Text"))
+        {
+          ++bodyStart;
+
+          String text = firstTag.text();
+          int blockPos = getBlockPosition(text);
+          if (blockPos != -1)
+          {
+            String rest = text.substring(blockPos);
+            addElement(elements, new TextTag(firstTag, rest));
+
+            text = text.substring(0, blockPos);
+          }
+
+          text = text.replaceAll("\\s+", " ").trim();
+          title = text;
+        }
+      }
+
+      for (int i = bodyStart; i < tags.length; i++)
+      {
+        addElement(elements, tags[i]);
       }
     }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+
+    return title;
   }
 
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  private static void addElement(EList<BodyElement> elements, Tag tag)
   {
-    if (baseClass == BodyElementContainer.class)
+    if (tag.kind().equals("Text"))
     {
-      switch (baseFeatureID)
+      elements.add(new TextImpl(null, tag));
+    }
+    else
+    {
+      elements.add(new UnresolvedBodyElement(null, tag));
+    }
+  }
+
+  private static int getBlockPosition(String text)
+  {
+    String[] blocks = { "p", "br", "hr", "ul", "ol", "div", "table" };
+    int result = Integer.MAX_VALUE;
+
+    for (String block : blocks)
+    {
+      int index = text.indexOf("<" + block);
+      if (index != -1 && index < result)
       {
-      case ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS:
-        return ArticlePackage.BODY__ELEMENTS;
-      default:
-        return -1;
+        result = index;
       }
     }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+
+    return result == Integer.MAX_VALUE ? -1 : result;
   }
 
-  @Override
-  public Object getId()
+  public static void generate(StructuralElement linkSource, EList<BodyElement> elements, HtmlWriter out)
+      throws IOException
   {
-    return getDoc();
+    UnresolvedBodyElement.resolve(linkSource.getDocumentation().getContext(), elements);
+
+    for (BodyElement element : elements)
+    {
+      out.write(element.getHtml(linkSource));
+    }
+
+    out.write("\n\n");
   }
 
-  @Override
-  public void generate(HtmlWriter out) throws IOException
-  {
-    EList<BodyElement> elements = getElements();
-    BodyElementContainerImpl.generate(this, elements, out);
-    super.generate(out);
-  }
-} // BodyImpl
+} // BodyElementContainerImpl

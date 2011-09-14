@@ -8,6 +8,7 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Diagram;
+import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -42,9 +43,9 @@ public class DiagramImpl extends BodyElementImpl implements Diagram
   }
 
   @Override
-  public String getHtml()
+  public String getHtml(StructuralElement linkSource)
   {
-    // TODO: implement DiagramImpl.getHtml()
+    // TODO: implement DiagramImpl.getHtml(linkSource)
     throw new UnsupportedOperationException();
   }
 

@@ -8,6 +8,7 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
+import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
 
 import org.eclipse.emf.ecore.EClass;
@@ -50,7 +51,7 @@ public class TextImpl extends BodyElementImpl implements Text
   }
 
   @Override
-  public String getHtml()
+  public String getHtml(StructuralElement linkSource)
   {
     return getTag().text();
   }

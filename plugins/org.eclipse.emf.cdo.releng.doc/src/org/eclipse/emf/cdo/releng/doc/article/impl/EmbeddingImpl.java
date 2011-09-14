@@ -10,6 +10,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
+import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -108,7 +109,7 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
   }
 
   @Override
-  public String getHtml()
+  public String getHtml(StructuralElement linkSource)
   {
     return element.getHtml(this);
   }

@@ -10,6 +10,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Article;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer;
 import org.eclipse.emf.cdo.releng.doc.article.Callout;
 import org.eclipse.emf.cdo.releng.doc.article.Category;
 import org.eclipse.emf.cdo.releng.doc.article.Chapter;
@@ -186,6 +187,12 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
     public Adapter caseBody(Body object)
     {
       return createBodyAdapter();
+    }
+
+    @Override
+    public Adapter caseBodyElementContainer(BodyElementContainer object)
+    {
+      return createBodyElementContainerAdapter();
     }
 
     @Override
@@ -461,6 +468,21 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createBodyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer
+   * <em>Body Element Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer
+   * @generated
+   */
+  public Adapter createBodyElementContainerAdapter()
   {
     return null;
   }

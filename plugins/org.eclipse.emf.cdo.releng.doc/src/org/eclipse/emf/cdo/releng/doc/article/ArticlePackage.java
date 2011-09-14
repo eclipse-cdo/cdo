@@ -535,20 +535,12 @@ public interface ArticlePackage extends EPackage
   int BODY__ELEMENTS = STRUCTURAL_ELEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int BODY__HTML = STRUCTURAL_ELEMENT_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int BODY__CATEGORY = STRUCTURAL_ELEMENT_FEATURE_COUNT + 2;
+  int BODY__CATEGORY = STRUCTURAL_ELEMENT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Body</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -556,7 +548,7 @@ public interface ArticlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int BODY_FEATURE_COUNT = STRUCTURAL_ELEMENT_FEATURE_COUNT + 3;
+  int BODY_FEATURE_COUNT = STRUCTURAL_ELEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.CategoryImpl <em>Category</em>}'
@@ -665,14 +657,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int CATEGORY__ELEMENTS = BODY__ELEMENTS;
-
-  /**
-   * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CATEGORY__HTML = BODY__HTML;
 
   /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -797,14 +781,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int CHAPTER__ELEMENTS = BODY__ELEMENTS;
-
-  /**
-   * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CHAPTER__HTML = BODY__HTML;
 
   /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -939,14 +915,6 @@ public interface ArticlePackage extends EPackage
   int ARTICLE__ELEMENTS = CHAPTER__ELEMENTS;
 
   /**
-   * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int ARTICLE__HTML = CHAPTER__HTML;
-
-  /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -1058,15 +1026,16 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getBodyElement()
    * @generated
    */
-  int BODY_ELEMENT = 16;
+  int BODY_ELEMENT = 17;
 
   /**
-   * The feature id for the '<em><b>Body</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
    * @generated
    * @ordered
    */
-  int BODY_ELEMENT__BODY = 0;
+  int BODY_ELEMENT__CONTAINER = 0;
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1077,29 +1046,13 @@ public interface ArticlePackage extends EPackage
   int BODY_ELEMENT__TAG = 1;
 
   /**
-   * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int BODY_ELEMENT__HTML = 2;
-
-  /**
-   * The feature id for the '<em><b>Callout</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int BODY_ELEMENT__CALLOUT = 3;
-
-  /**
    * The number of structural features of the '<em>Body Element</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    * 
    * @generated
    * @ordered
    */
-  int BODY_ELEMENT_FEATURE_COUNT = 4;
+  int BODY_ELEMENT_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.DiagramImpl <em>Diagram</em>}'
@@ -1112,12 +1065,13 @@ public interface ArticlePackage extends EPackage
   int DIAGRAM = 6;
 
   /**
-   * The feature id for the '<em><b>Body</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
    * @generated
    * @ordered
    */
-  int DIAGRAM__BODY = BODY_ELEMENT__BODY;
+  int DIAGRAM__CONTAINER = BODY_ELEMENT__CONTAINER;
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1126,22 +1080,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int DIAGRAM__TAG = BODY_ELEMENT__TAG;
-
-  /**
-   * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int DIAGRAM__HTML = BODY_ELEMENT__HTML;
-
-  /**
-   * The feature id for the '<em><b>Callout</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int DIAGRAM__CALLOUT = BODY_ELEMENT__CALLOUT;
 
   /**
    * The number of structural features of the '<em>Diagram</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1238,6 +1176,34 @@ public interface ArticlePackage extends EPackage
   int JAVA_ELEMENT_FEATURE_COUNT = LINK_TARGET_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl
+   * <em>Body Element Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getBodyElementContainer()
+   * @generated
+   */
+  int BODY_ELEMENT_CONTAINER = 16;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int BODY_ELEMENT_CONTAINER__ELEMENTS = 0;
+
+  /**
+   * The number of structural features of the '<em>Body Element Container</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int BODY_ELEMENT_CONTAINER_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.CalloutImpl <em>Callout</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -1248,21 +1214,21 @@ public interface ArticlePackage extends EPackage
   int CALLOUT = 11;
 
   /**
-   * The feature id for the '<em><b>Snippet</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CALLOUT__SNIPPET = 0;
-
-  /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int CALLOUT__ELEMENTS = 1;
+  int CALLOUT__ELEMENTS = BODY_ELEMENT_CONTAINER__ELEMENTS;
+
+  /**
+   * The feature id for the '<em><b>Snippet</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int CALLOUT__SNIPPET = BODY_ELEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Callout</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1270,7 +1236,7 @@ public interface ArticlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CALLOUT_FEATURE_COUNT = 2;
+  int CALLOUT_FEATURE_COUNT = BODY_ELEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExternalTargetImpl
@@ -1331,15 +1297,16 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getText()
    * @generated
    */
-  int TEXT = 17;
+  int TEXT = 18;
 
   /**
-   * The feature id for the '<em><b>Body</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
    * @generated
    * @ordered
    */
-  int TEXT__BODY = BODY_ELEMENT__BODY;
+  int TEXT__CONTAINER = BODY_ELEMENT__CONTAINER;
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1348,22 +1315,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int TEXT__TAG = BODY_ELEMENT__TAG;
-
-  /**
-   * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int TEXT__HTML = BODY_ELEMENT__HTML;
-
-  /**
-   * The feature id for the '<em><b>Callout</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int TEXT__CALLOUT = BODY_ELEMENT__CALLOUT;
 
   /**
    * The number of structural features of the '<em>Text</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1381,15 +1332,16 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getLink()
    * @generated
    */
-  int LINK = 18;
+  int LINK = 19;
 
   /**
-   * The feature id for the '<em><b>Body</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
    * @generated
    * @ordered
    */
-  int LINK__BODY = BODY_ELEMENT__BODY;
+  int LINK__CONTAINER = BODY_ELEMENT__CONTAINER;
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1398,22 +1350,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int LINK__TAG = BODY_ELEMENT__TAG;
-
-  /**
-   * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int LINK__HTML = BODY_ELEMENT__HTML;
-
-  /**
-   * The feature id for the '<em><b>Callout</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int LINK__CALLOUT = BODY_ELEMENT__CALLOUT;
 
   /**
    * The feature id for the '<em><b>Target</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1439,15 +1375,16 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getEmbedding()
    * @generated
    */
-  int EMBEDDING = 19;
+  int EMBEDDING = 20;
 
   /**
-   * The feature id for the '<em><b>Body</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
    * @generated
    * @ordered
    */
-  int EMBEDDING__BODY = BODY_ELEMENT__BODY;
+  int EMBEDDING__CONTAINER = BODY_ELEMENT__CONTAINER;
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1456,22 +1393,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int EMBEDDING__TAG = BODY_ELEMENT__TAG;
-
-  /**
-   * The feature id for the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int EMBEDDING__HTML = BODY_ELEMENT__HTML;
-
-  /**
-   * The feature id for the '<em><b>Callout</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int EMBEDDING__CALLOUT = BODY_ELEMENT__CALLOUT;
 
   /**
    * The feature id for the '<em><b>Element</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1497,7 +1418,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getSourceCode()
    * @generated
    */
-  int SOURCE_CODE = 20;
+  int SOURCE_CODE = 21;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1547,7 +1468,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getRootDoc()
    * @generated
    */
-  int ROOT_DOC = 21;
+  int ROOT_DOC = 22;
 
   /**
    * The meta object id for the '<em>File</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1556,7 +1477,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFile()
    * @generated
    */
-  int FILE = 22;
+  int FILE = 23;
 
   /**
    * The meta object id for the '<em>Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1565,7 +1486,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDoc()
    * @generated
    */
-  int DOC = 23;
+  int DOC = 24;
 
   /**
    * The meta object id for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1574,7 +1495,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
    * @generated
    */
-  int TAG = 24;
+  int TAG = 25;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation
@@ -1952,18 +1873,6 @@ public interface ArticlePackage extends EPackage
   EReference getCallout_Snippet();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.releng.doc.article.Callout#getElements <em>Elements</em>}'. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @return the meta object for the containment reference list '<em>Elements</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.Callout#getElements()
-   * @see #getCallout()
-   * @generated
-   */
-  EReference getCallout_Elements();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement
    * <em>Embeddable Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -2038,29 +1947,6 @@ public interface ArticlePackage extends EPackage
   EClass getBody();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.releng.doc.article.Body#getElements <em>Elements</em>}'. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @return the meta object for the containment reference list '<em>Elements</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.Body#getElements()
-   * @see #getBody()
-   * @generated
-   */
-  EReference getBody_Elements();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Body#getHtml
-   * <em>Html</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Html</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.Body#getHtml()
-   * @see #getBody()
-   * @generated
-   */
-  EAttribute getBody_Html();
-
-  /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.releng.doc.article.Body#getCategory
    * <em>Category</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -2070,6 +1956,28 @@ public interface ArticlePackage extends EPackage
    * @generated
    */
   EReference getBody_Category();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer
+   * <em>Body Element Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Body Element Container</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer
+   * @generated
+   */
+  EClass getBodyElementContainer();
+
+  /**
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer#getElements <em>Elements</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Elements</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer#getElements()
+   * @see #getBodyElementContainer()
+   * @generated
+   */
+  EReference getBodyElementContainer_Elements();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement <em>Body Element</em>}
@@ -2083,15 +1991,15 @@ public interface ArticlePackage extends EPackage
 
   /**
    * Returns the meta object for the container reference '
-   * {@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getBody <em>Body</em>}'. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * {@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getContainer <em>Container</em>}'. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
    * 
-   * @return the meta object for the container reference '<em>Body</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.BodyElement#getBody()
+   * @return the meta object for the container reference '<em>Container</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.BodyElement#getContainer()
    * @see #getBodyElement()
    * @generated
    */
-  EReference getBodyElement_Body();
+  EReference getBodyElement_Container();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getTag
@@ -2103,29 +2011,6 @@ public interface ArticlePackage extends EPackage
    * @generated
    */
   EAttribute getBodyElement_Tag();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getHtml
-   * <em>Html</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Html</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.BodyElement#getHtml()
-   * @see #getBodyElement()
-   * @generated
-   */
-  EAttribute getBodyElement_Html();
-
-  /**
-   * Returns the meta object for the container reference '
-   * {@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getCallout <em>Callout</em>}'. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * 
-   * @return the meta object for the container reference '<em>Callout</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.BodyElement#getCallout()
-   * @see #getBodyElement()
-   * @generated
-   */
-  EReference getBodyElement_Callout();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Text <em>Text</em>}'. <!--
@@ -2552,14 +2437,6 @@ public interface ArticlePackage extends EPackage
     EReference CALLOUT__SNIPPET = eINSTANCE.getCallout_Snippet();
 
     /**
-     * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference CALLOUT__ELEMENTS = eINSTANCE.getCallout_Elements();
-
-    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddableElementImpl
      * <em>Embeddable Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -2624,28 +2501,30 @@ public interface ArticlePackage extends EPackage
     EClass BODY = eINSTANCE.getBody();
 
     /**
-     * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference BODY__ELEMENTS = eINSTANCE.getBody_Elements();
-
-    /**
-     * The meta object literal for the '<em><b>Html</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute BODY__HTML = eINSTANCE.getBody_Html();
-
-    /**
      * The meta object literal for the '<em><b>Category</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * 
      * @generated
      */
     EReference BODY__CATEGORY = eINSTANCE.getBody_Category();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl
+     * <em>Body Element Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getBodyElementContainer()
+     * @generated
+     */
+    EClass BODY_ELEMENT_CONTAINER = eINSTANCE.getBodyElementContainer();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference BODY_ELEMENT_CONTAINER__ELEMENTS = eINSTANCE.getBodyElementContainer_Elements();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl
@@ -2658,12 +2537,12 @@ public interface ArticlePackage extends EPackage
     EClass BODY_ELEMENT = eINSTANCE.getBodyElement();
 
     /**
-     * The meta object literal for the '<em><b>Body</b></em>' container reference feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
+     * The meta object literal for the '<em><b>Container</b></em>' container reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * 
      * @generated
      */
-    EReference BODY_ELEMENT__BODY = eINSTANCE.getBodyElement_Body();
+    EReference BODY_ELEMENT__CONTAINER = eINSTANCE.getBodyElement_Container();
 
     /**
      * The meta object literal for the '<em><b>Tag</b></em>' attribute feature. <!-- begin-user-doc --> <!--
@@ -2672,22 +2551,6 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EAttribute BODY_ELEMENT__TAG = eINSTANCE.getBodyElement_Tag();
-
-    /**
-     * The meta object literal for the '<em><b>Html</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute BODY_ELEMENT__HTML = eINSTANCE.getBodyElement_Html();
-
-    /**
-     * The meta object literal for the '<em><b>Callout</b></em>' container reference feature. <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference BODY_ELEMENT__CALLOUT = eINSTANCE.getBodyElement_Callout();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.TextImpl <em>Text</em>}'

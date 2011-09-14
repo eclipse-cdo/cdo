@@ -7,9 +7,9 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
-import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
-import org.eclipse.emf.cdo.releng.doc.article.Callout;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer;
+import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -26,10 +26,8 @@ import com.sun.javadoc.Tag;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl#getBody <em>Body</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl#getContainer <em>Container</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl#getTag <em>Tag</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl#getHtml <em>Html</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl#getCallout <em>Callout</em>}</li>
  * </ul>
  * </p>
  * 
@@ -46,16 +44,6 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    */
   protected static final Tag TAG_EDEFAULT = null;
 
-  /**
-   * The default value of the '{@link #getHtml() <em>Html</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   * 
-   * @see #getHtml()
-   * @generated
-   * @ordered
-   */
-  protected static final String HTML_EDEFAULT = null;
-
   // TODO Is tag needed?
   private Tag tag;
 
@@ -69,9 +57,9 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
     super();
   }
 
-  BodyElementImpl(Body body, Tag tag)
+  BodyElementImpl(BodyElementContainer container, Tag tag)
   {
-    setBody(body);
+    setContainer(container);
     this.tag = tag;
   }
 
@@ -91,11 +79,11 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    * 
    * @generated
    */
-  public Body getBody()
+  public BodyElementContainer getContainer()
   {
-    if (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__BODY)
+    if (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CONTAINER)
       return null;
-    return (Body)eContainer();
+    return (BodyElementContainer)eContainer();
   }
 
   /**
@@ -103,9 +91,9 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    * 
    * @generated
    */
-  public NotificationChain basicSetBody(Body newBody, NotificationChain msgs)
+  public NotificationChain basicSetContainer(BodyElementContainer newContainer, NotificationChain msgs)
   {
-    msgs = eBasicSetContainer((InternalEObject)newBody, ArticlePackage.BODY_ELEMENT__BODY, msgs);
+    msgs = eBasicSetContainer((InternalEObject)newContainer, ArticlePackage.BODY_ELEMENT__CONTAINER, msgs);
     return msgs;
   }
 
@@ -114,24 +102,26 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    * 
    * @generated
    */
-  public void setBody(Body newBody)
+  public void setContainer(BodyElementContainer newContainer)
   {
-    if (newBody != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__BODY && newBody != null))
+    if (newContainer != eInternalContainer()
+        || (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CONTAINER && newContainer != null))
     {
-      if (EcoreUtil.isAncestor(this, newBody))
+      if (EcoreUtil.isAncestor(this, newContainer))
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, ArticlePackage.BODY__ELEMENTS, Body.class, msgs);
-      msgs = basicSetBody(newBody, msgs);
+      if (newContainer != null)
+        msgs = ((InternalEObject)newContainer).eInverseAdd(this, ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS,
+            BodyElementContainer.class, msgs);
+      msgs = basicSetContainer(newContainer, msgs);
       if (msgs != null)
         msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.BODY_ELEMENT__BODY, newBody, newBody));
+      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.BODY_ELEMENT__CONTAINER, newContainer,
+          newContainer));
   }
 
   /**
@@ -149,56 +139,7 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    * 
    * @generated NOT
    */
-  public abstract String getHtml();
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public Callout getCallout()
-  {
-    if (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CALLOUT)
-      return null;
-    return (Callout)eContainer();
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public NotificationChain basicSetCallout(Callout newCallout, NotificationChain msgs)
-  {
-    msgs = eBasicSetContainer((InternalEObject)newCallout, ArticlePackage.BODY_ELEMENT__CALLOUT, msgs);
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public void setCallout(Callout newCallout)
-  {
-    if (newCallout != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CALLOUT && newCallout != null))
-    {
-      if (EcoreUtil.isAncestor(this, newCallout))
-        throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      NotificationChain msgs = null;
-      if (eInternalContainer() != null)
-        msgs = eBasicRemoveFromContainer(msgs);
-      if (newCallout != null)
-        msgs = ((InternalEObject)newCallout).eInverseAdd(this, ArticlePackage.CALLOUT__ELEMENTS, Callout.class, msgs);
-      msgs = basicSetCallout(newCallout, msgs);
-      if (msgs != null)
-        msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.BODY_ELEMENT__CALLOUT, newCallout,
-          newCallout));
-  }
+  public abstract String getHtml(StructuralElement linkSource);
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -210,14 +151,10 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY_ELEMENT__BODY:
+    case ArticlePackage.BODY_ELEMENT__CONTAINER:
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
-      return basicSetBody((Body)otherEnd, msgs);
-    case ArticlePackage.BODY_ELEMENT__CALLOUT:
-      if (eInternalContainer() != null)
-        msgs = eBasicRemoveFromContainer(msgs);
-      return basicSetCallout((Callout)otherEnd, msgs);
+      return basicSetContainer((BodyElementContainer)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -232,10 +169,8 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY_ELEMENT__BODY:
-      return basicSetBody(null, msgs);
-    case ArticlePackage.BODY_ELEMENT__CALLOUT:
-      return basicSetCallout(null, msgs);
+    case ArticlePackage.BODY_ELEMENT__CONTAINER:
+      return basicSetContainer(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -250,10 +185,9 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   {
     switch (eContainerFeatureID())
     {
-    case ArticlePackage.BODY_ELEMENT__BODY:
-      return eInternalContainer().eInverseRemove(this, ArticlePackage.BODY__ELEMENTS, Body.class, msgs);
-    case ArticlePackage.BODY_ELEMENT__CALLOUT:
-      return eInternalContainer().eInverseRemove(this, ArticlePackage.CALLOUT__ELEMENTS, Callout.class, msgs);
+    case ArticlePackage.BODY_ELEMENT__CONTAINER:
+      return eInternalContainer().eInverseRemove(this, ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS,
+          BodyElementContainer.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }
@@ -268,14 +202,10 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY_ELEMENT__BODY:
-      return getBody();
+    case ArticlePackage.BODY_ELEMENT__CONTAINER:
+      return getContainer();
     case ArticlePackage.BODY_ELEMENT__TAG:
       return getTag();
-    case ArticlePackage.BODY_ELEMENT__HTML:
-      return getHtml();
-    case ArticlePackage.BODY_ELEMENT__CALLOUT:
-      return getCallout();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -290,11 +220,8 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY_ELEMENT__BODY:
-      setBody((Body)newValue);
-      return;
-    case ArticlePackage.BODY_ELEMENT__CALLOUT:
-      setCallout((Callout)newValue);
+    case ArticlePackage.BODY_ELEMENT__CONTAINER:
+      setContainer((BodyElementContainer)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -310,11 +237,8 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY_ELEMENT__BODY:
-      setBody((Body)null);
-      return;
-    case ArticlePackage.BODY_ELEMENT__CALLOUT:
-      setCallout((Callout)null);
+    case ArticlePackage.BODY_ELEMENT__CONTAINER:
+      setContainer((BodyElementContainer)null);
       return;
     }
     super.eUnset(featureID);
@@ -330,14 +254,10 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   {
     switch (featureID)
     {
-    case ArticlePackage.BODY_ELEMENT__BODY:
-      return getBody() != null;
+    case ArticlePackage.BODY_ELEMENT__CONTAINER:
+      return getContainer() != null;
     case ArticlePackage.BODY_ELEMENT__TAG:
       return TAG_EDEFAULT == null ? getTag() != null : !TAG_EDEFAULT.equals(getTag());
-    case ArticlePackage.BODY_ELEMENT__HTML:
-      return HTML_EDEFAULT == null ? getHtml() != null : !HTML_EDEFAULT.equals(getHtml());
-    case ArticlePackage.BODY_ELEMENT__CALLOUT:
-      return getCallout() != null;
     }
     return super.eIsSet(featureID);
   }

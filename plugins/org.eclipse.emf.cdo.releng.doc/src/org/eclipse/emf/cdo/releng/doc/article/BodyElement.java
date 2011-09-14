@@ -15,10 +15,8 @@ import com.sun.javadoc.Tag;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getBody <em>Body</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getContainer <em>Container</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getTag <em>Tag</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getHtml <em>Html</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getCallout <em>Callout</em>}</li>
  * </ul>
  * </p>
  * 
@@ -29,33 +27,34 @@ import com.sun.javadoc.Tag;
 public interface BodyElement extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Body</b></em>' container reference. It is bidirectional and its opposite is '
-   * {@link org.eclipse.emf.cdo.releng.doc.article.Body#getElements <em>Elements</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Container</b></em>' container reference. It is bidirectional and its opposite is '
+   * {@link org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer#getElements <em>Elements</em>}'. <!--
+   * begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Body</em>' container reference isn't clear, there really should be more of a description
-   * here...
+   * If the meaning of the '<em>Container</em>' container reference isn't clear, there really should be more of a
+   * description here...
    * </p>
    * <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Body</em>' container reference.
-   * @see #setBody(Body)
-   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getBodyElement_Body()
-   * @see org.eclipse.emf.cdo.releng.doc.article.Body#getElements
+   * @return the value of the '<em>Container</em>' container reference.
+   * @see #setContainer(BodyElementContainer)
+   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getBodyElement_Container()
+   * @see org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer#getElements
    * @model opposite="elements" resolveProxies="false" transient="false"
    * @generated
    */
-  Body getBody();
+  BodyElementContainer getContainer();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getBody <em>Body</em>}' container
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getContainer <em>Container</em>}'
+   * container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @param value
-   *          the new value of the '<em>Body</em>' container reference.
-   * @see #getBody()
+   *          the new value of the '<em>Container</em>' container reference.
+   * @see #getContainer()
    * @generated
    */
-  void setBody(Body value);
+  void setContainer(BodyElementContainer value);
 
   /**
    * Returns the value of the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc -->
@@ -72,46 +71,11 @@ public interface BodyElement extends EObject
   Tag getTag();
 
   /**
-   * Returns the value of the '<em><b>Html</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Html</em>' attribute isn't clear, there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the value of the '<em>Html</em>' attribute.
-   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getBodyElement_Html()
-   * @model transient="true" changeable="false" volatile="true" derived="true"
+   * @model
    * @generated
    */
-  String getHtml();
-
-  /**
-   * Returns the value of the '<em><b>Callout</b></em>' container reference. It is bidirectional and its opposite is '
-   * {@link org.eclipse.emf.cdo.releng.doc.article.Callout#getElements <em>Elements</em>}'. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Callout</em>' container reference isn't clear, there really should be more of a
-   * description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * 
-   * @return the value of the '<em>Callout</em>' container reference.
-   * @see #setCallout(Callout)
-   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getBodyElement_Callout()
-   * @see org.eclipse.emf.cdo.releng.doc.article.Callout#getElements
-   * @model opposite="elements" resolveProxies="false" transient="false"
-   * @generated
-   */
-  Callout getCallout();
-
-  /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getCallout <em>Callout</em>}'
-   * container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Callout</em>' container reference.
-   * @see #getCallout()
-   * @generated
-   */
-  void setCallout(Callout value);
+  String getHtml(StructuralElement linkSource);
 
 } // BodyElement

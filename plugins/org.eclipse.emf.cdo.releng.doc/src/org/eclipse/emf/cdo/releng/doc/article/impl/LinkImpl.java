@@ -10,6 +10,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
+import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -87,9 +88,7 @@ public class LinkImpl extends BodyElementImpl implements Link
     LinkTarget oldTarget = target;
     target = newTarget;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.LINK__TARGET, oldTarget, target));
-    }
   }
 
   /**
@@ -165,12 +164,11 @@ public class LinkImpl extends BodyElementImpl implements Link
   }
 
   @Override
-  public String getHtml()
+  public String getHtml(StructuralElement linkSource)
   {
-    Body body = getBody();
-    SeeTag tag = getTag();
+    String href = target.linkFrom(linkSource);
 
-    String href = target.linkFrom(body);
+    SeeTag tag = getTag();
     String label = tag.label();
     if (label == null || label.length() == 0)
     {

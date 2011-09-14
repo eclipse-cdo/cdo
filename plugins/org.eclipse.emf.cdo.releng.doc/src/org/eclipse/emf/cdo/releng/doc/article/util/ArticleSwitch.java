@@ -10,6 +10,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Article;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer;
 import org.eclipse.emf.cdo.releng.doc.article.Callout;
 import org.eclipse.emf.cdo.releng.doc.article.Category;
 import org.eclipse.emf.cdo.releng.doc.article.Chapter;
@@ -120,6 +121,8 @@ public class ArticleSwitch<T> extends Switch<T>
       if (result == null)
         result = caseStructuralElement(category);
       if (result == null)
+        result = caseBodyElementContainer(category);
+      if (result == null)
         result = caseLinkTarget(category);
       if (result == null)
         result = caseIdentifiable(category);
@@ -138,6 +141,8 @@ public class ArticleSwitch<T> extends Switch<T>
       if (result == null)
         result = caseStructuralElement(article);
       if (result == null)
+        result = caseBodyElementContainer(article);
+      if (result == null)
         result = caseLinkTarget(article);
       if (result == null)
         result = caseIdentifiable(article);
@@ -153,6 +158,8 @@ public class ArticleSwitch<T> extends Switch<T>
         result = caseBody(chapter);
       if (result == null)
         result = caseStructuralElement(chapter);
+      if (result == null)
+        result = caseBodyElementContainer(chapter);
       if (result == null)
         result = caseLinkTarget(chapter);
       if (result == null)
@@ -234,6 +241,8 @@ public class ArticleSwitch<T> extends Switch<T>
       Callout callout = (Callout)theEObject;
       T result = caseCallout(callout);
       if (result == null)
+        result = caseBodyElementContainer(callout);
+      if (result == null)
         result = defaultCase(theEObject);
       return result;
     }
@@ -274,9 +283,19 @@ public class ArticleSwitch<T> extends Switch<T>
       if (result == null)
         result = caseStructuralElement(body);
       if (result == null)
+        result = caseBodyElementContainer(body);
+      if (result == null)
         result = caseLinkTarget(body);
       if (result == null)
         result = caseIdentifiable(body);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ArticlePackage.BODY_ELEMENT_CONTAINER:
+    {
+      BodyElementContainer bodyElementContainer = (BodyElementContainer)theEObject;
+      T result = caseBodyElementContainer(bodyElementContainer);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -574,6 +593,22 @@ public class ArticleSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseBody(Body object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Body Element Container</em>'. <!--
+   * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
+   * end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Body Element Container</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBodyElementContainer(BodyElementContainer object)
   {
     return null;
   }

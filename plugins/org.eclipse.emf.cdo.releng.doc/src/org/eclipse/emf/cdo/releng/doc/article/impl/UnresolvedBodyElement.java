@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
+import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
 import org.eclipse.emf.common.util.EList;
@@ -50,7 +51,7 @@ public class UnresolvedBodyElement extends BodyElementImpl
   }
 
   @Override
-  public String getHtml()
+  public String getHtml(StructuralElement linkSource)
   {
     return getText();
   }

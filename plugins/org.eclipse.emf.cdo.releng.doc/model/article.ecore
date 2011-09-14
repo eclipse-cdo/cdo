@@ -74,12 +74,9 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"
         volatile="true" transient="true" derived="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Callout">
+  <eClassifiers xsi:type="ecore:EClass" name="Callout" eSuperTypes="#//BodyElementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="snippet" lowerBound="1"
         eType="#//Snippet" resolveProxies="false" eOpposite="#//Snippet/callouts"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" lowerBound="1"
-        upperBound="-1" eType="#//BodyElement" containment="true" resolveProxies="false"
-        eOpposite="#//BodyElement/callout"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Doc" instanceClassName="com.sun.javadoc.Doc"
       serializable="false"/>
@@ -98,23 +95,22 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"
         changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Body" abstract="true" eSuperTypes="#//StructuralElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
-        eType="#//BodyElement" containment="true" resolveProxies="false" eOpposite="#//BodyElement/body"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="html" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        changeable="false" derived="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Body" abstract="true" eSuperTypes="#//StructuralElement #//BodyElementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="#//Category"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BodyElementContainer" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//BodyElement" containment="true" resolveProxies="false" eOpposite="#//BodyElement/container"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BodyElement" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Body" resolveProxies="false"
-        eOpposite="#//Body/elements"/>
+    <eOperations name="getHtml" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eParameters name="linkSource" eType="#//StructuralElement"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" lowerBound="1"
+        eType="#//BodyElementContainer" resolveProxies="false" eOpposite="#//BodyElementContainer/elements"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tag" eType="#//Tag" changeable="false"
         volatile="true" transient="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="html" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        changeable="false" volatile="true" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="callout" eType="#//Callout"
-        resolveProxies="false" eOpposite="#//Callout/elements"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Text" eSuperTypes="#//BodyElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Link" eSuperTypes="#//BodyElement">

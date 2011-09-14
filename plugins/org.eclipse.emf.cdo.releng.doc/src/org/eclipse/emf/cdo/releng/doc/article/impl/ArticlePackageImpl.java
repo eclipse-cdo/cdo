@@ -11,6 +11,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ArticleFactory;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer;
 import org.eclipse.emf.cdo.releng.doc.article.Callout;
 import org.eclipse.emf.cdo.releng.doc.article.Category;
 import org.eclipse.emf.cdo.releng.doc.article.Chapter;
@@ -162,6 +163,13 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * @generated
    */
   private EClass bodyEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass bodyElementContainerEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -633,16 +641,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
-  public EReference getCallout_Elements()
-  {
-    return (EReference)calloutEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   public EClass getEmbeddableElement()
   {
     return embeddableElementEClass;
@@ -713,7 +711,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
-  public EReference getBody_Elements()
+  public EReference getBody_Category()
   {
     return (EReference)bodyEClass.getEStructuralFeatures().get(0);
   }
@@ -723,9 +721,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
-  public EAttribute getBody_Html()
+  public EClass getBodyElementContainer()
   {
-    return (EAttribute)bodyEClass.getEStructuralFeatures().get(1);
+    return bodyElementContainerEClass;
   }
 
   /**
@@ -733,9 +731,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
-  public EReference getBody_Category()
+  public EReference getBodyElementContainer_Elements()
   {
-    return (EReference)bodyEClass.getEStructuralFeatures().get(2);
+    return (EReference)bodyElementContainerEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -753,7 +751,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
-  public EReference getBodyElement_Body()
+  public EReference getBodyElement_Container()
   {
     return (EReference)bodyElementEClass.getEStructuralFeatures().get(0);
   }
@@ -766,26 +764,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
   public EAttribute getBodyElement_Tag()
   {
     return (EAttribute)bodyElementEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getBodyElement_Html()
-  {
-    return (EAttribute)bodyElementEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EReference getBodyElement_Callout()
-  {
-    return (EReference)bodyElementEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -963,7 +941,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     calloutEClass = createEClass(CALLOUT);
     createEReference(calloutEClass, CALLOUT__SNIPPET);
-    createEReference(calloutEClass, CALLOUT__ELEMENTS);
 
     embeddableElementEClass = createEClass(EMBEDDABLE_ELEMENT);
     createEReference(embeddableElementEClass, EMBEDDABLE_ELEMENT__DOCUMENTATION);
@@ -975,15 +952,14 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     createEAttribute(identifiableEClass, IDENTIFIABLE__ID);
 
     bodyEClass = createEClass(BODY);
-    createEReference(bodyEClass, BODY__ELEMENTS);
-    createEAttribute(bodyEClass, BODY__HTML);
     createEReference(bodyEClass, BODY__CATEGORY);
 
+    bodyElementContainerEClass = createEClass(BODY_ELEMENT_CONTAINER);
+    createEReference(bodyElementContainerEClass, BODY_ELEMENT_CONTAINER__ELEMENTS);
+
     bodyElementEClass = createEClass(BODY_ELEMENT);
-    createEReference(bodyElementEClass, BODY_ELEMENT__BODY);
+    createEReference(bodyElementEClass, BODY_ELEMENT__CONTAINER);
     createEAttribute(bodyElementEClass, BODY_ELEMENT__TAG);
-    createEAttribute(bodyElementEClass, BODY_ELEMENT__HTML);
-    createEReference(bodyElementEClass, BODY_ELEMENT__CALLOUT);
 
     textEClass = createEClass(TEXT);
 
@@ -1041,9 +1017,11 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     javaElementEClass.getESuperTypes().add(this.getLinkTarget());
     structuralElementEClass.getESuperTypes().add(this.getLinkTarget());
     linkTargetEClass.getESuperTypes().add(this.getIdentifiable());
+    calloutEClass.getESuperTypes().add(this.getBodyElementContainer());
     embeddableElementEClass.getESuperTypes().add(this.getIdentifiable());
     externalTargetEClass.getESuperTypes().add(this.getLinkTarget());
     bodyEClass.getESuperTypes().add(this.getStructuralElement());
+    bodyEClass.getESuperTypes().add(this.getBodyElementContainer());
     textEClass.getESuperTypes().add(this.getBodyElement());
     linkEClass.getESuperTypes().add(this.getBodyElement());
     embeddingEClass.getESuperTypes().add(this.getBodyElement());
@@ -1139,9 +1117,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEReference(getCallout_Snippet(), this.getSnippet(), this.getSnippet_Callouts(), "snippet", null, 1, 1,
         Callout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCallout_Elements(), this.getBodyElement(), this.getBodyElement_Callout(), "elements", null, 1,
-        -1, Callout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(embeddableElementEClass, EmbeddableElement.class, "EmbeddableElement", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -1164,27 +1139,26 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEClass(bodyEClass, Body.class, "Body", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBody_Elements(), this.getBodyElement(), this.getBodyElement_Body(), "elements", null, 0, -1,
-        Body.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBody_Html(), ecorePackage.getEString(), "html", null, 0, 1, Body.class, !IS_TRANSIENT,
-        !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getBody_Category(), this.getCategory(), null, "category", null, 0, 1, Body.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
 
+    initEClass(bodyElementContainerEClass, BodyElementContainer.class, "BodyElementContainer", IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getBodyElementContainer_Elements(), this.getBodyElement(), this.getBodyElement_Container(),
+        "elements", null, 0, -1, BodyElementContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(bodyElementEClass, BodyElement.class, "BodyElement", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBodyElement_Body(), this.getBody(), this.getBody_Elements(), "body", null, 0, 1,
-        BodyElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBodyElement_Container(), this.getBodyElementContainer(), this.getBodyElementContainer_Elements(),
+        "container", null, 1, 1, BodyElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBodyElement_Tag(), this.getTag(), "tag", null, 0, 1, BodyElement.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBodyElement_Html(), ecorePackage.getEString(), "html", null, 0, 1, BodyElement.class,
-        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getBodyElement_Callout(), this.getCallout(), this.getCallout_Elements(), "callout", null, 0, 1,
-        BodyElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    op = addEOperation(bodyElementEClass, ecorePackage.getEString(), "getHtml", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, this.getStructuralElement(), "linkSource", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(textEClass, Text.class, "Text", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

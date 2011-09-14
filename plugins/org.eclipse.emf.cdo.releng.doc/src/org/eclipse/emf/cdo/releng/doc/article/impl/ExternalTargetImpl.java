@@ -10,6 +10,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -124,7 +125,9 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");
@@ -149,6 +152,12 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
   public String getTooltip()
   {
     return JavaElementImpl.getTooltip(classDoc);
+  }
+
+  @Override
+  protected void writeLink(HtmlWriter out, String label, String href, String tooltip)
+  {
+    super.writeLink(out, "<code>" + label + "</code>", href, tooltip);
   }
 
 } // ExternalTargetImpl

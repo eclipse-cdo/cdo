@@ -9,9 +9,12 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
+import com.sun.javadoc.SeeTag;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Link Target</b></em>'. <!-- end-user-doc -->
@@ -148,6 +151,38 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
       return TOOLTIP_EDEFAULT == null ? getTooltip() != null : !TOOLTIP_EDEFAULT.equals(getTooltip());
     }
     return super.eIsSet(featureID);
+  }
+
+  public void generateLink(HtmlWriter out, StructuralElement linkSource, SeeTag tag)
+  {
+    String href = linkFrom(linkSource);
+
+    String label = tag.label();
+    if (label == null || label.length() == 0)
+    {
+      label = getDefaultLabel();
+      if (label == null || label.length() == 0)
+      {
+        label = tag.text();
+      }
+    }
+
+    String tooltip = getTooltip();
+    if (tooltip != null && tooltip.length() != 0)
+    {
+      tooltip = " title=\"" + tooltip + "\"";
+    }
+    else
+    {
+      tooltip = "";
+    }
+
+    writeLink(out, label, href, tooltip);
+  }
+
+  protected void writeLink(HtmlWriter out, String label, String href, String tooltip)
+  {
+    out.write("<a href=\"" + href + "\"" + tooltip + ">" + label + "</a>");
   }
 
 } // LinkTargetImpl

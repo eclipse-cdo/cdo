@@ -11,6 +11,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
+import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -139,7 +140,9 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (classFile: ");
@@ -164,6 +167,12 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
   public String getTooltip()
   {
     return getTooltip(classDoc);
+  }
+
+  @Override
+  protected void writeLink(HtmlWriter out, String label, String href, String tooltip)
+  {
+    super.writeLink(out, "<code>" + label + "</code>", href, tooltip);
   }
 
   public static String getTooltip(Doc doc)

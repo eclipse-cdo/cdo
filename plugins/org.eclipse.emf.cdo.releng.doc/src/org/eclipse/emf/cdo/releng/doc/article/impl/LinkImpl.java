@@ -170,30 +170,7 @@ public class LinkImpl extends BodyElementImpl implements Link
 
   public void generate(HtmlWriter out, StructuralElement linkSource) throws IOException
   {
-    String href = target.linkFrom(linkSource);
-
-    SeeTag tag = getTag();
-    String label = tag.label();
-    if (label == null || label.length() == 0)
-    {
-      label = target.getDefaultLabel();
-      if (label == null || label.length() == 0)
-      {
-        label = tag.text();
-      }
-    }
-
-    String tooltip = target.getTooltip();
-    if (tooltip != null && tooltip.length() != 0)
-    {
-      tooltip = " title=\"" + tooltip + "\"";
-    }
-    else
-    {
-      tooltip = "";
-    }
-
-    out.write("<a href=\"" + href + "\"" + tooltip + ">" + label + "</a>");
+    target.generateLink(out, linkSource, getTag());
   }
 
 } // LinkImpl

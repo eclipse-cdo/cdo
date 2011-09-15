@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getEmbeddableElements <em>Embeddable Elements</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getDependencies <em>Dependencies</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getProject <em>Project</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getPlugins <em>Plugins</em>}</li>
  * </ul>
  * </p>
  * 
@@ -105,5 +106,21 @@ public interface Documentation extends StructuralElement
    * @generated
    */
   String getProject();
+
+  /**
+   * Returns the value of the '<em><b>Plugins</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.emf.cdo.releng.doc.article.Plugin}. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Plugins</em>' containment reference list isn't clear, there really should be more of a
+   * description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Plugins</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation_Plugins()
+   * @model containment="true" changeable="false" derived="true"
+   * @generated
+   */
+  EList<Plugin> getPlugins();
 
 } // Documentation

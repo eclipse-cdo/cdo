@@ -10,12 +10,7 @@
  */
 
 /**
- * API Reference
- * 
- * @number 1
+ * Online Information
  */
-package org.eclipse.emf.cdo.doc.reference.api;
+package org.eclipse.emf.cdo.doc.online;
 
-class Javadoc
-{
-}

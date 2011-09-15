@@ -21,7 +21,9 @@ import com.sun.javadoc.Tag;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,6 +147,27 @@ public final class ArticleUtil
       {
         ex.printStackTrace();
       }
+    }
+  }
+
+  public static String readFile(File file)
+  {
+    Reader reader = null;
+    char[] buffer = new char[(int)file.length()];
+
+    try
+    {
+      reader = new FileReader(file);
+      reader.read(buffer);
+      return new String(buffer);
+    }
+    catch (IOException ex)
+    {
+      throw new RuntimeException(ex);
+    }
+    finally
+    {
+      close(reader);
     }
   }
 

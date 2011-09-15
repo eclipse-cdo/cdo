@@ -12,8 +12,9 @@ package org.eclipse.emf.cdo.releng.doc;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticleFactory;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
-import org.eclipse.emf.cdo.releng.doc.article.JavadocGroup;
-import org.eclipse.emf.cdo.releng.doc.article.JavadocPackage;
+import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
+import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
+import org.eclipse.emf.cdo.releng.doc.article.Plugin;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -126,8 +127,6 @@ public class AssembleScripts
       throws IOException, BundleException
   {
     SourcePlugin sourcePlugin = ANTLIB.getSourcePlugin(plugin.getName());
-    Set<String> packageNames = sourcePlugin.getPackageNames();
-
     JavaDoc javaDoc = ANTLIB.getJavaDoc(javadocProject);
     javaDoc.getSourcePlugins().add(sourcePlugin);
 
@@ -139,11 +138,26 @@ public class AssembleScripts
       {
         javaDoc.getSourceFolders().add(plugin.getName() + "/src/" + packageName.replace('.', '/'));
         javaDoc.getPackageNames().add(packageName);
-        packageNames.add(packageName);
+        sourcePlugin.getPackageNames().add(packageName);
       }
       else
       {
         javaDoc.getPackageExcludes().add(packageName);
+      }
+    }
+
+    File schemaFolder = new File(plugin, "schema");
+    if (schemaFolder.isDirectory())
+    {
+      for (File file : schemaFolder.listFiles())
+      {
+        String name = file.getName();
+        if (name.endsWith(".exsd"))
+        {
+          name = name.substring(0, name.length() - ".html".length()).replace('_', '.');
+          javaDoc.getSchemaPlugins().add(plugin.getName());
+          sourcePlugin.getSchemaNames().add(name);
+        }
       }
     }
   }
@@ -156,7 +170,7 @@ public class AssembleScripts
     ManifestElement[] manifestElements = getManifestElements(manifest);
     if (manifestElements == null || manifestElements.length == 0)
     {
-      System.err.println("Warning: No public packages in " + plugin.getName());
+      System.err.println("No public packages in " + plugin.getName());
     }
     else
     {
@@ -484,6 +498,8 @@ public class AssembleScripts
 
     private Set<String> packageNames = new HashSet<String>();
 
+    private Set<String> schemaNames = new HashSet<String>();
+
     public SourcePlugin(String projectName) throws IOException
     {
       this.projectName = projectName;
@@ -514,6 +530,18 @@ public class AssembleScripts
     public List<String> getSortedPackageNames()
     {
       List<String> names = new ArrayList<String>(packageNames);
+      Collections.sort(names);
+      return names;
+    }
+
+    public Set<String> getSchemaNames()
+    {
+      return schemaNames;
+    }
+
+    public List<String> getSortedSchemaNames()
+    {
+      List<String> names = new ArrayList<String>(schemaNames);
       Collections.sort(names);
       return names;
     }
@@ -638,6 +666,8 @@ public class AssembleScripts
 
     private Set<String> packageExcludes = new HashSet<String>();
 
+    private Set<String> schemaPlugins = new HashSet<String>();
+
     private Set<String> articlePackages = new HashSet<String>();
 
     public JavaDoc(String projectName)
@@ -707,6 +737,11 @@ public class AssembleScripts
       return packageExcludes;
     }
 
+    public final Set<String> getSchemaPlugins()
+    {
+      return schemaPlugins;
+    }
+
     public Set<String> getArticlePackages()
     {
       return articlePackages;
@@ -746,6 +781,13 @@ public class AssembleScripts
               if (articlePackages.isEmpty())
               {
                 writer.write("\t<property name=\"article.skip\" value=\"true\" />\n");
+              }
+            }
+            else if ("<!-- SCHEMA SKIP -->".equals(id))
+            {
+              if (schemaPlugins.isEmpty())
+              {
+                writer.write("\t<property name=\"schema.skip\" value=\"true\" />\n");
               }
             }
             else if ("<!-- SOURCE FOLDERS -->".equals(id))
@@ -811,6 +853,14 @@ public class AssembleScripts
                 }
               }
             }
+            else if ("<!-- SCHEMA CONVERSIONS -->".equals(id))
+            {
+              for (String schemaPlugin : sort(schemaPlugins))
+              {
+                writer.write("\t\t<pde.convertSchemaToHTML manifest=\"plugins/" + schemaPlugin
+                    + "/plugin.xml\" destination=\"${schemadoc.destdir}\" />\n");
+              }
+            }
             else if ("<!-- JAVADOC DEPENDENCIES -->".equals(id))
             {
               for (String dependency : sort(getAllDependencies()))
@@ -873,15 +923,23 @@ public class AssembleScripts
 
       for (SourcePlugin sourcePlugin : getSortedSourcePlugins())
       {
-        JavadocGroup javadocGroup = ArticleFactory.eINSTANCE.createJavadocGroup();
-        javadocGroup.setName(sourcePlugin.getLabel());
-        resource.getContents().add(javadocGroup);
+        Plugin plugin = ArticleFactory.eINSTANCE.createPlugin();
+        plugin.setName(sourcePlugin.getProject().getName());
+        plugin.setLabel(sourcePlugin.getLabel());
+        resource.getContents().add(plugin);
 
         for (String packageName : sourcePlugin.getSortedPackageNames())
         {
-          JavadocPackage javadocPackage = ArticleFactory.eINSTANCE.createJavadocPackage();
-          javadocPackage.setName(packageName);
-          javadocGroup.getPackages().add(javadocPackage);
+          JavaPackage javaPackage = ArticleFactory.eINSTANCE.createJavaPackage();
+          javaPackage.setName(packageName);
+          plugin.getPackages().add(javaPackage);
+        }
+
+        for (String schemaName : sourcePlugin.getSortedSchemaNames())
+        {
+          ExtensionPoint extensionPoint = ArticleFactory.eINSTANCE.createExtensionPoint();
+          extensionPoint.setName(schemaName);
+          plugin.getExtensionPoints().add(extensionPoint);
         }
       }
 

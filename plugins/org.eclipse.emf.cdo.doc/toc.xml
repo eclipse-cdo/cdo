@@ -97,5 +97,14 @@
 				<topic label="org.eclipse.emf.cdo.server.objectivity" href="javadoc/org/eclipse/emf/cdo/server/objectivity/package-summary.html" />
 			</topic>
 		</topic>
+		<topic label="Extension Point Reference" href="schemadoc/overview-summary.html">
+				<topic label="org.eclipse.emf.cdo.server.appExtensions" href="schemadoc/org.eclipse.emf.cdo.server.appExtensions.html" />
+				<topic label="org.eclipse.emf.cdo.server.repositoryFactories" href="schemadoc/org.eclipse.emf.cdo.server.repositoryFactories.html" />
+				<topic label="org.eclipse.emf.cdo.server.storeFactories" href="schemadoc/org.eclipse.emf.cdo.server.storeFactories.html" />
+		</topic>
+	</topic>
+	<topic label="Online Information" href="html/online">
+		<topic label="Homepage" href="http://www.eclipse.org/cdo" />
+		<topic label="Wiki" href="http://wiki.eclipse.org/CDO" />
 	</topic>
 </toc>

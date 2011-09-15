@@ -226,9 +226,15 @@
 			<link href="${jdk.link}" />
 			<link href="${platform.link}" />
 			<link href="${emf.link}" />
-			<link href="MAKE-RELATIVE/org.eclipse.net4j.db.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.db.doc/javadoc" />
-			<link href="MAKE-RELATIVE/org.eclipse.net4j.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.doc/javadoc" />
-			<link href="MAKE-RELATIVE/org.eclipse.net4j.util.doc/javadoc" offline="true" packagelistloc="plugins/org.eclipse.net4j.util.doc/javadoc" />
+			<link href="MAKE-RELATIVE/org.eclipse.net4j.db.doc/javadoc"
+			      offline="true"
+			      packagelistloc="plugins/org.eclipse.net4j.db.doc/javadoc" />
+			<link href="MAKE-RELATIVE/org.eclipse.net4j.doc/javadoc"
+			      offline="true"
+			      packagelistloc="plugins/org.eclipse.net4j.doc/javadoc" />
+			<link href="MAKE-RELATIVE/org.eclipse.net4j.util.doc/javadoc"
+			      offline="true"
+			      packagelistloc="plugins/org.eclipse.net4j.util.doc/javadoc" />
 
 			<tag name="ADDED" description="Added" />
 			<tag name="Singleton" description="Singleton" />

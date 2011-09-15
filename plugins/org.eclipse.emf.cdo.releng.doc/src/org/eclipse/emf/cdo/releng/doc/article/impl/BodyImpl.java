@@ -111,7 +111,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   private void titleMissing()
   {
     Doc doc = getDoc();
-    System.err.println("Warning: Title is missing in " + ArticleUtil.makeConsoleLink(doc));
+    System.err.println("Title is missing in " + ArticleUtil.makeConsoleLink(doc));
     setTitle(doc.name());
   }
 
@@ -332,9 +332,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (number: ");

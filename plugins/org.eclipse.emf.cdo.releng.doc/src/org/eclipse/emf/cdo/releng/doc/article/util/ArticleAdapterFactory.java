@@ -19,15 +19,18 @@ import org.eclipse.emf.cdo.releng.doc.article.Diagram;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
+import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
+import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
 import org.eclipse.emf.cdo.releng.doc.article.Identifiable;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
+import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
-import org.eclipse.emf.cdo.releng.doc.article.JavadocGroup;
-import org.eclipse.emf.cdo.releng.doc.article.JavadocPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
+import org.eclipse.emf.cdo.releng.doc.article.Plugin;
+import org.eclipse.emf.cdo.releng.doc.article.Schemadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
@@ -229,21 +232,39 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseJavadocGroup(JavadocGroup object)
+    public Adapter casePlugin(Plugin object)
     {
-      return createJavadocGroupAdapter();
+      return createPluginAdapter();
     }
 
     @Override
-    public Adapter caseJavadocPackage(JavadocPackage object)
+    public Adapter caseJavaPackage(JavaPackage object)
     {
-      return createJavadocPackageAdapter();
+      return createJavaPackageAdapter();
     }
 
     @Override
     public Adapter caseJavadoc(Javadoc object)
     {
       return createJavadocAdapter();
+    }
+
+    @Override
+    public Adapter caseExternalArticle(ExternalArticle object)
+    {
+      return createExternalArticleAdapter();
+    }
+
+    @Override
+    public Adapter caseSchemadoc(Schemadoc object)
+    {
+      return createSchemadocAdapter();
+    }
+
+    @Override
+    public Adapter caseExtensionPoint(ExtensionPoint object)
+    {
+      return createExtensionPointAdapter();
     }
 
     @Override
@@ -579,29 +600,29 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.JavadocGroup
-   * <em>Javadoc Group</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
-   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Plugin <em>Plugin</em>}
+   * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
+   * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
    * 
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.doc.article.JavadocGroup
+   * @see org.eclipse.emf.cdo.releng.doc.article.Plugin
    * @generated
    */
-  public Adapter createJavadocGroupAdapter()
+  public Adapter createPluginAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.JavadocPackage
-   * <em>Javadoc Package</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage
+   * <em>Java Package</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
    * 
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.releng.doc.article.JavadocPackage
+   * @see org.eclipse.emf.cdo.releng.doc.article.JavaPackage
    * @generated
    */
-  public Adapter createJavadocPackageAdapter()
+  public Adapter createJavaPackageAdapter()
   {
     return null;
   }
@@ -616,6 +637,48 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createJavadocAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalArticle
+   * <em>External Article</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ExternalArticle
+   * @generated
+   */
+  public Adapter createExternalArticleAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Schemadoc
+   * <em>Schemadoc</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
+   * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Schemadoc
+   * @generated
+   */
+  public Adapter createSchemadocAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint
+   * <em>Extension Point</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint
+   * @generated
+   */
+  public Adapter createExtensionPointAdapter()
   {
     return null;
   }

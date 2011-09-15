@@ -10,12 +10,12 @@
  */
 
 /**
- * API Reference
+ * Extension Point Reference
  * 
- * @number 1
+ * @number 2
  */
-package org.eclipse.emf.cdo.doc.reference.api;
+package org.eclipse.emf.cdo.doc.reference.schema;
 
-class Javadoc
+class Schemadoc
 {
 }

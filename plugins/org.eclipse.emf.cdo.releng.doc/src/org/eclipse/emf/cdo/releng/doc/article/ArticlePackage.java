@@ -367,13 +367,22 @@ public interface ArticlePackage extends EPackage
   int DOCUMENTATION__PROJECT = STRUCTURAL_ELEMENT_FEATURE_COUNT + 3;
 
   /**
+   * The feature id for the '<em><b>Plugins</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int DOCUMENTATION__PLUGINS = STRUCTURAL_ELEMENT_FEATURE_COUNT + 4;
+
+  /**
    * The number of structural features of the '<em>Documentation</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
    * 
    * @generated
    * @ordered
    */
-  int DOCUMENTATION_FEATURE_COUNT = STRUCTURAL_ELEMENT_FEATURE_COUNT + 4;
+  int DOCUMENTATION_FEATURE_COUNT = STRUCTURAL_ELEMENT_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ContextImpl <em>Context</em>}'
@@ -1494,14 +1503,14 @@ public interface ArticlePackage extends EPackage
   int SOURCE_CODE_FEATURE_COUNT = EXTERNAL_TARGET_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocGroupImpl
-   * <em>Javadoc Group</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl <em>Plugin</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavadocGroupImpl
-   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavadocGroup()
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getPlugin()
    * @generated
    */
-  int JAVADOC_GROUP = 22;
+  int PLUGIN = 22;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1509,7 +1518,7 @@ public interface ArticlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int JAVADOC_GROUP__NAME = 0;
+  int PLUGIN__NAME = 0;
 
   /**
    * The feature id for the '<em><b>Packages</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -1518,26 +1527,42 @@ public interface ArticlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int JAVADOC_GROUP__PACKAGES = 1;
+  int PLUGIN__PACKAGES = 1;
 
   /**
-   * The number of structural features of the '<em>Javadoc Group</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
+   * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int JAVADOC_GROUP_FEATURE_COUNT = 2;
+  int PLUGIN__LABEL = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocPackageImpl
-   * <em>Javadoc Package</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Extension Points</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * 
-   * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavadocPackageImpl
-   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavadocPackage()
+   * @generated
+   * @ordered
+   */
+  int PLUGIN__EXTENSION_POINTS = 3;
+
+  /**
+   * The number of structural features of the '<em>Plugin</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl
+   * <em>Java Package</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavaPackage()
    * @generated
    */
-  int JAVADOC_PACKAGE = 23;
+  int JAVA_PACKAGE = 23;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1545,24 +1570,24 @@ public interface ArticlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int JAVADOC_PACKAGE__NAME = 0;
+  int JAVA_PACKAGE__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Group</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Plugin</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int JAVADOC_PACKAGE__GROUP = 1;
+  int JAVA_PACKAGE__PLUGIN = 1;
 
   /**
-   * The number of structural features of the '<em>Javadoc Package</em>' class. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The number of structural features of the '<em>Java Package</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
    * @generated
    * @ordered
    */
-  int JAVADOC_PACKAGE_FEATURE_COUNT = 2;
+  int JAVA_PACKAGE_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocImpl <em>Javadoc</em>}'
@@ -1689,20 +1714,328 @@ public interface ArticlePackage extends EPackage
   int JAVADOC__NUMBER = CATEGORY__NUMBER;
 
   /**
-   * The feature id for the '<em><b>Groups</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int JAVADOC__GROUPS = CATEGORY_FEATURE_COUNT + 0;
-
-  /**
    * The number of structural features of the '<em>Javadoc</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int JAVADOC_FEATURE_COUNT = CATEGORY_FEATURE_COUNT + 1;
+  int JAVADOC_FEATURE_COUNT = CATEGORY_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExternalArticleImpl
+   * <em>External Article</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExternalArticleImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExternalArticle()
+   * @generated
+   */
+  int EXTERNAL_ARTICLE = 25;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__ID = ARTICLE__ID;
+
+  /**
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__DEFAULT_LABEL = ARTICLE__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__TOOLTIP = ARTICLE__TOOLTIP;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__CHILDREN = ARTICLE__CHILDREN;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__PARENT = ARTICLE__PARENT;
+
+  /**
+   * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__TITLE = ARTICLE__TITLE;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__PATH = ARTICLE__PATH;
+
+  /**
+   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__FULL_PATH = ARTICLE__FULL_PATH;
+
+  /**
+   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__OUTPUT_FILE = ARTICLE__OUTPUT_FILE;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__DOCUMENTATION = ARTICLE__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__DOC = ARTICLE__DOC;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__ELEMENTS = ARTICLE__ELEMENTS;
+
+  /**
+   * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__CATEGORY = ARTICLE__CATEGORY;
+
+  /**
+   * The feature id for the '<em><b>Number</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__NUMBER = ARTICLE__NUMBER;
+
+  /**
+   * The feature id for the '<em><b>Article</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__ARTICLE = ARTICLE__ARTICLE;
+
+  /**
+   * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE__URL = ARTICLE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>External Article</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_ARTICLE_FEATURE_COUNT = ARTICLE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.SchemadocImpl <em>Schemadoc</em>}'
+   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.SchemadocImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getSchemadoc()
+   * @generated
+   */
+  int SCHEMADOC = 26;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__ID = CATEGORY__ID;
+
+  /**
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__DEFAULT_LABEL = CATEGORY__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__TOOLTIP = CATEGORY__TOOLTIP;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__CHILDREN = CATEGORY__CHILDREN;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__PARENT = CATEGORY__PARENT;
+
+  /**
+   * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__TITLE = CATEGORY__TITLE;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__PATH = CATEGORY__PATH;
+
+  /**
+   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__FULL_PATH = CATEGORY__FULL_PATH;
+
+  /**
+   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__OUTPUT_FILE = CATEGORY__OUTPUT_FILE;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__DOCUMENTATION = CATEGORY__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__DOC = CATEGORY__DOC;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__ELEMENTS = CATEGORY__ELEMENTS;
+
+  /**
+   * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__CATEGORY = CATEGORY__CATEGORY;
+
+  /**
+   * The feature id for the '<em><b>Number</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC__NUMBER = CATEGORY__NUMBER;
+
+  /**
+   * The number of structural features of the '<em>Schemadoc</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SCHEMADOC_FEATURE_COUNT = CATEGORY_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExtensionPointImpl
+   * <em>Extension Point</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExtensionPointImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExtensionPoint()
+   * @generated
+   */
+  int EXTENSION_POINT = 27;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTENSION_POINT__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Plugin</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTENSION_POINT__PLUGIN = 1;
+
+  /**
+   * The number of structural features of the '<em>Extension Point</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXTENSION_POINT_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1711,7 +2044,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getRootDoc()
    * @generated
    */
-  int ROOT_DOC = 25;
+  int ROOT_DOC = 28;
 
   /**
    * The meta object id for the '<em>File</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1720,7 +2053,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFile()
    * @generated
    */
-  int FILE = 26;
+  int FILE = 29;
 
   /**
    * The meta object id for the '<em>Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1729,7 +2062,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDoc()
    * @generated
    */
-  int DOC = 27;
+  int DOC = 30;
 
   /**
    * The meta object id for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1738,7 +2071,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
    * @generated
    */
-  int TAG = 28;
+  int TAG = 31;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation
@@ -1796,6 +2129,18 @@ public interface ArticlePackage extends EPackage
    * @generated
    */
   EAttribute getDocumentation_Project();
+
+  /**
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getPlugins <em>Plugins</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Plugins</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Documentation#getPlugins()
+   * @see #getDocumentation()
+   * @generated
+   */
+  EReference getDocumentation_Plugins();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Context <em>Context</em>}'. <!--
@@ -2329,70 +2674,93 @@ public interface ArticlePackage extends EPackage
   EClass getSourceCode();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.JavadocGroup
-   * <em>Javadoc Group</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Plugin <em>Plugin</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the meta object for class '<em>Javadoc Group</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.JavadocGroup
+   * @return the meta object for class '<em>Plugin</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Plugin
    * @generated
    */
-  EClass getJavadocGroup();
+  EClass getPlugin();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.JavadocGroup#getName
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getName
    * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.JavadocGroup#getName()
-   * @see #getJavadocGroup()
+   * @see org.eclipse.emf.cdo.releng.doc.article.Plugin#getName()
+   * @see #getPlugin()
    * @generated
    */
-  EAttribute getJavadocGroup_Name();
+  EAttribute getPlugin_Name();
 
   /**
    * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.releng.doc.article.JavadocGroup#getPackages <em>Packages</em>}'. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * {@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getPackages <em>Packages</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * 
    * @return the meta object for the containment reference list '<em>Packages</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.JavadocGroup#getPackages()
-   * @see #getJavadocGroup()
+   * @see org.eclipse.emf.cdo.releng.doc.article.Plugin#getPackages()
+   * @see #getPlugin()
    * @generated
    */
-  EReference getJavadocGroup_Packages();
+  EReference getPlugin_Packages();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.JavadocPackage
-   * <em>Javadoc Package</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getLabel
+   * <em>Label</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the meta object for class '<em>Javadoc Package</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.JavadocPackage
+   * @return the meta object for the attribute '<em>Label</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Plugin#getLabel()
+   * @see #getPlugin()
    * @generated
    */
-  EClass getJavadocPackage();
+  EAttribute getPlugin_Label();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.JavadocPackage#getName
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getExtensionPoints <em>Extension Points</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Extension Points</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Plugin#getExtensionPoints()
+   * @see #getPlugin()
+   * @generated
+   */
+  EReference getPlugin_ExtensionPoints();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage <em>Java Package</em>}
+   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Java Package</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.JavaPackage
+   * @generated
+   */
+  EClass getJavaPackage();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getName
    * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.JavadocPackage#getName()
-   * @see #getJavadocPackage()
+   * @see org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getName()
+   * @see #getJavaPackage()
    * @generated
    */
-  EAttribute getJavadocPackage_Name();
+  EAttribute getJavaPackage_Name();
 
   /**
    * Returns the meta object for the container reference '
-   * {@link org.eclipse.emf.cdo.releng.doc.article.JavadocPackage#getGroup <em>Group</em>}'. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * {@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getPlugin <em>Plugin</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * 
-   * @return the meta object for the container reference '<em>Group</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.JavadocPackage#getGroup()
-   * @see #getJavadocPackage()
+   * @return the meta object for the container reference '<em>Plugin</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getPlugin()
+   * @see #getJavaPackage()
    * @generated
    */
-  EReference getJavadocPackage_Group();
+  EReference getJavaPackage_Plugin();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Javadoc <em>Javadoc</em>}'. <!--
@@ -2405,15 +2773,68 @@ public interface ArticlePackage extends EPackage
   EClass getJavadoc();
 
   /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.releng.doc.article.Javadoc#getGroups
-   * <em>Groups</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalArticle
+   * <em>External Article</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the meta object for the reference list '<em>Groups</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.Javadoc#getGroups()
-   * @see #getJavadoc()
+   * @return the meta object for class '<em>External Article</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ExternalArticle
    * @generated
    */
-  EReference getJavadoc_Groups();
+  EClass getExternalArticle();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalArticle#getUrl
+   * <em>Url</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Url</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ExternalArticle#getUrl()
+   * @see #getExternalArticle()
+   * @generated
+   */
+  EAttribute getExternalArticle_Url();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Schemadoc <em>Schemadoc</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Schemadoc</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Schemadoc
+   * @generated
+   */
+  EClass getSchemadoc();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint
+   * <em>Extension Point</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Extension Point</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint
+   * @generated
+   */
+  EClass getExtensionPoint();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint#getName
+   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint#getName()
+   * @see #getExtensionPoint()
+   * @generated
+   */
+  EAttribute getExtensionPoint_Name();
+
+  /**
+   * Returns the meta object for the container reference '
+   * {@link org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint#getPlugin <em>Plugin</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the container reference '<em>Plugin</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint#getPlugin()
+   * @see #getExtensionPoint()
+   * @generated
+   */
+  EReference getExtensionPoint_Plugin();
 
   /**
    * Returns the meta object for data type '{@link com.sun.javadoc.RootDoc <em>Root Doc</em>}'. <!-- begin-user-doc -->
@@ -2522,6 +2943,14 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EAttribute DOCUMENTATION__PROJECT = eINSTANCE.getDocumentation_Project();
+
+    /**
+     * The meta object literal for the '<em><b>Plugins</b></em>' containment reference list feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference DOCUMENTATION__PLUGINS = eINSTANCE.getDocumentation_Plugins();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ContextImpl <em>Context</em>}
@@ -2958,14 +3387,14 @@ public interface ArticlePackage extends EPackage
     EClass SOURCE_CODE = eINSTANCE.getSourceCode();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocGroupImpl
-     * <em>Javadoc Group</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl <em>Plugin</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavadocGroupImpl
-     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavadocGroup()
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getPlugin()
      * @generated
      */
-    EClass JAVADOC_GROUP = eINSTANCE.getJavadocGroup();
+    EClass PLUGIN = eINSTANCE.getPlugin();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
@@ -2973,7 +3402,7 @@ public interface ArticlePackage extends EPackage
      * 
      * @generated
      */
-    EAttribute JAVADOC_GROUP__NAME = eINSTANCE.getJavadocGroup_Name();
+    EAttribute PLUGIN__NAME = eINSTANCE.getPlugin_Name();
 
     /**
      * The meta object literal for the '<em><b>Packages</b></em>' containment reference list feature. <!--
@@ -2981,17 +3410,33 @@ public interface ArticlePackage extends EPackage
      * 
      * @generated
      */
-    EReference JAVADOC_GROUP__PACKAGES = eINSTANCE.getJavadocGroup_Packages();
+    EReference PLUGIN__PACKAGES = eINSTANCE.getPlugin_Packages();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocPackageImpl
-     * <em>Javadoc Package</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Label</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
      * 
-     * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavadocPackageImpl
-     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavadocPackage()
      * @generated
      */
-    EClass JAVADOC_PACKAGE = eINSTANCE.getJavadocPackage();
+    EAttribute PLUGIN__LABEL = eINSTANCE.getPlugin_Label();
+
+    /**
+     * The meta object literal for the '<em><b>Extension Points</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference PLUGIN__EXTENSION_POINTS = eINSTANCE.getPlugin_ExtensionPoints();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl
+     * <em>Java Package</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavaPackage()
+     * @generated
+     */
+    EClass JAVA_PACKAGE = eINSTANCE.getJavaPackage();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
@@ -2999,15 +3444,15 @@ public interface ArticlePackage extends EPackage
      * 
      * @generated
      */
-    EAttribute JAVADOC_PACKAGE__NAME = eINSTANCE.getJavadocPackage_Name();
+    EAttribute JAVA_PACKAGE__NAME = eINSTANCE.getJavaPackage_Name();
 
     /**
-     * The meta object literal for the '<em><b>Group</b></em>' container reference feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
+     * The meta object literal for the '<em><b>Plugin</b></em>' container reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * 
      * @generated
      */
-    EReference JAVADOC_PACKAGE__GROUP = eINSTANCE.getJavadocPackage_Group();
+    EReference JAVA_PACKAGE__PLUGIN = eINSTANCE.getJavaPackage_Plugin();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocImpl <em>Javadoc</em>}
@@ -3020,12 +3465,58 @@ public interface ArticlePackage extends EPackage
     EClass JAVADOC = eINSTANCE.getJavadoc();
 
     /**
-     * The meta object literal for the '<em><b>Groups</b></em>' reference list feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExternalArticleImpl
+     * <em>External Article</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExternalArticleImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExternalArticle()
+     * @generated
+     */
+    EClass EXTERNAL_ARTICLE = eINSTANCE.getExternalArticle();
+
+    /**
+     * The meta object literal for the '<em><b>Url</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * 
      * @generated
      */
-    EReference JAVADOC__GROUPS = eINSTANCE.getJavadoc_Groups();
+    EAttribute EXTERNAL_ARTICLE__URL = eINSTANCE.getExternalArticle_Url();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.SchemadocImpl
+     * <em>Schemadoc</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.SchemadocImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getSchemadoc()
+     * @generated
+     */
+    EClass SCHEMADOC = eINSTANCE.getSchemadoc();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExtensionPointImpl
+     * <em>Extension Point</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExtensionPointImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExtensionPoint()
+     * @generated
+     */
+    EClass EXTENSION_POINT = eINSTANCE.getExtensionPoint();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute EXTENSION_POINT__NAME = eINSTANCE.getExtensionPoint_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Plugin</b></em>' container reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference EXTENSION_POINT__PLUGIN = eINSTANCE.getExtensionPoint_Plugin();
 
     /**
      * The meta object literal for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

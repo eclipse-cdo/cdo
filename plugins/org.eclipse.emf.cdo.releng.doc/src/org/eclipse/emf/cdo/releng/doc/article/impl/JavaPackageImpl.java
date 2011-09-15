@@ -7,8 +7,8 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
-import org.eclipse.emf.cdo.releng.doc.article.JavadocGroup;
-import org.eclipse.emf.cdo.releng.doc.article.JavadocPackage;
+import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
+import org.eclipse.emf.cdo.releng.doc.article.Plugin;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -19,19 +19,18 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Javadoc Package</b></em>'. <!-- end-user-doc
- * -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Java Package</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocPackageImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocPackageImpl#getGroup <em>Group</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl#getPlugin <em>Plugin</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
+public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -57,7 +56,7 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
    * 
    * @generated
    */
-  protected JavadocPackageImpl()
+  protected JavaPackageImpl()
   {
     super();
   }
@@ -70,7 +69,7 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
   @Override
   protected EClass eStaticClass()
   {
-    return ArticlePackage.Literals.JAVADOC_PACKAGE;
+    return ArticlePackage.Literals.JAVA_PACKAGE;
   }
 
   /**
@@ -93,7 +92,7 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.JAVADOC_PACKAGE__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.JAVA_PACKAGE__NAME, oldName, name));
   }
 
   /**
@@ -101,11 +100,11 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
    * 
    * @generated
    */
-  public JavadocGroup getGroup()
+  public Plugin getPlugin()
   {
-    if (eContainerFeatureID() != ArticlePackage.JAVADOC_PACKAGE__GROUP)
+    if (eContainerFeatureID() != ArticlePackage.JAVA_PACKAGE__PLUGIN)
       return null;
-    return (JavadocGroup)eContainer();
+    return (Plugin)eContainer();
   }
 
   /**
@@ -113,9 +112,9 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
    * 
    * @generated
    */
-  public NotificationChain basicSetGroup(JavadocGroup newGroup, NotificationChain msgs)
+  public NotificationChain basicSetPlugin(Plugin newPlugin, NotificationChain msgs)
   {
-    msgs = eBasicSetContainer((InternalEObject)newGroup, ArticlePackage.JAVADOC_PACKAGE__GROUP, msgs);
+    msgs = eBasicSetContainer((InternalEObject)newPlugin, ArticlePackage.JAVA_PACKAGE__PLUGIN, msgs);
     return msgs;
   }
 
@@ -124,25 +123,24 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
    * 
    * @generated
    */
-  public void setGroup(JavadocGroup newGroup)
+  public void setPlugin(Plugin newPlugin)
   {
-    if (newGroup != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.JAVADOC_PACKAGE__GROUP && newGroup != null))
+    if (newPlugin != eInternalContainer()
+        || (eContainerFeatureID() != ArticlePackage.JAVA_PACKAGE__PLUGIN && newPlugin != null))
     {
-      if (EcoreUtil.isAncestor(this, newGroup))
+      if (EcoreUtil.isAncestor(this, newPlugin))
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
-      if (newGroup != null)
-        msgs = ((InternalEObject)newGroup).eInverseAdd(this, ArticlePackage.JAVADOC_GROUP__PACKAGES,
-            JavadocGroup.class, msgs);
-      msgs = basicSetGroup(newGroup, msgs);
+      if (newPlugin != null)
+        msgs = ((InternalEObject)newPlugin).eInverseAdd(this, ArticlePackage.PLUGIN__PACKAGES, Plugin.class, msgs);
+      msgs = basicSetPlugin(newPlugin, msgs);
       if (msgs != null)
         msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.JAVADOC_PACKAGE__GROUP, newGroup, newGroup));
+      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.JAVA_PACKAGE__PLUGIN, newPlugin, newPlugin));
   }
 
   /**
@@ -155,10 +153,10 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_PACKAGE__GROUP:
+    case ArticlePackage.JAVA_PACKAGE__PLUGIN:
       if (eInternalContainer() != null)
         msgs = eBasicRemoveFromContainer(msgs);
-      return basicSetGroup((JavadocGroup)otherEnd, msgs);
+      return basicSetPlugin((Plugin)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -173,8 +171,8 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_PACKAGE__GROUP:
-      return basicSetGroup(null, msgs);
+    case ArticlePackage.JAVA_PACKAGE__PLUGIN:
+      return basicSetPlugin(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -189,9 +187,8 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
   {
     switch (eContainerFeatureID())
     {
-    case ArticlePackage.JAVADOC_PACKAGE__GROUP:
-      return eInternalContainer()
-          .eInverseRemove(this, ArticlePackage.JAVADOC_GROUP__PACKAGES, JavadocGroup.class, msgs);
+    case ArticlePackage.JAVA_PACKAGE__PLUGIN:
+      return eInternalContainer().eInverseRemove(this, ArticlePackage.PLUGIN__PACKAGES, Plugin.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }
@@ -206,10 +203,10 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_PACKAGE__NAME:
+    case ArticlePackage.JAVA_PACKAGE__NAME:
       return getName();
-    case ArticlePackage.JAVADOC_PACKAGE__GROUP:
-      return getGroup();
+    case ArticlePackage.JAVA_PACKAGE__PLUGIN:
+      return getPlugin();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -224,11 +221,11 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_PACKAGE__NAME:
+    case ArticlePackage.JAVA_PACKAGE__NAME:
       setName((String)newValue);
       return;
-    case ArticlePackage.JAVADOC_PACKAGE__GROUP:
-      setGroup((JavadocGroup)newValue);
+    case ArticlePackage.JAVA_PACKAGE__PLUGIN:
+      setPlugin((Plugin)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -244,11 +241,11 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_PACKAGE__NAME:
+    case ArticlePackage.JAVA_PACKAGE__NAME:
       setName(NAME_EDEFAULT);
       return;
-    case ArticlePackage.JAVADOC_PACKAGE__GROUP:
-      setGroup((JavadocGroup)null);
+    case ArticlePackage.JAVA_PACKAGE__PLUGIN:
+      setPlugin((Plugin)null);
       return;
     }
     super.eUnset(featureID);
@@ -264,10 +261,10 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_PACKAGE__NAME:
+    case ArticlePackage.JAVA_PACKAGE__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-    case ArticlePackage.JAVADOC_PACKAGE__GROUP:
-      return getGroup() != null;
+    case ArticlePackage.JAVA_PACKAGE__PLUGIN:
+      return getPlugin() != null;
     }
     return super.eIsSet(featureID);
   }
@@ -290,4 +287,4 @@ public class JavadocPackageImpl extends EObjectImpl implements JavadocPackage
     return result.toString();
   }
 
-} // JavadocPackageImpl
+} // JavaPackageImpl

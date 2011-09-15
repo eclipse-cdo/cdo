@@ -40,7 +40,7 @@ public abstract class ArticleElement implements DocumentationElement
     bodyTags.addAll(Arrays.asList(classDoc.inlineTags()));
     if (bodyTags.isEmpty())
     {
-      System.err.println("Warning: Title is missing in " + classDoc.position());
+      System.err.println("Title is missing in " + classDoc.position());
       title = classDoc.name();
       return;
     }

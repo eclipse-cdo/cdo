@@ -145,20 +145,20 @@ public interface ArticleFactory extends EFactory
   SourceCode createSourceCode();
 
   /**
-   * Returns a new object of class '<em>Javadoc Group</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Plugin</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return a new object of class '<em>Javadoc Group</em>'.
+   * @return a new object of class '<em>Plugin</em>'.
    * @generated
    */
-  JavadocGroup createJavadocGroup();
+  Plugin createPlugin();
 
   /**
-   * Returns a new object of class '<em>Javadoc Package</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Returns a new object of class '<em>Java Package</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return a new object of class '<em>Javadoc Package</em>'.
+   * @return a new object of class '<em>Java Package</em>'.
    * @generated
    */
-  JavadocPackage createJavadocPackage();
+  JavaPackage createJavaPackage();
 
   /**
    * Returns a new object of class '<em>Javadoc</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -167,6 +167,30 @@ public interface ArticleFactory extends EFactory
    * @generated
    */
   Javadoc createJavadoc();
+
+  /**
+   * Returns a new object of class '<em>External Article</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>External Article</em>'.
+   * @generated
+   */
+  ExternalArticle createExternalArticle();
+
+  /**
+   * Returns a new object of class '<em>Schemadoc</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Schemadoc</em>'.
+   * @generated
+   */
+  Schemadoc createSchemadoc();
+
+  /**
+   * Returns a new object of class '<em>Extension Point</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Extension Point</em>'.
+   * @generated
+   */
+  ExtensionPoint createExtensionPoint();
 
   /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->

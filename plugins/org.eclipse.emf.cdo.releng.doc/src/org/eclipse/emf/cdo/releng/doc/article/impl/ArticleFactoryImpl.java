@@ -16,13 +16,16 @@ import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.Diagram;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
+import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
+import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
+import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
-import org.eclipse.emf.cdo.releng.doc.article.JavadocGroup;
-import org.eclipse.emf.cdo.releng.doc.article.JavadocPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
+import org.eclipse.emf.cdo.releng.doc.article.Plugin;
+import org.eclipse.emf.cdo.releng.doc.article.Schemadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
@@ -116,12 +119,18 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
       return createEmbedding();
     case ArticlePackage.SOURCE_CODE:
       return createSourceCode();
-    case ArticlePackage.JAVADOC_GROUP:
-      return createJavadocGroup();
-    case ArticlePackage.JAVADOC_PACKAGE:
-      return createJavadocPackage();
+    case ArticlePackage.PLUGIN:
+      return createPlugin();
+    case ArticlePackage.JAVA_PACKAGE:
+      return createJavaPackage();
     case ArticlePackage.JAVADOC:
       return createJavadoc();
+    case ArticlePackage.EXTERNAL_ARTICLE:
+      return createExternalArticle();
+    case ArticlePackage.SCHEMADOC:
+      return createSchemadoc();
+    case ArticlePackage.EXTENSION_POINT:
+      return createExtensionPoint();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -331,10 +340,10 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
    * 
    * @generated
    */
-  public JavadocGroup createJavadocGroup()
+  public Plugin createPlugin()
   {
-    JavadocGroupImpl javadocGroup = new JavadocGroupImpl();
-    return javadocGroup;
+    PluginImpl plugin = new PluginImpl();
+    return plugin;
   }
 
   /**
@@ -342,10 +351,10 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
    * 
    * @generated
    */
-  public JavadocPackage createJavadocPackage()
+  public JavaPackage createJavaPackage()
   {
-    JavadocPackageImpl javadocPackage = new JavadocPackageImpl();
-    return javadocPackage;
+    JavaPackageImpl javaPackage = new JavaPackageImpl();
+    return javaPackage;
   }
 
   /**
@@ -357,6 +366,39 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
   {
     JavadocImpl javadoc = new JavadocImpl();
     return javadoc;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public ExternalArticle createExternalArticle()
+  {
+    ExternalArticleImpl externalArticle = new ExternalArticleImpl();
+    return externalArticle;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Schemadoc createSchemadoc()
+  {
+    SchemadocImpl schemadoc = new SchemadocImpl();
+    return schemadoc;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public ExtensionPoint createExtensionPoint()
+  {
+    ExtensionPointImpl extensionPoint = new ExtensionPointImpl();
+    return extensionPoint;
   }
 
   /**

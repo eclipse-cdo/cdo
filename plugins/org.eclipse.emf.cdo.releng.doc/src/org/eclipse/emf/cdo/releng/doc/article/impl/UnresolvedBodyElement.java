@@ -70,7 +70,7 @@ public class UnresolvedBodyElement extends BodyElementImpl
       }
     }
 
-    System.err.println(ArticleUtil.makeConsoleLink("Warning: Unresolved link " + tag + " in ", tag.position()));
+    System.err.println(ArticleUtil.makeConsoleLink("Unresolved link " + tag + " in ", tag.position()));
     return this;
   }
 

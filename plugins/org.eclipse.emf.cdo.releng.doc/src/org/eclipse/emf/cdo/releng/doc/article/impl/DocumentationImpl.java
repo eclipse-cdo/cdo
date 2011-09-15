@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
+import org.eclipse.emf.cdo.releng.doc.article.Plugin;
+import org.eclipse.emf.cdo.releng.doc.article.Schemadoc;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
@@ -21,8 +23,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -32,6 +37,7 @@ import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.MethodDoc;
 import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.RootDoc;
+import com.sun.javadoc.Tag;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -49,6 +55,7 @@ import java.util.Collection;
  * Elements</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl#getDependencies <em>Dependencies</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl#getProject <em>Project</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl#getPlugins <em>Plugins</em>}</li>
  * </ul>
  * </p>
  * 
@@ -57,6 +64,8 @@ import java.util.Collection;
 public class DocumentationImpl extends StructuralElementImpl implements Documentation
 {
   private static final String JAVADOC_MARKER_CLASS = "Javadoc";
+
+  private static final String SCHEMADOC_MARKER_CLASS = "Schemadoc";
 
   /**
    * The cached value of the '{@link #getEmbeddableElements() <em>Embeddable Elements</em>}' containment reference list.
@@ -99,6 +108,16 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   protected String project = PROJECT_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getPlugins() <em>Plugins</em>}' containment reference list. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @see #getPlugins()
+   * @generated
+   * @ordered
+   */
+  protected EList<Plugin> plugins;
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -118,6 +137,14 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     File projectFolder = getOutputFile().getParentFile();
     setTitle(AssembleScripts.getPluginName(projectFolder));
 
+    analyzeDependencies(projectFolder);
+    loadPlugins(projectFolder);
+    analyzeDocumentation(projectFolder);
+  }
+
+  private void analyzeDependencies(File projectFolder)
+  {
+    Context context = getContext();
     for (String dependency : AssembleScripts.getDependencies(projectFolder))
     {
       if (context.getDocumentation(dependency) == null)
@@ -125,7 +152,11 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         new DocumentationImpl(context, dependency);
       }
     }
+  }
 
+  private void analyzeDocumentation(File projectFolder)
+  {
+    Context context = getContext();
     for (ClassDoc classDoc : context.getRoot().classes())
     {
       if (classDoc.containingClass() == null)
@@ -162,6 +193,12 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
           return new JavadocImpl(parent, packageDoc);
         }
 
+        ClassDoc schemadocMarkerClass = packageDoc.findClass(SCHEMADOC_MARKER_CLASS);
+        if (schemadocMarkerClass != null && schemadocMarkerClass.isPackagePrivate())
+        {
+          return new SchemadocImpl(parent, packageDoc);
+        }
+
         return new CategoryImpl(parent, packageDoc);
       }
 
@@ -169,20 +206,6 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     }
 
     return this;
-  }
-
-  private void warnIfSubPackagesUndocumented(PackageDoc packageDoc, PackageDoc parentDoc)
-  {
-    while (parentDoc != null)
-    {
-      if (ArticleUtil.isDocumented(parentDoc))
-      {
-        System.err.println("Warning: Undocumented category " + packageDoc.name());
-        break;
-      }
-
-      parentDoc = ArticleUtil.getParentPackage(getContext().getRoot(), parentDoc);
-    }
   }
 
   private void analyzeClass(StructuralElement parent, ClassDoc classDoc)
@@ -196,6 +219,19 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
     if (parent instanceof Javadoc && classDoc.simpleTypeName().equals(JAVADOC_MARKER_CLASS))
     {
+      return;
+    }
+
+    if (parent instanceof Schemadoc && classDoc.simpleTypeName().equals(SCHEMADOC_MARKER_CLASS))
+    {
+      return;
+    }
+
+    Tag[] externals = classDoc.tags("@external");
+    if (externals != null && externals.length != 0)
+    {
+      String url = externals[0].inlineTags()[0].text();
+      new ExternalArticleImpl(parent, classDoc, url);
       return;
     }
 
@@ -224,16 +260,6 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     }
   }
 
-  private Chapter createChapter(StructuralElement parent, ClassDoc classDoc)
-  {
-    if (parent instanceof Chapter)
-    {
-      return new ChapterImpl(parent, classDoc);
-    }
-
-    return new ArticleImpl(parent, classDoc);
-  }
-
   private void analyzeMethod(MethodDoc methodDoc)
   {
     if (ArticleUtil.isIgnore(methodDoc))
@@ -249,6 +275,47 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     if (ArticleUtil.isFactory(methodDoc))
     {
       new FactoryImpl(this, methodDoc);
+    }
+  }
+
+  private void warnIfSubPackagesUndocumented(PackageDoc packageDoc, PackageDoc parentDoc)
+  {
+    while (parentDoc != null)
+    {
+      if (ArticleUtil.isDocumented(parentDoc))
+      {
+        System.err.println("Undocumented category " + packageDoc.name());
+        break;
+      }
+
+      parentDoc = ArticleUtil.getParentPackage(getContext().getRoot(), parentDoc);
+    }
+  }
+
+  private Chapter createChapter(StructuralElement parent, ClassDoc classDoc)
+  {
+    if (parent instanceof Chapter)
+    {
+      return new ChapterImpl(parent, classDoc);
+    }
+
+    return new ArticleImpl(parent, classDoc);
+  }
+
+  private void loadPlugins(File projectFolder)
+  {
+    try
+    {
+      Resource resource = AssembleScripts.JavaDoc.getTocResource(projectFolder, false);
+
+      for (EObject eObject : resource.getContents())
+      {
+        getPlugins().add((Plugin)eObject);
+      }
+    }
+    catch (IOException ex)
+    {
+      ex.printStackTrace();
     }
   }
 
@@ -271,9 +338,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   public Context getContext()
   {
     if (eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT)
-    {
       return null;
-    }
     return (Context)eContainer();
   }
 
@@ -295,34 +360,24 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
    */
   public void setContext(Context newContext)
   {
-    if (newContext != eInternalContainer() || eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT
-        && newContext != null)
+    if (newContext != eInternalContainer()
+        || (eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT && newContext != null))
     {
       if (EcoreUtil.isAncestor(this, newContext))
-      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       if (newContext != null)
-      {
         msgs = ((InternalEObject)newContext).eInverseAdd(this, ArticlePackage.CONTEXT__DOCUMENTATIONS, Context.class,
             msgs);
-      }
       msgs = basicSetContext(newContext, msgs);
       if (msgs != null)
-      {
         msgs.dispatch();
-      }
     }
     else if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.DOCUMENTATION__CONTEXT, newContext,
           newContext));
-    }
   }
 
   /**
@@ -370,6 +425,20 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
    * 
    * @generated
    */
+  public EList<Plugin> getPlugins()
+  {
+    if (plugins == null)
+    {
+      plugins = new EObjectContainmentEList<Plugin>(Plugin.class, this, ArticlePackage.DOCUMENTATION__PLUGINS);
+    }
+    return plugins;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -378,9 +447,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     {
     case ArticlePackage.DOCUMENTATION__CONTEXT:
       if (eInternalContainer() != null)
-      {
         msgs = eBasicRemoveFromContainer(msgs);
-      }
       return basicSetContext((Context)otherEnd, msgs);
     case ArticlePackage.DOCUMENTATION__EMBEDDABLE_ELEMENTS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getEmbeddableElements()).basicAdd(otherEnd, msgs);
@@ -402,6 +469,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       return basicSetContext(null, msgs);
     case ArticlePackage.DOCUMENTATION__EMBEDDABLE_ELEMENTS:
       return ((InternalEList<?>)getEmbeddableElements()).basicRemove(otherEnd, msgs);
+    case ArticlePackage.DOCUMENTATION__PLUGINS:
+      return ((InternalEList<?>)getPlugins()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -440,6 +509,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       return getDependencies();
     case ArticlePackage.DOCUMENTATION__PROJECT:
       return getProject();
+    case ArticlePackage.DOCUMENTATION__PLUGINS:
+      return getPlugins();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -511,6 +582,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       return dependencies != null && !dependencies.isEmpty();
     case ArticlePackage.DOCUMENTATION__PROJECT:
       return PROJECT_EDEFAULT == null ? project != null : !PROJECT_EDEFAULT.equals(project);
+    case ArticlePackage.DOCUMENTATION__PLUGINS:
+      return plugins != null && !plugins.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -524,9 +597,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (project: ");

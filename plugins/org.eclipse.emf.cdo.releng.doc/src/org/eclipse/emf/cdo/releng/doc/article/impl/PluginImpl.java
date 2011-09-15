@@ -7,8 +7,9 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
-import org.eclipse.emf.cdo.releng.doc.article.JavadocGroup;
-import org.eclipse.emf.cdo.releng.doc.article.JavadocPackage;
+import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
+import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
+import org.eclipse.emf.cdo.releng.doc.article.Plugin;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -23,18 +24,20 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import java.util.Collection;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Javadoc Group</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Plugin</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocGroupImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocGroupImpl#getPackages <em>Packages</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl#getPackages <em>Packages</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl#getLabel <em>Label</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl#getExtensionPoints <em>Extension Points</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
+public class PluginImpl extends EObjectImpl implements Plugin
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -63,14 +66,44 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
    * @generated
    * @ordered
    */
-  protected EList<JavadocPackage> packages;
+  protected EList<JavaPackage> packages;
+
+  /**
+   * The default value of the '{@link #getLabel() <em>Label</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @see #getLabel()
+   * @generated
+   * @ordered
+   */
+  protected static final String LABEL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @see #getLabel()
+   * @generated
+   * @ordered
+   */
+  protected String label = LABEL_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getExtensionPoints() <em>Extension Points</em>}' containment reference list. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getExtensionPoints()
+   * @generated
+   * @ordered
+   */
+  protected EList<ExtensionPoint> extensionPoints;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */
-  protected JavadocGroupImpl()
+  protected PluginImpl()
   {
     super();
   }
@@ -83,7 +116,7 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
   @Override
   protected EClass eStaticClass()
   {
-    return ArticlePackage.Literals.JAVADOC_GROUP;
+    return ArticlePackage.Literals.PLUGIN;
   }
 
   /**
@@ -106,7 +139,7 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.JAVADOC_GROUP__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.PLUGIN__NAME, oldName, name));
   }
 
   /**
@@ -114,14 +147,52 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
    * 
    * @generated
    */
-  public EList<JavadocPackage> getPackages()
+  public EList<JavaPackage> getPackages()
   {
     if (packages == null)
     {
-      packages = new EObjectContainmentWithInverseEList<JavadocPackage>(JavadocPackage.class, this,
-          ArticlePackage.JAVADOC_GROUP__PACKAGES, ArticlePackage.JAVADOC_PACKAGE__GROUP);
+      packages = new EObjectContainmentWithInverseEList<JavaPackage>(JavaPackage.class, this,
+          ArticlePackage.PLUGIN__PACKAGES, ArticlePackage.JAVA_PACKAGE__PLUGIN);
     }
     return packages;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public String getLabel()
+  {
+    return label;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setLabel(String newLabel)
+  {
+    String oldLabel = label;
+    label = newLabel;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.PLUGIN__LABEL, oldLabel, label));
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EList<ExtensionPoint> getExtensionPoints()
+  {
+    if (extensionPoints == null)
+    {
+      extensionPoints = new EObjectContainmentWithInverseEList<ExtensionPoint>(ExtensionPoint.class, this,
+          ArticlePackage.PLUGIN__EXTENSION_POINTS, ArticlePackage.EXTENSION_POINT__PLUGIN);
+    }
+    return extensionPoints;
   }
 
   /**
@@ -135,8 +206,10 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_GROUP__PACKAGES:
+    case ArticlePackage.PLUGIN__PACKAGES:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getPackages()).basicAdd(otherEnd, msgs);
+    case ArticlePackage.PLUGIN__EXTENSION_POINTS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getExtensionPoints()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -151,8 +224,10 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_GROUP__PACKAGES:
+    case ArticlePackage.PLUGIN__PACKAGES:
       return ((InternalEList<?>)getPackages()).basicRemove(otherEnd, msgs);
+    case ArticlePackage.PLUGIN__EXTENSION_POINTS:
+      return ((InternalEList<?>)getExtensionPoints()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -167,10 +242,14 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_GROUP__NAME:
+    case ArticlePackage.PLUGIN__NAME:
       return getName();
-    case ArticlePackage.JAVADOC_GROUP__PACKAGES:
+    case ArticlePackage.PLUGIN__PACKAGES:
       return getPackages();
+    case ArticlePackage.PLUGIN__LABEL:
+      return getLabel();
+    case ArticlePackage.PLUGIN__EXTENSION_POINTS:
+      return getExtensionPoints();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -186,12 +265,19 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_GROUP__NAME:
+    case ArticlePackage.PLUGIN__NAME:
       setName((String)newValue);
       return;
-    case ArticlePackage.JAVADOC_GROUP__PACKAGES:
+    case ArticlePackage.PLUGIN__PACKAGES:
       getPackages().clear();
-      getPackages().addAll((Collection<? extends JavadocPackage>)newValue);
+      getPackages().addAll((Collection<? extends JavaPackage>)newValue);
+      return;
+    case ArticlePackage.PLUGIN__LABEL:
+      setLabel((String)newValue);
+      return;
+    case ArticlePackage.PLUGIN__EXTENSION_POINTS:
+      getExtensionPoints().clear();
+      getExtensionPoints().addAll((Collection<? extends ExtensionPoint>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -207,11 +293,17 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_GROUP__NAME:
+    case ArticlePackage.PLUGIN__NAME:
       setName(NAME_EDEFAULT);
       return;
-    case ArticlePackage.JAVADOC_GROUP__PACKAGES:
+    case ArticlePackage.PLUGIN__PACKAGES:
       getPackages().clear();
+      return;
+    case ArticlePackage.PLUGIN__LABEL:
+      setLabel(LABEL_EDEFAULT);
+      return;
+    case ArticlePackage.PLUGIN__EXTENSION_POINTS:
+      getExtensionPoints().clear();
       return;
     }
     super.eUnset(featureID);
@@ -227,10 +319,14 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
   {
     switch (featureID)
     {
-    case ArticlePackage.JAVADOC_GROUP__NAME:
+    case ArticlePackage.PLUGIN__NAME:
       return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-    case ArticlePackage.JAVADOC_GROUP__PACKAGES:
+    case ArticlePackage.PLUGIN__PACKAGES:
       return packages != null && !packages.isEmpty();
+    case ArticlePackage.PLUGIN__LABEL:
+      return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+    case ArticlePackage.PLUGIN__EXTENSION_POINTS:
+      return extensionPoints != null && !extensionPoints.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -249,8 +345,10 @@ public class JavadocGroupImpl extends EObjectImpl implements JavadocGroup
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", label: ");
+    result.append(label);
     result.append(')');
     return result.toString();
   }
 
-} // JavadocGroupImpl
+} // PluginImpl

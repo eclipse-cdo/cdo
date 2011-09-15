@@ -1,4 +1,4 @@
-/***************************************************************************
+/*
  * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +11,7 @@
  *    Simon McDuff - bug 215688
  *    Simon McDuff - bug 213402
  *    Andre Dietisheim - bug 256649
- **************************************************************************/
+ */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;

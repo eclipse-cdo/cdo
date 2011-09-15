@@ -211,7 +211,7 @@ Class ContainerPathItemProvider&lt;CONTAINER extends <A HREF="../../../../../../
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#getChildren(org.eclipse.jface.viewers.TreePath)">getChildren</A></B>(org.eclipse.jface.viewers.TreePath&nbsp;path)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;Returns the child elements of the last element in the given path.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -227,7 +227,7 @@ Class ContainerPathItemProvider&lt;CONTAINER extends <A HREF="../../../../../../
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#getParents(java.lang.Object)">getParents</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;Return the possible parent paths for the given element.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -235,7 +235,7 @@ Class ContainerPathItemProvider&lt;CONTAINER extends <A HREF="../../../../../../
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#hasChildren(org.eclipse.jface.viewers.TreePath)">hasChildren</A></B>(org.eclipse.jface.viewers.TreePath&nbsp;path)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;Returns whether the last element of the given path has children.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -343,21 +343,11 @@ hasChildren</H3>
 <PRE>
 public boolean <B>hasChildren</B>(org.eclipse.jface.viewers.TreePath&nbsp;path)</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreePathContentProvider</CODE></B></DD>
-<DD>Returns whether the last element of the given path has children.
- <p>
- Intended as an optimization for when the viewer does not need the actual
- children. Clients may be able to implement this more efficiently than
- <code>getChildren</code>.
- </p>
-<P>
-<DD><DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
 <DT><B>Specified by:</B><DD><CODE>hasChildren</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreePathContentProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>path</CODE> - the path
-<DT><B>Returns:</B><DD><code>true</code> if the lat element of the path has children,
-         and <code>false</code> if it has no children</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -367,23 +357,11 @@ getChildren</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>[] <B>getChildren</B>(org.eclipse.jface.viewers.TreePath&nbsp;path)</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreePathContentProvider</CODE></B></DD>
-<DD>Returns the child elements of the last element in the given path.
- Implementors may want to use the additional context of the complete path
- of a parent element in order to decide which children to return.
- <p>
- The provided path is relative to the input. The root elements must
- be obtained by calling
- <CODE>IStructuredContentProvider.getElements(Object)</CODE>.
- </p>
- The result is not modified by the viewer.
-<P>
-<DD><DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getChildren</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreePathContentProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>path</CODE> - the path of the parent element
-<DT><B>Returns:</B><DD>an array of child elements</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -393,18 +371,11 @@ getParents</H3>
 <PRE>
 public org.eclipse.jface.viewers.TreePath[] <B>getParents</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
 <DL>
-<DD><B>Deprecated.</B>&nbsp;<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreePathContentProvider</CODE></B></DD>
-<DD>Return the possible parent paths for the given element. An empty array
- can be returned if the paths cannot be computed. If the element is 
- a potential child of the input of the viewer, an empty tree path
- should be an entry in the returned array.
-<P>
-<DD><DL>
+<DD><B>Deprecated.</B>&nbsp;<DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getParents</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreePathContentProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>element</CODE> - the element
-<DT><B>Returns:</B><DD>the possible parent paths for the given element</DL>
+</DL>
 </DD>
 </DL>
 <HR>

@@ -206,7 +206,7 @@ A default implementation of an OSGi <CODE>application</CODE>.
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/om/OSGiApplication.html#start(org.eclipse.equinox.app.IApplicationContext)">start</A></B>(org.eclipse.equinox.app.IApplicationContext&nbsp;context)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Starts this application with the given context and returns a result.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -214,7 +214,7 @@ A default implementation of an OSGi <CODE>application</CODE>.
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/om/OSGiApplication.html#stop()">stop</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forces this running application to exit.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -320,33 +320,13 @@ start</H3>
 public final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>start</B>(org.eclipse.equinox.app.IApplicationContext&nbsp;context)
                    throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.equinox.app.IApplication</CODE></B></DD>
-<DD>Starts this application with the given context and returns a result.  The content of 
- the context is unchecked and should conform to the expectations of the application being 
- invoked.  This method can return the value <CODE>IApplicationContext.EXIT_ASYNC_RESULT</CODE> if 
- the application will deliver its results asynchronously with the 
- <CODE>IApplicationContext.setResult(Object, IApplication)</CODE> method; otherwise this method must not exit 
- until the application is finished and is ready to exit.
- <p>
- Applications can return any object they like.  If an <code>Integer</code> is returned
- it is treated as the program exit code if Eclipse is exiting.
- </p>
- <p>
- Note: This method is called by the platform; it is not intended
- to be called directly by clients.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>start</CODE> in interface <CODE>org.eclipse.equinox.app.IApplication</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>context</CODE> - the application context to pass to the application
-<DT><B>Returns:</B><DD>the return value of the application
+
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE> - if there is a problem running this application.<DT><B>See Also:</B><DD><CODE>IApplication.EXIT_OK</CODE>, 
-<CODE>IApplication.EXIT_RESTART</CODE>, 
-<CODE>IApplication.EXIT_RELAUNCH</CODE>, 
-<CODE>IApplicationContext.EXIT_ASYNC_RESULT</CODE></DL>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -356,19 +336,6 @@ stop</H3>
 <PRE>
 public final void <B>stop</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.equinox.app.IApplication</CODE></B></DD>
-<DD>Forces this running application to exit.  This method should wait until the 
- running application is ready to exit.  The <CODE>IApplication.start(IApplicationContext)</CODE> 
- should already have exited or should exit very soon after this method exits<p>
- 
- This method is only called to force an application to exit.
- This method will not be called if an application exits normally from 
- the <CODE>IApplication.start(IApplicationContext)</CODE> method.
- <p>
- Note: This method is called by the platform; it is not intended
- to be called directly by clients.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>stop</CODE> in interface <CODE>org.eclipse.equinox.app.IApplication</CODE></DL>
 </DD>

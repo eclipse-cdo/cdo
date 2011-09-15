@@ -800,7 +800,7 @@ public class AssembleScripts
             else if ("<!-- COPY DOC FILES -->".equals(id))
             {
               CharArrayWriter buffer = new CharArrayWriter();
-              buffer.write("\t\t<copy todir=\"${destdir}\" verbose=\"true\" failonerror=\"false\">\n");
+              buffer.write("\t\t<copy todir=\"${javadoc.destdir}\" verbose=\"true\" failonerror=\"false\">\n");
               buffer.write("\t\t\t<cutdirsmapper dirs=\"2\" />\n");
               buffer.write("\t\t\t<fileset dir=\"plugins\" defaultexcludes=\"true\">\n");
 
@@ -919,7 +919,7 @@ public class AssembleScripts
     public void generateTocXmi() throws IOException
     {
       Resource resource = getTocXmiResource(getProject(), true);
-      System.out.println("Generating " + resource.getURI().path());
+      System.out.println("Generating " + new File(resource.getURI().toFileString()).getCanonicalPath());
 
       for (SourcePlugin sourcePlugin : getSortedSourcePlugins())
       {

@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
-<project name="JavaDoc" default="build.clean" basedir="../..">
+<project name="JavaDoc" default="build" basedir="../..">
 
 	<property name="releng.project" value="plugins/org.eclipse.emf.cdo.releng.doc" />
+	<property name="supplemental" value="/develop/bin/org.eclipse.emf.cdo.releng.doc.supplemental" />
 
 	<target name="assemble.scripts">
 		<java classname="org.eclipse.emf.cdo.releng.doc.AssembleScripts" failonerror="true">
 			<classpath path="${releng.project}/bin" />
+			<classpath path="${supplemental}/tools.jar" />
 			<classpath>
 				<fileset dir="_target/plugins">
 					<include name="**/*.jar" />
@@ -14,21 +16,27 @@
 		</java>
 	</target>
 
-	<target name="clean" depends="assemble.scripts">
+	<target name="build.java" depends="assemble.scripts">
 		<ant antfile="${releng.project}/buildLib.ant" target="delegate">
-			<property name="delegate.target" value="clean" />
+			<property name="delegate.target" value="build.java" />
+		</ant>
+	</target>
+
+	<target name="build.schema" depends="assemble.scripts">
+		<ant antfile="${releng.project}/buildLib.ant" target="delegate">
+			<property name="delegate.target" value="build.schema" />
+		</ant>
+	</target>
+
+	<target name="build.article" depends="assemble.scripts">
+		<ant antfile="${releng.project}/buildLib.ant" target="delegate">
+			<property name="delegate.target" value="build.article" />
 		</ant>
 	</target>
 
 	<target name="build" depends="assemble.scripts">
 		<ant antfile="${releng.project}/buildLib.ant" target="delegate">
 			<property name="delegate.target" value="build" />
-		</ant>
-	</target>
-
-	<target name="build.clean" depends="assemble.scripts">
-		<ant antfile="${releng.project}/buildLib.ant" target="delegate">
-			<property name="delegate.target" value="build.clean" />
 		</ant>
 	</target>
 

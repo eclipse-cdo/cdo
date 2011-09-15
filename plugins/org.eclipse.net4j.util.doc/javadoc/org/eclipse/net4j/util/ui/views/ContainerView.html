@@ -196,7 +196,7 @@ Class ContainerView</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#addSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)">addSelectionChangedListener</A></B>(org.eclipse.jface.viewers.ISelectionChangedListener&nbsp;listener)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds a listener for selection changes in this selection provider.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -260,7 +260,7 @@ Class ContainerView</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#createPartControl(org.eclipse.swt.widgets.Composite)">createPartControl</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates the SWT controls for this workbench part.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -405,7 +405,7 @@ Class ContainerView</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#getSelection()">getSelection</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the current selection for this provider.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -478,7 +478,7 @@ Class ContainerView</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#removeSelectionChangedListener(org.eclipse.jface.viewers.ISelectionChangedListener)">removeSelectionChangedListener</A></B>(org.eclipse.jface.viewers.ISelectionChangedListener&nbsp;listener)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes the given selection change listener from this selection provider.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -511,7 +511,7 @@ Class ContainerView</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#selectReveal(org.eclipse.jface.viewers.ISelection)">selectReveal</A></B>(org.eclipse.jface.viewers.ISelection&nbsp;selection)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reveals and selects the given element within this target view.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -519,7 +519,7 @@ Class ContainerView</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#setFocus()">setFocus</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Asks this part to take focus within the workbench.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -527,7 +527,7 @@ Class ContainerView</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/views/ContainerView.html#setSelection(org.eclipse.jface.viewers.ISelection)">setSelection</A></B>(org.eclipse.jface.viewers.ISelection&nbsp;selection)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sets the current selection for this selection provider.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -672,16 +672,6 @@ setFocus</H3>
 <PRE>
 public void <B>setFocus</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.ui.IWorkbenchPart</CODE></B></DD>
-<DD>Asks this part to take focus within the workbench. Parts must
- assign focus to one of the controls contained in the part's
- parent composite.
- <p>
- Clients should not call this method (the workbench calls this method at
- appropriate times).  To have the workbench activate a part, use
- <code>IWorkbenchPage.activate(IWorkbenchPart) instead</code>.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>setFocus</CODE> in interface <CODE>org.eclipse.ui.IWorkbenchPart</CODE><DT><B>Specified by:</B><DD><CODE>setFocus</CODE> in class <CODE>org.eclipse.ui.part.WorkbenchPart</CODE></DL>
 </DD>
@@ -710,15 +700,11 @@ getSelection</H3>
 <PRE>
 public org.eclipse.jface.viewers.ISelection <B>getSelection</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ISelectionProvider</CODE></B></DD>
-<DD>Returns the current selection for this provider.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getSelection</CODE> in interface <CODE>org.eclipse.jface.viewers.ISelectionProvider</CODE></DL>
 </DD>
 <DD><DL>
-
-<DT><B>Returns:</B><DD>the current selection<DT><B>Since:</B></DT>
+<DT><B>Since:</B></DT>
   <DD>3.0</DD>
 </DL>
 </DD>
@@ -730,14 +716,11 @@ setSelection</H3>
 <PRE>
 public void <B>setSelection</B>(org.eclipse.jface.viewers.ISelection&nbsp;selection)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ISelectionProvider</CODE></B></DD>
-<DD>Sets the current selection for this selection provider.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>setSelection</CODE> in interface <CODE>org.eclipse.jface.viewers.ISelectionProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>selection</CODE> - the new selection<DT><B>Since:</B></DT>
+<DT><B>Since:</B></DT>
   <DD>3.0</DD>
 </DL>
 </DD>
@@ -749,15 +732,11 @@ addSelectionChangedListener</H3>
 <PRE>
 public void <B>addSelectionChangedListener</B>(org.eclipse.jface.viewers.ISelectionChangedListener&nbsp;listener)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ISelectionProvider</CODE></B></DD>
-<DD>Adds a listener for selection changes in this selection provider.
- Has no effect if an identical listener is already registered.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>addSelectionChangedListener</CODE> in interface <CODE>org.eclipse.jface.viewers.ISelectionProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>listener</CODE> - a selection changed listener<DT><B>Since:</B></DT>
+<DT><B>Since:</B></DT>
   <DD>3.0</DD>
 </DL>
 </DD>
@@ -769,15 +748,11 @@ removeSelectionChangedListener</H3>
 <PRE>
 public void <B>removeSelectionChangedListener</B>(org.eclipse.jface.viewers.ISelectionChangedListener&nbsp;listener)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ISelectionProvider</CODE></B></DD>
-<DD>Removes the given selection change listener from this selection provider.
- Has no effect if an identical listener is not registered.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>removeSelectionChangedListener</CODE> in interface <CODE>org.eclipse.jface.viewers.ISelectionProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>listener</CODE> - a selection changed listener<DT><B>Since:</B></DT>
+<DT><B>Since:</B></DT>
   <DD>3.0</DD>
 </DL>
 </DD>
@@ -789,14 +764,11 @@ selectReveal</H3>
 <PRE>
 public void <B>selectReveal</B>(org.eclipse.jface.viewers.ISelection&nbsp;selection)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.ui.part.ISetSelectionTarget</CODE></B></DD>
-<DD>Reveals and selects the given element within this target view.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>selectReveal</CODE> in interface <CODE>org.eclipse.ui.part.ISetSelectionTarget</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>selection</CODE> - the new element to select</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -806,29 +778,11 @@ createPartControl</H3>
 <PRE>
 public final void <B>createPartControl</B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.ui.IWorkbenchPart</CODE></B></DD>
-<DD>Creates the SWT controls for this workbench part.
- <p>
- Clients should not call this method (the workbench calls this method when
- it needs to, which may be never).
- </p>
- <p>
- For implementors this is a multi-step process:
- <ol>
-   <li>Create one or more controls within the parent.</li>
-   <li>Set the parent layout as needed.</li>
-   <li>Register any global actions with the site's <code>IActionBars</code>.</li>
-   <li>Register any context menus with the site.</li>
-   <li>Register a selection provider with the site, to make it available to 
-     the workbench's <code>ISelectionService</code> (optional). </li>
- </ol>
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>createPartControl</CODE> in interface <CODE>org.eclipse.ui.IWorkbenchPart</CODE><DT><B>Specified by:</B><DD><CODE>createPartControl</CODE> in class <CODE>org.eclipse.ui.part.WorkbenchPart</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>parent</CODE> - the parent control</DL>
+</DL>
 </DD>
 </DL>
 <HR>

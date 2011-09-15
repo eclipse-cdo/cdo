@@ -11,9 +11,10 @@
 package org.eclipse.net4j.util.doc;
 
 /**
- * @author Eike Stepper
+ * Overview
+ * 
+ * @number 0
  */
 public class Overview
 {
-
 }

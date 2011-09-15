@@ -263,7 +263,7 @@ Constructor for exception org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/D
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBSchema.html" title="class in org.eclipse.net4j.spi.db"><B>DBSchema</B></A> - Class in <A HREF="./org/eclipse/net4j/spi/db/package-summary.html">org.eclipse.net4j.spi.db</A><DD>A useful base class for implementing custom <A HREF="./org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><CODE>DB schemas</CODE></A>.<DT><A HREF="./org/eclipse/net4j/spi/db/DBSchema.html#DBSchema(java.lang.String)"><B>DBSchema(String)</B></A> - 
 Constructor for class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBSchema.html" title="class in org.eclipse.net4j.spi.db">DBSchema</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db"><B>DBType</B></A> - Enum in <A HREF="./org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A><DD>Enumerates the SQL data types that are compatible with the DB framework.<DT><A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db"><B>DBUtil</B></A> - Class in <A HREF="./org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A><DD>A utility class with various static factory and convenience methods.<DT><A HREF="./org/eclipse/net4j/db/ddl/IDBField.html#DEFAULT"><B>DEFAULT</B></A> - 
+<DT><A HREF="./org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db"><B>DBType</B></A> - Enum in <A HREF="./org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A><DD>Enumerates the SQL data types that are compatible with the DB framework.<DT><A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db"><B>DBUtil</B></A> - Class in <A HREF="./org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A><DD>A utility class with various static factory and convenience methods.<DT><A HREF="./org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db"><B>DBUtil.DeserializeRowHandler</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><B>DBUtil.RowHandler</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db"><B>DBUtil.SerializeRowHandler</B></A> - Interface in <A HREF="./org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/db/ddl/IDBField.html#DEFAULT"><B>DEFAULT</B></A> - 
 Static variable in interface org.eclipse.net4j.db.ddl.<A HREF="./org/eclipse/net4j/db/ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby"><B>DerbyAdapter</B></A> - Class in <A HREF="./org/eclipse/net4j/db/derby/package-summary.html">org.eclipse.net4j.db.derby</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/db/derby/DerbyAdapter.html#DerbyAdapter(java.lang.String)"><B>DerbyAdapter(String)</B></A> - 
@@ -272,8 +272,14 @@ Constructor for class org.eclipse.net4j.db.derby.<A HREF="./org/eclipse/net4j/db
 <DT><A HREF="./org/eclipse/net4j/db/DBUtil.html#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, org.eclipse.net4j.util.om.monitor.OMMonitor)"><B>deserializeTable(ExtendedDataInput, Connection, IDBTable, OMMonitor)</B></A> - 
 Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/DBUtil.html#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, org.eclipse.net4j.util.om.monitor.OMMonitor, org.eclipse.net4j.db.DBUtil.DeserializeRowHandler)"><B>deserializeTable(ExtendedDataInput, Connection, IDBTable, OMMonitor, DBUtil.DeserializeRowHandler)</B></A> - 
+Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html#doCreateTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)"><B>doCreateTable(IDBTable, Statement)</B></A> - 
 Method in class org.eclipse.net4j.spi.db.<A HREF="./org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/DBUtil.RowHandler.html#done(boolean)"><B>done(boolean)</B></A> - 
+Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.RowHandler</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/ddl/IDBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection)"><B>drop(IDBAdapter, Connection)</B></A> - 
 Method in interface org.eclipse.net4j.db.ddl.<A HREF="./org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</A>
@@ -593,6 +599,12 @@ Constructor for class org.eclipse.net4j.db.h2.<A HREF="./org/eclipse/net4j/db/h2
 <DT><A HREF="./org/eclipse/net4j/db/IDBRowHandler.html#handle(int, java.lang.Object...)"><B>handle(int, Object...)</B></A> - 
 Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataInput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBField[], java.lang.Object[])"><B>handleRow(ExtendedDataInput, Connection, IDBField[], Object[])</B></A> - 
+Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataOutput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBField[], java.lang.Object[])"><B>handleRow(ExtendedDataOutput, Connection, IDBField[], Object[])</B></A> - 
+Method in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html" title="class in org.eclipse.net4j.db.hsqldb"><B>HSQLDBAdapter</B></A> - Class in <A HREF="./org/eclipse/net4j/db/hsqldb/package-summary.html">org.eclipse.net4j.db.hsqldb</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html#HSQLDBAdapter()"><B>HSQLDBAdapter()</B></A> - 
 Constructor for class org.eclipse.net4j.db.hsqldb.<A HREF="./org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html" title="class in org.eclipse.net4j.db.hsqldb">HSQLDBAdapter</A>
 <DD>&nbsp;
@@ -695,6 +707,9 @@ Constructor for class org.eclipse.net4j.db.postgresql.<A HREF="./org/eclipse/net
 <DT><A HREF="./org/eclipse/net4j/db/DBType.html#readValue(org.eclipse.net4j.util.io.ExtendedDataInput, java.sql.PreparedStatement, int, boolean)"><B>readValue(ExtendedDataInput, PreparedStatement, int, boolean)</B></A> - 
 Method in enum org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/DBType.html#readValueWithResult(org.eclipse.net4j.util.io.ExtendedDataInput, java.sql.PreparedStatement, int, boolean)"><B>readValueWithResult(ExtendedDataInput, PreparedStatement, int, boolean)</B></A> - 
+Method in enum org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/IDBAdapter.html#REGISTRY"><B>REGISTRY</B></A> - 
 Static variable in interface org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A>
 <DD>&nbsp;
@@ -731,6 +746,9 @@ Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUt
 Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String, java.lang.String)"><B>serializeTable(ExtendedDataOutput, Connection, IDBTable, String, String)</B></A> - 
+Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String, java.lang.String, org.eclipse.net4j.db.DBUtil.SerializeRowHandler)"><B>serializeTable(ExtendedDataOutput, Connection, IDBTable, String, String, DBUtil.SerializeRowHandler)</B></A> - 
 Static method in class org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/db/ddl/IDBField.html#setName(java.lang.String)"><B>setName(String)</B></A> - 
@@ -828,6 +846,9 @@ Static variable in class org.eclipse.net4j.db.postgresql.<A HREF="./org/eclipse/
 <B>W</B></H2>
 <DL>
 <DT><A HREF="./org/eclipse/net4j/db/DBType.html#writeValue(org.eclipse.net4j.util.io.ExtendedDataOutput, java.sql.ResultSet, int, boolean)"><B>writeValue(ExtendedDataOutput, ResultSet, int, boolean)</B></A> - 
+Method in enum org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/db/DBType.html#writeValueWithResult(org.eclipse.net4j.util.io.ExtendedDataOutput, java.sql.ResultSet, int, boolean)"><B>writeValueWithResult(ExtendedDataOutput, ResultSet, int, boolean)</B></A> - 
 Method in enum org.eclipse.net4j.db.<A HREF="./org/eclipse/net4j/db/DBType.html" title="enum in org.eclipse.net4j.db">DBType</A>
 <DD>&nbsp;
 </DL>

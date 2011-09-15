@@ -166,7 +166,7 @@ Class StructuredContentProvider&lt;INPUT&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/StructuredContentProvider.html#dispose()">dispose</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Disposes of this content provider.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -208,8 +208,7 @@ Class StructuredContentProvider&lt;INPUT&gt;</H2>
              <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;newInput)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Notifies this content provider that the given viewer's input
- has been switched to a different element.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -324,14 +323,6 @@ dispose</H3>
 <PRE>
 public void <B>dispose</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IContentProvider</CODE></B></DD>
-<DD>Disposes of this content provider.  
- This is called by the viewer when it is disposed.
- <p>
- The viewer should not be updated during this call, as it is in the process
- of being disposed.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>dispose</CODE> in interface <CODE>org.eclipse.jface.viewers.IContentProvider</CODE></DL>
 </DD>
@@ -376,27 +367,11 @@ public void <B>inputChanged</B>(org.eclipse.jface.viewers.Viewer&nbsp;viewer,
                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;oldInput,
                          <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;newInput)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IContentProvider</CODE></B></DD>
-<DD>Notifies this content provider that the given viewer's input
- has been switched to a different element.
- <p>
- A typical use for this method is registering the content provider as a listener
- to changes on the new input (using model-specific means), and deregistering the viewer 
- from the old input. In response to these change notifications, the content provider
- should update the viewer (see the add, remove, update and refresh methods on the viewers).
- </p>
- <p>
- The viewer should not be updated during this call, as it might be in the process
- of being disposed.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>inputChanged</CODE> in interface <CODE>org.eclipse.jface.viewers.IContentProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>viewer</CODE> - the viewer<DD><CODE>oldInput</CODE> - the old input element, or <code>null</code> if the viewer
-   did not previously have an input<DD><CODE>newInput</CODE> - the new input element, or <code>null</code> if the viewer
-   does not have an input</DL>
+</DL>
 </DD>
 </DL>
 <HR>

@@ -242,8 +242,7 @@ Class LogDialog</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#close()">close</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Closes this window, disposes its shell, and removes this window from its
- window manager (if it has one).</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -251,7 +250,7 @@ Class LogDialog</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/LogDialog.html#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)">createButtonsForButtonBar</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds buttons to this dialog's button bar.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -426,26 +425,11 @@ close</H3>
 <PRE>
 public boolean <B>close</B>()</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.window.Window</CODE></B></DD>
-<DD>Closes this window, disposes its shell, and removes this window from its
- window manager (if it has one).
- <p>
- This framework method may be extended (<code>super.close</code> must
- be called).
- </p>
- <p>
-  Note that in order to prevent recursive calls to this method 
-  it does not call <code>Shell#close()</code>. As a result <code>ShellListener</code>s 
-  will not receive a <code>shellClosed</code> event.
-  </p>
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>close</CODE> in class <CODE>org.eclipse.jface.dialogs.TrayDialog</CODE></DL>
 </DD>
 <DD><DL>
-
-<DT><B>Returns:</B><DD><code>true</code> if the window is (or was already) closed, and
-         <code>false</code> if it is still open<DT><B>See Also:</B><DD><CODE>Window.close()</CODE></DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -469,21 +453,11 @@ createButtonsForButtonBar</H3>
 <PRE>
 protected void <B>createButtonsForButtonBar</B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.dialogs.Dialog</CODE></B></DD>
-<DD>Adds buttons to this dialog's button bar.
- <p>
- The <code>Dialog</code> implementation of this framework method adds
- standard ok and cancel buttons using the <code>createButton</code>
- framework method. These standard buttons will be accessible from
- <code>getCancelButton</code>, and <code>getOKButton</code>.
- Subclasses may override.
- </p>
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>createButtonsForButtonBar</CODE> in class <CODE>org.eclipse.jface.dialogs.Dialog</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>parent</CODE> - the button bar composite</DL>
+</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->

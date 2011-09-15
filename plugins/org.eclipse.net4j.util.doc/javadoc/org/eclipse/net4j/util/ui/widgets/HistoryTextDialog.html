@@ -201,7 +201,7 @@ TODO extend BaseDialog
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/HistoryTextDialog.html#buttonPressed(int)">buttonPressed</A></B>(int&nbsp;buttonId)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Notifies that this dialog's button with the given id has been pressed.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -209,7 +209,7 @@ TODO extend BaseDialog
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/HistoryTextDialog.html#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)">createButtonsForButtonBar</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds buttons to this dialog's button bar.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -217,8 +217,7 @@ TODO extend BaseDialog
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/HistoryTextDialog.html#createDialogArea(org.eclipse.swt.widgets.Composite)">createDialogArea</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates and returns the contents of the upper part of this dialog (above
- the button bar).</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -242,7 +241,7 @@ TODO extend BaseDialog
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/HistoryTextDialog.html#getValue()">getValue</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the string typed into this input dialog.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -250,7 +249,7 @@ TODO extend BaseDialog
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/widgets/HistoryTextDialog.html#validateInput()">validateInput</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates the input.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.dialogs.InputDialog"><!-- --></A>
@@ -350,15 +349,11 @@ getValue</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getValue</B>()</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.dialogs.InputDialog</CODE></B></DD>
-<DD>Returns the string typed into this input dialog.
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>getValue</CODE> in class <CODE>org.eclipse.jface.dialogs.InputDialog</CODE></DL>
 </DD>
 <DD><DL>
-
-<DT><B>Returns:</B><DD>the input string</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -368,36 +363,11 @@ createDialogArea</H3>
 <PRE>
 protected org.eclipse.swt.widgets.Control <B>createDialogArea</B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.dialogs.Dialog</CODE></B></DD>
-<DD>Creates and returns the contents of the upper part of this dialog (above
- the button bar).
- <p>
- The <code>Dialog</code> implementation of this framework method creates
- and returns a new <code>Composite</code> with standard margins and
- spacing.
- </p>
- <p>
- The returned control's layout data must be an instance of
- <code>GridData</code>. This method must not modify the parent's
- layout.
- </p>
- <p>
- Subclasses must override this method but may call <code>super</code> as
- in the following example:
- </p>
- 
- <pre>
- Composite composite = (Composite) super.createDialogArea(parent);
- //add controls to composite as necessary
- return composite;
- </pre>
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>createDialogArea</CODE> in class <CODE>org.eclipse.jface.dialogs.InputDialog</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>parent</CODE> - the parent composite to contain the dialog area
-<DT><B>Returns:</B><DD>the dialog area control</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -407,23 +377,11 @@ buttonPressed</H3>
 <PRE>
 protected void <B>buttonPressed</B>(int&nbsp;buttonId)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.dialogs.Dialog</CODE></B></DD>
-<DD>Notifies that this dialog's button with the given id has been pressed.
- <p>
- The <code>Dialog</code> implementation of this framework method calls
- <code>okPressed</code> if the ok button is the pressed, and
- <code>cancelPressed</code> if the cancel button is the pressed. All
- other button presses are ignored. Subclasses may override to handle other
- buttons, but should call <code>super.buttonPressed</code> if the
- default handling of the ok and cancel buttons is desired.
- </p>
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>buttonPressed</CODE> in class <CODE>org.eclipse.jface.dialogs.InputDialog</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>buttonId</CODE> - the id of the button that was pressed (see
-            <code>IDialogConstants.*_ID</code> constants)</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -433,21 +391,11 @@ createButtonsForButtonBar</H3>
 <PRE>
 protected void <B>createButtonsForButtonBar</B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.dialogs.Dialog</CODE></B></DD>
-<DD>Adds buttons to this dialog's button bar.
- <p>
- The <code>Dialog</code> implementation of this framework method adds
- standard ok and cancel buttons using the <code>createButton</code>
- framework method. These standard buttons will be accessible from
- <code>getCancelButton</code>, and <code>getOKButton</code>.
- Subclasses may override.
- </p>
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>createButtonsForButtonBar</CODE> in class <CODE>org.eclipse.jface.dialogs.InputDialog</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>parent</CODE> - the button bar composite</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -457,15 +405,6 @@ validateInput</H3>
 <PRE>
 protected void <B>validateInput</B>()</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.dialogs.InputDialog</CODE></B></DD>
-<DD>Validates the input.
- <p>
- The default implementation of this framework method delegates the request
- to the supplied input validator object; if it finds the input invalid,
- the error message is displayed in the dialog's message line. This hook
- method is called whenever the text changes in the input field.
- </p>
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>validateInput</CODE> in class <CODE>org.eclipse.jface.dialogs.InputDialog</CODE></DL>
 </DD>

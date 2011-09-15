@@ -172,7 +172,7 @@ Class SafeActionDelegate</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/actions/SafeActionDelegate.html#run(org.eclipse.jface.action.IAction)">run</A></B>(org.eclipse.jface.action.IAction&nbsp;action)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performs this action.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -189,7 +189,7 @@ Class SafeActionDelegate</H2>
                  org.eclipse.jface.viewers.ISelection&nbsp;selection)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Notifies this action delegate that the selection in the workbench has changed.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -265,25 +265,11 @@ selectionChanged</H3>
 public void <B>selectionChanged</B>(org.eclipse.jface.action.IAction&nbsp;action,
                              org.eclipse.jface.viewers.ISelection&nbsp;selection)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.ui.IActionDelegate</CODE></B></DD>
-<DD>Notifies this action delegate that the selection in the workbench has changed.
- <p>
- Implementers can use this opportunity to change the availability of the
- action or to modify other presentation properties.
- </p><p>
- When the selection changes, the action enablement state is updated based on
- the criteria specified in the plugin.xml file. Then the delegate is notified
- of the selection change regardless of whether the enablement criteria in the
- plugin.xml file is met.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>selectionChanged</CODE> in interface <CODE>org.eclipse.ui.IActionDelegate</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>action</CODE> - the action proxy that handles presentation portion of 
-                the action<DD><CODE>selection</CODE> - the current selection, or <code>null</code> if there
-                is no selection.</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -293,23 +279,11 @@ run</H3>
 <PRE>
 public void <B>run</B>(org.eclipse.jface.action.IAction&nbsp;action)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.ui.IActionDelegate</CODE></B></DD>
-<DD>Performs this action.
- <p>
- This method is called by the proxy action when the action has been
- triggered. Implement this method to do the actual work.
- </p><p>
- <b>Note:</b> If the action delegate also implements
- <code>IActionDelegate2</code>, then this method is not invoked but
- instead the <code>runWithEvent(IAction, Event)</code> method is called.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>run</CODE> in interface <CODE>org.eclipse.ui.IActionDelegate</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>action</CODE> - the action proxy that handles the presentation portion of the
-   action</DL>
+</DL>
 </DD>
 </DL>
 <HR>

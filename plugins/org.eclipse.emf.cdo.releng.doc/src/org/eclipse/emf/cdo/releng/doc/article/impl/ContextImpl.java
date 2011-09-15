@@ -157,12 +157,8 @@ public class ContextImpl extends EObjectImpl implements Context
       }
     }
 
-    new DocumentationImpl(this, project);
-
-    for (Documentation documentation : getDocumentations())
-    {
-      dump(documentation, "");
-    }
+    Documentation documentation = new DocumentationImpl(this, project);
+    dump(documentation, "");
   }
 
   private void dump(StructuralElement element, String prefix)
@@ -353,7 +349,9 @@ public class ContextImpl extends EObjectImpl implements Context
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (baseFolder: ");

@@ -173,8 +173,7 @@ Class OMPreferencePage</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#createContents(org.eclipse.swt.widgets.Composite)">createContents</A></B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates and returns the SWT control for the customized body 
- of this preference page under the given parent composite.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -198,7 +197,7 @@ Class OMPreferencePage</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#doGetPreferenceStore()">doGetPreferenceStore</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the preference store of this preference page.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -238,7 +237,7 @@ Class OMPreferencePage</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html#init(org.eclipse.ui.IWorkbench)">init</A></B>(org.eclipse.ui.IWorkbench&nbsp;workbench)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Initializes this preference page for the given workbench.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.preference.PreferencePage"><!-- --></A>
@@ -349,18 +348,11 @@ init</H3>
 <PRE>
 public void <B>init</B>(org.eclipse.ui.IWorkbench&nbsp;workbench)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.ui.IWorkbenchPreferencePage</CODE></B></DD>
-<DD>Initializes this preference page for the given workbench.
- <p>
- This method is called automatically as the preference page is being created
- and initialized. Clients must not call this method.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>init</CODE> in interface <CODE>org.eclipse.ui.IWorkbenchPreferencePage</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>workbench</CODE> - the workbench</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -370,20 +362,11 @@ doGetPreferenceStore</H3>
 <PRE>
 protected org.eclipse.jface.preference.IPreferenceStore <B>doGetPreferenceStore</B>()</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.preference.PreferencePage</CODE></B></DD>
-<DD>Returns the preference store of this preference page.
- <p>
- This is a framework hook method for subclasses to return a
- page-specific preference store. The default implementation
- returns <code>null</code>.
- </p>
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>doGetPreferenceStore</CODE> in class <CODE>org.eclipse.jface.preference.PreferencePage</CODE></DL>
 </DD>
 <DD><DL>
-
-<DT><B>Returns:</B><DD>the preference store, or <code>null</code> if none</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -435,22 +418,11 @@ createContents</H3>
 <PRE>
 protected final org.eclipse.swt.widgets.Control <B>createContents</B>(org.eclipse.swt.widgets.Composite&nbsp;parent)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.preference.PreferencePage</CODE></B></DD>
-<DD>Creates and returns the SWT control for the customized body 
- of this preference page under the given parent composite.
- <p>
- This framework method must be implemented by concrete subclasses. Any
- subclass returning a <code>Composite</code> object whose <code>Layout</code>
- has default margins (for example, a <code>GridLayout</code>) are expected to
- set the margins of this <code>Layout</code> to 0 pixels. 
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>createContents</CODE> in class <CODE>org.eclipse.jface.preference.PreferencePage</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>parent</CODE> - the parent composite
-<DT><B>Returns:</B><DD>the new control</DL>
+</DL>
 </DD>
 </DL>
 <HR>

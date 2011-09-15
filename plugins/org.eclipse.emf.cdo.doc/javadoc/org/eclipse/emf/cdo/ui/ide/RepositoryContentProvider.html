@@ -154,7 +154,7 @@ Class RepositoryContentProvider</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/ide/RepositoryContentProvider.html#dispose()">dispose</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Disposes of this content provider.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -162,7 +162,7 @@ Class RepositoryContentProvider</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/ide/RepositoryContentProvider.html#getChildren(java.lang.Object)">getChildren</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parentElement)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the child elements of the given parent element.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -170,8 +170,7 @@ Class RepositoryContentProvider</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/ide/RepositoryContentProvider.html#getElements(java.lang.Object)">getElements</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parentElement)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the elements to display in the viewer 
- when its input is set to the given element.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -179,8 +178,7 @@ Class RepositoryContentProvider</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/ide/RepositoryContentProvider.html#getParent(java.lang.Object)">getParent</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the parent for the given element, or <code>null</code> 
- indicating that the parent can't be computed.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -188,7 +186,7 @@ Class RepositoryContentProvider</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/ui/ide/RepositoryContentProvider.html#hasChildren(java.lang.Object)">hasChildren</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parentElement)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns whether the given element has children.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -301,14 +299,6 @@ dispose</H3>
 <PRE>
 public void <B>dispose</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IContentProvider</CODE></B></DD>
-<DD>Disposes of this content provider.  
- This is called by the viewer when it is disposed.
- <p>
- The viewer should not be updated during this call, as it is in the process
- of being disposed.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>dispose</CODE> in interface <CODE>org.eclipse.jface.viewers.IContentProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.net4j.util.ui">dispose</A></CODE> in class <CODE><A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ui">StructuredContentProvider</A>&lt;org.eclipse.core.resources.IWorkspaceRoot&gt;</CODE></DL>
 </DD>
@@ -407,22 +397,11 @@ getChildren</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>[] <B>getChildren</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parentElement)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></B></DD>
-<DD>Returns the child elements of the given parent element.
- <p>
- The difference between this method and <code>IStructuredContentProvider.getElements</code> 
- is that <code>getElements</code> is called to obtain the 
- tree viewer's root elements, whereas <code>getChildren</code> is used
- to obtain the children of a given parent element in the tree (including a root).
- </p>
- The result is not modified by the viewer.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getChildren</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>parentElement</CODE> - the parent element
-<DT><B>Returns:</B><DD>an array of child elements</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -432,24 +411,11 @@ getElements</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>[] <B>getElements</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parentElement)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></B></DD>
-<DD>Returns the elements to display in the viewer 
- when its input is set to the given element. 
- These elements can be presented as rows in a table, items in a list, etc.
- The result is not modified by the viewer.
- <p>
- <b>NOTE:</b> The returned array must not contain the given
- <code>inputElement</code>, since this leads to recursion issues in
- <CODE>AbstractTreeViewer</CODE> (see
- <a href="https://bugs.eclipse.org/9262">bug 9262</a>).
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getElements</CODE> in interface <CODE>org.eclipse.jface.viewers.IStructuredContentProvider</CODE><DT><B>Specified by:</B><DD><CODE>getElements</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>parentElement</CODE> - the input element
-<DT><B>Returns:</B><DD>the array of elements to display in the viewer</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -459,19 +425,11 @@ getParent</H3>
 <PRE>
 public <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A> <B>getParent</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;element)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></B></DD>
-<DD>Returns the parent for the given element, or <code>null</code> 
- indicating that the parent can't be computed. 
- In this case the tree-structured viewer can't expand
- a given node correctly if requested.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getParent</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>element</CODE> - the element
-<DT><B>Returns:</B><DD>the parent element, or <code>null</code> if it
-   has none or if the parent cannot be computed</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -495,21 +453,11 @@ hasChildren</H3>
 <PRE>
 public boolean <B>hasChildren</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;parentElement)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></B></DD>
-<DD>Returns whether the given element has children.
- <p>
- Intended as an optimization for when the viewer does not
- need the actual children.  Clients may be able to implement
- this more efficiently than <code>getChildren</code>.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>hasChildren</CODE> in interface <CODE>org.eclipse.jface.viewers.ITreeContentProvider</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>parentElement</CODE> - the element
-<DT><B>Returns:</B><DD><code>true</code> if the given element has children,
-  and <code>false</code> if it has no children</DL>
+</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->

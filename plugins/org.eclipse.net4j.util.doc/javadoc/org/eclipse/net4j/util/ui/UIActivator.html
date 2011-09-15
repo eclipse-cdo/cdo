@@ -225,8 +225,7 @@ Class UIActivator</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.html#start(org.osgi.framework.BundleContext)">start</A></B>(org.osgi.framework.BundleContext&nbsp;context)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>AbstractUIPlugin</code> implementation of this <code>Plugin</code>
- method refreshes the plug-in actions.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -234,9 +233,7 @@ Class UIActivator</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/util/ui/UIActivator.html#stop(org.osgi.framework.BundleContext)">stop</A></B>(org.osgi.framework.BundleContext&nbsp;context)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The <code>AbstractUIPlugin</code> implementation of this <CODE>Plugin</CODE>
- method saves this plug-in's preference and dialog stores and shuts down 
- its image registry (if they are in use).</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.ui.plugin.AbstractUIPlugin"><!-- --></A>
@@ -347,53 +344,13 @@ start</H3>
 public final void <B>start</B>(org.osgi.framework.BundleContext&nbsp;context)
                  throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.ui.plugin.AbstractUIPlugin</CODE></B></DD>
-<DD>The <code>AbstractUIPlugin</code> implementation of this <code>Plugin</code>
- method refreshes the plug-in actions.  Subclasses may extend this method,
- but must send super <b>first</b>.
- Starts up this plug-in.
- <p>
- This method should be overridden in subclasses that need to do something
- when this plug-in is started.  Implementors should call the inherited method
- at the first possible point to ensure that any system requirements can be met.
- </p>
- <p>
- If this method throws an exception, it is taken as an indication that
- plug-in initialization has failed; as a result, the plug-in will not
- be activated; moreover, the plug-in will be marked as disabled and 
- ineligible for activation for the duration.
- </p>
- <p>
- Note 1: This method is automatically invoked by the platform 
- the first time any code in the plug-in is executed.
- </p>
- <p>
- Note 2: This method is intended to perform simple initialization 
- of the plug-in environment. The platform may terminate initializers 
- that do not complete in a timely fashion.
- </p>
- <p>
- Note 3: The class loader typically has monitors acquired during invocation of this method.  It is 
- strongly recommended that this method avoid synchronized blocks or other thread locking mechanisms,
- as this would lead to deadlock vulnerability.
- </p>
- <p>
- Note 4: The supplied bundle context represents the plug-in to the OSGi framework.
- For security reasons, it is strongly recommended that this object should not be divulged.
- </p>
- <p>
- Note 5: This method and the <CODE>Plugin.stop(BundleContext)</CODE> may be called from separate threads,
- but the OSGi framework ensures that both methods will not be called simultaneously.
- </p>
- <b>Clients must never explicitly call this method.</b>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>start</CODE> in interface <CODE>org.osgi.framework.BundleActivator</CODE><DT><B>Overrides:</B><DD><CODE>start</CODE> in class <CODE>org.eclipse.ui.plugin.AbstractUIPlugin</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>context</CODE> - the bundle context for this plug-in
+
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE> - if this plug-in did not start up properly</DL>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -404,50 +361,13 @@ stop</H3>
 public final void <B>stop</B>(org.osgi.framework.BundleContext&nbsp;context)
                 throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.ui.plugin.AbstractUIPlugin</CODE></B></DD>
-<DD>The <code>AbstractUIPlugin</code> implementation of this <CODE>Plugin</CODE>
- method saves this plug-in's preference and dialog stores and shuts down 
- its image registry (if they are in use). Subclasses may extend this
- method, but must send super <b>last</b>. A try-finally statement should
- be used where necessary to ensure that <code>super.stop()</code> is
- always done.
- Stops this plug-in.
- <p>
- This method should be re-implemented in subclasses that need to do something
- when the plug-in is shut down.  Implementors should call the inherited method
- as late as possible to ensure that any system requirements can be met.
- </p>
- <p>
- Plug-in shutdown code should be robust. In particular, this method
- should always make an effort to shut down the plug-in. Furthermore,
- the code should not assume that the plug-in was started successfully.
- </p>
- <p>
- Note 1: If a plug-in has been automatically started, this method will be automatically
- invoked by the platform when the platform is shut down.
- </p>
- <p>
- Note 2: This method is intended to perform simple termination
- of the plug-in environment. The platform may terminate invocations
- that do not complete in a timely fashion.
- </p>
- <p>
- Note 3: The supplied bundle context represents the plug-in to the OSGi framework.
- For security reasons, it is strongly recommended that this object should not be divulged.
- </p>
- <p>
- Note 4: This method and the <CODE>Plugin.start(BundleContext)</CODE> may be called from separate threads,
- but the OSGi framework ensures that both methods will not be called simultaneously.
- </p>
- <b>Clients must never explicitly call this method.</b>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>stop</CODE> in interface <CODE>org.osgi.framework.BundleActivator</CODE><DT><B>Overrides:</B><DD><CODE>stop</CODE> in class <CODE>org.eclipse.ui.plugin.AbstractUIPlugin</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>context</CODE> - the bundle context for this plug-in
+
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE> - if this method fails to shut down this plug-in</DL>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></DL>
 </DD>
 </DL>
 <HR>

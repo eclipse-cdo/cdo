@@ -167,7 +167,7 @@ Class DNDDropAdapter&lt;TYPE&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDropAdapter.html#determineLocation(org.eclipse.swt.dnd.DropTargetEvent)">determineLocation</A></B>(org.eclipse.swt.dnd.DropTargetEvent&nbsp;event)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the position of the given event's coordinates relative to its target.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -199,7 +199,7 @@ Class DNDDropAdapter&lt;TYPE&gt;</H2>
 <TD><CODE><B><A HREF="../../../../../../org/eclipse/net4j/util/ui/dnd/DNDDropAdapter.html#performDrop(java.lang.Object)">performDrop</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;data)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performs any work associated with the drop.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -226,7 +226,7 @@ Class DNDDropAdapter&lt;TYPE&gt;</H2>
              org.eclipse.swt.dnd.TransferData&nbsp;type)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates dropping on the given object.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -322,8 +322,7 @@ public org.eclipse.jface.viewers.StructuredViewer <B>getViewer</B>()</PRE>
 <DT><B>Overrides:</B><DD><CODE>getViewer</CODE> in class <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></DL>
 </DD>
 <DD><DL>
-
-<DT><B>Returns:</B><DD>the viewer to which this drop support has been added.</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -355,17 +354,11 @@ determineLocation</H3>
 <PRE>
 protected int <B>determineLocation</B>(org.eclipse.swt.dnd.DropTargetEvent&nbsp;event)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></B></DD>
-<DD>Returns the position of the given event's coordinates relative to its target.
- The position is determined to be before, after, or on the item, based on
- some threshold value.
-<P>
 <DD><DL>
 <DT><B>Overrides:</B><DD><CODE>determineLocation</CODE> in class <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>event</CODE> - the event
-<DT><B>Returns:</B><DD>one of the <code>LOCATION_* </code>constants defined in this class</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -375,19 +368,11 @@ performDrop</H3>
 <PRE>
 public boolean <B>performDrop</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;data)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></B></DD>
-<DD>Performs any work associated with the drop.
- <p>
- Subclasses must implement this method to provide drop behavior.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>performDrop</CODE> in class <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>data</CODE> - the drop data
-<DT><B>Returns:</B><DD><code>true</code> if the drop was successful, and 
-   <code>false</code> otherwise</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -399,21 +384,11 @@ public boolean <B>validateDrop</B>(<A HREF="http://download.oracle.com/javase/1.
                             int&nbsp;operation,
                             org.eclipse.swt.dnd.TransferData&nbsp;type)</PRE>
 <DL>
-<DD><B>Description copied from class: <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></B></DD>
-<DD>Validates dropping on the given object. This method is called whenever some 
- aspect of the drop operation changes.
- <p>
- Subclasses must implement this method to define which drops make sense.
- </p>
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>validateDrop</CODE> in class <CODE>org.eclipse.jface.viewers.ViewerDropAdapter</CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>target</CODE> - the object that the mouse is currently hovering over, or
-   <code>null</code> if the mouse is hovering over empty space<DD><CODE>operation</CODE> - the current drag operation (copy, move, etc.)<DD><CODE>type</CODE> - the current transfer type
-<DT><B>Returns:</B><DD><code>true</code> if the drop is valid, and <code>false</code>
-   otherwise</DL>
+</DL>
 </DD>
 </DL>
 <HR>

@@ -186,7 +186,7 @@ Class CDOLabelProvider</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOLabelProvider.html#dispose()">dispose</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Disposes of this label provider.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -194,7 +194,7 @@ Class CDOLabelProvider</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOLabelProvider.html#getBackground(java.lang.Object)">getBackground</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides a background color for the given element.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -202,7 +202,7 @@ Class CDOLabelProvider</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOLabelProvider.html#getFont(java.lang.Object)">getFont</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides a font for the given element.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -210,7 +210,7 @@ Class CDOLabelProvider</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOLabelProvider.html#getForeground(java.lang.Object)">getForeground</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides a foreground color for the given element.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -326,14 +326,6 @@ dispose</H3>
 <PRE>
 public void <B>dispose</B>()</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE></B></DD>
-<DD>Disposes of this label provider.  When a label provider is
- attached to a viewer, the viewer will automatically call
- this method when the viewer is being closed.  When label providers
- are used outside of the context of a viewer, it is the client's
- responsibility to ensure that this method is called when the
- provider is no longer needed.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>dispose</CODE> in interface <CODE>org.eclipse.jface.viewers.IBaseLabelProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html?is-external=true#dispose()" title="class or interface in org.eclipse.emf.edit.ui.provider">dispose</A></CODE> in class <CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.ui.provider">AdapterFactoryLabelProvider</A></CODE></DL>
 </DD>
@@ -362,16 +354,11 @@ getBackground</H3>
 <PRE>
 public org.eclipse.swt.graphics.Color <B>getBackground</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IColorProvider</CODE></B></DD>
-<DD>Provides a background color for the given element.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getBackground</CODE> in interface <CODE>org.eclipse.jface.viewers.IColorProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html?is-external=true#getBackground(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.ui.provider">getBackground</A></CODE> in class <CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.ui.provider">AdapterFactoryLabelProvider</A></CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>object</CODE> - the element
-<DT><B>Returns:</B><DD>the background color for the element, or <code>null</code> 
-   to use the default background color</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -381,16 +368,11 @@ getForeground</H3>
 <PRE>
 public org.eclipse.swt.graphics.Color <B>getForeground</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IColorProvider</CODE></B></DD>
-<DD>Provides a foreground color for the given element.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getForeground</CODE> in interface <CODE>org.eclipse.jface.viewers.IColorProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html?is-external=true#getForeground(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.ui.provider">getForeground</A></CODE> in class <CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.ui.provider">AdapterFactoryLabelProvider</A></CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>object</CODE> - the element
-<DT><B>Returns:</B><DD>the foreground color for the element, or <code>null</code> 
-   to use the default foreground color</DL>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -400,16 +382,11 @@ getFont</H3>
 <PRE>
 public org.eclipse.swt.graphics.Font <B>getFont</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;object)</PRE>
 <DL>
-<DD><B>Description copied from interface: <CODE>org.eclipse.jface.viewers.IFontProvider</CODE></B></DD>
-<DD>Provides a font for the given element.
-<P>
 <DD><DL>
 <DT><B>Specified by:</B><DD><CODE>getFont</CODE> in interface <CODE>org.eclipse.jface.viewers.IFontProvider</CODE><DT><B>Overrides:</B><DD><CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html?is-external=true#getFont(java.lang.Object)" title="class or interface in org.eclipse.emf.edit.ui.provider">getFont</A></CODE> in class <CODE><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html?is-external=true" title="class or interface in org.eclipse.emf.edit.ui.provider">AdapterFactoryLabelProvider</A></CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>object</CODE> - the element
-<DT><B>Returns:</B><DD>the font for the element, or <code>null</code> 
-   to use the default font</DL>
+</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->

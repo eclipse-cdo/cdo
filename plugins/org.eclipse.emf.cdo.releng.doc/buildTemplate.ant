@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="JavaDoc" default="build.clean" basedir="../..">
+<project name="JavaDoc" default="build" basedir="../..">
 
 	<!-- GENERATION WARNING -->
 
@@ -24,6 +24,8 @@
 		<fileset dir="_target/plugins">
 			<include name="**/*.jar" />
 			<exclude name="**/*carbon*" />
+			<exclude name="**/*.source_*" />
+			<exclude name="**/*.doc_*" />
 		</fileset>
 		<fileset dir="plugins">
 			<include name="**/*.jar" />
@@ -43,20 +45,17 @@
 		<include name="**/*.html" />
 	</fileset>
 
-	<target name="clean">
+	<taskdef name="pde.convertSchemaToHTML"
+	         classname="org.eclipse.pde.internal.core.ant.ConvertSchemaToHTML"
+	         classpathref="javadoc.classpath" />
+
+	<target name="build.java">
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${javadoc.destdir}" defaultexcludes="true">
 				<include name="**/*" />
 			</fileset>
 		</delete>
-		<delete includeemptydirs="true" failonerror="false">
-			<fileset dir="${article.destdir}" defaultexcludes="true">
-				<include name="**/*" />
-			</fileset>
-		</delete>
-	</target>
 
-	<target name="build.java">
 		<property name="warningsfile"
 		          location="plugins/org.eclipse.emf.cdo.releng.doc/debug/${PROJECT-NAME}.warnings" />
 
@@ -144,8 +143,18 @@
 	</target>
 
 	<target name="build.schema" unless="schema.skip">
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${schemadoc.destdir}" defaultexcludes="true">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+
 		<mkdir dir="${schemadoc.destdir}" />
-		<copyfile dest="${schemadoc.destdir}" src="plugins/org.eclipse.emf.cdo.releng.doc/schema.css" />
+		<copy todir="${schemadoc.destdir}" failonerror="true" verbose="true">
+			<fileset dir="plugins/org.eclipse.emf.cdo.releng.doc">
+				<include name="schema.css" />
+			</fileset>
+		</copy>
 
 		<!-- SCHEMA CONVERSIONS -->
 
@@ -160,6 +169,12 @@
 		<tstamp>
 			<format property="start.time" pattern="y-M-D-H-m-s-S" />
 		</tstamp>
+
+		<delete includeemptydirs="true" failonerror="false">
+			<fileset dir="${article.destdir}" defaultexcludes="true">
+				<include name="**/*" />
+			</fileset>
+		</delete>
 
 		<mkdir dir="${article.destdir}" />
 		<copy todir="${article.destdir}" verbose="true" failonerror="false">
@@ -182,7 +197,7 @@
 		         private="true">
 
 			<doclet name="org.eclipse.emf.cdo.releng.doc.article.impl.ArticleDoclet"
-			        path="plugins/org.eclipse.emf.cdo.releng.doc/bin;${supplemental}/bin;C:\develop\ws\cdo\_target\plugins\org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar;C:\develop\ws\cdo\_target\plugins\org.eclipse.emf.common_2.7.0.v20110605-0747.jar">
+			        path="plugins/org.eclipse.emf.cdo.releng.doc/bin;${supplemental}/bin;${supplemental}/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar;${supplemental}/org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar;${supplemental}/org.eclipse.emf.common_2.7.0.v20110605-0747.jar">
 				<param name="-starttime" value="${start.time}" />
 				<param name="-basefolder" value="${basedir}" />
 				<param name="-project" value="${PROJECT-NAME}" />
@@ -199,7 +214,5 @@
 	</target>
 
 	<target name="build" depends="build.java, build.schema, build.article" />
-
-	<target name="build.clean" depends="clean, build" />
 
 </project>

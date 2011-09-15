@@ -954,13 +954,15 @@ public class AssembleScripts
       Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
       map.put("xmi", new XMIResourceFactoryImpl());
 
-      File javadoc = new File(project, "javadoc");
-      javadoc.mkdirs();
-
-      File target = new File(javadoc, "toc.xmi");
-
+      File target = new File(project, "toc.xmi");
       URI uri = URI.createFileURI(target.getCanonicalPath());
-      return create ? resourceSet.createResource(uri) : resourceSet.getResource(uri, true);
+
+      if (create)
+      {
+        return resourceSet.createResource(uri);
+      }
+
+      return resourceSet.getResource(uri, true);
     }
   }
 }

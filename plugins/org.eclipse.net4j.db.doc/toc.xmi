@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
+  <article:Plugin name="org.eclipse.net4j.db" label="Net4j DB Framework">
+    <packages name="org.eclipse.net4j.db"/>
+    <packages name="org.eclipse.net4j.db.ddl"/>
+    <packages name="org.eclipse.net4j.db.dml"/>
+    <packages name="org.eclipse.net4j.spi.db"/>
+    <extensionPoints name="dbAdapters"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.net4j.db.derby" label="Net4j DB Framework Derby Adapter">
+    <packages name="org.eclipse.net4j.db.derby"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.net4j.db.h2" label="Net4j DB Framework H2 Adapter">
+    <packages name="org.eclipse.net4j.db.h2"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.net4j.db.hsqldb" label="Net4j DB Framework HSQLDB Adapter">
+    <packages name="org.eclipse.net4j.db.hsqldb"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.net4j.db.mysql" label="Net4j DB Framework MYSQL Adapter">
+    <packages name="org.eclipse.net4j.db.mysql"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.net4j.db.postgresql" label="Net4j DB Framework PostgreSQL Adapter">
+    <packages name="org.eclipse.net4j.db.postgresql"/>
+  </article:Plugin>
+</xmi:XMI>

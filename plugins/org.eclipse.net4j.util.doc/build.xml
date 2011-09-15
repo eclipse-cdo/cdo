@@ -15,6 +15,7 @@
 	<property file="${project.path}/build.properties" />
 	<property name="javadoc.name" value="${pluginName}" />
 	<property name="javadoc.destdir" value="${project.path}/javadoc" />
+	<property name="schemadoc.destdir" value="${project.path}/schemadoc" />
 	<property name="article.destdir" value="${project.path}/html" />
 	<property name="article.sources" value="${project.path}/src" />
 	<property name="supplemental" value="/develop/bin/org.eclipse.emf.cdo.releng.doc.supplemental" />
@@ -204,6 +205,17 @@
 		</java>
 	</target>
 
+	<target name="build.schema" unless="schema.skip">
+		<mkdir dir="${schemadoc.destdir}" />
+		<pde.convertSchemaToHTML manifest="plugins/org.eclipse.net4j.util/plugin.xml" destination="${schemadoc.destdir}" />
+
+		<replaceregexp match="\.\./\.\./(.*?)\.css" replace="\1.css" byline="true">
+			<fileset dir="${schemadoc.destdir}">
+				<include name="*.html" />
+			</fileset>
+		</replaceregexp>
+	</target>
+
 	<target name="build.article" unless="article.skip">
 		<tstamp>
 			<format property="start.time" pattern="y-M-D-H-m-s-S" />
@@ -245,8 +257,8 @@
 		</javadoc>
 	</target>
 
-	<target name="build" depends="build.java,build.article" />
+	<target name="build" depends="build.java, build.schema, build.article" />
 
-	<target name="build.clean" depends="clean,build" />
+	<target name="build.clean" depends="clean, build" />
 
 </project>

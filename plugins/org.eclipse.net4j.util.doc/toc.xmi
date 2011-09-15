@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
-  <article:JavadocGroup name="Net4j Utilities">
+  <article:Plugin name="org.eclipse.net4j.util" label="Net4j Utilities">
     <packages name="org.eclipse.net4j.util"/>
     <packages name="org.eclipse.net4j.util.cache"/>
     <packages name="org.eclipse.net4j.util.collection"/>
@@ -23,8 +23,10 @@
     <packages name="org.eclipse.net4j.util.registry"/>
     <packages name="org.eclipse.net4j.util.security"/>
     <packages name="org.eclipse.net4j.util.transaction"/>
-  </article:JavadocGroup>
-  <article:JavadocGroup name="Net4j Utilities UI">
+    <extensionPoints name="elementProcessors"/>
+    <extensionPoints name="factories"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.net4j.util.ui" label="Net4j Utilities UI">
     <packages name="org.eclipse.net4j.util.ui"/>
     <packages name="org.eclipse.net4j.util.ui.actions"/>
     <packages name="org.eclipse.net4j.util.ui.container"/>
@@ -34,5 +36,5 @@
     <packages name="org.eclipse.net4j.util.ui.security"/>
     <packages name="org.eclipse.net4j.util.ui.views"/>
     <packages name="org.eclipse.net4j.util.ui.widgets"/>
-  </article:JavadocGroup>
+  </article:Plugin>
 </xmi:XMI>

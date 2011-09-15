@@ -5,10 +5,6 @@
 <toc label="Net4j Signalling Platform Documentation" topic="javadoc/overview-summary.html">
 	<topic label="Overview" href="html/Overview.html">
 	</topic>
-	<topic label="Online Information" href="html/online">
-		<topic label="Homepage" href="http://www.eclipse.org/cdo" />
-		<topic label="Wiki" href="http://wiki.eclipse.org/CDO" />
-	</topic>
 	<topic label="Reference" href="html/reference">
 		<topic label="API Reference" href="javadoc/overview-summary.html">
 			<topic label="Net4j Signalling Platform Transport" href="javadoc/org/eclipse/net4j/package-summary.html">
@@ -43,6 +39,10 @@
 				<topic label="org.eclipse.net4j.ui" href="javadoc/org/eclipse/net4j/ui/package-summary.html" />
 			</topic>
 		</topic>
+	</topic>
+	<topic label="Online" href="html/online">
+		<topic label="Homepage" href="http://www.eclipse.org/cdo" />
+		<topic label="Wiki" href="http://wiki.eclipse.org/CDO" />
 	</topic>
 	<topic label="Legal" href="about.html" />
 </toc>

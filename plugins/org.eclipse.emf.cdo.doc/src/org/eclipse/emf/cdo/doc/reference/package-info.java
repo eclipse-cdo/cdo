@@ -11,6 +11,8 @@
 
 /**
  * Reference
+ * 
+ * @number 444
  */
 package org.eclipse.emf.cdo.doc.reference;
 

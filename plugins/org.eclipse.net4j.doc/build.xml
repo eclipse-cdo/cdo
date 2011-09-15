@@ -154,7 +154,7 @@
 			<tag name="noreference" description="No Reference" />
 		</javadoc>
 
-		<copy todir="${destdir}" verbose="true" failonerror="false">
+		<copy todir="${javadoc.destdir}" verbose="true" failonerror="false">
 			<cutdirsmapper dirs="2" />
 			<fileset dir="plugins" defaultexcludes="true">
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/acceptor/doc-files/**" />

@@ -10,7 +10,9 @@
  */
 
 /**
- * Online Information
+ * Online
+ * 
+ * @number 555
  */
 package org.eclipse.net4j.doc.online;
 

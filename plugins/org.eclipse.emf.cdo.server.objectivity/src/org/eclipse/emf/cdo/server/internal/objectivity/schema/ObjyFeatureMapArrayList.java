@@ -1,4 +1,3 @@
-/***************************************************************************
 /*
  * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials

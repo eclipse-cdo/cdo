@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- ******************************************************************************/
+ */
 package org.eclipse.emf.cdo.dawn.gmf.synchronize;
 
 import org.eclipse.emf.cdo.dawn.gmf.util.DawnDiagramUpdater;
@@ -146,7 +146,7 @@ public class DawnChangeHelper
     return kep;
   }
 
-  /*********************************************************************************************************************
+  /***************************************
    * This method creates an EditPart given by the specified ElemetType and PLaces it to the give coordinates
    * Element-Types could be: DawnElementTypes.Klasse_1001
    * 
@@ -171,7 +171,7 @@ public class DawnChangeHelper
     return (EditPart)viewer.getEditPartRegistry().get(viewAdapter.getAdapter(View.class));
   }
 
-  /*********************************************************************************************************************
+  /***************************************
    * sets a property for an editpart
    * 
    * @param editPart
@@ -191,7 +191,7 @@ public class DawnChangeHelper
 
   }
 
-  /*********************************************************************************************************************
+  /***************************************
    * resizes an Editpart to the given dimension
    * 
    * @param editpart
@@ -232,7 +232,7 @@ public class DawnChangeHelper
     }
   }
 
-  /*********************************************************************************************************************
+  /***************************************
    * moves an EdidPart to the given postione
    * 
    * @param editpart
@@ -315,7 +315,7 @@ public class DawnChangeHelper
     ViewUtil.destroy(view);
   }
 
-  /*********************************************************************************************************************
+  /***************************************
    * Deletes a view and it's contained element
    * 
    * @param view
@@ -360,7 +360,7 @@ public class DawnChangeHelper
     editor.getDiagramEditDomain().getDiagramCommandStack().execute(command);
   }
 
-  /*********************************************************************************************************************
+  /***************************************
    * creates an edge for a given elementType
    * 
    * @param oldEdge
@@ -398,7 +398,7 @@ public class DawnChangeHelper
     return ret;
   }
 
-  /*********************************************************************************************************************
+  /***************************************
    * This Method sets the Anchors and Bendpoint from an old Edge to the edge of the given EditPart
    * 
    * @param edgeEditpart
@@ -564,7 +564,7 @@ public class DawnChangeHelper
     });
   }
 
-  /*********************************************************************************************************************
+  /***************************************
    * sets a property for an editpart
    * 
    * @param editPart
@@ -582,7 +582,7 @@ public class DawnChangeHelper
     diagramEP.getDiagramEditDomain().getDiagramCommandStack().execute(new ICommandProxy(setPropertyCommand));
   }
 
-  /*********************************************************************************************************************
+  /***************************************
    * updates the model
    * 
    * @param editPart

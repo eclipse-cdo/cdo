@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
  * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * 
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- ******************************************************************************/
+ */
 package org.eclipse.emf.cdo.dawn.gmf.util;
 
 /**
@@ -942,7 +942,7 @@ public class DawnResourceHelper
     return FileLocator.resolve(new URL(r.getURI().toString())).toString().replace("file:", "");
   }
 
-  /****************************************************************************************************
+  /**********************
    * finds EditPart from a View
    * 
    * @param view

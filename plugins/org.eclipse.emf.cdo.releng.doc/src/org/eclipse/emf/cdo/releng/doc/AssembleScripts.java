@@ -99,7 +99,7 @@ public class AssembleScripts
         assembleArticleOptions(javaDoc);
 
         javaDoc.generateAnt();
-        javaDoc.generateToc();
+        javaDoc.generateTocXmi();
       }
 
       ANTLIB.generate();
@@ -857,8 +857,8 @@ public class AssembleScripts
             {
               for (String schemaPlugin : sort(schemaPlugins))
               {
-                writer.write("\t\t<pde.convertSchemaToHTML manifest=\"plugins/" + schemaPlugin
-                    + "/plugin.xml\" destination=\"${schemadoc.destdir}\" />\n");
+                writer.write("\t\t<pde.convertSchemaToHTML destination=\"${schemadoc.destdir}\" manifest=\"plugins/"
+                    + schemaPlugin + "/plugin.xml\" />\n");
               }
             }
             else if ("<!-- JAVADOC DEPENDENCIES -->".equals(id))
@@ -916,9 +916,9 @@ public class AssembleScripts
       }
     }
 
-    public void generateToc() throws IOException
+    public void generateTocXmi() throws IOException
     {
-      Resource resource = getTocResource(getProject(), true);
+      Resource resource = getTocXmiResource(getProject(), true);
       System.out.println("Generating " + resource.getURI().path());
 
       for (SourcePlugin sourcePlugin : getSortedSourcePlugins())
@@ -946,7 +946,7 @@ public class AssembleScripts
       resource.save(null);
     }
 
-    public static Resource getTocResource(File project, boolean create) throws IOException
+    public static Resource getTocXmiResource(File project, boolean create) throws IOException
     {
       ArticlePackage.eINSTANCE.eClass();
 

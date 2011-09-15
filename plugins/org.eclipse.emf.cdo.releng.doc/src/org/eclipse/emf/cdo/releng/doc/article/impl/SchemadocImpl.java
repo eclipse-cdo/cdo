@@ -92,6 +92,7 @@ public class SchemadocImpl extends CategoryImpl implements Schemadoc
 
   private String getHref(ExtensionPoint extensionPoint)
   {
-    return "schemadoc/" + extensionPoint.getName() + ".html";
+    String plugin = extensionPoint.getPlugin().getName().replace('.', '_');
+    return "schemadoc/" + plugin + "_" + extensionPoint.getName() + ".html";
   }
 } // SchemadocImpl

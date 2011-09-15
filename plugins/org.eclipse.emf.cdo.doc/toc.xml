@@ -98,9 +98,20 @@
 			</topic>
 		</topic>
 		<topic label="Extension Point Reference" href="schemadoc/overview-summary.html">
-				<topic label="org.eclipse.emf.cdo.server.appExtensions" href="schemadoc/org.eclipse.emf.cdo.server.appExtensions.html" />
-				<topic label="org.eclipse.emf.cdo.server.repositoryFactories" href="schemadoc/org.eclipse.emf.cdo.server.repositoryFactories.html" />
-				<topic label="org.eclipse.emf.cdo.server.storeFactories" href="schemadoc/org.eclipse.emf.cdo.server.storeFactories.html" />
+			<topic label="CDO Model Repository Client" href="schemadoc/org_eclipse_emf_cdo_viewProviders.html">
+				<topic label="viewProviders" href="schemadoc/org_eclipse_emf_cdo_viewProviders.html" />
+			</topic>
+			<topic label="CDO Model Repository Server" href="schemadoc/org_eclipse_emf_cdo_server_appExtensions.html">
+				<topic label="appExtensions" href="schemadoc/org_eclipse_emf_cdo_server_appExtensions.html" />
+				<topic label="repositoryFactories" href="schemadoc/org_eclipse_emf_cdo_server_repositoryFactories.html" />
+				<topic label="storeFactories" href="schemadoc/org_eclipse_emf_cdo_server_storeFactories.html" />
+			</topic>
+			<topic label="CDO Model Repository Server DB" href="schemadoc/org_eclipse_emf_cdo_server_db_mappingStrategies.html">
+				<topic label="mappingStrategies" href="schemadoc/org_eclipse_emf_cdo_server_db_mappingStrategies.html" />
+			</topic>
+			<topic label="CDO Model Repository Server Hibernate" href="schemadoc/org_eclipse_emf_cdo_server_hibernate_mappingProviderFactories.html">
+				<topic label="mappingProviderFactories" href="schemadoc/org_eclipse_emf_cdo_server_hibernate_mappingProviderFactories.html" />
+			</topic>
 		</topic>
 	</topic>
 	<topic label="Online Information" href="html/online">

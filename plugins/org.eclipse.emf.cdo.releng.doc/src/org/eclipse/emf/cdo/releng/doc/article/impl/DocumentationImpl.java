@@ -23,7 +23,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -306,11 +305,11 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   {
     try
     {
-      Resource resource = AssembleScripts.JavaDoc.getTocResource(projectFolder, false);
+      Resource resource = AssembleScripts.JavaDoc.getTocXmiResource(projectFolder, false);
 
-      for (EObject eObject : resource.getContents())
+      for (Object content : resource.getContents().toArray())
       {
-        getPlugins().add((Plugin)eObject);
+        getPlugins().add((Plugin)content);
       }
     }
     catch (IOException ex)
@@ -338,7 +337,9 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   public Context getContext()
   {
     if (eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT)
+    {
       return null;
+    }
     return (Context)eContainer();
   }
 
@@ -360,24 +361,34 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
    */
   public void setContext(Context newContext)
   {
-    if (newContext != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT && newContext != null))
+    if (newContext != eInternalContainer() || eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT
+        && newContext != null)
     {
       if (EcoreUtil.isAncestor(this, newContext))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newContext != null)
+      {
         msgs = ((InternalEObject)newContext).eInverseAdd(this, ArticlePackage.CONTEXT__DOCUMENTATIONS, Context.class,
             msgs);
+      }
       msgs = basicSetContext(newContext, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.DOCUMENTATION__CONTEXT, newContext,
           newContext));
+    }
   }
 
   /**
@@ -447,7 +458,9 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     {
     case ArticlePackage.DOCUMENTATION__CONTEXT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetContext((Context)otherEnd, msgs);
     case ArticlePackage.DOCUMENTATION__EMBEDDABLE_ELEMENTS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getEmbeddableElements()).basicAdd(otherEnd, msgs);
@@ -597,7 +610,9 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (project: ");

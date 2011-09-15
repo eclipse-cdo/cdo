@@ -207,7 +207,9 @@
 
 	<target name="build.schema" unless="schema.skip">
 		<mkdir dir="${schemadoc.destdir}" />
-		<pde.convertSchemaToHTML manifest="plugins/org.eclipse.net4j.util/plugin.xml" destination="${schemadoc.destdir}" />
+		<copyfile dest="${schemadoc.destdir}" src="plugins/org.eclipse.emf.cdo.releng.doc/schema.css" />
+
+		<pde.convertSchemaToHTML destination="${schemadoc.destdir}" manifest="plugins/org.eclipse.net4j.util/plugin.xml" />
 
 		<replaceregexp match="\.\./\.\./(.*?)\.css" replace="\1.css" byline="true">
 			<fileset dir="${schemadoc.destdir}">

@@ -145,6 +145,8 @@
 
 	<target name="build.schema" unless="schema.skip">
 		<mkdir dir="${schemadoc.destdir}" />
+		<copyfile dest="${schemadoc.destdir}" src="plugins/org.eclipse.emf.cdo.releng.doc/schema.css" />
+
 		<!-- SCHEMA CONVERSIONS -->
 
 		<replaceregexp match="\.\./\.\./(.*?)\.css" replace="\1.css" byline="true">

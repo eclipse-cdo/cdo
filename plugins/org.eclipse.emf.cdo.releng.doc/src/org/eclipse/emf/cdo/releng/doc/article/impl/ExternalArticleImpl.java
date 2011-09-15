@@ -127,13 +127,21 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");
     result.append(url);
     result.append(')');
     return result.toString();
+  }
+
+  @Override
+  public void generate() throws IOException
+  {
+    // Do nothing
   }
 
   @Override

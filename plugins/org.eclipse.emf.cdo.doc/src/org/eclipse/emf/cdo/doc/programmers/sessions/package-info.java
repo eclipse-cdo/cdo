@@ -10,9 +10,9 @@
  */
 
 /**
- * Online Docs
+ * Sessions
  * 
- * @number 555
+ * @number 2
  */
-package org.eclipse.net4j.doc.online;
+package org.eclipse.emf.cdo.doc.programmers.sessions;
 

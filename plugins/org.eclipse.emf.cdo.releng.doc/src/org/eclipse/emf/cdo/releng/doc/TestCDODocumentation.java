@@ -39,7 +39,7 @@ public class TestCDODocumentation
   public static void main(String[] args)
   {
     add("-sourcepath /develop/ws/cdo/plugins/org.eclipse.net4j.util.doc/src;/develop/ws/cdo/plugins/org.eclipse.net4j.db.doc/src;/develop/ws/cdo/plugins/org.eclipse.net4j.doc/src;/develop/ws/cdo/plugins/org.eclipse.emf.cdo.doc/src");
-    add("-subpackages org.eclipse.net4j.util.doc:org.eclipse.emf.cdo.doc.connectors:org.eclipse.emf.cdo.doc.sessions:org.eclipse.emf.cdo.doc.reference:org.eclipse.emf.cdo.doc.reference.api:org.eclipse.emf.cdo.doc.online:org.eclipse.emf.cdo.doc");
+    add("-subpackages org.eclipse.net4j.util.doc:org.eclipse.emf.cdo.doc.programmers.connectors:org.eclipse.emf.cdo.doc.programmers.sessions:org.eclipse.emf.cdo.doc.reference:org.eclipse.emf.cdo.doc.reference.api:org.eclipse.emf.cdo.doc.online:org.eclipse.emf.cdo.doc:org.eclipse.emf.cdo.doc.programmers");
     add("-doclet org.eclipse.emf.cdo.releng.doc.article.impl.ArticleDoclet");
     add("-docletpath /develop/ws/cdo/plugins/org.eclipse.emf.cdo.releng.doc/bin;/develop/bin/org.eclipse.emf.cdo.releng.doc.supplemental/bin;/develop/ws/cdo/_target/plugins/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar;/develop/ws/cdo/_target/plugins/org.eclipse.emf.common_2.7.0.v20110605-0747.jar");
     add("-encoding ISO-8859-1");

@@ -10,7 +10,11 @@
  */
 
 /**
- * Sessions
+ * Connectors
+ * <p>
+ * In this category you'll find a number of articles about physical transport connections: {@toc}
+ * 
+ * @number 1
  */
-package org.eclipse.emf.cdo.doc.sessions;
+package org.eclipse.emf.cdo.doc.programmers.connectors;
 

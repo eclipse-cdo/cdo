@@ -9,14 +9,11 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.Article;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
-import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.ClassDoc;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -63,19 +60,7 @@ public class ArticleImpl extends ChapterImpl implements Article
   @Override
   public void generate() throws IOException
   {
-    HtmlWriter out = null;
-
-    try
-    {
-      File file = getOutputFile();
-      file.getParentFile().mkdirs();
-      out = new HtmlWriter(file);
-
-      generate(out);
-    }
-    finally
-    {
-      ArticleUtil.close(out);
-    }
+    generate(getOutputFile());
   }
+
 } // ArticleImpl

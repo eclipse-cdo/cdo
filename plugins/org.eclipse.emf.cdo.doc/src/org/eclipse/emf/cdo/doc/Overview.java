@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.doc;
  * Overview
  * 
  * @number 0
+ * @default
  */
 public class Overview
 {

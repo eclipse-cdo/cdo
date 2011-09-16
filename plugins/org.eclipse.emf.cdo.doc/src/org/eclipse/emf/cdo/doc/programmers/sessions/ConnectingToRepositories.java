@@ -8,9 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
+package org.eclipse.emf.cdo.doc.programmers.sessions;
 
 /**
- * Connectors
+ * Connecting To Repositories
  */
-package org.eclipse.emf.cdo.doc.connectors;
+public class ConnectingToRepositories
+{
+  /**
+   * Set Buffer Capacity
+   */
+  public class SetBufferCapacity
+  {
+  }
 
+  /**
+   * Set Connection Timeout
+   */
+  public class SetConnectionTimeout
+  {
+  }
+}

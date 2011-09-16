@@ -67,7 +67,7 @@ public class SchemadocImpl extends CategoryImpl implements Schemadoc
       {
         if (!exists)
         {
-          writer.write(prefix + "<topic label=\"" + getTitle() + "\" href=\"schemadoc/overview-summary.html\">\n");
+          writer.write(prefix + "<topic label=\"" + getTitle() + "\" href=\"" + getTocHref() + "\">\n");
           exists = true;
         }
 

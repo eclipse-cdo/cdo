@@ -315,11 +315,6 @@
 		</delete>
 
 		<mkdir dir="${article.destdir}" />
-		<copy todir="${article.destdir}" verbose="true" failonerror="false">
-			<fileset dir="${article.sources}" defaultexcludes="true">
-				<exclude name="**/*.java" />
-			</fileset>
-		</copy>
 		<copy todir="${project.path}/images" verbose="true" failonerror="false">
 			<fileset dir="plugins/org.eclipse.emf.cdo.releng.doc/resources" defaultexcludes="true">
 				<include name="**/*" />

@@ -21,8 +21,12 @@ import com.sun.javadoc.Tag;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,8 +156,8 @@ public final class ArticleUtil
 
   public static String readFile(File file)
   {
-    Reader reader = null;
     char[] buffer = new char[(int)file.length()];
+    Reader reader = null;
 
     try
     {
@@ -168,6 +172,43 @@ public final class ArticleUtil
     finally
     {
       close(reader);
+    }
+  }
+
+  public static void copyFile(File source, File target)
+  {
+    int size = (int)source.length();
+    byte[] buffer = new byte[size];
+    InputStream in = null;
+
+    try
+    {
+      in = new FileInputStream(source);
+      in.read(buffer);
+    }
+    catch (IOException ex)
+    {
+      throw new RuntimeException(ex);
+    }
+    finally
+    {
+      close(in);
+    }
+
+    OutputStream out = null;
+
+    try
+    {
+      out = new FileOutputStream(target);
+      out.write(buffer);
+    }
+    catch (IOException ex)
+    {
+      throw new RuntimeException(ex);
+    }
+    finally
+    {
+      close(out);
     }
   }
 

@@ -123,4 +123,6 @@ public interface Documentation extends StructuralElement
    */
   EList<Plugin> getPlugins();
 
+  void setDefaultElement(StructuralElement defaultElement);
+
 } // Documentation

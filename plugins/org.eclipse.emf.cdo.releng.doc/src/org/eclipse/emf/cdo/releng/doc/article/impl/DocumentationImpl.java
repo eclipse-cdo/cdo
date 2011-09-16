@@ -116,6 +116,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
    */
   protected EList<Plugin> plugins;
 
+  private StructuralElement defaultElement;
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -627,6 +629,16 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     return "Documentation";
   }
 
+  public void setDefaultElement(StructuralElement defaultElement)
+  {
+    if (this.defaultElement != null)
+    {
+      System.err.println("Multiple default elements declared");
+    }
+
+    this.defaultElement = defaultElement;
+  }
+
   @Override
   public RootDoc getDoc()
   {
@@ -661,10 +673,15 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
       try
       {
+        String href = "javadoc/overview-summary.html";
+        if (defaultElement != null)
+        {
+          href = ((StructuralElementImpl)defaultElement).getTocHref();
+        }
 
         writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n");
         writer.write("<?NLS TYPE=\"org.eclipse.help.toc\"?>\n\n");
-        writer.write("<toc label=\"" + getDocumentation().getTitle() + "\" topic=\"javadoc/overview-summary.html\">\n");
+        writer.write("<toc label=\"" + getDocumentation().getTitle() + "\" topic=\"" + href + "\">\n");
 
         generateTocEntries(writer, "\t");
 

@@ -2,18 +2,20 @@
 
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="CDO Model Repository Documentation" topic="javadoc/overview-summary.html">
+<toc label="CDO Model Repository Documentation" topic="html/Overview.html">
 	<topic label="Overview" href="html/Overview.html">
 	</topic>
-	<topic label="Connectors" href="html/connectors">
-		<topic label="Creating Transport Connections" href="html/connectors/CreatingTransportConnections.html">
+	<topic label="Programmer's Guide" href="html/programmers/summary.html">
+		<topic label="Connectors" href="html/programmers/connectors/summary.html">
+			<topic label="Creating Transport Connections" href="html/programmers/connectors/CreatingTransportConnections.html">
+			</topic>
+		</topic>
+		<topic label="Sessions" href="html/programmers/sessions/summary.html">
+			<topic label="Connecting To Repositories" href="html/programmers/sessions/ConnectingToRepositories.html">
+			</topic>
 		</topic>
 	</topic>
-	<topic label="Sessions" href="html/sessions">
-		<topic label="Connecting To Repositories" href="html/sessions/ConnectingToRepositories.html">
-		</topic>
-	</topic>
-	<topic label="Reference" href="html/reference">
+	<topic label="Reference" href="html/reference/summary.html">
 		<topic label="API Reference" href="javadoc/overview-summary.html">
 			<topic label="CDO Model Repository Client" href="javadoc/org/eclipse/emf/cdo/package-summary.html">
 				<topic label="org.eclipse.emf.cdo" href="javadoc/org/eclipse/emf/cdo/package-summary.html" />
@@ -99,7 +101,7 @@
 				<topic label="org.eclipse.emf.cdo.server.objectivity" href="javadoc/org/eclipse/emf/cdo/server/objectivity/package-summary.html" />
 			</topic>
 		</topic>
-		<topic label="Extension Point Reference" href="schemadoc/overview-summary.html">
+		<topic label="Extension Point Reference" href="html/reference/schema/summary.html">
 			<topic label="CDO Model Repository Client" href="schemadoc/org_eclipse_emf_cdo_viewProviders.html">
 				<topic label="viewProviders" href="schemadoc/org_eclipse_emf_cdo_viewProviders.html" />
 			</topic>
@@ -116,7 +118,7 @@
 			</topic>
 		</topic>
 	</topic>
-	<topic label="Online" href="html/online">
+	<topic label="Online Docs" href="html/online/summary.html">
 		<topic label="Homepage" href="http://www.eclipse.org/cdo" />
 		<topic label="Wiki" href="http://wiki.eclipse.org/CDO" />
 	</topic>

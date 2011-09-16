@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.doc.connectors;
+package org.eclipse.emf.cdo.doc.programmers.connectors;
 
-import org.eclipse.emf.cdo.doc.connectors.CreatingTransportConnections.AddConfigurationParameters.SetBufferCapacity;
-import org.eclipse.emf.cdo.doc.connectors.Snippets.JMSConnector;
-import org.eclipse.emf.cdo.doc.sessions.ConnectingToRepositories.SetConnectionTimeout;
+import org.eclipse.emf.cdo.doc.programmers.connectors.CreatingTransportConnections.AddConfigurationParameters.SetBufferCapacity;
+import org.eclipse.emf.cdo.doc.programmers.connectors.Snippets.JMSConnector;
+import org.eclipse.emf.cdo.doc.programmers.sessions.ConnectingToRepositories.SetConnectionTimeout;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
@@ -57,6 +58,128 @@ public class Bugzilla_351078_Test extends AbstractSyncingTest
   public void testDoNothing() throws Exception
   {
     run(new CompanyChanger());
+  }
+
+  public void testAddTwoRemoveSecond_DoNothing() throws Exception
+  {
+    run(new CompanyChanger()
+    {
+      @Override
+      public void beforeConnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.remove(1);
+        transaction.commit();
+      }
+
+      @Override
+      public void beforeReconnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+      }
+    });
+  }
+
+  public void testAddTwo_RemoveFirst() throws Exception
+  {
+    run(new CompanyChanger()
+    {
+      @Override
+      public void beforeConnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+      }
+
+      @Override
+      public void beforeReconnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.remove(0);
+        transaction.commit();
+      }
+    });
+  }
+
+  public void testAddTwo_RemoveSecond() throws Exception
+  {
+    run(new CompanyChanger()
+    {
+      @Override
+      public void beforeConnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+      }
+
+      @Override
+      public void beforeReconnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.remove(1);
+        transaction.commit();
+      }
+    });
+  }
+
+  public void testAddTwo_RemoveSecondAddOne() throws Exception
+  {
+    run(new CompanyChanger()
+    {
+      @Override
+      public void beforeConnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+      }
+
+      @Override
+      public void beforeReconnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.remove(1);
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+      }
+    });
+  }
+
+  public void testAddTwo_AddOneRemoveThird() throws Exception
+  {
+    run(new CompanyChanger()
+    {
+      @Override
+      public void beforeConnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+      }
+
+      @Override
+      public void beforeReconnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.remove(2);
+        transaction.commit();
+      }
+    });
   }
 
   public void testAddOne_AddOne() throws Exception
@@ -345,20 +468,7 @@ public class Bugzilla_351078_Test extends AbstractSyncingTest
     waitForOnline(clone);
     sleep(500); // TODO Clarify why waitForOnline() alone is not enough
 
-    // Create client session & transaction.
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-
-    CDOID id = CDOUtil.getCDOObject(masterCompany).cdoID();
-    Company company = (Company)transaction.getObject(id);
-    EList<Category> categories = company.getCategories();
-
-    for (int i = 0; i < masterCompany.getCategories().size(); i++)
-    {
-      CDOObject masterCategory = CDOUtil.getCDOObject(masterCompany.getCategories().get(i));
-      CDOObject category = CDOUtil.getCDOObject(categories.get(i));
-      assertEquals(masterCategory.cdoID(), category.cdoID());
-    }
+    check(masterCompany, "after connect");
 
     getOfflineConfig().stopMasterTransport();
     waitForOffline(clone);
@@ -370,12 +480,30 @@ public class Bugzilla_351078_Test extends AbstractSyncingTest
     waitForOnline(clone);
     sleep(500);
 
-    for (int i = 0; i < masterCompany.getCategories().size(); i++)
+    check(masterCompany, "after reconnect");
+  }
+
+  private void check(Company masterCompany, String when)
+  {
+    EList<Category> masterCategories = masterCompany.getCategories();
+
+    CDOSession session = openSession();
+    CDOView view = session.openView();
+
+    CDOID id = CDOUtil.getCDOObject(masterCompany).cdoID();
+    Company company = (Company)view.getObject(id);
+    EList<Category> categories = company.getCategories();
+
+    assertEquals("Size (" + when + ")", masterCategories.size(), categories.size());
+
+    for (int i = 0; i < masterCategories.size(); i++)
     {
-      CDOObject masterCategory = CDOUtil.getCDOObject(masterCompany.getCategories().get(i));
+      CDOObject masterCategory = CDOUtil.getCDOObject(masterCategories.get(i));
       CDOObject category = CDOUtil.getCDOObject(categories.get(i));
-      assertEquals("Element " + i, masterCategory.cdoID(), category.cdoID());
+      assertEquals("Element " + i + " (" + when + ")", masterCategory.cdoID(), category.cdoID());
     }
+
+    session.close();
   }
 
   /**

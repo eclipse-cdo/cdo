@@ -626,6 +626,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   protected IScenario getDefaultScenario()
   {
     IScenario scenario;
+
     try
     {
       scenario = Scenario.load();

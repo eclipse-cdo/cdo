@@ -20,19 +20,19 @@ public interface IScenario extends ITestLifecycle, Serializable
 {
   public IContainerConfig getContainerConfig();
 
-  public void setContainerConfig(IContainerConfig containerConfig);
+  public IScenario setContainerConfig(IContainerConfig containerConfig);
 
   public IRepositoryConfig getRepositoryConfig();
 
-  public void setRepositoryConfig(IRepositoryConfig repositoryConfig);
+  public IScenario setRepositoryConfig(IRepositoryConfig repositoryConfig);
 
   public ISessionConfig getSessionConfig();
 
-  public void setSessionConfig(ISessionConfig sessionConfig);
+  public IScenario setSessionConfig(ISessionConfig sessionConfig);
 
   public IModelConfig getModelConfig();
 
-  public void setModelConfig(IModelConfig modelConfig);
+  public IScenario setModelConfig(IModelConfig modelConfig);
 
   public Set<IConfig> getConfigs();
 

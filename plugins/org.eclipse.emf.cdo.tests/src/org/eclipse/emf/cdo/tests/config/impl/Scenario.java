@@ -70,7 +70,7 @@ public class Scenario implements IScenario
     return containerConfig;
   }
 
-  public void setContainerConfig(IContainerConfig containerConfig)
+  public Scenario setContainerConfig(IContainerConfig containerConfig)
   {
     configs = null;
     this.containerConfig = containerConfig;
@@ -78,6 +78,8 @@ public class Scenario implements IScenario
     {
       containerConfig.setCurrentTest(currentTest);
     }
+
+    return this;
   }
 
   public IRepositoryConfig getRepositoryConfig()
@@ -85,7 +87,7 @@ public class Scenario implements IScenario
     return repositoryConfig;
   }
 
-  public void setRepositoryConfig(IRepositoryConfig repositoryConfig)
+  public Scenario setRepositoryConfig(IRepositoryConfig repositoryConfig)
   {
     configs = null;
     this.repositoryConfig = repositoryConfig;
@@ -93,6 +95,8 @@ public class Scenario implements IScenario
     {
       repositoryConfig.setCurrentTest(currentTest);
     }
+
+    return this;
   }
 
   public ISessionConfig getSessionConfig()
@@ -100,7 +104,7 @@ public class Scenario implements IScenario
     return sessionConfig;
   }
 
-  public void setSessionConfig(ISessionConfig sessionConfig)
+  public Scenario setSessionConfig(ISessionConfig sessionConfig)
   {
     configs = null;
     this.sessionConfig = sessionConfig;
@@ -108,6 +112,8 @@ public class Scenario implements IScenario
     {
       sessionConfig.setCurrentTest(currentTest);
     }
+
+    return this;
   }
 
   public IModelConfig getModelConfig()
@@ -115,7 +121,7 @@ public class Scenario implements IScenario
     return modelConfig;
   }
 
-  public void setModelConfig(IModelConfig modelConfig)
+  public Scenario setModelConfig(IModelConfig modelConfig)
   {
     configs = null;
     this.modelConfig = modelConfig;
@@ -123,6 +129,8 @@ public class Scenario implements IScenario
     {
       modelConfig.setCurrentTest(currentTest);
     }
+
+    return this;
   }
 
   @Override

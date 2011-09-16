@@ -95,7 +95,9 @@ public class CategoryImpl extends BodyImpl implements Category
   public void generate(HtmlWriter out) throws IOException
   {
     String title = getTitle();
+    out.write("<center>\n");
     out.writeHeading(1, title);
+    out.write("</center>\n");
 
     EList<BodyElement> elements = getElements();
     BodyElementContainerImpl.generate(out, this, elements);

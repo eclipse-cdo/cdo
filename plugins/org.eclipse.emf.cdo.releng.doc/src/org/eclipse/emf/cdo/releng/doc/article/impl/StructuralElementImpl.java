@@ -570,6 +570,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   protected void generate(File file) throws IOException
   {
+    String title = getTitle() + " (" + getDocumentation().getTitle() + ")";
     HtmlWriter out = null;
 
     try
@@ -577,7 +578,35 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       file.getParentFile().mkdirs();
       out = new HtmlWriter(file);
 
+      out.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n");
+      out.write("<HTML>\n");
+      out.write("\n");
+      out.write("<HEAD>\n");
+      out.write("<TITLE>\n");
+      out.write(title + "\n");
+      out.write("</TITLE>\n");
+      out.write("\n");
+      out.write("<SCRIPT type=\"text/javascript\">\n");
+      out.write("function windowTitle()\n");
+      out.write("{\n");
+      out.write("    if (location.href.indexOf('is-external=true') == -1) {\n");
+      out.write("        parent.document.title=\"" + title + "\";\n");
+      out.write("    }\n");
+      out.write("}\n");
+      out.write("</SCRIPT>\n");
+      out.write("<NOSCRIPT>\n");
+      out.write("</NOSCRIPT>\n");
+      out.write("</HEAD>\n");
+      out.write("\n");
+      out.write("<BODY BGCOLOR=\"white\" onload=\"windowTitle();\">\n");
+      out.write("<HR>\n");
+
       generate(out);
+
+      out.write("<HR>\n");
+      out.write("<i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>\n");
+      out.write("</BODY>\n");
+      out.write("</HTML>\n");
     }
     finally
     {

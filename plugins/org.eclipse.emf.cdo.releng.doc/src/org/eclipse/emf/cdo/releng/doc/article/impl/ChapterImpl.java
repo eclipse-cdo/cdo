@@ -151,7 +151,9 @@ public class ChapterImpl extends BodyImpl implements Chapter
     String title = getTitle();
     if (this instanceof Article)
     {
+      out.write("<center>\n");
       out.writeHeading(1, title);
+      out.write("</center>\n");
     }
     else
     {

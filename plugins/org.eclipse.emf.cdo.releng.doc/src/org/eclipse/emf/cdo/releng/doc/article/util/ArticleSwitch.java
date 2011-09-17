@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
+import org.eclipse.emf.cdo.releng.doc.article.Toc;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -440,6 +441,16 @@ public class ArticleSwitch<T> extends Switch<T>
     {
       ExtensionPoint extensionPoint = (ExtensionPoint)theEObject;
       T result = caseExtensionPoint(extensionPoint);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ArticlePackage.TOC:
+    {
+      Toc toc = (Toc)theEObject;
+      T result = caseToc(toc);
+      if (result == null)
+        result = caseBodyElement(toc);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -866,6 +877,21 @@ public class ArticleSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseExtensionPoint(ExtensionPoint object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Toc</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Toc</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseToc(Toc object)
   {
     return null;
   }

@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
+import org.eclipse.emf.cdo.releng.doc.article.Toc;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -253,6 +254,13 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * @generated
    */
   private EClass extensionPointEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass tocEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1049,6 +1057,26 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
+  public EClass getToc()
+  {
+    return tocEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getToc_Levels()
+  {
+    return (EAttribute)tocEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EDataType getRootDoc()
   {
     return rootDocEDataType;
@@ -1212,6 +1240,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     createEAttribute(extensionPointEClass, EXTENSION_POINT__NAME);
     createEReference(extensionPointEClass, EXTENSION_POINT__PLUGIN);
 
+    tocEClass = createEClass(TOC);
+    createEAttribute(tocEClass, TOC__LEVELS);
+
     // Create data types
     rootDocEDataType = createEDataType(ROOT_DOC);
     fileEDataType = createEDataType(FILE);
@@ -1270,6 +1301,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     javadocEClass.getESuperTypes().add(this.getCategory());
     externalArticleEClass.getESuperTypes().add(this.getArticle());
     schemadocEClass.getESuperTypes().add(this.getCategory());
+    tocEClass.getESuperTypes().add(this.getBodyElement());
 
     // Initialize classes and features; add operations and parameters
     initEClass(documentationEClass, Documentation.class, "Documentation", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1454,6 +1486,10 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEReference(getExtensionPoint_Plugin(), this.getPlugin(), this.getPlugin_ExtensionPoints(), "plugin", null, 1,
         1, ExtensionPoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(tocEClass, Toc.class, "Toc", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getToc_Levels(), ecorePackage.getEInt(), "levels", "-1", 0, 1, Toc.class, !IS_TRANSIENT,
+        !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(rootDocEDataType, RootDoc.class, "RootDoc", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

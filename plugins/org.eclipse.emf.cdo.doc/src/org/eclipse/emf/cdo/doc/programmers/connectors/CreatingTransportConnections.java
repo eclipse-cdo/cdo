@@ -47,6 +47,8 @@ import java.nio.channels.SocketChannel;
  * porta, risus eu auctor semper, ante lectus lobortis sem, a luctus diam dui eu sapien. Sed at metus et dolor tincidunt
  * convallis id a est. Donec quam nisl, scelerisque a feugiat id, mattis vel urna. Suspendisse facilisis, libero ac
  * ultricies dictum, mi sem feugiat purus, ac aliquam metus purus sed leo. Sed a viverra metus.
+ * <p>
+ * <b>Table of Contents</b> {@toc}
  * 
  * @author Eike Stepper
  */

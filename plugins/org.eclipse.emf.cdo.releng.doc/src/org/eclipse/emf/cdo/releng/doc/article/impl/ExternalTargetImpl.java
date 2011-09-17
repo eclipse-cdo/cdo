@@ -10,11 +10,12 @@ import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.ClassDoc;
+
+import java.io.PrintWriter;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>External Target</b></em>'. <!-- end-user-doc
@@ -153,7 +154,7 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
   }
 
   @Override
-  protected void writeLink(HtmlWriter out, String label, String href, String tooltip)
+  protected void writeLink(PrintWriter out, String label, String href, String tooltip)
   {
     super.writeLink(out, "<code>" + label + "</code>", href, tooltip);
   }

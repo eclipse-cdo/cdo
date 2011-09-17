@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Schemadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
+import org.eclipse.emf.cdo.releng.doc.article.Toc;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -131,6 +132,8 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
       return createSchemadoc();
     case ArticlePackage.EXTENSION_POINT:
       return createExtensionPoint();
+    case ArticlePackage.TOC:
+      return createToc();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -399,6 +402,17 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
   {
     ExtensionPointImpl extensionPoint = new ExtensionPointImpl();
     return extensionPoint;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Toc createToc()
+  {
+    TocImpl toc = new TocImpl();
+    return toc;
   }
 
   /**

@@ -6,9 +6,8 @@
  */
 package org.eclipse.emf.cdo.releng.doc.article;
 
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
-
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Embeddable Element</b></em>'. <!-- end-user-doc
@@ -56,5 +55,5 @@ public interface EmbeddableElement extends Identifiable
    */
   void setDocumentation(Documentation value);
 
-  void generate(HtmlWriter out, Embedding embedder) throws IOException;
+  void generate(PrintWriter out, Embedding embedder) throws IOException;
 } // EmbeddableElement

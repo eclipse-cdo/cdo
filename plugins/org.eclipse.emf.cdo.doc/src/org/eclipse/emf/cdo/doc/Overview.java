@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.doc;
 
 /**
  * Overview
+ * <p>
+ * {@toc}
  * 
  * @number 0
  * @default

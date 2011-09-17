@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
-import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
@@ -18,7 +17,6 @@ import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -29,6 +27,7 @@ import com.sun.javadoc.Tag;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @author Eike Stepper
@@ -37,9 +36,9 @@ public class UnresolvedBodyElement extends BodyElementImpl
 {
   private static final boolean DEBUG = false;
 
-  UnresolvedBodyElement(Body body, Tag tag)
+  UnresolvedBodyElement(Tag tag)
   {
-    super(body, tag);
+    super(tag);
   }
 
   public final String getText()
@@ -52,7 +51,7 @@ public class UnresolvedBodyElement extends BodyElementImpl
     return getTag().text();
   }
 
-  public void generate(HtmlWriter out, StructuralElement linkSource) throws IOException
+  public void generate(PrintWriter out, StructuralElement linkSource) throws IOException
   {
     out.write(getText());
   }
@@ -133,12 +132,12 @@ public class UnresolvedBodyElement extends BodyElementImpl
   {
     if (target instanceof LinkTarget)
     {
-      return new LinkImpl(null, tag, (LinkTarget)target);
+      return new LinkImpl(tag, (LinkTarget)target);
     }
 
     if (target instanceof EmbeddableElement)
     {
-      return new EmbeddingImpl(null, tag, (EmbeddableElement)target);
+      return new EmbeddingImpl(tag, (EmbeddableElement)target);
     }
 
     return null;

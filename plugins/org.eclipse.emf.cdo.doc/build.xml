@@ -345,12 +345,13 @@
 			</fileset>
 
 			<package name="org.eclipse.emf.cdo.doc" />
-			<package name="org.eclipse.emf.cdo.doc.connectors" />
 			<package name="org.eclipse.emf.cdo.doc.online" />
+			<package name="org.eclipse.emf.cdo.doc.programmers" />
+			<package name="org.eclipse.emf.cdo.doc.programmers.connectors" />
+			<package name="org.eclipse.emf.cdo.doc.programmers.sessions" />
 			<package name="org.eclipse.emf.cdo.doc.reference" />
 			<package name="org.eclipse.emf.cdo.doc.reference.api" />
 			<package name="org.eclipse.emf.cdo.doc.reference.schema" />
-			<package name="org.eclipse.emf.cdo.doc.sessions" />
 			<package name="org.eclipse.net4j.db.doc" />
 			<package name="org.eclipse.net4j.db.doc.online" />
 			<package name="org.eclipse.net4j.db.doc.reference" />

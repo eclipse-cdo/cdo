@@ -7,17 +7,16 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
-import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.SeeTag;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Embedding</b></em>'. <!-- end-user-doc -->
@@ -52,9 +51,9 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
     super();
   }
 
-  EmbeddingImpl(Body body, SeeTag tag, EmbeddableElement element)
+  EmbeddingImpl(SeeTag tag, EmbeddableElement element)
   {
-    super(body, tag);
+    super(tag);
     this.element = element;
   }
 
@@ -111,7 +110,7 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
     return super.eIsSet(featureID);
   }
 
-  public void generate(HtmlWriter out, StructuralElement linkSource) throws IOException
+  public void generate(PrintWriter out, StructuralElement linkSource) throws IOException
   {
     element.generate(out, this);
   }

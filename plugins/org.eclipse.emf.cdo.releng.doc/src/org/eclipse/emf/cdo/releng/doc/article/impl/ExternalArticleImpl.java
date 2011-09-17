@@ -145,6 +145,12 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
   }
 
   @Override
+  public String linkFrom(StructuralElement source)
+  {
+    return url;
+  }
+
+  @Override
   protected void generateTocEntry(BufferedWriter writer, String prefix) throws IOException
   {
     writer.write(prefix + "<topic label=\"" + getTitle() + "\" href=\"" + url + "\" />\n");

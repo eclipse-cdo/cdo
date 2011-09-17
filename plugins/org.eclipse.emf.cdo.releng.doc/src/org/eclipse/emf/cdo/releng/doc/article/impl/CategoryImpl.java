@@ -7,19 +7,18 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
-import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Category;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.PackageDoc;
+import com.sun.javadoc.Tag;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Category</b></em>'. <!-- end-user-doc -->
@@ -44,6 +43,16 @@ public class CategoryImpl extends BodyImpl implements Category
   {
     super(parent, ArticleUtil.getSimplePackageName(packageDoc), packageDoc);
     getDocumentation().getContext().register(getId(), this);
+
+    for (Tag tag : packageDoc.inlineTags())
+    {
+      if (tag.name().equals("@toc"))
+      {
+        return;
+      }
+    }
+
+    elements.add(new TocImpl(null));
   }
 
   /**
@@ -92,15 +101,13 @@ public class CategoryImpl extends BodyImpl implements Category
   }
 
   @Override
-  public void generate(HtmlWriter out) throws IOException
+  public void generate(PrintWriter out) throws IOException
   {
-    String title = getTitle();
-    out.write("<center>\n");
-    out.writeHeading(1, title);
-    out.write("</center>\n");
+    out.write("<h" + 1 + ">");
+    out.write(getTitle());
+    out.write("</h" + 1 + ">\n");
 
-    EList<BodyElement> elements = getElements();
-    BodyElementContainerImpl.generate(out, this, elements);
+    BodyElementContainerImpl.generate(out, this, getElements());
   }
 
   @Override

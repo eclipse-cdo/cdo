@@ -146,4 +146,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="plugin" lowerBound="1"
         eType="#//Plugin" eOpposite="#//Plugin/extensionPoints"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Toc" eSuperTypes="#//BodyElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="levels" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        changeable="false" defaultValueLiteral="-1" derived="true"/>
+  </eClassifiers>
 </ecore:EPackage>

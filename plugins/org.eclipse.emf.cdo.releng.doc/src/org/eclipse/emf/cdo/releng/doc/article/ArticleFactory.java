@@ -193,6 +193,14 @@ public interface ArticleFactory extends EFactory
   ExtensionPoint createExtensionPoint();
 
   /**
+   * Returns a new object of class '<em>Toc</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Toc</em>'.
+   * @generated
+   */
+  Toc createToc();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

@@ -9,12 +9,13 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import com.sun.javadoc.SeeTag;
+
+import java.io.PrintWriter;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Link Target</b></em>'. <!-- end-user-doc -->
@@ -153,21 +154,31 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
     return super.eIsSet(featureID);
   }
 
-  public void generateLink(HtmlWriter out, StructuralElement linkSource, SeeTag tag)
+  public void generateLink(PrintWriter out, StructuralElement linkSource, SeeTag tag)
   {
-    String href = linkFrom(linkSource);
-
-    String label = tag.label();
+    String label = tag == null ? null : tag.label();
     if (label == null || label.length() == 0)
     {
       label = getDefaultLabel();
       if (label == null || label.length() == 0)
       {
-        label = tag.text();
+        label = tag == null ? null : tag.text();
       }
     }
 
+    writeLink(out, linkSource, label);
+  }
+
+  protected void writeLink(PrintWriter out, StructuralElement linkSource, String label)
+  {
+    String href = linkFrom(linkSource);
     String tooltip = getTooltip();
+
+    writeLink(out, label, href, tooltip);
+  }
+
+  protected void writeLink(PrintWriter out, String label, String href, String tooltip)
+  {
     if (tooltip != null && tooltip.length() != 0)
     {
       tooltip = " title=\"" + tooltip + "\"";
@@ -177,11 +188,6 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
       tooltip = "";
     }
 
-    writeLink(out, label, href, tooltip);
-  }
-
-  protected void writeLink(HtmlWriter out, String label, String href, String tooltip)
-  {
     out.write("<a href=\"" + href + "\"" + tooltip + ">" + label + "</a>");
   }
 

@@ -12,8 +12,11 @@ package org.eclipse.net4j.doc;
 
 /**
  * Overview
+ * <p>
+ * {@toc}
  * 
  * @number 0
+ * @default
  */
 public class Overview
 {

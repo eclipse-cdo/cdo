@@ -11,7 +11,6 @@ import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -28,6 +27,7 @@ import com.sun.javadoc.Doc;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -538,6 +538,17 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
     return result.toString();
   }
 
+  public int getDepth()
+  {
+    int depth = 0;
+    for (StructuralElement child : getChildren())
+    {
+      depth = Math.max(depth, child.getDepth());
+    }
+
+    return 1 + depth;
+  }
+
   @Override
   public String getDefaultLabel()
   {
@@ -560,7 +571,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
     }
   }
 
-  public void generate(HtmlWriter out) throws IOException
+  public void generate(PrintWriter out) throws IOException
   {
     for (StructuralElement child : getChildren())
     {
@@ -571,12 +582,12 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   protected void generate(File file) throws IOException
   {
     String title = getTitle() + " (" + getDocumentation().getTitle() + ")";
-    HtmlWriter out = null;
+    PrintWriter out = null;
 
     try
     {
       file.getParentFile().mkdirs();
-      out = new HtmlWriter(file);
+      out = new PrintWriter(file);
 
       out.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n");
       out.write("<HTML>\n");

@@ -2038,13 +2038,56 @@ public interface ArticlePackage extends EPackage
   int EXTENSION_POINT_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.TocImpl <em>Toc</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.TocImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getToc()
+   * @generated
+   */
+  int TOC = 28;
+
+  /**
+   * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TOC__CONTAINER = BODY_ELEMENT__CONTAINER;
+
+  /**
+   * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TOC__TAG = BODY_ELEMENT__TAG;
+
+  /**
+   * The feature id for the '<em><b>Levels</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TOC__LEVELS = BODY_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Toc</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int TOC_FEATURE_COUNT = BODY_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see com.sun.javadoc.RootDoc
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getRootDoc()
    * @generated
    */
-  int ROOT_DOC = 28;
+  int ROOT_DOC = 29;
 
   /**
    * The meta object id for the '<em>File</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2053,7 +2096,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFile()
    * @generated
    */
-  int FILE = 29;
+  int FILE = 30;
 
   /**
    * The meta object id for the '<em>Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2062,7 +2105,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDoc()
    * @generated
    */
-  int DOC = 30;
+  int DOC = 31;
 
   /**
    * The meta object id for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2071,7 +2114,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
    * @generated
    */
-  int TAG = 31;
+  int TAG = 32;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation
@@ -2837,6 +2880,27 @@ public interface ArticlePackage extends EPackage
   EReference getExtensionPoint_Plugin();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Toc <em>Toc</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Toc</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Toc
+   * @generated
+   */
+  EClass getToc();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Toc#getLevels
+   * <em>Levels</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Levels</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Toc#getLevels()
+   * @see #getToc()
+   * @generated
+   */
+  EAttribute getToc_Levels();
+
+  /**
    * Returns the meta object for data type '{@link com.sun.javadoc.RootDoc <em>Root Doc</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
@@ -3517,6 +3581,24 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EReference EXTENSION_POINT__PLUGIN = eINSTANCE.getExtensionPoint_Plugin();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.TocImpl <em>Toc</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.TocImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getToc()
+     * @generated
+     */
+    EClass TOC = eINSTANCE.getToc();
+
+    /**
+     * The meta object literal for the '<em><b>Levels</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute TOC__LEVELS = eINSTANCE.getToc_Levels();
 
     /**
      * The meta object literal for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -12,7 +12,7 @@
 /**
  * Connectors
  * <p>
- * In this category you'll find a number of articles about physical transport connections: {@toc}
+ * In this category you'll find a number of articles about physical transport connections:
  * 
  * @number 1
  */

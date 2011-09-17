@@ -11,7 +11,6 @@ import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -21,6 +20,7 @@ import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.ProgramElementDoc;
 
 import java.io.File;
+import java.io.PrintWriter;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Java Element</b></em>'. <!-- end-user-doc -->
@@ -168,7 +168,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
   }
 
   @Override
-  protected void writeLink(HtmlWriter out, String label, String href, String tooltip)
+  protected void writeLink(PrintWriter out, String label, String href, String tooltip)
   {
     super.writeLink(out, "<code>" + label + "</code>", href, tooltip);
   }

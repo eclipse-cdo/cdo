@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleException;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -32,6 +31,7 @@ import com.sun.javadoc.Tag;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -228,7 +228,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     return doc;
   }
 
-  public void generate(HtmlWriter out, Embedding embedder) throws IOException
+  public void generate(PrintWriter out, Embedding embedder) throws IOException
   {
     String id = doc.name();
     int lastDot = id.lastIndexOf('.');
@@ -315,25 +315,6 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     }
 
     out.write("<p/>\n");
-
-    // out.write("<ol>\n");
-    // for (Callout callout : getCallouts())
-    // {
-    // out.write("<li>");
-    //
-    // try
-    // {
-    // BodyElementContainerImpl.generate(structuralElement, callout.getElements(), out);
-    // }
-    // catch (IOException ex)
-    // {
-    // ex.printStackTrace();
-    // }
-    //
-    // out.write("</li>\n");
-    // }
-    //
-    // out.write("</ol>\n");
   }
 
   private StructuralElement getStructuralElement(Embedding embedder)
@@ -347,7 +328,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     throw new ArticleException(ArticleUtil.makeConsoleLink("Nested embedding in ", embedder.getTag().position()));
   }
 
-  private String getCodeSnippetHtml(HtmlWriter out, String id, String title)
+  private String getCodeSnippetHtml(PrintWriter out, String id, String title)
   {
     Map<String, Object> options = new HashMap<String, Object>();
     options.put("id", id);

@@ -7,11 +7,9 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
-import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -20,6 +18,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import com.sun.javadoc.SeeTag;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Link</b></em>'. <!-- end-user-doc -->
@@ -54,9 +53,9 @@ public class LinkImpl extends BodyElementImpl implements Link
     super();
   }
 
-  LinkImpl(Body body, SeeTag tag, LinkTarget target)
+  LinkImpl(SeeTag tag, LinkTarget target)
   {
-    super(body, tag);
+    super(tag);
     this.target = target;
   }
 
@@ -91,7 +90,9 @@ public class LinkImpl extends BodyElementImpl implements Link
     LinkTarget oldTarget = target;
     target = newTarget;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.LINK__TARGET, oldTarget, target));
+    }
   }
 
   /**
@@ -166,7 +167,7 @@ public class LinkImpl extends BodyElementImpl implements Link
     return (SeeTag)super.getTag();
   }
 
-  public void generate(HtmlWriter out, StructuralElement linkSource) throws IOException
+  public void generate(PrintWriter out, StructuralElement linkSource) throws IOException
   {
     target.generateLink(out, linkSource, getTag());
   }

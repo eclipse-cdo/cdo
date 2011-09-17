@@ -6,9 +6,9 @@
  */
 package org.eclipse.emf.cdo.releng.doc.article;
 
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
-
 import com.sun.javadoc.SeeTag;
+
+import java.io.PrintWriter;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Link Target</b></em>'. <!-- end-user-doc -->
@@ -63,6 +63,6 @@ public interface LinkTarget extends Identifiable
    */
   String linkFrom(StructuralElement source);
 
-  void generateLink(HtmlWriter out, StructuralElement linkSource, SeeTag tag);
+  void generateLink(PrintWriter out, StructuralElement linkSource, SeeTag tag);
 
 } // LinkTarget

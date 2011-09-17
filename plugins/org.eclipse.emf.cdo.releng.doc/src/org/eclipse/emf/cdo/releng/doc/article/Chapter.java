@@ -36,4 +36,5 @@ public interface Chapter extends Body
    * @generated
    */
   Article getArticle();
+
 } // Chapter

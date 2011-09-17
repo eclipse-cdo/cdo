@@ -10,7 +10,6 @@ import org.eclipse.emf.cdo.releng.doc.article.Article;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Chapter;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -18,6 +17,7 @@ import com.sun.javadoc.ClassDoc;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,44 +146,51 @@ public class ChapterImpl extends BodyImpl implements Chapter
   }
 
   @Override
-  public void generate(HtmlWriter out) throws IOException
+  public void generate(PrintWriter out) throws IOException
   {
-    String title = getTitle();
+    String anchor = "<a name=\"" + getPath() + "\"/>";
+
     if (this instanceof Article)
     {
-      out.write("<center>\n");
-      out.writeHeading(1, title);
-      out.write("</center>\n");
+      out.write("<h" + 1 + ">");
+      out.write(anchor + getTitle());
+      out.write("</h" + 1 + ">\n");
     }
     else
     {
-      int[] chapterNumber = getChapterNumber();
-
-      StringBuilder builder = new StringBuilder();
-      for (int number : chapterNumber)
-      {
-        if (builder.length() != 0)
-        {
-          builder.append(".");
-        }
-
-        builder.append(number);
-      }
-
-      builder.append(" ");
-      builder.append(title);
-      String result = builder.toString();
-      out.writeHeading(chapterNumber.length + 1, result);
+      int level = getChapterNumbers().length + 1;
+      out.write("<h" + level + ">");
+      out.write(anchor + getTitleWithNumber());
+      out.write("</h" + level + ">\n");
     }
-
-    out.write("<a name=\"");
-    out.write(getPath());
-    out.write("\"/>");
 
     super.generate(out);
   }
 
-  public int[] getChapterNumber()
+  public String getTitleWithNumber()
+  {
+    return getChapterNumber() + "&nbsp;&nbsp;" + getTitle();
+  }
+
+  public String getChapterNumber()
+  {
+    int[] chapterNumber = getChapterNumbers();
+
+    StringBuilder builder = new StringBuilder();
+    for (int number : chapterNumber)
+    {
+      if (builder.length() != 0)
+      {
+        builder.append(".");
+      }
+
+      builder.append(number);
+    }
+
+    return builder.toString();
+  }
+
+  public int[] getChapterNumbers()
   {
     List<Integer> levelNumbers = new ArrayList<Integer>();
     getLevelNumbers(this, levelNumbers);

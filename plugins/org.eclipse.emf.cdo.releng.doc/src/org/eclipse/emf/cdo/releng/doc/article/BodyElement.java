@@ -6,13 +6,12 @@
  */
 package org.eclipse.emf.cdo.releng.doc.article;
 
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
-
 import org.eclipse.emf.ecore.EObject;
 
 import com.sun.javadoc.Tag;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Body Element</b></em>'. <!-- end-user-doc -->
@@ -74,5 +73,5 @@ public interface BodyElement extends EObject
    */
   Tag getTag();
 
-  void generate(HtmlWriter out, StructuralElement linkSource) throws IOException;
+  void generate(PrintWriter out, StructuralElement linkSource) throws IOException;
 } // BodyElement

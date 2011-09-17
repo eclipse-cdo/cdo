@@ -13,7 +13,6 @@ import org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer;
 import org.eclipse.emf.cdo.releng.doc.article.Category;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
-import org.eclipse.emf.cdo.releng.doc.article.util.HtmlWriter;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -26,6 +25,7 @@ import com.sun.javadoc.Doc;
 import com.sun.javadoc.Tag;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collection;
 
 /**
@@ -332,7 +332,9 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (number: ");
@@ -348,7 +350,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   }
 
   @Override
-  public void generate(HtmlWriter out) throws IOException
+  public void generate(PrintWriter out) throws IOException
   {
     EList<BodyElement> elements = getElements();
     BodyElementContainerImpl.generate(out, this, elements);

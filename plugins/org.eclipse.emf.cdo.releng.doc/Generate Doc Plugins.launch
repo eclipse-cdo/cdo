@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.ant.AntLaunchConfigurationType">
 <booleanAttribute key="org.eclipse.ant.ui.DEFAULT_VM_INSTALL" value="true"/>
-<stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${working_set:&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;resources&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.doc&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.releng.doc&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.net4j.db.doc&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.net4j.doc&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.net4j.util.doc&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;/resources&gt;}"/>
+<stringAttribute key="org.eclipse.debug.core.ATTR_REFRESH_SCOPE" value="${working_set:&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#13;&#10;&lt;resources&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.doc&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.releng/help&quot; type=&quot;2&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.emf.cdo.releng.doc&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.net4j.db.doc&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.net4j.doc&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;item path=&quot;/org.eclipse.net4j.util.doc&quot; type=&quot;4&quot;/&gt;&#13;&#10;&lt;/resources&gt;}"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/org.eclipse.emf.cdo.releng.doc/build.xml"/>
 </listAttribute>

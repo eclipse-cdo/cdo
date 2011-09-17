@@ -522,7 +522,7 @@
 		<antcall target="-generate.index" />
 		<antcall target="-generate.bookmarks" />
 		<antcall target="-generate.dropins" />
-		
+
 		<if>
 			<equals arg1="${hudson.GENERATE_PRODUCTS}" arg2="true" />
 			<then>

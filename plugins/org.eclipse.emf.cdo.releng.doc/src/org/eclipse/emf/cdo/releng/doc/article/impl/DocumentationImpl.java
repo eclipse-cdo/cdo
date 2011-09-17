@@ -736,32 +736,32 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         super(project, "toc.html");
         idPrefix = project.getName().replace('.', '_') + "_";
 
-        write("<LINK REL=stylesheet TYPE=\"text/css\" HREF=\"toc.css\">\n");
-        write("\n");
-
-        write("<script type=\"text/javascript\">\n");
-        write("  function toggle(id)\n");
-        write("  {\n");
-        write("    e = document.getElementById(id);\n");
-        write("    e.style.display = (e.style.display == \"\" ? \"none\" : \"\");\n");
-        write("    img = document.getElementById(\"img_\" + id);\n");
-        write("    img.src = (e.style.display == \"none\" ? \"plus.gif\" : \"minus.gif\");\n");
-        write("  }\n");
-        write("</script>\n");
-        write("\n");
-
-        write("<font face=\"Segoe UI,Arial\" size=\"-1\">\n");
-        write("\n");
-
-        write("<!-- TOC START -->\n");
+        // write("<LINK REL=stylesheet TYPE=\"text/css\" HREF=\"toc.css\">\n");
+        // write("\n");
+        //
+        // write("<script type=\"text/javascript\">\n");
+        // write("  function toggle(id)\n");
+        // write("  {\n");
+        // write("    e = document.getElementById(id);\n");
+        // write("    e.style.display = (e.style.display == \"\" ? \"none\" : \"\");\n");
+        // write("    img = document.getElementById(\"img_\" + id);\n");
+        // write("    img.src = (e.style.display == \"none\" ? \"plus.gif\" : \"minus.gif\");\n");
+        // write("  }\n");
+        // write("</script>\n");
+        // write("\n");
+        //
+        // write("<font face=\"Segoe UI,Arial\" size=\"-1\">\n");
+        // write("\n");
+        //
+        // write("<!-- TOC START -->\n");
       }
 
       @Override
       public void close() throws IOException
       {
-        write("<!-- TOC END -->\n");
-        write("\n");
-        write("</font>\n");
+        // write("<!-- TOC END -->\n");
+        // write("\n");
+        // write("</font>\n");
         super.close();
       }
 

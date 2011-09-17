@@ -419,7 +419,8 @@ public class AssembleScripts
 
         writer.write("\t<target name=\"delegate\">\n");
 
-        for (JavaDoc javaDoc : (List<JavaDoc>)getJavaDocsSortedByDependencies())
+        List<JavaDoc> javaDocs = (List<JavaDoc>)getJavaDocsSortedByDependencies();
+        for (JavaDoc javaDoc : javaDocs)
         {
           writer.write("\t\t<ant antfile=\"plugins/" + javaDoc.getProject().getName()
               + "/build.xml\" target=\"${delegate.target}\" />\n");
@@ -427,6 +428,22 @@ public class AssembleScripts
 
         writer.write("\t</target>\n");
         writer.write("\n");
+
+        writer.write("\t<target name=\"toc\">\n");
+        writer.write("\t\t<concat destfile=\"plugins/org.eclipse.emf.cdo.releng/help/toc.html\">\n");
+        writer.write("\t\t\t<path path=\"plugins/org.eclipse.emf.cdo.releng.doc/help/tocHeader.html\" />\n");
+
+        Collections.reverse(javaDocs);
+        for (JavaDoc javaDoc : javaDocs)
+        {
+          writer.write("\t\t\t<path path=\"plugins/" + javaDoc.getProject().getName() + "/toc.html\" />\n");
+        }
+
+        writer.write("\t\t\t<path path=\"plugins/org.eclipse.emf.cdo.releng.doc/help/tocFooter.html\" />\n");
+        writer.write("\t\t</concat>\n");
+        writer.write("\t</target>\n");
+        writer.write("\n");
+
         writer.write("</project>\n");
         writer.flush();
       }

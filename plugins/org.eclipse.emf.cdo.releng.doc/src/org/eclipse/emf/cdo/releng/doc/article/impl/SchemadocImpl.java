@@ -11,13 +11,13 @@ import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
 import org.eclipse.emf.cdo.releng.doc.article.Plugin;
 import org.eclipse.emf.cdo.releng.doc.article.Schemadoc;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl.TocWriter;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.PackageDoc;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
@@ -56,7 +56,7 @@ public class SchemadocImpl extends CategoryImpl implements Schemadoc
   }
 
   @Override
-  protected void generateTocEntry(BufferedWriter writer, String prefix) throws IOException
+  protected void generateTocEntry(TocWriter writer) throws IOException
   {
     boolean exists = false;
 
@@ -67,26 +67,26 @@ public class SchemadocImpl extends CategoryImpl implements Schemadoc
       {
         if (!exists)
         {
-          writer.write(prefix + "<topic label=\"" + getTitle() + "\" href=\"" + getTocHref() + "\">\n");
+          writer.writeGroupStart(getTitle(), getTocHref());
           exists = true;
         }
 
         String href = getHref(extensionPoints.get(0));
-        writer.write(prefix + "\t<topic label=\"" + plugin.getLabel() + "\" href=\"" + href + "\">\n");
+        writer.writeGroupStart(plugin.getLabel(), href);
 
         for (ExtensionPoint extensionPoint : extensionPoints)
         {
           href = getHref(extensionPoint);
-          writer.write(prefix + "\t\t<topic label=\"" + extensionPoint.getName() + "\" href=\"" + href + "\" />\n");
+          writer.writeSingle(extensionPoint.getName(), href);
         }
 
-        writer.write(prefix + "\t</topic>\n");
+        writer.writeGroupEnd();
       }
     }
 
     if (exists)
     {
-      writer.write(prefix + "</topic>\n");
+      writer.writeGroupEnd();
     }
   }
 

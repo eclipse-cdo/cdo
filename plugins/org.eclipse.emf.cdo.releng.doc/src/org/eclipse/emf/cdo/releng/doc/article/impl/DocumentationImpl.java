@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -339,7 +340,9 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   public Context getContext()
   {
     if (eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT)
+    {
       return null;
+    }
     return (Context)eContainer();
   }
 
@@ -361,24 +364,34 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
    */
   public void setContext(Context newContext)
   {
-    if (newContext != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT && newContext != null))
+    if (newContext != eInternalContainer() || eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT
+        && newContext != null)
     {
       if (EcoreUtil.isAncestor(this, newContext))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newContext != null)
+      {
         msgs = ((InternalEObject)newContext).eInverseAdd(this, ArticlePackage.CONTEXT__DOCUMENTATIONS, Context.class,
             msgs);
+      }
       msgs = basicSetContext(newContext, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.DOCUMENTATION__CONTEXT, newContext,
           newContext));
+    }
   }
 
   /**
@@ -448,7 +461,9 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     {
     case ArticlePackage.DOCUMENTATION__CONTEXT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetContext((Context)otherEnd, msgs);
     case ArticlePackage.DOCUMENTATION__EMBEDDABLE_ELEMENTS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getEmbeddableElements()).basicAdd(otherEnd, msgs);
@@ -598,7 +613,9 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (project: ");
@@ -639,46 +656,240 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   public void generate() throws IOException
   {
     super.generate();
-    generateToc();
+    generateToc(false);
+    generateToc(true);
   }
 
-  private void generateToc() throws IOException
+  private void generateToc(boolean html) throws IOException
   {
     File project = getOutputFile().getParentFile();
-    FileWriter out = null;
+
+    String href = "javadoc/overview-summary.html";
+    if (defaultElement != null)
+    {
+      href = ((StructuralElementImpl)defaultElement).getTocHref();
+    }
+
+    TocWriter writer = null;
 
     try
     {
-      File target = new File(project, "toc.xml");
-      System.out.println("Generating " + target.getCanonicalPath());
-
-      out = new FileWriter(target);
-      BufferedWriter writer = new BufferedWriter(out);
-
-      try
+      if (html)
       {
-        String href = "javadoc/overview-summary.html";
-        if (defaultElement != null)
-        {
-          href = ((StructuralElementImpl)defaultElement).getTocHref();
-        }
-
-        writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n");
-        writer.write("<?NLS TYPE=\"org.eclipse.help.toc\"?>\n\n");
-        writer.write("<toc label=\"" + getDocumentation().getTitle() + "\" topic=\"" + href + "\">\n");
-
-        generateTocEntries(writer, "\t");
-
-        writer.write("</toc>\n");
-        writer.flush();
+        writer = new TocWriter.Html(project);
       }
-      finally
+      else
       {
+        writer = new TocWriter.Xml(project);
       }
+
+      writer.writeGroupStart(getDocumentation().getTitle(), href);
+      generateTocEntries(writer);
+      writer.writeGroupEnd();
     }
     finally
     {
-      ArticleUtil.close(out);
+      ArticleUtil.close(writer);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class TocWriter extends BufferedWriter
+  {
+    protected File project;
+
+    protected int level;
+
+    public TocWriter(File project, String filename) throws IOException
+    {
+      super(new FileWriter(new File(project, filename)));
+      this.project = project;
+    }
+
+    public final void writePrefix() throws IOException
+    {
+      for (int i = 0; i < level; i++)
+      {
+        write("  ");
+      }
+    }
+
+    public abstract void writeSingle(String label, String href) throws IOException;
+
+    public abstract void writeGroupStart(String label, String href) throws IOException;
+
+    public abstract void writeGroupEnd() throws IOException;
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Html extends TocWriter
+    {
+      private int id;
+
+      private String idPrefix;
+
+      public Html(File project) throws IOException
+      {
+        super(project, "toc.html");
+        idPrefix = project.getName().replace('.', '_') + "_";
+
+        write("<LINK REL=stylesheet TYPE=\"text/css\" HREF=\"toc.css\">\n");
+        write("\n");
+
+        write("<script type=\"text/javascript\">\n");
+        write("  function toggle(id)\n");
+        write("  {\n");
+        write("    e = document.getElementById(id);\n");
+        write("    e.style.display = (e.style.display == \"\" ? \"none\" : \"\");\n");
+        write("    img = document.getElementById(\"img_\" + id);\n");
+        write("    img.src = (e.style.display == \"none\" ? \"plus.gif\" : \"minus.gif\");\n");
+        write("  }\n");
+        write("</script>\n");
+        write("\n");
+
+        write("<font face=\"Segoe UI,Arial\" size=\"-1\">\n");
+        write("\n");
+
+        write("<!-- TOC START -->\n");
+      }
+
+      @Override
+      public void close() throws IOException
+      {
+        write("<!-- TOC END -->\n");
+        write("\n");
+        write("</font>\n");
+        super.close();
+      }
+
+      public String nextID()
+      {
+        return idPrefix + ++id;
+      }
+
+      public void writeHref(String label, String href) throws IOException
+      {
+        label = label.replaceAll(" ", "&nbsp");
+        if (level == 0)
+        {
+          label = "<b>" + label + "</b>";
+        }
+
+        URI uri = URI.createURI(href);
+        if (uri.isRelative())
+        {
+          href = project.getName() + "/" + href;
+        }
+
+        write("<a href=\"" + href + "\" target=\"content\">" + label + "</a>");
+      }
+
+      public void writeImage(String name) throws IOException
+      {
+        write("<img src=\"" + name + "\"/>");
+      }
+
+      @Override
+      public void writeSingle(String label, String href) throws IOException
+      {
+        writePrefix();
+        write("<div class=\"te\"><span>");
+        writeImage("empty.gif");
+        writeImage("article.gif");
+        writeHref(label, href);
+        write("</span></div>\n");
+      }
+
+      @Override
+      public void writeGroupStart(String label, String href) throws IOException
+      {
+        String id = nextID();
+
+        writePrefix();
+        write("<div class=\"te\">");
+        write("<span><a href=\"javascript:toggle('" + id + "')\">");
+        write("<img src=\"" + "plus.gif" + "\" id=\"img_" + id + "\"/>");
+        write("</a>");
+
+        if (level == 0)
+        {
+          writeImage("documentation.gif");
+        }
+        else
+        {
+          writeImage("category.gif");
+        }
+
+        writeHref(label, href);
+        write("</span></div>\n");
+
+        writePrefix();
+        write("<div id=\"" + id + "\" style=\"display:none; margin-left:20px;\">\n");
+        ++level;
+      }
+
+      @Override
+      public void writeGroupEnd() throws IOException
+      {
+        --level;
+        writePrefix();
+        write("</div>\n");
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Xml extends TocWriter
+    {
+      public Xml(File project) throws IOException
+      {
+        super(project, "toc.xml");
+        write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        write("<?NLS TYPE=\"org.eclipse.help.toc\"?>\n\n");
+      }
+
+      @Override
+      public void writeSingle(String label, String href) throws IOException
+      {
+        writePrefix();
+        write("<topic label=\"" + label + "\" href=\"" + href + "\" />\n");
+      }
+
+      @Override
+      public void writeGroupStart(String label, String href) throws IOException
+      {
+        writePrefix();
+        if (level == 0)
+        {
+          write("<toc label=\"" + label + "\" topic=\"" + href + "\">\n");
+        }
+        else
+        {
+          write("<topic label=\"" + label + "\" href=\"" + href + "\">\n");
+        }
+
+        ++level;
+      }
+
+      @Override
+      public void writeGroupEnd() throws IOException
+      {
+        --level;
+
+        writePrefix();
+        if (level == 0)
+        {
+          write("</toc>\n");
+        }
+        else
+        {
+          write("</topic>\n");
+        }
+      }
     }
   }
 } // DocumentationImpl

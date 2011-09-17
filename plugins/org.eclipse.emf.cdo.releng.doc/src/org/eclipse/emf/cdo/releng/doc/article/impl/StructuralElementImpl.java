@@ -10,6 +10,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl.TocWriter;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -24,7 +25,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.sun.javadoc.Doc;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -625,7 +625,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
     }
   }
 
-  protected void generateTocEntries(BufferedWriter writer, String prefix) throws IOException
+  protected void generateTocEntries(TocWriter writer) throws IOException
   {
     List<StructuralElement> children = new ArrayList<StructuralElement>(getChildren());
     Collections.sort(children, new Comparator<StructuralElement>()
@@ -639,15 +639,15 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
     for (StructuralElement child : children)
     {
       BodyImpl body = (BodyImpl)child;
-      body.generateTocEntry(writer, prefix);
+      body.generateTocEntry(writer);
     }
   }
 
-  protected void generateTocEntry(BufferedWriter writer, String prefix) throws IOException
+  protected void generateTocEntry(TocWriter writer) throws IOException
   {
-    writer.write(prefix + "<topic label=\"" + getTitle() + "\" href=\"" + getTocHref() + "\">\n");
-    generateTocEntries(writer, prefix + "\t");
-    writer.write(prefix + "</topic>\n");
+    writer.writeGroupStart(getTitle(), getTocHref());
+    generateTocEntries(writer);
+    writer.writeGroupEnd();
   }
 
   protected File getTocTarget()

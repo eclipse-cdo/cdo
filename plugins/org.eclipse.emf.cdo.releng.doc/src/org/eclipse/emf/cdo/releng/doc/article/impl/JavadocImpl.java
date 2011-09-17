@@ -11,13 +11,13 @@ import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Plugin;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl.TocWriter;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.PackageDoc;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
@@ -62,26 +62,26 @@ public class JavadocImpl extends CategoryImpl implements Javadoc
   }
 
   @Override
-  protected void generateTocEntry(BufferedWriter writer, String prefix) throws IOException
+  protected void generateTocEntry(TocWriter writer) throws IOException
   {
-    writer.write(prefix + "<topic label=\"" + getTitle() + "\" href=\"javadoc/overview-summary.html\">\n");
+    writer.writeGroupStart(getTitle(), "javadoc/overview-summary.html");
 
     for (Plugin plugin : getDocumentation().getPlugins())
     {
       EList<JavaPackage> packages = plugin.getPackages();
       String href = getHref(packages.get(0));
-      writer.write(prefix + "\t<topic label=\"" + plugin.getLabel() + "\" href=\"" + href + "\">\n");
+      writer.writeGroupStart(plugin.getLabel(), href);
 
       for (JavaPackage javaPackage : packages)
       {
         href = getHref(javaPackage);
-        writer.write(prefix + "\t\t<topic label=\"" + javaPackage.getName() + "\" href=\"" + href + "\" />\n");
+        writer.writeSingle(javaPackage.getName(), href);
       }
 
-      writer.write(prefix + "\t</topic>\n");
+      writer.writeGroupEnd();
     }
 
-    writer.write(prefix + "</topic>\n");
+    writer.writeGroupEnd();
   }
 
   private String getHref(JavaPackage javaPackage)

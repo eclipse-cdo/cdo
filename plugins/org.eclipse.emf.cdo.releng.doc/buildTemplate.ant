@@ -178,7 +178,7 @@
 
 		<mkdir dir="${article.destdir}" />
 		<copy todir="${project.path}/images" verbose="true" failonerror="false">
-			<fileset dir="plugins/org.eclipse.emf.cdo.releng.doc/resources" defaultexcludes="true">
+			<fileset dir="plugins/org.eclipse.emf.cdo.releng.doc/images" defaultexcludes="true">
 				<include name="**/*" />
 			</fileset>
 		</copy>

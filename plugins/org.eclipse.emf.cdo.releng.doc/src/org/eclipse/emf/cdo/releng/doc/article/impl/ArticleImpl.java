@@ -9,6 +9,7 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.Article;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl.TocWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -63,4 +64,9 @@ public class ArticleImpl extends ChapterImpl implements Article
     generate(getOutputFile());
   }
 
+  @Override
+  protected void generateTocEntry(TocWriter writer) throws IOException
+  {
+    writer.writeSingle(getTitle(), getTocHref());
+  }
 } // ArticleImpl

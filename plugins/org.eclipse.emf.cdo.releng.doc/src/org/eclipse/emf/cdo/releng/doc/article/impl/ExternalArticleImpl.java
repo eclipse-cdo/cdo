@@ -9,12 +9,12 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl.TocWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.ClassDoc;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 
 /**
@@ -151,8 +151,8 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
   }
 
   @Override
-  protected void generateTocEntry(BufferedWriter writer, String prefix) throws IOException
+  protected void generateTocEntry(TocWriter writer) throws IOException
   {
-    writer.write(prefix + "<topic label=\"" + getTitle() + "\" href=\"" + url + "\" />\n");
+    writer.writeSingle(getTitle(), url);
   }
 } // ExternalArticleImpl

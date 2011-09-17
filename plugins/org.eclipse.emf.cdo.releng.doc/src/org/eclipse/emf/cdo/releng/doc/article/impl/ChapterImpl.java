@@ -10,12 +10,12 @@ import org.eclipse.emf.cdo.releng.doc.article.Article;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.Chapter;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl.TocWriter;
 
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.ClassDoc;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -137,11 +137,11 @@ public class ChapterImpl extends BodyImpl implements Chapter
   }
 
   @Override
-  protected void generateTocEntry(BufferedWriter writer, String prefix) throws IOException
+  protected void generateTocEntry(TocWriter writer) throws IOException
   {
     if (this instanceof Article)
     {
-      super.generateTocEntry(writer, prefix);
+      super.generateTocEntry(writer);
     }
   }
 

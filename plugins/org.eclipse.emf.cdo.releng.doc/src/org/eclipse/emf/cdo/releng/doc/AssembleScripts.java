@@ -103,6 +103,7 @@ public class AssembleScripts
       }
 
       ANTLIB.generate();
+      ANTLIB.generateDocsTxt();
       ANTLIB.generateDebug();
       System.out.println();
 
@@ -445,6 +446,36 @@ public class AssembleScripts
         writer.write("\n");
 
         writer.write("</project>\n");
+        writer.flush();
+      }
+      finally
+      {
+        if (out != null)
+        {
+          out.close();
+        }
+      }
+    }
+
+    public void generateDocsTxt() throws IOException
+    {
+      FileWriter out = null;
+
+      try
+      {
+        File target = new File(new File(new File(plugins, "org.eclipse.emf.cdo.releng"), "help"), "docs.txt");
+        System.out.println("Generating " + target.getCanonicalPath());
+
+        out = new FileWriter(target);
+        BufferedWriter writer = new BufferedWriter(out);
+
+        List<JavaDoc> javaDocs = (List<JavaDoc>)getJavaDocsSortedByDependencies();
+        for (JavaDoc javaDoc : javaDocs)
+        {
+          writer.write(javaDoc.getProject().getName());
+          writer.write("\n");
+        }
+
         writer.flush();
       }
       finally

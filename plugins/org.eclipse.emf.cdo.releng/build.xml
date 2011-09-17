@@ -192,6 +192,7 @@
 				<include name="features/**" />
 				<include name="plugins/**" />
 				<include name="zips/**" />
+				<include name="help/**" />
 				<include name="*.jar" />
 				<include name="*.xml" />
 				<include name="*.html" />
@@ -519,6 +520,7 @@
 		<property name="zips" location="${hudson.WORKSPACE}/zips" />
 		<mkdir dir="${zips}" />
 
+		<antcall target="-generate.help" />
 		<antcall target="-generate.index" />
 		<antcall target="-generate.bookmarks" />
 		<antcall target="-generate.dropins" />
@@ -529,6 +531,18 @@
 				<antcall target="-generate.products" />
 			</then>
 		</if>
+	</target>
+
+	<!-- ============== -->
+	<!-- Generate Help -->
+	<!-- ============== -->
+
+	<target name="-generate.help">
+		<copy todir="${hudson.WORKSPACE}">
+			<fileset dir="${releng}">
+				<include name="help/**"/>
+			</fileset>
+		</copy>
 	</target>
 
 	<!-- ============== -->

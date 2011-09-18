@@ -182,6 +182,10 @@
 				<include name="**/*" />
 			</fileset>
 		</copy>
+		<copy file="plugins/org.eclipse.emf.cdo.releng.doc/book.css"
+		      todir="${project.path}/html"
+		      verbose="true"
+		      failonerror="false" />
 
 		<javadoc encoding="ISO-8859-1"
 		         classpathref="javadoc.classpath"

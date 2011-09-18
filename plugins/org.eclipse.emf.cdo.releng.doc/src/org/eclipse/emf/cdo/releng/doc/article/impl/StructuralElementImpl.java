@@ -595,7 +595,8 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   protected void generate(File file) throws IOException
   {
-    String title = getTitle() + " (" + getDocumentation().getTitle() + ")";
+    Documentation documentation = getDocumentation();
+    String title = getTitle() + " (" + documentation.getTitle() + ")";
     PrintWriter out = null;
 
     try
@@ -611,6 +612,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       out.write(title + "\n");
       out.write("</TITLE>\n");
       out.write("\n");
+      out.write("<LINK REL=\"STYLESHEET\" HREF=\"" + documentation.linkFrom(this)
+          + "book.css\" CHARSET=\"ISO-8859-1\" TYPE=\"text/css\">\n");
+      out.write("\n");
       out.write("<SCRIPT type=\"text/javascript\">\n");
       out.write("function windowTitle()\n");
       out.write("{\n");
@@ -624,7 +628,6 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       out.write("</HEAD>\n");
       out.write("\n");
       out.write("<BODY BGCOLOR=\"white\" onload=\"windowTitle();\">\n");
-      out.write("<HR>\n");
 
       generate(out);
 

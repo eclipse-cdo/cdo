@@ -772,7 +772,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
       public void writeHref(String label, String href) throws IOException
       {
-        label = label.replaceAll(" ", "&nbsp");
+        label = label.replaceAll(" ", "&nbsp;");
         if (level == 0)
         {
           label = "<b>" + label + "</b>";

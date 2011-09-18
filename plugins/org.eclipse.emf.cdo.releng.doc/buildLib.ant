@@ -10,11 +10,13 @@
 		<ant antfile="plugins/org.eclipse.net4j.db.doc/build.xml" target="${delegate.target}" />
 		<ant antfile="plugins/org.eclipse.net4j.doc/build.xml" target="${delegate.target}" />
 		<ant antfile="plugins/org.eclipse.emf.cdo.doc/build.xml" target="${delegate.target}" />
+		<ant antfile="plugins/org.eclipse.emf.cdo.releng.help/build.xml" target="${delegate.target}" />
 	</target>
 
 	<target name="toc">
 		<concat destfile="plugins/org.eclipse.emf.cdo.releng/help/toc.html">
 			<path path="plugins/org.eclipse.emf.cdo.releng.doc/help/tocHeader.html" />
+			<path path="plugins/org.eclipse.emf.cdo.releng.help/toc.html" />
 			<path path="plugins/org.eclipse.emf.cdo.doc/toc.html" />
 			<path path="plugins/org.eclipse.net4j.doc/toc.html" />
 			<path path="plugins/org.eclipse.net4j.db.doc/toc.html" />

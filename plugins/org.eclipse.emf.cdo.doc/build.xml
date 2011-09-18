@@ -351,8 +351,6 @@
 			<package name="org.eclipse.emf.cdo.doc" />
 			<package name="org.eclipse.emf.cdo.doc.online" />
 			<package name="org.eclipse.emf.cdo.doc.programmers" />
-			<package name="org.eclipse.emf.cdo.doc.programmers.connectors" />
-			<package name="org.eclipse.emf.cdo.doc.programmers.sessions" />
 			<package name="org.eclipse.emf.cdo.doc.reference" />
 			<package name="org.eclipse.emf.cdo.doc.reference.api" />
 			<package name="org.eclipse.emf.cdo.doc.reference.schema" />

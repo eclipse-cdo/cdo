@@ -30,8 +30,6 @@ Require-Bundle: org.eclipse.help;bundle-version="[3.3.0,4.0.0)";resolution:=opti
 Export-Package: org.eclipse.emf.cdo.doc;version="4.1.0",
  org.eclipse.emf.cdo.doc.online;version="4.1.0",
  org.eclipse.emf.cdo.doc.programmers;version="4.1.0",
- org.eclipse.emf.cdo.doc.programmers.connectors;version="4.1.0",
- org.eclipse.emf.cdo.doc.programmers.sessions;version="4.1.0",
  org.eclipse.emf.cdo.doc.reference;version="4.1.0",
  org.eclipse.emf.cdo.doc.reference.api;version="4.1.0",
  org.eclipse.emf.cdo.doc.reference.schema;version="4.1.0"

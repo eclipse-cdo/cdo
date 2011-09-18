@@ -195,7 +195,7 @@ public class AssembleScripts
   {
     Set<String> excludedPackages = new HashSet<String>();
 
-    String javadocExclude = buildProperties.getProperty("org.eclipse.emf.cdo.releng.javadoc.exclude");
+    String javadocExclude = buildProperties.getProperty("doc.exclude");
     if (javadocExclude != null)
     {
       for (String exclude : javadocExclude.split(","))
@@ -214,7 +214,8 @@ public class AssembleScripts
   {
     Attributes attributes = manifest.getMainAttributes();
     String exportPackage = attributes.getValue(EXPORT_PACKAGE);
-    return ManifestElement.parseHeader(EXPORT_PACKAGE, exportPackage);
+    ManifestElement[] elements = ManifestElement.parseHeader(EXPORT_PACKAGE, exportPackage);
+    return elements == null ? new ManifestElement[0] : elements;
   }
 
   private static Manifest getManifest(File plugin) throws IOException
@@ -271,6 +272,12 @@ public class AssembleScripts
     }
 
     return properties;
+  }
+
+  public static boolean isWeb(File projectFolder)
+  {
+    Properties buildProperties = getProperties(new File(projectFolder, "build.properties"));
+    return Boolean.parseBoolean(buildProperties.getProperty("doc.web", "true"));
   }
 
   public static List<String> getDependencies(File projectFolder)
@@ -472,8 +479,12 @@ public class AssembleScripts
         List<JavaDoc> javaDocs = (List<JavaDoc>)getJavaDocsSortedByDependencies();
         for (JavaDoc javaDoc : javaDocs)
         {
-          writer.write(javaDoc.getProject().getName());
-          writer.write("\n");
+          File projectFolder = javaDoc.getProject();
+          if (isWeb(projectFolder))
+          {
+            writer.write(projectFolder.getName());
+            writer.write("\n");
+          }
         }
 
         writer.flush();
@@ -507,6 +518,11 @@ public class AssembleScripts
           for (SourcePlugin sourcePlugin : javaDoc.getSortedSourcePlugins())
           {
             List<String> sortedPackageNames = sourcePlugin.getSortedPackageNames();
+            if (sortedPackageNames.isEmpty())
+            {
+              break;
+            }
+
             writer.write("<b><a href=\"../../" + javaDoc.getProject().getName() + "/javadoc/"
                 + sortedPackageNames.get(0).replace('.', '/') + "/package-summary.html\" target=\"debugDetails\">"
                 + sourcePlugin.getLabel() + "</a></b>\n");
@@ -928,14 +944,18 @@ public class AssembleScripts
             {
               for (SourcePlugin sourcePlugin : getSortedSourcePlugins())
               {
-                writer.write("\t\t\t<group title=\"" + sourcePlugin.getLabel() + "\">\n");
-
-                for (String packageName : sourcePlugin.getSortedPackageNames())
+                List<String> sortedPackageNames = sourcePlugin.getSortedPackageNames();
+                if (!sortedPackageNames.isEmpty())
                 {
-                  writer.write("\t\t\t\t<package name=\"" + packageName + "\" />\n");
-                }
+                  writer.write("\t\t\t<group title=\"" + sourcePlugin.getLabel() + "\">\n");
 
-                writer.write("\t\t\t</group>\n");
+                  for (String packageName : sortedPackageNames)
+                  {
+                    writer.write("\t\t\t\t<package name=\"" + packageName + "\" />\n");
+                  }
+
+                  writer.write("\t\t\t</group>\n");
+                }
               }
             }
             else

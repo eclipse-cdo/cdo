@@ -69,16 +69,19 @@ public class JavadocImpl extends CategoryImpl implements Javadoc
     for (Plugin plugin : getDocumentation().getPlugins())
     {
       EList<JavaPackage> packages = plugin.getPackages();
-      String href = getHref(packages.get(0));
-      writer.writeGroupStart(plugin.getLabel(), href);
-
-      for (JavaPackage javaPackage : packages)
+      if (!packages.isEmpty())
       {
-        href = getHref(javaPackage);
-        writer.writeSingle(javaPackage.getName(), href);
-      }
+        String href = getHref(packages.get(0));
+        writer.writeGroupStart(plugin.getLabel(), href);
 
-      writer.writeGroupEnd();
+        for (JavaPackage javaPackage : packages)
+        {
+          href = getHref(javaPackage);
+          writer.writeSingle(javaPackage.getName(), href);
+        }
+
+        writer.writeGroupEnd();
+      }
     }
 
     writer.writeGroupEnd();

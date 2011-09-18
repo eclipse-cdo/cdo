@@ -34,7 +34,7 @@
    </url>
 
    <plugin
-         id="com.mongodb"
+         id="org.eclipse.orbit.mongodb"
          download-size="0"
          install-size="0"
          version="0.0.0"

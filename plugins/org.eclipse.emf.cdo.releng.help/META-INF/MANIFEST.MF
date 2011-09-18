@@ -9,9 +9,6 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.help;bundle-version="[3.3.0,4.0.0)";resolution:=optional,
  org.eclipse.emf.cdo.doc;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.releng;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.releng.doc;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
- org.eclipse.emf.cdo.releng.promotion;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.releng.version;bundle-version="[1.0.0,2.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.releng.version.digest;bundle-version="[1.0.0,2.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.releng.version.digest.ui;bundle-version="[1.0.0,2.0.0)";resolution:=optional;visibility:=reexport

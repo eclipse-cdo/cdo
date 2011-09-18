@@ -165,7 +165,7 @@ public class ContextImpl extends EObjectImpl implements Context
   {
     System.out.println(prefix + element.getTitle() + "   --> " + ArticleUtil.makeConsoleLink(element.getDoc()));
 
-    for (StructuralElement child : element.getChildren())
+    for (StructuralElement child : element.getSortedChildren())
     {
       dump(child, prefix + "  ");
     }
@@ -349,7 +349,9 @@ public class ContextImpl extends EObjectImpl implements Context
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (baseFolder: ");

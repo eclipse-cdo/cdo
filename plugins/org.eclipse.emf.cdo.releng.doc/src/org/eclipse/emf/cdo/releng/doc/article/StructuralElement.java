@@ -13,6 +13,7 @@ import com.sun.javadoc.Doc;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Structural Element</b></em>'. <!-- end-user-doc
@@ -175,6 +176,8 @@ public interface StructuralElement extends LinkTarget
   Doc getDoc();
 
   int getDepth();
+
+  List<StructuralElement> getSortedChildren();
 
   void generate() throws IOException;
 

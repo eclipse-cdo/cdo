@@ -563,9 +563,23 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   protected abstract String getKind();
 
+  public List<StructuralElement> getSortedChildren()
+  {
+    List<StructuralElement> children = new ArrayList<StructuralElement>(getChildren());
+    Collections.sort(children, new Comparator<StructuralElement>()
+    {
+      public int compare(StructuralElement body1, StructuralElement body2)
+      {
+        return new Integer(((Body)body1).getNumber()).compareTo(((Body)body2).getNumber());
+      }
+    });
+
+    return children;
+  }
+
   public void generate() throws IOException
   {
-    for (StructuralElement child : getChildren())
+    for (StructuralElement child : getSortedChildren())
     {
       child.generate();
     }
@@ -573,7 +587,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   public void generate(PrintWriter out) throws IOException
   {
-    for (StructuralElement child : getChildren())
+    for (StructuralElement child : getSortedChildren())
     {
       child.generate(out);
     }
@@ -627,16 +641,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   protected void generateTocEntries(TocWriter writer) throws IOException
   {
-    List<StructuralElement> children = new ArrayList<StructuralElement>(getChildren());
-    Collections.sort(children, new Comparator<StructuralElement>()
-    {
-      public int compare(StructuralElement body1, StructuralElement body2)
-      {
-        return new Integer(((Body)body1).getNumber()).compareTo(((Body)body2).getNumber());
-      }
-    });
-
-    for (StructuralElement child : children)
+    for (StructuralElement child : getSortedChildren())
     {
       BodyImpl body = (BodyImpl)child;
       body.generateTocEntry(writer);

@@ -226,7 +226,7 @@ public class TocImpl extends BodyElementImpl implements Toc
       out.write("</td></tr>\n");
     }
 
-    for (StructuralElement child : element.getChildren())
+    for (StructuralElement child : element.getSortedChildren())
     {
       generate(out, linkSource, imagePath, depth, child, level + 1);
     }

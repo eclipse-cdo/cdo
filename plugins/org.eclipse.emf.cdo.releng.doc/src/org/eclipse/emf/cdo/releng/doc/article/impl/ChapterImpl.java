@@ -213,7 +213,7 @@ public class ChapterImpl extends BodyImpl implements Chapter
       getLevelNumbers((ChapterImpl)parent, levelNumbers);
     }
 
-    int number = parent.getChildren().indexOf(chapter) + 1;
+    int number = parent.getSortedChildren().indexOf(chapter) + 1;
     levelNumbers.add(number);
   }
 } // ChapterImpl

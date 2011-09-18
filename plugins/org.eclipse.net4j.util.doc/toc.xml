@@ -3,7 +3,7 @@
 
 <toc label="Net4j Utilities Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
-  <topic label="Reference" href="html/reference/summary.html">
+  <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">
       <topic label="Net4j Utilities" href="javadoc/org/eclipse/net4j/util/package-summary.html">
         <topic label="org.eclipse.net4j.util" href="javadoc/org/eclipse/net4j/util/package-summary.html" />
@@ -41,14 +41,14 @@
         <topic label="org.eclipse.net4j.util.ui.widgets" href="javadoc/org/eclipse/net4j/util/ui/widgets/package-summary.html" />
       </topic>
     </topic>
-    <topic label="Extension Point Reference" href="html/reference/schema/summary.html">
+    <topic label="Extension Point Reference" href="html/reference/schema/index.html">
       <topic label="Net4j Utilities" href="schemadoc/org_eclipse_net4j_util_elementProcessors.html">
         <topic label="elementProcessors" href="schemadoc/org_eclipse_net4j_util_elementProcessors.html" />
         <topic label="factories" href="schemadoc/org_eclipse_net4j_util_factories.html" />
       </topic>
     </topic>
   </topic>
-  <topic label="Online Docs" href="html/online/summary.html">
+  <topic label="Online Docs" href="html/online/index.html">
     <topic label="Homepage" href="http://www.eclipse.org/cdo" />
     <topic label="Wiki" href="http://wiki.eclipse.org/CDO" />
   </topic>

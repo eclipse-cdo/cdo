@@ -111,8 +111,14 @@ public class CategoryImpl extends BodyImpl implements Category
   }
 
   @Override
+  public String linkFrom(StructuralElement source)
+  {
+    return super.linkFrom(source) + "/index.html";
+  }
+
+  @Override
   protected File getTocTarget()
   {
-    return new File(super.getTocTarget(), "summary.html");
+    return new File(super.getTocTarget(), "index.html");
   }
 } // CategoryImpl

@@ -33,12 +33,15 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
-   <includes
-         id="com.mongodb"
-         version="0.0.0"/>
-
    <plugin
          id="org.eclipse.emf.cdo.server.mongodb"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.orbit.mongodb"
          download-size="0"
          install-size="0"
          version="0.0.0"

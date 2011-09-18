@@ -23,11 +23,6 @@
 	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="local" failOnError="false"/>
 	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="svn"/>
 	
-	<!--
-	<rm:locator pattern="^com\.mongodb(?:\..+)?$" searchPathRef="local" failOnError="false"/>
-	<rm:locator pattern="^com\.mongodb(?:\..+)?$" searchPathRef="svn"/>
-	-->
-	
 	<rm:locator searchPathRef="p2"/>
 	
 	<!-- Search Paths -->

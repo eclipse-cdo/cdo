@@ -104,7 +104,7 @@ public class ExpectedFileInputStream extends FileInputStream
 
         try
         {
-          wait(Math.max(100L, restTime));
+          wait(Math.min(100L, restTime));
         }
         catch (InterruptedException ex)
         {

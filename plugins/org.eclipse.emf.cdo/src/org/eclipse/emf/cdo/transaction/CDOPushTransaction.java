@@ -163,7 +163,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
 
   public boolean isDirty()
   {
-    return dirty;
+    return dirty || delegate.isDirty();
   }
 
   protected void setDirty(boolean dirty)

@@ -18,6 +18,7 @@
     <cq:advisorNode namePattern="org\.eclipse\.emf\.cdo.*" branchTagPath="4.0-maintenance"/>
     <cq:advisorNode namePattern="org\.eclipse\.net4j.*" branchTagPath="4.0-maintenance"/>
     <cq:advisorNode namePattern="org\.gastro.*" branchTagPath="4.0-maintenance"/>
+    <cq:advisorNode namePattern="com\.mongodb.*" branchTagPath="4.0-maintenance"/>
 
 	<cq:advisorNode namePattern=".*" useMaterialization="false" useTargetPlatform="false"/>
 </cq:componentQuery>

@@ -245,6 +245,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         delegate.loadLob(info, outputStreamOrWriter);
+        return;
       }
       catch (Exception ex)
       {
@@ -262,6 +263,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         delegate.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
+        return;
       }
       catch (Exception ex)
       {

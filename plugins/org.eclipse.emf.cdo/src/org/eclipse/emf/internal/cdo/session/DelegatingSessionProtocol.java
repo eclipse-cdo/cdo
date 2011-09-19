@@ -410,7 +410,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         delegate.enableLockNotifications(viewID, enable);
-        
         return;
       }
       catch (Exception ex)

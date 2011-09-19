@@ -136,4 +136,9 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, IDu
    * @since 4.1
    */
   public void setLockState(Object key, LockState<Object, IView> lockState);
+
+  /**
+   * @since 4.1
+   */
+  public void reloadLocks();
 }

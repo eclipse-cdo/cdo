@@ -1102,6 +1102,9 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     where = " WHERE " + CDODBSchema.COMMIT_INFOS_TIMESTAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, CDODBSchema.COMMIT_INFOS, null, where);
 
+    DurableLockingManager durableLockingManager = store.getDurableLockingManager();
+    durableLockingManager.rawExport(connection, out, fromCommitTime, toCommitTime);
+
     IIDHandler idHandler = store.getIDHandler();
     idHandler.rawExport(connection, out, fromCommitTime, toCommitTime);
 
@@ -1116,14 +1119,15 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       OMMonitor monitor) throws IOException
   {
     DBStore store = getStore();
+    IIDHandler idHandler = store.getIDHandler();
     if (store.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
     {
-      store.getIDHandler().setLastObjectID(in.readCDOID()); // See bug 325097
+      idHandler.setLastObjectID(in.readCDOID()); // See bug 325097
     }
 
     IMappingStrategy mappingStrategy = store.getMappingStrategy();
     int size = mappingStrategy.getClassMappings().size();
-    int commitWork = 4;
+    int commitWork = 5;
     monitor.begin(commitWork + size + commitWork);
 
     Collection<InternalCDOPackageUnit> packageUnits = new HashSet<InternalCDOPackageUnit>();
@@ -1132,9 +1136,16 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     {
       DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES, monitor.fork());
       DBUtil.deserializeTable(in, connection, CDODBSchema.COMMIT_INFOS, monitor.fork());
-      store.getIDHandler().rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
+
+      DurableLockingManager durableLockingManager = store.getDurableLockingManager();
+      durableLockingManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
+
+      idHandler.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
+
       rawImportPackageUnits(in, fromCommitTime, toCommitTime, packageUnits, monitor.fork());
+
       mappingStrategy.rawImport(this, in, fromCommitTime, toCommitTime, monitor.fork(size));
+
       rawCommit(commitWork, monitor);
     }
     catch (RuntimeException ex)

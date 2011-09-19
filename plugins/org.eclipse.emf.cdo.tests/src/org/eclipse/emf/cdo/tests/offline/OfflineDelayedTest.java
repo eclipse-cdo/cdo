@@ -117,10 +117,6 @@ public class OfflineDelayedTest extends AbstractSyncingTest
     waitForOnline(clone);
   }
 
-  // public void testXXX() throws Exception
-  // {
-  // }
-
   public void _testSyncWhileCommittingToMaster_NewPackage() throws Exception
   {
     TestListener listener = new TestListener();

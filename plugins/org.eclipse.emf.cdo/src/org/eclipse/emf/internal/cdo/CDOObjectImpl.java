@@ -86,8 +86,6 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
 
   private InternalCDORevision revision;
 
-  private CDOLockState lockState;
-
   /**
    * CDO uses this list instead of eSettings for transient objects. EMF uses eSettings as cache. CDO deactivates the
    * cache but EMF still used eSettings to store list wrappers. CDO needs another place to store the real list with the
@@ -225,25 +223,14 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
   /**
    * @since 4.1
    */
-  public synchronized CDOLockState cdoLockState()
+  public CDOLockState cdoLockState()
   {
-    if (lockState == null)
+    if (!FSMUtil.isTransient(this) && !FSMUtil.isNew(this))
     {
-      if (!FSMUtil.isTransient(this) && !FSMUtil.isNew(this))
-      {
-        lockState = view.getLockStates(Collections.singletonList(id))[0];
-      }
+      return view.getLockStates(Collections.singletonList(id))[0];
     }
 
-    return lockState;
-  }
-
-  /**
-   * @since 4.1
-   */
-  public synchronized void cdoInternalSetLockState(CDOLockState lockState)
-  {
-    this.lockState = lockState;
+    return null;
   }
 
   public void cdoInternalSetID(CDOID id)

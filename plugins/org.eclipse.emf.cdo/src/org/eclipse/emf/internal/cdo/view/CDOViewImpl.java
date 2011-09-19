@@ -103,6 +103,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 /**
  * @author Eike Stepper
@@ -128,6 +129,8 @@ public class CDOViewImpl extends AbstractCDOView
   private long lastUpdateTime;
 
   private QueueRunner invalidationRunner;
+
+  private Map<InternalCDOObject, CDOLockState> lockStates = new WeakHashMap<InternalCDOObject, CDOLockState>();
 
   @ExcludeFromDump
   private InvalidationRunnerLock invalidationRunnerLock = new InvalidationRunnerLock();
@@ -339,7 +342,7 @@ public class CDOViewImpl extends AbstractCDOView
       InternalCDOObject obj = getObject(id, false);
       if (obj != null)
       {
-        obj.cdoInternalSetLockState(lockState);
+        lockStates.put(obj, lockState);
       }
     }
   }
@@ -363,29 +366,51 @@ public class CDOViewImpl extends AbstractCDOView
 
   public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
   {
-    if (!options().isLockNotificationEnabled())
-    {
-      return;
-    }
+    CDOLockChangeInfo event = null;
 
-    // If lockChangeInfo pertains to a different view, do nothing.
-    if (!lockChangeInfo.getBranch().equals(getBranch()))
+    try
     {
-      return;
-    }
+      synchronized (this)
+      {
+        if (!options().isLockNotificationEnabled())
+        {
+          return;
+        }
 
-    // If lockChangeInfo represents lock changes authored by this view itself, do nothing.
-    CDOLockOwner thisView = CDOLockUtil.createLockOwner(this);
-    if (lockChangeInfo.getLockOwner().equals(thisView))
+        if (lockChangeInfo.isInvalidateAll())
+        {
+          lockStates.clear();
+          event = lockChangeInfo;
+          return;
+        }
+
+        // If lockChangeInfo pertains to a different view, do nothing.
+        if (!lockChangeInfo.getBranch().equals(getBranch()))
+        {
+          return;
+        }
+
+        // If lockChangeInfo represents lock changes authored by this view itself, do nothing.
+        CDOLockOwner thisView = CDOLockUtil.createLockOwner(this);
+        if (lockChangeInfo.getLockOwner().equals(thisView))
+        {
+          return;
+        }
+
+        // TODO (CD) I know it is Eike's desideratum that this be done asynchronously.. but beware,
+        // this will require the tests to be fixed to listen for the view events instead of the
+        // session events.
+        updateLockStates(lockChangeInfo.getLockStates());
+        event = lockChangeInfo;
+      }
+    }
+    finally
     {
-      return;
+      if (event != null)
+      {
+        fireLocksChangedEvent(sender, event);
+      }
     }
-
-    // TODO (CD) I know it is Eike's desideratum that this be done asynchronously.. but beware,
-    // this will require the tests to be fixed to listen for the view events instead of the
-    // session events.
-    updateLockStates(lockChangeInfo.getLockStates());
-    fireLocksChangedEvent(sender, lockChangeInfo);
   }
 
   private void fireLocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
@@ -550,11 +575,39 @@ public class CDOViewImpl extends AbstractCDOView
     return revisionManager.getRevision(id, branchPoint, initialChunkSize, CDORevision.DEPTH_NONE, loadOnDemand);
   }
 
-  public CDOLockState[] getLockStates(Collection<CDOID> ids)
+  public synchronized CDOLockState[] getLockStates(Collection<CDOID> ids)
   {
-    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    CDOLockState[] lockStates = sessionProtocol.getLockStates(viewID, ids);
-    return lockStates;
+    List<CDOID> missing = new LinkedList<CDOID>();
+    List<CDOLockState> lockStates = new LinkedList<CDOLockState>();
+    for (CDOID id : ids)
+    {
+      CDOLockState lockState = null;
+      InternalCDOObject obj = getObject(id, false);
+      if (obj != null)
+      {
+        lockState = this.lockStates.get(obj);
+      }
+      if (lockState != null)
+      {
+        lockStates.add(lockState);
+      }
+      else
+      {
+        missing.add(id);
+      }
+    }
+
+    if (missing.size() > 0)
+    {
+      CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+      CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, missing);
+      for (CDOLockState loadedLockState : loadedLockStates)
+      {
+        lockStates.add(loadedLockState);
+      }
+    }
+
+    return lockStates.toArray(new CDOLockState[lockStates.size()]);
   }
 
   private CDOBranchPoint getBranchPointForID(CDOID id)

@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
@@ -270,6 +271,12 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDOLockChangeInfo readCDOLockChangeInfo() throws IOException
   {
+    boolean isInvalidateAll = readBoolean();
+    if (isInvalidateAll)
+    {
+      return CDOLockUtil.createLockChangeInfo();
+    }
+
     CDOBranchPoint branchPoint = readCDOBranchPoint();
     CDOLockOwner lockOwner = readCDOLockOwner();
     Operation operation = readEnum(Operation.class);

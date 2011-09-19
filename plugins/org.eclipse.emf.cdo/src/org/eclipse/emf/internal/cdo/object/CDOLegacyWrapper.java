@@ -97,8 +97,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   protected InternalCDORevision revision;
 
-  protected CDOLockState lockState;
-
   /**
    * It could happen that while <i>revisionToInstance()</i> is executed externally the <i>internalPostLoad()</i> method
    * will be called. This happens for example if <i>internalPostInvalidate()</i> is called. The leads to another
@@ -127,20 +125,12 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   public synchronized CDOLockState cdoLockState()
   {
-    if (lockState == null)
+    if (!FSMUtil.isTransient(this) && !FSMUtil.isNew(this))
     {
-      if (!FSMUtil.isTransient(this) && !FSMUtil.isNew(this))
-      {
-        lockState = view.getLockStates(Collections.singletonList(id))[0];
-      }
+      return view.getLockStates(Collections.singletonList(id))[0];
     }
 
-    return lockState;
-  }
-
-  public synchronized void cdoInternalSetLockState(CDOLockState lockState)
-  {
-    this.lockState = lockState;
+    return null;
   }
 
   @Override

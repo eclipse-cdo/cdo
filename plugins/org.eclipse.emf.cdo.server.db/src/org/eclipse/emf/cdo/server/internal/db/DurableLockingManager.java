@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea.Handler;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaAlreadyExistsException;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundException;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
@@ -34,7 +36,9 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -85,6 +89,8 @@ public class DurableLockingManager extends Lifecycle
   private String sqlSelectLockAreas;
 
   private String sqlDeleteLockArea;
+
+  private String sqlDeleteLockAreas;
 
   private String sqlSelectLocks;
 
@@ -484,6 +490,18 @@ public class DurableLockingManager extends Lifecycle
     sqlDeleteLockArea = builder.toString();
 
     builder = new StringBuilder();
+    builder.append("DELETE FROM ");
+    builder.append(lockAreas);
+    builder.append(" a WHERE EXISTS (SELECT * FROM ");
+    builder.append(locks);
+    builder.append(" l WHERE l.");
+    builder.append(locksArea);
+    builder.append("=a.");
+    builder.append(lockAreasID);
+    builder.append(")");
+    sqlDeleteLockAreas = builder.toString();
+
+    builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(locksObject);
     builder.append(","); //$NON-NLS-1$
@@ -682,6 +700,37 @@ public class DurableLockingManager extends Lifecycle
       statementCache.releasePreparedStatement(stmtUpdate);
       statementCache.releasePreparedStatement(stmtInsertOrDelete);
       statementCache.releasePreparedStatement(stmtSelect);
+    }
+  }
+
+  public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime)
+      throws IOException
+  {
+    DBUtil.serializeTable(out, connection, lockAreas, null, null);
+    DBUtil.serializeTable(out, connection, locks, null, null);
+  }
+
+  public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException
+  {
+    monitor.begin(4);
+
+    try
+    {
+      // Delete all non-empty lock areas
+      DBUtil.update(connection, sqlDeleteLockAreas);
+      monitor.worked();
+
+      DBUtil.deserializeTable(in, connection, lockAreas, monitor.fork());
+
+      DBUtil.clearTable(connection, locks);
+      monitor.worked();
+
+      DBUtil.deserializeTable(in, connection, locks, monitor.fork());
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 }

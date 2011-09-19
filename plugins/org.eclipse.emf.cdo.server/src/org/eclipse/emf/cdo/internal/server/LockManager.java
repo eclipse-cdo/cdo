@@ -352,7 +352,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    loadDurableLocks();
+    loadLocks();
     getRepository().getSessionManager().addListener(sessionManagerListener);
   }
 
@@ -391,7 +391,13 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     throw new IllegalStateException("Store does not implement " + DurableLocking2.class.getSimpleName());
   }
 
-  private void loadDurableLocks()
+  public void reloadLocks()
+  {
+    DurableLockLoader handler = new DurableLockLoader();
+    getLockAreas(null, handler);
+  }
+
+  private void loadLocks()
   {
     InternalStore store = repository.getStore();
     IStoreAccessor reader = null;
@@ -402,9 +408,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       if (reader instanceof DurableLocking)
       {
         StoreThreadLocal.setAccessor(reader);
-
-        DurableLockLoader handler = new DurableLockLoader();
-        getLockAreas(null, handler);
+        reloadLocks();
       }
     }
     finally
@@ -578,10 +582,26 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     {
     }
 
+    private IView getView(String lockAreaID)
+    {
+      IView view = openViews.get(lockAreaID);
+      if (view == null)
+      {
+        view = durableViews.get(lockAreaID);
+      }
+      
+      return view;
+    }
+
     public boolean handleLockArea(LockArea area)
     {
       String durableLockingID = area.getDurableLockingID();
-      IView view = durableViews.get(durableLockingID);
+      IView view = getView(durableLockingID);
+      if (view != null)
+      {
+        unlock2(view);
+      }
+      
       if (view == null)
       {
         view = new DurableView(durableLockingID);
@@ -640,17 +660,8 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
         }
       }
     }
+    
     return grade;
-  }
-
-  private IView getView(String lockAreaID)
-  {
-    IView view = openViews.get(lockAreaID);
-    if (view == null)
-    {
-      view = durableViews.get(lockAreaID);
-    }
-    return view;
   }
 
   private LockArea getLockAreaNoEx(String durableLockingID)
@@ -683,11 +694,6 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     else
     {
       accessor.updateLockArea(lockArea);
-      IView view = getView(durableLockingID);
-      if (view != null)
-      {
-        unlock2(view);
-      }
       new DurableLockLoader().handleLockArea(lockArea);
     }
   }

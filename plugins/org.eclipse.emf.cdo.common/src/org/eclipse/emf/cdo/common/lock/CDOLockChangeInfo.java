@@ -31,6 +31,12 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 public interface CDOLockChangeInfo extends CDOBranchPoint
 {
   /**
+   * @return <code>true</code> if this instance signals that all {@link CDOLockState lockstates} must be invalidated,
+   *         <code>false</code> otherwise
+   */
+  public boolean isInvalidateAll();
+
+  /**
    * @return The branch at which the lock changes took place, same as <code>getView().getBranch()</code>.
    */
   public CDOBranch getBranch();

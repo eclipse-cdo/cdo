@@ -18,10 +18,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
+import org.eclipse.emf.cdo.internal.common.lock.CDOLockAreaImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockChangeInfoImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockOwnerImpl;
 import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
-import org.eclipse.emf.cdo.internal.common.lock.CDOLockAreaImpl;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 
 import org.eclipse.net4j.util.CheckUtil;
@@ -72,7 +72,7 @@ public final class CDOLockUtil
         sessionID = session.getSessionID();
         viewID = view.getViewID();
       }
-      
+
       CDOLockOwner owner = new CDOLockOwnerImpl(sessionID, viewID, durableLockingID, isDurableView);
       cdoLockState.addReadLockOwner(owner);
     }
@@ -104,7 +104,7 @@ public final class CDOLockUtil
       int viewID = view.getViewID();
       return new CDOLockOwnerImpl(sessionID, viewID, durableLockingID, false);
     }
-    
+
     CheckUtil.checkNull(durableLockingID, "durableLockingID");
     return new CDOLockOwnerImpl(0, 0, durableLockingID, true); // TODO (CD) Symbolic constants?
   }
@@ -113,6 +113,11 @@ public final class CDOLockUtil
       Operation op, LockType lockType, CDOLockState[] cdoLockStates)
   {
     return new CDOLockChangeInfoImpl(branch.getPoint(timestamp), lockOwner, cdoLockStates, op, lockType);
+  }
+
+  public static CDOLockChangeInfo createLockChangeInfo()
+  {
+    return new CDOLockChangeInfoImpl();
   }
 
   public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOCommonView view, CDOBranch viewedBranch,

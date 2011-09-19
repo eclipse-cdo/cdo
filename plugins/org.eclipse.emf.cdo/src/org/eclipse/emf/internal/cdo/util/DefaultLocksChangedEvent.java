@@ -74,4 +74,9 @@ public class DefaultLocksChangedEvent extends Event implements CDOLockChangeInfo
   {
     return lockChangeInfo.getLockType();
   }
+
+  public boolean isInvalidateAll()
+  {
+    return lockChangeInfo.isInvalidateAll();
+  }
 }

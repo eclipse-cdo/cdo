@@ -601,6 +601,23 @@ public final class DBUtil
     return result;
   }
 
+  /**
+   * @since 4.1
+   */
+  public static int clearTable(Connection connection, IDBTable table)
+  {
+    return clearTable(connection, table.getName());
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static int clearTable(Connection connection, String tableName)
+  {
+    String sql = "DELETE FROM " + tableName;
+    return update(connection, sql);
+  }
+
   public static int select(Connection connection, IDBRowHandler rowHandler, String where, IDBField... fields)
       throws DBException
   {

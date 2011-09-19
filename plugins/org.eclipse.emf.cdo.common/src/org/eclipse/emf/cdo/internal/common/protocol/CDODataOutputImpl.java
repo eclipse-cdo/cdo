@@ -227,16 +227,24 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
 
   public void writeCDOLockChangeInfo(CDOLockChangeInfo lockChangeInfo) throws IOException
   {
-    writeCDOBranchPoint(lockChangeInfo);
-    writeCDOLockOwner(lockChangeInfo.getLockOwner());
-    writeEnum(lockChangeInfo.getOperation());
-    writeCDOLockType(lockChangeInfo.getLockType());
-
-    CDOLockState[] lockStates = lockChangeInfo.getLockStates();
-    writeInt(lockStates.length);
-    for (CDOLockState lockState : lockStates)
+    if (lockChangeInfo.isInvalidateAll())
     {
-      writeCDOLockState(lockState);
+      writeBoolean(true);
+    }
+    else
+    {
+      writeBoolean(false);
+      writeCDOBranchPoint(lockChangeInfo);
+      writeCDOLockOwner(lockChangeInfo.getLockOwner());
+      writeEnum(lockChangeInfo.getOperation());
+      writeCDOLockType(lockChangeInfo.getLockType());
+
+      CDOLockState[] lockStates = lockChangeInfo.getLockStates();
+      writeInt(lockStates.length);
+      for (CDOLockState lockState : lockStates)
+      {
+        writeCDOLockState(lockState);
+      }
     }
   }
 

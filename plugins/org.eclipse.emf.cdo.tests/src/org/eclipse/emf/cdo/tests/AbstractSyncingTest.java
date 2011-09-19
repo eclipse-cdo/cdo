@@ -245,4 +245,12 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
       ConcurrencyUtil.sleep(SLEEP_MILLIS);
     }
   }
+
+  protected static CDOTransaction openTransaction(CDOSession session)
+  {
+    CDOTransaction tx = session.openTransaction();
+    tx.options().setLockNotificationEnabled(true);
+    tx.enableDurableLocking(true);
+    return tx;
+  }
 }

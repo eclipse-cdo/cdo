@@ -33,6 +33,8 @@ public class CDOLockChangeInfoImpl implements CDOLockChangeInfo
 
   private final LockType lockType;
 
+  private final boolean isInvalidateAll;
+
   public CDOLockChangeInfoImpl(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, CDOLockState[] lockStates,
       Operation operation, LockType lockType)
   {
@@ -41,16 +43,27 @@ public class CDOLockChangeInfoImpl implements CDOLockChangeInfo
     this.lockStates = lockStates;
     this.operation = operation;
     this.lockType = lockType;
+    isInvalidateAll = false;
+  }
+
+  public CDOLockChangeInfoImpl()
+  {
+    branchPoint = null;
+    lockOwner = null;
+    lockStates = null;
+    operation = null;
+    lockType = null;
+    isInvalidateAll = true;
   }
 
   public CDOBranch getBranch()
   {
-    return branchPoint.getBranch();
+    return branchPoint == null ? null : branchPoint.getBranch();
   }
 
   public long getTimeStamp()
   {
-    return branchPoint.getTimeStamp();
+    return branchPoint == null ? CDOBranchPoint.UNSPECIFIED_DATE : branchPoint.getTimeStamp();
   }
 
   public CDOLockOwner getLockOwner()
@@ -71,5 +84,10 @@ public class CDOLockChangeInfoImpl implements CDOLockChangeInfo
   public LockType getLockType()
   {
     return lockType;
+  }
+
+  public boolean isInvalidateAll()
+  {
+    return isInvalidateAll;
   }
 }

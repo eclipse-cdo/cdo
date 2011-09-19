@@ -44,6 +44,7 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(ViewTest.class);
     testClasses.add(TransactionTest.class);
     testClasses.add(PushTransactionTest.class);
+    testClasses.add(PushTransactionWithoutReconstructSavepointsTest.class);
     testClasses.add(CommitInfoTest.class);
     testClasses.add(AuditTest.class);
     testClasses.add(AuditSameSessionTest.class);

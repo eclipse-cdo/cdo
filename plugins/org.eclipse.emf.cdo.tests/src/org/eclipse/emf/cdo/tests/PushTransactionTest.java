@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -68,7 +69,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Make a diff in existing element");
@@ -83,7 +84,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       push(transaction, pushTransaction);
@@ -105,7 +106,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Remove an existing element");
@@ -120,7 +121,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       push(transaction, pushTransaction);
@@ -139,7 +140,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new element");
@@ -155,7 +156,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDORevisionDelta delta = transaction.getRevisionDeltas().values().iterator().next();
@@ -176,7 +177,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new element");
@@ -192,7 +193,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDORevisionDelta delta = transaction.getRevisionDeltas().values().iterator().next();
@@ -213,7 +214,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new element");
@@ -229,7 +230,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDORevisionDelta delta = transaction.getRevisionDeltas().values().iterator().next();
@@ -258,7 +259,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new element");
@@ -274,7 +275,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDORevisionDelta delta = transaction.getRevisionDeltas().values().iterator().next();
@@ -312,7 +313,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new resource");
@@ -327,7 +328,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       CDOResource resource2 = (CDOResource)resource.getContents().get(2);
@@ -354,7 +355,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new element");
@@ -378,7 +379,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       assertEquals(1, transaction.getRevisionDeltas().size());
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
@@ -410,7 +411,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new elements");
@@ -430,7 +431,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       assertEquals(supplierName, ((Supplier)resource.getContents().get(1)).getName());
@@ -451,7 +452,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Create a new elements");
@@ -469,7 +470,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       assertEquals(0, resource.getContents().size());
@@ -489,7 +490,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       Supplier supplier = (Supplier)resource.getContents().get(0);
@@ -503,7 +504,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Reload previous local session");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
       assertEquals(true, transaction.isDirty());
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       Supplier supplier = (Supplier)resource.getContents().get(0);
@@ -525,7 +526,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Make a diff in existing element");
@@ -552,7 +553,7 @@ public class PushTransactionTest extends AbstractCDOTest
 
     try
     {
-      new CDOPushTransaction(transaction, file);
+      openPushTransaction(transaction, file);
       fail("ObjectNotFoundException expected");
     }
     catch (ObjectNotFoundException expected)
@@ -567,7 +568,7 @@ public class PushTransactionTest extends AbstractCDOTest
       msg("Open session & local transaction");
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
+      CDOPushTransaction pushTransaction = openPushTransaction(transaction);
       file = pushTransaction.getFile();
       CDOResource resource = transaction.getOrCreateResource(getResourcePath(resourcePath));
       msg("Make a diff in existing element");
@@ -592,7 +593,7 @@ public class PushTransactionTest extends AbstractCDOTest
     msg("Reload previous local session");
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction, file);
+    CDOPushTransaction pushTransaction = openPushTransaction(transaction, file);
     assertEquals(true, transaction.hasConflict());
 
     try
@@ -604,6 +605,16 @@ public class PushTransactionTest extends AbstractCDOTest
     {
       // SUCCESS
     }
+  }
+
+  protected CDOPushTransaction openPushTransaction(CDOTransaction transaction) throws IOException
+  {
+    return new CDOPushTransaction(transaction);
+  }
+
+  protected CDOPushTransaction openPushTransaction(CDOTransaction transaction, File file) throws IOException
+  {
+    return new CDOPushTransaction(transaction, file);
   }
 
   protected void push(CDOTransaction transaction, CDOPushTransaction pushTransaction) throws CommitException

@@ -8,11 +8,16 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
+package org.eclipse.emf.cdo.releng.help.contributor;
 
 /**
- * Release Engineer's Guide
+ * Using Subversion
+ * <p>
  * 
- * @number 2
+ * @number 3
+ * @author Eike Stepper
  */
-package org.eclipse.emf.cdo.releng.help.releng;
+public class Subversion
+{
 
+}

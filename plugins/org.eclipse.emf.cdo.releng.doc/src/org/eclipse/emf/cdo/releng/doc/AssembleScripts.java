@@ -425,6 +425,7 @@ public class AssembleScripts
         writeGenerationWarning(writer);
         writer.write("\n");
 
+        // Generate delegator
         writer.write("\t<target name=\"delegate\">\n");
 
         List<JavaDoc> javaDocs = (List<JavaDoc>)getJavaDocsSortedByDependencies();
@@ -437,6 +438,7 @@ public class AssembleScripts
         writer.write("\t</target>\n");
         writer.write("\n");
 
+        // Generate toc
         writer.write("\t<target name=\"toc\">\n");
         writer.write("\t\t<concat destfile=\"plugins/org.eclipse.emf.cdo.releng/help/toc.html\">\n");
         writer.write("\t\t\t<path path=\"plugins/org.eclipse.emf.cdo.releng.doc/help/tocHeader.html\" />\n");
@@ -444,7 +446,10 @@ public class AssembleScripts
         Collections.reverse(javaDocs);
         for (JavaDoc javaDoc : javaDocs)
         {
-          writer.write("\t\t\t<path path=\"plugins/" + javaDoc.getProject().getName() + "/toc.html\" />\n");
+          if (javaDoc.isWeb())
+          {
+            writer.write("\t\t\t<path path=\"plugins/" + javaDoc.getProject().getName() + "/toc.html\" />\n");
+          }
         }
 
         writer.write("\t\t\t<path path=\"plugins/org.eclipse.emf.cdo.releng.doc/help/tocFooter.html\" />\n");
@@ -480,7 +485,7 @@ public class AssembleScripts
         for (JavaDoc javaDoc : javaDocs)
         {
           File projectFolder = javaDoc.getProject();
-          if (isWeb(projectFolder))
+          if (javaDoc.isWeb())
           {
             writer.write(projectFolder.getName());
             writer.write("\n");
@@ -809,6 +814,11 @@ public class AssembleScripts
     public Set<String> getArticlePackages()
     {
       return articlePackages;
+    }
+
+    public boolean isWeb()
+    {
+      return AssembleScripts.isWeb(getProject());
     }
 
     public void generateAnt() throws IOException

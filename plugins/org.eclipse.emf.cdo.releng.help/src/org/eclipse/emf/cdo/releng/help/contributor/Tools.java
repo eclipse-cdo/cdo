@@ -8,11 +8,35 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
+package org.eclipse.emf.cdo.releng.help.contributor;
 
 /**
- * Release Engineer's Guide
+ * Additional Tools
+ * <p>
  * 
- * @number 2
+ * @number 4
+ * @author Eike Stepper
  */
-package org.eclipse.emf.cdo.releng.help.releng;
+public class Tools
+{
+  /**
+   * Task Overview Perspective
+   */
+  public class TaskOverview
+  {
+  }
 
+  /**
+   * Revision Hyperlink Detector
+   */
+  public class RevisionHyperlinks
+  {
+  }
+
+  /**
+   * Commit Comment Creator
+   */
+  public class CommitComments
+  {
+  }
+}

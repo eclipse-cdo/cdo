@@ -664,6 +664,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   {
     File project = getOutputFile().getParentFile();
 
+    // TODO Check if documentation has Javadocs
     String href = "javadoc/overview-summary.html";
     if (defaultElement != null)
     {

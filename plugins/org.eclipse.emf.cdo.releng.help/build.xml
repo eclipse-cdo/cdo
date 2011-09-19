@@ -226,6 +226,7 @@
 			</fileset>
 
 			<package name="org.eclipse.emf.cdo.releng.help" />
+			<package name="org.eclipse.emf.cdo.releng.help.contributor" />
 			<package name="org.eclipse.emf.cdo.releng.help.online" />
 			<package name="org.eclipse.emf.cdo.releng.help.reference" />
 			<package name="org.eclipse.emf.cdo.releng.help.reference.api" />

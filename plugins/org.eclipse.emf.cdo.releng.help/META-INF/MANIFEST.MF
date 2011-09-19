@@ -13,6 +13,7 @@ Require-Bundle: org.eclipse.help;bundle-version="[3.3.0,4.0.0)";resolution:=opti
  org.eclipse.emf.cdo.releng.version.digest;bundle-version="[1.0.0,2.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.emf.cdo.releng.version.digest.ui;bundle-version="[1.0.0,2.0.0)";resolution:=optional;visibility:=reexport
 Export-Package: org.eclipse.emf.cdo.releng.help;version="4.1.0",
+ org.eclipse.emf.cdo.releng.help.contributor;version="4.1.0",
  org.eclipse.emf.cdo.releng.help.online;version="4.1.0",
  org.eclipse.emf.cdo.releng.help.reference;version="4.1.0",
  org.eclipse.emf.cdo.releng.help.reference.api;version="4.1.0",

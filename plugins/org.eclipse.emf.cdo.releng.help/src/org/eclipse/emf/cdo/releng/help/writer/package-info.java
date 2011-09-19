@@ -12,7 +12,7 @@
 /**
  * Technical Writer's Guide
  * 
- * @number 2
+ * @number 3
  */
 package org.eclipse.emf.cdo.releng.help.writer;
 

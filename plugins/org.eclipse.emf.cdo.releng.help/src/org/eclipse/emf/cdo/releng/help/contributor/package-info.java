@@ -10,9 +10,9 @@
  */
 
 /**
- * Release Engineer's Guide
+ * Contributor's Guide
  * 
- * @number 2
+ * @number 1
  */
-package org.eclipse.emf.cdo.releng.help.releng;
+package org.eclipse.emf.cdo.releng.help.contributor;
 

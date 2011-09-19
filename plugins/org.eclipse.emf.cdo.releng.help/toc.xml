@@ -3,6 +3,12 @@
 
 <toc label="CDO Release Engineering Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
+  <topic label="Contributor's Guide" href="html/contributor/index.html">
+    <topic label="Project Infrastructure" href="html/contributor/Infrastructure.html" />
+    <topic label="Using Bugzilla" href="html/contributor/Bugzilla.html" />
+    <topic label="Using Subversion" href="html/contributor/Subversion.html" />
+    <topic label="Additional Tools" href="html/contributor/Tools.html" />
+  </topic>
   <topic label="Release Engineer's Guide" href="html/releng/index.html">
     <topic label="Provisioning" href="html/releng/provisioning/index.html">
       <topic label="Using Buckminster" href="html/releng/provisioning/Buckminster.html" />

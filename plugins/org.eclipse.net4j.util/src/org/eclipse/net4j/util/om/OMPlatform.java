@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
+import org.eclipse.net4j.util.om.log.OMLogFilter;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.trace.OMTraceHandler;
 
@@ -47,6 +48,16 @@ public interface OMPlatform
   public boolean isDebugging();
 
   public void setDebugging(boolean debugging);
+
+  /**
+   * @since 3.2
+   */
+  public void addLogFilter(OMLogFilter logFilter);
+
+  /**
+   * @since 3.2
+   */
+  public void removeLogFilter(OMLogFilter logFilter);
 
   public void addLogHandler(OMLogHandler logHandler);
 

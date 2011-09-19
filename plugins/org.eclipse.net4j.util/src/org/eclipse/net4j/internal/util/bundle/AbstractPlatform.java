@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.log.OMLogFilter;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.log.OMLogger.Level;
@@ -50,6 +51,8 @@ public abstract class AbstractPlatform implements OMPlatform
 
   private Map<String, AbstractBundle> bundles = new ConcurrentHashMap<String, AbstractBundle>(0);
 
+  private Queue<OMLogFilter> logFilters = new ConcurrentLinkedQueue<OMLogFilter>();
+
   private Queue<OMLogHandler> logHandlers = new ConcurrentLinkedQueue<OMLogHandler>();
 
   private Queue<OMTraceHandler> traceHandlers = new ConcurrentLinkedQueue<OMTraceHandler>();
@@ -70,6 +73,19 @@ public abstract class AbstractPlatform implements OMPlatform
     }
 
     return bundle;
+  }
+
+  public void addLogFilter(OMLogFilter logFilter)
+  {
+    if (!logFilters.contains(logFilter))
+    {
+      logFilters.add(logFilter);
+    }
+  }
+
+  public void removeLogFilter(OMLogFilter logFilter)
+  {
+    logFilters.remove(logFilter);
   }
 
   public void addLogHandler(OMLogHandler logHandler)
@@ -224,17 +240,46 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public void log(OMLogger logger, Level level, String msg, Throwable t)
   {
-    for (OMLogHandler logHandler : logHandlers)
+    if (!logFilters.isEmpty())
     {
-      try
+      for (OMLogFilter logFilter : logFilters)
       {
-        logHandler.logged(logger, level, msg, t);
-      }
-      catch (Exception ex)
-      {
-        if (TRACER().isEnabled())
+        try
         {
-          TRACER().trace(ex);
+          if (logFilter.filter(logger, level, msg, t))
+          {
+            if (TRACER().isEnabled())
+            {
+              TRACER().format("Filtered log event: logger={0}, level={1}, msg={2}\n{3}", logger, level, msg, t);
+            }
+
+            return;
+          }
+        }
+        catch (Exception ex)
+        {
+          if (TRACER().isEnabled())
+          {
+            TRACER().trace(ex);
+          }
+        }
+      }
+    }
+
+    if (!logHandlers.isEmpty())
+    {
+      for (OMLogHandler logHandler : logHandlers)
+      {
+        try
+        {
+          logHandler.logged(logger, level, msg, t);
+        }
+        catch (Exception ex)
+        {
+          if (TRACER().isEnabled())
+          {
+            TRACER().trace(ex);
+          }
         }
       }
     }
@@ -242,17 +287,20 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public void trace(OMTraceHandlerEvent event)
   {
-    for (OMTraceHandler traceHandler : traceHandlers)
+    if (!traceHandlers.isEmpty())
     {
-      try
+      for (OMTraceHandler traceHandler : traceHandlers)
       {
-        traceHandler.traced(event);
-      }
-      catch (Exception ex)
-      {
-        if (TRACER().isEnabled())
+        try
         {
-          TRACER().trace(ex);
+          traceHandler.traced(event);
+        }
+        catch (Exception ex)
+        {
+          if (TRACER().isEnabled())
+          {
+            TRACER().trace(ex);
+          }
         }
       }
     }

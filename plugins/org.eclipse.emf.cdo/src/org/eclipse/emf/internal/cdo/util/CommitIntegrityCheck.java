@@ -239,30 +239,30 @@ public class CommitIntegrityCheck
       Object idOrObject = ((CDOAddFeatureDelta)featureDelta).getValue();
       if (containmentOrWithOpposite || isNew(idOrObject))
       {
-        checkIncluded(idOrObject, "added child/refTarget of", dirtyObject);
+        checkIncluded(idOrObject, "added child / refTarget of", dirtyObject);
       }
     }
     else if (featureDelta instanceof CDOSetFeatureDelta)
     {
-      Object newIDOrObject = ((CDOSetFeatureDelta)featureDelta).getValue();
       Object oldIDOrObject = ((CDOSetFeatureDelta)featureDelta).getOldValue();
       CDOID oldID = (CDOID)transaction.convertObjectToID(oldIDOrObject);
-      if (oldIDOrObject != null)
+      if (!CDOIDUtil.isNull(oldID))
       {
         // Old child must be included if it's the container or has an eOpposite
         if (containmentOrWithOpposite)
         {
-          checkIncluded(oldID, "removed/former child/refTarget of", dirtyObject);
+          checkIncluded(oldID, "removed / former child / refTarget of", dirtyObject);
         }
       }
 
+      Object newIDOrObject = ((CDOSetFeatureDelta)featureDelta).getValue();
       if (newIDOrObject != null)
       {
         // New child must be included
         newIDOrObject = transaction.convertObjectToID(newIDOrObject);
         if (containmentOrWithOpposite || isNew(newIDOrObject))
         {
-          checkIncluded(newIDOrObject, "new child/refTarget of", dirtyObject);
+          checkIncluded(newIDOrObject, "new child / refTarget of", dirtyObject);
         }
       }
     }
@@ -272,7 +272,7 @@ public class CommitIntegrityCheck
       {
         Object idOrObject = ((CDORemoveFeatureDelta)featureDelta).getValue();
         CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
-        checkIncluded(id, "removed child/refTarget of", dirtyObject);
+        checkIncluded(id, "removed child / refTarget of", dirtyObject);
       }
       else if (featureDelta instanceof CDOClearFeatureDelta)
       {
@@ -283,7 +283,7 @@ public class CommitIntegrityCheck
         {
           Object idOrObject = cleanRev.get(feat, i);
           CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
-          checkIncluded(id, "removed child/refTarget of", dirtyObject);
+          checkIncluded(id, "removed child / refTarget of", dirtyObject);
         }
       }
       else if (featureDelta instanceof CDOUnsetFeatureDelta)
@@ -292,7 +292,7 @@ public class CommitIntegrityCheck
         InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
         Object idOrObject = cleanRev.getValue(feat);
         CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);
-        checkIncluded(id, "removed child/refTarget of", dirtyObject);
+        checkIncluded(id, "removed child / refTarget of", dirtyObject);
       }
       else if (featureDelta instanceof CDOMoveFeatureDelta)
       {

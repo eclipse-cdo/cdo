@@ -655,7 +655,16 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   @Override
   public void generate() throws IOException
   {
+    EList<StructuralElement> children = getChildren();
+    if (!children.isEmpty())
+    {
+      StructuralElement child = children.get(0);
+      File sourceFolder = child.getDoc().position().file().getParentFile().getParentFile();
+      copyResources(sourceFolder, getOutputFile());
+    }
+
     super.generate();
+
     generateToc(false);
     generateToc(true);
   }

@@ -749,7 +749,7 @@
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_p1VWcdxaEeCpIJpgvmzkYA" routing="Rectilinear" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_p1VWctxaEeCpIJpgvmzkYA" fontName="Segoe UI"/>
     <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p1VWc9xaEeCpIJpgvmzkYA" points="[-4, -20, 182, 88]$[-4, -50, 182, 58]$[-187, -50, -1, 58]$[-187, -79, -1, 29]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_p1VWc9xaEeCpIJpgvmzkYA" points="[-1, -20, 185, 92]$[-1, -51, 185, 61]$[-187, -51, -1, 61]$[-187, -87, -1, 25]"/>
   </edges>
   <edges xmi:type="notation:Edge" xmi:id="_6-blYNxaEeCpIJpgvmzkYA" type="3003" source="_5fxPANxaEeCpIJpgvmzkYA" target="_yWi_ANxZEeCpIJpgvmzkYA">
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_6-blYdxaEeCpIJpgvmzkYA" routing="Rectilinear" lineColor="4210752"/>

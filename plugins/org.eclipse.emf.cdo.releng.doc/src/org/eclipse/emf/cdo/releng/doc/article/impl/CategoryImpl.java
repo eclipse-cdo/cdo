@@ -81,20 +81,8 @@ public class CategoryImpl extends BodyImpl implements Category
   @Override
   public void generate() throws IOException
   {
-    File targetFolder = getOutputFile();
     File sourceFolder = getDoc().position().file().getParentFile();
-    for (File file : sourceFolder.listFiles())
-    {
-      if (file.isFile())
-      {
-        String name = file.getName();
-        if (!name.endsWith(".java") && !name.equals("package-info.java"))
-        {
-          File targetFile = new File(targetFolder, name);
-          ArticleUtil.copyFile(file, targetFile);
-        }
-      }
-    }
+    copyResources(sourceFolder, getOutputFile());
 
     super.generate();
     generate(getTocTarget());

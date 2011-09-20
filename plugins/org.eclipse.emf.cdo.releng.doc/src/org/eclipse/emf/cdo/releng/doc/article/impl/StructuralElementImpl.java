@@ -668,4 +668,20 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
     File projectFolder = getDocumentation().getOutputFile().getParentFile();
     return ArticleUtil.createLink(projectFolder, getTocTarget());
   }
+
+  protected void copyResources(File sourceFolder, File targetFolder)
+  {
+    for (File file : sourceFolder.listFiles())
+    {
+      if (file.isFile())
+      {
+        String name = file.getName();
+        if (!name.endsWith(".java") && !name.equals("package-info.java"))
+        {
+          File targetFile = new File(targetFolder, name);
+          ArticleUtil.copyFile(file, targetFile);
+        }
+      }
+    }
+  }
 } // StructuralElementImpl

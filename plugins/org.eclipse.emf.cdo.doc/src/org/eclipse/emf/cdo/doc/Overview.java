@@ -131,15 +131,118 @@ public class Overview
      */
     public class Application
     {
+      /**
+       * OSGi
+       */
+      public class OSGi
+      {
+      }
+
+      /**
+       * EMF
+       */
+      public class EMF
+      {
+      }
+
+      /**
+       * CDO Client
+       */
+      public class CDOClient
+      {
+      }
+
+      /**
+       * Net4j Core
+       */
+      public class Net4j
+      {
+      }
+
+      /**
+       * Models
+       */
+      public class Models
+      {
+      }
+
+      /**
+       * Protocol
+       */
+      public class Protocol
+      {
+      }
+
+      /**
+       * Transport
+       */
+      public class Transport
+      {
+      }
     }
 
     /**
      * Repository Architecture
      * <p>
+     * The main building block of a CDO repository is split into two layers, the generic repository layer that client
+     * applications interact with and the database integration layer that providers can hook into to integrate their
+     * data storage solutions with CDO. A number of such integrations already ship with CDO, as outlined in
+     * {@link CDOStore}.
+     * <p>
+     * The following diagram illustrates the major building blocks of a CDO repository:
+     * <p>
      * <img src="repository-architecture.png"/>.
      */
     public class Repository
     {
+      /**
+       * OSGi
+       */
+      public class OSGi
+      {
+      }
+
+      /**
+       * CDO Server Core
+       */
+      public class CDOServerCore
+      {
+      }
+
+      /**
+       * CDO Store
+       */
+      public class CDOStore
+      {
+      }
+
+      /**
+       * OCL
+       */
+      public class OCL
+      {
+      }
+
+      /**
+       * Net4j
+       */
+      public class Net4j
+      {
+      }
+
+      /**
+       * Protocol
+       */
+      public class Protocol
+      {
+      }
+
+      /**
+       * Transport
+       */
+      public class Transport
+      {
+      }
     }
   }
 }

@@ -288,7 +288,7 @@ Class description missing: org.eclipse.emf.spi.cdo.DefaultCDOMerger$PerFeature.c
 Class description missing: org.eclipse.emf.spi.cdo.DefaultCDOMerger.class(DefaultCDOMerger.java:50)
 Class description missing: org.eclipse.emf.spi.cdo.FSMUtil.class(FSMUtil.java:36)
 Class description missing: org.eclipse.emf.spi.cdo.InternalCDOLoadable.class(InternalCDOLoadable.java:20)
-Class description missing: org.eclipse.emf.spi.cdo.InternalCDOObject.class(InternalCDOObject.java:32)
+Class description missing: org.eclipse.emf.spi.cdo.InternalCDOObject.class(InternalCDOObject.java:31)
 Class description missing: org.eclipse.emf.spi.cdo.InternalCDORemoteSession.class(InternalCDORemoteSession.java:21)
 Class description missing: org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager.class(InternalCDORemoteSessionManager.java:24)
 Class description missing: org.eclipse.emf.spi.cdo.InternalCDOSavepoint.class(InternalCDOSavepoint.java:24)

@@ -62,9 +62,9 @@ function windowTitle()
  loading single objects on demand and caching them <i>softly</i> in your application. That implies that objects that
  are no longer referenced by the application are automatically garbage collected when memory contention occurs. Lazy
  loading is accompanied by various prefetching strategies, including the monitoring of the object graph's
- <i>usage</i> and calculation of fetch rules that are optimal for the current usage patterns. The scalability of EMF
- applications can be further increased by leveraging CDO constructs such as remote cross referencing or optimized
- content adapters.
+ <i>usage</i> and the calculation of fetch rules that are optimal for the current usage patterns. The scalability of
+ EMF applications can be further increased by leveraging CDO constructs such as remote cross referencing or
+ optimized content adapters.
  <p>
  <li><b>Thread safety</b> ensures that multiple threads of your application can access and modify the object graph
  without worrying about the synchronization details. This is possible and cheap because multiple transactions can be
@@ -83,20 +83,23 @@ function windowTitle()
  handlers.
  <p>
  <li><b>Fault tolerance</b> on multiple levels, namely the setup of fail-over clusters of replicating repositories
- under the control of fail-over monitors, as well as the usage of anumber of special kinds of session such as
+ under the control of a fail-over monitor, as well as the usage of a number of special session types such as
  fail-over or reconnecting sessions that allow applications to hold on their copy of the object graph even though
  the physical repository connection has broken down or changed to a different fail-over participant.
  <p>
- <li><b>Offline work</b> with your models is supported by two different mechanisms. One way is to create a clone of
- a complete remote repository, including all history of all branches. Such a clone is continuously synchronized with
- its remote master and can either act as an embedded repository to make a single application tolerant against
- network outage or it can be set up to serve multiple clients, e.g., to compensate low latency master connections
- and speed up read access to the object graph. An entirely different and somewhat lighter approach to offline work
- is to check out a single version of the object graph from a particular branch point of the repository into a local
- CDO workspace. Such a workspace behaves similar to a local repository without branching or history capture, in
- particular it supports multiple concurrent transactions on the local checkout. In addition it supports most remote
- functionality that is known from source code management systems such as update, merge, compare, revert and check
- in.
+ <li><b>Offline work</b> with your models is supported by two different mechanisms:
+ <ul>
+ <li>One way is to create a <b>clone</b> of a complete remote repository, including all history of all branches.
+ Such a clone is continuously synchronized with its remote master and can either act as an embedded repository to
+ make a single application tolerant against network outage or it can be set up to serve multiple clients, e.g., to
+ compensate low latency master connections and speed up read access to the object graph.
+ <p>
+ <li>An entirely different and somewhat lighter approach to offline work is to check out a single version of the
+ object graph from a particular branch point of the repository into a local CDO <b>workspace</b>. Such a workspace
+ behaves similar to a local repository without branching or history capture, in particular it supports multiple
+ concurrent transactions on the local checkout. In addition it supports most remote functionality that is known from
+ source code management systems such as update, merge, compare, revert and check in.
+ </ul>
  </ul>
 
 <h2><a name="Architecture"/>2&nbsp;&nbsp;Architecture</h2>
@@ -120,8 +123,8 @@ function windowTitle()
  dependendcies on CDO to your application code.
  <p>
  The following diagram illustrates the major building blocks of a CDO application:
- <p>
- <img src="application-architecture.png"/>.
+ <p align="center">
+ <img src="application-architecture.png"/>
 
 <h4><a name="OSGi"/>2.1.1&nbsp;&nbsp;OSGi</h4>
 
@@ -151,8 +154,12 @@ function windowTitle()
  data storage solutions with CDO. A number of such integrations already ship with CDO, as outlined in
  <a href="Overview.html#CDOStore" title="Chapter in CDO Model Repository Documentation">CDO Store</a>.
  <p>
- The following diagram illustrates the major building blocks of a CDO repository:
+ While technically a CDO repository depends on EMF this dependency is not of equal importance as it is in a CDO
+ application. In particular the generated application models are not required to be deployed to the server because
+ a CDO repository accesses models reflectively and the model objects are not implemented as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a> on the server.
  <p>
+ The following diagram illustrates the major building blocks of a CDO repository:
+ <p align="center">
  <img src="repository-architecture.png"/>.
 
 <h4><a name="OSGi"/>2.2.1&nbsp;&nbsp;OSGi</h4>

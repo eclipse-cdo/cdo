@@ -158,6 +158,24 @@ A utility class with various static factory and convenience methods.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#clearTable(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable)">clearTable</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+           <A HREF="../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#clearTable(java.sql.Connection, java.lang.String)">clearTable</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+           <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;tableName)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../org/eclipse/net4j/db/DBUtil.html#close(java.sql.Connection)">close</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection)</CODE>
 
@@ -779,6 +797,34 @@ public static int <B>update</B>(<A HREF="http://download.oracle.com/javase/1.5.0
 <DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/SQLException.html?is-external=true" title="class or interface in java.sql">SQLException</A></CODE> - if <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true#executeUpdate()" title="class or interface in java.sql"><CODE>PreparedStatement.executeUpdate()</CODE></A> throws it.
 <DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/IllegalStateException.html?is-external=true" title="class or interface in java.lang">IllegalStateException</A></CODE> - if the check indicated by <code>excatlyOne</code> indicates an error.<DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="clearTable(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable)"><!-- --></A><H3>
+clearTable</H3>
+<PRE>
+public static int <B>clearTable</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+                             <A HREF="../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</A>&nbsp;table)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="clearTable(java.sql.Connection, java.lang.String)"><!-- --></A><H3>
+clearTable</H3>
+<PRE>
+public static int <B>clearTable</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</A>&nbsp;connection,
+                             <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;tableName)</PRE>
+<DL>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

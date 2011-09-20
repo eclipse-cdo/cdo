@@ -225,6 +225,14 @@ Represents a change in the lock state of a set of objects. Instances are meant t
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the time stamp of this branch point, or the fixed special time stamp <i>
  <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><CODE>unspecified</CODE></A></i> if this branch point marks the <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()"><CODE>head</CODE></A> of a branch.</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html#isInvalidateAll()">isInvalidateAll</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -238,6 +246,22 @@ Represents a change in the lock state of a set of objects. Instances are meant t
 <B>Method Detail</B></FONT></TH>
 </TR>
 </TABLE>
+
+<A NAME="isInvalidateAll()"><!-- --></A><H3>
+isInvalidateAll</H3>
+<PRE>
+boolean <B>isInvalidateAll</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD><code>true</code> if this instance signals that all <A HREF="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><CODE>lockstates</CODE></A> must be invalidated,
+         <code>false</code> otherwise</DL>
+</DD>
+</DL>
+<HR>
 
 <A NAME="getBranch()"><!-- --></A><H3>
 getBranch</H3>

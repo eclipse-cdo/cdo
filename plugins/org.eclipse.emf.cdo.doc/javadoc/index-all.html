@@ -1132,12 +1132,6 @@ Method in class org.eclipse.emf.internal.cdo.<A HREF="./org/eclipse/emf/internal
 <DT><A HREF="./org/eclipse/emf/spi/cdo/InternalCDOObject.html#cdoInternalSetID(org.eclipse.emf.cdo.common.id.CDOID)"><B>cdoInternalSetID(CDOID)</B></A> - 
 Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</A>
 <DD>&nbsp;
-<DT><A HREF="./org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalSetLockState(org.eclipse.emf.cdo.common.lock.CDOLockState)"><B>cdoInternalSetLockState(CDOLockState)</B></A> - 
-Method in class org.eclipse.emf.internal.cdo.<A HREF="./org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</A>
-<DD>&nbsp;
-<DT><A HREF="./org/eclipse/emf/spi/cdo/InternalCDOObject.html#cdoInternalSetLockState(org.eclipse.emf.cdo.common.lock.CDOLockState)"><B>cdoInternalSetLockState(CDOLockState)</B></A> - 
-Method in interface org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</A>
-<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalSetResource(org.eclipse.emf.cdo.eresource.CDOResource)"><B>cdoInternalSetResource(CDOResource)</B></A> - 
 Method in class org.eclipse.emf.internal.cdo.<A HREF="./org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</A>
 <DD>&nbsp;
@@ -2518,6 +2512,9 @@ Method in interface org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cd
 Method in interface org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cdo/spi/server/InternalLockManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockChangeInfo(long, org.eclipse.emf.cdo.common.lock.CDOLockOwner, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.common.lock.CDOLockState[])"><B>createLockChangeInfo(long, CDOLockOwner, CDOBranch, CDOLockChangeInfo.Operation, IRWLockManager.LockType, CDOLockState[])</B></A> - 
+Static method in class org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockUtil.html" title="class in org.eclipse.emf.cdo.common.lock">CDOLockUtil</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockChangeInfo()"><B>createLockChangeInfo()</B></A> - 
 Static method in class org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockUtil.html" title="class in org.eclipse.emf.cdo.common.lock">CDOLockUtil</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockChangeInfo(long, org.eclipse.emf.cdo.common.CDOCommonView, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.common.lock.CDOLockState[])"><B>createLockChangeInfo(long, CDOCommonView, CDOBranch, CDOLockChangeInfo.Operation, IRWLockManager.LockType, CDOLockState[])</B></A> - 
@@ -8869,6 +8866,9 @@ Method in class org.eclipse.emf.cdo.spi.common.revision.<A HREF="./org/eclipse/e
 <DT><A HREF="./org/eclipse/emf/spi/cdo/FSMUtil.html#isInvalid(org.eclipse.emf.cdo.CDOObject)"><B>isInvalid(CDOObject)</B></A> - 
 Static method in class org.eclipse.emf.spi.cdo.<A HREF="./org/eclipse/emf/spi/cdo/FSMUtil.html" title="class in org.eclipse.emf.spi.cdo">FSMUtil</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html#isInvalidateAll()"><B>isInvalidateAll()</B></A> - 
+Method in interface org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/view/CDOView.Options.html#isInvalidationNotificationEnabled()"><B>isInvalidationNotificationEnabled()</B></A> - 
 Method in interface org.eclipse.emf.cdo.view.<A HREF="./org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</A>
 <DD>Returns <code>true</code> if the <A HREF="./org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> in this view will notify their
@@ -10877,6 +10877,9 @@ Method in class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/t
 <DT><A HREF="./org/eclipse/emf/cdo/view/CDOView.html#reload(org.eclipse.emf.cdo.CDOObject...)"><B>reload(CDOObject...)</B></A> - 
 Method in interface org.eclipse.emf.cdo.view.<A HREF="./org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>
 <DD>Reloads the given <A HREF="./org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> from the repository.
+<DT><A HREF="./org/eclipse/emf/cdo/spi/server/InternalLockManager.html#reloadLocks()"><B>reloadLocks()</B></A> - 
+Method in interface org.eclipse.emf.cdo.spi.server.<A HREF="./org/eclipse/emf/cdo/spi/server/InternalLockManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/util/CDOQueryQueue.html#remainingCapacity()"><B>remainingCapacity()</B></A> - 
 Method in class org.eclipse.emf.cdo.common.util.<A HREF="./org/eclipse/emf/cdo/common/util/CDOQueryQueue.html" title="class in org.eclipse.emf.cdo.common.util">CDOQueryQueue</A>
 <DD>&nbsp;

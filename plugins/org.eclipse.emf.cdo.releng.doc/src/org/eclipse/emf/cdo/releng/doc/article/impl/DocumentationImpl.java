@@ -660,7 +660,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     {
       StructuralElement child = children.get(0);
       File sourceFolder = child.getDoc().position().file().getParentFile().getParentFile();
-      copyResources(sourceFolder, getOutputFile());
+      File targetFolder = getOutputFile();
+      copyResources(sourceFolder, targetFolder);
     }
 
     super.generate();

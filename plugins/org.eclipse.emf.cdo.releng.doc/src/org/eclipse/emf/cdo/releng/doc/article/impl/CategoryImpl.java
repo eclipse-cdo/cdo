@@ -82,7 +82,8 @@ public class CategoryImpl extends BodyImpl implements Category
   public void generate() throws IOException
   {
     File sourceFolder = getDoc().position().file().getParentFile();
-    copyResources(sourceFolder, getOutputFile());
+    File targetFolder = getOutputFile();
+    copyResources(sourceFolder, targetFolder);
 
     super.generate();
     generate(getTocTarget());

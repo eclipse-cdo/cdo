@@ -43,6 +43,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collection;
 
 /**
@@ -63,9 +64,15 @@ import java.util.Collection;
  */
 public class DocumentationImpl extends StructuralElementImpl implements Documentation
 {
+  private static final String HTML = "html";
+
+  private static final String PLUGINS = "plugins";
+
   private static final String JAVADOC_MARKER_CLASS = "Javadoc";
 
   private static final String SCHEMADOC_MARKER_CLASS = "Schemadoc";
+
+  private static final boolean LOCAL = false;
 
   /**
    * The cached value of the '{@link #getEmbeddableElements() <em>Embeddable Elements</em>}' containment reference list.
@@ -119,6 +126,12 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   private StructuralElement defaultElement;
 
+  private boolean analyzed;
+
+  private File projectFolder;
+
+  private String basePathForChildren;
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -131,17 +144,27 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   DocumentationImpl(Context context, String project)
   {
-    super(null, "plugins/" + project + "/html", context.getRoot());
+    super(null, null, context.getRoot());
     setContext(context);
     this.project = project;
     context.register(getId(), this);
 
-    File projectFolder = getOutputFile().getParentFile();
+    basePathForChildren = PLUGINS + "/" + project + "/" + HTML;
+    projectFolder = new File(new File(getContext().getBaseFolder(), PLUGINS), project);
+
     setTitle(AssembleScripts.getPluginName(projectFolder));
 
     analyzeDependencies(projectFolder);
     loadPlugins(projectFolder);
     analyzeDocumentation(projectFolder);
+
+    if (defaultElement == null)
+    {
+      throw new AssertionError("No default element declared in " + getTitle());
+    }
+
+    setPath(defaultElement.getPath());
+    analyzed = true;
   }
 
   private void analyzeDependencies(File projectFolder)
@@ -158,8 +181,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   private void analyzeDocumentation(File projectFolder)
   {
-    Context context = getContext();
-    for (ClassDoc classDoc : context.getRoot().classes())
+    ClassDoc[] classes = getContext().getRoot().classes();
+    for (ClassDoc classDoc : classes)
     {
       if (classDoc.containingClass() == null)
       {
@@ -624,6 +647,22 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     return result.toString();
   }
 
+  public File getProjectFolder()
+  {
+    return projectFolder;
+  }
+
+  @Override
+  public String getBasePathForChildren()
+  {
+    return basePathForChildren;
+  }
+
+  public boolean isAnalyzed()
+  {
+    return analyzed;
+  }
+
   @Override
   protected String getKind()
   {
@@ -634,7 +673,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   {
     if (this.defaultElement != null)
     {
-      System.err.println("Multiple default elements declared");
+      throw new AssertionError("Multiple default elements declared in " + getTitle());
     }
 
     this.defaultElement = defaultElement;
@@ -653,6 +692,24 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
   }
 
   @Override
+  public String getTooltip()
+  {
+    return getTitle();
+  }
+
+  @Override
+  public String linkFrom(StructuralElement source)
+  {
+    return defaultElement.linkFrom(source);
+  }
+
+  @Override
+  protected String getTocHref()
+  {
+    return ((StructuralElementImpl)defaultElement).getTocHref();
+  }
+
+  @Override
   public void generate() throws IOException
   {
     EList<StructuralElement> children = getChildren();
@@ -660,8 +717,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     {
       StructuralElement child = children.get(0);
       File sourceFolder = child.getDoc().position().file().getParentFile().getParentFile();
-      File targetFolder = getOutputFile();
-      copyResources(sourceFolder, targetFolder);
+      copyResources(sourceFolder);
     }
 
     super.generate();
@@ -670,31 +726,33 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     generateToc(true);
   }
 
+  @Override
+  protected void generateBreadCrumbs(PrintWriter out, StructuralElement linkSource) throws IOException
+  {
+    super.generateBreadCrumbs(out, linkSource);
+
+    if (linkSource != this)
+    {
+      generateLink(out, linkSource, null);
+    }
+  }
+
   private void generateToc(boolean html) throws IOException
   {
-    File project = getOutputFile().getParentFile();
-
-    // TODO Check if documentation has Javadocs
-    String href = "javadoc/overview-summary.html";
-    if (defaultElement != null)
-    {
-      href = ((StructuralElementImpl)defaultElement).getTocHref();
-    }
-
     TocWriter writer = null;
 
     try
     {
       if (html)
       {
-        writer = new TocWriter.Html(project);
+        writer = new TocWriter.Html(projectFolder);
       }
       else
       {
-        writer = new TocWriter.Xml(project);
+        writer = new TocWriter.Xml(projectFolder);
       }
 
-      writer.writeGroupStart(getDocumentation().getTitle(), href);
+      writer.writeGroupStart(getDocumentation().getTitle(), getTocHref());
       generateTocEntries(writer);
       writer.writeGroupEnd();
     }
@@ -715,7 +773,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
     public TocWriter(File project, String filename) throws IOException
     {
-      super(new FileWriter(new File(project, filename)));
+      super(new FileWriter(new File(LOCAL ? project.getParentFile() : project, filename)));
       this.project = project;
     }
 
@@ -747,32 +805,36 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         super(project, "toc.html");
         idPrefix = project.getName().replace('.', '_') + "_";
 
-        // write("<LINK REL=stylesheet TYPE=\"text/css\" HREF=\"toc.css\">\n");
-        // write("\n");
-        //
-        // write("<script type=\"text/javascript\">\n");
-        // write("  function toggle(id)\n");
-        // write("  {\n");
-        // write("    e = document.getElementById(id);\n");
-        // write("    e.style.display = (e.style.display == \"\" ? \"none\" : \"\");\n");
-        // write("    img = document.getElementById(\"img_\" + id);\n");
-        // write("    img.src = (e.style.display == \"none\" ? \"plus.gif\" : \"minus.gif\");\n");
-        // write("  }\n");
-        // write("</script>\n");
-        // write("\n");
-        //
-        // write("<font face=\"Segoe UI,Arial\" size=\"-1\">\n");
-        // write("\n");
-        //
-        // write("<!-- TOC START -->\n");
+        if (LOCAL)
+        {
+          write("<LINK REL=stylesheet TYPE=\"text/css\" HREF=\"toc.css\">\n");
+          write("\n");
+
+          write("<script type=\"text/javascript\">\n");
+          write("  function toggle(id)\n");
+          write("  {\n");
+          write("    e = document.getElementById(id);\n");
+          write("    e.style.display = (e.style.display == \"\" ? \"none\" : \"\");\n");
+          write("    img = document.getElementById(\"img_\" + id);\n");
+          write("    img.src = (e.style.display == \"none\" ? \"plus.gif\" : \"minus.gif\");\n");
+          write("  }\n");
+          write("</script>\n");
+          write("\n");
+
+          write("<font face=\"Segoe UI,Arial\" size=\"-1\">\n");
+          write("\n");
+        }
       }
 
       @Override
       public void close() throws IOException
       {
-        // write("<!-- TOC END -->\n");
-        // write("\n");
-        // write("</font>\n");
+        if (LOCAL)
+        {
+          write("\n");
+          write("</font>\n");
+        }
+
         super.close();
       }
 

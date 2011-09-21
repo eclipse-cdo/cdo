@@ -108,7 +108,7 @@ public class UnresolvedBodyElement extends BodyElementImpl
     String packageName = classDoc.containingPackage().name();
     for (Documentation documentation : context.getDocumentations())
     {
-      File projectFolder = documentation.getOutputFile().getParentFile();
+      File projectFolder = documentation.getProjectFolder();
       File javadocFolder = new File(projectFolder, "javadoc");
       File packageFolder = new File(javadocFolder, packageName.replace('.', '/'));
       File classFile = new File(packageFolder, classDoc.typeName() + ".html");

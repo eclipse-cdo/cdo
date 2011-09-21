@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
  * describe the structure of and the possible relations between these objects.
  * <p>
  * 
- * @number 0
  * @default
  */
 public class Overview

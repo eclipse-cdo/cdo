@@ -53,13 +53,6 @@
         resolveProxies="false" eOpposite="#//StructuralElement/children"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        changeable="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullPath" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" changeable="false"
-        volatile="true" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputFile" lowerBound="1"
-        eType="#//File" changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="documentation" lowerBound="1"
         eType="#//Documentation" changeable="false" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
@@ -97,8 +90,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="Body" abstract="true" eSuperTypes="#//StructuralElement #//BodyElementContainer">
     <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="#//Category"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="number" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-        changeable="false" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BodyElementContainer" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"

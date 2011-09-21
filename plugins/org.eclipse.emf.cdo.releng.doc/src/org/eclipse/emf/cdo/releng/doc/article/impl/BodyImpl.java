@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.sun.javadoc.Doc;
-import com.sun.javadoc.Tag;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,7 +34,6 @@ import java.util.Collection;
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyImpl#getElements <em>Elements</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyImpl#getCategory <em>Category</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyImpl#getNumber <em>Number</em>}</li>
  * </ul>
  * </p>
  * 
@@ -54,26 +52,6 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   protected EList<BodyElement> elements;
 
   /**
-   * The default value of the '{@link #getNumber() <em>Number</em>}' attribute. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @see #getNumber()
-   * @generated
-   * @ordered
-   */
-  protected static final int NUMBER_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getNumber() <em>Number</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   * 
-   * @see #getNumber()
-   * @generated
-   * @ordered
-   */
-  protected int number = NUMBER_EDEFAULT;
-
-  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -86,16 +64,6 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   BodyImpl(StructuralElement parent, String path, Doc doc)
   {
     super(parent, path, doc);
-
-    Tag[] tags = doc.tags("@number");
-    if (tags != null && tags.length != 0)
-    {
-      Tag[] inlineTags = tags[0].inlineTags();
-      if (inlineTags != null && inlineTags.length != 0)
-      {
-        number = Integer.parseInt(inlineTags[0].text());
-      }
-    }
 
     String title = BodyElementContainerImpl.analyzeTags(getElements(), doc.inlineTags(), true);
     if (title != null)
@@ -167,16 +135,6 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
    * 
    * @generated
    */
-  public int getNumber()
-  {
-    return number;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -219,8 +177,6 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
       return getElements();
     case ArticlePackage.BODY__CATEGORY:
       return getCategory();
-    case ArticlePackage.BODY__NUMBER:
-      return getNumber();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -275,8 +231,6 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
       return elements != null && !elements.isEmpty();
     case ArticlePackage.BODY__CATEGORY:
       return getCategory() != null;
-    case ArticlePackage.BODY__NUMBER:
-      return number != NUMBER_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -321,26 +275,6 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
       }
     }
     return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy())
-    {
-      return super.toString();
-    }
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (number: ");
-    result.append(number);
-    result.append(')');
-    return result.toString();
   }
 
   @Override

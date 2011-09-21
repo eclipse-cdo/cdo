@@ -24,9 +24,6 @@ import java.util.List;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getChildren <em>Children</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getParent <em>Parent</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getTitle <em>Title</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getPath <em>Path</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getFullPath <em>Full Path</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getOutputFile <em>Output File</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getDocumentation <em>Documentation</em>}</li>
  * </ul>
  * </p>
@@ -101,51 +98,6 @@ public interface StructuralElement extends LinkTarget
   String getTitle();
 
   /**
-   * Returns the value of the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Path</em>' attribute isn't clear, there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * 
-   * @return the value of the '<em>Path</em>' attribute.
-   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getStructuralElement_Path()
-   * @model required="true" changeable="false"
-   * @generated
-   */
-  String getPath();
-
-  /**
-   * Returns the value of the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Full Path</em>' attribute isn't clear, there really should be more of a description
-   * here...
-   * </p>
-   * <!-- end-user-doc -->
-   * 
-   * @return the value of the '<em>Full Path</em>' attribute.
-   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getStructuralElement_FullPath()
-   * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
-   * @generated
-   */
-  String getFullPath();
-
-  /**
-   * Returns the value of the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Output File</em>' attribute isn't clear, there really should be more of a description
-   * here...
-   * </p>
-   * <!-- end-user-doc -->
-   * 
-   * @return the value of the '<em>Output File</em>' attribute.
-   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getStructuralElement_OutputFile()
-   * @model dataType="org.eclipse.emf.cdo.releng.doc.article.File" required="true" transient="true" changeable="false"
-   *        volatile="true" derived="true"
-   * @generated
-   */
-  File getOutputFile();
-
-  /**
    * Returns the value of the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Documentation</em>' reference isn't clear, there really should be more of a description
@@ -175,7 +127,21 @@ public interface StructuralElement extends LinkTarget
    */
   Doc getDoc();
 
+  String getPath();
+
+  String getFullPath();
+
+  String getBasePathForChildren();
+
+  File getOutputFile();
+
+  File getBaseFolderForChildren();
+
   int getDepth();
+
+  float getNumber();
+
+  boolean isOverview();
 
   List<StructuralElement> getSortedChildren();
 

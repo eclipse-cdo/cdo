@@ -186,36 +186,12 @@ public interface ArticlePackage extends EPackage
   int STRUCTURAL_ELEMENT__TITLE = LINK_TARGET_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int STRUCTURAL_ELEMENT__PATH = LINK_TARGET_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int STRUCTURAL_ELEMENT__FULL_PATH = LINK_TARGET_FEATURE_COUNT + 4;
-
-  /**
-   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int STRUCTURAL_ELEMENT__OUTPUT_FILE = LINK_TARGET_FEATURE_COUNT + 5;
-
-  /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int STRUCTURAL_ELEMENT__DOCUMENTATION = LINK_TARGET_FEATURE_COUNT + 6;
+  int STRUCTURAL_ELEMENT__DOCUMENTATION = LINK_TARGET_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -223,7 +199,7 @@ public interface ArticlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int STRUCTURAL_ELEMENT__DOC = LINK_TARGET_FEATURE_COUNT + 7;
+  int STRUCTURAL_ELEMENT__DOC = LINK_TARGET_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Structural Element</em>' class. <!-- begin-user-doc --> <!--
@@ -232,7 +208,7 @@ public interface ArticlePackage extends EPackage
    * @generated
    * @ordered
    */
-  int STRUCTURAL_ELEMENT_FEATURE_COUNT = LINK_TARGET_FEATURE_COUNT + 8;
+  int STRUCTURAL_ELEMENT_FEATURE_COUNT = LINK_TARGET_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl
@@ -292,30 +268,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int DOCUMENTATION__TITLE = STRUCTURAL_ELEMENT__TITLE;
-
-  /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int DOCUMENTATION__PATH = STRUCTURAL_ELEMENT__PATH;
-
-  /**
-   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int DOCUMENTATION__FULL_PATH = STRUCTURAL_ELEMENT__FULL_PATH;
-
-  /**
-   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int DOCUMENTATION__OUTPUT_FILE = STRUCTURAL_ELEMENT__OUTPUT_FILE;
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -495,30 +447,6 @@ public interface ArticlePackage extends EPackage
   int BODY__TITLE = STRUCTURAL_ELEMENT__TITLE;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int BODY__PATH = STRUCTURAL_ELEMENT__PATH;
-
-  /**
-   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int BODY__FULL_PATH = STRUCTURAL_ELEMENT__FULL_PATH;
-
-  /**
-   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int BODY__OUTPUT_FILE = STRUCTURAL_ELEMENT__OUTPUT_FILE;
-
-  /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -552,20 +480,12 @@ public interface ArticlePackage extends EPackage
   int BODY__CATEGORY = STRUCTURAL_ELEMENT_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Number</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int BODY__NUMBER = STRUCTURAL_ELEMENT_FEATURE_COUNT + 2;
-
-  /**
    * The number of structural features of the '<em>Body</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int BODY_FEATURE_COUNT = STRUCTURAL_ELEMENT_FEATURE_COUNT + 3;
+  int BODY_FEATURE_COUNT = STRUCTURAL_ELEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.CategoryImpl <em>Category</em>}'
@@ -627,30 +547,6 @@ public interface ArticlePackage extends EPackage
   int CATEGORY__TITLE = BODY__TITLE;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CATEGORY__PATH = BODY__PATH;
-
-  /**
-   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CATEGORY__FULL_PATH = BODY__FULL_PATH;
-
-  /**
-   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CATEGORY__OUTPUT_FILE = BODY__OUTPUT_FILE;
-
-  /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -682,14 +578,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int CATEGORY__CATEGORY = BODY__CATEGORY;
-
-  /**
-   * The feature id for the '<em><b>Number</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CATEGORY__NUMBER = BODY__NUMBER;
 
   /**
    * The number of structural features of the '<em>Category</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -759,30 +647,6 @@ public interface ArticlePackage extends EPackage
   int CHAPTER__TITLE = BODY__TITLE;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CHAPTER__PATH = BODY__PATH;
-
-  /**
-   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CHAPTER__FULL_PATH = BODY__FULL_PATH;
-
-  /**
-   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CHAPTER__OUTPUT_FILE = BODY__OUTPUT_FILE;
-
-  /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -814,14 +678,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int CHAPTER__CATEGORY = BODY__CATEGORY;
-
-  /**
-   * The feature id for the '<em><b>Number</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int CHAPTER__NUMBER = BODY__NUMBER;
 
   /**
    * The feature id for the '<em><b>Article</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -899,30 +755,6 @@ public interface ArticlePackage extends EPackage
   int ARTICLE__TITLE = CHAPTER__TITLE;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int ARTICLE__PATH = CHAPTER__PATH;
-
-  /**
-   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int ARTICLE__FULL_PATH = CHAPTER__FULL_PATH;
-
-  /**
-   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int ARTICLE__OUTPUT_FILE = CHAPTER__OUTPUT_FILE;
-
-  /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -954,14 +786,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int ARTICLE__CATEGORY = CHAPTER__CATEGORY;
-
-  /**
-   * The feature id for the '<em><b>Number</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int ARTICLE__NUMBER = CHAPTER__NUMBER;
 
   /**
    * The feature id for the '<em><b>Article</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1649,30 +1473,6 @@ public interface ArticlePackage extends EPackage
   int JAVADOC__TITLE = CATEGORY__TITLE;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int JAVADOC__PATH = CATEGORY__PATH;
-
-  /**
-   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int JAVADOC__FULL_PATH = CATEGORY__FULL_PATH;
-
-  /**
-   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int JAVADOC__OUTPUT_FILE = CATEGORY__OUTPUT_FILE;
-
-  /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -1704,14 +1504,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int JAVADOC__CATEGORY = CATEGORY__CATEGORY;
-
-  /**
-   * The feature id for the '<em><b>Number</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int JAVADOC__NUMBER = CATEGORY__NUMBER;
 
   /**
    * The number of structural features of the '<em>Javadoc</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1781,30 +1573,6 @@ public interface ArticlePackage extends EPackage
   int EXTERNAL_ARTICLE__TITLE = ARTICLE__TITLE;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_ARTICLE__PATH = ARTICLE__PATH;
-
-  /**
-   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_ARTICLE__FULL_PATH = ARTICLE__FULL_PATH;
-
-  /**
-   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_ARTICLE__OUTPUT_FILE = ARTICLE__OUTPUT_FILE;
-
-  /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -1836,14 +1604,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int EXTERNAL_ARTICLE__CATEGORY = ARTICLE__CATEGORY;
-
-  /**
-   * The feature id for the '<em><b>Number</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_ARTICLE__NUMBER = ARTICLE__NUMBER;
 
   /**
    * The feature id for the '<em><b>Article</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1930,30 +1690,6 @@ public interface ArticlePackage extends EPackage
   int SCHEMADOC__TITLE = CATEGORY__TITLE;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int SCHEMADOC__PATH = CATEGORY__PATH;
-
-  /**
-   * The feature id for the '<em><b>Full Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int SCHEMADOC__FULL_PATH = CATEGORY__FULL_PATH;
-
-  /**
-   * The feature id for the '<em><b>Output File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int SCHEMADOC__OUTPUT_FILE = CATEGORY__OUTPUT_FILE;
-
-  /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -1985,14 +1721,6 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int SCHEMADOC__CATEGORY = CATEGORY__CATEGORY;
-
-  /**
-   * The feature id for the '<em><b>Number</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int SCHEMADOC__NUMBER = CATEGORY__NUMBER;
 
   /**
    * The number of structural features of the '<em>Schemadoc</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2391,41 +2119,6 @@ public interface ArticlePackage extends EPackage
   EAttribute getStructuralElement_Title();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getPath
-   * <em>Path</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Path</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getPath()
-   * @see #getStructuralElement()
-   * @generated
-   */
-  EAttribute getStructuralElement_Path();
-
-  /**
-   * Returns the meta object for the attribute '
-   * {@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getFullPath <em>Full Path</em>}'. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Full Path</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getFullPath()
-   * @see #getStructuralElement()
-   * @generated
-   */
-  EAttribute getStructuralElement_FullPath();
-
-  /**
-   * Returns the meta object for the attribute '
-   * {@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getOutputFile <em>Output File</em>}'. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Output File</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getOutputFile()
-   * @see #getStructuralElement()
-   * @generated
-   */
-  EAttribute getStructuralElement_OutputFile();
-
-  /**
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getDocumentation <em>Documentation</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -2587,17 +2280,6 @@ public interface ArticlePackage extends EPackage
    * @generated
    */
   EReference getBody_Category();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Body#getNumber
-   * <em>Number</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @return the meta object for the attribute '<em>Number</em>'.
-   * @see org.eclipse.emf.cdo.releng.doc.article.Body#getNumber()
-   * @see #getBody()
-   * @generated
-   */
-  EAttribute getBody_Number();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer
@@ -3187,30 +2869,6 @@ public interface ArticlePackage extends EPackage
     EAttribute STRUCTURAL_ELEMENT__TITLE = eINSTANCE.getStructuralElement_Title();
 
     /**
-     * The meta object literal for the '<em><b>Path</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute STRUCTURAL_ELEMENT__PATH = eINSTANCE.getStructuralElement_Path();
-
-    /**
-     * The meta object literal for the '<em><b>Full Path</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute STRUCTURAL_ELEMENT__FULL_PATH = eINSTANCE.getStructuralElement_FullPath();
-
-    /**
-     * The meta object literal for the '<em><b>Output File</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute STRUCTURAL_ELEMENT__OUTPUT_FILE = eINSTANCE.getStructuralElement_OutputFile();
-
-    /**
      * The meta object literal for the '<em><b>Documentation</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
      * 
@@ -3341,14 +2999,6 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EReference BODY__CATEGORY = eINSTANCE.getBody_Category();
-
-    /**
-     * The meta object literal for the '<em><b>Number</b></em>' attribute feature. <!-- begin-user-doc --> <!--
-     * end-user-doc -->
-     * 
-     * @generated
-     */
-    EAttribute BODY__NUMBER = eINSTANCE.getBody_Number();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl

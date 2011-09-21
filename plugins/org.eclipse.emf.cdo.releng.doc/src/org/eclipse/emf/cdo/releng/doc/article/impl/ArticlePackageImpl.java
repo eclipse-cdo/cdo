@@ -607,39 +607,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
-  public EAttribute getStructuralElement_Path()
-  {
-    return (EAttribute)structuralElementEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getStructuralElement_FullPath()
-  {
-    return (EAttribute)structuralElementEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getStructuralElement_OutputFile()
-  {
-    return (EAttribute)structuralElementEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
   public EReference getStructuralElement_Documentation()
   {
-    return (EReference)structuralElementEClass.getEStructuralFeatures().get(6);
+    return (EReference)structuralElementEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -649,7 +619,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    */
   public EAttribute getStructuralElement_Doc()
   {
-    return (EAttribute)structuralElementEClass.getEStructuralFeatures().get(7);
+    return (EAttribute)structuralElementEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -780,16 +750,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
   public EReference getBody_Category()
   {
     return (EReference)bodyEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public EAttribute getBody_Number()
-  {
-    return (EAttribute)bodyEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1176,9 +1136,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     createEReference(structuralElementEClass, STRUCTURAL_ELEMENT__CHILDREN);
     createEReference(structuralElementEClass, STRUCTURAL_ELEMENT__PARENT);
     createEAttribute(structuralElementEClass, STRUCTURAL_ELEMENT__TITLE);
-    createEAttribute(structuralElementEClass, STRUCTURAL_ELEMENT__PATH);
-    createEAttribute(structuralElementEClass, STRUCTURAL_ELEMENT__FULL_PATH);
-    createEAttribute(structuralElementEClass, STRUCTURAL_ELEMENT__OUTPUT_FILE);
     createEReference(structuralElementEClass, STRUCTURAL_ELEMENT__DOCUMENTATION);
     createEAttribute(structuralElementEClass, STRUCTURAL_ELEMENT__DOC);
 
@@ -1200,7 +1157,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     bodyEClass = createEClass(BODY);
     createEReference(bodyEClass, BODY__CATEGORY);
-    createEAttribute(bodyEClass, BODY__NUMBER);
 
     bodyElementContainerEClass = createEClass(BODY_ELEMENT_CONTAINER);
     createEReference(bodyElementContainerEClass, BODY_ELEMENT_CONTAINER__ELEMENTS);
@@ -1367,14 +1323,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEAttribute(getStructuralElement_Title(), ecorePackage.getEString(), "title", null, 1, 1,
         StructuralElement.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStructuralElement_Path(), ecorePackage.getEString(), "path", null, 1, 1, StructuralElement.class,
-        !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStructuralElement_FullPath(), ecorePackage.getEString(), "fullPath", null, 1, 1,
-        StructuralElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStructuralElement_OutputFile(), this.getFile(), "outputFile", null, 1, 1,
-        StructuralElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        IS_DERIVED, IS_ORDERED);
     initEReference(getStructuralElement_Documentation(), this.getDocumentation(), null, "documentation", null, 1, 1,
         StructuralElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
@@ -1418,8 +1366,6 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEReference(getBody_Category(), this.getCategory(), null, "category", null, 0, 1, Body.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
-    initEAttribute(getBody_Number(), ecorePackage.getEInt(), "number", null, 0, 1, Body.class, !IS_TRANSIENT,
-        !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEClass(bodyElementContainerEClass, BodyElementContainer.class, "BodyElementContainer", IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

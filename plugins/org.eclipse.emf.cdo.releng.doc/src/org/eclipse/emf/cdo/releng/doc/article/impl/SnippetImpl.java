@@ -239,7 +239,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
     StructuralElement structuralElement = getStructuralElement(embedder);
     File source = structuralElement.getOutputFile();
-    File target = new File(getDocumentation().getOutputFile().getParentFile(), "images");
+    File target = new File(getDocumentation().getProjectFolder(), "images");
     String imagePath = ArticleUtil.createLink(source, target) + "/";
 
     SeeTag embedderTag = (SeeTag)embedder.getTag();

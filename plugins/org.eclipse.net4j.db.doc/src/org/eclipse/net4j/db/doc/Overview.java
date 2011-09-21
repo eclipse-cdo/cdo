@@ -15,7 +15,6 @@ package org.eclipse.net4j.db.doc;
  * <p>
  * {@toc}
  * 
- * @number 0
  * @default
  */
 public class Overview

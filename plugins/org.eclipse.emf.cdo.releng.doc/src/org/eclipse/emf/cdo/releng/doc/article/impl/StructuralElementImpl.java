@@ -7,7 +7,6 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
-import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl.TocWriter;
@@ -24,6 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.sun.javadoc.Doc;
+import com.sun.javadoc.Tag;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +43,6 @@ import java.util.List;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl#getChildren <em>Children</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl#getParent <em>Parent</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl#getTitle <em>Title</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl#getPath <em>Path</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl#getOutputFile <em>Output File</em>}</li>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl#getDocumentation <em>Documentation</em>}
  * </li>
@@ -85,45 +84,6 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   protected String title = TITLE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getPath() <em>Path</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   * 
-   * @see #getPath()
-   * @generated
-   * @ordered
-   */
-  protected static final String PATH_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getPath() <em>Path</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @see #getPath()
-   * @generated
-   * @ordered
-   */
-  protected String path = PATH_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getFullPath() <em>Full Path</em>}' attribute. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @see #getFullPath()
-   * @generated
-   * @ordered
-   */
-  protected static final String FULL_PATH_EDEFAULT = null;
-
-  /**
-   * The default value of the '{@link #getOutputFile() <em>Output File</em>}' attribute. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
-   * 
-   * @see #getOutputFile()
-   * @generated
-   * @ordered
-   */
-  protected static final File OUTPUT_FILE_EDEFAULT = null;
-
-  /**
    * The default value of the '{@link #getDoc() <em>Doc</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see #getDoc()
@@ -138,6 +98,14 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   private Doc doc;
 
+  private boolean overview;
+
+  private float number = 100f;
+
+  private List<StructuralElement> sortedChildren;
+
+  private String path;
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -151,13 +119,34 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   StructuralElementImpl(StructuralElement parent, String path, Doc doc)
   {
     setParent(parent);
-    this.path = path;
+    setPath(path);
     this.doc = doc;
 
     if (ArticleUtil.isTagged(doc, "@default"))
     {
-      getDocumentation().setDefaultElement(this);
+      number = -1f;
+      overview = true;
+
+      Documentation documentation = getDocumentation();
+      documentation.setDefaultElement(this);
+      System.out.println("Default element of " + documentation.getProject() + ": " + getFullPath());
+
     }
+
+    Tag[] tags = doc.tags("@number");
+    if (tags != null && tags.length != 0)
+    {
+      Tag[] inlineTags = tags[0].inlineTags();
+      if (inlineTags != null && inlineTags.length != 0)
+      {
+        number = Float.parseFloat(inlineTags[0].text());
+      }
+    }
+  }
+
+  final void setPath(String path)
+  {
+    this.path = path;
   }
 
   final void setTitle(String title)
@@ -266,62 +255,6 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
-   */
-  public String getPath()
-  {
-    return path;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated NOT
-   */
-  public final String getFullPath()
-  {
-    if (fullPath == null)
-    {
-      fullPath = createFullPath();
-    }
-
-    return fullPath;
-  }
-
-  protected String createFullPath()
-  {
-    StructuralElement parent = getParent();
-    if (parent != null)
-    {
-      return parent.getFullPath() + "/" + path;
-    }
-
-    return path;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated NOT
-   */
-  public final File getOutputFile()
-  {
-    if (outputFile == null)
-    {
-      outputFile = createOutputFile();
-    }
-
-    return outputFile;
-  }
-
-  protected File createOutputFile()
-  {
-    return new File(getDocumentation().getContext().getBaseFolder(), getFullPath());
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated NOT
    */
   public Documentation getDocumentation()
@@ -332,11 +265,6 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
     }
 
     StructuralElement parent = getParent();
-    if (parent == null)
-    {
-      System.out.println();
-    }
-
     return parent.getDocumentation();
   }
 
@@ -353,7 +281,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   @Override
   public String linkFrom(StructuralElement source)
   {
-    return ArticleUtil.createLink(source.getOutputFile(), getOutputFile());
+    File sourceFile = source.getOutputFile();
+    File targetFile = getOutputFile();
+    return ArticleUtil.createLink(sourceFile, targetFile);
   }
 
   /**
@@ -430,12 +360,6 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       return getParent();
     case ArticlePackage.STRUCTURAL_ELEMENT__TITLE:
       return getTitle();
-    case ArticlePackage.STRUCTURAL_ELEMENT__PATH:
-      return getPath();
-    case ArticlePackage.STRUCTURAL_ELEMENT__FULL_PATH:
-      return getFullPath();
-    case ArticlePackage.STRUCTURAL_ELEMENT__OUTPUT_FILE:
-      return getOutputFile();
     case ArticlePackage.STRUCTURAL_ELEMENT__DOCUMENTATION:
       return getDocumentation();
     case ArticlePackage.STRUCTURAL_ELEMENT__DOC:
@@ -502,12 +426,6 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       return getParent() != null;
     case ArticlePackage.STRUCTURAL_ELEMENT__TITLE:
       return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals(title);
-    case ArticlePackage.STRUCTURAL_ELEMENT__PATH:
-      return PATH_EDEFAULT == null ? path != null : !PATH_EDEFAULT.equals(path);
-    case ArticlePackage.STRUCTURAL_ELEMENT__FULL_PATH:
-      return FULL_PATH_EDEFAULT == null ? getFullPath() != null : !FULL_PATH_EDEFAULT.equals(getFullPath());
-    case ArticlePackage.STRUCTURAL_ELEMENT__OUTPUT_FILE:
-      return OUTPUT_FILE_EDEFAULT == null ? getOutputFile() != null : !OUTPUT_FILE_EDEFAULT.equals(getOutputFile());
     case ArticlePackage.STRUCTURAL_ELEMENT__DOCUMENTATION:
       return getDocumentation() != null;
     case ArticlePackage.STRUCTURAL_ELEMENT__DOC:
@@ -532,10 +450,70 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (title: ");
     result.append(title);
-    result.append(", path: ");
-    result.append(path);
     result.append(')');
     return result.toString();
+  }
+
+  public String getPath()
+  {
+    return path;
+  }
+
+  public final String getFullPath()
+  {
+    if (fullPath == null)
+    {
+      fullPath = createFullPath();
+    }
+
+    return fullPath;
+  }
+
+  protected String createFullPath()
+  {
+    StructuralElement parent = getParent();
+    if (parent != null)
+    {
+      return parent.getBasePathForChildren() + "/" + path;
+    }
+
+    return path;
+  }
+
+  public String getBasePathForChildren()
+  {
+    return new File(getFullPath()).getParentFile().toString();
+  }
+
+  public final File getOutputFile()
+  {
+    checkAnalyzed();
+    if (outputFile == null)
+    {
+      outputFile = createOutputFile();
+    }
+
+    return outputFile;
+  }
+
+  protected File createOutputFile()
+  {
+    return new File(getDocumentation().getContext().getBaseFolder(), getFullPath());
+  }
+
+  public final File getBaseFolderForChildren()
+  {
+    return new File(getDocumentation().getContext().getBaseFolder(), getBasePathForChildren());
+  }
+
+  public boolean isOverview()
+  {
+    return overview;
+  }
+
+  public float getNumber()
+  {
+    return number;
   }
 
   public int getDepth()
@@ -565,20 +543,25 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   public List<StructuralElement> getSortedChildren()
   {
-    List<StructuralElement> children = new ArrayList<StructuralElement>(getChildren());
-    Collections.sort(children, new Comparator<StructuralElement>()
+    checkAnalyzed();
+    if (sortedChildren == null)
     {
-      public int compare(StructuralElement body1, StructuralElement body2)
+      sortedChildren = new ArrayList<StructuralElement>(getChildren());
+      Collections.sort(sortedChildren, new Comparator<StructuralElement>()
       {
-        return new Integer(((Body)body1).getNumber()).compareTo(((Body)body2).getNumber());
-      }
-    });
+        public int compare(StructuralElement body1, StructuralElement body2)
+        {
+          return new Float(body1.getNumber()).compareTo(body2.getNumber());
+        }
+      });
+    }
 
-    return children;
+    return sortedChildren;
   }
 
   public void generate() throws IOException
   {
+    checkAnalyzed();
     for (StructuralElement child : getSortedChildren())
     {
       child.generate();
@@ -587,6 +570,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   public void generate(PrintWriter out) throws IOException
   {
+    checkAnalyzed();
     for (StructuralElement child : getSortedChildren())
     {
       child.generate(out);
@@ -595,8 +579,12 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   protected void generate(File file) throws IOException
   {
+    checkAnalyzed();
     Documentation documentation = getDocumentation();
     String title = getTitle() + " (" + documentation.getTitle() + ")";
+    File cssFile = new File(documentation.getBaseFolderForChildren(), "book.css");
+    String css = ArticleUtil.createLink(getOutputFile(), cssFile);
+
     PrintWriter out = null;
 
     try
@@ -608,12 +596,11 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       out.write("<HTML>\n");
       out.write("\n");
       out.write("<HEAD>\n");
-      out.write("<TITLE>\n");
-      out.write(title + "\n");
+      out.write("<TITLE>");
+      out.write(title);
       out.write("</TITLE>\n");
       out.write("\n");
-      out.write("<LINK REL=\"STYLESHEET\" HREF=\"" + documentation.linkFrom(this)
-          + "book.css\" CHARSET=\"ISO-8859-1\" TYPE=\"text/css\">\n");
+      out.write("<LINK REL=\"STYLESHEET\" HREF=\"" + css + "\" CHARSET=\"ISO-8859-1\" TYPE=\"text/css\">\n");
       out.write("\n");
       out.write("<SCRIPT type=\"text/javascript\">\n");
       out.write("function windowTitle()\n");
@@ -623,11 +610,16 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       out.write("    }\n");
       out.write("}\n");
       out.write("</SCRIPT>\n");
-      out.write("<NOSCRIPT>\n");
-      out.write("</NOSCRIPT>\n");
+      out.write("<NOSCRIPT></NOSCRIPT>\n");
       out.write("</HEAD>\n");
       out.write("\n");
       out.write("<BODY BGCOLOR=\"white\" onload=\"windowTitle();\">\n");
+
+      out.write("<!-- ");
+      out.write("<div class=\"help_breadcrumbs\">");
+      generateBreadCrumbs(out, this);
+      out.write("</div>\n");
+      out.write(" -->\n");
 
       generate(out);
 
@@ -642,8 +634,19 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
     }
   }
 
+  protected void generateBreadCrumbs(PrintWriter out, StructuralElement linkSource) throws IOException
+  {
+    checkAnalyzed();
+    StructuralElement parent = getParent();
+    if (parent instanceof StructuralElementImpl)
+    {
+      ((StructuralElementImpl)parent).generateBreadCrumbs(out, linkSource);
+    }
+  }
+
   protected void generateTocEntries(TocWriter writer) throws IOException
   {
+    checkAnalyzed();
     for (StructuralElement child : getSortedChildren())
     {
       BodyImpl body = (BodyImpl)child;
@@ -653,6 +656,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   protected void generateTocEntry(TocWriter writer) throws IOException
   {
+    checkAnalyzed();
     writer.writeGroupStart(getTitle(), getTocHref());
     generateTocEntries(writer);
     writer.writeGroupEnd();
@@ -665,12 +669,14 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
   protected String getTocHref()
   {
-    File projectFolder = getDocumentation().getOutputFile().getParentFile();
-    return ArticleUtil.createLink(projectFolder, getTocTarget());
+    File projectFolder = getDocumentation().getProjectFolder();
+    File tocTarget = getTocTarget();
+    return ArticleUtil.createLink(projectFolder, tocTarget);
   }
 
-  protected void copyResources(File sourceFolder, File targetFolder)
+  protected void copyResources(File sourceFolder)
   {
+    File targetFolder = getOutputFile().getParentFile();
     for (File file : sourceFolder.listFiles())
     {
       if (file.isFile())
@@ -682,6 +688,15 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
           ArticleUtil.copyFile(file, targetFile);
         }
       }
+    }
+  }
+
+  protected void checkAnalyzed()
+  {
+    Documentation documentation = getDocumentation();
+    if (documentation == null || !documentation.isAnalyzed())
+    {
+      throw new AssertionError("Documentation analysis is not finished, yet");
     }
   }
 } // StructuralElementImpl

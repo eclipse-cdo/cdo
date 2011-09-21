@@ -15,7 +15,6 @@ package org.eclipse.emf.cdo.releng.help;
  * <p>
  * {@toc}
  * 
- * @number 0
  * @default
  */
 public class Overview

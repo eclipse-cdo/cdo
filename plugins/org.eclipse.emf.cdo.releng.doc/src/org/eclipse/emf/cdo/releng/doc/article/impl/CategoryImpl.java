@@ -41,7 +41,7 @@ public class CategoryImpl extends BodyImpl implements Category
 
   CategoryImpl(StructuralElement parent, PackageDoc packageDoc)
   {
-    super(parent, ArticleUtil.getSimplePackageName(packageDoc), packageDoc);
+    super(parent, ArticleUtil.getSimplePackageName(packageDoc) + "/index.html", packageDoc);
     getDocumentation().getContext().register(getId(), this);
 
     for (Tag tag : packageDoc.inlineTags())
@@ -82,11 +82,22 @@ public class CategoryImpl extends BodyImpl implements Category
   public void generate() throws IOException
   {
     File sourceFolder = getDoc().position().file().getParentFile();
-    File targetFolder = getOutputFile();
-    copyResources(sourceFolder, targetFolder);
+    copyResources(sourceFolder);
 
     super.generate();
     generate(getTocTarget());
+  }
+
+  @Override
+  protected void generateBreadCrumbs(PrintWriter out, StructuralElement linkSource) throws IOException
+  {
+    super.generateBreadCrumbs(out, linkSource);
+
+    if (linkSource != this)
+    {
+      out.write(" > ");
+      generateLink(out, linkSource, null);
+    }
   }
 
   @Override
@@ -97,17 +108,5 @@ public class CategoryImpl extends BodyImpl implements Category
     out.write("</h" + 1 + ">\n");
 
     BodyElementContainerImpl.generate(out, this, getElements());
-  }
-
-  @Override
-  public String linkFrom(StructuralElement source)
-  {
-    return super.linkFrom(source) + "/index.html";
-  }
-
-  @Override
-  protected File getTocTarget()
-  {
-    return new File(super.getTocTarget(), "index.html");
   }
 } // CategoryImpl

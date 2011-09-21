@@ -152,18 +152,14 @@ public class TocImpl extends BodyElementImpl implements Toc
   public void generate(PrintWriter out, StructuralElement linkSource) throws IOException
   {
     StructuralElement element = (StructuralElement)getContainer();
-    if (ArticleUtil.isTagged(element.getDoc(), "@default"))
+    if (element.isOverview())
     {
       element = element.getDocumentation();
     }
 
     File source = linkSource.getOutputFile();
-    File target = new File(linkSource.getDocumentation().getOutputFile().getParentFile(), "images");
+    File target = new File(linkSource.getDocumentation().getProjectFolder(), "images");
     String imagePath = ArticleUtil.createLink(source, target) + "/";
-    if (linkSource instanceof Category)
-    {
-      imagePath = "../" + imagePath;
-    }
 
     out.write("<p>\n");
     out.write("<table border=\"0\">\n");
@@ -221,7 +217,7 @@ public class TocImpl extends BodyElementImpl implements Toc
       }
 
       int colspan = depth - level + 2;
-      out.write("&nbsp;&nbsp;</td><td colspan=\"" + colspan + "\">");
+      out.write("&nbsp;</td><td colspan=\"" + colspan + "\">");
       element.generateLink(out, linkSource, null);
       out.write("</td></tr>\n");
     }

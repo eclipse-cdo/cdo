@@ -127,9 +127,7 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");

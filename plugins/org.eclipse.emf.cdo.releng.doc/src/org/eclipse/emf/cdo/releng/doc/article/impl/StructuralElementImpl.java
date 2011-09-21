@@ -618,7 +618,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       out.write("<!-- ");
       out.write("<div class=\"help_breadcrumbs\">");
       generateBreadCrumbs(out, this);
-      out.write("</div>\n");
+      out.write("</div>");
       out.write(" -->\n");
 
       generate(out);

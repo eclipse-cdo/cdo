@@ -267,6 +267,12 @@ public class CDOViewImpl extends AbstractCDOView
   public synchronized void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)
       throws InterruptedException
   {
+    lockObjects(objects, lockType, timeout, false);
+  }
+
+  public synchronized void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout,
+      boolean recursive) throws InterruptedException
+  {
     checkActive();
     checkState(getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE, "Locking not supported for historial views");
 
@@ -280,8 +286,16 @@ public class CDOViewImpl extends AbstractCDOView
       }
     }
 
+    // Even if objects is not empty, revisionKeys may be empty, due to all of the
+    // objects being NEW or TRANSIENT. In such a case there is nothing to do
+    if (revisionKeys.isEmpty())
+    {
+      return;
+    }
+
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    LockObjectsResult result = sessionProtocol.lockObjects2(revisionKeys, viewID, getBranch(), lockType, timeout);
+    LockObjectsResult result = sessionProtocol.lockObjects2(revisionKeys, viewID, getBranch(), lockType, recursive,
+        timeout);
 
     if (!result.isSuccessful())
     {
@@ -443,6 +457,11 @@ public class CDOViewImpl extends AbstractCDOView
    */
   public synchronized void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType)
   {
+    unlockObjects(objects, lockType, false);
+  }
+
+  public synchronized void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType, boolean recursive)
+  {
     checkActive();
 
     List<CDOID> objectIDs = null;
@@ -456,7 +475,7 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    UnlockObjectsResult result = sessionProtocol.unlockObjects2(this, objectIDs, lockType);
+    UnlockObjectsResult result = sessionProtocol.unlockObjects2(this, objectIDs, lockType, recursive);
 
     updateAndNotifyLockStates(Operation.UNLOCK, lockType, result.getTimestamp(), result.getNewLockStates());
   }

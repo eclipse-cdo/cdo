@@ -38,14 +38,16 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
 
   private List<CDORevisionKey> revisionKeys;
 
+  private boolean recursive;
+
   public LockObjectsRequest(CDOClientProtocol protocol, List<CDORevisionKey> revisionKeys, int viewID,
-      LockType lockType, long timeout)
+      LockType lockType, boolean recursive, long timeout)
   {
-    this(protocol, CDOProtocolConstants.SIGNAL_LOCK_OBJECTS, revisionKeys, viewID, lockType, timeout);
+    this(protocol, CDOProtocolConstants.SIGNAL_LOCK_OBJECTS, revisionKeys, viewID, lockType, recursive, timeout);
   }
 
   protected LockObjectsRequest(CDOClientProtocol protocol, short signalID, List<CDORevisionKey> revisionKeys,
-      int viewID, LockType lockType, long timeout)
+      int viewID, LockType lockType, boolean recursive, long timeout)
   {
     super(protocol, signalID);
 
@@ -53,6 +55,7 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
     this.lockType = lockType;
     this.timeout = timeout;
     this.revisionKeys = revisionKeys;
+    this.recursive = recursive;
   }
 
   @Override
@@ -60,6 +63,7 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
   {
     out.writeInt(viewID);
     out.writeCDOLockType(lockType);
+    out.writeBoolean(recursive);
     out.writeLong(timeout);
 
     out.writeInt(revisionKeys.size());

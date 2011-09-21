@@ -50,6 +50,7 @@ public class UnlockObjectsIndication extends CDOServerWriteIndication
   {
     int viewID = in.readInt();
     LockType lockType = in.readCDOLockType();
+    boolean recursive = in.readBoolean();
     int size = in.readInt();
 
     InternalRepository repository = getRepository();
@@ -57,7 +58,7 @@ public class UnlockObjectsIndication extends CDOServerWriteIndication
 
     if (size == CDOProtocolConstants.RELEASE_ALL_LOCKS)
     {
-      result = repository.unlock((InternalView)view, null, null);
+      result = repository.unlock((InternalView)view, null, null, false);
     }
     else
     {
@@ -67,7 +68,7 @@ public class UnlockObjectsIndication extends CDOServerWriteIndication
         objectIDs.add(in.readCDOID());
       }
 
-      result = repository.unlock((InternalView)view, lockType, objectIDs);
+      result = repository.unlock((InternalView)view, lockType, objectIDs, recursive);
     }
   }
 

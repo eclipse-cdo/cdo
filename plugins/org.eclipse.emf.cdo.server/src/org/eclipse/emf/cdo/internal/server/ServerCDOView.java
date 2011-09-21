@@ -155,7 +155,18 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive)
+      throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType, boolean recursive)
   {
     throw new UnsupportedOperationException();
   }

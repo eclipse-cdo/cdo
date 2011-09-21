@@ -294,11 +294,11 @@ public abstract class SynchronizableRepository extends Repository.Default implem
         // TODO (CD) Consider this problem further
         long timeout = 0;
 
-        super.lock(view, lockType, lockables, null, timeout);
+        super.lock(view, lockType, lockables, null, false, timeout);
       }
       else if (lockChangeInfo.getOperation() == Operation.UNLOCK)
       {
-        super.doUnlock(view, lockType, lockables);
+        super.doUnlock(view, lockType, lockables, false);
       }
       else
       {
@@ -550,11 +550,12 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   }
 
   @Override
-  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revisionKeys, long timeout)
+  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revisionKeys,
+      boolean recursive, long timeout)
   {
     if (view.getBranch().isLocal())
     {
-      return super.lock(view, lockType, revisionKeys, timeout);
+      return super.lock(view, lockType, revisionKeys, recursive, timeout);
     }
 
     if (getState() != ONLINE)
@@ -562,11 +563,11 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       throw new CDOException("Cannot lock in a non-local branch when clone is not connected to master");
     }
 
-    return lockThrough(view, lockType, revisionKeys, timeout);
+    return lockThrough(view, lockType, revisionKeys, false, timeout);
   }
 
-  private LockObjectsResult lockOnMaster(InternalView view, LockType type, List<CDORevisionKey> revKeys, long timeout)
-      throws InterruptedException
+  private LockObjectsResult lockOnMaster(InternalView view, LockType type, List<CDORevisionKey> revKeys,
+      boolean recursive, long timeout) throws InterruptedException
   {
     // Delegate locking to the master
     InternalCDOSession remoteSession = getSynchronizer().getRemoteSession();
@@ -579,7 +580,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
 
     LockObjectsResult masterLockingResult = sessionProtocol.delegateLockObjects(areaID, revKeys, view.getBranch(),
-        type, timeout);
+        type, recursive, timeout);
 
     if (masterLockingResult.isSuccessful() && masterLockingResult.isWaitForUpdate())
     {
@@ -596,17 +597,18 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     return masterLockingResult;
   }
 
-  private LockObjectsResult lockThrough(InternalView view, LockType type, List<CDORevisionKey> keys, long timeout)
+  private LockObjectsResult lockThrough(InternalView view, LockType type, List<CDORevisionKey> keys, boolean recursive,
+      long timeout)
   {
     try
     {
-      LockObjectsResult masterLockingResult = lockOnMaster(view, type, keys, timeout);
+      LockObjectsResult masterLockingResult = lockOnMaster(view, type, keys, recursive, timeout);
       if (!masterLockingResult.isSuccessful())
       {
         return masterLockingResult;
       }
 
-      LockObjectsResult localLockingResult = super.lock(view, type, keys, timeout);
+      LockObjectsResult localLockingResult = super.lock(view, type, keys, recursive, timeout);
       return localLockingResult;
     }
     catch (InterruptedException ex)
@@ -616,11 +618,11 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   }
 
   @Override
-  public UnlockObjectsResult unlock(InternalView view, LockType lockType, List<CDOID> objectIDs)
+  public UnlockObjectsResult unlock(InternalView view, LockType lockType, List<CDOID> objectIDs, boolean recursive)
   {
     if (view.getBranch().isLocal())
     {
-      super.unlock(view, lockType, objectIDs);
+      super.unlock(view, lockType, objectIDs, recursive);
     }
 
     if (getState() != ONLINE)
@@ -628,10 +630,10 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       throw new CDOException("Cannot unlock in a non-local branch when clone is not connected to master");
     }
 
-    return unlockThrough(view, lockType, objectIDs);
+    return unlockThrough(view, lockType, objectIDs, recursive);
   }
 
-  private void unlockOnMaster(InternalView view, LockType lockType, List<CDOID> objectIDs)
+  private void unlockOnMaster(InternalView view, LockType lockType, List<CDOID> objectIDs, boolean recursive)
   {
     InternalCDOSession remoteSession = getSynchronizer().getRemoteSession();
     CDOSessionProtocol sessionProtocol = remoteSession.getSessionProtocol();
@@ -642,13 +644,14 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       throw new IllegalStateException("Durable locking is not enabled.");
     }
 
-    sessionProtocol.delegateUnlockObjects(lockAreaID, objectIDs, lockType);
+    sessionProtocol.delegateUnlockObjects(lockAreaID, objectIDs, lockType, recursive);
   }
 
-  private UnlockObjectsResult unlockThrough(InternalView view, LockType lockType, List<CDOID> objectIDs)
+  private UnlockObjectsResult unlockThrough(InternalView view, LockType lockType, List<CDOID> objectIDs,
+      boolean recursive)
   {
-    unlockOnMaster(view, lockType, objectIDs);
-    return super.unlock(view, lockType, objectIDs);
+    unlockOnMaster(view, lockType, objectIDs, recursive);
+    return super.unlock(view, lockType, objectIDs, recursive);
   }
 
   /**

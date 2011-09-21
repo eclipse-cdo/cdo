@@ -232,18 +232,18 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
       revisionKeys.add(rev);
     }
 
-    return lockObjects2(revisionKeys, viewID, viewedBranch, lockType, timeout);
+    return lockObjects2(revisionKeys, viewID, viewedBranch, lockType, false, timeout);
   }
 
   public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
-      LockType lockType, long timeout) throws InterruptedException
+      LockType lockType, boolean recursive, long timeout) throws InterruptedException
   {
     InterruptedException interruptedException = null;
     RuntimeException runtimeException = null;
 
     try
     {
-      return new LockObjectsRequest(this, revisionKeys, viewID, lockType, timeout).send();
+      return new LockObjectsRequest(this, revisionKeys, viewID, lockType, recursive, timeout).send();
     }
     catch (RemoteException ex)
     {
@@ -274,14 +274,15 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   }
 
   public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
-      CDOBranch viewedBranch, LockType lockType, long timeout) throws InterruptedException
+      CDOBranch viewedBranch, LockType lockType, boolean recursive, long timeout) throws InterruptedException
   {
     InterruptedException interruptedException = null;
     RuntimeException runtimeException = null;
 
     try
     {
-      return new LockDelegationRequest(this, lockAreaID, revisionKeys, viewedBranch, lockType, timeout).send();
+      return new LockDelegationRequest(this, lockAreaID, revisionKeys, viewedBranch, lockType, recursive, timeout)
+          .send();
     }
     catch (RemoteException ex)
     {
@@ -311,19 +312,22 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     throw runtimeException;
   }
 
+  @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
   {
-    send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType));
+    send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType, false));
   }
 
-  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType,
+      boolean recursive)
   {
-    return send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType));
+    return send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType, recursive));
   }
 
-  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType)
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType,
+      boolean recursive)
   {
-    return send(new UnlockDelegationRequest(this, lockAreaID, objectIDs, lockType));
+    return send(new UnlockDelegationRequest(this, lockAreaID, objectIDs, lockType, recursive));
   }
 
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers)

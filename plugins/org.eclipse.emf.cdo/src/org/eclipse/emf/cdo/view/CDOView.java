@@ -336,10 +336,15 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)
       throws InterruptedException;
 
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive)
+      throws InterruptedException;
+
   /**
    * Unlocks the given locked objects of this view.
    */
   public void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType);
+
+  public void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType, boolean recursive);
 
   /**
    * Unlocks all locked objects of this view.

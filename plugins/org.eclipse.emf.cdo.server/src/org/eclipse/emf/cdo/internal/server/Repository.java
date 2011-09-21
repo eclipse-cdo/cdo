@@ -1366,19 +1366,20 @@ public class Repository extends Container<Object> implements InternalRepository
     return lockables;
   }
 
-  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revKeys, long timeout)
+  public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revKeys, boolean recursive,
+      long timeout)
   {
     List<Object> lockables = revisionKeysToObjects(revKeys, view.getBranch(), isSupportingBranches());
-    return lock(view, lockType, lockables, revKeys, timeout);
+    return lock(view, lockType, lockables, revKeys, recursive, timeout);
   }
 
   protected LockObjectsResult lock(InternalView view, LockType type, List<Object> lockables,
-      List<CDORevisionKey> loadedRevs, long timeout)
+      List<CDORevisionKey> loadedRevs, boolean recursive, long timeout)
   {
     List<LockState<Object, IView>> newLockStates = null;
     try
     {
-      newLockStates = lockManager.lock2(true, type, view, lockables, timeout);
+      newLockStates = lockManager.lock2(true, type, view, lockables, recursive, timeout);
     }
     catch (TimeoutRuntimeException ex)
     {
@@ -1390,7 +1391,17 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     long[] requiredTimestamp = { 0L };
-    CDORevisionKey[] staleRevisionsArray = checkStaleRevisions(view, loadedRevs, lockables, type, requiredTimestamp);
+    CDORevisionKey[] staleRevisionsArray = null;
+    
+    try
+    {
+      staleRevisionsArray = checkStaleRevisions(view, loadedRevs, lockables, type, requiredTimestamp);
+    }
+    catch (IllegalArgumentException e)
+    {
+      lockManager.unlock2(true, type, view, lockables, recursive);
+      throw e;
+    }
 
     // If some of the clients' revisions are stale and it has passiveUpdates disabled,
     // then the locks are useless so we release them and report the stale revisions
@@ -1399,7 +1410,7 @@ public class Repository extends Container<Object> implements InternalRepository
     boolean staleNoUpdate = staleRevisionsArray.length > 0 && !session.isPassiveUpdateEnabled();
     if (staleNoUpdate)
     {
-      lockManager.unlock2(true, type, view, lockables);
+      lockManager.unlock2(true, type, view, lockables, recursive);
       return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, new CDOLockState[0],
           getTimeStamp());
     }
@@ -1428,7 +1439,6 @@ public class Repository extends Container<Object> implements InternalRepository
 
         if (rev == null)
         {
-          lockManager.unlock2(true, lockType, view, objectsToLock);
           throw new IllegalArgumentException(String.format("Object %s not found in branch %s (possibly detached)", id,
               viewedBranch));
         }
@@ -1472,7 +1482,7 @@ public class Repository extends Container<Object> implements InternalRepository
     return cdoLockStates;
   }
 
-  public UnlockObjectsResult unlock(InternalView view, LockType lockType, List<CDOID> objectIDs)
+  public UnlockObjectsResult unlock(InternalView view, LockType lockType, List<CDOID> objectIDs, boolean recursive)
   {
     List<Object> unlockables = null;
     if (objectIDs != null)
@@ -1486,10 +1496,11 @@ public class Repository extends Container<Object> implements InternalRepository
       }
     }
 
-    return doUnlock(view, lockType, unlockables);
+    return doUnlock(view, lockType, unlockables, recursive);
   }
 
-  protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables)
+  protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables,
+      boolean recursive)
   {
     List<LockState<Object, IView>> newLockStates = null;
     if (lockType == null) // Signals an unlock-all operation
@@ -1498,7 +1509,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
     else
     {
-      newLockStates = lockManager.unlock2(true, lockType, view, unlockables);
+      newLockStates = lockManager.unlock2(true, lockType, view, unlockables, recursive);
     }
 
     long timestamp = getTimeStamp();

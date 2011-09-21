@@ -356,29 +356,31 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
   /**
    * @since 4.1
    */
-  public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
-      LockType lockType, long timeout) throws InterruptedException
+  public LockObjectsResult lockObjects2(List<CDORevisionKey> keys, int viewID, CDOBranch viewedBranch, LockType type,
+      boolean recursive, long timeout) throws InterruptedException
   {
     throw new UnsupportedOperationException();
   }
 
-  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  @Deprecated
+  public void unlockObjects(CDOView view, Collection<CDOID> ids, LockType type)
   {
     throw new UnsupportedOperationException();
   }
 
-  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> ids, LockType type, boolean recursive)
   {
     throw new UnsupportedOperationException();
   }
 
-  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
-      CDOBranch viewedBranch, LockType lockType, long timeout) throws InterruptedException
+  public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> keys, CDOBranch viewedBranch,
+      LockType type, boolean recursive, long timeout) throws InterruptedException
   {
     throw new UnsupportedOperationException();
   }
 
-  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType)
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> ids, LockType type,
+      boolean recursive)
   {
     throw new UnsupportedOperationException();
   }

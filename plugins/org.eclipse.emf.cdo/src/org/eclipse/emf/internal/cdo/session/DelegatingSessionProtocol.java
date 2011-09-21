@@ -638,7 +638,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
    * @since 4.1
    */
   public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
-      LockType lockType, long timeout) throws InterruptedException
+      LockType lockType, boolean recursive, long timeout) throws InterruptedException
 
   {
     int attempt = 0;
@@ -646,7 +646,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     {
       try
       {
-        return delegate.lockObjects2(revisionKeys, viewID, viewedBranch, lockType, timeout);
+        return delegate.lockObjects2(revisionKeys, viewID, viewedBranch, lockType, recursive, timeout);
       }
       catch (Exception ex)
       {
@@ -656,14 +656,14 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
-      CDOBranch viewedBranch, LockType lockType, long timeout) throws InterruptedException
+      CDOBranch viewedBranch, LockType lockType, boolean recursive, long timeout) throws InterruptedException
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.delegateLockObjects(lockAreaID, revisionKeys, viewedBranch, lockType, timeout);
+        return delegate.delegateLockObjects(lockAreaID, revisionKeys, viewedBranch, lockType, recursive, timeout);
       }
       catch (Exception ex)
       {
@@ -672,14 +672,15 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType)
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType,
+      boolean recursive)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.delegateUnlockObjects(lockAreaID, objectIDs, lockType);
+        return delegate.delegateUnlockObjects(lockAreaID, objectIDs, lockType, recursive);
       }
       catch (Exception ex)
       {
@@ -774,6 +775,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
   {
     int attempt = 0;
@@ -791,14 +793,15 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType,
+      boolean recursive)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.unlockObjects2(view, objectIDs, lockType);
+        return delegate.unlockObjects2(view, objectIDs, lockType, recursive);
       }
       catch (Exception ex)
       {

@@ -1048,4 +1048,40 @@ public class LockingManagerTest extends AbstractLockingTest
     company.getCategories().add(category);
     objects.add(CDOUtil.getCDOObject(category));
   }
+
+  public void testRecursiveLock() throws Exception
+  {
+    CDOSession session = openSession();
+    session.options().setPassiveUpdateEnabled(false);
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource res = transaction.createResource(getResourcePath("/res1"));
+
+    Category category1 = getModel1Factory().createCategory();
+    Category category2_1 = getModel1Factory().createCategory();
+    Category category2_2 = getModel1Factory().createCategory();
+    Category category3 = getModel1Factory().createCategory();
+    res.getContents().add(category1);
+    category1.getCategories().add(category2_1);
+    category1.getCategories().add(category2_2);
+    category2_1.getCategories().add(category3);
+
+    transaction.commit();
+
+    CDOObject top = CDOUtil.getCDOObject(category1);
+    transaction.lockObjects(Collections.singleton(top), LockType.WRITE, 5000, true);
+
+    assertWriteLock(true, category1);
+    assertWriteLock(true, category2_1);
+    assertWriteLock(true, category2_2);
+    assertWriteLock(true, category3);
+
+    transaction.unlockObjects(Collections.singleton(top), LockType.WRITE, true);
+
+    assertWriteLock(false, category1);
+    assertWriteLock(false, category2_1);
+    assertWriteLock(false, category2_2);
+    assertWriteLock(false, category3);
+
+    session.close();
+  }
 }

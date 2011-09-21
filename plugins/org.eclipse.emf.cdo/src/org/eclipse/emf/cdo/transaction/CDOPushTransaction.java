@@ -556,6 +556,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     delegate.lockObjects(objects, lockType, timeout);
   }
 
+  public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive)
+      throws InterruptedException
+  {
+    delegate.lockObjects(objects, lockType, timeout, recursive);
+  }
+
   public Options options()
   {
     return delegate.options();
@@ -643,6 +649,11 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType)
   {
     delegate.unlockObjects(objects, lockType);
+  }
+
+  public void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType, boolean recursive)
+  {
+    delegate.unlockObjects(objects, lockType, recursive);
   }
 
   /**

@@ -38,18 +38,22 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
 
   private LockType lockType;
 
-  public UnlockObjectsRequest(CDOClientProtocol protocol, int viewID, Collection<CDOID> objects, LockType lockType)
+  private boolean recursive;
+
+  public UnlockObjectsRequest(CDOClientProtocol protocol, int viewID, Collection<CDOID> objects, LockType lockType,
+      boolean recursive)
   {
-    this(protocol, CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS, viewID, objects, lockType);
+    this(protocol, CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS, viewID, objects, lockType, recursive);
   }
 
   protected UnlockObjectsRequest(CDOClientProtocol protocol, short signalID, int viewID, Collection<CDOID> objectIDs,
-      LockType lockType)
+      LockType lockType, boolean recursive)
   {
     super(protocol, signalID);
     this.viewID = viewID;
     this.objectIDs = objectIDs;
     this.lockType = lockType;
+    this.recursive = recursive;
   }
 
   @Override
@@ -57,6 +61,7 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
   {
     out.writeInt(viewID);
     out.writeCDOLockType(lockType);
+    out.writeBoolean(recursive);
     if (objectIDs == null)
     {
       if (TRACER.isEnabled())

@@ -139,10 +139,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public boolean cancelQuery(int queryId);
 
   /**
-   * Use #lockObjects2 instead.
-   * 
    * @since 4.0
-   * @deprecated Not called anymore.
+   * @deprecated Not called anymore. Use {@link #lockObjects2(List, int, CDOBranch, LockType, boolean, long)} instead.
    */
   @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
@@ -152,28 +150,32 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @since 4.1
    */
   public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
-      LockType lockType, long timeout) throws InterruptedException;
+      LockType lockType, boolean recursive, long timeout) throws InterruptedException;
 
   /**
    * @since 4.1
    */
   public LockObjectsResult delegateLockObjects(String lockAreaID, List<CDORevisionKey> revisionKeys,
-      CDOBranch viewedBranch, LockType lockType, long timeout) throws InterruptedException;
+      CDOBranch viewedBranch, LockType lockType, boolean recursive, long timeout) throws InterruptedException;
 
   /**
    * @since 3.0
+   * @deprecated Not called anymore. Use {@link #unlockObjects2(CDOView, Collection, LockType, boolean)} instead.
    */
+  @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType);
 
   /**
    * @since 4.1
    */
-  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType);
+  public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType,
+      boolean recursive);
 
   /**
    * @since 4.1
    */
-  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType);
+  public UnlockObjectsResult delegateUnlockObjects(String lockAreaID, Collection<CDOID> objectIDs, LockType lockType,
+      boolean recursive);
 
   /**
    * @since 3.0

@@ -30,9 +30,9 @@ public class LockDelegationRequest extends LockObjectsRequest
   private CDOBranch viewedBranch;
 
   public LockDelegationRequest(CDOClientProtocol protocol, String lockAreaID, List<CDORevisionKey> revisionKeys,
-      CDOBranch viewedBranch, LockType lockType, long timeout)
+      CDOBranch viewedBranch, LockType lockType, boolean recursive, long timeout)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_LOCK_DELEGATION, revisionKeys, 0, lockType, timeout);
+    super(protocol, CDOProtocolConstants.SIGNAL_LOCK_DELEGATION, revisionKeys, 0, lockType, recursive, timeout);
     this.lockAreaID = lockAreaID;
     this.viewedBranch = viewedBranch;
   }

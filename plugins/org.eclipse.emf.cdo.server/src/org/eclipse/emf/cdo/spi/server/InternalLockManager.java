@@ -63,14 +63,14 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, IDu
    * @since 4.0
    */
   @Deprecated
-  public void lock(boolean explicit, LockType type, IView context, Collection<? extends Object> objectsToLock,
-      long timeout) throws InterruptedException;
+  public void lock(boolean explicit, LockType type, IView context, Collection<? extends Object> objects, long timeout)
+      throws InterruptedException;
 
   /**
    * @since 4.1
    */
   public List<LockState<Object, IView>> lock2(boolean explicit, LockType type, IView context,
-      Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException;
+      Collection<? extends Object> objects, boolean recursive, long timeout) throws InterruptedException;
 
   /**
    * Attempts to release for a given locktype, view and objects.
@@ -80,13 +80,13 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, IDu
    * @since 4.0
    */
   @Deprecated
-  public void unlock(boolean explicit, LockType type, IView context, Collection<? extends Object> objectsToUnlock);
+  public void unlock(boolean explicit, LockType type, IView context, Collection<? extends Object> objects);
 
   /**
    * @since 4.1
    */
   public List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView context,
-      Collection<? extends Object> objectsToUnlock);
+      Collection<? extends Object> objects, boolean recursive);
 
   /**
    * Attempts to release all locks(read and write) for a given view.

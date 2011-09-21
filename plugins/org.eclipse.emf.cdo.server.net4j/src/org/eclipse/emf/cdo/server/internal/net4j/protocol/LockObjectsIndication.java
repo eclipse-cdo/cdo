@@ -51,6 +51,7 @@ public class LockObjectsIndication extends CDOServerWriteIndication
   {
     int viewID = in.readInt();
     LockType lockType = in.readCDOLockType();
+    boolean recursive = in.readBoolean();
     long timeout = in.readLong();
 
     int nRevisions = in.readInt();
@@ -62,7 +63,7 @@ public class LockObjectsIndication extends CDOServerWriteIndication
 
     InternalRepository repository = getRepository();
     IView view = getView(viewID);
-    result = repository.lock((InternalView)view, lockType, revisionKeys, timeout);
+    result = repository.lock((InternalView)view, lockType, revisionKeys, recursive, timeout);
   }
 
   protected IView getView(int viewID)

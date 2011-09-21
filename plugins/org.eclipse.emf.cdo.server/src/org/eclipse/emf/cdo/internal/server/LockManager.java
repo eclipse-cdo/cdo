@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -19,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
@@ -32,6 +34,8 @@ import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalView;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
@@ -45,13 +49,18 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * @author Simon McDuff
@@ -166,11 +175,11 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
   public void lock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToLock, long timeout)
       throws InterruptedException
   {
-    lock2(explicit, type, view, objectsToLock, timeout);
+    lock2(explicit, type, view, objectsToLock, false, timeout);
   }
 
   public List<LockState<Object, IView>> lock2(boolean explicit, LockType type, IView view,
-      Collection<? extends Object> objectsToLock, long timeout) throws InterruptedException
+      Collection<? extends Object> objectsToLock, boolean recursive, long timeout) throws InterruptedException
   {
     String durableLockingID = null;
     DurableLocking accessor = null;
@@ -184,7 +193,24 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       }
     }
 
-    List<LockState<Object, IView>> newLockStates = super.lock2(type, view, objectsToLock, timeout);
+    long startTime = timeout == WAIT ? 0L : currentTimeMillis();
+
+    List<LockState<Object, IView>> newLockStates;
+    synchronized (this)
+    {
+      if (recursive)
+      {
+        objectsToLock = createContentSet(objectsToLock, view);
+      }
+
+      // Adjust timeout for delay we may have incurred on entering this synchronized block
+      if (timeout != WAIT)
+      {
+        timeout -= currentTimeMillis() - startTime;
+      }
+
+      newLockStates = super.lock2(type, view, objectsToLock, timeout);
+    }
 
     if (accessor != null)
     {
@@ -194,17 +220,70 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     return newLockStates;
   }
 
+  private Set<? extends Object> createContentSet(Collection<? extends Object> objectsToLock, IView view)
+  {
+    CDOBranch branch = view.getBranch();
+    CDOView cdoView = CDOServerUtil.openView(view.getSession(), branch.getHead(), true);
+
+    Set<Object> contents = new HashSet<Object>();
+    for (Object o : objectsToLock)
+    {
+      contents.add(o);
+
+      boolean isIDandBranch = o instanceof CDOIDAndBranch;
+      CDOID id;
+      if (isIDandBranch)
+      {
+        id = ((CDOIDAndBranch)o).getID();
+      }
+      else
+      {
+        id = (CDOID)o;
+      }
+
+      CDOObject obj = cdoView.getObject(id);
+      TreeIterator<EObject> iter = obj.eAllContents();
+      while (iter.hasNext())
+      {
+        EObject eObj = iter.next();
+        CDOObject cdoObj = CDOUtil.getCDOObject(eObj);
+        CDOID childID = cdoObj.cdoID();
+        Object child;
+        if (isIDandBranch)
+        {
+          child = CDOIDUtil.createIDAndBranch(childID, branch);
+        }
+        else
+        {
+          child = childID;
+        }
+        contents.add(child);
+      }
+    }
+
+    return contents;
+  }
+
   @Deprecated
   public synchronized void unlock(boolean explicit, LockType type, IView view,
       Collection<? extends Object> objectsToUnlock)
   {
-    unlock2(explicit, type, view, objectsToUnlock);
+    unlock2(explicit, type, view, objectsToUnlock, false);
   }
 
   public synchronized List<LockState<Object, IView>> unlock2(boolean explicit, LockType type, IView view,
-      Collection<? extends Object> objectsToUnlock)
+      Collection<? extends Object> objects, boolean recursive)
   {
-    List<LockState<Object, IView>> newLockStates = super.unlock2(type, view, objectsToUnlock);
+    List<LockState<Object, IView>> newLockStates;
+    synchronized (this)
+    {
+      if (recursive)
+      {
+        objects = createContentSet(objects, view);
+      }
+
+      newLockStates = super.unlock2(type, view, objects);
+    }
 
     if (explicit)
     {
@@ -212,7 +291,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       if (durableLockingID != null)
       {
         DurableLocking accessor = getDurableLocking();
-        accessor.unlock(durableLockingID, type, objectsToUnlock);
+        accessor.unlock(durableLockingID, type, objects);
       }
     }
 
@@ -222,7 +301,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
   @Deprecated
   public synchronized void unlock(boolean explicit, IView view)
   {
-    unlock(explicit, view);
+    unlock2(explicit, view);
   }
 
   public synchronized List<LockState<Object, IView>> unlock2(boolean explicit, IView view)
@@ -589,7 +668,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       {
         view = durableViews.get(lockAreaID);
       }
-      
+
       return view;
     }
 
@@ -601,7 +680,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       {
         unlock2(view);
       }
-      
+
       if (view == null)
       {
         view = new DurableView(durableLockingID);
@@ -660,7 +739,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
         }
       }
     }
-    
+
     return grade;
   }
 

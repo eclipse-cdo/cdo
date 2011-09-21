@@ -163,7 +163,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       throw new AssertionError("No default element declared in " + getTitle());
     }
 
-    setPath(defaultElement.getPath());
+    setPath(defaultElement.getFullPath());
     analyzed = true;
   }
 
@@ -716,7 +716,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     if (!children.isEmpty())
     {
       StructuralElement child = children.get(0);
-      File sourceFolder = child.getDoc().position().file().getParentFile().getParentFile();
+      File sourceFolder = child.getDoc().position().file().getParentFile();
       copyResources(sourceFolder);
     }
 

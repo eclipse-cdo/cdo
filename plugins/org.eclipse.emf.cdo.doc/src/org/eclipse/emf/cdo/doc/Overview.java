@@ -20,6 +20,10 @@ import org.eclipse.emf.ecore.EObject;
  * model can be regarded as a graph of application or business objects and a meta model as a set of classifiers that
  * describe the structure of and the possible relations between these objects.
  * <p>
+ * CDO supports plentyfold deployments such as embedded repositories, offline clones or replicated clusters. The
+ * following diagram illustrates the most common scenario:
+ * <p align="center">
+ * <img src="cdo-overview.png"/>
  * 
  * @default
  */

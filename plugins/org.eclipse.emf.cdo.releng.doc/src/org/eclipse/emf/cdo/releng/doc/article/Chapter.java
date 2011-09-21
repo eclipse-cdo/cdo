@@ -37,4 +37,5 @@ public interface Chapter extends Body
    */
   Article getArticle();
 
+  public String getName();
 } // Chapter

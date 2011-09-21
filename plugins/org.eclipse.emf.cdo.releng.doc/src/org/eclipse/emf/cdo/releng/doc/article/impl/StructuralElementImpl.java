@@ -620,6 +620,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       generateBreadCrumbs(out, this);
       out.write("</div>");
       out.write(" -->\n");
+      out.write("\n");
 
       generate(out);
 

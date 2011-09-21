@@ -48,6 +48,7 @@ public class ChapterImpl extends BodyImpl implements Chapter
   {
     super(parent, makePath(classDoc), classDoc);
     getDocumentation().getContext().register(getId(), this);
+    ((ArticleImpl)getArticle()).registerChapter(this);
   }
 
   private static String makePath(ClassDoc classDoc)
@@ -133,7 +134,7 @@ public class ChapterImpl extends BodyImpl implements Chapter
       return super.createFullPath();
     }
 
-    return getArticle().getFullPath() + "#" + getPath();
+    return getArticle().getFullPath() + "#" + getName();
   }
 
   @Override
@@ -148,16 +149,16 @@ public class ChapterImpl extends BodyImpl implements Chapter
   @Override
   public void generate(PrintWriter out) throws IOException
   {
-    String anchor = "<a name=\"" + getPath() + "\"/>";
-
     if (this instanceof Article)
     {
       out.write("<h" + 1 + ">");
-      out.write(anchor + getTitle());
+      out.write(getTitle());
       out.write("</h" + 1 + ">\n");
     }
     else
     {
+      String anchor = "<a name=\"" + getName() + "\"/>";
+
       int level = getChapterNumbers().length + 1;
       out.write("<h" + level + ">");
       out.write(anchor + getTitleWithNumber());
@@ -165,6 +166,12 @@ public class ChapterImpl extends BodyImpl implements Chapter
     }
 
     super.generate(out);
+  }
+
+  public String getName()
+  {
+    return getDoc().simpleTypeName();
+    // return getPath().replace('/', '_').replace('.', '_').replace('-', '_');
   }
 
   public String getTitleWithNumber()

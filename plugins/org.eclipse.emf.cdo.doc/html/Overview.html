@@ -19,7 +19,8 @@ function windowTitle()
 
 <BODY BGCOLOR="white" onload="windowTitle();">
 <!-- <div class="help_breadcrumbs"><a href="" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a></div> -->
-<h1><a name="Overview.html"/>Overview</h1>
+
+<h1>Overview</h1>
 <p>
  CDO is a pure Java <i>model repository</i> for your EMF models and meta models. CDO can also serve as a
  <i>persistence and distribution framework</i> for your EMF based application systems. For the sake of this overview a
@@ -128,33 +129,12 @@ function windowTitle()
  <p align="center">
  <img src="application-architecture.png"/>
 
-<h4><a name="OSGi"/>2.1.1&nbsp;&nbsp;OSGi</h4>
-
-
-<h4><a name="EMF"/>2.1.2&nbsp;&nbsp;EMF</h4>
-
-
-<h4><a name="CDOClient"/>2.1.3&nbsp;&nbsp;CDO Client</h4>
-
-
-<h4><a name="Net4j"/>2.1.4&nbsp;&nbsp;Net4j Core</h4>
-
-
-<h4><a name="Models"/>2.1.5&nbsp;&nbsp;Models</h4>
-
-
-<h4><a name="Protocol"/>2.1.6&nbsp;&nbsp;Protocol</h4>
-
-
-<h4><a name="Transport"/>2.1.7&nbsp;&nbsp;Transport</h4>
-
-
 <h3><a name="Repository"/>2.2&nbsp;&nbsp;Repository Architecture</h3>
 <p>
  The main building block of a CDO repository is split into two layers, the generic repository layer that client
  applications interact with and the database integration layer that providers can hook into to integrate their
- data storage solutions with CDO. A number of such integrations already ship with CDO, as outlined in
- <a href="Overview.html#CDOStore" title="Chapter in CDO Model Repository Documentation">CDO Store</a>.
+ data storage solutions with CDO. A number of such integrations already ship with CDO, making it possible to
+ connect a repository to all sorts of JDBC databases, Hibernate, Objectivity/DB, MongoDB or DB4O.
  <p>
  While technically a CDO repository depends on EMF this dependency is not of equal importance as it is in a CDO
  application. In particular the generated application models are not required to be deployed to the server because
@@ -163,27 +143,6 @@ function windowTitle()
  The following diagram illustrates the major building blocks of a CDO repository:
  <p align="center">
  <img src="repository-architecture.png"/>.
-
-<h4><a name="OSGi"/>2.2.1&nbsp;&nbsp;OSGi</h4>
-
-
-<h4><a name="CDOServerCore"/>2.2.2&nbsp;&nbsp;CDO Server Core</h4>
-
-
-<h4><a name="CDOStore"/>2.2.3&nbsp;&nbsp;CDO Store</h4>
-
-
-<h4><a name="OCL"/>2.2.4&nbsp;&nbsp;OCL</h4>
-
-
-<h4><a name="Net4j"/>2.2.5&nbsp;&nbsp;Net4j</h4>
-
-
-<h4><a name="Protocol"/>2.2.6&nbsp;&nbsp;Protocol</h4>
-
-
-<h4><a name="Transport"/>2.2.7&nbsp;&nbsp;Transport</h4>
-
 
 <HR>
 <i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.</i>

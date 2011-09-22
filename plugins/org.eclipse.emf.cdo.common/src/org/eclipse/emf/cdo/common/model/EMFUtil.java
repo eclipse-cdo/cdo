@@ -329,10 +329,7 @@ public final class EMFUtil
     synchronized (notifier)
     {
       EList<Adapter> adapters = notifier.eAdapters();
-      if (!adapters.contains(adapter))
-      {
-        adapters.add(adapter);
-      }
+      adapters.add(adapter);
     }
   }
 

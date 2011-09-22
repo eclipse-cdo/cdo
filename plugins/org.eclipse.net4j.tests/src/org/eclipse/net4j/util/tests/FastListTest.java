@@ -11,7 +11,7 @@
  */
 package org.eclipse.net4j.util.tests;
 
-import org.eclipse.net4j.util.collection.FastList;
+import org.eclipse.net4j.util.collection.ConcurrentArray;
 
 /**
  * @author Eike Stepper
@@ -251,7 +251,7 @@ public class FastListTest extends AbstractOMTest
   /**
    * @author Eike Stepper
    */
-  public static class TestList extends FastList<Integer>
+  public static class TestList extends ConcurrentArray<Integer>
   {
     public int added;
 

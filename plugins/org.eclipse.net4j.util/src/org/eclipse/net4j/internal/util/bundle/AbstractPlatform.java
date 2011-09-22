@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.util.bundle;
 
 import org.eclipse.net4j.internal.util.om.LegacyPlatform;
 import org.eclipse.net4j.internal.util.om.OSGiPlatform;
+import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
@@ -30,9 +31,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Eike Stepper
@@ -51,11 +50,32 @@ public abstract class AbstractPlatform implements OMPlatform
 
   private Map<String, AbstractBundle> bundles = new ConcurrentHashMap<String, AbstractBundle>(0);
 
-  private Queue<OMLogFilter> logFilters = new ConcurrentLinkedQueue<OMLogFilter>();
+  private ConcurrentArray<OMLogFilter> logFilters = new ConcurrentArray.Unique<OMLogFilter>()
+  {
+    @Override
+    protected OMLogFilter[] newArray(int length)
+    {
+      return new OMLogFilter[length];
+    }
+  };
 
-  private Queue<OMLogHandler> logHandlers = new ConcurrentLinkedQueue<OMLogHandler>();
+  private ConcurrentArray<OMLogHandler> logHandlers = new ConcurrentArray.Unique<OMLogHandler>()
+  {
+    @Override
+    protected OMLogHandler[] newArray(int length)
+    {
+      return new OMLogHandler[length];
+    }
+  };
 
-  private Queue<OMTraceHandler> traceHandlers = new ConcurrentLinkedQueue<OMTraceHandler>();
+  private ConcurrentArray<OMTraceHandler> traceHandlers = new ConcurrentArray.Unique<OMTraceHandler>()
+  {
+    @Override
+    protected OMTraceHandler[] newArray(int length)
+    {
+      return new OMTraceHandler[length];
+    }
+  };
 
   private boolean debugging;
 
@@ -77,10 +97,7 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public void addLogFilter(OMLogFilter logFilter)
   {
-    if (!logFilters.contains(logFilter))
-    {
-      logFilters.add(logFilter);
-    }
+    logFilters.add(logFilter);
   }
 
   public void removeLogFilter(OMLogFilter logFilter)
@@ -90,10 +107,7 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public void addLogHandler(OMLogHandler logHandler)
   {
-    if (!logHandlers.contains(logHandler))
-    {
-      logHandlers.add(logHandler);
-    }
+    logHandlers.add(logHandler);
   }
 
   public void removeLogHandler(OMLogHandler logHandler)
@@ -103,10 +117,7 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public void addTraceHandler(OMTraceHandler traceHandler)
   {
-    if (!traceHandlers.contains(traceHandler))
-    {
-      traceHandlers.add(traceHandler);
-    }
+    traceHandlers.add(traceHandler);
   }
 
   public void removeTraceHandler(OMTraceHandler traceHandler)
@@ -242,7 +253,7 @@ public abstract class AbstractPlatform implements OMPlatform
   {
     if (!logFilters.isEmpty())
     {
-      for (OMLogFilter logFilter : logFilters)
+      for (OMLogFilter logFilter : logFilters.get())
       {
         try
         {
@@ -268,7 +279,7 @@ public abstract class AbstractPlatform implements OMPlatform
 
     if (!logHandlers.isEmpty())
     {
-      for (OMLogHandler logHandler : logHandlers)
+      for (OMLogHandler logHandler : logHandlers.get())
       {
         try
         {
@@ -289,7 +300,7 @@ public abstract class AbstractPlatform implements OMPlatform
   {
     if (!traceHandlers.isEmpty())
     {
-      for (OMTraceHandler traceHandler : traceHandlers)
+      for (OMTraceHandler traceHandler : traceHandlers.get())
       {
         try
         {

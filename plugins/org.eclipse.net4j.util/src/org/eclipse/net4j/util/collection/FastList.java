@@ -13,94 +13,9 @@ package org.eclipse.net4j.util.collection;
 /**
  * @author Eike Stepper
  * @since 3.0
+ * @deprecated As of 3.2 use {@link ConcurrentArray}.
  */
-public abstract class FastList<E>
+@Deprecated
+public abstract class FastList<E> extends ConcurrentArray<E>
 {
-  protected E[] elements;
-
-  public FastList()
-  {
-  }
-
-  public boolean isEmpty()
-  {
-    return elements == null;
-  }
-
-  public E[] get()
-  {
-    return elements;
-  }
-
-  public synchronized void add(E element)
-  {
-    if (elements == null)
-    {
-      E[] array = newArray(1);
-      array[0] = element;
-      elements = array;
-      firstElementAdded();
-    }
-    else
-    {
-      int length = elements.length;
-      E[] array = newArray(length + 1);
-      System.arraycopy(elements, 0, array, 0, length);
-      array[length] = element;
-      elements = array;
-    }
-  }
-
-  public synchronized boolean remove(E element)
-  {
-    if (elements != null)
-    {
-      int length = elements.length;
-      if (length == 1)
-      {
-        if (elements[0] == element)
-        {
-          elements = null;
-          lastElementRemoved();
-          return true;
-        }
-      }
-      else
-      {
-        for (int i = 0; i < length; i++)
-        {
-          E e = elements[i];
-          if (e == element)
-          {
-            E[] array = newArray(length - 1);
-
-            if (i > 0)
-            {
-              System.arraycopy(elements, 0, array, 0, i);
-            }
-
-            if (i + 1 <= length - 1)
-            {
-              System.arraycopy(elements, i + 1, array, i, length - 1 - i);
-            }
-
-            elements = array;
-            return true;
-          }
-        }
-      }
-    }
-
-    return false;
-  }
-
-  protected void firstElementAdded()
-  {
-  }
-
-  protected void lastElementRemoved()
-  {
-  }
-
-  protected abstract E[] newArray(int length);
 }

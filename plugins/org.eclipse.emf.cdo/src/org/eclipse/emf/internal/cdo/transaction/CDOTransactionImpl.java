@@ -108,7 +108,7 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.ByteArrayWrapper;
-import org.eclipse.net4j.util.collection.FastList;
+import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -169,7 +169,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private Object transactionHandlersLock = new Object();
 
-  private FastList<CDOTransactionHandler1> transactionHandlers1 = new FastList<CDOTransactionHandler1>()
+  private ConcurrentArray<CDOTransactionHandler1> transactionHandlers1 = new ConcurrentArray<CDOTransactionHandler1>()
   {
     @Override
     protected CDOTransactionHandler1[] newArray(int length)
@@ -178,7 +178,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   };
 
-  private FastList<CDOTransactionHandler2> transactionHandlers2 = new FastList<CDOTransactionHandler2>()
+  private ConcurrentArray<CDOTransactionHandler2> transactionHandlers2 = new ConcurrentArray<CDOTransactionHandler2>()
   {
     @Override
     protected CDOTransactionHandler2[] newArray(int length)
@@ -2880,12 +2880,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       IEvent event = null;
       synchronized (CDOTransactionImpl.this)
       {
-        if (!conflictResolvers.contains(resolver))
-        {
-          validateResolver(resolver);
-          conflictResolvers.add(resolver);
-          event = new ConflictResolversEventImpl();
-        }
+        validateResolver(resolver);
+        conflictResolvers.add(resolver);
+        event = new ConflictResolversEventImpl();
       }
 
       fireEvent(event);

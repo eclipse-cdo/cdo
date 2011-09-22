@@ -61,7 +61,7 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
-import org.eclipse.net4j.util.collection.FastList;
+import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -115,7 +115,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
   private CDOResourceImpl rootResource;
 
-  private final FastList<CDOObjectHandler> objectHandlers = new FastList<CDOObjectHandler>()
+  private final ConcurrentArray<CDOObjectHandler> objectHandlers = new ConcurrentArray<CDOObjectHandler>()
   {
     @Override
     protected CDOObjectHandler[] newArray(int length)
@@ -212,7 +212,7 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       {
         throw new IllegalStateException("RootResourceID is null; is the repository not yet initialized?");
       }
-      
+
       CDOResourceImpl resource = (CDOResourceImpl)getObject(rootResourceID);
       setRootResource(resource);
     }

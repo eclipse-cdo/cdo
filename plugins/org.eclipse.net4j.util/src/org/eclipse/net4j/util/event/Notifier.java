@@ -12,7 +12,7 @@ package org.eclipse.net4j.util.event;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.collection.FastList;
+import org.eclipse.net4j.util.collection.ConcurrentArray;
 
 import java.util.concurrent.ExecutorService;
 
@@ -24,7 +24,7 @@ import java.util.concurrent.ExecutorService;
  */
 public class Notifier implements INotifier
 {
-  private FastList<IListener> listeners = new FastList<IListener>()
+  private ConcurrentArray<IListener> listeners = new ConcurrentArray<IListener>()
   {
     @Override
     protected IListener[] newArray(int length)

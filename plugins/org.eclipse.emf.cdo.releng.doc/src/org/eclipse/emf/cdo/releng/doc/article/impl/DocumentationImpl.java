@@ -256,7 +256,15 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     if (externals != null && externals.length != 0)
     {
       String url = externals[0].inlineTags()[0].text();
-      new ExternalArticleImpl(parent, classDoc, url);
+      if (URI.createURI(url).isRelative())
+      {
+        new PluginResourceImpl(parent, classDoc, url);
+      }
+      else
+      {
+        new ExternalArticleImpl(parent, classDoc, url);
+      }
+
       return;
     }
 

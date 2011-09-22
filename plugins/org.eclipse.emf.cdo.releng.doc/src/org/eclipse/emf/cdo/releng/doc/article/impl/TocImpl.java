@@ -138,9 +138,7 @@ public class TocImpl extends BodyElementImpl implements Toc
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (levels: ");

@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.Plugin;
+import org.eclipse.emf.cdo.releng.doc.article.PluginResource;
 import org.eclipse.emf.cdo.releng.doc.article.Schemadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
@@ -134,6 +135,8 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
       return createExtensionPoint();
     case ArticlePackage.TOC:
       return createToc();
+    case ArticlePackage.PLUGIN_RESOURCE:
+      return createPluginResource();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -413,6 +416,17 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
   {
     TocImpl toc = new TocImpl();
     return toc;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public PluginResource createPluginResource()
+  {
+    PluginResourceImpl pluginResource = new PluginResourceImpl();
+    return pluginResource;
   }
 
   /**

@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Plugin;
+import org.eclipse.emf.cdo.releng.doc.article.PluginResource;
 import org.eclipse.emf.cdo.releng.doc.article.Schemadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
@@ -272,6 +273,12 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
     public Adapter caseToc(Toc object)
     {
       return createTocAdapter();
+    }
+
+    @Override
+    public Adapter casePluginResource(PluginResource object)
+    {
+      return createPluginResourceAdapter();
     }
 
     @Override
@@ -700,6 +707,20 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTocAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.PluginResource
+   * <em>Plugin Resource</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.PluginResource
+   * @generated
+   */
+  public Adapter createPluginResourceAdapter()
   {
     return null;
   }

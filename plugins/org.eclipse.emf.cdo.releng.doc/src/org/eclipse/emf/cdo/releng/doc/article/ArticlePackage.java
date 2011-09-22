@@ -1809,13 +1809,130 @@ public interface ArticlePackage extends EPackage
   int TOC_FEATURE_COUNT = BODY_ELEMENT_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginResourceImpl
+   * <em>Plugin Resource</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.PluginResourceImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getPluginResource()
+   * @generated
+   */
+  int PLUGIN_RESOURCE = 29;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__ID = EXTERNAL_ARTICLE__ID;
+
+  /**
+   * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__DEFAULT_LABEL = EXTERNAL_ARTICLE__DEFAULT_LABEL;
+
+  /**
+   * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__TOOLTIP = EXTERNAL_ARTICLE__TOOLTIP;
+
+  /**
+   * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__CHILDREN = EXTERNAL_ARTICLE__CHILDREN;
+
+  /**
+   * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__PARENT = EXTERNAL_ARTICLE__PARENT;
+
+  /**
+   * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__TITLE = EXTERNAL_ARTICLE__TITLE;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__DOCUMENTATION = EXTERNAL_ARTICLE__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__DOC = EXTERNAL_ARTICLE__DOC;
+
+  /**
+   * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__ELEMENTS = EXTERNAL_ARTICLE__ELEMENTS;
+
+  /**
+   * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__CATEGORY = EXTERNAL_ARTICLE__CATEGORY;
+
+  /**
+   * The feature id for the '<em><b>Article</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__ARTICLE = EXTERNAL_ARTICLE__ARTICLE;
+
+  /**
+   * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE__URL = EXTERNAL_ARTICLE__URL;
+
+  /**
+   * The number of structural features of the '<em>Plugin Resource</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PLUGIN_RESOURCE_FEATURE_COUNT = EXTERNAL_ARTICLE_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see com.sun.javadoc.RootDoc
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getRootDoc()
    * @generated
    */
-  int ROOT_DOC = 29;
+  int ROOT_DOC = 30;
 
   /**
    * The meta object id for the '<em>File</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1824,7 +1941,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFile()
    * @generated
    */
-  int FILE = 30;
+  int FILE = 31;
 
   /**
    * The meta object id for the '<em>Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1833,7 +1950,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDoc()
    * @generated
    */
-  int DOC = 31;
+  int DOC = 32;
 
   /**
    * The meta object id for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1842,7 +1959,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
    * @generated
    */
-  int TAG = 32;
+  int TAG = 33;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation
@@ -2583,6 +2700,16 @@ public interface ArticlePackage extends EPackage
   EAttribute getToc_Levels();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.PluginResource
+   * <em>Plugin Resource</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Plugin Resource</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.PluginResource
+   * @generated
+   */
+  EClass getPluginResource();
+
+  /**
    * Returns the meta object for data type '{@link com.sun.javadoc.RootDoc <em>Root Doc</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
@@ -3249,6 +3376,16 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EAttribute TOC__LEVELS = eINSTANCE.getToc_Levels();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginResourceImpl
+     * <em>Plugin Resource</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.PluginResourceImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getPluginResource()
+     * @generated
+     */
+    EClass PLUGIN_RESOURCE = eINSTANCE.getPluginResource();
 
     /**
      * The meta object literal for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

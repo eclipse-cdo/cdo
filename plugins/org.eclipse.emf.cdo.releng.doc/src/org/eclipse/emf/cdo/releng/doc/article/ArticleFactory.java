@@ -201,6 +201,14 @@ public interface ArticleFactory extends EFactory
   Toc createToc();
 
   /**
+   * Returns a new object of class '<em>Plugin Resource</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Plugin Resource</em>'.
+   * @generated
+   */
+  PluginResource createPluginResource();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

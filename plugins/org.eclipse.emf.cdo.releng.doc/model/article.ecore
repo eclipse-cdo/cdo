@@ -141,4 +141,5 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="levels" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         changeable="false" defaultValueLiteral="-1" derived="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PluginResource" eSuperTypes="#//ExternalArticle"/>
 </ecore:EPackage>

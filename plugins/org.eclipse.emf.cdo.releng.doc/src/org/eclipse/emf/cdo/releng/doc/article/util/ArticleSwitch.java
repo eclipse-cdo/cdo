@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Plugin;
+import org.eclipse.emf.cdo.releng.doc.article.PluginResource;
 import org.eclipse.emf.cdo.releng.doc.article.Schemadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
@@ -451,6 +452,30 @@ public class ArticleSwitch<T> extends Switch<T>
       T result = caseToc(toc);
       if (result == null)
         result = caseBodyElement(toc);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ArticlePackage.PLUGIN_RESOURCE:
+    {
+      PluginResource pluginResource = (PluginResource)theEObject;
+      T result = casePluginResource(pluginResource);
+      if (result == null)
+        result = caseExternalArticle(pluginResource);
+      if (result == null)
+        result = caseArticle(pluginResource);
+      if (result == null)
+        result = caseChapter(pluginResource);
+      if (result == null)
+        result = caseBody(pluginResource);
+      if (result == null)
+        result = caseStructuralElement(pluginResource);
+      if (result == null)
+        result = caseBodyElementContainer(pluginResource);
+      if (result == null)
+        result = caseLinkTarget(pluginResource);
+      if (result == null)
+        result = caseIdentifiable(pluginResource);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -892,6 +917,21 @@ public class ArticleSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseToc(Toc object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Plugin Resource</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Plugin Resource</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePluginResource(PluginResource object)
   {
     return null;
   }

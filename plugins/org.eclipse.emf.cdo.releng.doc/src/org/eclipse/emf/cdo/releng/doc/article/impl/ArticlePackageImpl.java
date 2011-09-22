@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Plugin;
+import org.eclipse.emf.cdo.releng.doc.article.PluginResource;
 import org.eclipse.emf.cdo.releng.doc.article.Schemadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
@@ -261,6 +262,13 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * @generated
    */
   private EClass tocEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass pluginResourceEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1037,6 +1045,16 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
+  public EClass getPluginResource()
+  {
+    return pluginResourceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EDataType getRootDoc()
   {
     return rootDocEDataType;
@@ -1199,6 +1217,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     tocEClass = createEClass(TOC);
     createEAttribute(tocEClass, TOC__LEVELS);
 
+    pluginResourceEClass = createEClass(PLUGIN_RESOURCE);
+
     // Create data types
     rootDocEDataType = createEDataType(ROOT_DOC);
     fileEDataType = createEDataType(FILE);
@@ -1258,6 +1278,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     externalArticleEClass.getESuperTypes().add(this.getArticle());
     schemadocEClass.getESuperTypes().add(this.getCategory());
     tocEClass.getESuperTypes().add(this.getBodyElement());
+    pluginResourceEClass.getESuperTypes().add(this.getExternalArticle());
 
     // Initialize classes and features; add operations and parameters
     initEClass(documentationEClass, Documentation.class, "Documentation", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1436,6 +1457,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEClass(tocEClass, Toc.class, "Toc", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getToc_Levels(), ecorePackage.getEInt(), "levels", "-1", 0, 1, Toc.class, !IS_TRANSIENT,
         !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+
+    initEClass(pluginResourceEClass, PluginResource.class, "PluginResource", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
 
     // Initialize data types
     initEDataType(rootDocEDataType, RootDoc.class, "RootDoc", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

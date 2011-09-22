@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
 /**
+ * See bug 341995.
+ * 
  * @author Caspar De Groot
  */
 public class Bugzilla_341995_Test extends AbstractCDOTest

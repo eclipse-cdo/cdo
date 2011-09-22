@@ -26,6 +26,7 @@ import com.sun.javadoc.Doc;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Body</b></em>'. <!-- end-user-doc -->
@@ -289,5 +290,57 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
     EList<BodyElement> elements = getElements();
     BodyElementContainerImpl.generate(out, this, elements);
     super.generate(out);
+  }
+
+  protected void generateHeader(PrintWriter out)
+  {
+    out.write("<table border=\"0\">\n");
+    out.write("\t<tr>\n");
+    out.write("\t\t<td width=\"100%\"><h1>");
+    out.write(getTitle());
+    out.write("</h1></td>\n");
+    out.write("\t\t<td align=\"right\" valign=\"middle\" nowrap>");
+    generateNav(out);
+    out.write("</td>\n");
+    out.write("\t</tr>\n");
+    out.write("</table>\n");
+  }
+
+  protected void generateFooter(PrintWriter out)
+  {
+    out.write("<p align=\"right\">\n");
+    generateNav(out);
+    out.write("</p>\n");
+  }
+
+  private void generateNav(PrintWriter out)
+  {
+    List<StructuralElement> elements = getDocumentation().getNavElements();
+    int index = elements.indexOf(this);
+
+    if (index > 0)
+    {
+      StructuralElement previous = elements.get(index - 1);
+      generateNav(out, previous, "Backward");
+    }
+
+    out.write("&nbsp;");
+
+    if (index < elements.size() - 1)
+    {
+      StructuralElement next = elements.get(index + 1);
+      generateNav(out, next, "Forward");
+    }
+  }
+
+  private void generateNav(PrintWriter out, StructuralElement target, String action)
+  {
+    String href = target.linkFrom(this);
+    String tooltip = action + " to " + target.getTitle();
+    String image = getImagePath() + "/" + action.toLowerCase() + ".png";
+
+    out.write("<a href=\"" + href + "\" title=\"" + tooltip + "\">");
+    out.write("<img src=\"" + image + "\"/>");
+    out.write("</a>");
   }
 } // BodyImpl

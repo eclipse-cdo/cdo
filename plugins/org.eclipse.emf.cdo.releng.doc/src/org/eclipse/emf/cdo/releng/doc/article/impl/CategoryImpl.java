@@ -19,6 +19,7 @@ import com.sun.javadoc.Tag;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Category</b></em>'. <!-- end-user-doc -->
@@ -42,7 +43,6 @@ public class CategoryImpl extends BodyImpl implements Category
   CategoryImpl(StructuralElement parent, PackageDoc packageDoc)
   {
     super(parent, ArticleUtil.getSimplePackageName(packageDoc) + "/index.html", packageDoc);
-    getDocumentation().getContext().register(getId(), this);
 
     for (Tag tag : packageDoc.inlineTags())
     {
@@ -70,6 +70,13 @@ public class CategoryImpl extends BodyImpl implements Category
   protected String getKind()
   {
     return "Category";
+  }
+
+  @Override
+  protected void collectNavElements(List<StructuralElement> navElements)
+  {
+    navElements.add(this);
+    super.collectNavElements(navElements);
   }
 
   @Override
@@ -103,10 +110,8 @@ public class CategoryImpl extends BodyImpl implements Category
   @Override
   public void generate(PrintWriter out) throws IOException
   {
-    out.write("<h" + 1 + ">");
-    out.write(getTitle());
-    out.write("</h" + 1 + ">\n");
-
+    generateHeader(out);
     BodyElementContainerImpl.generate(out, this, getElements());
+    generateFooter(out);
   }
 } // CategoryImpl

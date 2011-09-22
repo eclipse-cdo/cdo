@@ -12,12 +12,14 @@ import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Plugin;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl.TocWriter;
+import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.PackageDoc;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -29,6 +31,8 @@ import java.io.IOException;
  */
 public class JavadocImpl extends CategoryImpl implements Javadoc
 {
+  private static final String OVERVIEW_SUMMARY = "javadoc/overview-summary.html";
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -62,9 +66,17 @@ public class JavadocImpl extends CategoryImpl implements Javadoc
   }
 
   @Override
+  public String linkFrom(StructuralElement source)
+  {
+    File sourceFile = source.getOutputFile();
+    File targetFile = new File(getDocumentation().getProjectFolder(), OVERVIEW_SUMMARY);
+    return ArticleUtil.createLink(sourceFile, targetFile);
+  }
+
+  @Override
   protected void generateTocEntry(TocWriter writer) throws IOException
   {
-    writer.writeGroupStart(getTitle(), "javadoc/overview-summary.html");
+    writer.writeGroupStart(getTitle(), OVERVIEW_SUMMARY);
 
     for (Plugin plugin : getDocumentation().getPlugins())
     {

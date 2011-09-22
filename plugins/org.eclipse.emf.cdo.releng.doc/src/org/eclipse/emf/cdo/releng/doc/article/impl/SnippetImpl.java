@@ -29,7 +29,6 @@ import com.sun.javadoc.SeeTag;
 import com.sun.javadoc.SourcePosition;
 import com.sun.javadoc.Tag;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
@@ -238,9 +237,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     }
 
     StructuralElement structuralElement = getStructuralElement(embedder);
-    File source = structuralElement.getOutputFile();
-    File target = new File(getDocumentation().getProjectFolder(), "images");
-    String imagePath = ArticleUtil.createLink(source, target) + "/";
+    String imagePath = structuralElement.getImagePath() + "/";
 
     SeeTag embedderTag = (SeeTag)embedder.getTag();
     String title = embedderTag.label();

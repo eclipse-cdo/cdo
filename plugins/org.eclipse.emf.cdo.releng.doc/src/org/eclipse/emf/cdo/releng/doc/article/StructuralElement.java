@@ -149,4 +149,6 @@ public interface StructuralElement extends LinkTarget
 
   void generate(PrintWriter out) throws IOException;
 
+  String getImagePath();
+
 } // StructuralElement

@@ -19,6 +19,7 @@ import com.sun.javadoc.ClassDoc;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -74,6 +75,13 @@ public class ArticleImpl extends ChapterImpl implements Article
   protected String getKind()
   {
     return "Article";
+  }
+
+  @Override
+  protected void collectNavElements(List<StructuralElement> navElements)
+  {
+    navElements.add(this);
+    super.collectNavElements(navElements);
   }
 
   @Override

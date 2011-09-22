@@ -12,13 +12,11 @@ import org.eclipse.emf.cdo.releng.doc.article.Category;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.Toc;
-import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
 import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.Tag;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -138,7 +136,9 @@ public class TocImpl extends BodyElementImpl implements Toc
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (levels: ");
@@ -155,13 +155,10 @@ public class TocImpl extends BodyElementImpl implements Toc
       element = element.getDocumentation();
     }
 
-    File source = linkSource.getOutputFile();
-    File target = new File(linkSource.getDocumentation().getProjectFolder(), "images");
-    String imagePath = ArticleUtil.createLink(source, target) + "/";
-
     out.write("<p>\n");
     out.write("<table border=\"0\">\n");
 
+    String imagePath = linkSource.getImagePath() + "/";
     generate(out, linkSource, imagePath, element.getDepth(), element, 0);
 
     out.write("</table>\n");

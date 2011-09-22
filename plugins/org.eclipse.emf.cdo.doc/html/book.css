@@ -94,12 +94,12 @@ a:link	     { color: #0000FF }
 a:hover	     { color: #000080 }
 a:visited    { text-decoration: underline }
 ul	     { margin-top: 10px; margin-bottom: 10px; }
-li	     { margin-top: 10px; margin-bottom: 10px; } 
-li p	     { margin-top: 10px; margin-bottom: 10px; }
+li	     { margin-top: 5px; margin-bottom: 5px; } 
+li p	     { margin-top: 5px; margin-bottom: 5px; }
 ol	     { margin-top: 10px; margin-bottom: 10px; }
 dl	     { margin-top: 10px; margin-bottom: 10px; }
-dt	     { margin-top: 10px; margin-bottom: 10px; font-weight: bold; }
-dd	     { margin-top: 10px; margin-bottom: 10px; }
+dt	     { margin-top: 5px; margin-bottom: 5px; font-weight: bold; }
+dd	     { margin-top: 5px; margin-bottom: 5px; }
 strong	     { font-weight: bold}
 em	     { font-style: italic}
 var	     { font-style: italic}

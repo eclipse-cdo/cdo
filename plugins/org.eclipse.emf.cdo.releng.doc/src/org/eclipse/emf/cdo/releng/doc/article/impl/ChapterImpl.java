@@ -47,7 +47,6 @@ public class ChapterImpl extends BodyImpl implements Chapter
   ChapterImpl(StructuralElement parent, ClassDoc classDoc)
   {
     super(parent, makePath(classDoc), classDoc);
-    getDocumentation().getContext().register(getId(), this);
     ((ArticleImpl)getArticle()).registerChapter(this);
   }
 
@@ -151,9 +150,9 @@ public class ChapterImpl extends BodyImpl implements Chapter
   {
     if (this instanceof Article)
     {
-      out.write("<h" + 1 + ">");
-      out.write(getTitle());
-      out.write("</h" + 1 + ">\n");
+      generateHeader(out);
+      super.generate(out);
+      generateFooter(out);
     }
     else
     {
@@ -163,15 +162,14 @@ public class ChapterImpl extends BodyImpl implements Chapter
       out.write("<h" + level + ">");
       out.write(anchor + getTitleWithNumber());
       out.write("</h" + level + ">\n");
-    }
 
-    super.generate(out);
+      super.generate(out);
+    }
   }
 
   public String getName()
   {
     return getDoc().simpleTypeName();
-    // return getPath().replace('/', '_').replace('.', '_').replace('-', '_');
   }
 
   public String getTitleWithNumber()

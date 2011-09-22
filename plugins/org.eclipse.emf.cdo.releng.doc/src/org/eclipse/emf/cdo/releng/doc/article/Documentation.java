@@ -9,6 +9,7 @@ package org.eclipse.emf.cdo.releng.doc.article;
 import org.eclipse.emf.common.util.EList;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Documentation</b></em>'. <!-- end-user-doc -->
@@ -129,6 +130,11 @@ public interface Documentation extends StructuralElement
 
   File getProjectFolder();
 
+  StructuralElement getDefaultElement();
+
   void setDefaultElement(StructuralElement defaultElement);
 
+  List<StructuralElement> getNavElements();
+
+  void registerElement(StructuralElement element);
 } // Documentation

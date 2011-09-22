@@ -44,7 +44,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Documentation</b></em>'. <!-- end-user-doc -->
@@ -126,6 +129,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
   private StructuralElement defaultElement;
 
+  private final List<StructuralElement> navElements = new ArrayList<StructuralElement>();
+
   private boolean analyzed;
 
   private File projectFolder;
@@ -157,7 +162,6 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     analyzeDependencies(projectFolder);
     loadPlugins(projectFolder);
     analyzeDocumentation(projectFolder);
-
     if (defaultElement == null)
     {
       throw new AssertionError("No default element declared in " + getTitle());
@@ -165,6 +169,15 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
     setPath(defaultElement.getFullPath());
     analyzed = true;
+    collectNavElements(navElements);
+  }
+
+  public void registerElement(StructuralElement element)
+  {
+    if (element != this)
+    {
+      getContext().register(element.getId(), element);
+    }
   }
 
   private void analyzeDependencies(File projectFolder)
@@ -677,6 +690,11 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     return "Documentation";
   }
 
+  public StructuralElement getDefaultElement()
+  {
+    return defaultElement;
+  }
+
   public void setDefaultElement(StructuralElement defaultElement)
   {
     if (this.defaultElement != null)
@@ -685,6 +703,11 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     }
 
     this.defaultElement = defaultElement;
+  }
+
+  public List<StructuralElement> getNavElements()
+  {
+    return Collections.unmodifiableList(navElements);
   }
 
   @Override

@@ -127,7 +127,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
-import org.eclipse.emf.ecore.util.EContentsEList;
+import org.eclipse.emf.ecore.impl.EClassImpl.FeatureSubsetSupplier;
+import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
+import org.eclipse.emf.ecore.util.ECrossReferenceEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
@@ -2187,8 +2189,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     List<Pair<Setting, EObject>> objectsToBeRemoved = new LinkedList<Pair<Setting, EObject>>();
     for (CDOObject referencer : referencers)
     {
-      EContentsEList.FeatureIterator<EObject> it = (EContentsEList.FeatureIterator<EObject>)referencer
-          .eCrossReferences().iterator();
+      FeatureIterator<EObject> it = getChangeableCrossReferences(referencer);
       while (it.hasNext())
       {
         EObject referencedObject = it.next();
@@ -2197,13 +2198,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (referencedOIDs.contains(referencedOID))
         {
           EReference reference = (EReference)it.feature();
-
-          // Don't touch derived references -- user app might not like this.
-          // And don't touch unchangeable references either.
-          if (reference.isDerived() || !reference.isChangeable())
-          {
-            continue;
-          }
 
           // In the case of DIRTY, we must investigate further: Is the referencer dirty
           // because a reference to the referencedObject was added? Only in this case
@@ -2233,6 +2227,44 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       EcoreUtil.remove(pair.getElement1(), pair.getElement2());
     }
+  }
+
+  private FeatureIterator<EObject> getChangeableCrossReferences(EObject object)
+  {
+    FeatureSubsetSupplier features = (FeatureSubsetSupplier)object.eClass().getEAllStructuralFeatures();
+    EStructuralFeature[] crossReferences = features.crossReferences();
+    if (crossReferences != null)
+    {
+      List<EStructuralFeature> changeableReferences = new ArrayList<EStructuralFeature>();
+      for (int i = 0; i < crossReferences.length; i++)
+      {
+        EStructuralFeature reference = crossReferences[i];
+
+        // Filter out derived references
+        if (reference.isDerived())
+        {
+          continue;
+        }
+
+        // Filter out unchangeable references
+        if (!reference.isChangeable())
+        {
+          continue;
+        }
+
+        changeableReferences.add(reference);
+      }
+
+      if (!changeableReferences.isEmpty())
+      {
+        EStructuralFeature[] collectedStructuralFeatures = changeableReferences
+            .toArray(new EStructuralFeature[changeableReferences.size()]);
+        return (FeatureIterator<EObject>)new ECrossReferenceEListDerived(object, collectedStructuralFeatures)
+            .iterator();
+      }
+    }
+
+    return (FeatureIterator<EObject>)ECrossReferenceEList.<EObject> emptyContentsEList().iterator();
   }
 
   public synchronized long getLastCommitTime()
@@ -2981,4 +3013,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
   }
+
+  public static class ECrossReferenceEListDerived extends ECrossReferenceEList<EObject>
+  {
+
+    public ECrossReferenceEListDerived(EObject eObject)
+    {
+      super(eObject);
+    }
+
+    public ECrossReferenceEListDerived(EObject eObject, EStructuralFeature[] eStructuralFeatures)
+    {
+      super(eObject, eStructuralFeatures);
+    }
+  }
+
 }

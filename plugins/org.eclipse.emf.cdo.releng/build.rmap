@@ -84,7 +84,7 @@
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/emf/updates/2.8milestones">
+			<rm:uri format="{0}/modeling/emf/emf/updates/2.7milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -102,7 +102,7 @@
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/mdt/ocl/updates/milestones/3.2.0">
+			<rm:uri format="{0}/modeling/mdt/ocl/updates/milestones/3.1.0">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>

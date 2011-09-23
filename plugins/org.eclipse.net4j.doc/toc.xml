@@ -15,7 +15,6 @@
         <topic label="org.eclipse.net4j.signal" href="javadoc/org/eclipse/net4j/signal/package-summary.html" />
         <topic label="org.eclipse.net4j.signal.heartbeat" href="javadoc/org/eclipse/net4j/signal/heartbeat/package-summary.html" />
         <topic label="org.eclipse.net4j.signal.wrapping" href="javadoc/org/eclipse/net4j/signal/wrapping/package-summary.html" />
-        <topic label="org.eclipse.spi.net4j" href="javadoc/org/eclipse/spi/net4j/package-summary.html" />
       </topic>
       <topic label="Net4j Signalling Platform Transport HTTP" href="javadoc/org/eclipse/net4j/http/package-summary.html">
         <topic label="org.eclipse.net4j.http" href="javadoc/org/eclipse/net4j/http/package-summary.html" />

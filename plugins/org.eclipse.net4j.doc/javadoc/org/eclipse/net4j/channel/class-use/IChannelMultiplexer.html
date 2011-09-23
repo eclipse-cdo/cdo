@@ -9,6 +9,7 @@ Uses of Interface org.eclipse.net4j.channel.IChannelMultiplexer (Net4j Signallin
 
 <META NAME="date" CONTENT="">
 
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
 
 <SCRIPT type="text/javascript">
@@ -107,10 +108,6 @@ Packages that use <A HREF="../../../../../org/eclipse/net4j/channel/IChannelMult
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.net4j.tcp"><B>org.eclipse.net4j.tcp</B></A></TD>
 <TD>Transport layer extension with support for TCP socket connections.&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><A HREF="#org.eclipse.spi.net4j"><B>org.eclipse.spi.net4j</B></A></TD>
-<TD>Server service provider interfaces and useful base implementations for the Net4j transport layer.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -237,103 +234,6 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.ht
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><CODE>connector</CODE></A> that implements non-blocking multiplexed TCP transport, optionally with
  <A HREF="../../../../../org/eclipse/net4j/tcp/ssl/SSLUtil.html" title="class in org.eclipse.net4j.tcp.ssl"><CODE>SSL</CODE></A>.</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-<A NAME="org.eclipse.spi.net4j"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-Uses of <A HREF="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A> in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A></FONT></TH>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2">Subinterfaces of <A HREF="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A> in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;interface</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;interface</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/spi/net4j/InternalConnector.html" title="interface in org.eclipse.spi.net4j">InternalConnector</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2">Classes in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A> that implement <A HREF="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;class</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;class</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/spi/net4j/Connector.html" title="class in org.eclipse.spi.net4j">Connector</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A> that return <A HREF="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A></CODE></FONT></TD>
-<TD><CODE><B>Channel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.html#getMultiplexer()">getMultiplexer</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A> with parameters of type <A HREF="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>Channel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Channel.html#setMultiplexer(org.eclipse.net4j.channel.IChannelMultiplexer)">setMultiplexer</A></B>(<A HREF="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A>&nbsp;channelMultiplexer)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>InternalChannel.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/InternalChannel.html#setMultiplexer(org.eclipse.net4j.channel.IChannelMultiplexer)">setMultiplexer</A></B>(<A HREF="../../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</A>&nbsp;channelMultiplexer)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;

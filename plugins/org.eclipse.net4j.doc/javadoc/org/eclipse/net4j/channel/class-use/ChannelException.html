@@ -9,6 +9,7 @@ Uses of Class org.eclipse.net4j.channel.ChannelException (Net4j Signalling Platf
 
 <META NAME="date" CONTENT="">
 
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
 
 <SCRIPT type="text/javascript">
@@ -92,10 +93,6 @@ Packages that use <A HREF="../../../../../org/eclipse/net4j/channel/ChannelExcep
 <TD><A HREF="#org.eclipse.net4j.channel"><B>org.eclipse.net4j.channel</B></A></TD>
 <TD>The Net4j transport layer concepts for dealing with channels.&nbsp;</TD>
 </TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><A HREF="#org.eclipse.spi.net4j"><B>org.eclipse.spi.net4j</B></A></TD>
-<TD>Server service provider interfaces and useful base implementations for the Net4j transport layer.&nbsp;</TD>
-</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -137,90 +134,6 @@ Uses of <A HREF="../../../../../org/eclipse/net4j/channel/ChannelException.html"
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Synchronous request to open a new <A HREF="../../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><CODE>IChannel</CODE></A> with a channel protocol defined by a given protocol identifier.</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-<A NAME="org.eclipse.spi.net4j"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-Uses of <A HREF="../../../../../org/eclipse/net4j/channel/ChannelException.html" title="class in org.eclipse.net4j.channel">ChannelException</A> in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A></FONT></TH>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left" COLSPAN="2">Methods in <A HREF="../../../../../org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</A> that throw <A HREF="../../../../../org/eclipse/net4j/channel/ChannelException.html" title="class in org.eclipse.net4j.channel">ChannelException</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ChannelMultiplexer.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#closeChannel(org.eclipse.spi.net4j.InternalChannel)">closeChannel</A></B>(<A HREF="../../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</A>&nbsp;channel)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected abstract &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ChannelMultiplexer.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)">deregisterChannelFromPeer</A></B>(<A HREF="../../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</A>&nbsp;channel)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>Connector.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/Connector.html#deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)">deregisterChannelFromPeer</A></B>(<A HREF="../../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</A>&nbsp;channel)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ChannelMultiplexer.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseCloseChannel(short)">inverseCloseChannel</A></B>(short&nbsp;channelID)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</A></CODE></FONT></TD>
-<TD><CODE><B>ChannelMultiplexer.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#openChannel()">openChannel</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</A></CODE></FONT></TD>
-<TD><CODE><B>ChannelMultiplexer.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#openChannel(org.eclipse.net4j.protocol.IProtocol)">openChannel</A></B>(<A HREF="../../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</A>&lt;?&gt;&nbsp;protocol)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</A></CODE></FONT></TD>
-<TD><CODE><B>ChannelMultiplexer.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#openChannel(java.lang.String, java.lang.Object)">openChannel</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;protocolID,
-            <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>&nbsp;infraStructure)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>protected abstract &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B>ChannelMultiplexer.</B><B><A HREF="../../../../../org/eclipse/spi/net4j/ChannelMultiplexer.html#registerChannelWithPeer(short, long, org.eclipse.net4j.protocol.IProtocol)">registerChannelWithPeer</A></B>(short&nbsp;channelID,
-                        long&nbsp;timeout,
-                        <A HREF="../../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</A>&lt;?&gt;&nbsp;protocol)</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;

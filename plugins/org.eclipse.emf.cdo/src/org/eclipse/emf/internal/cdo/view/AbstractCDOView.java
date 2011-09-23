@@ -90,6 +90,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -474,7 +475,17 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
   public synchronized InternalCDOObject[] getObjectsArray()
   {
-    return objects.values().toArray(new InternalCDOObject[objects.size()]);
+    Collection<InternalCDOObject> values = objects.values();
+    List<InternalCDOObject> valuesNoNull = new ArrayList<InternalCDOObject>(values.size());
+    for (Iterator<InternalCDOObject> it = values.iterator(); it.hasNext();)
+    {
+      InternalCDOObject next = it.next();
+      if (next != null)
+      {
+        valuesNoNull.add(next);
+      }
+    }
+    return valuesNoNull.toArray(new InternalCDOObject[valuesNoNull.size()]);
   }
 
   public synchronized CDOResource getResource(String path)

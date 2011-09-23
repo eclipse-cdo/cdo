@@ -140,7 +140,8 @@
 			</fileset>
 		</copy>
 
-		<copy todir="${javadoc.destdir}" verbose="true" failonerror="false">
+		<!-- Copy javadoc.css -->
+		<copy todir="${javadoc.destdir}" verbose="true" failonerror="false" overwrite="true">
 			<fileset dir="plugins/org.eclipse.emf.cdo.releng.doc" defaultexcludes="true">
 				<include name="javadoc.css" />
 			</fileset>

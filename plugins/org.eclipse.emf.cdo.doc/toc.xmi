@@ -14,7 +14,6 @@
     <packages name="org.eclipse.emf.cdo.util"/>
     <packages name="org.eclipse.emf.cdo.view"/>
     <packages name="org.eclipse.emf.internal.cdo"/>
-    <packages name="org.eclipse.emf.spi.cdo"/>
     <extensionPoints name="viewProviders"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.edit" label="CDO Model Repository Client Edit Support">
@@ -48,19 +47,11 @@
     <packages name="org.eclipse.emf.cdo.common.revision"/>
     <packages name="org.eclipse.emf.cdo.common.revision.delta"/>
     <packages name="org.eclipse.emf.cdo.common.util"/>
-    <packages name="org.eclipse.emf.cdo.spi.common"/>
-    <packages name="org.eclipse.emf.cdo.spi.common.branch"/>
-    <packages name="org.eclipse.emf.cdo.spi.common.commit"/>
-    <packages name="org.eclipse.emf.cdo.spi.common.id"/>
-    <packages name="org.eclipse.emf.cdo.spi.common.lock"/>
-    <packages name="org.eclipse.emf.cdo.spi.common.model"/>
-    <packages name="org.eclipse.emf.cdo.spi.common.revision"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server" label="CDO Model Repository Server">
     <packages name="org.eclipse.emf.cdo.server"/>
     <packages name="org.eclipse.emf.cdo.server.embedded"/>
     <packages name="org.eclipse.emf.cdo.server.mem"/>
-    <packages name="org.eclipse.emf.cdo.spi.server"/>
     <extensionPoints name="appExtensions"/>
     <extensionPoints name="repositoryFactories"/>
     <extensionPoints name="storeFactories"/>

@@ -9,6 +9,7 @@ Uses of Package org.eclipse.emf.cdo.common (CDO Model Repository Documentation)
 
 <META NAME="date" CONTENT="">
 
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
 
 <SCRIPT type="text/javascript">
@@ -117,24 +118,12 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/common/package-sum
 <TD>Client concepts for dealing with sessions to CDO repositories.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><A HREF="#org.eclipse.emf.cdo.spi.common"><B>org.eclipse.emf.cdo.spi.common</B></A></TD>
-<TD>Common service provider interfaces and useful base implementations.&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><A HREF="#org.eclipse.emf.cdo.spi.server"><B>org.eclipse.emf.cdo.spi.server</B></A></TD>
-<TD>Server service provider interfaces and useful base implementations.&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.transaction"><B>org.eclipse.emf.cdo.transaction</B></A></TD>
 <TD>Client concepts for dealing with transactions, distributed transactions and their save points.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.view"><B>org.eclipse.emf.cdo.view</B></A></TD>
 <TD>Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><A HREF="#org.eclipse.emf.spi.cdo"><B>org.eclipse.emf.spi.cdo</B></A></TD>
-<TD>Client service provider interfaces and useful base implementations.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -376,72 +365,6 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/common/package-summary.ht
 </TABLE>
 &nbsp;
 <P>
-<A NAME="org.eclipse.emf.cdo.spi.common"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-Classes in <A HREF="../../../../../org/eclipse/emf/cdo/common/package-summary.html">org.eclipse.emf.cdo.common</A> used by <A HREF="../../../../../org/eclipse/emf/cdo/spi/common/package-summary.html">org.eclipse.emf.cdo.spi.common</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonView.html#org.eclipse.emf.cdo.spi.common"><B>CDOCommonView</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO views that is common to both client and server side.</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-<A NAME="org.eclipse.emf.cdo.spi.server"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-Classes in <A HREF="../../../../../org/eclipse/emf/cdo/common/package-summary.html">org.eclipse.emf.cdo.common</A> used by <A HREF="../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonRepository.html#org.eclipse.emf.cdo.spi.server"><B>CDOCommonRepository</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO repositories that is common to both client and server side.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonRepository.State.html#org.eclipse.emf.cdo.spi.server"><B>CDOCommonRepository.State</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState()"><CODE>states</CODE></A> of a CDO repository.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonRepository.Type.html#org.eclipse.emf.cdo.spi.server"><B>CDOCommonRepository.Type</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType()"><CODE>types</CODE></A> of a CDO repository.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonSession.html#org.eclipse.emf.cdo.spi.server"><B>CDOCommonSession</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO sessions that is common to both client and server side.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonSession.Options.html#org.eclipse.emf.cdo.spi.server"><B>CDOCommonSession.Options</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates the configuration options of CDO sessions that are common to both client and server side.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonTransaction.html#org.eclipse.emf.cdo.spi.server"><B>CDOCommonTransaction</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO transactions that is common to both client and server side.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonView.html#org.eclipse.emf.cdo.spi.server"><B>CDOCommonView</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO views that is common to both client and server side.</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
 <A NAME="org.eclipse.emf.cdo.transaction"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -486,66 +409,6 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/common/package-summary.ht
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Encapsulates the configuration options of CDO views that are common to both client and server side.</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-<A NAME="org.eclipse.emf.spi.cdo"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-Classes in <A HREF="../../../../../org/eclipse/emf/cdo/common/package-summary.html">org.eclipse.emf.cdo.common</A> used by <A HREF="../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonRepository.IDGenerationLocation.html#org.eclipse.emf.spi.cdo"><B>CDOCommonRepository.IDGenerationLocation</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation()"><CODE>ID generation locations</CODE></A> of a CDO
- repository.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonRepository.State.html#org.eclipse.emf.spi.cdo"><B>CDOCommonRepository.State</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState()"><CODE>states</CODE></A> of a CDO repository.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonRepository.Type.html#org.eclipse.emf.spi.cdo"><B>CDOCommonRepository.Type</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType()"><CODE>types</CODE></A> of a CDO repository.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonSession.html#org.eclipse.emf.spi.cdo"><B>CDOCommonSession</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO sessions that is common to both client and server side.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonSession.Options.LockNotificationMode.html#org.eclipse.emf.spi.cdo"><B>CDOCommonSession.Options.LockNotificationMode</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getLockNotificationMode()"><CODE>lock notification modes</CODE></A> of a
- CDO session.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonSession.Options.PassiveUpdateMode.html#org.eclipse.emf.spi.cdo"><B>CDOCommonSession.Options.PassiveUpdateMode</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enumerates the possible <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()"><CODE>passive update modes</CODE></A> of a CDO
- session.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonTransaction.html#org.eclipse.emf.spi.cdo"><B>CDOCommonTransaction</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO transactions that is common to both client and server side.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/common/class-use/CDOCommonView.html#org.eclipse.emf.spi.cdo"><B>CDOCommonView</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Abstracts the information about CDO views that is common to both client and server side.</TD>
 </TR>
 </TABLE>
 &nbsp;

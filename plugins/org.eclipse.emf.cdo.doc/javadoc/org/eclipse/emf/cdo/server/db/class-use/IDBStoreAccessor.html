@@ -9,6 +9,7 @@ Uses of Interface org.eclipse.emf.cdo.server.db.IDBStoreAccessor (CDO Model Repo
 
 <META NAME="date" CONTENT="">
 
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../../html/book.css" TITLE="Style">
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../stylesheet.css" TITLE="Style">
 
 <SCRIPT type="text/javascript">
@@ -338,7 +339,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAcce
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B>IClassMapping.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">readChangeSet</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-              <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</A>[]&nbsp;segments)</CODE>
+              org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[]&nbsp;segments)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</TD>
@@ -348,7 +349,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAcce
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</A>&lt;<A HREF="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</A>&gt;</CODE></FONT></TD>
 <TD><CODE><B>IMappingStrategy.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.net4j.util.om.monitor.OMMonitor, org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">readChangeSet</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
               <A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor,
-              <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</A>[]&nbsp;segments)</CODE>
+              org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[]&nbsp;segments)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</TD>
@@ -374,7 +375,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAcce
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B>IClassMapping.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#readRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, int)">readRevision</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-             <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision,
+             org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision,
              int&nbsp;listChunk)</CODE>
 
 <BR>
@@ -384,7 +385,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAcce
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;boolean</CODE></FONT></TD>
 <TD><CODE><B>IClassMappingAuditSupport.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMappingAuditSupport.html#readRevisionByVersion(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, int)">readRevisionByVersion</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;storeAccessor,
-                      <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision,
+                      org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision,
                       int&nbsp;listChunk)</CODE>
 
 <BR>
@@ -394,7 +395,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAcce
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>IListMapping.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html#readValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, int)">readValues</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-           <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision,
+           org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision,
            int&nbsp;listChunk)</CODE>
 
 <BR>
@@ -404,7 +405,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAcce
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>IClassMapping.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#writeRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, boolean, boolean, org.eclipse.net4j.util.om.monitor.OMMonitor)">writeRevision</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-              <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision,
+              org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision,
               boolean&nbsp;mapType,
               boolean&nbsp;revise,
               <A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
@@ -416,7 +417,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAcce
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>IClassMappingDeltaSupport.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMappingDeltaSupport.html#writeRevisionDelta(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta, long, org.eclipse.net4j.util.om.monitor.OMMonitor)">writeRevisionDelta</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-                   <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</A>&nbsp;delta,
+                   org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta&nbsp;delta,
                    long&nbsp;created,
                    <A HREF="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</A>&nbsp;monitor)</CODE>
 
@@ -427,7 +428,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAcce
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B>IListMapping.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">writeValues</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-            <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)</CODE>
+            org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write a complete list of values to the database.</TD>

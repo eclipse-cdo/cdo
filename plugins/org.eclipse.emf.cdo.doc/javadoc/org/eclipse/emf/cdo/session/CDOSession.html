@@ -9,6 +9,7 @@ CDOSession (CDO Model Repository Documentation)
 
 <META NAME="date" CONTENT="">
 
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
 
 <SCRIPT type="text/javascript">
@@ -94,7 +95,7 @@ Interface CDOSession</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionContainer</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</A>, <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html" title="interface in org.eclipse.emf.cdo.view">CDOViewContainer</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A>&gt;, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSession.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSession</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</A>, <A HREF="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSession.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSession</A>, <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</A></DD>
 </DL>
 <HR>
 <DL>
@@ -102,7 +103,7 @@ Interface CDOSession</H2>
 </PRE><map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="../common/branch/CDOBranchManager.html" title="&#171;interface&#187; CDOBranchManager (org.eclipse.emf.cdo.common.branch)" alt="" coords="627,5,867,59"/>
 <area shape="rect" id="node2" href="../common/commit/CDOCommitInfoManager.html" title="&#171;interface&#187; CDOCommitInfoManager (org.eclipse.emf.cdo.common.commit)" alt="" coords="625,78,869,133"/>
-<area shape="rect" id="node3" href="../common/CDOCommonSession.html" title="&#171;interface&#187; CDOCommonSession (org.eclipse.emf.cdo.common)" alt="" coords="15,478,212,533"/>
+<area shape="rect" id="node3" href="../common/CDOCommonSession.html" title="&#171;interface&#187; CDOCommonSession (org.eclipse.emf.cdo.common)" alt="" coords="15,445,212,499"/>
 <area shape="rect" id="node4" href="../view/CDOFetchRuleManager.html" title="&#171;interface&#187; CDOFetchRuleManager (org.eclipse.emf.cdo.view)" alt="" coords="661,151,832,206"/>
 <area shape="rect" id="node5" href="../common/id/CDOIDGenerator.html" title="&#171;interface&#187; CDOIDGenerator (org.eclipse.emf.cdo.common.id)" alt="" coords="641,225,852,279"/>
 <area shape="rect" id="node6" href="../net4j/CDONet4jSession.html" title="&#171;interface&#187; CDONet4jSession (org.eclipse.emf.cdo.net4j)" alt="" coords="659,298,834,353"/>
@@ -111,15 +112,14 @@ Interface CDOSession</H2>
 <area shape="rect" id="node9" href="CDORepositoryInfo.html" title="&#171;interface&#187; CDORepositoryInfo" alt="" coords="681,519,813,559"/>
 <area shape="rect" id="node10" href="../common/revision/CDORevisionManager.html" title="&#171;interface&#187; CDORevisionManager (org.eclipse.emf.cdo.common.revision)" alt="" coords="625,578,869,633"/>
 <area shape="rect" id="node11" href="../server/embedded/CDOSession.html" title="&#171;interface&#187; CDOSession (org.eclipse.emf.cdo.server.embedded)" alt="" coords="624,651,869,706"/>
-<area shape="rect" id="node12" href="CDOSession.html" title="&#171;interface&#187; CDOSession" alt="" coords="358,552,455,592"/>
+<area shape="rect" id="node12" href="CDOSession.html" title="&#171;interface&#187; CDOSession" alt="" coords="358,519,455,559"/>
 <area shape="rect" id="node13" href="CDOSession.ExceptionHandler.html" title="&#171;interface&#187; CDOSession.ExceptionHandler" alt="" coords="645,725,848,765"/>
 <area shape="rect" id="node14" href="CDOSession.Options.html" title="&#171;interface&#187; CDOSession.Options" alt="" coords="673,784,820,824"/>
 <area shape="rect" id="node15" href="CDOSessionConfiguration.html" title="&#171;interface&#187; CDOSessionConfiguration" alt="" coords="661,843,833,883"/>
-<area shape="rect" id="node16" href="CDOSessionInvalidationEvent.html" title="&#171;interface&#187; CDOSessionInvalidationEvent" alt="" coords="17,552,209,592"/>
-<area shape="rect" id="node17" href="CDOSessionLocksChangedEvent.html" title="&#171;interface&#187; CDOSessionLocksChangedEvent" alt="" coords="6,611,221,651"/>
+<area shape="rect" id="node16" href="CDOSessionInvalidationEvent.html" title="&#171;interface&#187; CDOSessionInvalidationEvent" alt="" coords="17,519,209,559"/>
+<area shape="rect" id="node17" href="CDOSessionLocksChangedEvent.html" title="&#171;interface&#187; CDOSessionLocksChangedEvent" alt="" coords="6,577,221,617"/>
 <area shape="rect" id="node18" href="../transaction/CDOTransaction.html" title="&#171;interface&#187; CDOTransaction (org.eclipse.emf.cdo.transaction)" alt="" coords="641,902,852,957"/>
 <area shape="rect" id="node19" href="../view/CDOView.html" title="&#171;interface&#187; CDOView (org.eclipse.emf.cdo.view)" alt="" coords="661,975,832,1030"/>
-<area shape="rect" id="node20" href="../../spi/cdo/InternalCDOSession.html" title="&#171;interface&#187; InternalCDOSession (org.eclipse.emf.spi.cdo)" alt="" coords="665,1049,829,1103"/>
 </map>
 
 <CENTER><IMG SRC="CDOSession.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -175,7 +175,7 @@ Represents and controls the connection to a model repository in addition to the 
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles <A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><CODE>protocol</CODE></A> exceptions if
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles <CODE>protocol</CODE> exceptions if
  <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)"><CODE>configured</CODE></A> before the session has
  been opened.</TD>
 </TR>

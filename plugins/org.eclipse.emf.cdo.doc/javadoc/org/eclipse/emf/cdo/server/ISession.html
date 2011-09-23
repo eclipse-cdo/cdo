@@ -9,6 +9,7 @@ ISession (CDO Model Repository Documentation)
 
 <META NAME="date" CONTENT="">
 
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
 
 <SCRIPT type="text/javascript">
@@ -93,22 +94,18 @@ Interface ISession</H2>
 <DL>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A>&gt;, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</A></DD>
 </DL>
-<DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</A></DD>
-</DL>
 <HR>
 <DL>
 <DT><PRE>public interface <B>ISession</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</A>&lt;<A HREF="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</A>&gt;</DL>
 </PRE><map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../spi/server/InternalSession.html" title="&#171;interface&#187; InternalSession (org.eclipse.emf.cdo.spi.server)" alt="" coords="35,214,237,269"/>
-<area shape="rect" id="node2" href="IView.html" title="&#171;interface&#187; IView" alt="" coords="267,221,352,261"/>
-<area shape="rect" id="node3" href="ITransaction.html" title="&#171;interface&#187; ITransaction" alt="" coords="382,221,473,261"/>
-<area shape="rect" id="node4" href="ISynchronizableRepository.html" title="&#171;interface&#187; ISynchronizableRepository" alt="" coords="5,13,181,53"/>
-<area shape="rect" id="node5" href="../spi/server/ISessionProtocol.html" title="&#171;interface&#187; ISessionProtocol (org.eclipse.emf.cdo.spi.server)" alt="" coords="504,214,707,269"/>
-<area shape="rect" id="node6" href="ISessionManager.html" title="&#171;interface&#187; ISessionManager" alt="" coords="211,13,333,53"/>
-<area shape="rect" id="node7" href="ISession.html" title="&#171;interface&#187; ISession" alt="" coords="325,117,411,157"/>
-<area shape="rect" id="node8" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="363,6,565,61"/>
-<area shape="rect" id="node9" href="../common/CDOCommonSession.html" title="&#171;interface&#187; CDOCommonSession (org.eclipse.emf.cdo.common)" alt="" coords="595,6,792,61"/>
+<area shape="rect" id="node1" href="IView.html" title="&#171;interface&#187; IView" alt="" coords="207,221,292,261"/>
+<area shape="rect" id="node2" href="ITransaction.html" title="&#171;interface&#187; ITransaction" alt="" coords="322,221,413,261"/>
+<area shape="rect" id="node3" href="ISynchronizableRepository.html" title="&#171;interface&#187; ISynchronizableRepository" alt="" coords="5,13,181,53"/>
+<area shape="rect" id="node4" title="&#171;interface&#187; ISessionProtocol (org.eclipse.emf.cdo.spi.server)" alt="" coords="444,214,647,269"/>
+<area shape="rect" id="node5" href="ISessionManager.html" title="&#171;interface&#187; ISessionManager" alt="" coords="211,13,333,53"/>
+<area shape="rect" id="node6" href="ISession.html" title="&#171;interface&#187; ISession" alt="" coords="325,117,411,157"/>
+<area shape="rect" id="node7" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="363,6,565,61"/>
+<area shape="rect" id="node8" href="../common/CDOCommonSession.html" title="&#171;interface&#187; CDOCommonSession (org.eclipse.emf.cdo.common)" alt="" coords="595,6,792,61"/>
 </map>
 
 <CENTER><IMG SRC="ISession.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -181,7 +178,7 @@ Interface ISession</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/spi/server/ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.emf.cdo.spi.server.ISessionProtocol</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/ISession.html#getProtocol()">getProtocol</A></B>()</CODE>
 
 <BR>
@@ -291,7 +288,7 @@ getManager</H3>
 <A NAME="getProtocol()"><!-- --></A><H3>
 getProtocol</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/spi/server/ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</A> <B>getProtocol</B>()</PRE>
+org.eclipse.emf.cdo.spi.server.ISessionProtocol <B>getProtocol</B>()</PRE>
 <DL>
 <DD><DL>
 </DL>

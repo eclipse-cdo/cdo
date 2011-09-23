@@ -9,6 +9,7 @@ IListMapping (CDO Model Repository Documentation)
 
 <META NAME="date" CONTENT="">
 
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../../html/book.css" TITLE="Style">
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../../stylesheet.css" TITLE="Style">
 
 <SCRIPT type="text/javascript">
@@ -174,7 +175,7 @@ Interface for mapping features with <code>isMany() == true</code>.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html#readValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, int)">readValues</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-           <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision,
+           org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision,
            int&nbsp;listChunk)</CODE>
 
 <BR>
@@ -184,7 +185,7 @@ Interface for mapping features with <code>isMany() == true</code>.
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">writeValues</A></B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-            <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)</CODE>
+            org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write a complete list of values to the database.</TD>
@@ -235,7 +236,7 @@ getDBTables</H3>
 writeValues</H3>
 <PRE>
 void <B>writeValues</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-                 <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision)</PRE>
+                 org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision)</PRE>
 <DL>
 <DD>Write a complete list of values to the database.
 <P>
@@ -249,14 +250,14 @@ void <B>writeValues</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server
 readValues</H3>
 <PRE>
 void <B>readValues</B>(<A HREF="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</A>&nbsp;accessor,
-                <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>&nbsp;revision,
+                org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision&nbsp;revision,
                 int&nbsp;listChunk)</PRE>
 <DL>
 <DD>Read the list size and the complete list or the first part of it.
 <P>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>accessor</CODE> - the accessor to use.<DD><CODE>revision</CODE> - the revision into which the list values should be read.<DD><CODE>listChunk</CODE> - indicating the lazy loading behavior: <A HREF="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#UNCHUNKED"><CODE>CDORevision.UNCHUNKED</CODE></A> means that the whole list should be
-          read. Else, if <code>listChunk >= 0</code>, the list is filled with <A HREF="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.html#UNINITIALIZED"><CODE>InternalCDOList.UNINITIALIZED</CODE></A>
+          read. Else, if <code>listChunk >= 0</code>, the list is filled with <CODE>InternalCDOList.UNINITIALIZED</CODE>
           and only the first <code>listChunk</code> values are read.</DL>
 </DD>
 </DL>

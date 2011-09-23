@@ -9,6 +9,7 @@ CDOView (CDO Model Repository Documentation)
 
 <META NAME="date" CONTENT="">
 
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
 
 <SCRIPT type="text/javascript">
@@ -94,7 +95,7 @@ Interface CDOView</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</A>, <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A>, <A HREF="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</A>, <A HREF="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A></DD>
 </DL>
 <DL>
 <DT><B>All Known Implementing Classes:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</A></DD>
@@ -105,13 +106,13 @@ Interface CDOView</H2>
 </PRE><map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="../common/CDOCommonView.html" title="&#171;interface&#187; CDOCommonView (org.eclipse.emf.cdo.common)" alt="" coords="15,5,212,59"/>
 <area shape="rect" id="node2" href="../CDOObject.html" title="&#171;interface&#187; CDOObject (org.eclipse.emf.cdo)" alt="" coords="42,78,185,133"/>
-<area shape="rect" id="node3" href="CDOObjectHandler.html" title="&#171;interface&#187; CDOObjectHandler" alt="" coords="671,349,803,389"/>
+<area shape="rect" id="node3" href="CDOObjectHandler.html" title="&#171;interface&#187; CDOObjectHandler" alt="" coords="671,368,803,408"/>
 <area shape="rect" id="node4" href="CDOQuery.html" title="&#171;interface&#187; CDOQuery" alt="" coords="71,152,156,192"/>
 <area shape="rect" id="node5" href="../session/CDOSession.html" title="&#171;interface&#187; CDOSession (org.eclipse.emf.cdo.session)" alt="" coords="17,211,209,266"/>
-<area shape="rect" id="node6" href="../transaction/CDOTransaction.html" title="&#171;interface&#187; CDOTransaction (org.eclipse.emf.cdo.transaction)" alt="" coords="632,409,843,463"/>
+<area shape="rect" id="node6" href="../transaction/CDOTransaction.html" title="&#171;interface&#187; CDOTransaction (org.eclipse.emf.cdo.transaction)" alt="" coords="632,427,843,482"/>
 <area shape="rect" id="node7" href="../util/CDOUpdatable.html" title="&#171;interface&#187; CDOUpdatable (org.eclipse.emf.cdo.util)" alt="" coords="31,285,195,339"/>
 <area shape="rect" id="node8" href="CDOView.html" title="&#171;interface&#187; CDOView" alt="" coords="387,417,472,457"/>
-<area shape="rect" id="node9" href="CDOView.Options.html" title="&#171;interface&#187; CDOView.Options" alt="" coords="674,483,801,523"/>
+<area shape="rect" id="node9" href="CDOView.Options.html" title="&#171;interface&#187; CDOView.Options" alt="" coords="674,501,801,541"/>
 <area shape="rect" id="node10" href="CDOViewAdaptersNotifiedEvent.html" title="&#171;interface&#187; CDOViewAdaptersNotifiedEvent" alt="" coords="11,359,216,399"/>
 <area shape="rect" id="node11" href="CDOViewContainer.html" title="&#171;interface&#187; CDOViewContainer" alt="" coords="47,417,180,457"/>
 <area shape="rect" id="node12" href="CDOViewDurabilityChangedEvent.html" title="&#171;interface&#187; CDOViewDurabilityChangedEvent" alt="" coords="6,476,221,516"/>
@@ -120,7 +121,6 @@ Interface CDOView</H2>
 <area shape="rect" id="node15" href="CDOViewSet.html" title="&#171;interface&#187; CDOViewSet" alt="" coords="64,652,163,692"/>
 <area shape="rect" id="node16" href="CDOViewTargetChangedEvent.html" title="&#171;interface&#187; CDOViewTargetChangedEvent" alt="" coords="15,711,212,751"/>
 <area shape="rect" id="node17" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="23,770,203,825"/>
-<area shape="rect" id="node18" href="../../spi/cdo/InternalCDOView.html" title="&#171;interface&#187; InternalCDOView (org.eclipse.emf.spi.cdo)" alt="" coords="655,542,819,597"/>
 </map>
 
 <CENTER><IMG SRC="CDOView.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -424,6 +424,17 @@ T</CODE></FONT></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long, boolean)">lockObjects</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;objects,
+            <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType,
+            long&nbsp;timeout,
+            boolean&nbsp;recursive)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()">options</A></B>()</CODE>
 
@@ -548,6 +559,16 @@ T</CODE></FONT></TD>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unlocks the given locked objects of this view.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">unlockObjects</A></B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;objects,
+              <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType,
+              boolean&nbsp;recursive)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.emf.cdo.common.CDOCommonView"><!-- --></A>
@@ -1139,6 +1160,26 @@ void <B>lockObjects</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/ap
 </DL>
 <HR>
 
+<A NAME="lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long, boolean)"><!-- --></A><H3>
+lockObjects</H3>
+<PRE>
+void <B>lockObjects</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;objects,
+                 <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType,
+                 long&nbsp;timeout,
+                 boolean&nbsp;recursive)
+                 throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Throws:</B>
+<DD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</A></CODE></DL>
+</DD>
+</DL>
+<HR>
+
 <A NAME="unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)"><!-- --></A><H3>
 unlockObjects</H3>
 <PRE>
@@ -1147,6 +1188,22 @@ void <B>unlockObjects</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/
 <DL>
 <DD>Unlocks the given locked objects of this view.
 <P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)"><!-- --></A><H3>
+unlockObjects</H3>
+<PRE>
+void <B>unlockObjects</B>(<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</A>&lt;? extends <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&gt;&nbsp;objects,
+                   <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</A>&nbsp;lockType,
+                   boolean&nbsp;recursive)</PRE>
+<DL>
 <DD><DL>
 </DL>
 </DD>

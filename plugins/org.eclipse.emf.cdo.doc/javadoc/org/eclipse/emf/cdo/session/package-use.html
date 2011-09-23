@@ -9,6 +9,7 @@ Uses of Package org.eclipse.emf.cdo.session (CDO Model Repository Documentation)
 
 <META NAME="date" CONTENT="">
 
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
 
 <SCRIPT type="text/javascript">
@@ -117,10 +118,6 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/session/package-su
 <TD>Client concepts for the communication and collaboration with other sessions.&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><A HREF="#org.eclipse.emf.cdo.spi.server"><B>org.eclipse.emf.cdo.spi.server</B></A></TD>
-<TD>Server service provider interfaces and useful base implementations.&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.transaction"><B>org.eclipse.emf.cdo.transaction</B></A></TD>
 <TD>Client concepts for dealing with transactions, distributed transactions and their save points.&nbsp;</TD>
 </TR>
@@ -139,10 +136,6 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/session/package-su
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="#org.eclipse.emf.cdo.view"><B>org.eclipse.emf.cdo.view</B></A></TD>
 <TD>Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.&nbsp;</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><A HREF="#org.eclipse.emf.spi.cdo"><B>org.eclipse.emf.spi.cdo</B></A></TD>
-<TD>Client service provider interfaces and useful base implementations.&nbsp;</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -291,7 +284,7 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/session/package-summary.h
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/session/class-use/CDOSession.ExceptionHandler.html#org.eclipse.emf.cdo.session"><B>CDOSession.ExceptionHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles <A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><CODE>protocol</CODE></A> exceptions if
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles <CODE>protocol</CODE> exceptions if
  <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)"><CODE>configured</CODE></A> before the session has
  been opened.</TD>
 </TR>
@@ -332,21 +325,6 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/session/package-summary.h
 </TABLE>
 &nbsp;
 <P>
-<A NAME="org.eclipse.emf.cdo.spi.server"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-Classes in <A HREF="../../../../../org/eclipse/emf/cdo/session/package-summary.html">org.eclipse.emf.cdo.session</A> used by <A HREF="../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/session/class-use/CDOSessionConfigurationFactory.html#org.eclipse.emf.cdo.spi.server"><B>CDOSessionConfigurationFactory</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session configuration</CODE></A> instances.</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
 <A NAME="org.eclipse.emf.cdo.transaction"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -380,7 +358,7 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/session/package-summary.h
 <TD><B><A HREF="../../../../../org/eclipse/emf/cdo/session/class-use/CDOSession.ExceptionHandler.html#org.eclipse.emf.cdo.ui"><B>CDOSession.ExceptionHandler</B></A></B>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles <A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><CODE>protocol</CODE></A> exceptions if
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles <CODE>protocol</CODE> exceptions if
  <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)"><CODE>configured</CODE></A> before the session has
  been opened.</TD>
 </TR>
@@ -445,49 +423,6 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/session/package-summary.h
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents and controls the connection to a model repository in addition to the inherited <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>
  management functions.</TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-<A NAME="org.eclipse.emf.spi.cdo"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-Classes in <A HREF="../../../../../org/eclipse/emf/cdo/session/package-summary.html">org.eclipse.emf.cdo.session</A> used by <A HREF="../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</A></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/session/class-use/CDORepositoryInfo.html#org.eclipse.emf.spi.cdo"><B>CDORepositoryInfo</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Describes a model repository a <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> is connected to.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/session/class-use/CDOSession.html#org.eclipse.emf.spi.cdo"><B>CDOSession</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Represents and controls the connection to a model repository in addition to the inherited <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A>
- management functions.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/session/class-use/CDOSession.ExceptionHandler.html#org.eclipse.emf.spi.cdo"><B>CDOSession.ExceptionHandler</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles <A HREF="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><CODE>protocol</CODE></A> exceptions if
- <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)"><CODE>configured</CODE></A> before the session has
- been opened.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/session/class-use/CDOSessionConfiguration.html#org.eclipse.emf.spi.cdo"><B>CDOSessionConfiguration</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Configures and opens new <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>sessions</CODE></A>.</TD>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/session/class-use/CDOSessionInvalidationEvent.html#org.eclipse.emf.spi.cdo"><B>CDOSessionInvalidationEvent</B></A></B>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session event</CODE></A> fired when passive updates (commit notifications) are being received from a
- remote repository.</TD>
 </TR>
 </TABLE>
 &nbsp;

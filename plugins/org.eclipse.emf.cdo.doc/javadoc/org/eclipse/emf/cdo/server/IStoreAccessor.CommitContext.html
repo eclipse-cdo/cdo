@@ -9,6 +9,7 @@ IStoreAccessor.CommitContext (CDO Model Repository Documentation)
 
 <META NAME="date" CONTENT="">
 
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
 <LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
 
 <SCRIPT type="text/javascript">
@@ -94,18 +95,14 @@ Interface IStoreAccessor.CommitContext</H2>
 <DT><B>All Superinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A></DD>
 </DL>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</A></DD>
-</DL>
-<DL>
 <DT><B>Enclosing interface:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</A></DD>
 </DL>
 <HR>
 <DL>
 <DT><PRE>public static interface <B>IStoreAccessor.CommitContext</B><DT>extends <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</A></DL>
 </PRE><map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../spi/server/InternalCommitContext.html" title="&#171;interface&#187; InternalCommitContext (org.eclipse.emf.cdo.spi.server)" alt="" coords="25,179,228,234"/>
-<area shape="rect" id="node2" href="IStoreAccessor.CommitContext.html" title="&#171;interface&#187; IStoreAccessor.CommitContext" alt="" coords="24,100,229,140"/>
-<area shape="rect" id="node3" href="../common/revision/CDORevisionProvider.html" title="&#171;interface&#187; CDORevisionProvider (org.eclipse.emf.cdo.common.revision)" alt="" coords="5,6,248,61"/>
+<area shape="rect" id="node1" href="IStoreAccessor.CommitContext.html" title="&#171;interface&#187; IStoreAccessor.CommitContext" alt="" coords="24,100,229,140"/>
+<area shape="rect" id="node2" href="../common/revision/CDORevisionProvider.html" title="&#171;interface&#187; CDORevisionProvider (org.eclipse.emf.cdo.common.revision)" alt="" coords="5,6,248,61"/>
 </map>
 
 <CENTER><IMG SRC="IStoreAccessor.CommitContext.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -181,7 +178,7 @@ Represents the state of a single, logical commit operation which is driven throu
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</A>[]</CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDirtyObjectDeltas()">getDirtyObjectDeltas</A></B>()</CODE>
 
 <BR>
@@ -190,7 +187,7 @@ Represents the state of a single, logical commit operation which is driven throu
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>[]</CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDirtyObjects()">getDirtyObjects</A></B>()</CODE>
 
 <BR>
@@ -215,7 +212,7 @@ Represents the state of a single, logical commit operation which is driven throu
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>[]</CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getNewObjects()">getNewObjects</A></B>()</CODE>
 
 <BR>
@@ -224,7 +221,7 @@ Represents the state of a single, logical commit operation which is driven throu
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</A>[]</CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getNewPackageUnits()">getNewPackageUnits</A></B>()</CODE>
 
 <BR>
@@ -233,7 +230,7 @@ Represents the state of a single, logical commit operation which is driven throu
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</A></CODE></FONT></TD>
+<CODE>&nbsp;org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getPackageRegistry()">getPackageRegistry</A></B>()</CODE>
 
 <BR>
@@ -424,7 +421,7 @@ boolean <B>isAutoReleaseLocksEnabled</B>()</PRE>
 <A NAME="getPackageRegistry()"><!-- --></A><H3>
 getPackageRegistry</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</A> <B>getPackageRegistry</B>()</PRE>
+org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry <B>getPackageRegistry</B>()</PRE>
 <DL>
 <DD>Returns the temporary, transactional package manager associated with the commit operation represented by this
  <code>CommitContext</code>. In addition to the packages registered with the session this package manager also
@@ -442,7 +439,7 @@ getPackageRegistry</H3>
 <A NAME="getNewPackageUnits()"><!-- --></A><H3>
 getNewPackageUnits</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</A>[] <B>getNewPackageUnits</B>()</PRE>
+org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[] <B>getNewPackageUnits</B>()</PRE>
 <DL>
 <DD>Returns an array of the new package units that are part of the commit operation represented by this
  <code>CommitContext</code>.
@@ -459,7 +456,7 @@ getNewPackageUnits</H3>
 <A NAME="getNewObjects()"><!-- --></A><H3>
 getNewObjects</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>[] <B>getNewObjects</B>()</PRE>
+org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision[] <B>getNewObjects</B>()</PRE>
 <DL>
 <DD>Returns an array of the new objects that are part of the commit operation represented by this
  <code>CommitContext</code>.
@@ -476,7 +473,7 @@ getNewObjects</H3>
 <A NAME="getDirtyObjects()"><!-- --></A><H3>
 getDirtyObjects</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</A>[] <B>getDirtyObjects</B>()</PRE>
+org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision[] <B>getDirtyObjects</B>()</PRE>
 <DL>
 <DD>Returns an array of the dirty objects that are part of the commit operation represented by this
  <code>CommitContext</code>.
@@ -493,7 +490,7 @@ getDirtyObjects</H3>
 <A NAME="getDirtyObjectDeltas()"><!-- --></A><H3>
 getDirtyObjectDeltas</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</A>[] <B>getDirtyObjectDeltas</B>()</PRE>
+org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta[] <B>getDirtyObjectDeltas</B>()</PRE>
 <DL>
 <DD>Returns an array of the dirty object deltas that are part of the commit operation represented by this
  <code>CommitContext</code>.

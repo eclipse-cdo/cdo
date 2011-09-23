@@ -35,14 +35,6 @@ org.eclipse.emf.cdo.server.objectivity
 org.eclipse.emf.cdo.server.ocl
 org.eclipse.emf.cdo.session
 org.eclipse.emf.cdo.session.remote
-org.eclipse.emf.cdo.spi.common
-org.eclipse.emf.cdo.spi.common.branch
-org.eclipse.emf.cdo.spi.common.commit
-org.eclipse.emf.cdo.spi.common.id
-org.eclipse.emf.cdo.spi.common.lock
-org.eclipse.emf.cdo.spi.common.model
-org.eclipse.emf.cdo.spi.common.revision
-org.eclipse.emf.cdo.spi.server
 org.eclipse.emf.cdo.transaction
 org.eclipse.emf.cdo.ui
 org.eclipse.emf.cdo.ui.ide
@@ -50,4 +42,3 @@ org.eclipse.emf.cdo.ui.widgets
 org.eclipse.emf.cdo.util
 org.eclipse.emf.cdo.view
 org.eclipse.emf.internal.cdo
-org.eclipse.emf.spi.cdo

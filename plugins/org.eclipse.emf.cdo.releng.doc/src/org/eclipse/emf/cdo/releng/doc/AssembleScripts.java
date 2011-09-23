@@ -135,7 +135,7 @@ public class AssembleScripts
     for (ManifestElement manifestElement : getManifestElements(manifest))
     {
       String packageName = manifestElement.getValue().trim();
-      if (isPublic(manifestElement) && !excludedPackages.contains(packageName))
+      if (isIncluded(excludedPackages, packageName) && isPublic(manifestElement))
       {
         javaDoc.getSourceFolders().add(plugin.getName() + "/src/" + packageName.replace('.', '/'));
         javaDoc.getPackageNames().add(packageName);
@@ -184,6 +184,26 @@ public class AssembleScripts
         }
       }
     }
+  }
+
+  private static boolean isIncluded(Set<String> excludedPackages, String packageName)
+  {
+    if (packageName.endsWith(".spi"))
+    {
+      return false;
+    }
+
+    if (packageName.indexOf(".spi.") != -1)
+    {
+      return false;
+    }
+
+    if (excludedPackages.contains(packageName))
+    {
+      return false;
+    }
+
+    return true;
   }
 
   private static boolean isPublic(ManifestElement manifestElement)

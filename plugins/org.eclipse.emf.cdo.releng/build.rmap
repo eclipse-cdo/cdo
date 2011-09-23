@@ -67,6 +67,8 @@
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emft/mwe/updates/milestones">
+			<!--XXX FOR Juno M2 only-->
+			<!--<rm:uri format="{0}/modeling/emft/mwe/updates/releases">-->
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -115,6 +117,8 @@
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/m2t/xpand/updates/milestones">
+			<!--XXX FOR Juno M2 only-->
+			<!--<rm:uri format="{0}/modeling/m2t/xpand/updates/releases">-->
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>

@@ -87,7 +87,7 @@ h2           { font-size: 140%; margin-top: 25px; margin-bottom: 3px }
 h3           { font-size: 110%; margin-top: 20px; margin-bottom: 3px }
 h4           { font-size: 100%; margin-top: 20px; margin-bottom: 3px; font-style: italic }
 p            { margin-top: 10px; margin-bottom: 10px }
-pre          { font-size: 93%; margin-left: 6; color: #4444CC }
+pre          { font-size: 93%; margin-left: 6 }
 code         { font-size: 93%; } 
 table        { font-size: 100% } /* needed for quirks mode */
 a:link	     { color: #0000FF }

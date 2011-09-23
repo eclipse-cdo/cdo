@@ -1141,20 +1141,18 @@ public class CDOViewImpl extends AbstractCDOView
 
     private void reset()
     {
-      // Keep the object in memory
-      Set<CDOObject> oldObject = objects;
+      // Keep the objects in memory
+      Set<CDOObject> oldObjects = objects;
       objects = new HashBag<CDOObject>();
       if (options().getStrongReferencePolicy() != CDOAdapterPolicy.NONE)
       {
-        InternalCDOObject objects[] = getObjectsArray();
-        for (int i = 0; i < objects.length; i++)
+        for (InternalCDOObject object : getObjectsList())
         {
-          InternalCDOObject object = objects[i];
           attachObject(object);
         }
       }
 
-      oldObject.clear();
+      oldObjects.clear();
     }
   }
 
@@ -1196,13 +1194,13 @@ public class CDOViewImpl extends AbstractCDOView
       List<CDOID> ids = new ArrayList<CDOID>();
       if (policiesPresent)
       {
-        for (InternalCDOObject cdoObject : getObjectsArray())
+        for (InternalCDOObject object : getObjectsList())
         {
-          int count = getNumberOfValidAdapter(cdoObject);
+          int count = getNumberOfValidAdapter(object);
           if (count > 0)
           {
-            ids.add(cdoObject.cdoID());
-            addEntry(cdoObject.cdoID(), cdoObject, count);
+            ids.add(object.cdoID());
+            addEntry(object.cdoID(), object, count);
           }
         }
       }

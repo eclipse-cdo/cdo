@@ -9,6 +9,7 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.PluginResource;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl.TocWriter;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
 import org.eclipse.emf.ecore.EClass;
@@ -16,6 +17,7 @@ import org.eclipse.emf.ecore.EClass;
 import com.sun.javadoc.ClassDoc;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Plugin Resource</b></em>'. <!-- end-user-doc
@@ -60,4 +62,11 @@ public class PluginResourceImpl extends ExternalArticleImpl implements PluginRes
     File targetFile = new File(getDocumentation().getProjectFolder(), getUrl());
     return ArticleUtil.createLink(sourceFile, targetFile);
   }
+
+  @Override
+  protected void generateTocEntry(TocWriter writer) throws IOException
+  {
+    writer.writeSingle(getTitle(), url, null);
+  }
+
 } // PluginResourceImpl

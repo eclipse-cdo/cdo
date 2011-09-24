@@ -674,7 +674,7 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   protected void generateTocEntry(TocWriter writer) throws IOException
   {
     checkAnalyzed();
-    writer.writeGroupStart(getTitle(), getTocHref());
+    writer.writeGroupStart(getTitle(), getTocHref(), null);
     generateTocEntries(writer);
     writer.writeGroupEnd();
   }

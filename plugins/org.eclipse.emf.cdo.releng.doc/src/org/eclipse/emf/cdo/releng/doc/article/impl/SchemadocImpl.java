@@ -67,17 +67,17 @@ public class SchemadocImpl extends CategoryImpl implements Schemadoc
       {
         if (!exists)
         {
-          writer.writeGroupStart(getTitle(), getTocHref());
+          writer.writeGroupStart(getTitle(), getTocHref(), null);
           exists = true;
         }
 
         String href = getHref(extensionPoints.get(0));
-        writer.writeGroupStart(plugin.getLabel(), href);
+        writer.writeGroupStart(plugin.getLabel(), href, "plugin");
 
         for (ExtensionPoint extensionPoint : extensionPoints)
         {
           href = getHref(extensionPoint);
-          writer.writeSingle(extensionPoint.getName(), href);
+          writer.writeSingle(extensionPoint.getName(), href, "extpoint");
         }
 
         writer.writeGroupEnd();

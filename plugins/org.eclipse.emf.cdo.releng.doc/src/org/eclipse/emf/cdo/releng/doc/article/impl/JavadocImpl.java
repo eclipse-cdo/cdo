@@ -76,7 +76,7 @@ public class JavadocImpl extends CategoryImpl implements Javadoc
   @Override
   protected void generateTocEntry(TocWriter writer) throws IOException
   {
-    writer.writeGroupStart(getTitle(), OVERVIEW_SUMMARY);
+    writer.writeGroupStart(getTitle(), OVERVIEW_SUMMARY, null);
 
     for (Plugin plugin : getDocumentation().getPlugins())
     {
@@ -84,12 +84,12 @@ public class JavadocImpl extends CategoryImpl implements Javadoc
       if (!packages.isEmpty())
       {
         String href = getHref(packages.get(0));
-        writer.writeGroupStart(plugin.getLabel(), href);
+        writer.writeGroupStart(plugin.getLabel(), href, "plugin");
 
         for (JavaPackage javaPackage : packages)
         {
           href = getHref(javaPackage);
-          writer.writeSingle(javaPackage.getName(), href);
+          writer.writeSingle(javaPackage.getName(), href, "package");
         }
 
         writer.writeGroupEnd();

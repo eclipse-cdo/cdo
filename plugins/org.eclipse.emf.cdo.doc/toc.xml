@@ -5,101 +5,101 @@
   <topic label="Overview" href="html/Overview.html" />
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">
-      <topic label="CDO Model Repository Client" href="javadoc/org/eclipse/emf/cdo/package-summary.html">
-        <topic label="org.eclipse.emf.cdo" href="javadoc/org/eclipse/emf/cdo/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.eresource" href="javadoc/org/eclipse/emf/cdo/eresource/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.eresource.impl" href="javadoc/org/eclipse/emf/cdo/eresource/impl/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.eresource.util" href="javadoc/org/eclipse/emf/cdo/eresource/util/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.etypes" href="javadoc/org/eclipse/emf/cdo/etypes/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.etypes.impl" href="javadoc/org/eclipse/emf/cdo/etypes/impl/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.etypes.util" href="javadoc/org/eclipse/emf/cdo/etypes/util/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.session" href="javadoc/org/eclipse/emf/cdo/session/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.session.remote" href="javadoc/org/eclipse/emf/cdo/session/remote/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.transaction" href="javadoc/org/eclipse/emf/cdo/transaction/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.util" href="javadoc/org/eclipse/emf/cdo/util/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.view" href="javadoc/org/eclipse/emf/cdo/view/package-summary.html" />
-        <topic label="org.eclipse.emf.internal.cdo" href="javadoc/org/eclipse/emf/internal/cdo/package-summary.html" />
+      <topic label="CDO Model Repository Client" href="javadoc/org/eclipse/emf/cdo/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo" href="javadoc/org/eclipse/emf/cdo/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.eresource" href="javadoc/org/eclipse/emf/cdo/eresource/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.eresource.impl" href="javadoc/org/eclipse/emf/cdo/eresource/impl/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.eresource.util" href="javadoc/org/eclipse/emf/cdo/eresource/util/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.etypes" href="javadoc/org/eclipse/emf/cdo/etypes/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.etypes.impl" href="javadoc/org/eclipse/emf/cdo/etypes/impl/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.etypes.util" href="javadoc/org/eclipse/emf/cdo/etypes/util/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.session" href="javadoc/org/eclipse/emf/cdo/session/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.session.remote" href="javadoc/org/eclipse/emf/cdo/session/remote/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.transaction" href="javadoc/org/eclipse/emf/cdo/transaction/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.util" href="javadoc/org/eclipse/emf/cdo/util/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.view" href="javadoc/org/eclipse/emf/cdo/view/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.internal.cdo" href="javadoc/org/eclipse/emf/internal/cdo/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Client Edit Support" href="javadoc/org/eclipse/emf/cdo/edit/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.edit" href="javadoc/org/eclipse/emf/cdo/edit/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.eresource.provider" href="javadoc/org/eclipse/emf/cdo/eresource/provider/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.etypes.provider" href="javadoc/org/eclipse/emf/cdo/etypes/provider/package-summary.html" />
+      <topic label="CDO Model Repository Client Edit Support" href="javadoc/org/eclipse/emf/cdo/edit/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.edit" href="javadoc/org/eclipse/emf/cdo/edit/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.eresource.provider" href="javadoc/org/eclipse/emf/cdo/eresource/provider/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.etypes.provider" href="javadoc/org/eclipse/emf/cdo/etypes/provider/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Client Location" href="javadoc/org/eclipse/emf/cdo/location/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.location" href="javadoc/org/eclipse/emf/cdo/location/package-summary.html" />
+      <topic label="CDO Model Repository Client Location" href="javadoc/org/eclipse/emf/cdo/location/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.location" href="javadoc/org/eclipse/emf/cdo/location/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Client Net4j Support" href="javadoc/org/eclipse/emf/cdo/net4j/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.net4j" href="javadoc/org/eclipse/emf/cdo/net4j/package-summary.html" />
+      <topic label="CDO Model Repository Client Net4j Support" href="javadoc/org/eclipse/emf/cdo/net4j/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.net4j" href="javadoc/org/eclipse/emf/cdo/net4j/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Client UI" href="javadoc/org/eclipse/emf/cdo/ui/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.ui" href="javadoc/org/eclipse/emf/cdo/ui/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.ui.widgets" href="javadoc/org/eclipse/emf/cdo/ui/widgets/package-summary.html" />
+      <topic label="CDO Model Repository Client UI" href="javadoc/org/eclipse/emf/cdo/ui/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.ui" href="javadoc/org/eclipse/emf/cdo/ui/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.ui.widgets" href="javadoc/org/eclipse/emf/cdo/ui/widgets/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Client UI IDE" href="javadoc/org/eclipse/emf/cdo/ui/ide/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.ui.ide" href="javadoc/org/eclipse/emf/cdo/ui/ide/package-summary.html" />
+      <topic label="CDO Model Repository Client UI IDE" href="javadoc/org/eclipse/emf/cdo/ui/ide/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.ui.ide" href="javadoc/org/eclipse/emf/cdo/ui/ide/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Common" href="javadoc/org/eclipse/emf/cdo/common/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.common" href="javadoc/org/eclipse/emf/cdo/common/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.branch" href="javadoc/org/eclipse/emf/cdo/common/branch/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.commit" href="javadoc/org/eclipse/emf/cdo/common/commit/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.commit.handler" href="javadoc/org/eclipse/emf/cdo/common/commit/handler/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.id" href="javadoc/org/eclipse/emf/cdo/common/id/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.lob" href="javadoc/org/eclipse/emf/cdo/common/lob/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.lock" href="javadoc/org/eclipse/emf/cdo/common/lock/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.model" href="javadoc/org/eclipse/emf/cdo/common/model/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.protocol" href="javadoc/org/eclipse/emf/cdo/common/protocol/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.revision" href="javadoc/org/eclipse/emf/cdo/common/revision/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.revision.delta" href="javadoc/org/eclipse/emf/cdo/common/revision/delta/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.common.util" href="javadoc/org/eclipse/emf/cdo/common/util/package-summary.html" />
+      <topic label="CDO Model Repository Common" href="javadoc/org/eclipse/emf/cdo/common/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.common" href="javadoc/org/eclipse/emf/cdo/common/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.branch" href="javadoc/org/eclipse/emf/cdo/common/branch/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.commit" href="javadoc/org/eclipse/emf/cdo/common/commit/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.commit.handler" href="javadoc/org/eclipse/emf/cdo/common/commit/handler/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.id" href="javadoc/org/eclipse/emf/cdo/common/id/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.lob" href="javadoc/org/eclipse/emf/cdo/common/lob/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.lock" href="javadoc/org/eclipse/emf/cdo/common/lock/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.model" href="javadoc/org/eclipse/emf/cdo/common/model/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.protocol" href="javadoc/org/eclipse/emf/cdo/common/protocol/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.revision" href="javadoc/org/eclipse/emf/cdo/common/revision/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.revision.delta" href="javadoc/org/eclipse/emf/cdo/common/revision/delta/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.common.util" href="javadoc/org/eclipse/emf/cdo/common/util/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Server" href="javadoc/org/eclipse/emf/cdo/server/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.server" href="javadoc/org/eclipse/emf/cdo/server/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.server.embedded" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.server.mem" href="javadoc/org/eclipse/emf/cdo/server/mem/package-summary.html" />
+      <topic label="CDO Model Repository Server" href="javadoc/org/eclipse/emf/cdo/server/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server" href="javadoc/org/eclipse/emf/cdo/server/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.server.embedded" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.server.mem" href="javadoc/org/eclipse/emf/cdo/server/mem/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Server DB" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.server.db" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.server.db.mapping" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/package-summary.html" />
+      <topic label="CDO Model Repository Server DB" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server.db" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.server.db.mapping" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Server DB4O" href="javadoc/org/eclipse/emf/cdo/server/db4o/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.server.db4o" href="javadoc/org/eclipse/emf/cdo/server/db4o/package-summary.html" />
+      <topic label="CDO Model Repository Server DB4O" href="javadoc/org/eclipse/emf/cdo/server/db4o/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server.db4o" href="javadoc/org/eclipse/emf/cdo/server/db4o/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Server Hibernate" href="javadoc/org/eclipse/emf/cdo/server/hibernate/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.server.hibernate" href="javadoc/org/eclipse/emf/cdo/server/hibernate/package-summary.html" />
+      <topic label="CDO Model Repository Server Hibernate" href="javadoc/org/eclipse/emf/cdo/server/hibernate/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server.hibernate" href="javadoc/org/eclipse/emf/cdo/server/hibernate/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Server MongoDB" href="javadoc/org/eclipse/emf/cdo/server/mongodb/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.server.mongodb" href="javadoc/org/eclipse/emf/cdo/server/mongodb/package-summary.html" />
+      <topic label="CDO Model Repository Server MongoDB" href="javadoc/org/eclipse/emf/cdo/server/mongodb/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server.mongodb" href="javadoc/org/eclipse/emf/cdo/server/mongodb/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Server Net4j Support" href="javadoc/org/eclipse/emf/cdo/server/net4j/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.server.net4j" href="javadoc/org/eclipse/emf/cdo/server/net4j/package-summary.html" />
+      <topic label="CDO Model Repository Server Net4j Support" href="javadoc/org/eclipse/emf/cdo/server/net4j/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server.net4j" href="javadoc/org/eclipse/emf/cdo/server/net4j/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Server OCL Support" href="javadoc/org/eclipse/emf/cdo/server/ocl/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.server.ocl" href="javadoc/org/eclipse/emf/cdo/server/ocl/package-summary.html" />
+      <topic label="CDO Model Repository Server OCL Support" href="javadoc/org/eclipse/emf/cdo/server/ocl/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server.ocl" href="javadoc/org/eclipse/emf/cdo/server/ocl/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Server Objectivity" href="javadoc/org/eclipse/emf/cdo/server/objectivity/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.server.objectivity" href="javadoc/org/eclipse/emf/cdo/server/objectivity/package-summary.html" />
+      <topic label="CDO Model Repository Server Objectivity" href="javadoc/org/eclipse/emf/cdo/server/objectivity/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.server.objectivity" href="javadoc/org/eclipse/emf/cdo/server/objectivity/package-summary.html" icon="package" />
       </topic>
     </topic>
     <topic label="Extension Point Reference" href="html/reference/schema/index.html">
-      <topic label="CDO Model Repository Client" href="schemadoc/org_eclipse_emf_cdo_viewProviders.html">
-        <topic label="viewProviders" href="schemadoc/org_eclipse_emf_cdo_viewProviders.html" />
+      <topic label="CDO Model Repository Client" href="schemadoc/org_eclipse_emf_cdo_viewProviders.html" icon="plugin">
+        <topic label="viewProviders" href="schemadoc/org_eclipse_emf_cdo_viewProviders.html" icon="extpoint" />
       </topic>
-      <topic label="CDO Model Repository Server" href="schemadoc/org_eclipse_emf_cdo_server_appExtensions.html">
-        <topic label="appExtensions" href="schemadoc/org_eclipse_emf_cdo_server_appExtensions.html" />
-        <topic label="repositoryFactories" href="schemadoc/org_eclipse_emf_cdo_server_repositoryFactories.html" />
-        <topic label="storeFactories" href="schemadoc/org_eclipse_emf_cdo_server_storeFactories.html" />
+      <topic label="CDO Model Repository Server" href="schemadoc/org_eclipse_emf_cdo_server_appExtensions.html" icon="plugin">
+        <topic label="appExtensions" href="schemadoc/org_eclipse_emf_cdo_server_appExtensions.html" icon="extpoint" />
+        <topic label="repositoryFactories" href="schemadoc/org_eclipse_emf_cdo_server_repositoryFactories.html" icon="extpoint" />
+        <topic label="storeFactories" href="schemadoc/org_eclipse_emf_cdo_server_storeFactories.html" icon="extpoint" />
       </topic>
-      <topic label="CDO Model Repository Server DB" href="schemadoc/org_eclipse_emf_cdo_server_db_mappingStrategies.html">
-        <topic label="mappingStrategies" href="schemadoc/org_eclipse_emf_cdo_server_db_mappingStrategies.html" />
+      <topic label="CDO Model Repository Server DB" href="schemadoc/org_eclipse_emf_cdo_server_db_mappingStrategies.html" icon="plugin">
+        <topic label="mappingStrategies" href="schemadoc/org_eclipse_emf_cdo_server_db_mappingStrategies.html" icon="extpoint" />
       </topic>
-      <topic label="CDO Model Repository Server Hibernate" href="schemadoc/org_eclipse_emf_cdo_server_hibernate_mappingProviderFactories.html">
-        <topic label="mappingProviderFactories" href="schemadoc/org_eclipse_emf_cdo_server_hibernate_mappingProviderFactories.html" />
+      <topic label="CDO Model Repository Server Hibernate" href="schemadoc/org_eclipse_emf_cdo_server_hibernate_mappingProviderFactories.html" icon="plugin">
+        <topic label="mappingProviderFactories" href="schemadoc/org_eclipse_emf_cdo_server_hibernate_mappingProviderFactories.html" icon="extpoint" />
       </topic>
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">
-    <topic label="Homepage" href="http://www.eclipse.org/cdo" />
-    <topic label="Wiki" href="http://wiki.eclipse.org/CDO" />
+    <topic label="Homepage" href="http://www.eclipse.org/cdo" icon="external" />
+    <topic label="Wiki" href="http://wiki.eclipse.org/CDO" icon="external" />
   </topic>
   <topic label="Legal" href="about.html" />
 </toc>

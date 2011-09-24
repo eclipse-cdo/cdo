@@ -93,6 +93,6 @@ public class ArticleImpl extends ChapterImpl implements Article
   @Override
   protected void generateTocEntry(TocWriter writer) throws IOException
   {
-    writer.writeSingle(getTitle(), getTocHref());
+    writer.writeSingle(getTitle(), getTocHref(), null);
   }
 } // ArticleImpl

@@ -783,7 +783,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         writer = new TocWriter.Xml(projectFolder);
       }
 
-      writer.writeGroupStart(getDocumentation().getTitle(), getTocHref());
+      writer.writeGroupStart(getDocumentation().getTitle(), getTocHref(), null);
       generateTocEntries(writer);
       writer.writeGroupEnd();
     }
@@ -816,9 +816,9 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       }
     }
 
-    public abstract void writeSingle(String label, String href) throws IOException;
+    public abstract void writeSingle(String label, String href, String icon) throws IOException;
 
-    public abstract void writeGroupStart(String label, String href) throws IOException;
+    public abstract void writeGroupStart(String label, String href, String icon) throws IOException;
 
     public abstract void writeGroupEnd() throws IOException;
 
@@ -897,18 +897,18 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       }
 
       @Override
-      public void writeSingle(String label, String href) throws IOException
+      public void writeSingle(String label, String href, String icon) throws IOException
       {
         writePrefix();
         write("<div class=\"te\"><span>");
         writeImage("empty.gif");
-        writeImage("article.gif");
+        writeImage(icon != null ? icon + ".gif" : "article.gif");
         writeHref(label, href);
         write("</span></div>\n");
       }
 
       @Override
-      public void writeGroupStart(String label, String href) throws IOException
+      public void writeGroupStart(String label, String href, String icon) throws IOException
       {
         String id = nextID();
 
@@ -924,7 +924,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         }
         else
         {
-          writeImage("category.gif");
+          writeImage(icon != null ? icon + ".gif" : "category.gif");
         }
 
         writeHref(label, href);
@@ -957,14 +957,14 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
       }
 
       @Override
-      public void writeSingle(String label, String href) throws IOException
+      public void writeSingle(String label, String href, String icon) throws IOException
       {
         writePrefix();
-        write("<topic label=\"" + label + "\" href=\"" + href + "\" />\n");
+        write("<topic label=\"" + label + "\" href=\"" + href + "\"" + icon(icon) + " />\n");
       }
 
       @Override
-      public void writeGroupStart(String label, String href) throws IOException
+      public void writeGroupStart(String label, String href, String icon) throws IOException
       {
         writePrefix();
         if (level == 0)
@@ -973,7 +973,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         }
         else
         {
-          write("<topic label=\"" + label + "\" href=\"" + href + "\">\n");
+          write("<topic label=\"" + label + "\" href=\"" + href + "\"" + icon(icon) + ">\n");
         }
 
         ++level;
@@ -993,6 +993,16 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         {
           write("</topic>\n");
         }
+      }
+
+      private String icon(String icon)
+      {
+        if (icon == null)
+        {
+          return "";
+        }
+
+        return " icon=\"" + icon + "\"";
       }
     }
   }

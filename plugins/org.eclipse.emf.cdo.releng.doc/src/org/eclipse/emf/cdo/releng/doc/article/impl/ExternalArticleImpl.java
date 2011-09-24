@@ -127,7 +127,9 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");
@@ -151,6 +153,6 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
   @Override
   protected void generateTocEntry(TocWriter writer) throws IOException
   {
-    writer.writeSingle(getTitle(), url);
+    writer.writeSingle(getTitle(), url, "external");
   }
 } // ExternalArticleImpl

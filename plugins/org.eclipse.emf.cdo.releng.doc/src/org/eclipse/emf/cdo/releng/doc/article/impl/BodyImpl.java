@@ -340,7 +340,7 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
     String image = getImagePath() + "/" + action.toLowerCase() + ".png";
 
     out.write("<a href=\"" + href + "\" title=\"" + tooltip + "\">");
-    out.write("<img src=\"" + image + "\"/>");
+    out.write("<img src=\"" + image + "\"></img>");
     out.write("</a>");
   }
 } // BodyImpl

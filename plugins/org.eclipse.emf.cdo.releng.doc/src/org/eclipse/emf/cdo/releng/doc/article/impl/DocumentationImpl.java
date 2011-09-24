@@ -893,7 +893,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
 
       public void writeImage(String name) throws IOException
       {
-        write("<img src=\"" + name + "\"/>");
+        write("<img src=\"" + name + "\"></img>");
       }
 
       @Override
@@ -915,7 +915,7 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
         writePrefix();
         write("<div class=\"te\">");
         write("<span><a href=\"javascript:toggle('" + id + "')\">");
-        write("<img src=\"" + "plus.gif" + "\" id=\"img_" + id + "\"/>");
+        write("<img src=\"" + "plus.gif" + "\" id=\"img_" + id + "\"></img>");
         write("</a>");
 
         if (level == 0)

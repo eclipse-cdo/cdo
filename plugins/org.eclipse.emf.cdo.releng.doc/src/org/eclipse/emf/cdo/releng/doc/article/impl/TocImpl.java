@@ -193,18 +193,18 @@ public class TocImpl extends BodyElementImpl implements Toc
       out.write("<tr>");
       for (int i = 1; i < level; i++)
       {
-        out.write("<td/>");
+        out.write("<td></td>");
       }
 
       out.write("<td>");
 
       if (element instanceof Category)
       {
-        out.write("<img src=\"" + imagePath + "category.gif\"/>");
+        out.write("<img src=\"" + imagePath + "category.gif\"></img>");
       }
       else if (element instanceof Article)
       {
-        out.write("<img src=\"" + imagePath + "article.gif\"/>");
+        out.write("<img src=\"" + imagePath + "article.gif\"></img>");
       }
       else
       {

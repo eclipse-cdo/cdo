@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * following diagram illustrates the most common scenario:
  * <p align="center">
  * <img src="cdo-overview.png"/>
+ * </p>
  * 
  * @default
  */
@@ -143,6 +144,7 @@ public class Overview
      * The following diagram illustrates the major building blocks of a CDO application:
      * <p align="center">
      * <img src="application-architecture.png"/>
+     * </p>
      */
     public class Application
     {
@@ -212,6 +214,7 @@ public class Overview
      * The following diagram illustrates the major building blocks of a CDO repository:
      * <p align="center">
      * <img src="repository-architecture.png"/>.
+     * </p>
      */
     public class Repository
     {

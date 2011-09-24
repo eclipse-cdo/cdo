@@ -44,21 +44,21 @@
   </topic>
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">
-      <topic label="CDO Release Engineering Version Tool" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.releng.version" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" />
-        <topic label="org.eclipse.emf.cdo.releng.version.test" href="javadoc/org/eclipse/emf/cdo/releng/version/test/package-summary.html" />
+      <topic label="CDO Release Engineering Version Tool" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.releng.version" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.releng.version.test" href="javadoc/org/eclipse/emf/cdo/releng/version/test/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Release Engineering Version Tool (Digest Validator UI)" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/ui/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.releng.version.digest.ui" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/ui/package-summary.html" />
+      <topic label="CDO Release Engineering Version Tool (Digest Validator UI)" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/ui/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.releng.version.digest.ui" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/ui/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Release Engineering Version Tool (Digest Validator)" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/package-summary.html">
-        <topic label="org.eclipse.emf.cdo.releng.version.digest" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/package-summary.html" />
+      <topic label="CDO Release Engineering Version Tool (Digest Validator)" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.releng.version.digest" href="javadoc/org/eclipse/emf/cdo/releng/version/digest/package-summary.html" icon="package" />
       </topic>
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">
-    <topic label="Homepage" href="http://www.eclipse.org/cdo" />
-    <topic label="Wiki" href="http://wiki.eclipse.org/CDO" />
+    <topic label="Homepage" href="http://www.eclipse.org/cdo" icon="external" />
+    <topic label="Wiki" href="http://wiki.eclipse.org/CDO" icon="external" />
   </topic>
   <topic label="Legal" href="about.html" />
 </toc>

@@ -4,5 +4,6 @@
   <mspec:property key="target.ws" value="*"/>
   <mspec:property key="target.arch" value="*"/>
   <mspec:property key="resolve.target.platform" value="true"/>
+	
   <mspec:mspecNode materializer="workspace" filter="(buckminster.source=true)"/>
 </mspec:mspec>

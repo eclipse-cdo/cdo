@@ -5,7 +5,10 @@
 	
 	<!-- Properties -->
 	
+	<rm:property key="platform.version" mutable="true" value="3.8"/>
+	<rm:property key="emf.version" mutable="true" value="2.8"/>
 	<rm:property key="orbit.version" mutable="true" value="S20110907174232"/>
+
 	<rm:property key="checkout" mutable="true" value="/replaced/by/hudson/builds"/>
 	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo"/>
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
@@ -58,12 +61,16 @@
 	</rm:searchPath>
 	
 	<rm:searchPath name="p2">
+		
+		<!-- EMF Transaction, Validation, ... -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- MWE -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<!--<rm:uri format="{0}/modeling/emft/mwe/updates/milestones">-->
@@ -72,48 +79,65 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- EMFT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emft/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- EcoreTools -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/amalgam/temp/ecoretools-1.0.0">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- EMF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/emf/updates/2.8milestones">
+			<rm:uri format="{0}/modeling/emf/emf/updates/{1}milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
+				<bc:propertyRef key="emf.version"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- GEF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/tools/gef/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- GMP -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/gmp/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- OCL -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/mdt/ocl/updates/milestones/3.2.0">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- QVTOML -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/m2m/qvtoml/updates/releases">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- XPAND -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<!-- <rm:uri format="{0}/modeling/m2t/xpand/updates/milestones"> -->
@@ -122,6 +146,8 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- SWTBOT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<!-- ################################################################ -->
@@ -131,6 +157,8 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- ORBIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/tools/orbit/downloads/drops/{1}/repository">
@@ -138,12 +166,16 @@
 				<bc:propertyRef key="orbit.version"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- TENEO -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/interim">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+
+		<!-- EVLER.ORG -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<!-- ############################################################### -->
@@ -151,14 +183,19 @@
 			<!-- ############################################################### -->
 			<rm:uri format="http://www.elver.org/eclipse/update"/>
 		</rm:provider>
+
+		<!-- SF.NET -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="http://net4j.sourceforge.net/update"/>
 		</rm:provider>
+
+		<!-- PLATFORM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/eclipse/updates/3.8milestones">
+			<rm:uri format="{0}/eclipse/updates/{1}milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
+				<bc:propertyRef key="platform.version"/>
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>

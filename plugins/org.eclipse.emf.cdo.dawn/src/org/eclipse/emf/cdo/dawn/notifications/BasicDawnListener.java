@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.dawn.notifications;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
+import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
 import org.eclipse.net4j.util.event.IEvent;
 
@@ -56,9 +57,35 @@ public abstract class BasicDawnListener implements IDawnListener// implements IL
     {
       handleTransactionConflictEvent((CDOTransactionConflictEvent)event);
     }
+    else if (event instanceof CDOViewLocksChangedEvent)
+    {
+      handleLocksChangedEvent((CDOViewLocksChangedEvent)event);
+    }
     else
     {
       handleEvent(event);
     }
+  }
+
+  public void handleViewInvalidationEvent(CDOViewInvalidationEvent event)
+  {
+  }
+
+  public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
+  {
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void handleLocksChangedEvent(CDOViewLocksChangedEvent event)
+  {
+  }
+
+  /**
+   * @since 2.0
+   */
+  public void handleEvent(IEvent event)
+  {
   }
 }

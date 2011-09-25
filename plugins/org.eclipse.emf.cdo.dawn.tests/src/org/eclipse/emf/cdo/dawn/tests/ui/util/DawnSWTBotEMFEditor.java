@@ -102,7 +102,7 @@ public class DawnSWTBotEMFEditor extends SWTBotEditor
     return runnable.getResult();
   }
 
-  protected Viewer getCurrentViewer()
+  public Viewer getCurrentViewer()
   {
     final MultiPageEditorPart editor = (MultiPageEditorPart)getReference().getEditor(false);
 

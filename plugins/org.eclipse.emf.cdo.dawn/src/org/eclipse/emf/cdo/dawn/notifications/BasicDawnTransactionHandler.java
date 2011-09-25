@@ -70,14 +70,17 @@ public class BasicDawnTransactionHandler extends BasicDawnListener implements ID
   { // This method can be overwritten be subclasses
   }
 
+  @Override
   public void handleViewInvalidationEvent(CDOViewInvalidationEvent event)
   { // This method can be overwritten be subclasses
   }
 
+  @Override
   public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
   { // This method can be overwritten be subclasses
   }
 
+  @Override
   public void handleEvent(IEvent event)
   {
   }

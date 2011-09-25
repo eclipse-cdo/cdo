@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.dawn.spi;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * The IDawnEditingSupport is the direct connection the the Dawn Runtime. Service Providers must implement this
@@ -96,4 +97,12 @@ public interface IDawnEditingSupport
    * @since 2.0
    */
   public void unlockObject(Object objectToBeUnlocked);
+
+  /**
+   * Implementations must handle all operations which are necessary on remotely locked objects, like disabling them,
+   * providing specific markers, like colors or icons, and so on.
+   * 
+   * @since 2.0
+   */
+  public void handleRemoteLockChanges(Map<Object, DawnState> changedObjects);
 }

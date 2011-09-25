@@ -58,8 +58,13 @@ public class EMFLockingTest extends AbstractDawnEMFTest
       AClass aClass2 = ((ACoreRoot)resource2.getContents().get(0)).getClasses().get(0);
       aClass2.cdoWriteLock().lock();
     }
+
     sleep(500);
+
     assertEquals(true, aClass.cdoWriteLock().isLockedByOthers());
+
+    // SWTBotTreeItem treeItem = selectFolder(tree.getAllItems(), "BClass", false);
+    // assertEquals(DawnColorConstants.COLOR_LOCKED_REMOTELY, treeItem.foregroundColor());
 
     editor.close();
   }
@@ -99,6 +104,9 @@ public class EMFLockingTest extends AbstractDawnEMFTest
 
     assertEquals(false, aClass.cdoWriteLock().isLocked());
     assertEquals(false, aClass2.cdoWriteLock().isLockedByOthers());
+
+    // SWTBotTreeItem treeItem = selectFolder(tree.getAllItems(), "AClass", false);
+    // assertEquals(DawnColorConstants.COLOR_LOCKED_LOCALLY, treeItem.foregroundColor());
 
     editor.close();
   }

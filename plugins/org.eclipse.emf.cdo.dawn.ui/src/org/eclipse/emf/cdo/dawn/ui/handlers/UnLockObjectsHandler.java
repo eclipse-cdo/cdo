@@ -24,7 +24,6 @@ public class UnLockObjectsHandler extends SelectionHandler
 {
   public Object execute(ExecutionEvent event) throws ExecutionException
   {
-    System.out.println("Unlock");
     ((IDawnEditor)DawnEditorHelper.getActiveEditor()).getDawnEditorSupport().unlockObjects(getSelectedObjects(event));
 
     return null;

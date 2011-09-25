@@ -11,51 +11,15 @@
 package org.eclipse.emf.cdo.dawn.emf.notifications.impl;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
-import org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener;
-import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
-import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
-import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
-
-import org.eclipse.net4j.util.event.IEvent;
-
-import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.cdo.dawn.notifications.BasicDawnLockingHandler;
 
 /**
  * @author Martin Fluegge
  */
-public class DawnEMFLockingHandler extends BasicDawnListener
+public class DawnEMFLockingHandler extends BasicDawnLockingHandler
 {
   public DawnEMFLockingHandler(IDawnEditor editor)
   {
     super(editor);
-  }
-
-  public void handleViewInvalidationEvent(CDOViewInvalidationEvent event)
-  {
-    System.out.println("DawnEMFLockingHandler.handleViewInvalidationEvent()");
-  }
-
-  public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
-  {
-    System.out.println("DawnEMFLockingHandler.handleTransactionConflictEvent()");
-  }
-
-  public void handleEvent(IEvent event)
-  {
-    if (event instanceof CDOViewLocksChangedEvent)
-    {
-      refreshEditor();
-    }
-  }
-
-  private void refreshEditor()
-  {
-    editor.getSite().getShell().getDisplay().asyncExec(new Runnable()
-    {
-      public void run()
-      {
-        ((IViewerProvider)editor).getViewer().refresh();
-      }
-    });
   }
 }

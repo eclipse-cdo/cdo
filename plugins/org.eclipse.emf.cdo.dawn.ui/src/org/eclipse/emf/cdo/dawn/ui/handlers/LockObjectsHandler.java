@@ -24,7 +24,6 @@ public class LockObjectsHandler extends SelectionHandler
 {
   public Object execute(ExecutionEvent event) throws ExecutionException
   {
-    System.out.println("Lock");
     ((IDawnEditor)DawnEditorHelper.getActiveEditor()).getDawnEditorSupport().lockObjects(getSelectedObjects(event));
 
     return null;

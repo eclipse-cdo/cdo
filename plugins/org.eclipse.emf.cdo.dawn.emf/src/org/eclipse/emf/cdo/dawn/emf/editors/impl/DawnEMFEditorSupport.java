@@ -15,12 +15,15 @@ import org.eclipse.emf.cdo.dawn.editors.impl.DawnAbstractEditorSupport;
 import org.eclipse.emf.cdo.dawn.emf.notifications.impl.DawnEMFHandler;
 import org.eclipse.emf.cdo.dawn.emf.notifications.impl.DawnEMFLockingHandler;
 import org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener;
+import org.eclipse.emf.cdo.dawn.spi.DawnState;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.ecore.EObject;
+
+import java.util.Map;
 
 /**
  * @author Martin Fluegge
@@ -41,19 +44,6 @@ public class DawnEMFEditorSupport extends DawnAbstractEditorSupport
       view.close();
     }
   }
-
-  // public void registerListeners()
-  // {
-  // BasicDawnListener listener = new DawnEMFHandler(getEditor());
-  // CDOView view = getView();
-  // view.addListener(listener);
-  //
-  // if (view instanceof CDOTransaction)
-  // {
-  // CDOTransaction transaction = (CDOTransaction)view;
-  // transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.CDO);
-  // }
-  // }
 
   @Override
   protected BasicDawnListener getBasicHandler()
@@ -98,5 +88,16 @@ public class DawnEMFEditorSupport extends DawnAbstractEditorSupport
   {
     CDOUtil.getCDOObject((EObject)objectToBeUnlocked).cdoWriteLock().unlock();
     refresh();
+  }
+
+  public void handleRemoteLockChanges(Map<Object, DawnState> changedObjects)
+  {
+    getEditor().getSite().getShell().getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        refresh();
+      }
+    });
   }
 }

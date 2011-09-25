@@ -102,7 +102,6 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
 
   private void validatePage()
   {
-    System.out.println("validatePage");
     ResourceChooserValidator validator = chooserComposite.getValidator();
     boolean valid = validator.isValid();
 

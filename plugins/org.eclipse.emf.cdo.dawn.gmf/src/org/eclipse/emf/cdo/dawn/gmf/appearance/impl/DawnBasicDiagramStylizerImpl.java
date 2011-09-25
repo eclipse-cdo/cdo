@@ -18,11 +18,12 @@ import org.eclipse.gef.EditPart;
  * @author Martin Fluegge
  * @since 2.0
  */
-public class DawnBasicDiagramStylizerImpl implements DawnEditPartStylizer
+public class DawnBasicDiagramStylizerImpl extends DawnEditPartStylizer
 {
   /**
    * @since 2.0
    */
+  @Override
   public void setDefault(EditPart editpart)
   {
   }
@@ -30,6 +31,7 @@ public class DawnBasicDiagramStylizerImpl implements DawnEditPartStylizer
   /**
    * @since 2.0
    */
+  @Override
   public void setConflicted(EditPart editpart, int type)
   {
   }
@@ -37,6 +39,7 @@ public class DawnBasicDiagramStylizerImpl implements DawnEditPartStylizer
   /**
    * @since 2.0
    */
+  @Override
   public void setLocked(EditPart editpart, int type)
   {
   }

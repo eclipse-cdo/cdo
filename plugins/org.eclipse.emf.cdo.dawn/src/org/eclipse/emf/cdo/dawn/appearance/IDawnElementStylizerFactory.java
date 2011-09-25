@@ -8,13 +8,13 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.spi;
+package org.eclipse.emf.cdo.dawn.appearance;
 
 /**
  * @author Martin Fluegge
  * @since 2.0
  */
-public enum DawnState
+public interface IDawnElementStylizerFactory
 {
-  LOCKED_LOCALLY, LOCKED_REMOTELY, DIRTY, CLEAN, CONFLICT
+  public DawnElementStylizer getElementStylizer(Object object);
 }

@@ -25,21 +25,21 @@ Dawn knows three states - default, conflicted and locked. By implementing an own
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
-
+                  
                </documentation>
             </annotation>
          </attribute>
          <attribute name="id" type="string">
             <annotation>
                <documentation>
-
+                  
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>
-
+                  
                </documentation>
                <appinfo>
                   <meta.attribute translatable="true"/>
@@ -50,11 +50,16 @@ Dawn knows three states - default, conflicted and locked. By implementing an own
    </element>
 
    <element name="DawnEditPartStylizers">
+      <annotation>
+         <appinfo>
+            <meta.element deprecated="true"/>
+         </appinfo>
+      </annotation>
       <complexType>
          <attribute name="editpart" type="string">
             <annotation>
                <documentation>
-
+                  
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.gef.EditPart"/>
@@ -64,7 +69,7 @@ Dawn knows three states - default, conflicted and locked. By implementing an own
          <attribute name="stylizer" type="string">
             <annotation>
                <documentation>
-
+                  
                </documentation>
                <appinfo>
                   <meta.attribute kind="java" basedOn=":org.eclipse.emf.cdo.dawn.appearance.DawnEditPartStylizer"/>
@@ -90,9 +95,9 @@ Dawn knows three states - default, conflicted and locked. By implementing an own
       <documentation>
          Following is an example of how a EditPartStylizer can be registered:
 &lt;pre&gt;
-	&lt;DawnEditPartStylizers                 		editpart=&quot;org.eclipse.emf.cdo.dawn.examples.acore.classdiagram.diagram.edit.parts.AClassEditPart&quot;
+ &lt;DawnEditPartStylizers                   editpart=&quot;org.eclipse.emf.cdo.dawn.examples.acore.classdiagram.diagram.edit.parts.AClassEditPart&quot;
         stylizer=&quot;org.eclipse.emf.cdo.dawn.appearance.impl.DawnBasicNodeEditPartStylizerImpl&quot;&gt;
-	&lt;/DawnEditPartStylizers&gt;
+ &lt;/DawnEditPartStylizers&gt;
 &lt;/pre&gt;
       </documentation>
    </annotation>

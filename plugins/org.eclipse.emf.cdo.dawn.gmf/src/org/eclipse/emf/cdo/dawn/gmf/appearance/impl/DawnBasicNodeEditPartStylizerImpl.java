@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.dawn.gmf.appearance.impl;
 
 import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
+import org.eclipse.emf.cdo.dawn.spi.DawnState;
 import org.eclipse.emf.cdo.dawn.ui.DawnColorConstants;
 
 import org.eclipse.gef.EditPart;
@@ -27,11 +28,11 @@ public class DawnBasicNodeEditPartStylizerImpl extends DawnBasicGraphicalEditPar
     setBorder(editPart, DawnColorConstants.COLOR_NO_CONFLICT, 0);
   }
 
-  @Override
-  public void setConflicted(EditPart editPart, int type)
-  {
-    setBorder(editPart, DawnColorConstants.COLOR_DELETE_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
-  }
+  // @Override
+  // public void setConflicted(EditPart editPart, int type)
+  // {
+  // setBorder(editPart, DawnColorConstants.COLOR_DELETE_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+  // }
 
   @Override
   public void setLocked(EditPart editPart, int type)
@@ -40,12 +41,14 @@ public class DawnBasicNodeEditPartStylizerImpl extends DawnBasicGraphicalEditPar
     {
     case DawnAppearancer.TYPE_LOCKED_GLOBALLY:
     {
-      setBorder(editPart, DawnColorConstants.COLOR_LOCKED_REMOTELY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+      setBorder(editPart, getBackgroundColor(editPart, DawnState.LOCKED_REMOTELY),
+          DawnAppearancer.DEFAULT_BORDER_THICKNESS);
       break;
     }
     case DawnAppearancer.TYPE_LOCKED_LOCALLY:
     {
-      setBorder(editPart, DawnColorConstants.COLOR_LOCKED_LOCALLY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+      setBorder(editPart, getBackgroundColor(editPart, DawnState.LOCKED_LOCALLY),
+          DawnAppearancer.DEFAULT_BORDER_THICKNESS);
       break;
     }
     }

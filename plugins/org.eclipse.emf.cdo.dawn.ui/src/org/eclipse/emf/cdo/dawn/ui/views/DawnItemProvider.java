@@ -26,7 +26,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class DawnItemProvider extends CDOItemProvider
 {
-
   private final DawnExplorer dawnExplorer;
 
   public DawnItemProvider(IWorkbenchPage page, DawnExplorer dawnExplorer, IElementFilter rootElementFilter)

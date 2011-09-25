@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.dawn.gmf.appearance.impl;
 
 import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
 import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnEditPartStylizer;
-import org.eclipse.emf.cdo.dawn.ui.DawnColorConstants;
+import org.eclipse.emf.cdo.dawn.spi.DawnState;
 
 import org.eclipse.draw2d.Border;
 import org.eclipse.draw2d.IFigure;
@@ -26,11 +26,12 @@ import org.eclipse.swt.graphics.Color;
  * @since 2.0
  */
 
-public class DawnBasicGraphicalEditPartStylizerImpl implements DawnEditPartStylizer
+public class DawnBasicGraphicalEditPartStylizerImpl extends DawnEditPartStylizer
 {
   /**
    * @since 2.0
    */
+  @Override
   public void setDefault(EditPart editPart)
   {
     setBorder(editPart, null);
@@ -39,17 +40,20 @@ public class DawnBasicGraphicalEditPartStylizerImpl implements DawnEditPartStyli
   /**
    * @since 2.0
    */
+  @Override
   public void setConflicted(EditPart editPart, int type)
   {
-    setBorder(editPart, DawnColorConstants.COLOR_DELETE_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+    setBorder(editPart, getForegroundColor(editPart, DawnState.CONFLICT), DawnAppearancer.DEFAULT_BORDER_THICKNESS);
   }
 
   /**
    * @since 2.0
    */
+  @Override
   public void setLocked(EditPart editPart, int type)
   {
-    setBorder(editPart, DawnColorConstants.COLOR_LOCKED_REMOTELY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+    setBorder(editPart, getBackgroundColor(editPart, DawnState.LOCKED_REMOTELY),
+        DawnAppearancer.DEFAULT_BORDER_THICKNESS);
   }
 
   /**

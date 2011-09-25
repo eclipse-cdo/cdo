@@ -34,7 +34,9 @@ import java.util.Map;
 /**
  * @author Martin Fluegge
  * @since 2.0
+ * @deprecated
  */
+@Deprecated
 public class DawnEditPartStylizerRegistry
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnEditPartStylizerRegistry.class);

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.dawn.gmf.appearance.impl;
 
 import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
 import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnEditPartStylizer;
+import org.eclipse.emf.cdo.dawn.spi.DawnState;
 import org.eclipse.emf.cdo.dawn.ui.DawnColorConstants;
 
 import org.eclipse.emf.workspace.AbstractEMFOperation;
@@ -36,12 +37,13 @@ import org.eclipse.swt.graphics.Color;
  * @author Martin Fluegge
  * @since 2.0
  */
-public class DawnBasicConnectionEditPartStylizerImpl implements DawnEditPartStylizer
+public class DawnBasicConnectionEditPartStylizerImpl extends DawnEditPartStylizer
 {
 
   /**
    * @since 2.0
    */
+  @Override
   public void setDefault(EditPart editPart)
   {
     setEdge(editPart, DawnColorConstants.COLOR_NO_CONFLICT);
@@ -50,9 +52,11 @@ public class DawnBasicConnectionEditPartStylizerImpl implements DawnEditPartStyl
   /**
    * @since 2.0
    */
+  @Override
   public void setConflicted(EditPart editPart, int type)
   {
-    Color color = DawnColorConstants.COLOR_DELETE_CONFLICT;
+    // Color color = DawnColorConstants.COLOR_DELETE_CONFLICT;
+    Color color = getForegroundColor(editPart, DawnState.CONFLICT);
     setEdge(editPart, color);
   }
 
@@ -91,6 +95,7 @@ public class DawnBasicConnectionEditPartStylizerImpl implements DawnEditPartStyl
   /**
    * @since 2.0
    */
+  @Override
   public void setLocked(EditPart editPart, int type)
   {
     Color color = null;
@@ -98,12 +103,12 @@ public class DawnBasicConnectionEditPartStylizerImpl implements DawnEditPartStyl
     {
     case DawnAppearancer.TYPE_LOCKED_LOCALLY:
     {
-      color = DawnColorConstants.COLOR_LOCKED_REMOTELY;
+      color = getBackgroundColor(editPart, DawnState.LOCKED_LOCALLY);
       break;
     }
     case DawnAppearancer.TYPE_LOCKED_GLOBALLY:
     {
-      color = DawnColorConstants.COLOR_LOCKED_LOCALLY;
+      color = getBackgroundColor(editPart, DawnState.LOCKED_REMOTELY);
       break;
     }
 

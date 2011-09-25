@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.dawn.gmf.appearance;
 
+import org.eclipse.emf.cdo.dawn.appearance.DawnElementStylizer;
+import org.eclipse.emf.cdo.dawn.ui.stylizer.DawnElementStylizerRegistry;
+
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.util.EditPartUtilities;
@@ -41,7 +44,7 @@ public class DawnAppearancer
    */
   public static void setEditPartConflicted(EditPart editPart, int type)
   {
-    DawnEditPartStylizer stylizer = DawnEditPartStylizerRegistry.instance.getStylizer(editPart);
+    DawnElementStylizer stylizer = DawnElementStylizerRegistry.instance.getStylizer(editPart);
     if (stylizer != null)
     {
       stylizer.setConflicted(editPart, type);
@@ -66,7 +69,7 @@ public class DawnAppearancer
    */
   public static void setEditPartDefault(EditPart editPart)
   {
-    DawnEditPartStylizer stylizer = DawnEditPartStylizerRegistry.instance.getStylizer(editPart);
+    DawnElementStylizer stylizer = DawnElementStylizerRegistry.instance.getStylizer(editPart);
     if (stylizer != null)
     {
       stylizer.setDefault(editPart);
@@ -78,7 +81,7 @@ public class DawnAppearancer
    */
   public static void setEditPartLocked(EditPart editPart, int type)
   {
-    DawnEditPartStylizer stylizer = DawnEditPartStylizerRegistry.instance.getStylizer(editPart);
+    DawnElementStylizer stylizer = DawnElementStylizerRegistry.instance.getStylizer(editPart);
     if (stylizer != null)
     {
       stylizer.setLocked(editPart, type);

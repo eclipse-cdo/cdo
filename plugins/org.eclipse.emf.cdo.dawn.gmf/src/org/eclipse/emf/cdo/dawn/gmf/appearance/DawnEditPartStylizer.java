@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.dawn.gmf.appearance;
 
-import org.eclipse.emf.cdo.dawn.appearance.DawnElementStylizer;
+import org.eclipse.emf.cdo.dawn.ui.stylizer.DawnDefaultElementStylizer;
 
 import org.eclipse.gef.EditPart;
 
@@ -23,20 +23,38 @@ import org.eclipse.gef.EditPart;
  * @author Martin Fluegge
  * @since 2.0
  */
-public interface DawnEditPartStylizer extends DawnElementStylizer<EditPart>
+public abstract class DawnEditPartStylizer extends DawnDefaultElementStylizer
 {
   /**
    * @since 2.0
    */
-  public void setDefault(EditPart editPart);
+  public abstract void setDefault(EditPart editPart);
 
   /**
    * @since 2.0
    */
-  public void setConflicted(EditPart editPart, int type);
+  public abstract void setConflicted(EditPart editPart, int type);
 
   /**
    * @since 2.0
    */
-  public void setLocked(EditPart editPart, int type);
+  public abstract void setLocked(EditPart editPart, int type);
+
+  @Override
+  public void setDefault(Object element)
+  {
+    setDefault((EditPart)element);
+  }
+
+  @Override
+  public void setConflicted(Object element, int type)
+  {
+    setConflicted((EditPart)element, type);
+  }
+
+  @Override
+  public void setLocked(Object element, int type)
+  {
+    setLocked((EditPart)element, type);
+  }
 }

@@ -11,16 +11,17 @@
 package org.eclipse.emf.cdo.dawn.gmf.editors.impl;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.dawn.appearance.DawnElementStylizer;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.editors.impl.DawnAbstractEditorSupport;
 import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
-import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnEditPartStylizer;
-import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnEditPartStylizerRegistry;
 import org.eclipse.emf.cdo.dawn.gmf.notifications.impl.DawnGMFHandler;
 import org.eclipse.emf.cdo.dawn.gmf.notifications.impl.DawnGMFLockingHandler;
+import org.eclipse.emf.cdo.dawn.gmf.synchronize.DawnChangeHelper;
 import org.eclipse.emf.cdo.dawn.gmf.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener;
 import org.eclipse.emf.cdo.dawn.spi.DawnState;
+import org.eclipse.emf.cdo.dawn.ui.stylizer.DawnElementStylizerRegistry;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -125,7 +126,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
           CDOUtil.getCDOObject(element).cdoWriteLock().lock();
         }
       }
-      DawnEditPartStylizer stylizer = DawnEditPartStylizerRegistry.instance.getStylizer(editPart);
+      DawnElementStylizer stylizer = DawnElementStylizerRegistry.instance.getStylizer(editPart);
       if (stylizer != null)
       {
         stylizer.setLocked(editPart, DawnAppearancer.TYPE_LOCKED_LOCALLY);
@@ -139,6 +140,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     if (objectToBeUnlocked instanceof EditPart)
     {
       EditPart editPart = (EditPart)objectToBeUnlocked;
+
       Object model = editPart.getModel();
 
       if (model instanceof EObject)
@@ -150,7 +152,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
           CDOUtil.getCDOObject(element).cdoWriteLock().unlock();
         }
       }
-      DawnEditPartStylizer stylizer = DawnEditPartStylizerRegistry.instance.getStylizer(editPart);
+      DawnElementStylizer stylizer = DawnElementStylizerRegistry.instance.getStylizer(editPart);
       if (stylizer != null)
       {
         stylizer.setDefault(editPart);
@@ -184,10 +186,12 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
       else if (object.cdoWriteLock().isLockedByOthers())
       {
         DawnAppearancer.setEditPartLocked(editPart, DawnAppearancer.TYPE_LOCKED_GLOBALLY);
+        DawnChangeHelper.deactivateEditPart(editPart);
       }
       else
       {
         DawnAppearancer.setEditPartDefault(editPart);
+        DawnChangeHelper.activateEditPart(editPart);
       }
     }
   }

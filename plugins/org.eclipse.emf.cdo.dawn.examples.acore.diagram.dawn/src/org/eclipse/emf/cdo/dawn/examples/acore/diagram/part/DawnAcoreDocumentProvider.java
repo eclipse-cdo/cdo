@@ -51,7 +51,6 @@ import java.util.Map;
 @SuppressWarnings("restriction")
 public class DawnAcoreDocumentProvider extends AcoreDocumentProvider
 {
-
   public DawnAcoreDocumentProvider()
   {
     super();

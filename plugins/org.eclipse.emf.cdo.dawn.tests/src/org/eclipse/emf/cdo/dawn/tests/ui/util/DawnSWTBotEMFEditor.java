@@ -45,7 +45,7 @@ public class DawnSWTBotEMFEditor extends SWTBotEditor
   }
 
   /**
-   * return the tree auf the EMF editor
+   * return the tree of the EMF editor
    */
   public SWTBotTree getSelectionPageTree()
   {
@@ -251,7 +251,6 @@ public class DawnSWTBotEMFEditor extends SWTBotEditor
 
     display.asyncExec(new Runnable()
     {
-
       public void run()
       {
         item.widget.setData(text);

@@ -13,12 +13,14 @@ package org.eclipse.emf.cdo.dawn.emf.editors.impl;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.editors.impl.DawnAbstractEditorSupport;
 import org.eclipse.emf.cdo.dawn.emf.notifications.impl.DawnEMFHandler;
+import org.eclipse.emf.cdo.dawn.emf.notifications.impl.DawnEMFLockingHandler;
 import org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
+import org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * @author Martin Fluegge
@@ -40,23 +42,61 @@ public class DawnEMFEditorSupport extends DawnAbstractEditorSupport
     }
   }
 
-  public void registerListeners()
-  {
-    BasicDawnListener listener = new DawnEMFHandler(getEditor());
-    CDOView view = getView();
-    view.addListener(listener);
+  // public void registerListeners()
+  // {
+  // BasicDawnListener listener = new DawnEMFHandler(getEditor());
+  // CDOView view = getView();
+  // view.addListener(listener);
+  //
+  // if (view instanceof CDOTransaction)
+  // {
+  // CDOTransaction transaction = (CDOTransaction)view;
+  // transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.CDO);
+  // }
+  // }
 
-    if (view instanceof CDOTransaction)
-    {
-      CDOTransaction transaction = (CDOTransaction)view;
-      transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.CDO);
-    }
+  @Override
+  protected BasicDawnListener getBasicHandler()
+  {
+    return new DawnEMFHandler(getEditor());
+  }
+
+  @Override
+  protected BasicDawnListener getLockingHandler()
+  {
+    return new DawnEMFLockingHandler(getEditor());
+  }
+
+  @Override
+  protected CDOTransactionHandlerBase getTransactionHandler()
+  {
+    return null;
   }
 
   @Override
   public void rollback()
   {
     super.rollback();
+    refresh();
+  }
+
+  public void refresh()
+  {
     ((IViewerProvider)getEditor()).getViewer().refresh();
+  }
+
+  public void lockObject(Object objectToBeLocked)
+  {
+    if (objectToBeLocked instanceof EObject)
+    {
+      CDOUtil.getCDOObject((EObject)objectToBeLocked).cdoWriteLock().lock();
+    }
+    refresh();
+  }
+
+  public void unlockObject(Object objectToBeUnlocked)
+  {
+    CDOUtil.getCDOObject((EObject)objectToBeUnlocked).cdoWriteLock().unlock();
+    refresh();
   }
 }

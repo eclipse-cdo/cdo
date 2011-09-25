@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AInterfaceEdit
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreVisualIDRegistry;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreElementTypes;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.AcoreViewProvider;
-import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
+import org.eclipse.emf.cdo.dawn.ui.DawnColorConstants;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
 
@@ -36,6 +36,7 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.datatype.RelativeBendpoint;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditPart;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
@@ -276,7 +277,33 @@ public class DawnAcoreTestUtil
       GraphicalEditPart e = (GraphicalEditPart)editPart;
 
       IFigure figure = e.getFigure();
-      return ((LineBorder)figure.getBorder()).getColor().equals(DawnAppearancer.COLOR_DELETE_CONFLICT);
+      return ((LineBorder)figure.getBorder()).getColor().equals(DawnColorConstants.COLOR_DELETE_CONFLICT);
+    }
+    return false;
+  }
+
+  public static Object showsLock(EditPart editPart, Color lockColor)
+  {
+    if (editPart instanceof AClassEditPart || editPart instanceof AInterfaceEditPart)
+    {
+      GraphicalEditPart e = (GraphicalEditPart)editPart;
+
+      IFigure figure = e.getFigure();
+      return ((LineBorder)figure.getBorder()).getColor().equals(lockColor);
+    }
+    return false;
+  }
+
+  public static Object showsNoLock(EditPart editPart)
+  {
+    if (editPart instanceof AClassEditPart || editPart instanceof AInterfaceEditPart)
+    {
+      GraphicalEditPart e = (GraphicalEditPart)editPart;
+
+      IFigure figure = e.getFigure();
+      Color color = ((LineBorder)figure.getBorder()).getColor();
+      return !(color.equals(DawnColorConstants.COLOR_LOCKED_REMOTELY) && color
+          .equals(DawnColorConstants.COLOR_LOCKED_LOCALLY));
     }
     return false;
   }

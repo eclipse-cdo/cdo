@@ -19,8 +19,12 @@ import org.eclipse.emf.cdo.dawn.tests.ui.DawnProjectExplorerTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnEMFCreationWizardTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.emf.DawnEMFHandleEditorTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.emf.EMFEditorRollbackTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.emf.EMFLockingTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.gmf.ConflictTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.DawnCreationWizardSWTBotTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.gmf.GMFLockingTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.MultipleResourcesTest;
+import org.eclipse.emf.cdo.dawn.tests.ui.gmf.RollbackTest;
 import org.eclipse.emf.cdo.dawn.tests.ui.gmf.SimpleDiagramTest;
 import org.eclipse.emf.cdo.tests.AllTests;
 import org.eclipse.emf.cdo.tests.config.IScenario;
@@ -54,24 +58,26 @@ public class AllTestsDawnUISWTBot extends ConfigTestSuite
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    /******************** General **********************/
+    // /******************** General **********************/
     // testClasses.add(DawnCodeGenerationTest.class);
-
-    /******************** GMF **********************/
+    testClasses.add(DawnProjectExplorerTest.class);
     testClasses.add(DawnPreferencesTest.class);
+
+    // /******************** GMF **********************/
     testClasses.add(DawnCreationWizardSWTBotTest.class);
     testClasses.add(SimpleDiagramTest.class);
     testClasses.add(MultipleResourcesTest.class);
-    testClasses.add(DawnProjectExplorerTest.class);
-    // testClasses.add(RollbackTest.class);
-    // testClasses.add(ConflictTest.class);
+    testClasses.add(GMFLockingTest.class);
+    testClasses.add(ConflictTest.class);
+    testClasses.add(RollbackTest.class);
 
-    /******************** EMF **********************/
+    // /******************** EMF **********************/
     testClasses.add(DawnEMFCreationWizardTest.class);
     testClasses.add(EMFEditorRollbackTest.class);
     testClasses.add(DawnEMFHandleEditorTest.class);
+    testClasses.add(EMFLockingTest.class);
 
-    /******************** Bugzilla **********************/
+    // /******************** Bugzilla **********************/
     testClasses.add(Bugzilla_321024_Test.class);
     testClasses.add(Bugzilla_333291_Test.class);
     testClasses.add(Bugzilla_333187_Test.class);

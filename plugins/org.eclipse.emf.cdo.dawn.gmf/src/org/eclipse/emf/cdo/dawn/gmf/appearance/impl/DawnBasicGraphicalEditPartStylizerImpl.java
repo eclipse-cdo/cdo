@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.dawn.gmf.appearance.impl;
 
 import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
 import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnEditPartStylizer;
+import org.eclipse.emf.cdo.dawn.ui.DawnColorConstants;
 
 import org.eclipse.draw2d.Border;
 import org.eclipse.draw2d.IFigure;
@@ -40,7 +41,7 @@ public class DawnBasicGraphicalEditPartStylizerImpl implements DawnEditPartStyli
    */
   public void setConflicted(EditPart editPart, int type)
   {
-    setBorder(editPart, DawnAppearancer.COLOR_DELETE_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+    setBorder(editPart, DawnColorConstants.COLOR_DELETE_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
   }
 
   /**
@@ -48,7 +49,7 @@ public class DawnBasicGraphicalEditPartStylizerImpl implements DawnEditPartStyli
    */
   public void setLocked(EditPart editPart, int type)
   {
-    setBorder(editPart, DawnAppearancer.COLOR_LOCKED_REMOTELY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+    setBorder(editPart, DawnColorConstants.COLOR_LOCKED_REMOTELY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
   }
 
   /**

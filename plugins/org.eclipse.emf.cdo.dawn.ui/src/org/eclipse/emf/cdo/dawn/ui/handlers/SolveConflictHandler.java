@@ -8,11 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.dawn.handlers;
+package org.eclipse.emf.cdo.dawn.ui.handlers;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.helper.DawnEditorHelper;
-import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
+import org.eclipse.emf.cdo.dawn.internal.ui.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 

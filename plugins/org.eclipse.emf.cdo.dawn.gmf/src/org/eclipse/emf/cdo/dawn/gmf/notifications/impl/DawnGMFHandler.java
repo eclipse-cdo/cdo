@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.gmf.synchronize.DawnConflictHelper;
 import org.eclipse.emf.cdo.dawn.gmf.util.DawnDiagramUpdater;
-import org.eclipse.emf.cdo.dawn.notifications.BasicDawnListener;
+import org.eclipse.emf.cdo.dawn.notifications.BasicDawnTransactionHandler;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
@@ -45,7 +45,7 @@ import org.eclipse.swt.widgets.Display;
 /**
  * @author Martin Fluegge
  */
-public class DawnGMFHandler extends BasicDawnListener
+public class DawnGMFHandler extends BasicDawnTransactionHandler
 {
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnGMFHandler.class);
@@ -209,7 +209,6 @@ public class DawnGMFHandler extends BasicDawnListener
 
   private void handleObject(CDOObject dirtyObject)
   {
-
     if (dirtyObject.cdoInvalid())
     {
       return;

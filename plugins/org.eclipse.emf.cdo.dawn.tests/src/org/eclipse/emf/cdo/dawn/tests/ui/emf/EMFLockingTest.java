@@ -32,10 +32,10 @@ import org.junit.runner.RunWith;
  */
 @CleanRepositoriesBefore
 @RunWith(SWTBotJunit4ClassRunner.class)
-public class EMFEditorRollbackTest extends AbstractDawnEMFTest
+public class EMFLockingTest extends AbstractDawnEMFTest
 {
   @Test
-  public void testGMFAClassConflictMove() throws Exception
+  public void testAClassLockRemotely() throws Exception
   {
     DawnSWTBotEMFEditor editor = DawnAcoreTestUtil.openNewAcoreEMFEditor("default.acore", getBot());
     assertNotNull(editor);
@@ -45,10 +45,8 @@ public class EMFEditorRollbackTest extends AbstractDawnEMFTest
 
     editor.clickContextMenu(tree.widget, "AClass");
     editor.save();
-    // selectFolder(tree.getAllItems(), "AClass", false);
 
     IDawnEditor dawnEditor = (IDawnEditor)editor.getReference().getEditor(false);
-
     CDOResource resource = dawnEditor.getDawnEditorSupport().getView().getResource("/default.acore");
     AClass aClass = ((ACoreRoot)resource.getContents().get(0)).getClasses().get(0);
     aClass.setName("BClass");
@@ -58,17 +56,50 @@ public class EMFEditorRollbackTest extends AbstractDawnEMFTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource2 = transaction.getResource("/default.acore");
       AClass aClass2 = ((ACoreRoot)resource2.getContents().get(0)).getClasses().get(0);
-      aClass2.setName("CClass");
-      transaction.commit();
+      aClass2.cdoWriteLock().lock();
     }
     sleep(500);
-    assertEquals(true, aClass.cdoConflict());
-    editor.clickContextMenu(tree.widget, "Solve Conflict");
+    assertEquals(true, aClass.cdoWriteLock().isLockedByOthers());
 
-    getBot().button("yes").click();
-    assertEquals(false, aClass.cdoConflict());
-    assertEquals("CClass", aClass.getName());
     editor.close();
+  }
 
+  @Test
+  public void testAClassLockLocally() throws Exception
+  {
+    DawnSWTBotEMFEditor editor = DawnAcoreTestUtil.openNewAcoreEMFEditor("default.acore", getBot());
+    assertNotNull(editor);
+    SWTBotTree tree = editor.getSelectionPageTree();
+
+    selectFolder(tree.getAllItems(), "ACore Root", false);
+
+    editor.clickContextMenu(tree.widget, "AClass");
+    editor.save();
+
+    selectFolder(tree.getAllItems(), "AClass", false);
+
+    editor.clickContextMenu(tree.widget, "Lock");
+    sleep(500);
+
+    IDawnEditor dawnEditor = (IDawnEditor)editor.getReference().getEditor(false);
+    CDOResource resource = dawnEditor.getDawnEditorSupport().getView().getResource("/default.acore");
+    AClass aClass = ((ACoreRoot)resource.getContents().get(0)).getClasses().get(0);
+    assertEquals(true, aClass.cdoWriteLock().isLocked());
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource2 = transaction.getResource("/default.acore");
+    AClass aClass2 = ((ACoreRoot)resource2.getContents().get(0)).getClasses().get(0);
+    assertEquals(true, aClass2.cdoWriteLock().isLockedByOthers());
+
+    sleep(500);
+
+    editor.clickContextMenu(tree.widget, "Unlock");
+    sleep(500);
+
+    assertEquals(false, aClass.cdoWriteLock().isLocked());
+    assertEquals(false, aClass2.cdoWriteLock().isLockedByOthers());
+
+    editor.close();
   }
 }

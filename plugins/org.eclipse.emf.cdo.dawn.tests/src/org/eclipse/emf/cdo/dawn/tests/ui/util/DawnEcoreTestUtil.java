@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.dawn.tests.ui.util;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassEditPart;
 import org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AInterfaceEditPart;
-import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
+import org.eclipse.emf.cdo.dawn.ui.DawnColorConstants;
 import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
 
@@ -174,7 +174,7 @@ public class DawnEcoreTestUtil
       GraphicalEditPart e = (GraphicalEditPart)editPart;
 
       IFigure figure = e.getFigure();
-      return ((LineBorder)figure.getBorder()).getColor().equals(DawnAppearancer.COLOR_DELETE_CONFLICT);
+      return ((LineBorder)figure.getBorder()).getColor().equals(DawnColorConstants.COLOR_DELETE_CONFLICT);
     }
     return false;
   }

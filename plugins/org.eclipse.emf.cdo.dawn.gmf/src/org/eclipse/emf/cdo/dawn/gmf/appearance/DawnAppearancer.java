@@ -10,11 +10,9 @@
  */
 package org.eclipse.emf.cdo.dawn.gmf.appearance;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.util.EditPartUtilities;
-import org.eclipse.swt.graphics.Color;
 
 /**
  * @author Martin Fluegge
@@ -25,18 +23,6 @@ public class DawnAppearancer
   public static final int DEFAULT_BORDER_THICKNESS = 2;
 
   public static final int DEFAULT_LINE_THICKNESS = 3;
-
-  public static final Color COLOR_NO_BORDER = new Color(null, 255, 255, 255);
-
-  public static final Color COLOR_LOCKED_REMOTELY = ColorConstants.yellow;
-
-  public static final Color COLOR_LOCKED_LOCALLY = ColorConstants.green;
-
-  public static final Color COLOR_DELETE_CONFLICT = new Color(null, 255, 0, 0);
-
-  public static final Color COLOR_CHANGE_CONFLICT = new Color(null, 0, 0, 255);
-
-  public static final Color COLOR_NO_CONFLICT = new Color(null, 255, 255, 255);
 
   public static final int TYPE_CONFLICT_NONE = -1;
 
@@ -90,12 +76,12 @@ public class DawnAppearancer
   /**
    * @since 2.0
    */
-  protected static void setEditPartLocked(EditPart editPart, int type)
+  public static void setEditPartLocked(EditPart editPart, int type)
   {
     DawnEditPartStylizer stylizer = DawnEditPartStylizerRegistry.instance.getStylizer(editPart);
     if (stylizer != null)
     {
-      stylizer.setDefault(editPart);
+      stylizer.setLocked(editPart, type);
     }
   }
 }

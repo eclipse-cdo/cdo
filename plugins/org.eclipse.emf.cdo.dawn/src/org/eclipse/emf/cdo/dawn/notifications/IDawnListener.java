@@ -11,18 +11,23 @@
 package org.eclipse.emf.cdo.dawn.notifications;
 
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
-import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 /**
  * @author Martin Fluegge
  * @since 1.0
  */
-public interface IDawnListener extends CDOTransactionHandler, IListener
+public interface IDawnListener extends IListener
 {
   public void handleViewInvalidationEvent(CDOViewInvalidationEvent event);
 
   public void handleTransactionConflictEvent(CDOTransactionConflictEvent event);
+
+  /**
+   * @since 2.0
+   */
+  public void handleEvent(IEvent event);
 }

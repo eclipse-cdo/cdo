@@ -10,23 +10,14 @@
  */
 package org.eclipse.emf.cdo.dawn.editors;
 
-import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.dawn.spi.IDawnUIElement;
 
 import org.eclipse.ui.IEditorPart;
 
 /**
  * @author Martin Fluegge
  */
-public interface IDawnEditor extends IEditorPart
+public interface IDawnEditor extends IDawnUIElement, IEditorPart
 {
   public String getContributorID();
-
-  public CDOView getView();
-
-  public void setDirty();
-
-  /**
-   * @since 1.0
-   */
-  public IDawnEditorSupport getDawnEditorSupport();
 }

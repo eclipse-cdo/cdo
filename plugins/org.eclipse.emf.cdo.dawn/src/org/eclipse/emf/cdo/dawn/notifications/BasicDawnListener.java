@@ -10,25 +10,17 @@
  */
 package org.eclipse.emf.cdo.dawn.notifications;
 
-import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
-import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
-import org.eclipse.emf.cdo.transaction.CDOCommitContext;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 /**
  * @author Martin Fluegge
  */
 public abstract class BasicDawnListener implements IDawnListener// implements IListener
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BasicDawnListener.class);
-
   protected IDawnEditor editor;
 
   /**
@@ -64,72 +56,9 @@ public abstract class BasicDawnListener implements IDawnListener// implements IL
     {
       handleTransactionConflictEvent((CDOTransactionConflictEvent)event);
     }
-  }
-
-  /**
-   * @since 1.0
-   */
-  public void attachingObject(CDOTransaction transaction, CDOObject object)
-  {
-    if (TRACER.isEnabled())
+    else
     {
-      TRACER.format("attachingObject {0}", object); //$NON-NLS-1$
+      handleEvent(event);
     }
-    editor.setDirty();
-  }
-
-  /**
-   * @since 1.0
-   */
-  public void detachingObject(CDOTransaction transaction, CDOObject object)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("detachingObject {0}", object); //$NON-NLS-1$
-    }
-
-    editor.setDirty();
-  }
-
-  /**
-   * @since 1.0
-   */
-  public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
-  { // This method can be overwritten be subclasses
-  }
-
-  /**
-   * @since 1.0
-   */
-  public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
-  { // This method can be overwritten be subclasses
-  }
-
-  /**
-   * @since 1.0
-   */
-  public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
-  { // This method can be overwritten be subclasses
-  }
-
-  /**
-   * @since 1.0
-   */
-  public void rolledBackTransaction(CDOTransaction transaction)
-  { // This method can be overwritten be subclasses
-  }
-
-  /**
-   * @since 1.0
-   */
-  public void handleViewInvalidationEvent(CDOViewInvalidationEvent event)
-  { // This method can be overwritten be subclasses
-  }
-
-  /**
-   * @since 1.0
-   */
-  public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
-  { // This method can be overwritten be subclasses
   }
 }

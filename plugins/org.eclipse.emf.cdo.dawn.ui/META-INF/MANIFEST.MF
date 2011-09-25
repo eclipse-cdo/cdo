@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.cdo.ui;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.dawn.util;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.emf.cdo.dawn;bundle-version="[2.0.0,3.0.0)"
+ org.eclipse.emf.cdo.dawn;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.draw2d;bundle-version="[3.5.0,4.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
@@ -16,6 +17,7 @@ Bundle-Localization: plugin
 Export-Package: org.eclipse.emf.cdo.dawn.internal.ui.bundle;version="2.0.0",
  org.eclipse.emf.cdo.dawn.ui;version="2.0.0",
  org.eclipse.emf.cdo.dawn.ui.composites;version="2.0.0",
+ org.eclipse.emf.cdo.dawn.ui.handlers;version="2.0.0";x-internal:=true,
  org.eclipse.emf.cdo.dawn.ui.helper;version="2.0.0",
  org.eclipse.emf.cdo.dawn.ui.messages;version="2.0.0",
  org.eclipse.emf.cdo.dawn.ui.views;version="2.0.0",

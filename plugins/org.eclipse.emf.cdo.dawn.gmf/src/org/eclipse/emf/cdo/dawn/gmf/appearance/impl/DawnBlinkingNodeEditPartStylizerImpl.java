@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.dawn.gmf.appearance.impl;
 
 import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
+import org.eclipse.emf.cdo.dawn.ui.DawnColorConstants;
 
 import org.eclipse.gef.EditPart;
 
@@ -35,7 +36,7 @@ public class DawnBlinkingNodeEditPartStylizerImpl extends DawnBasicGraphicalEdit
   public void setDefault(EditPart editPart)
   {
     blinkingThread.stop(editPart);
-    setBorder(editPart, DawnAppearancer.COLOR_NO_CONFLICT, 0);
+    setBorder(editPart, DawnColorConstants.COLOR_NO_CONFLICT, 0);
   }
 
   @Override
@@ -47,7 +48,7 @@ public class DawnBlinkingNodeEditPartStylizerImpl extends DawnBasicGraphicalEdit
   @Override
   public void setLocked(EditPart editPart, int type)
   {
-    setBorder(editPart, DawnAppearancer.COLOR_LOCKED_REMOTELY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+    setBorder(editPart, DawnColorConstants.COLOR_LOCKED_REMOTELY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
   }
 
   /**
@@ -68,11 +69,11 @@ public class DawnBlinkingNodeEditPartStylizerImpl extends DawnBasicGraphicalEdit
         {
           if (editParts.get(e))
           {
-            setBorder(e, DawnAppearancer.COLOR_NO_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+            setBorder(e, DawnColorConstants.COLOR_NO_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
           }
           else
           {
-            setBorder(e, DawnAppearancer.COLOR_DELETE_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+            setBorder(e, DawnColorConstants.COLOR_DELETE_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
           }
 
           editParts.put(e, !editParts.get(e));

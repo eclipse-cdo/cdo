@@ -111,42 +111,4 @@
              name="UnlockObjects">
        </command>
     </extension>-->
-    <extension
-          point="org.eclipse.ui.menus">
-             <menuContribution
-                   locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               label="Conflict">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activePart">
-                  <instanceof
-                        value="org.eclipse.emf.cdo.dawn.editors.IDawnEditor">
-                  </instanceof>
-               </with>
-            </visibleWhen>
-            <command
-                  commandId="org.eclipse.emf.cdo.dawn.commands.solveconflict"
-                  label="Solve Conflict"
-                  mnemonic="%contributions.view.refresh.mnemonic">
-            </command>
-         </menu>
-      </menuContribution>
-
-    </extension>
-    <extension
-          point="org.eclipse.ui.commands">
-       <command
-             id="org.eclipse.emf.cdo.dawn.commands.solveconflict"
-             name="Solve Confilct">
-       </command>
-    </extension>
-    <extension
-          point="org.eclipse.ui.handlers">
-       <handler
-             class="org.eclipse.emf.cdo.dawn.handlers.SolveConflictHandler"
-             commandId="org.eclipse.emf.cdo.dawn.commands.solveconflict">
-       </handler>
-    </extension>
 </plugin>

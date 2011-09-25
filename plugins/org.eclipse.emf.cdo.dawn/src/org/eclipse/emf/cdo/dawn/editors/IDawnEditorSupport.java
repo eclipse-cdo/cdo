@@ -10,27 +10,12 @@
  */
 package org.eclipse.emf.cdo.dawn.editors;
 
-import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.dawn.spi.IDawnEditingSupport;
 
 /**
  * @author Martin Fluegge
  */
-public interface IDawnEditorSupport
+public interface IDawnEditorSupport extends IDawnEditingSupport
 {
-  public void setDirty(boolean dirty);
 
-  public boolean isDirty();
-
-  public CDOView getView();
-
-  public void setView(CDOView view);
-
-  public void close();
-
-  public void registerListeners();
-
-  /**
-   * @since 1.0
-   */
-  public void rollback();
 }

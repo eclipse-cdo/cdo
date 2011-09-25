@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.dawn.gmf.appearance.impl;
 
 import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
+import org.eclipse.emf.cdo.dawn.ui.DawnColorConstants;
 
 import org.eclipse.draw2d.Border;
 import org.eclipse.gef.EditPart;
@@ -43,7 +44,7 @@ public class DawnBasicTextAwareEditPartStylizerImpl extends DawnBasicGraphicalEd
     // e.getFigure().setForegroundColor(DawnAppearancer.COLOR_DELETE_CONFLICT);
     oldValues.put(e, e.getFigure().getBorder());
 
-    setBorder(editPart, DawnAppearancer.COLOR_DELETE_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+    setBorder(editPart, DawnColorConstants.COLOR_DELETE_CONFLICT, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
     // View view = (View)e.getModel();
     // FontStyle style = (FontStyle)view.getStyle(NotationPackage.eINSTANCE.getFontStyle());
     // if (style == null)
@@ -59,6 +60,6 @@ public class DawnBasicTextAwareEditPartStylizerImpl extends DawnBasicGraphicalEd
   @Override
   public void setLocked(EditPart editPart, int type)
   {
-    setBorder(editPart, DawnAppearancer.COLOR_LOCKED_REMOTELY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
+    setBorder(editPart, DawnColorConstants.COLOR_LOCKED_REMOTELY, DawnAppearancer.DEFAULT_BORDER_THICKNESS);
   }
 }

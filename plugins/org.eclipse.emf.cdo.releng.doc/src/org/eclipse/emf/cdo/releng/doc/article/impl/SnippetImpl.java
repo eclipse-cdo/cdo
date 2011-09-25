@@ -255,14 +255,14 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     out.write("  <a name=\"snippet_" + id + "\"></a\n");
     out.write("  <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
     out.write("    <tr>\n");
-    out.write("      <td><img src=\"" + imagePath + "editor-top-left.png\"></img></td>\n");
+    out.write("      <td><img src=\"" + imagePath + "editor-top-left.png\"></td>\n");
     out.write("      <td style=\"background-image:url(" + imagePath
         + "editor-top1.png); background-repeat:repeat-x;\" width=\"1px\"><font face=\"Segoe UI,Arial\" size=\"-1\">"
         + title + "</font></td>\n");
-    out.write("      <td width=\"1px\"><img src=\"" + imagePath + "editor-close.png\"></img></td>\n");
+    out.write("      <td width=\"1px\"><img src=\"" + imagePath + "editor-close.png\"></td>\n");
     out.write("      <td style=\"background-image:url(" + imagePath
         + "editor-top2.png); background-repeat:repeat-x;\">&nbsp;</td>\n");
-    out.write("      <td><img src=\"" + imagePath + "editor-top-right.png\"></img></td>\n");
+    out.write("      <td><img src=\"" + imagePath + "editor-top-right.png\"></td>\n");
     out.write("    </tr>\n");
     out.write("    <tr>\n");
     out.write("      <td style=\"background-image:url(" + imagePath
@@ -281,10 +281,10 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
         + "editor-right.png); background-repeat:repeat-y;\">&nbsp;</td>\n");
     out.write("    </tr>\n");
     out.write("    <tr>\n");
-    out.write("      <td><img src=\"" + imagePath + "editor-bottom-left.png\"></img></td>\n");
+    out.write("      <td><img src=\"" + imagePath + "editor-bottom-left.png\"></td>\n");
     out.write("      <td style=\"background-image:url(" + imagePath
         + "editor-bottom.png); background-repeat:repeat-x;\" colspan=\"3\">&nbsp;</td>\n");
-    out.write("      <td><img src=\"" + imagePath + "editor-bottom-right.png\"></img></td>\n");
+    out.write("      <td><img src=\"" + imagePath + "editor-bottom-right.png\"></td>\n");
     out.write("    </tr>\n");
     out.write("  </table>\n");
     out.write("</div>\n");
@@ -415,7 +415,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     String hrefSuffix = code ? "" : "_code";
 
     String image = "<img src=\"" + imagePath + "callout-" + number
-        + ".png\" width=\"16\" height=\"16\" border=\"0\" align=\"top\"></img>";
+        + ".png\" width=\"16\" height=\"16\" border=\"0\" align=\"top\">";
 
     alt = PATTERN.matcher(alt).replaceAll("");
     alt = alt.replaceAll("\"", "&quot;");

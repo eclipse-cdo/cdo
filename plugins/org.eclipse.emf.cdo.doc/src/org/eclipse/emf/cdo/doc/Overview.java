@@ -67,11 +67,10 @@ public class Overview
    * <dt><b>Scalability</b>
    * <dd>Scalability, the ability to store and access models of arbitrary size, is transparently achieved by loading
    * single objects on demand and caching them <i>softly</i> in your application. That implies that objects that are no
-   * longer referenced by the application are automatically garbage collected when memory contention occurs. Lazy
-   * loading is accompanied by various prefetching strategies, including the monitoring of the object graph's
-   * <i>usage</i> and the calculation of fetch rules that are optimal for the current usage patterns. The scalability of
-   * EMF applications can be further increased by leveraging CDO constructs such as remote cross referencing or
-   * optimized content adapters.
+   * longer referenced by the application are automatically garbage collected when memory runs low. Lazy loading is
+   * accompanied by various prefetching strategies, including the monitoring of the object graph's <i>usage</i> and the
+   * calculation of fetch rules that are optimal for the current usage patterns. The scalability of EMF applications can
+   * be further increased by leveraging CDO constructs such as remote cross referencing or optimized content adapters.
    * <p>
    * <dt><b>Thread Safety</b>
    * <dd>Thread safety ensures that multiple threads of your application can access and modify the object graph without

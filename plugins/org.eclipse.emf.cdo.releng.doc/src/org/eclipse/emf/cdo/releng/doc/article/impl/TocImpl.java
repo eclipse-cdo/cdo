@@ -200,11 +200,11 @@ public class TocImpl extends BodyElementImpl implements Toc
 
       if (element instanceof Category)
       {
-        out.write("<img src=\"" + imagePath + "category.gif\"></img>");
+        out.write("<img src=\"" + imagePath + "category.gif\">");
       }
       else if (element instanceof Article)
       {
-        out.write("<img src=\"" + imagePath + "article.gif\"></img>");
+        out.write("<img src=\"" + imagePath + "article.gif\">");
       }
       else
       {

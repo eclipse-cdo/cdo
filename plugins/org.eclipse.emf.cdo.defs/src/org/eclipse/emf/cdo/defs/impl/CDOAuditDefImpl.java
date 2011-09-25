@@ -28,18 +28,18 @@ import java.util.Date;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.defs.impl.CDOAuditDefImpl#getTimeStamp <em>Time Stamp</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.defs.impl.CDOAuditDefImpl#getTimeStamp <em>Time Stamp</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 {
   /**
-   * The default value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getTimeStamp()
    * @generated
    * @ordered
@@ -47,9 +47,9 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
   protected static final Date TIME_STAMP_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getTimeStamp() <em>Time Stamp</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getTimeStamp()
    * @generated
    * @ordered
@@ -58,7 +58,6 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOAuditDefImpl()
@@ -68,7 +67,6 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -79,7 +77,6 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Date getTimeStamp()
@@ -89,7 +86,6 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTimeStamp(Date newTimeStamp)
@@ -103,7 +99,6 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -119,7 +114,6 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -136,7 +130,6 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -153,7 +146,6 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -169,7 +161,6 @@ public class CDOAuditDefImpl extends CDOViewDefImpl implements CDOAuditDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

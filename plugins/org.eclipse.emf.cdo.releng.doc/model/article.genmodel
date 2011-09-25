@@ -2,48 +2,53 @@
 <genmodel:GenModel xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.releng.doc/src"
-    modelPluginID="org.eclipse.emf.cdo.releng.doc" modelName="Article" updateClasspath="false"
-    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
-    copyrightFields="false">
+    editDirectory="" editorDirectory="" modelPluginID="org.eclipse.emf.cdo.releng.doc"
+    modelName="Article" updateClasspath="false" codeFormatting="true" testsDirectory=""
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    runtimeVersion="2.6">
   <foreignModel>article.ecore</foreignModel>
   <genPackages prefix="Article" basePackage="org.eclipse.emf.cdo.releng.doc" disposableProviderFactory="true"
       ecorePackage="article.ecore#/">
     <genDataTypes ecoreDataType="article.ecore#//RootDoc"/>
     <genDataTypes ecoreDataType="article.ecore#//File"/>
     <genDataTypes ecoreDataType="article.ecore#//Doc"/>
+    <genDataTypes ecoreDataType="article.ecore#//Tag"/>
     <genClasses ecoreClass="article.ecore#//Documentation">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference article.ecore#//Documentation/context"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference article.ecore#//Documentation/embeddableElements"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference article.ecore#//Documentation/dependencies"/>
-      <genOperations ecoreOperation="article.ecore#//Documentation/generate"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Documentation/project"/>
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference article.ecore#//Documentation/plugins"/>
     </genClasses>
     <genClasses ecoreClass="article.ecore#//Context">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Context/baseFolder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Context/project"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference article.ecore#//Context/documentations"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Context/root"/>
     </genClasses>
     <genClasses ecoreClass="article.ecore#//Category"/>
-    <genClasses ecoreClass="article.ecore#//Article">
-      <genOperations ecoreOperation="article.ecore#//Article/generate"/>
+    <genClasses ecoreClass="article.ecore#//Article"/>
+    <genClasses ecoreClass="article.ecore#//Chapter">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference article.ecore#//Chapter/article"/>
     </genClasses>
-    <genClasses ecoreClass="article.ecore#//Chapter"/>
     <genClasses ecoreClass="article.ecore#//Snippet">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference article.ecore#//Snippet/callouts"/>
     </genClasses>
-    <genClasses ecoreClass="article.ecore#//Diagram">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Diagram/code"/>
-    </genClasses>
+    <genClasses ecoreClass="article.ecore#//Diagram"/>
     <genClasses ecoreClass="article.ecore#//Factory"/>
-    <genClasses ecoreClass="article.ecore#//JavaElement"/>
+    <genClasses ecoreClass="article.ecore#//JavaElement">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//JavaElement/classFile"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="article.ecore#//StructuralElement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference article.ecore#//StructuralElement/children"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference article.ecore#//StructuralElement/parent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//StructuralElement/title"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//StructuralElement/path"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//StructuralElement/outputFile"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference article.ecore#//StructuralElement/documentation"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//StructuralElement/doc"/>
     </genClasses>
     <genClasses image="false" ecoreClass="article.ecore#//LinkTarget">
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//LinkTarget/label"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//LinkTarget/defaultLabel"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//LinkTarget/tooltip"/>
       <genOperations ecoreOperation="article.ecore#//LinkTarget/linkFrom">
         <genParameters ecoreParameter="article.ecore#//LinkTarget/linkFrom/source"/>
       </genOperations>
@@ -53,25 +58,24 @@
     </genClasses>
     <genClasses image="false" ecoreClass="article.ecore#//EmbeddableElement">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference article.ecore#//EmbeddableElement/documentation"/>
-      <genOperations ecoreOperation="article.ecore#//EmbeddableElement/getHtml">
-        <genParameters ecoreParameter="article.ecore#//EmbeddableElement/getHtml/embedder"/>
-      </genOperations>
     </genClasses>
-    <genClasses ecoreClass="article.ecore#//ExternalTarget"/>
+    <genClasses ecoreClass="article.ecore#//ExternalTarget">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//ExternalTarget/url"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="article.ecore#//Identifiable">
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Identifiable/id"/>
     </genClasses>
     <genClasses image="false" ecoreClass="article.ecore#//Body">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference article.ecore#//Body/elements"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Body/html"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference article.ecore#//Body/category"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="article.ecore#//BodyElementContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference article.ecore#//BodyElementContainer/elements"/>
     </genClasses>
     <genClasses image="false" ecoreClass="article.ecore#//BodyElement">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference article.ecore#//BodyElement/body"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//BodyElement/html"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference article.ecore#//BodyElement/container"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//BodyElement/tag"/>
     </genClasses>
-    <genClasses ecoreClass="article.ecore#//Text">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Text/value"/>
-    </genClasses>
+    <genClasses ecoreClass="article.ecore#//Text"/>
     <genClasses ecoreClass="article.ecore#//Link">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference article.ecore#//Link/target"/>
     </genClasses>
@@ -79,5 +83,28 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference article.ecore#//Embedding/element"/>
     </genClasses>
     <genClasses ecoreClass="article.ecore#//SourceCode"/>
+    <genClasses ecoreClass="article.ecore#//Plugin">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Plugin/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference article.ecore#//Plugin/packages"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Plugin/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference article.ecore#//Plugin/extensionPoints"/>
+    </genClasses>
+    <genClasses ecoreClass="article.ecore#//JavaPackage">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//JavaPackage/name"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference article.ecore#//JavaPackage/plugin"/>
+    </genClasses>
+    <genClasses ecoreClass="article.ecore#//Javadoc"/>
+    <genClasses ecoreClass="article.ecore#//ExternalArticle">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//ExternalArticle/url"/>
+    </genClasses>
+    <genClasses ecoreClass="article.ecore#//Schemadoc"/>
+    <genClasses ecoreClass="article.ecore#//ExtensionPoint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//ExtensionPoint/name"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference article.ecore#//ExtensionPoint/plugin"/>
+    </genClasses>
+    <genClasses ecoreClass="article.ecore#//Toc">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute article.ecore#//Toc/levels"/>
+    </genClasses>
+    <genClasses ecoreClass="article.ecore#//PluginResource"/>
   </genPackages>
 </genmodel:GenModel>

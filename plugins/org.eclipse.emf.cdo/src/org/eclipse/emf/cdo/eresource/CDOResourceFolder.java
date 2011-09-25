@@ -19,10 +19,15 @@ import org.eclipse.emf.common.util.EList;
  * @apiviz.composedOf {@link CDOResourceNode} - - nodes
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
+ *              <p>
+ *              The following features are supported:
+ *              <ul>
+ *              <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceFolder#getNodes <em>Nodes</em>}</li>
+ *              </ul>
+ *              </p>
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceFolder()
  * @model
  * @generated
- * @since 2.0
  */
 public interface CDOResourceFolder extends CDOResourceNode
 {

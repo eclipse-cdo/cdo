@@ -34,91 +34,78 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilDefsPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass defContainerEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass defEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass executorServiceDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass threadPoolDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass randomizerDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass userManagerDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass userEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass passwordCredentialsProviderDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass credentialsProviderDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass negotiatorDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass responseNegotiatorDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass challengeNegotiatorDefEClass = null;
@@ -143,7 +130,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
@@ -163,9 +149,7 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
   public static Net4jUtilDefsPackage init()
   {
     if (isInited)
-    {
       return (Net4jUtilDefsPackage)EPackage.Registry.INSTANCE.getEPackage(Net4jUtilDefsPackage.eNS_URI);
-    }
 
     // Obtain or create and register package
     Net4jUtilDefsPackageImpl theNet4jUtilDefsPackage = (Net4jUtilDefsPackageImpl)(EPackage.Registry.INSTANCE
@@ -190,7 +174,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getDefContainer()
@@ -200,7 +183,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getDefContainer_Definitions()
@@ -210,7 +192,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getDefContainer_DefaultDefinition()
@@ -220,7 +201,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getDef()
@@ -230,7 +210,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getExecutorServiceDef()
@@ -240,7 +219,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getThreadPoolDef()
@@ -250,7 +228,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getRandomizerDef()
@@ -260,7 +237,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getRandomizerDef_AlgorithmName()
@@ -270,7 +246,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getRandomizerDef_ProviderName()
@@ -280,7 +255,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getRandomizerDef_Seed()
@@ -290,7 +264,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getUserManagerDef()
@@ -300,7 +273,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getUserManagerDef_User()
@@ -310,7 +282,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getUser()
@@ -320,7 +291,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getUser_UserID()
@@ -330,7 +300,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getUser_Password()
@@ -340,7 +309,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getPasswordCredentialsProviderDef()
@@ -350,7 +318,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getPasswordCredentialsProviderDef_Password()
@@ -360,7 +327,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCredentialsProviderDef()
@@ -370,7 +336,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCredentialsProviderDef_UserID()
@@ -380,7 +345,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getNegotiatorDef()
@@ -390,7 +354,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getResponseNegotiatorDef()
@@ -400,7 +363,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getResponseNegotiatorDef_CredentialsProvider()
@@ -410,7 +372,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getChallengeNegotiatorDef()
@@ -420,7 +381,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getChallengeNegotiatorDef_UserManager()
@@ -430,7 +390,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getChallengeNegotiatorDef_Randomizer()
@@ -440,7 +399,6 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Net4jUtilDefsFactory getNet4jUtilDefsFactory()
@@ -450,23 +408,20 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -510,23 +465,20 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -539,23 +491,23 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    executorServiceDefEClass.getESuperTypes().add(getDef());
-    threadPoolDefEClass.getESuperTypes().add(getExecutorServiceDef());
-    randomizerDefEClass.getESuperTypes().add(getDef());
-    userManagerDefEClass.getESuperTypes().add(getDef());
-    passwordCredentialsProviderDefEClass.getESuperTypes().add(getCredentialsProviderDef());
-    credentialsProviderDefEClass.getESuperTypes().add(getDef());
-    negotiatorDefEClass.getESuperTypes().add(getDef());
-    responseNegotiatorDefEClass.getESuperTypes().add(getNegotiatorDef());
-    challengeNegotiatorDefEClass.getESuperTypes().add(getNegotiatorDef());
+    executorServiceDefEClass.getESuperTypes().add(this.getDef());
+    threadPoolDefEClass.getESuperTypes().add(this.getExecutorServiceDef());
+    randomizerDefEClass.getESuperTypes().add(this.getDef());
+    userManagerDefEClass.getESuperTypes().add(this.getDef());
+    passwordCredentialsProviderDefEClass.getESuperTypes().add(this.getCredentialsProviderDef());
+    credentialsProviderDefEClass.getESuperTypes().add(this.getDef());
+    negotiatorDefEClass.getESuperTypes().add(this.getDef());
+    responseNegotiatorDefEClass.getESuperTypes().add(this.getNegotiatorDef());
+    challengeNegotiatorDefEClass.getESuperTypes().add(this.getNegotiatorDef());
 
     // Initialize classes and features; add operations and parameters
     initEClass(defContainerEClass, DefContainer.class, "DefContainer", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDefContainer_Definitions(), getDef(), null, "definitions", null, 1, -1, DefContainer.class,
+    initEReference(getDefContainer_Definitions(), this.getDef(), null, "definitions", null, 1, -1, DefContainer.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getDefContainer_DefaultDefinition(), getDef(), null, "defaultDefinition", null, 0, 1,
+    initEReference(getDefContainer_DefaultDefinition(), this.getDef(), null, "defaultDefinition", null, 0, 1,
         DefContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -584,9 +536,9 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
     initEClass(userManagerDefEClass, UserManagerDef.class, "UserManagerDef", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getUserManagerDef_User(), getUser(), null, "user", null, 1, -1, UserManagerDef.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEReference(getUserManagerDef_User(), this.getUser(), null, "user", null, 1, -1, UserManagerDef.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(userEClass, User.class, "User", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getUser_UserID(), ecorePackage.getEString(), "userID", null, 0, 1, User.class, !IS_TRANSIENT,
@@ -611,16 +563,16 @@ public class Net4jUtilDefsPackageImpl extends EPackageImpl implements Net4jUtilD
 
     initEClass(responseNegotiatorDefEClass, ResponseNegotiatorDef.class, "ResponseNegotiatorDef", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getResponseNegotiatorDef_CredentialsProvider(), getCredentialsProviderDef(), null,
+    initEReference(getResponseNegotiatorDef_CredentialsProvider(), this.getCredentialsProviderDef(), null,
         "credentialsProvider", null, 0, 1, ResponseNegotiatorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(challengeNegotiatorDefEClass, ChallengeNegotiatorDef.class, "ChallengeNegotiatorDef", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getChallengeNegotiatorDef_UserManager(), getUserManagerDef(), null, "userManager", null, 0, 1,
+    initEReference(getChallengeNegotiatorDef_UserManager(), this.getUserManagerDef(), null, "userManager", null, 0, 1,
         ChallengeNegotiatorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getChallengeNegotiatorDef_Randomizer(), getRandomizerDef(), null, "randomizer", null, 0, 1,
+    initEReference(getChallengeNegotiatorDef_Randomizer(), this.getRandomizerDef(), null, "randomizer", null, 0, 1,
         ChallengeNegotiatorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

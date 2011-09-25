@@ -31,21 +31,20 @@ import java.util.Date;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.gastro.business.impl.BusinessDayImpl#getDate <em>Date</em>}</li>
- * <li>{@link org.gastro.business.impl.BusinessDayImpl#getMenuCard <em>Menu Card</em>}</li>
- * <li>{@link org.gastro.business.impl.BusinessDayImpl#getOrders <em>Orders</em>}</li>
- * <li>{@link org.gastro.business.impl.BusinessDayImpl#getWaiters <em>Waiters</em>}</li>
- * <li>{@link org.gastro.business.impl.BusinessDayImpl#isClosed <em>Closed</em>}</li>
+ *   <li>{@link org.gastro.business.impl.BusinessDayImpl#getDate <em>Date</em>}</li>
+ *   <li>{@link org.gastro.business.impl.BusinessDayImpl#getMenuCard <em>Menu Card</em>}</li>
+ *   <li>{@link org.gastro.business.impl.BusinessDayImpl#getOrders <em>Orders</em>}</li>
+ *   <li>{@link org.gastro.business.impl.BusinessDayImpl#getWaiters <em>Waiters</em>}</li>
+ *   <li>{@link org.gastro.business.impl.BusinessDayImpl#isClosed <em>Closed</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected BusinessDayImpl()
@@ -55,7 +54,6 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -66,7 +64,6 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -77,7 +74,6 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Date getDate()
@@ -87,7 +83,6 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setDate(Date newDate)
@@ -97,7 +92,6 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public MenuCard getMenuCard()
@@ -107,7 +101,6 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setMenuCard(MenuCard newMenuCard)
@@ -117,7 +110,6 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -128,7 +120,6 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -139,7 +130,6 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isClosed()
@@ -149,7 +139,6 @@ public class BusinessDayImpl extends CDOObjectImpl implements BusinessDay
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setClosed(boolean newClosed)

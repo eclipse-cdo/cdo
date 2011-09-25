@@ -22,7 +22,6 @@ import java.util.List;
 /**
  * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>Order State</b></em>', and
  * utility methods for working with them. <!-- end-user-doc -->
- * 
  * @see org.gastro.business.BusinessPackage#getOrderState()
  * @model
  * @generated
@@ -30,8 +29,8 @@ import java.util.List;
 public enum OrderState implements Enumerator
 {
   /**
-   * The '<em><b>Ordered</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The '<em><b>Ordered</b></em>' literal object.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #ORDERED_VALUE
    * @generated
    * @ordered
@@ -39,8 +38,8 @@ public enum OrderState implements Enumerator
   ORDERED(0, "Ordered", "Ordered"),
 
   /**
-   * The '<em><b>Acknowledged</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The '<em><b>Acknowledged</b></em>' literal object.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #ACKNOWLEDGED_VALUE
    * @generated
    * @ordered
@@ -48,8 +47,8 @@ public enum OrderState implements Enumerator
   ACKNOWLEDGED(2, "Acknowledged", "Acknowledged"),
 
   /**
-   * The '<em><b>Prepared</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The '<em><b>Prepared</b></em>' literal object.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #PREPARED_VALUE
    * @generated
    * @ordered
@@ -57,8 +56,8 @@ public enum OrderState implements Enumerator
   PREPARED(1, "Prepared", "Prepared"),
 
   /**
-   * The '<em><b>Served</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The '<em><b>Served</b></em>' literal object.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #SERVED_VALUE
    * @generated
    * @ordered
@@ -66,8 +65,8 @@ public enum OrderState implements Enumerator
   SERVED(3, "Served", "Served"),
 
   /**
-   * The '<em><b>Paid</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The '<em><b>Paid</b></em>' literal object.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #PAID_VALUE
    * @generated
    * @ordered
@@ -75,13 +74,13 @@ public enum OrderState implements Enumerator
   PAID(4, "Paid", "Paid");
 
   /**
-   * The '<em><b>Ordered</b></em>' literal value. <!-- begin-user-doc -->
+   * The '<em><b>Ordered</b></em>' literal value.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>Ordered</b></em>' literal object isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @see #ORDERED
    * @model name="Ordered"
    * @generated
@@ -90,13 +89,13 @@ public enum OrderState implements Enumerator
   public static final int ORDERED_VALUE = 0;
 
   /**
-   * The '<em><b>Acknowledged</b></em>' literal value. <!-- begin-user-doc -->
+   * The '<em><b>Acknowledged</b></em>' literal value.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>Acknowledged</b></em>' literal object isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @see #ACKNOWLEDGED
    * @model name="Acknowledged"
    * @generated
@@ -105,13 +104,13 @@ public enum OrderState implements Enumerator
   public static final int ACKNOWLEDGED_VALUE = 2;
 
   /**
-   * The '<em><b>Prepared</b></em>' literal value. <!-- begin-user-doc -->
+   * The '<em><b>Prepared</b></em>' literal value.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>Prepared</b></em>' literal object isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @see #PREPARED
    * @model name="Prepared"
    * @generated
@@ -120,13 +119,13 @@ public enum OrderState implements Enumerator
   public static final int PREPARED_VALUE = 1;
 
   /**
-   * The '<em><b>Served</b></em>' literal value. <!-- begin-user-doc -->
+   * The '<em><b>Served</b></em>' literal value.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>Served</b></em>' literal object isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @see #SERVED
    * @model name="Served"
    * @generated
@@ -135,13 +134,13 @@ public enum OrderState implements Enumerator
   public static final int SERVED_VALUE = 3;
 
   /**
-   * The '<em><b>Paid</b></em>' literal value. <!-- begin-user-doc -->
+   * The '<em><b>Paid</b></em>' literal value.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of '<em><b>Paid</b></em>' literal object isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @see #PAID
    * @model name="Paid"
    * @generated
@@ -150,24 +149,24 @@ public enum OrderState implements Enumerator
   public static final int PAID_VALUE = 4;
 
   /**
-   * An array of all the '<em><b>Order State</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * An array of all the '<em><b>Order State</b></em>' enumerators.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   private static final OrderState[] VALUES_ARRAY = new OrderState[] { ORDERED, ACKNOWLEDGED, PREPARED, SERVED, PAID, };
 
   /**
-   * A public read-only list of all the '<em><b>Order State</b></em>' enumerators. <!-- begin-user-doc --> <!--
+   * A public read-only list of all the '<em><b>Order State</b></em>' enumerators.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   public static final List<OrderState> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
   /**
-   * Returns the '<em><b>Order State</b></em>' literal with the specified literal value. <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>Order State</b></em>' literal with the specified literal value.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   public static OrderState get(String literal)
@@ -184,9 +183,9 @@ public enum OrderState implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Order State</b></em>' literal with the specified name. <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>Order State</b></em>' literal with the specified name.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   public static OrderState getByName(String name)
@@ -203,9 +202,9 @@ public enum OrderState implements Enumerator
   }
 
   /**
-   * Returns the '<em><b>Order State</b></em>' literal with the specified integer value. <!-- begin-user-doc --> <!--
+   * Returns the '<em><b>Order State</b></em>' literal with the specified integer value.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   public static OrderState get(int value)
@@ -228,28 +227,25 @@ public enum OrderState implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private final int value;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private final String name;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private final String literal;
 
   /**
-   * Only this class can construct instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Only this class can construct instances.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   private OrderState(int value, String name, String literal)
@@ -261,7 +257,6 @@ public enum OrderState implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getValue()
@@ -271,7 +266,6 @@ public enum OrderState implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -281,7 +275,6 @@ public enum OrderState implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getLiteral()
@@ -290,9 +283,9 @@ public enum OrderState implements Enumerator
   }
 
   /**
-   * Returns the literal value of the enumerator, which is its string representation. <!-- begin-user-doc --> <!--
+   * Returns the literal value of the enumerator, which is its string representation.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   @Override

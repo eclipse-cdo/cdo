@@ -13,3 +13,4 @@
  * Client utility classes, some common interfaces and exceptions.
  */
 package org.eclipse.emf.cdo.util;
+

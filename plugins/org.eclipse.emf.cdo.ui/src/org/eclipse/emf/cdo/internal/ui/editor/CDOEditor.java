@@ -611,11 +611,17 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void handleActivateGen()
   {
+    // Recompute the read only state.
+    //
     if (editingDomain.getResourceToReadOnlyMap() != null)
     {
       editingDomain.getResourceToReadOnlyMap().clear();
+
+      // Refresh any actions that may become enabled or disabled.
+      //
       setSelection(getSelection());
     }
+
     if (!removedResources.isEmpty())
     {
       if (handleDirtyConflict())
@@ -704,7 +710,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (updateProblemIndication)
     {
-      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.ui", 0, null, //$NON-NLS-1$
+      BasicDiagnostic diagnostic = new BasicDiagnostic(Diagnostic.OK, "org.eclipse.emf.cdo.ui", 0, null,
           new Object[] { editingDomain.getResourceSet() });
       for (Diagnostic childDiagnostic : resourceToDiagnosticMap.values())
       {
@@ -766,8 +772,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected boolean handleDirtyConflict()
   {
-    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"), //$NON-NLS-1$
-        getString("_WARN_FileConflict")); //$NON-NLS-1$
+    return MessageDialog.openQuestion(getSite().getShell(), getString("_UI_FileConflict_label"),
+        getString("_WARN_FileConflict"));
   }
 
   /**
@@ -1029,8 +1035,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void createContextMenuFor(StructuredViewer viewer)
   {
-    MenuManager contextMenu = new MenuManager("#PopUp"); //$NON-NLS-1$
-    contextMenu.add(new Separator("additions")); //$NON-NLS-1$
+    MenuManager contextMenu = new MenuManager("#PopUp");
+    contextMenu.add(new Separator("additions"));
     contextMenu.setRemoveAllWhenShown(true);
     contextMenu.addMenuListener(this);
     Menu menu = contextMenu.createContextMenu(viewer.getControl());
@@ -1164,16 +1170,16 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
-      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString( //$NON-NLS-1$
-          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception == null ? (Object)resource //$NON-NLS-1$
+      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString(
+          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception == null ? (Object)resource
           : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
     else if (exception != null)
     {
-      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString( //$NON-NLS-1$
-          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception }); //$NON-NLS-1$
+      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString(
+          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception });
     }
     else
     {
@@ -1212,7 +1218,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
       createContextMenuFor(selectionViewer);
       int pageIndex = addPage(tree);
-      setPageText(pageIndex, getString("_UI_SelectionPage_label")); //$NON-NLS-1$
+      setPageText(pageIndex, getString("_UI_SelectionPage_label"));
 
       getSite().getShell().getDisplay().asyncExec(new Runnable()
       {
@@ -2171,25 +2177,25 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
         case 0:
         {
-          statusLineManager.setMessage(getString("_UI_NoObjectSelected")); //$NON-NLS-1$
+          statusLineManager.setMessage(getString("_UI_NoObjectSelected"));
           break;
         }
         case 1:
         {
           String text = new AdapterFactoryItemDelegator(adapterFactory).getText(collection.iterator().next());
-          statusLineManager.setMessage(getString("_UI_SingleObjectSelected", text)); //$NON-NLS-1$
+          statusLineManager.setMessage(getString("_UI_SingleObjectSelected", text));
           break;
         }
         default:
         {
-          statusLineManager.setMessage(getString("_UI_MultiObjectSelected", Integer.toString(collection.size()))); //$NON-NLS-1$
+          statusLineManager.setMessage(getString("_UI_MultiObjectSelected", Integer.toString(collection.size())));
           break;
         }
         }
       }
       else
       {
-        statusLineManager.setMessage(""); //$NON-NLS-1$
+        statusLineManager.setMessage("");
       }
     }
   }

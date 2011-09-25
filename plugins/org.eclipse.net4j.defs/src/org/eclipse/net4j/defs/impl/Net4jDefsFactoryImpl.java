@@ -29,14 +29,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static Net4jDefsFactory init()
@@ -58,8 +57,8 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Net4jDefsFactoryImpl()
@@ -69,7 +68,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -98,7 +96,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TCPConnectorDef createTCPConnectorDef()
@@ -109,7 +106,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TCPAcceptorDef createTCPAcceptorDef()
@@ -120,7 +116,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public JVMAcceptorDef createJVMAcceptorDef()
@@ -131,7 +126,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public JVMConnectorDef createJVMConnectorDef()
@@ -142,7 +136,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public HTTPConnectorDef createHTTPConnectorDef()
@@ -153,7 +146,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TCPSelectorDef createTCPSelectorDef()
@@ -164,7 +156,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BufferPoolDef createBufferPoolDef()
@@ -175,7 +166,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Net4jDefsPackage getNet4jDefsPackage()
@@ -185,7 +175,6 @@ public class Net4jDefsFactoryImpl extends EFactoryImpl implements Net4jDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

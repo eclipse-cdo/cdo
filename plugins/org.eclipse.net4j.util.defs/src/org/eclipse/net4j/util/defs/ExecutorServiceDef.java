@@ -14,7 +14,8 @@ package org.eclipse.net4j.util.defs;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Executor Service Def</b></em>'. <!--
  * end-user-doc -->
- * 
+ *
+ *
  * @see org.eclipse.net4j.util.defs.Net4jUtilDefsPackage#getExecutorServiceDef()
  * @model abstract="true"
  * @generated

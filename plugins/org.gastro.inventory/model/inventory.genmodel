@@ -5,7 +5,8 @@
     creationIcons="false" editorDirectory="" modelPluginID="org.gastro.inventory"
     modelName="Inventory" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
     reflectiveDelegation="true" codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.cdo"
-    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" optimizedHasChildren="true">
+    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" optimizedHasChildren="true"
+    runtimeVersion="2.6">
   <foreignModel>inventory.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Inventory" basePackage="org.gastro" disposableProviderFactory="true"

@@ -84,27 +84,27 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
     switch (eClass.getClassifierID())
     {
     case InventoryPackage.STOCK:
-      return createStock();
+      return (EObject)createStock();
     case InventoryPackage.STOCK_PRODUCT:
-      return createStockProduct();
+      return (EObject)createStockProduct();
     case InventoryPackage.RECIPE:
-      return createRecipe();
+      return (EObject)createRecipe();
     case InventoryPackage.INGREDIENT:
-      return createIngredient();
+      return (EObject)createIngredient();
     case InventoryPackage.MENU_CARD:
-      return createMenuCard();
+      return (EObject)createMenuCard();
     case InventoryPackage.RESTAURANT:
-      return createRestaurant();
+      return (EObject)createRestaurant();
     case InventoryPackage.DEPARTMENT:
-      return createDepartment();
+      return (EObject)createDepartment();
     case InventoryPackage.OFFERING:
-      return createOffering();
+      return (EObject)createOffering();
     case InventoryPackage.TABLE:
-      return createTable();
+      return (EObject)createTable();
     case InventoryPackage.EMPLOYEE:
-      return createEmployee();
+      return (EObject)createEmployee();
     case InventoryPackage.SECTION:
-      return createSection();
+      return (EObject)createSection();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOClientProtocolFactoryDefImpl extends ClientProtocolFactoryDefImpl implements
@@ -32,7 +32,6 @@ public class CDOClientProtocolFactoryDefImpl extends ClientProtocolFactoryDefImp
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOClientProtocolFactoryDefImpl()
@@ -42,7 +41,6 @@ public class CDOClientProtocolFactoryDefImpl extends ClientProtocolFactoryDefImp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

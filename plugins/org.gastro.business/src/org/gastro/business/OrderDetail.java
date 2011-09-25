@@ -19,17 +19,18 @@ import org.gastro.inventory.Offering;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Order Detail</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.gastro.business.OrderDetail#getOrder <em>Order</em>}</li>
- * <li>{@link org.gastro.business.OrderDetail#getOffering <em>Offering</em>}</li>
- * <li>{@link org.gastro.business.OrderDetail#getQuantity <em>Quantity</em>}</li>
- * <li>{@link org.gastro.business.OrderDetail#getState <em>State</em>}</li>
- * <li>{@link org.gastro.business.OrderDetail#getPrice <em>Price</em>}</li>
+ *   <li>{@link org.gastro.business.OrderDetail#getOrder <em>Order</em>}</li>
+ *   <li>{@link org.gastro.business.OrderDetail#getOffering <em>Offering</em>}</li>
+ *   <li>{@link org.gastro.business.OrderDetail#getQuantity <em>Quantity</em>}</li>
+ *   <li>{@link org.gastro.business.OrderDetail#getState <em>State</em>}</li>
+ *   <li>{@link org.gastro.business.OrderDetail#getPrice <em>Price</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.business.BusinessPackage#getOrderDetail()
  * @model
  * @extends CDOObject
@@ -38,14 +39,14 @@ import org.gastro.inventory.Offering;
 public interface OrderDetail extends CDOObject
 {
   /**
-   * Returns the value of the '<em><b>Order</b></em>' container reference. It is bidirectional and its opposite is '
-   * {@link org.gastro.business.Order#getOrderDetails <em>Order Details</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Order</b></em>' container reference.
+   * It is bidirectional and its opposite is '{@link org.gastro.business.Order#getOrderDetails <em>Order Details</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Order</em>' container reference isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Order</em>' container reference.
    * @see #setOrder(Order)
    * @see org.gastro.business.BusinessPackage#getOrderDetail_Order()
@@ -67,13 +68,13 @@ public interface OrderDetail extends CDOObject
   void setOrder(Order value);
 
   /**
-   * Returns the value of the '<em><b>Offering</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Offering</b></em>' reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Offering</em>' reference isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Offering</em>' reference.
    * @see #setOffering(Offering)
    * @see org.gastro.business.BusinessPackage#getOrderDetail_Offering()
@@ -94,13 +95,13 @@ public interface OrderDetail extends CDOObject
   void setOffering(Offering value);
 
   /**
-   * Returns the value of the '<em><b>Quantity</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Quantity</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Quantity</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Quantity</em>' attribute.
    * @see #setQuantity(int)
    * @see org.gastro.business.BusinessPackage#getOrderDetail_Quantity()
@@ -121,13 +122,13 @@ public interface OrderDetail extends CDOObject
   void setQuantity(int value);
 
   /**
-   * Returns the value of the '<em><b>State</b></em>' attribute. The literals are from the enumeration
-   * {@link org.gastro.business.OrderState}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>State</b></em>' attribute.
+   * The literals are from the enumeration {@link org.gastro.business.OrderState}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>State</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>State</em>' attribute.
    * @see org.gastro.business.OrderState
    * @see #setState(OrderState)
@@ -150,12 +151,12 @@ public interface OrderDetail extends CDOObject
   void setState(OrderState value);
 
   /**
-   * Returns the value of the '<em><b>Price</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Price</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Price</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Price</em>' attribute.
    * @see org.gastro.business.BusinessPackage#getOrderDetail_Price()
    * @model transient="true" changeable="false" volatile="true" derived="true"

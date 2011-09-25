@@ -13,3 +13,4 @@
  * The generated EMF utilities of the CDO repository file system.
  */
 package org.eclipse.emf.cdo.eresource.util;
+

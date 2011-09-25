@@ -36,98 +36,84 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass connectorDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass clientProtocolFactoryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass tcpConnectorDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass acceptorDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass tcpAcceptorDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass jvmAcceptorDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass jvmConnectorDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass httpConnectorDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass tcpSelectorDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass serverProtocolFactoryDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass bufferProviderDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass bufferPoolDefEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass protocolProviderDefEClass = null;
@@ -152,18 +138,17 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link Net4jDefsPackage#eINSTANCE} when that field is accessed. Clients should
-   * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
    * 
+   * <p>This method is used to initialize {@link Net4jDefsPackage#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -172,9 +157,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
   public static Net4jDefsPackage init()
   {
     if (isInited)
-    {
       return (Net4jDefsPackage)EPackage.Registry.INSTANCE.getEPackage(Net4jDefsPackage.eNS_URI);
-    }
 
     // Obtain or create and register package
     Net4jDefsPackageImpl theNet4jDefsPackage = (Net4jDefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Net4jDefsPackageImpl ? EPackage.Registry.INSTANCE
@@ -201,7 +184,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getConnectorDef()
@@ -211,7 +193,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getConnectorDef_UserID()
@@ -221,7 +202,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getConnectorDef_BufferProvider()
@@ -231,7 +211,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getConnectorDef_ExecutorService()
@@ -241,7 +220,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getConnectorDef_Negotiator()
@@ -251,7 +229,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getConnectorDef_ClientProtocolProvider()
@@ -261,7 +238,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getClientProtocolFactoryDef()
@@ -271,7 +247,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getTCPConnectorDef()
@@ -281,7 +256,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getTCPConnectorDef_TcpSelectorDef()
@@ -291,7 +265,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getTCPConnectorDef_Host()
@@ -301,7 +274,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getTCPConnectorDef_Port()
@@ -311,7 +283,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getAcceptorDef()
@@ -321,7 +292,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getAcceptorDef_BufferProvider()
@@ -331,7 +301,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getAcceptorDef_ExecutorService()
@@ -341,7 +310,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getAcceptorDef_Negotiator()
@@ -351,7 +319,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getAcceptorDef_ServerProtocolProvider()
@@ -361,7 +328,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getTCPAcceptorDef()
@@ -371,7 +337,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getTCPAcceptorDef_Host()
@@ -381,7 +346,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getTCPAcceptorDef_Port()
@@ -391,7 +355,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getTCPAcceptorDef_TcpSelectorDef()
@@ -401,7 +364,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getJVMAcceptorDef()
@@ -411,7 +373,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getJVMAcceptorDef_Name()
@@ -421,7 +382,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getJVMConnectorDef()
@@ -431,7 +391,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getJVMConnectorDef_Name()
@@ -441,7 +400,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getHTTPConnectorDef()
@@ -451,7 +409,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getHTTPConnectorDef_Url()
@@ -461,7 +418,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getTCPSelectorDef()
@@ -471,7 +427,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getServerProtocolFactoryDef()
@@ -481,7 +436,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getBufferProviderDef()
@@ -491,7 +445,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getBufferPoolDef()
@@ -501,7 +454,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getProtocolProviderDef()
@@ -511,7 +463,6 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Net4jDefsFactory getNet4jDefsFactory()
@@ -521,23 +472,20 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -588,23 +536,20 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package
@@ -622,17 +567,17 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
     // Add supertypes to classes
     connectorDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    clientProtocolFactoryDefEClass.getESuperTypes().add(getProtocolProviderDef());
-    tcpConnectorDefEClass.getESuperTypes().add(getConnectorDef());
+    clientProtocolFactoryDefEClass.getESuperTypes().add(this.getProtocolProviderDef());
+    tcpConnectorDefEClass.getESuperTypes().add(this.getConnectorDef());
     acceptorDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    tcpAcceptorDefEClass.getESuperTypes().add(getAcceptorDef());
-    jvmAcceptorDefEClass.getESuperTypes().add(getAcceptorDef());
-    jvmConnectorDefEClass.getESuperTypes().add(getConnectorDef());
-    httpConnectorDefEClass.getESuperTypes().add(getConnectorDef());
+    tcpAcceptorDefEClass.getESuperTypes().add(this.getAcceptorDef());
+    jvmAcceptorDefEClass.getESuperTypes().add(this.getAcceptorDef());
+    jvmConnectorDefEClass.getESuperTypes().add(this.getConnectorDef());
+    httpConnectorDefEClass.getESuperTypes().add(this.getConnectorDef());
     tcpSelectorDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    serverProtocolFactoryDefEClass.getESuperTypes().add(getProtocolProviderDef());
+    serverProtocolFactoryDefEClass.getESuperTypes().add(this.getProtocolProviderDef());
     bufferProviderDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    bufferPoolDefEClass.getESuperTypes().add(getBufferProviderDef());
+    bufferPoolDefEClass.getESuperTypes().add(this.getBufferProviderDef());
     protocolProviderDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
 
     // Initialize classes and features; add operations and parameters
@@ -640,7 +585,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getConnectorDef_UserID(), ecorePackage.getEString(), "userID", null, 0, 1, ConnectorDef.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConnectorDef_BufferProvider(), getBufferProviderDef(), null, "bufferProvider", null, 1, 1,
+    initEReference(getConnectorDef_BufferProvider(), this.getBufferProviderDef(), null, "bufferProvider", null, 1, 1,
         ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConnectorDef_ExecutorService(), theNet4jUtilDefsPackage.getExecutorServiceDef(), null,
@@ -649,7 +594,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
     initEReference(getConnectorDef_Negotiator(), theNet4jUtilDefsPackage.getNegotiatorDef(), null, "negotiator", null,
         0, 1, ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConnectorDef_ClientProtocolProvider(), getClientProtocolFactoryDef(), null,
+    initEReference(getConnectorDef_ClientProtocolProvider(), this.getClientProtocolFactoryDef(), null,
         "clientProtocolProvider", null, 1, -1, ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -658,7 +603,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
     initEClass(tcpConnectorDefEClass, TCPConnectorDef.class, "TCPConnectorDef", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTCPConnectorDef_TcpSelectorDef(), getTCPSelectorDef(), null, "tcpSelectorDef", null, 0, 1,
+    initEReference(getTCPConnectorDef_TcpSelectorDef(), this.getTCPSelectorDef(), null, "tcpSelectorDef", null, 0, 1,
         TCPConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTCPConnectorDef_Host(), ecorePackage.getEString(), "host", null, 1, 1, TCPConnectorDef.class,
@@ -668,7 +613,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
     initEClass(acceptorDefEClass, AcceptorDef.class, "AcceptorDef", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAcceptorDef_BufferProvider(), getBufferPoolDef(), null, "bufferProvider", null, 0, 1,
+    initEReference(getAcceptorDef_BufferProvider(), this.getBufferPoolDef(), null, "bufferProvider", null, 0, 1,
         AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAcceptorDef_ExecutorService(), theNet4jUtilDefsPackage.getThreadPoolDef(), null,
@@ -677,7 +622,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
     initEReference(getAcceptorDef_Negotiator(), theNet4jUtilDefsPackage.getNegotiatorDef(), null, "negotiator", null,
         0, 1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAcceptorDef_ServerProtocolProvider(), getServerProtocolFactoryDef(), null,
+    initEReference(getAcceptorDef_ServerProtocolProvider(), this.getServerProtocolFactoryDef(), null,
         "serverProtocolProvider", null, 1, -1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -687,7 +632,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTCPAcceptorDef_Port(), ecorePackage.getEInt(), "port", null, 1, 1, TCPAcceptorDef.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTCPAcceptorDef_TcpSelectorDef(), getTCPSelectorDef(), null, "tcpSelectorDef", null, 1, 1,
+    initEReference(getTCPAcceptorDef_TcpSelectorDef(), this.getTCPSelectorDef(), null, "tcpSelectorDef", null, 1, 1,
         TCPAcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

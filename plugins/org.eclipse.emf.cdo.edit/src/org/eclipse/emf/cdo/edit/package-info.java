@@ -13,3 +13,4 @@
  * Useful base classes that can be referenced from custom EMF generator models.
  */
 package org.eclipse.emf.cdo.edit;
+

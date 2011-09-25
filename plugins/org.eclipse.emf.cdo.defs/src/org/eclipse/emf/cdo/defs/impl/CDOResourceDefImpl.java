@@ -44,9 +44,9 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 {
 
   /**
-   * The cached value of the '{@link #getCdoTransaction() <em>Cdo Transaction</em>}' reference. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getCdoTransaction() <em>Cdo Transaction</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getCdoTransaction()
    * @generated
    * @ordered
@@ -64,9 +64,9 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
   protected static final ResourceMode RESOURCE_MODE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getResourceMode() <em>Resource Mode</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getResourceMode() <em>Resource Mode</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getResourceMode()
    * @generated
    * @ordered
@@ -84,8 +84,8 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
   protected static final String PATH_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getPath() <em>Path</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getPath() <em>Path</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getPath()
    * @generated
    * @ordered
@@ -94,7 +94,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOResourceDefImpl()
@@ -104,7 +103,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -115,7 +113,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOTransactionDef getCdoTransaction()
@@ -136,7 +133,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOTransactionDef basicGetCdoTransaction()
@@ -146,7 +142,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setCdoTransaction(CDOTransactionDef newCdoTransaction)
@@ -160,7 +155,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ResourceMode getResourceMode()
@@ -170,7 +164,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setResourceMode(ResourceMode newResourceMode)
@@ -184,7 +177,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getPath()
@@ -194,7 +186,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setPath(String newPath)
@@ -207,7 +198,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -229,7 +219,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -252,7 +241,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -275,7 +263,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -295,7 +282,6 @@ public class CDOResourceDefImpl extends DefImpl implements CDOResourceDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

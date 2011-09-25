@@ -13,3 +13,4 @@
  * A library with reusable widgets.
  */
 package org.eclipse.emf.cdo.ui.widgets;
+

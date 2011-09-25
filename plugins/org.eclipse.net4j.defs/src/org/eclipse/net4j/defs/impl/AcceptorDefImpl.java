@@ -41,21 +41,21 @@ import java.util.concurrent.ExecutorService;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl#getBufferProvider <em>Buffer Provider</em>}</li>
- * <li>{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl#getExecutorService <em>Executor Service</em>}</li>
- * <li>{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl#getNegotiator <em>Negotiator</em>}</li>
- * <li>{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl#getServerProtocolProvider <em>Server Protocol Provider</em>}</li>
+ *   <li>{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl#getBufferProvider <em>Buffer Provider</em>}</li>
+ *   <li>{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl#getExecutorService <em>Executor Service</em>}</li>
+ *   <li>{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl#getNegotiator <em>Negotiator</em>}</li>
+ *   <li>{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl#getServerProtocolProvider <em>Server Protocol Provider</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 {
   /**
-   * The cached value of the '{@link #getBufferProvider() <em>Buffer Provider</em>}' reference. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getBufferProvider() <em>Buffer Provider</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getBufferProvider()
    * @generated
    * @ordered
@@ -63,9 +63,9 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
   protected BufferPoolDef bufferProvider;
 
   /**
-   * The cached value of the '{@link #getExecutorService() <em>Executor Service</em>}' reference. <!-- begin-user-doc
+   * The cached value of the '{@link #getExecutorService() <em>Executor Service</em>}' reference.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getExecutorService()
    * @generated
    * @ordered
@@ -73,9 +73,9 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
   protected ThreadPoolDef executorService;
 
   /**
-   * The cached value of the '{@link #getNegotiator() <em>Negotiator</em>}' reference. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getNegotiator() <em>Negotiator</em>}' reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getNegotiator()
    * @generated
    * @ordered
@@ -83,8 +83,8 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
   protected NegotiatorDef negotiator;
 
   /**
-   * This is true if the Negotiator reference has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is true if the Negotiator reference has been set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -93,7 +93,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
   /**
    * The cached value of the '{@link #getServerProtocolProvider() <em>Server Protocol Provider</em>}' reference list.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see #getServerProtocolProvider()
    * @generated
    * @ordered
@@ -102,7 +101,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected AcceptorDefImpl()
@@ -112,7 +110,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -123,7 +120,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BufferPoolDef getBufferProvider()
@@ -135,10 +131,8 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
       if (bufferProvider != oldBufferProvider)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.ACCEPTOR_DEF__BUFFER_PROVIDER,
               oldBufferProvider, bufferProvider));
-        }
       }
     }
     return bufferProvider;
@@ -146,7 +140,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BufferPoolDef basicGetBufferProvider()
@@ -156,7 +149,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setBufferProvider(BufferPoolDef newBufferProvider)
@@ -164,15 +156,12 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
     BufferPoolDef oldBufferProvider = bufferProvider;
     bufferProvider = newBufferProvider;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.ACCEPTOR_DEF__BUFFER_PROVIDER,
           oldBufferProvider, bufferProvider));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ThreadPoolDef getExecutorService()
@@ -184,10 +173,8 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
       if (executorService != oldExecutorService)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.ACCEPTOR_DEF__EXECUTOR_SERVICE,
               oldExecutorService, executorService));
-        }
       }
     }
     return executorService;
@@ -195,7 +182,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ThreadPoolDef basicGetExecutorService()
@@ -205,7 +191,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setExecutorService(ThreadPoolDef newExecutorService)
@@ -213,15 +198,12 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
     ThreadPoolDef oldExecutorService = executorService;
     executorService = newExecutorService;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.ACCEPTOR_DEF__EXECUTOR_SERVICE,
           oldExecutorService, executorService));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NegotiatorDef getNegotiator()
@@ -233,10 +215,8 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
       if (negotiator != oldNegotiator)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.ACCEPTOR_DEF__NEGOTIATOR,
               oldNegotiator, negotiator));
-        }
       }
     }
     return negotiator;
@@ -244,7 +224,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NegotiatorDef basicGetNegotiator()
@@ -254,7 +233,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setNegotiator(NegotiatorDef newNegotiator)
@@ -264,15 +242,12 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
     boolean oldNegotiatorESet = negotiatorESet;
     negotiatorESet = true;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.ACCEPTOR_DEF__NEGOTIATOR, oldNegotiator,
           negotiator, !oldNegotiatorESet));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetNegotiator()
@@ -282,15 +257,12 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
     negotiator = null;
     negotiatorESet = false;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jDefsPackage.ACCEPTOR_DEF__NEGOTIATOR, oldNegotiator,
           null, oldNegotiatorESet));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetNegotiator()
@@ -300,7 +272,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<ServerProtocolFactoryDef> getServerProtocolProvider()
@@ -315,20 +286,16 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetServerProtocolProvider()
   {
     if (serverProtocolProvider != null)
-    {
       ((InternalEList.Unsettable<?>)serverProtocolProvider).unset();
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetServerProtocolProvider()
@@ -338,7 +305,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -348,21 +314,15 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
     {
     case Net4jDefsPackage.ACCEPTOR_DEF__BUFFER_PROVIDER:
       if (resolve)
-      {
         return getBufferProvider();
-      }
       return basicGetBufferProvider();
     case Net4jDefsPackage.ACCEPTOR_DEF__EXECUTOR_SERVICE:
       if (resolve)
-      {
         return getExecutorService();
-      }
       return basicGetExecutorService();
     case Net4jDefsPackage.ACCEPTOR_DEF__NEGOTIATOR:
       if (resolve)
-      {
         return getNegotiator();
-      }
       return basicGetNegotiator();
     case Net4jDefsPackage.ACCEPTOR_DEF__SERVER_PROTOCOL_PROVIDER:
       return getServerProtocolProvider();
@@ -372,7 +332,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -400,7 +359,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -426,7 +384,6 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

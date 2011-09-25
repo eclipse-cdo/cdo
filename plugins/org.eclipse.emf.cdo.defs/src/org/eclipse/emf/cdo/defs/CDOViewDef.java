@@ -15,13 +15,14 @@ import org.eclipse.net4j.util.defs.Def;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO View Def</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.defs.CDOViewDef#getCdoSessionDef <em>Cdo Session Def</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.defs.CDOViewDef#getCdoSessionDef <em>Cdo Session Def</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.defs.CDODefsPackage#getCDOViewDef()
  * @model
  * @generated
@@ -29,13 +30,13 @@ import org.eclipse.net4j.util.defs.Def;
 public interface CDOViewDef extends Def
 {
   /**
-   * Returns the value of the '<em><b>Cdo Session Def</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Cdo Session Def</b></em>' reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Cdo Session Def</em>' reference isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Cdo Session Def</em>' reference.
    * @see #setCdoSessionDef(CDOSessionDef)
    * @see org.eclipse.emf.cdo.defs.CDODefsPackage#getCDOViewDef_CdoSessionDef()
@@ -45,11 +46,9 @@ public interface CDOViewDef extends Def
   CDOSessionDef getCdoSessionDef();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.defs.CDOViewDef#getCdoSessionDef <em>Cdo Session Def</em>}'
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Cdo Session Def</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.defs.CDOViewDef#getCdoSessionDef <em>Cdo Session Def</em>}' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Cdo Session Def</em>' reference.
    * @see #getCdoSessionDef()
    * @generated
    */

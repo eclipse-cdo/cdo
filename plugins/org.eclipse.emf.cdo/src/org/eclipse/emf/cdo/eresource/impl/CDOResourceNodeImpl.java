@@ -41,7 +41,6 @@ import java.util.List;
  *           </ul>
  *           </p>
  * @generated
- * @since 2.0
  */
 public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDOResourceNode
 {

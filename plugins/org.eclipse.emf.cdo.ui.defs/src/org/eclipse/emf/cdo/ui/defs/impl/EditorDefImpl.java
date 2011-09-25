@@ -26,18 +26,18 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.ui.defs.impl.EditorDefImpl#getEditorID <em>Editor ID</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.ui.defs.impl.EditorDefImpl#getEditorID <em>Editor ID</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class EditorDefImpl extends DefImpl implements EditorDef
 {
   /**
-   * The default value of the '{@link #getEditorID() <em>Editor ID</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getEditorID() <em>Editor ID</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getEditorID()
    * @generated
    * @ordered
@@ -45,9 +45,9 @@ public class EditorDefImpl extends DefImpl implements EditorDef
   protected static final String EDITOR_ID_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getEditorID() <em>Editor ID</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getEditorID() <em>Editor ID</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getEditorID()
    * @generated
    * @ordered
@@ -56,7 +56,6 @@ public class EditorDefImpl extends DefImpl implements EditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected EditorDefImpl()
@@ -66,7 +65,6 @@ public class EditorDefImpl extends DefImpl implements EditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -77,7 +75,6 @@ public class EditorDefImpl extends DefImpl implements EditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getEditorID()
@@ -87,7 +84,6 @@ public class EditorDefImpl extends DefImpl implements EditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setEditorID(String newEditorID)
@@ -95,15 +91,12 @@ public class EditorDefImpl extends DefImpl implements EditorDef
     String oldEditorID = editorID;
     editorID = newEditorID;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.EDITOR_DEF__EDITOR_ID, oldEditorID,
           editorID));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -119,7 +112,6 @@ public class EditorDefImpl extends DefImpl implements EditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -136,7 +128,6 @@ public class EditorDefImpl extends DefImpl implements EditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -153,7 +144,6 @@ public class EditorDefImpl extends DefImpl implements EditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -169,16 +159,13 @@ public class EditorDefImpl extends DefImpl implements EditorDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (editorID: ");

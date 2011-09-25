@@ -28,10 +28,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.net4j.util.defs.impl.PasswordCredentialsProviderDefImpl#getPassword <em>Password</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.impl.PasswordCredentialsProviderDefImpl#getPassword <em>Password</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefImpl implements
@@ -39,9 +39,9 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 {
 
   /**
-   * The default value of the '{@link #getPassword() <em>Password</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The default value of the '{@link #getPassword() <em>Password</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getPassword()
    * @generated
    * @ordered
@@ -49,9 +49,9 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
   protected static final String PASSWORD_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getPassword() <em>Password</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getPassword() <em>Password</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getPassword()
    * @generated
    * @ordered
@@ -60,7 +60,6 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected PasswordCredentialsProviderDefImpl()
@@ -70,7 +69,6 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -81,7 +79,6 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getPassword()
@@ -91,7 +88,6 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setPassword(String newPassword)
@@ -99,15 +95,12 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
     String oldPassword = password;
     password = newPassword;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Net4jUtilDefsPackage.PASSWORD_CREDENTIALS_PROVIDER_DEF__PASSWORD, oldPassword, password));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -123,7 +116,6 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -140,7 +132,6 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -157,7 +148,6 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -173,16 +163,13 @@ public class PasswordCredentialsProviderDefImpl extends CredentialsProviderDefIm
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (password: ");

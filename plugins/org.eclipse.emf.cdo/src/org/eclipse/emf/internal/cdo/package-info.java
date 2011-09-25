@@ -13,3 +13,4 @@
  * Exposes {@link org.eclipse.emf.internal.cdo.CDOObjectImpl} for extension in generated EMF models.
  */
 package org.eclipse.emf.internal.cdo;
+

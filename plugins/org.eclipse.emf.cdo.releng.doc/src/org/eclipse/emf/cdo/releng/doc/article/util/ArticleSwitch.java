@@ -38,9 +38,10 @@ import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
 import org.eclipse.emf.cdo.releng.doc.article.Toc;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.util.Switch;
+
+import java.util.List;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -51,7 +52,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage
  * @generated
  */
-public class ArticleSwitch<T> extends Switch<T>
+public class ArticleSwitch<T>
 {
   /**
    * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -74,16 +75,15 @@ public class ArticleSwitch<T> extends Switch<T>
   }
 
   /**
-   * Checks whether this is a switch for the given package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @parameter ePackage the package in question.
-   * @return whether this is a switch for the given package.
+   * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  @Override
-  protected boolean isSwitchFor(EPackage ePackage)
+  public T doSwitch(EObject theEObject)
   {
-    return ePackage == modelPackage;
+    return doSwitch(theEObject.eClass(), theEObject);
   }
 
   /**
@@ -93,7 +93,24 @@ public class ArticleSwitch<T> extends Switch<T>
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  @Override
+  protected T doSwitch(EClass theEClass, EObject theEObject)
+  {
+    if (theEClass.eContainer() == modelPackage)
+    {
+      return doSwitch(theEClass.getClassifierID(), theEObject);
+    }
+
+    List<EClass> eSuperTypes = theEClass.getESuperTypes();
+    return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
+  }
+
+  /**
+   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * @generated
+   */
   protected T doSwitch(int classifierID, EObject theEObject)
   {
     switch (classifierID)
@@ -103,13 +120,21 @@ public class ArticleSwitch<T> extends Switch<T>
       Documentation documentation = (Documentation)theEObject;
       T result = caseDocumentation(documentation);
       if (result == null)
+      {
         result = caseStructuralElement(documentation);
+      }
       if (result == null)
+      {
         result = caseLinkTarget(documentation);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(documentation);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.CONTEXT:
@@ -117,7 +142,9 @@ public class ArticleSwitch<T> extends Switch<T>
       Context context = (Context)theEObject;
       T result = caseContext(context);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.CATEGORY:
@@ -125,17 +152,29 @@ public class ArticleSwitch<T> extends Switch<T>
       Category category = (Category)theEObject;
       T result = caseCategory(category);
       if (result == null)
+      {
         result = caseBody(category);
+      }
       if (result == null)
+      {
         result = caseStructuralElement(category);
+      }
       if (result == null)
+      {
         result = caseBodyElementContainer(category);
+      }
       if (result == null)
+      {
         result = caseLinkTarget(category);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(category);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.ARTICLE:
@@ -143,19 +182,33 @@ public class ArticleSwitch<T> extends Switch<T>
       Article article = (Article)theEObject;
       T result = caseArticle(article);
       if (result == null)
+      {
         result = caseChapter(article);
+      }
       if (result == null)
+      {
         result = caseBody(article);
+      }
       if (result == null)
+      {
         result = caseStructuralElement(article);
+      }
       if (result == null)
+      {
         result = caseBodyElementContainer(article);
+      }
       if (result == null)
+      {
         result = caseLinkTarget(article);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(article);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.CHAPTER:
@@ -163,17 +216,29 @@ public class ArticleSwitch<T> extends Switch<T>
       Chapter chapter = (Chapter)theEObject;
       T result = caseChapter(chapter);
       if (result == null)
+      {
         result = caseBody(chapter);
+      }
       if (result == null)
+      {
         result = caseStructuralElement(chapter);
+      }
       if (result == null)
+      {
         result = caseBodyElementContainer(chapter);
+      }
       if (result == null)
+      {
         result = caseLinkTarget(chapter);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(chapter);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.SNIPPET:
@@ -181,11 +246,17 @@ public class ArticleSwitch<T> extends Switch<T>
       Snippet snippet = (Snippet)theEObject;
       T result = caseSnippet(snippet);
       if (result == null)
+      {
         result = caseEmbeddableElement(snippet);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(snippet);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.DIAGRAM:
@@ -193,9 +264,13 @@ public class ArticleSwitch<T> extends Switch<T>
       Diagram diagram = (Diagram)theEObject;
       T result = caseDiagram(diagram);
       if (result == null)
+      {
         result = caseBodyElement(diagram);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.FACTORY:
@@ -203,11 +278,17 @@ public class ArticleSwitch<T> extends Switch<T>
       Factory factory = (Factory)theEObject;
       T result = caseFactory(factory);
       if (result == null)
+      {
         result = caseEmbeddableElement(factory);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(factory);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.JAVA_ELEMENT:
@@ -215,11 +296,17 @@ public class ArticleSwitch<T> extends Switch<T>
       JavaElement javaElement = (JavaElement)theEObject;
       T result = caseJavaElement(javaElement);
       if (result == null)
+      {
         result = caseLinkTarget(javaElement);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(javaElement);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.STRUCTURAL_ELEMENT:
@@ -227,11 +314,17 @@ public class ArticleSwitch<T> extends Switch<T>
       StructuralElement structuralElement = (StructuralElement)theEObject;
       T result = caseStructuralElement(structuralElement);
       if (result == null)
+      {
         result = caseLinkTarget(structuralElement);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(structuralElement);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.LINK_TARGET:
@@ -239,9 +332,13 @@ public class ArticleSwitch<T> extends Switch<T>
       LinkTarget linkTarget = (LinkTarget)theEObject;
       T result = caseLinkTarget(linkTarget);
       if (result == null)
+      {
         result = caseIdentifiable(linkTarget);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.CALLOUT:
@@ -249,9 +346,13 @@ public class ArticleSwitch<T> extends Switch<T>
       Callout callout = (Callout)theEObject;
       T result = caseCallout(callout);
       if (result == null)
+      {
         result = caseBodyElementContainer(callout);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.EMBEDDABLE_ELEMENT:
@@ -259,9 +360,13 @@ public class ArticleSwitch<T> extends Switch<T>
       EmbeddableElement embeddableElement = (EmbeddableElement)theEObject;
       T result = caseEmbeddableElement(embeddableElement);
       if (result == null)
+      {
         result = caseIdentifiable(embeddableElement);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.EXTERNAL_TARGET:
@@ -269,11 +374,17 @@ public class ArticleSwitch<T> extends Switch<T>
       ExternalTarget externalTarget = (ExternalTarget)theEObject;
       T result = caseExternalTarget(externalTarget);
       if (result == null)
+      {
         result = caseLinkTarget(externalTarget);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(externalTarget);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.IDENTIFIABLE:
@@ -281,7 +392,9 @@ public class ArticleSwitch<T> extends Switch<T>
       Identifiable identifiable = (Identifiable)theEObject;
       T result = caseIdentifiable(identifiable);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.BODY:
@@ -289,15 +402,25 @@ public class ArticleSwitch<T> extends Switch<T>
       Body body = (Body)theEObject;
       T result = caseBody(body);
       if (result == null)
+      {
         result = caseStructuralElement(body);
+      }
       if (result == null)
+      {
         result = caseBodyElementContainer(body);
+      }
       if (result == null)
+      {
         result = caseLinkTarget(body);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(body);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.BODY_ELEMENT_CONTAINER:
@@ -305,7 +428,9 @@ public class ArticleSwitch<T> extends Switch<T>
       BodyElementContainer bodyElementContainer = (BodyElementContainer)theEObject;
       T result = caseBodyElementContainer(bodyElementContainer);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.BODY_ELEMENT:
@@ -313,7 +438,9 @@ public class ArticleSwitch<T> extends Switch<T>
       BodyElement bodyElement = (BodyElement)theEObject;
       T result = caseBodyElement(bodyElement);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.TEXT:
@@ -321,9 +448,13 @@ public class ArticleSwitch<T> extends Switch<T>
       Text text = (Text)theEObject;
       T result = caseText(text);
       if (result == null)
+      {
         result = caseBodyElement(text);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.LINK:
@@ -331,9 +462,13 @@ public class ArticleSwitch<T> extends Switch<T>
       Link link = (Link)theEObject;
       T result = caseLink(link);
       if (result == null)
+      {
         result = caseBodyElement(link);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.EMBEDDING:
@@ -341,9 +476,13 @@ public class ArticleSwitch<T> extends Switch<T>
       Embedding embedding = (Embedding)theEObject;
       T result = caseEmbedding(embedding);
       if (result == null)
+      {
         result = caseBodyElement(embedding);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.SOURCE_CODE:
@@ -351,13 +490,21 @@ public class ArticleSwitch<T> extends Switch<T>
       SourceCode sourceCode = (SourceCode)theEObject;
       T result = caseSourceCode(sourceCode);
       if (result == null)
+      {
         result = caseExternalTarget(sourceCode);
+      }
       if (result == null)
+      {
         result = caseLinkTarget(sourceCode);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(sourceCode);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.PLUGIN:
@@ -365,7 +512,9 @@ public class ArticleSwitch<T> extends Switch<T>
       Plugin plugin = (Plugin)theEObject;
       T result = casePlugin(plugin);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.JAVA_PACKAGE:
@@ -373,7 +522,9 @@ public class ArticleSwitch<T> extends Switch<T>
       JavaPackage javaPackage = (JavaPackage)theEObject;
       T result = caseJavaPackage(javaPackage);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.JAVADOC:
@@ -381,19 +532,33 @@ public class ArticleSwitch<T> extends Switch<T>
       Javadoc javadoc = (Javadoc)theEObject;
       T result = caseJavadoc(javadoc);
       if (result == null)
+      {
         result = caseCategory(javadoc);
+      }
       if (result == null)
+      {
         result = caseBody(javadoc);
+      }
       if (result == null)
+      {
         result = caseStructuralElement(javadoc);
+      }
       if (result == null)
+      {
         result = caseBodyElementContainer(javadoc);
+      }
       if (result == null)
+      {
         result = caseLinkTarget(javadoc);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(javadoc);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.EXTERNAL_ARTICLE:
@@ -401,21 +566,37 @@ public class ArticleSwitch<T> extends Switch<T>
       ExternalArticle externalArticle = (ExternalArticle)theEObject;
       T result = caseExternalArticle(externalArticle);
       if (result == null)
+      {
         result = caseArticle(externalArticle);
+      }
       if (result == null)
+      {
         result = caseChapter(externalArticle);
+      }
       if (result == null)
+      {
         result = caseBody(externalArticle);
+      }
       if (result == null)
+      {
         result = caseStructuralElement(externalArticle);
+      }
       if (result == null)
+      {
         result = caseBodyElementContainer(externalArticle);
+      }
       if (result == null)
+      {
         result = caseLinkTarget(externalArticle);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(externalArticle);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.SCHEMADOC:
@@ -423,19 +604,33 @@ public class ArticleSwitch<T> extends Switch<T>
       Schemadoc schemadoc = (Schemadoc)theEObject;
       T result = caseSchemadoc(schemadoc);
       if (result == null)
+      {
         result = caseCategory(schemadoc);
+      }
       if (result == null)
+      {
         result = caseBody(schemadoc);
+      }
       if (result == null)
+      {
         result = caseStructuralElement(schemadoc);
+      }
       if (result == null)
+      {
         result = caseBodyElementContainer(schemadoc);
+      }
       if (result == null)
+      {
         result = caseLinkTarget(schemadoc);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(schemadoc);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.EXTENSION_POINT:
@@ -443,7 +638,9 @@ public class ArticleSwitch<T> extends Switch<T>
       ExtensionPoint extensionPoint = (ExtensionPoint)theEObject;
       T result = caseExtensionPoint(extensionPoint);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.TOC:
@@ -451,9 +648,13 @@ public class ArticleSwitch<T> extends Switch<T>
       Toc toc = (Toc)theEObject;
       T result = caseToc(toc);
       if (result == null)
+      {
         result = caseBodyElement(toc);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case ArticlePackage.PLUGIN_RESOURCE:
@@ -461,23 +662,41 @@ public class ArticleSwitch<T> extends Switch<T>
       PluginResource pluginResource = (PluginResource)theEObject;
       T result = casePluginResource(pluginResource);
       if (result == null)
+      {
         result = caseExternalArticle(pluginResource);
+      }
       if (result == null)
+      {
         result = caseArticle(pluginResource);
+      }
       if (result == null)
+      {
         result = caseChapter(pluginResource);
+      }
       if (result == null)
+      {
         result = caseBody(pluginResource);
+      }
       if (result == null)
+      {
         result = caseStructuralElement(pluginResource);
+      }
       if (result == null)
+      {
         result = caseBodyElementContainer(pluginResource);
+      }
       if (result == null)
+      {
         result = caseLinkTarget(pluginResource);
+      }
       if (result == null)
+      {
         result = caseIdentifiable(pluginResource);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -947,7 +1166,6 @@ public class ArticleSwitch<T> extends Switch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated
    */
-  @Override
   public T defaultCase(EObject object)
   {
     return null;

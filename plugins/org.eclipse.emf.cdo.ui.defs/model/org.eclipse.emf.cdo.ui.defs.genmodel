@@ -5,7 +5,7 @@
     modelDirectory="/org.eclipse.emf.cdo.ui.defs/src" editDirectory="" editorDirectory=""
     modelPluginID="org.eclipse.emf.cdo.ui.defs" modelName="Org.eclipse.emf.cdo.ui"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.cdo.defs/model/org.eclipse.emf.cdo.defs.genmodel#//defs ../../org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.genmodel#//defs ../../org.eclipse.net4j.defs/model/org.eclipse.net4j.defs.genmodel#//defs">
+    complianceLevel="5.0" copyrightFields="false" runtimeVersion="2.6" usedGenPackages="../../org.eclipse.emf.cdo.defs/model/org.eclipse.emf.cdo.defs.genmodel#//defs ../../org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.genmodel#//defs ../../org.eclipse.net4j.defs/model/org.eclipse.net4j.defs.genmodel#//defs">
   <foreignModel>org.eclipse.emf.cdo.ui.defs.ecore</foreignModel>
   <genPackages prefix="CDOUIDefs" basePackage="org.eclipse.emf.cdo.ui" disposableProviderFactory="true"
       ecorePackage="org.eclipse.emf.cdo.ui.defs.ecore#/">

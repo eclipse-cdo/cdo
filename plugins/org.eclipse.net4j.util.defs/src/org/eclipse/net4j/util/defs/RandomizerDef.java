@@ -13,15 +13,16 @@ package org.eclipse.net4j.util.defs;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Randomizer Def</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.net4j.util.defs.RandomizerDef#getAlgorithmName <em>Algorithm Name</em>}</li>
- * <li>{@link org.eclipse.net4j.util.defs.RandomizerDef#getProviderName <em>Provider Name</em>}</li>
- * <li>{@link org.eclipse.net4j.util.defs.RandomizerDef#getSeed <em>Seed</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.RandomizerDef#getAlgorithmName <em>Algorithm Name</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.RandomizerDef#getProviderName <em>Provider Name</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.RandomizerDef#getSeed <em>Seed</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.net4j.util.defs.Net4jUtilDefsPackage#getRandomizerDef()
  * @model
  * @generated
@@ -29,13 +30,13 @@ package org.eclipse.net4j.util.defs;
 public interface RandomizerDef extends Def
 {
   /**
-   * Returns the value of the '<em><b>Algorithm Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Algorithm Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Algorithm Name</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Algorithm Name</em>' attribute.
    * @see #isSetAlgorithmName()
    * @see #unsetAlgorithmName()
@@ -47,11 +48,9 @@ public interface RandomizerDef extends Def
   String getAlgorithmName();
 
   /**
-   * Sets the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getAlgorithmName <em>Algorithm Name</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Algorithm Name</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getAlgorithmName <em>Algorithm Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Algorithm Name</em>' attribute.
    * @see #isSetAlgorithmName()
    * @see #unsetAlgorithmName()
    * @see #getAlgorithmName()
@@ -60,9 +59,8 @@ public interface RandomizerDef extends Def
   void setAlgorithmName(String value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getAlgorithmName <em>Algorithm Name</em>}
-   * ' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getAlgorithmName <em>Algorithm Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetAlgorithmName()
    * @see #getAlgorithmName()
    * @see #setAlgorithmName(String)
@@ -71,9 +69,8 @@ public interface RandomizerDef extends Def
   void unsetAlgorithmName();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getAlgorithmName
-   * <em>Algorithm Name</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getAlgorithmName <em>Algorithm Name</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Algorithm Name</em>' attribute is set.
    * @see #unsetAlgorithmName()
    * @see #getAlgorithmName()
@@ -83,13 +80,13 @@ public interface RandomizerDef extends Def
   boolean isSetAlgorithmName();
 
   /**
-   * Returns the value of the '<em><b>Provider Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Provider Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Provider Name</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Provider Name</em>' attribute.
    * @see #isSetProviderName()
    * @see #unsetProviderName()
@@ -101,11 +98,9 @@ public interface RandomizerDef extends Def
   String getProviderName();
 
   /**
-   * Sets the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getProviderName <em>Provider Name</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Provider Name</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getProviderName <em>Provider Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Provider Name</em>' attribute.
    * @see #isSetProviderName()
    * @see #unsetProviderName()
    * @see #getProviderName()
@@ -114,9 +109,8 @@ public interface RandomizerDef extends Def
   void setProviderName(String value);
 
   /**
-   * Unsets the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getProviderName <em>Provider Name</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Unsets the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getProviderName <em>Provider Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isSetProviderName()
    * @see #getProviderName()
    * @see #setProviderName(String)
@@ -125,9 +119,8 @@ public interface RandomizerDef extends Def
   void unsetProviderName();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getProviderName
-   * <em>Provider Name</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getProviderName <em>Provider Name</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Provider Name</em>' attribute is set.
    * @see #unsetProviderName()
    * @see #getProviderName()
@@ -137,12 +130,12 @@ public interface RandomizerDef extends Def
   boolean isSetProviderName();
 
   /**
-   * Returns the value of the '<em><b>Seed</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Seed</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Seed</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Seed</em>' attribute.
    * @see #isSetSeed()
    * @see #unsetSeed()
@@ -178,9 +171,8 @@ public interface RandomizerDef extends Def
   void unsetSeed();
 
   /**
-   * Returns whether the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getSeed <em>Seed</em>}'
-   * attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns whether the value of the '{@link org.eclipse.net4j.util.defs.RandomizerDef#getSeed <em>Seed</em>}' attribute is set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return whether the value of the '<em>Seed</em>' attribute is set.
    * @see #unsetSeed()
    * @see #getSeed()

@@ -5,7 +5,7 @@
     modelDirectory="/org.eclipse.net4j.defs/src" editDirectory="" editorDirectory=""
     modelPluginID="org.eclipse.net4j.defs" modelName="Org.eclipse.net4j" codeFormatting="true"
     testsDirectory="" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
-    copyrightFields="false" usedGenPackages="../../org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.genmodel#//defs">
+    copyrightFields="false" runtimeVersion="2.6" usedGenPackages="../../org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.genmodel#//defs">
   <foreignModel>org.eclipse.net4j.defs.ecore</foreignModel>
   <genPackages prefix="Net4jDefs" basePackage="org.eclipse.net4j" disposableProviderFactory="true"
       ecorePackage="org.eclipse.net4j.defs.ecore#/">

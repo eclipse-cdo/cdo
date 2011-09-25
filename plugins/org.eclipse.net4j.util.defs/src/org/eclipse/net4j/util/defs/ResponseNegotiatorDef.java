@@ -14,13 +14,14 @@ package org.eclipse.net4j.util.defs;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Response Negotiator Def</b></em>'. <!--
  * end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.net4j.util.defs.ResponseNegotiatorDef#getCredentialsProvider <em>Credentials Provider</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.ResponseNegotiatorDef#getCredentialsProvider <em>Credentials Provider</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.net4j.util.defs.Net4jUtilDefsPackage#getResponseNegotiatorDef()
  * @model
  * @generated
@@ -28,13 +29,13 @@ package org.eclipse.net4j.util.defs;
 public interface ResponseNegotiatorDef extends NegotiatorDef
 {
   /**
-   * Returns the value of the '<em><b>Credentials Provider</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Credentials Provider</b></em>' reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Credentials Provider</em>' reference isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Credentials Provider</em>' reference.
    * @see #setCredentialsProvider(CredentialsProviderDef)
    * @see org.eclipse.net4j.util.defs.Net4jUtilDefsPackage#getResponseNegotiatorDef_CredentialsProvider()
@@ -44,11 +45,9 @@ public interface ResponseNegotiatorDef extends NegotiatorDef
   CredentialsProviderDef getCredentialsProvider();
 
   /**
-   * Sets the value of the '{@link org.eclipse.net4j.util.defs.ResponseNegotiatorDef#getCredentialsProvider
-   * <em>Credentials Provider</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Credentials Provider</em>' reference.
+   * Sets the value of the '{@link org.eclipse.net4j.util.defs.ResponseNegotiatorDef#getCredentialsProvider <em>Credentials Provider</em>}' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Credentials Provider</em>' reference.
    * @see #getCredentialsProvider()
    * @generated
    */

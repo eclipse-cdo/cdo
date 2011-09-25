@@ -4,7 +4,7 @@
     modelDirectory="/org.eclipse.net4j.ui.defs/src" editDirectory="" editorDirectory=""
     modelPluginID="org.eclipse.net4j.ui.defs" modelName="Org.eclipse.net4j.ui" codeFormatting="true"
     testsDirectory="" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
-    copyrightFields="false" usedGenPackages="../../org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.genmodel#//defs">
+    copyrightFields="false" runtimeVersion="2.6" usedGenPackages="../../org.eclipse.net4j.util.defs/model/org.eclipse.net4j.util.defs.genmodel#//defs">
   <foreignModel>org.eclipse.net4j.ui.defs.ecore</foreignModel>
   <genPackages prefix="Net4JUIDefs" basePackage="org.eclipse.net4j.ui" disposableProviderFactory="true"
       ecorePackage="org.eclipse.net4j.ui.defs.ecore#/">

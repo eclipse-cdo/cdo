@@ -16,7 +16,8 @@ import org.eclipse.net4j.util.defs.Def;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Interactive Credentials Provider Def</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
+ *
  * @see org.eclipse.net4j.ui.defs.Net4JUIDefsPackage#getInteractiveCredentialsProviderDef()
  * @model
  * @generated

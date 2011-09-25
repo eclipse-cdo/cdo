@@ -49,9 +49,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 {
   /**
-   * The cached value of the '{@link #getConnectorDef() <em>Connector Def</em>}' reference. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getConnectorDef() <em>Connector Def</em>}' reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getConnectorDef()
    * @generated
    * @ordered
@@ -59,17 +59,17 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   protected ConnectorDef connectorDef;
 
   /**
-   * This is true if the Connector Def reference has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is true if the Connector Def reference has been set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   protected boolean connectorDefESet;
 
   /**
-   * The default value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute. <!-- begin-user-doc -->
+   * The default value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getRepositoryName()
    * @generated
    * @ordered
@@ -77,9 +77,9 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
   protected static final String REPOSITORY_NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getRepositoryName() <em>Repository Name</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getRepositoryName()
    * @generated
    * @ordered
@@ -119,7 +119,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOSessionDefImpl()
@@ -129,7 +128,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -140,7 +138,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ConnectorDef getConnectorDef()
@@ -152,10 +149,8 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       if (connectorDef != oldConnectorDef)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF,
               oldConnectorDef, connectorDef));
-        }
       }
     }
     return connectorDef;
@@ -163,7 +158,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ConnectorDef basicGetConnectorDef()
@@ -188,7 +182,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setConnectorDefGen(ConnectorDef newConnectorDef)
@@ -198,15 +191,12 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     boolean oldConnectorDefESet = connectorDefESet;
     connectorDefESet = true;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF,
           oldConnectorDef, connectorDef, !oldConnectorDefESet));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetConnectorDef()
@@ -216,15 +206,12 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     connectorDef = null;
     connectorDefESet = false;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF,
           oldConnectorDef, null, oldConnectorDefESet));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetConnectorDef()
@@ -234,7 +221,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getRepositoryName()
@@ -244,7 +230,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setRepositoryName(String newRepositoryName)
@@ -252,15 +237,12 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     String oldRepositoryName = repositoryName;
     repositoryName = newRepositoryName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME,
           oldRepositoryName, repositoryName));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOPackageRegistryDef getCdoPackageRegistryDef()
@@ -272,10 +254,8 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
       if (cdoPackageRegistryDef != oldCdoPackageRegistryDef)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF, oldCdoPackageRegistryDef, cdoPackageRegistryDef));
-        }
       }
     }
     return cdoPackageRegistryDef;
@@ -283,7 +263,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOPackageRegistryDef basicGetCdoPackageRegistryDef()
@@ -293,7 +272,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setCdoPackageRegistryDef(CDOPackageRegistryDef newCdoPackageRegistryDef)
@@ -301,15 +279,12 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     CDOPackageRegistryDef oldCdoPackageRegistryDef = cdoPackageRegistryDef;
     cdoPackageRegistryDef = newCdoPackageRegistryDef;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF,
           oldCdoPackageRegistryDef, cdoPackageRegistryDef));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isLegacySupportEnabled()
@@ -319,7 +294,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setLegacySupportEnabled(boolean newLegacySupportEnabled)
@@ -327,15 +301,12 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     boolean oldLegacySupportEnabled = legacySupportEnabled;
     legacySupportEnabled = newLegacySupportEnabled;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED,
           oldLegacySupportEnabled, legacySupportEnabled));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -345,17 +316,13 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
     {
     case CDODefsPackage.CDO_SESSION_DEF__CONNECTOR_DEF:
       if (resolve)
-      {
         return getConnectorDef();
-      }
       return basicGetConnectorDef();
     case CDODefsPackage.CDO_SESSION_DEF__REPOSITORY_NAME:
       return getRepositoryName();
     case CDODefsPackage.CDO_SESSION_DEF__CDO_PACKAGE_REGISTRY_DEF:
       if (resolve)
-      {
         return getCdoPackageRegistryDef();
-      }
       return basicGetCdoPackageRegistryDef();
     case CDODefsPackage.CDO_SESSION_DEF__LEGACY_SUPPORT_ENABLED:
       return isLegacySupportEnabled();
@@ -365,7 +332,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -391,7 +357,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -417,7 +382,6 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -440,16 +404,13 @@ public class CDOSessionDefImpl extends DefImpl implements CDOSessionDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (repositoryName: ");

@@ -106,7 +106,7 @@ public class ComposeBranchPointComposite extends Composite
         {
           selectTimeStampComposite.setBranch(newBranch);
         }
-  
+
         composeBranchPoint();
       }
     };

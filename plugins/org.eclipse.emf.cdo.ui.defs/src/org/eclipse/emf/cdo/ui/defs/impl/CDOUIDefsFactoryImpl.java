@@ -25,14 +25,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static CDOUIDefsFactory init()
@@ -54,8 +53,8 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public CDOUIDefsFactoryImpl()
@@ -65,7 +64,6 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -84,7 +82,6 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EditorDef createEditorDef()
@@ -95,7 +92,6 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOEditorDef createCDOEditorDef()
@@ -106,7 +102,6 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOUIDefsPackage getCDOUIDefsPackage()
@@ -116,7 +111,6 @@ public class CDOUIDefsFactoryImpl extends EFactoryImpl implements CDOUIDefsFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

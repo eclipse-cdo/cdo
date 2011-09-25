@@ -32,8 +32,8 @@ import java.util.Map;
  *              </p>
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceNode()
  * @model abstract="true"
+ * @extends CDOObject
  * @generated
- * @since 2.0
  */
 public interface CDOResourceNode extends CDOObject
 {

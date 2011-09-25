@@ -23,14 +23,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static Net4JUIDefsFactory init()
@@ -52,8 +51,8 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Net4JUIDefsFactoryImpl()
@@ -63,7 +62,6 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -80,7 +78,6 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public InteractiveCredentialsProviderDef createInteractiveCredentialsProviderDef()
@@ -91,7 +88,6 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Net4JUIDefsPackage getNet4JUIDefsPackage()
@@ -101,7 +97,6 @@ public class Net4JUIDefsFactoryImpl extends EFactoryImpl implements Net4JUIDefsF
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

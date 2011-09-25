@@ -15,13 +15,14 @@ import org.eclipse.net4j.util.defs.Def;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Package Def</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.defs.EPackageDef#getNsURI <em>Ns URI</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.defs.EPackageDef#getNsURI <em>Ns URI</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.defs.CDODefsPackage#getEPackageDef()
  * @model abstract="true"
  * @generated
@@ -29,12 +30,12 @@ import org.eclipse.net4j.util.defs.Def;
 public interface EPackageDef extends Def
 {
   /**
-   * Returns the value of the '<em><b>Ns URI</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Ns URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Ns URI</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Ns URI</em>' attribute.
    * @see #setNsURI(String)
    * @see org.eclipse.emf.cdo.defs.CDODefsPackage#getEPackageDef_NsURI()

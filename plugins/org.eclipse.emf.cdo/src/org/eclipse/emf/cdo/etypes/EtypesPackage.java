@@ -27,10 +27,6 @@ import org.eclipse.emf.ecore.EReference;
  * </ul>
  * <!-- end-user-doc -->
  * 
- * @since 4.0
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
- * @apiviz.exclude
  * @see org.eclipse.emf.cdo.etypes.EtypesFactory
  * @model kind="package"
  * @generated

@@ -30,19 +30,19 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.defs.impl.CDOViewDefImpl#getCdoSessionDef <em>Cdo Session Def</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.defs.impl.CDOViewDefImpl#getCdoSessionDef <em>Cdo Session Def</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 {
 
   /**
-   * The cached value of the '{@link #getCdoSessionDef() <em>Cdo Session Def</em>}' reference. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getCdoSessionDef() <em>Cdo Session Def</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getCdoSessionDef()
    * @generated
    * @ordered
@@ -51,7 +51,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOViewDefImpl()
@@ -61,7 +60,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -72,7 +70,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOSessionDef getCdoSessionDef()
@@ -93,7 +90,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CDOSessionDef basicGetCdoSessionDef()
@@ -103,7 +99,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setCdoSessionDef(CDOSessionDef newCdoSessionDef)
@@ -117,7 +112,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -135,7 +129,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -152,7 +145,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -169,7 +161,6 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

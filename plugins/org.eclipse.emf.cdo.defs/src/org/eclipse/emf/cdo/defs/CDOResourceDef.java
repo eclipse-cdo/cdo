@@ -32,13 +32,13 @@ import org.eclipse.net4j.util.defs.Def;
 public interface CDOResourceDef extends Def
 {
   /**
-   * Returns the value of the '<em><b>Cdo Transaction</b></em>' reference. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Cdo Transaction</b></em>' reference.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Cdo Transaction</em>' reference isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Cdo Transaction</em>' reference.
    * @see #setCdoTransaction(CDOTransactionDef)
    * @see org.eclipse.emf.cdo.defs.CDODefsPackage#getCDOResourceDef_CdoTransaction()
@@ -48,25 +48,24 @@ public interface CDOResourceDef extends Def
   CDOTransactionDef getCdoTransaction();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.defs.CDOResourceDef#getCdoTransaction <em>Cdo Transaction</em>}'
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Cdo Transaction</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.defs.CDOResourceDef#getCdoTransaction <em>Cdo Transaction</em>}' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Cdo Transaction</em>' reference.
    * @see #getCdoTransaction()
    * @generated
    */
   void setCdoTransaction(CDOTransactionDef value);
 
   /**
-   * Returns the value of the '<em><b>Resource Mode</b></em>' attribute. The default value is <code>"null"</code>. The
-   * literals are from the enumeration {@link org.eclipse.emf.cdo.defs.ResourceMode}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Resource Mode</b></em>' attribute.
+   * The default value is <code>"null"</code>.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.defs.ResourceMode}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Resource Mode</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Resource Mode</em>' attribute.
    * @see org.eclipse.emf.cdo.defs.ResourceMode
    * @see #setResourceMode(ResourceMode)
@@ -77,11 +76,9 @@ public interface CDOResourceDef extends Def
   ResourceMode getResourceMode();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.defs.CDOResourceDef#getResourceMode <em>Resource Mode</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Resource Mode</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.defs.CDOResourceDef#getResourceMode <em>Resource Mode</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Resource Mode</em>' attribute.
    * @see org.eclipse.emf.cdo.defs.ResourceMode
    * @see #getResourceMode()
    * @generated
@@ -89,12 +86,12 @@ public interface CDOResourceDef extends Def
   void setResourceMode(ResourceMode value);
 
   /**
-   * Returns the value of the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Path</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Path</em>' attribute.
    * @see #setPath(String)
    * @see org.eclipse.emf.cdo.defs.CDODefsPackage#getCDOResourceDef_Path()

@@ -28,12 +28,12 @@ package org.eclipse.net4j.defs;
 public interface HTTPConnectorDef extends ConnectorDef
 {
   /**
-   * Returns the value of the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Url</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Url</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Url</em>' attribute.
    * @see #setUrl(String)
    * @see org.eclipse.net4j.defs.Net4jDefsPackage#getHTTPConnectorDef_Url()

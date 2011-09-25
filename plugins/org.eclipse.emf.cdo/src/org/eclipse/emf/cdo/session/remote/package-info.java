@@ -13,3 +13,4 @@
  * Client concepts for the communication and collaboration with other sessions.
  */
 package org.eclipse.emf.cdo.session.remote;
+

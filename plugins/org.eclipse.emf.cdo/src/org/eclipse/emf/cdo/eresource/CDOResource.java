@@ -36,7 +36,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isModified <em>Modified</em>}</li>
  *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isLoaded <em>Loaded</em>}</li>
  *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#isTrackingModification <em>Tracking
- *                  Modification </em>}</li>
+ *                  Modification</em>}</li>
  *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getErrors <em>Errors</em>}</li>
  *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}</li>
  *                  <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}</li>

@@ -13,7 +13,8 @@ package org.eclipse.net4j.util.defs;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Negotiator Def</b></em>'. <!-- end-user-doc -->
- * 
+ *
+ *
  * @see org.eclipse.net4j.util.defs.Net4jUtilDefsPackage#getNegotiatorDef()
  * @model abstract="true"
  * @generated

@@ -13,3 +13,4 @@
  * Reusable UI components specific to the CDO Model Repository.
  */
 package org.eclipse.emf.cdo.ui;
+

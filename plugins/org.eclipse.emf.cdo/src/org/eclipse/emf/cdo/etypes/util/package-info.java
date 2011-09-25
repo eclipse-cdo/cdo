@@ -13,3 +13,4 @@
  * The generated EMF utilities of the CDO system data types and native annotations.
  */
 package org.eclipse.emf.cdo.etypes.util;
+

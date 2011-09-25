@@ -46,8 +46,8 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
@@ -56,7 +56,6 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected JVMConnectorDefImpl()
@@ -66,7 +65,6 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -77,7 +75,6 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -87,7 +84,6 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -95,14 +91,11 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.JVM_CONNECTOR_DEF__NAME, oldName, name));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -118,7 +111,6 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -135,7 +127,6 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -152,7 +143,6 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -168,16 +158,13 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

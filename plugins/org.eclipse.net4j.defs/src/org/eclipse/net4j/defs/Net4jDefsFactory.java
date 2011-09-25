@@ -16,78 +16,77 @@ import org.eclipse.emf.ecore.EFactory;
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
  * the model. <!-- end-user-doc -->
- * 
  * @see org.eclipse.net4j.defs.Net4jDefsPackage
  * @generated
  */
 public interface Net4jDefsFactory extends EFactory
 {
   /**
-   * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   Net4jDefsFactory eINSTANCE = org.eclipse.net4j.defs.impl.Net4jDefsFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>TCP Connector Def</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>TCP Connector Def</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>TCP Connector Def</em>'.
    * @generated
    */
   TCPConnectorDef createTCPConnectorDef();
 
   /**
-   * Returns a new object of class '<em>TCP Acceptor Def</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>TCP Acceptor Def</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>TCP Acceptor Def</em>'.
    * @generated
    */
   TCPAcceptorDef createTCPAcceptorDef();
 
   /**
-   * Returns a new object of class '<em>JVM Acceptor Def</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>JVM Acceptor Def</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>JVM Acceptor Def</em>'.
    * @generated
    */
   JVMAcceptorDef createJVMAcceptorDef();
 
   /**
-   * Returns a new object of class '<em>JVM Connector Def</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>JVM Connector Def</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>JVM Connector Def</em>'.
    * @generated
    */
   JVMConnectorDef createJVMConnectorDef();
 
   /**
-   * Returns a new object of class '<em>HTTP Connector Def</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>HTTP Connector Def</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>HTTP Connector Def</em>'.
    * @generated
    */
   HTTPConnectorDef createHTTPConnectorDef();
 
   /**
-   * Returns a new object of class '<em>TCP Selector Def</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>TCP Selector Def</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>TCP Selector Def</em>'.
    * @generated
    */
   TCPSelectorDef createTCPSelectorDef();
 
   /**
-   * Returns a new object of class '<em>Buffer Pool Def</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns a new object of class '<em>Buffer Pool Def</em>'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>Buffer Pool Def</em>'.
    * @generated
    */
   BufferPoolDef createBufferPoolDef();
 
   /**
-   * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the package supported by this factory.
    * @generated
    */

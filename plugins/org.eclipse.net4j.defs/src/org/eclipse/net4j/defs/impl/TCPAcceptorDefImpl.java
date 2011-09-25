@@ -51,8 +51,8 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
   protected static final String HOST_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getHost() <em>Host</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getHost() <em>Host</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getHost()
    * @generated
    * @ordered
@@ -70,8 +70,8 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
   protected static final int PORT_EDEFAULT = 0;
 
   /**
-   * The cached value of the '{@link #getPort() <em>Port</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getPort() <em>Port</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getPort()
    * @generated
    * @ordered
@@ -79,9 +79,9 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
   protected int port = PORT_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getTcpSelectorDef() <em>Tcp Selector Def</em>}' reference. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getTcpSelectorDef() <em>Tcp Selector Def</em>}' reference.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getTcpSelectorDef()
    * @generated
    * @ordered
@@ -90,7 +90,6 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected TCPAcceptorDefImpl()
@@ -100,7 +99,6 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -111,7 +109,6 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getHost()
@@ -121,7 +118,6 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setHost(String newHost)
@@ -129,14 +125,11 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
     String oldHost = host;
     host = newHost;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_ACCEPTOR_DEF__HOST, oldHost, host));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getPort()
@@ -146,7 +139,6 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setPort(int newPort)
@@ -154,14 +146,11 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
     int oldPort = port;
     port = newPort;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_ACCEPTOR_DEF__PORT, oldPort, port));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TCPSelectorDef getTcpSelectorDef()
@@ -173,10 +162,8 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
       if (tcpSelectorDef != oldTcpSelectorDef)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Net4jDefsPackage.TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF, oldTcpSelectorDef, tcpSelectorDef));
-        }
       }
     }
     return tcpSelectorDef;
@@ -184,7 +171,6 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public TCPSelectorDef basicGetTcpSelectorDef()
@@ -194,7 +180,6 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setTcpSelectorDef(TCPSelectorDef newTcpSelectorDef)
@@ -202,15 +187,12 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
     TCPSelectorDef oldTcpSelectorDef = tcpSelectorDef;
     tcpSelectorDef = newTcpSelectorDef;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF,
           oldTcpSelectorDef, tcpSelectorDef));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -224,9 +206,7 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
       return getPort();
     case Net4jDefsPackage.TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF:
       if (resolve)
-      {
         return getTcpSelectorDef();
-      }
       return basicGetTcpSelectorDef();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -234,7 +214,6 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -257,7 +236,6 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -280,7 +258,6 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -300,16 +277,13 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (host: ");

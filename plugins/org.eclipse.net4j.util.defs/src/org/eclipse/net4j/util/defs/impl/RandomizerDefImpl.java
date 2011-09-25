@@ -24,20 +24,20 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.net4j.util.defs.impl.RandomizerDefImpl#getAlgorithmName <em>Algorithm Name</em>}</li>
- * <li>{@link org.eclipse.net4j.util.defs.impl.RandomizerDefImpl#getProviderName <em>Provider Name</em>}</li>
- * <li>{@link org.eclipse.net4j.util.defs.impl.RandomizerDefImpl#getSeed <em>Seed</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.impl.RandomizerDefImpl#getAlgorithmName <em>Algorithm Name</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.impl.RandomizerDefImpl#getProviderName <em>Provider Name</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.impl.RandomizerDefImpl#getSeed <em>Seed</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 {
   /**
-   * The default value of the '{@link #getAlgorithmName() <em>Algorithm Name</em>}' attribute. <!-- begin-user-doc -->
+   * The default value of the '{@link #getAlgorithmName() <em>Algorithm Name</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getAlgorithmName()
    * @generated
    * @ordered
@@ -45,9 +45,9 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
   protected static final String ALGORITHM_NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getAlgorithmName() <em>Algorithm Name</em>}' attribute. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getAlgorithmName() <em>Algorithm Name</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getAlgorithmName()
    * @generated
    * @ordered
@@ -55,17 +55,17 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
   protected String algorithmName = ALGORITHM_NAME_EDEFAULT;
 
   /**
-   * This is true if the Algorithm Name attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is true if the Algorithm Name attribute has been set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   protected boolean algorithmNameESet;
 
   /**
-   * The default value of the '{@link #getProviderName() <em>Provider Name</em>}' attribute. <!-- begin-user-doc -->
+   * The default value of the '{@link #getProviderName() <em>Provider Name</em>}' attribute.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getProviderName()
    * @generated
    * @ordered
@@ -73,9 +73,9 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
   protected static final String PROVIDER_NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getProviderName() <em>Provider Name</em>}' attribute. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getProviderName() <em>Provider Name</em>}' attribute.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getProviderName()
    * @generated
    * @ordered
@@ -83,8 +83,8 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
   protected String providerName = PROVIDER_NAME_EDEFAULT;
 
   /**
-   * This is true if the Provider Name attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is true if the Provider Name attribute has been set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -101,8 +101,8 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
   protected static final byte[] SEED_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getSeed() <em>Seed</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getSeed() <em>Seed</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getSeed()
    * @generated
    * @ordered
@@ -110,8 +110,8 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
   protected byte[] seed = SEED_EDEFAULT;
 
   /**
-   * This is true if the Seed attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This is true if the Seed attribute has been set.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -138,7 +138,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected RandomizerDefImpl()
@@ -148,7 +147,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -159,7 +157,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAlgorithmName()
@@ -169,7 +166,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAlgorithmName(String newAlgorithmName)
@@ -179,15 +175,12 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     boolean oldAlgorithmNameESet = algorithmNameESet;
     algorithmNameESet = true;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.RANDOMIZER_DEF__ALGORITHM_NAME,
           oldAlgorithmName, algorithmName, !oldAlgorithmNameESet));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetAlgorithmName()
@@ -197,15 +190,12 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     algorithmName = ALGORITHM_NAME_EDEFAULT;
     algorithmNameESet = false;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jUtilDefsPackage.RANDOMIZER_DEF__ALGORITHM_NAME,
           oldAlgorithmName, ALGORITHM_NAME_EDEFAULT, oldAlgorithmNameESet));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetAlgorithmName()
@@ -215,7 +205,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getProviderName()
@@ -225,7 +214,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setProviderName(String newProviderName)
@@ -235,15 +223,12 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     boolean oldProviderNameESet = providerNameESet;
     providerNameESet = true;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.RANDOMIZER_DEF__PROVIDER_NAME,
           oldProviderName, providerName, !oldProviderNameESet));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetProviderName()
@@ -253,15 +238,12 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     providerName = PROVIDER_NAME_EDEFAULT;
     providerNameESet = false;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jUtilDefsPackage.RANDOMIZER_DEF__PROVIDER_NAME,
           oldProviderName, PROVIDER_NAME_EDEFAULT, oldProviderNameESet));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetProviderName()
@@ -271,7 +253,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public byte[] getSeed()
@@ -281,7 +262,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setSeed(byte[] newSeed)
@@ -291,15 +271,12 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     boolean oldSeedESet = seedESet;
     seedESet = true;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.RANDOMIZER_DEF__SEED, oldSeed, seed,
           !oldSeedESet));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetSeed()
@@ -309,15 +286,12 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
     seed = SEED_EDEFAULT;
     seedESet = false;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jUtilDefsPackage.RANDOMIZER_DEF__SEED, oldSeed,
           SEED_EDEFAULT, oldSeedESet));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetSeed()
@@ -327,7 +301,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -347,7 +320,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -370,7 +342,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -393,7 +364,6 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -413,45 +383,30 @@ public class RandomizerDefImpl extends DefImpl implements RandomizerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (algorithmName: ");
     if (algorithmNameESet)
-    {
       result.append(algorithmName);
-    }
     else
-    {
       result.append("<unset>");
-    }
     result.append(", providerName: ");
     if (providerNameESet)
-    {
       result.append(providerName);
-    }
     else
-    {
       result.append("<unset>");
-    }
     result.append(", seed: ");
     if (seedESet)
-    {
       result.append(seed);
-    }
     else
-    {
       result.append("<unset>");
-    }
     result.append(')');
     return result.toString();
   }

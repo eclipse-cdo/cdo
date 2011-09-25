@@ -38,9 +38,9 @@ import java.util.Collection;
 public class UserManagerDefImpl extends DefImpl implements UserManagerDef
 {
   /**
-   * The cached value of the '{@link #getUser() <em>User</em>}' reference list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getUser() <em>User</em>}' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getUser()
    * @generated
    * @ordered
@@ -49,7 +49,6 @@ public class UserManagerDefImpl extends DefImpl implements UserManagerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected UserManagerDefImpl()
@@ -59,7 +58,6 @@ public class UserManagerDefImpl extends DefImpl implements UserManagerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -70,7 +68,6 @@ public class UserManagerDefImpl extends DefImpl implements UserManagerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<User> getUser()
@@ -84,20 +81,16 @@ public class UserManagerDefImpl extends DefImpl implements UserManagerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void unsetUser()
   {
     if (user != null)
-    {
       ((InternalEList.Unsettable<?>)user).unset();
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isSetUser()
@@ -107,7 +100,6 @@ public class UserManagerDefImpl extends DefImpl implements UserManagerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -123,7 +115,6 @@ public class UserManagerDefImpl extends DefImpl implements UserManagerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -142,7 +133,6 @@ public class UserManagerDefImpl extends DefImpl implements UserManagerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -159,7 +149,6 @@ public class UserManagerDefImpl extends DefImpl implements UserManagerDef
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

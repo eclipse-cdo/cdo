@@ -22,14 +22,12 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass interactiveCredentialsProviderDefEClass = null;
@@ -54,18 +52,17 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link Net4JUIDefsPackage#eINSTANCE} when that field is accessed. Clients should
-   * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
    * 
+   * <p>This method is used to initialize {@link Net4JUIDefsPackage#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -74,9 +71,7 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
   public static Net4JUIDefsPackage init()
   {
     if (isInited)
-    {
       return (Net4JUIDefsPackage)EPackage.Registry.INSTANCE.getEPackage(Net4JUIDefsPackage.eNS_URI);
-    }
 
     // Obtain or create and register package
     Net4JUIDefsPackageImpl theNet4JUIDefsPackage = (Net4JUIDefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Net4JUIDefsPackageImpl ? EPackage.Registry.INSTANCE
@@ -103,7 +98,6 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getInteractiveCredentialsProviderDef()
@@ -113,7 +107,6 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Net4JUIDefsFactory getNet4JUIDefsFactory()
@@ -123,23 +116,20 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
   {
     if (isCreated)
-    {
       return;
-    }
     isCreated = true;
 
     // Create classes and their features
@@ -148,23 +138,20 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
   {
     if (isInitialized)
-    {
       return;
-    }
     isInitialized = true;
 
     // Initialize package

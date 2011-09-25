@@ -21,14 +21,13 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOLazyPackageRegistryDefImpl extends CDOPackageRegistryDefImpl implements CDOLazyPackageRegistryDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CDOLazyPackageRegistryDefImpl()
@@ -38,7 +37,6 @@ public class CDOLazyPackageRegistryDefImpl extends CDOPackageRegistryDefImpl imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

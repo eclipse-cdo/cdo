@@ -404,7 +404,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -457,49 +457,27 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   public void dispose()
   {
     if (stockItemProvider != null)
-    {
       stockItemProvider.dispose();
-    }
     if (stockProductItemProvider != null)
-    {
       stockProductItemProvider.dispose();
-    }
     if (recipeItemProvider != null)
-    {
       recipeItemProvider.dispose();
-    }
     if (ingredientItemProvider != null)
-    {
       ingredientItemProvider.dispose();
-    }
     if (menuCardItemProvider != null)
-    {
       menuCardItemProvider.dispose();
-    }
     if (restaurantItemProvider != null)
-    {
       restaurantItemProvider.dispose();
-    }
     if (departmentItemProvider != null)
-    {
       departmentItemProvider.dispose();
-    }
     if (offeringItemProvider != null)
-    {
       offeringItemProvider.dispose();
-    }
     if (tableItemProvider != null)
-    {
       tableItemProvider.dispose();
-    }
     if (employeeItemProvider != null)
-    {
       employeeItemProvider.dispose();
-    }
     if (sectionItemProvider != null)
-    {
       sectionItemProvider.dispose();
-    }
   }
 
 }

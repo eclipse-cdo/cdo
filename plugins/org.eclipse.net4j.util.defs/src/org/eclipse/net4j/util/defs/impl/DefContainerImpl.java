@@ -32,11 +32,11 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.net4j.util.defs.impl.DefContainerImpl#getDefinitions <em>Definitions</em>}</li>
- * <li>{@link org.eclipse.net4j.util.defs.impl.DefContainerImpl#getDefaultDefinition <em>Default Definition</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.impl.DefContainerImpl#getDefinitions <em>Definitions</em>}</li>
+ *   <li>{@link org.eclipse.net4j.util.defs.impl.DefContainerImpl#getDefaultDefinition <em>Default Definition</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class DefContainerImpl extends EObjectImpl implements DefContainer
@@ -63,7 +63,6 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected DefContainerImpl()
@@ -73,7 +72,6 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -84,7 +82,6 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<Def> getDefinitions()
@@ -98,7 +95,6 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Def getDefaultDefinition()
@@ -110,10 +106,8 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
       if (defaultDefinition != oldDefaultDefinition)
       {
         if (eNotificationRequired())
-        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Net4jUtilDefsPackage.DEF_CONTAINER__DEFAULT_DEFINITION, oldDefaultDefinition, defaultDefinition));
-        }
       }
     }
     return defaultDefinition;
@@ -121,7 +115,6 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Def basicGetDefaultDefinition()
@@ -131,7 +124,6 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setDefaultDefinition(Def newDefaultDefinition)
@@ -139,15 +131,12 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
     Def oldDefaultDefinition = defaultDefinition;
     defaultDefinition = newDefaultDefinition;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.DEF_CONTAINER__DEFAULT_DEFINITION,
           oldDefaultDefinition, defaultDefinition));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -163,7 +152,6 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -175,9 +163,7 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
       return getDefinitions();
     case Net4jUtilDefsPackage.DEF_CONTAINER__DEFAULT_DEFINITION:
       if (resolve)
-      {
         return getDefaultDefinition();
-      }
       return basicGetDefaultDefinition();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -185,7 +171,6 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -207,7 +192,6 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -227,7 +211,6 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

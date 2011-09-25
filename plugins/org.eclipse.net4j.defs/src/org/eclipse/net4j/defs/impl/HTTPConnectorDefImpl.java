@@ -36,8 +36,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnectorDef
 {
   /**
-   * The default value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The default value of the '{@link #getUrl() <em>Url</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getUrl()
    * @generated
    * @ordered
@@ -45,8 +45,8 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
   protected static final String URL_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getUrl()
    * @generated
    * @ordered
@@ -55,7 +55,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected HTTPConnectorDefImpl()
@@ -65,7 +64,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -76,7 +74,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getUrl()
@@ -86,7 +83,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setUrl(String newUrl)
@@ -94,14 +90,11 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
     String oldUrl = url;
     url = newUrl;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL, oldUrl, url));
-    }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -117,7 +110,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -134,7 +126,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -151,7 +142,6 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -167,16 +157,13 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");

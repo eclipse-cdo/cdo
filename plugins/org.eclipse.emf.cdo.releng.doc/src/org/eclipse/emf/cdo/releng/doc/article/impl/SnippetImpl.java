@@ -252,7 +252,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     html = processCallouts(id, html, imagePath);
 
     out.write("<div class=\"snippet\" style=\"margin-left:24px;\" align=\"left\">\n");
-    out.write("  <a name=\"snippet_" + id + "\"></a\n");
+    out.write("  <a name=\"snippet_" + id + "\"></a>\n");
     out.write("  <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
     out.write("    <tr>\n");
     out.write("      <td><img src=\"" + imagePath + "editor-top-left.png\"></td>\n");

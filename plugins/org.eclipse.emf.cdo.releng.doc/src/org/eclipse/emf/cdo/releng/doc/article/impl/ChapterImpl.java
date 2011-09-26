@@ -156,7 +156,7 @@ public class ChapterImpl extends BodyImpl implements Chapter
     }
     else
     {
-      String anchor = "<a name=\"" + getName() + "\">";
+      String anchor = "<a name=\"" + getName() + "\"></a>";
 
       int level = getChapterNumbers().length + 1;
       out.write("<h" + level + ">");

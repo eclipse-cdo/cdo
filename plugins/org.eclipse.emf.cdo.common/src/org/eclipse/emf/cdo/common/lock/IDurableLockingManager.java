@@ -19,8 +19,7 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import java.util.Map;
 
 /**
- * Manages all aspects of durable CDO views like persisting informations like {@link CDOBranchPoint branch point} and
- * acquired locks.
+ * Manages all persistent aspects of durable CDO views such as {@link CDOBranchPoint branch point} and acquired locks.
  * 
  * @author Eike Stepper
  * @since 4.0

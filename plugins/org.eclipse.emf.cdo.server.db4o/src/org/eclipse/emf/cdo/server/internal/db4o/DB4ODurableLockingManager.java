@@ -120,7 +120,7 @@ public class DB4ODurableLockingManager extends Lifecycle
     LockArea area = getLockArea(accessor, durableLockingID);
     Map<CDOID, LockGrade> locks = area.getLocks();
 
-    InternalLockManager lockManager = accessor.getStore().getRepository().getLockManager();
+    InternalLockManager lockManager = accessor.getStore().getRepository().getLockingManager();
     for (Object objectToLock : objectsToLock)
     {
       CDOID id = lockManager.getLockKeyID(objectToLock);
@@ -147,7 +147,7 @@ public class DB4ODurableLockingManager extends Lifecycle
     LockArea area = getLockArea(accessor, durableLockingID);
     Map<CDOID, LockGrade> locks = area.getLocks();
 
-    InternalLockManager lockManager = accessor.getStore().getRepository().getLockManager();
+    InternalLockManager lockManager = accessor.getStore().getRepository().getLockingManager();
     for (Object objectToUnlock : objectsToUnlock)
     {
       CDOID id = lockManager.getLockKeyID(objectToUnlock);

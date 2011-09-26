@@ -655,7 +655,7 @@ public class DurableLockingManager extends Lifecycle
       stmtUpdate = statementCache.getPreparedStatement(sqlUpdateLock, ReuseProbability.MEDIUM);
       stmtUpdate.setString(2, durableLockingID);
 
-      InternalLockManager lockManager = accessor.getStore().getRepository().getLockManager();
+      InternalLockManager lockManager = accessor.getStore().getRepository().getLockingManager();
       for (Object key : keys)
       {
         CDOID id = lockManager.getLockKeyID(key);

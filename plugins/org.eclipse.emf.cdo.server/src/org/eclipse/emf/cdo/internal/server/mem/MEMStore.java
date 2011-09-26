@@ -809,7 +809,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
     LockArea area = getLockArea(durableLockingID);
     Map<CDOID, LockGrade> locks = area.getLocks();
 
-    InternalLockManager lockManager = getRepository().getLockManager();
+    InternalLockManager lockManager = getRepository().getLockingManager();
     for (Object objectToLock : objectsToLock)
     {
       CDOID id = lockManager.getLockKeyID(objectToLock);
@@ -832,7 +832,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader, Du
     LockArea area = getLockArea(durableLockingID);
     Map<CDOID, LockGrade> locks = area.getLocks();
 
-    InternalLockManager lockManager = getRepository().getLockManager();
+    InternalLockManager lockManager = getRepository().getLockingManager();
     for (Object objectToUnlock : objectsToUnlock)
     {
       CDOID id = lockManager.getLockKeyID(objectToUnlock);

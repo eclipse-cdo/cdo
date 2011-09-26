@@ -839,7 +839,7 @@ public class LockingManagerTest extends AbstractLockingTest
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     readLock(company);
     transaction.close();
-    assertEquals(false, repo.getLockManager().hasLock(LockType.READ, view, cdoCompany.cdoID()));
+    assertEquals(false, repo.getLockingManager().hasLock(LockType.READ, view, cdoCompany.cdoID()));
   }
 
   public void testSessionClose() throws Exception
@@ -860,7 +860,7 @@ public class LockingManagerTest extends AbstractLockingTest
     session.close();
 
     sleep(100);
-    assertEquals(false, repo.getLockManager().hasLock(LockType.READ, view, cdoCompany.cdoID()));
+    assertEquals(false, repo.getLockingManager().hasLock(LockType.READ, view, cdoCompany.cdoID()));
   }
 
   public void testBugzilla_270345() throws Exception

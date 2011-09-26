@@ -197,7 +197,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     {
       StoreThreadLocal.setSession(replicatorSession);
       final List<String> areaIDs = new LinkedList<String>();
-      getLockManager().getLockAreas(null, new LockArea.Handler()
+      getLockingManager().getLockAreas(null, new LockArea.Handler()
       {
         public boolean handleLockArea(LockArea area)
         {
@@ -272,7 +272,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     CDOLockOwner owner = lockChangeInfo.getLockOwner();
     String durableLockingID = owner.getDurableLockingID();
     CDOBranch viewedBranch = lockChangeInfo.getBranch();
-    InternalLockManager lockManager = getLockManager();
+    InternalLockManager lockManager = getLockingManager();
     LockType lockType = lockChangeInfo.getLockType();
 
     InternalView view = null;
@@ -316,7 +316,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     try
     {
       StoreThreadLocal.setSession(replicatorSession);
-      getLockManager().updateLockArea(area);
+      getLockingManager().updateLockArea(area);
 
       getSessionManager().sendLockNotification(null, CDOLockUtil.createLockChangeInfo());
       return true;
@@ -384,7 +384,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
   private void replicateRawReloadLocks()
   {
-    getLockManager().reloadLocks();
+    getLockingManager().reloadLocks();
   }
 
   private void replicateRawNotifyClients(long fromCommitTime, long toCommitTime)

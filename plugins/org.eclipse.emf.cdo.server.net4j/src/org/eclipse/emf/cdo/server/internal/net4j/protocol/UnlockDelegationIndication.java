@@ -57,7 +57,7 @@ public class UnlockDelegationIndication extends UnlockObjectsIndication
   @Override
   protected IView getView(int viewID)
   {
-    InternalLockManager lockManager = getRepository().getLockManager();
+    InternalLockManager lockManager = getRepository().getLockingManager();
     InternalSession session = getSession();
     view = (InternalView)lockManager.openView(session, InternalSession.TEMP_VIEW_ID, true, lockAreaID);
     return view;

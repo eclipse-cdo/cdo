@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
+import org.eclipse.emf.cdo.server.ILockingManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 
@@ -33,7 +33,7 @@ import java.util.Map;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalLockManager extends IRWOLockManager<Object, IView>, IDurableLockingManager
+public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILockingManager
 {
   public InternalRepository getRepository();
 

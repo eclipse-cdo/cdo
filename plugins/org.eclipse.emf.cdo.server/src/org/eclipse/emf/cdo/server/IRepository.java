@@ -75,8 +75,15 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
 
   /**
    * @since 4.0
+   * @deprecated As of 4.1 use {@link #getLockingManager()}.
    */
+  @Deprecated
   public IDurableLockingManager getLockManager();
+
+  /**
+   * @since 4.1
+   */
+  public ILockingManager getLockingManager();
 
   /**
    * @since 2.0

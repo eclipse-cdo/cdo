@@ -18,6 +18,8 @@ public abstract class ConcurrentArray<E>
 {
   protected E[] elements;
 
+  private final E[] EMPTY = newArray(0);
+
   public ConcurrentArray()
   {
   }
@@ -29,7 +31,7 @@ public abstract class ConcurrentArray<E>
 
   public E[] get()
   {
-    return elements;
+    return elements == null ? EMPTY : elements;
   }
 
   public synchronized void add(E element)

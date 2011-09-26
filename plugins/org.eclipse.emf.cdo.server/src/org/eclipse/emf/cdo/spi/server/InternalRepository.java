@@ -100,7 +100,16 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
 
   public void setSessionManager(InternalSessionManager sessionManager);
 
+  /**
+   * @deprecated As of 4.1 use {@link #getLockingManager()}.
+   */
+  @Deprecated
   public InternalLockManager getLockManager();
+
+  /**
+   * @since 4.1
+   */
+  public InternalLockManager getLockingManager();
 
   public InternalQueryManager getQueryManager();
 

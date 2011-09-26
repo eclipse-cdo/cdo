@@ -101,9 +101,10 @@ public abstract class DelegatingRepository implements InternalRepository
     return getDelegate().getListeners();
   }
 
+  @Deprecated
   public InternalLockManager getLockManager()
   {
-    return getDelegate().getLockManager();
+    return getDelegate().getLockingManager();
   }
 
   public String getName()

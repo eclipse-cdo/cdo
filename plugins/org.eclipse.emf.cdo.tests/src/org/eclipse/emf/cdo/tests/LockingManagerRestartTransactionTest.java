@@ -10,9 +10,13 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.ILockingManager;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -360,5 +364,30 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     company = (Company)resource.getContents().get(0);
     assertReadLock(true, company);
     assertWriteLock(false, company);
+  }
+
+  public void testDurableViewHandler() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+
+    writeLock(company);
+
+    String durableLockingID = transaction.enableDurableLocking(true);
+
+    InternalLockManager mgr = getRepository().getLockingManager();
+    final boolean[] gotCalled = new boolean[1];
+    mgr.addDurableViewHandler(new ILockingManager.DurableViewHandler()
+    {
+      public void openingView(CDOCommonSession session, int viewID, boolean readOnly, LockArea area)
+      {
+        gotCalled[0] = true;
+      }
+    });
+
+    restart(durableLockingID);
+
+    assertEquals(true, gotCalled[0]);
   }
 }

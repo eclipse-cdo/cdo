@@ -57,7 +57,7 @@ public class OpenViewIndication extends CDOServerReadIndication
     }
     else
     {
-      InternalLockManager lockManager = getRepository().getLockManager();
+      InternalLockManager lockManager = getRepository().getLockingManager();
 
       try
       {

@@ -9,7 +9,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/internal/server/LockManager.java" type="org.eclipse.emf.cdo.internal.server.LockManager$DurableView">
+    <resource path="src/org/eclipse/emf/cdo/internal/server/LockingManager.java" type="org.eclipse.emf.cdo.internal.server.LockingManager$DurableView">
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="Options"/>

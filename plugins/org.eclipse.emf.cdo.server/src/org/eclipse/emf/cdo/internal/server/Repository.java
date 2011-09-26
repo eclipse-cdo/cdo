@@ -175,7 +175,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private InternalCommitManager commitManager;
 
-  private InternalLockManager lockManager;
+  private InternalLockManager lockingManager;
 
   private IQueryHandlerProvider queryHandlerProvider;
 
@@ -780,19 +780,26 @@ public class Repository extends Container<Object> implements InternalRepository
 
   /**
    * @since 2.0
+   * @deprecated
    */
+  @Deprecated
   public InternalLockManager getLockManager()
   {
-    return lockManager;
+    return getLockingManager();
+  }
+
+  public InternalLockManager getLockingManager()
+  {
+    return lockingManager;
   }
 
   /**
    * @since 2.0
    */
-  public void setLockManager(InternalLockManager lockManager)
+  public void setLockingManager(InternalLockManager lockingManager)
   {
     checkInactive();
-    this.lockManager = lockManager;
+    this.lockingManager = lockingManager;
   }
 
   public InternalCommitContext createCommitContext(InternalTransaction transaction)
@@ -942,7 +949,7 @@ public class Repository extends Container<Object> implements InternalRepository
   public Object[] getElements()
   {
     final Object[] elements = { packageRegistry, branchManager, revisionManager, sessionManager, queryManager,
-        commitManager, commitInfoManager, lockManager, store };
+        commitManager, commitInfoManager, getLockingManager(), store };
     return elements;
   }
 
@@ -1163,7 +1170,7 @@ public class Repository extends Container<Object> implements InternalRepository
     long startTime = context.getLastReplicatedCommitTime();
     commitInfoManager.getCommitInfos(null, startTime + 1L, CDOBranchPoint.UNSPECIFIED_DATE, context);
 
-    lockManager.getLockAreas(null, context);
+    getLockingManager().getLockAreas(null, context);
   }
 
   public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
@@ -1379,7 +1386,7 @@ public class Repository extends Container<Object> implements InternalRepository
     List<LockState<Object, IView>> newLockStates = null;
     try
     {
-      newLockStates = lockManager.lock2(true, type, view, lockables, recursive, timeout);
+      newLockStates = getLockingManager().lock2(true, type, view, lockables, recursive, timeout);
     }
     catch (TimeoutRuntimeException ex)
     {
@@ -1392,14 +1399,14 @@ public class Repository extends Container<Object> implements InternalRepository
 
     long[] requiredTimestamp = { 0L };
     CDORevisionKey[] staleRevisionsArray = null;
-    
+
     try
     {
       staleRevisionsArray = checkStaleRevisions(view, loadedRevs, lockables, type, requiredTimestamp);
     }
     catch (IllegalArgumentException e)
     {
-      lockManager.unlock2(true, type, view, lockables, recursive);
+      getLockingManager().unlock2(true, type, view, lockables, recursive);
       throw e;
     }
 
@@ -1410,7 +1417,7 @@ public class Repository extends Container<Object> implements InternalRepository
     boolean staleNoUpdate = staleRevisionsArray.length > 0 && !session.isPassiveUpdateEnabled();
     if (staleNoUpdate)
     {
-      lockManager.unlock2(true, type, view, lockables, recursive);
+      getLockingManager().unlock2(true, type, view, lockables, recursive);
       return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, new CDOLockState[0],
           getTimeStamp());
     }
@@ -1505,11 +1512,11 @@ public class Repository extends Container<Object> implements InternalRepository
     List<LockState<Object, IView>> newLockStates = null;
     if (lockType == null) // Signals an unlock-all operation
     {
-      newLockStates = lockManager.unlock2(true, view);
+      newLockStates = getLockingManager().unlock2(true, view);
     }
     else
     {
-      newLockStates = lockManager.unlock2(true, lockType, view, unlockables, recursive);
+      newLockStates = getLockingManager().unlock2(true, lockType, view, unlockables, recursive);
     }
 
     long timestamp = getTimeStamp();
@@ -1746,7 +1753,7 @@ public class Repository extends Container<Object> implements InternalRepository
     checkState(queryManager, "queryManager"); //$NON-NLS-1$
     checkState(commitInfoManager, "commitInfoManager"); //$NON-NLS-1$
     checkState(commitManager, "commitManager"); //$NON-NLS-1$
-    checkState(lockManager, "lockingManager"); //$NON-NLS-1$
+    checkState(getLockingManager(), "lockingManager"); //$NON-NLS-1$
 
     packageRegistry.setReplacingDescriptors(true);
     packageRegistry.setPackageProcessor(this);
@@ -1760,7 +1767,7 @@ public class Repository extends Container<Object> implements InternalRepository
     queryManager.setRepository(this);
     commitInfoManager.setCommitInfoLoader(this);
     commitManager.setRepository(this);
-    lockManager.setRepository(this);
+    getLockingManager().setRepository(this);
     store.setRepository(this);
   }
 
@@ -1816,13 +1823,13 @@ public class Repository extends Container<Object> implements InternalRepository
       // }
     }
 
-    LifecycleUtil.activate(lockManager); // Needs an initialized main branch / branch manager
+    LifecycleUtil.activate(getLockingManager()); // Needs an initialized main branch / branch manager
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
-    LifecycleUtil.deactivate(lockManager);
+    LifecycleUtil.deactivate(getLockingManager());
     LifecycleUtil.deactivate(queryHandlerProvider);
     LifecycleUtil.deactivate(commitManager);
     LifecycleUtil.deactivate(commitInfoManager);
@@ -1885,7 +1892,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
       if (getLockManager() == null)
       {
-        setLockManager(createLockManager());
+        setLockingManager(createLockManager());
       }
 
       super.doBeforeActivate();
@@ -1926,9 +1933,15 @@ public class Repository extends Container<Object> implements InternalRepository
       return new CommitManager();
     }
 
+    @Deprecated
     protected InternalLockManager createLockManager()
     {
-      return new LockManager();
+      return createLockingManager();
+    }
+
+    public LockingManager createLockingManager()
+    {
+      return new LockingManager();
     }
   }
 }

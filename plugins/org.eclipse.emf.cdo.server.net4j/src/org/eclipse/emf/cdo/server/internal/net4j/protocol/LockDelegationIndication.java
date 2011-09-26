@@ -65,7 +65,7 @@ public class LockDelegationIndication extends LockObjectsIndication
     // The viewID received as an argument, is the ID of the client's view, which
     // does not exist on the master. So we ignore this argument and open a new
     // view instead.
-    InternalLockManager lockManager = getRepository().getLockManager();
+    InternalLockManager lockManager = getRepository().getLockingManager();
     InternalSession session = getSession();
     view = SyncingUtil.openViewWithLockArea(session, lockManager, viewedBranch, lockAreaID);
     return view;

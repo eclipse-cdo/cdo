@@ -167,7 +167,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
     repository = transaction.getRepository();
     revisionManager = repository.getRevisionManager();
-    lockManager = repository.getLockManager();
+    lockManager = repository.getLockingManager();
     ensuringReferentialIntegrity = repository.isEnsuringReferentialIntegrity();
 
     repositoryPackageRegistry = repository.getPackageRegistry(false);
@@ -1059,7 +1059,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
       if (isAutoReleaseLocksEnabled())
       {
-        postCommitLockStates = repository.getLockManager().unlock2(true, transaction);
+        postCommitLockStates = repository.getLockingManager().unlock2(true, transaction);
         if (!postCommitLockStates.isEmpty())
         {
           sendLockNotifications(postCommitLockStates);

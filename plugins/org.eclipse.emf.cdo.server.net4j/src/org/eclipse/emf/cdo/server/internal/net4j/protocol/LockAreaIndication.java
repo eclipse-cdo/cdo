@@ -34,7 +34,7 @@ public class LockAreaIndication extends CDOServerWriteIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    InternalLockManager lockManager = getRepository().getLockManager();
+    InternalLockManager lockManager = getRepository().getLockingManager();
 
     int viewID = in.readInt();
     InternalView view = getSession().getView(viewID);

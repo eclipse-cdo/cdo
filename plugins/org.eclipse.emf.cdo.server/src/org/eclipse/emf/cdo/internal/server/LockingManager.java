@@ -41,6 +41,7 @@ import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
@@ -66,13 +67,22 @@ import java.util.Set;
  * @author Simon McDuff
  * @since 3.0
  */
-public class LockManager extends RWOLockManager<Object, IView> implements InternalLockManager
+public class LockingManager extends RWOLockManager<Object, IView> implements InternalLockManager
 {
   private InternalRepository repository;
 
   private Map<String, InternalView> openViews = new HashMap<String, InternalView>();
 
   private Map<String, DurableView> durableViews = new HashMap<String, DurableView>();
+
+  private ConcurrentArray<DurableViewHandler> durableViewHandlers = new ConcurrentArray<DurableViewHandler>()
+  {
+    @Override
+    protected DurableViewHandler[] newArray(int length)
+    {
+      return new DurableViewHandler[length];
+    }
+  };
 
   @ExcludeFromDump
   private transient IListener sessionListener = new ContainerEventAdapter<IView>()
@@ -87,8 +97,10 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
       }
       else
       {
-        changeContext(view, new DurableView(durableLockingID));
+        DurableView durableView = new DurableView(durableLockingID);
+        changeContext(view, durableView);
         unregisterOpenView(durableLockingID);
+        durableViews.put(durableLockingID, durableView);
       }
     }
   };
@@ -109,7 +121,7 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     }
   };
 
-  public LockManager()
+  public LockingManager()
   {
   }
 
@@ -399,6 +411,18 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
         throw new IllegalStateException("Durable read-only state does not match the request");
       }
 
+      for (DurableViewHandler handler : durableViewHandlers.get())
+      {
+        try
+        {
+          handler.openingView(session, viewID, readOnly, area);
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+
       if (readOnly)
       {
         view = (InternalView)session.openView(viewID, area);
@@ -408,7 +432,8 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
         view = (InternalView)session.openTransaction(viewID, area);
       }
 
-      changeContext(new DurableView(durableLockingID), view);
+      DurableView durableView = durableViews.get(durableLockingID);
+      changeContext(durableView, view);
       view.setDurableLockingID(durableLockingID);
       view.addListener(new LifecycleEventAdapter()
       {
@@ -521,6 +546,16 @@ public class LockManager extends RWOLockManager<Object, IView> implements Intern
     }
 
     throw new ImplementationError("Unexpected lock object: " + key);
+  }
+
+  public void addDurableViewHandler(DurableViewHandler handler)
+  {
+    durableViewHandlers.add(handler);
+  }
+
+  public void removeDurableViewHandler(DurableViewHandler handler)
+  {
+    durableViewHandlers.remove(handler);
   }
 
   /**

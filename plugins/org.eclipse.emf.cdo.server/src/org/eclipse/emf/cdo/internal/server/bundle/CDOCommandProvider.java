@@ -283,7 +283,7 @@ public class CDOCommandProvider implements CommandProvider
       @Override
       protected void doExecute(IStoreAccessor accessor)
       {
-        repository.getLockManager().getLockAreas(userIDPrefix, new IDurableLockingManager.LockArea.Handler()
+        repository.getLockingManager().getLockAreas(userIDPrefix, new IDurableLockingManager.LockArea.Handler()
         {
           public boolean handleLockArea(LockArea area)
           {
@@ -311,7 +311,7 @@ public class CDOCommandProvider implements CommandProvider
       @Override
       protected void doExecute(IStoreAccessor accessor)
       {
-        repository.getLockManager().deleteLockArea(durableLockingID);
+        repository.getLockingManager().deleteLockArea(durableLockingID);
       }
     }.execute(repository);
   }

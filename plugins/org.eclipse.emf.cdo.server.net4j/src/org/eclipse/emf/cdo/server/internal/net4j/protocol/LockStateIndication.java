@@ -48,7 +48,7 @@ public class LockStateIndication extends CDOServerReadIndication
       throw new IllegalStateException("View not found");
     }
 
-    InternalLockManager lockMgr = getRepository().getLockManager();
+    InternalLockManager lockMgr = getRepository().getLockingManager();
 
     int n = in.readInt();
     cdoLockStates = new CDOLockState[n];

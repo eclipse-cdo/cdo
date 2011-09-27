@@ -685,7 +685,7 @@
 		                  profile="CDOServer"
 		                  platform="Mac"
 		                  os="macosx"
-		                  ws="carbon"
+		                  ws="cocoa"
 		                  arch="x86"
 		                  priority="430" />
 
@@ -693,7 +693,7 @@
 		                  profile="CDOExplorer"
 		                  platform="Mac"
 		                  os="macosx"
-		                  ws="carbon"
+		                  ws="cocoa"
 		                  arch="x86"
 		                  priority="330" />
 	</target>

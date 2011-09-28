@@ -63,13 +63,13 @@
                 class="org.eclipse.emf.cdo.dawn.notifications.DawnGMFTransactionListener">
           </DawnTransactionListener>
        </extension>-->
-       <extension
+      <!-- <extension
              point="org.eclipse.emf.cdo.dawn.editpartstylizers">
           <DawnEditPartStylizers
                 editpart="org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AClassEditPart"
                 stylizer="org.eclipse.emf.cdo.dawn.gmf.appearance.impl.DawnBasicNodeEditPartStylizerImpl">
           </DawnEditPartStylizers>
-       </extension>
+       </extension>-->
       <extension point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders" id="ep-provider">
       <?gmfgen generated="true"?>
       <editpartProvider class="org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.DawnAcoreEditPartProvider">

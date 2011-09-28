@@ -61,6 +61,7 @@ public class TestSessionManager extends SessionManager
       if (commitNotificationDelay != 0)
       {
         delayLatch.countDown();
+        Thread.yield();
         ConcurrencyUtil.sleep(commitNotificationDelay);
       }
     }

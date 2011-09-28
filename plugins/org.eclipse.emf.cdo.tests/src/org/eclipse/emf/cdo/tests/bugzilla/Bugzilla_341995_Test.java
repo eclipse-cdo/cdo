@@ -44,8 +44,10 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
     msg(cdoCat.cdoRevision().getVersion());
 
     long delay = 2000L;
+
     TestSessionManager sessionManager = (TestSessionManager)getRepository().getSessionManager();
     sessionManager.setCommitNotificationDelay(delay);
+
     try
     {
       doSecondSessionAsync();
@@ -84,7 +86,9 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
 
         Category cat = (Category)resource.getContents().get(0);
         cat.setName("dirty");
+
         CDOCommitInfo info;
+
         try
         {
           info = tx.commit();
@@ -100,6 +104,7 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
         session.close();
       }
     };
+
     new Thread(r).start();
   }
 }

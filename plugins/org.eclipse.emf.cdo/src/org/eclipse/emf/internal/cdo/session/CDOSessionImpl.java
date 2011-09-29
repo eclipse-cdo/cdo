@@ -576,32 +576,29 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private long refresh(boolean enablePassiveUpdates)
   {
-    synchronized (outOfSequenceInvalidations)
+    Map<CDOBranch, List<InternalCDOView>> views = new HashMap<CDOBranch, List<InternalCDOView>>();
+    Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions = new HashMap<CDOBranch, Map<CDOID, InternalCDORevision>>();
+    collectViewedRevisions(views, viewedRevisions);
+    cleanupRevisionCache(viewedRevisions);
+
+    CDOSessionProtocol sessionProtocol = getSessionProtocol();
+    long lastUpdateTime = getLastUpdateTime();
+    int initialChunkSize = options().getCollectionLoadingPolicy().getInitialChunkSize();
+
+    RefreshSessionResult result = sessionProtocol.refresh(lastUpdateTime, viewedRevisions, initialChunkSize,
+        enablePassiveUpdates);
+
+    setLastUpdateTime(result.getLastUpdateTime());
+    registerPackageUnits(result.getPackageUnits());
+
+    for (Entry<CDOBranch, List<InternalCDOView>> entry : views.entrySet())
     {
-      Map<CDOBranch, List<InternalCDOView>> views = new HashMap<CDOBranch, List<InternalCDOView>>();
-      Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions = new HashMap<CDOBranch, Map<CDOID, InternalCDORevision>>();
-      collectViewedRevisions(views, viewedRevisions);
-      cleanupRevisionCache(viewedRevisions);
-
-      CDOSessionProtocol sessionProtocol = getSessionProtocol();
-      long lastUpdateTime = getLastUpdateTime();
-      int initialChunkSize = options().getCollectionLoadingPolicy().getInitialChunkSize();
-
-      RefreshSessionResult result = sessionProtocol.refresh(lastUpdateTime, viewedRevisions, initialChunkSize,
-          enablePassiveUpdates);
-
-      setLastUpdateTime(result.getLastUpdateTime());
-      registerPackageUnits(result.getPackageUnits());
-
-      for (Entry<CDOBranch, List<InternalCDOView>> entry : views.entrySet())
-      {
-        CDOBranch branch = entry.getKey();
-        List<InternalCDOView> branchViews = entry.getValue();
-        processRefreshSessionResult(result, branch, branchViews, viewedRevisions);
-      }
-
-      return result.getLastUpdateTime();
+      CDOBranch branch = entry.getKey();
+      List<InternalCDOView> branchViews = entry.getValue();
+      processRefreshSessionResult(result, branch, branchViews, viewedRevisions);
     }
+
+    return result.getLastUpdateTime();
   }
 
   public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch,
@@ -819,11 +816,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     try
     {
-      synchronized (outOfSequenceInvalidations)
-      {
-        registerPackageUnits(commitInfo.getNewPackageUnits());
-        invalidate(commitInfo, null);
-      }
+      registerPackageUnits(commitInfo.getNewPackageUnits());
+      invalidate(commitInfo, null);
     }
     catch (RuntimeException ex)
     {
@@ -1036,38 +1030,41 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    */
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
   {
+    long previousTimeStamp = commitInfo.getPreviousTimeStamp();
+    long lastUpdateTime = getLastUpdateTime();
+
+    if (previousTimeStamp < lastUpdateTime)
+    {
+      previousTimeStamp = lastUpdateTime;
+    }
+
     synchronized (outOfSequenceInvalidations)
     {
-      long previousTimeStamp = commitInfo.getPreviousTimeStamp();
-      long lastUpdateTime = getLastUpdateTime();
-
-      if (previousTimeStamp < lastUpdateTime)
-      {
-        previousTimeStamp = lastUpdateTime;
-      }
-
       outOfSequenceInvalidations.put(previousTimeStamp, new Pair<CDOCommitInfo, InternalCDOTransaction>(commitInfo,
           sender));
+    }
 
-      long nextPreviousTimeStamp = lastUpdateTime;
-      while (!outOfSequenceInvalidations.isEmpty())
+    long nextPreviousTimeStamp = lastUpdateTime;
+    for (;;)
+    {
+      Pair<CDOCommitInfo, InternalCDOTransaction> currentPair;
+      synchronized (outOfSequenceInvalidations)
       {
-        Pair<CDOCommitInfo, InternalCDOTransaction> currentPair = outOfSequenceInvalidations
-            .remove(nextPreviousTimeStamp);
-
-        // If we don't have the invalidation that follows the last one we processed,
-        // then there is nothing we can do right now
-        if (currentPair == null)
-        {
-          break;
-        }
-
-        CDOCommitInfo currentCommitInfo = currentPair.getElement1();
-        InternalCDOTransaction currentSender = currentPair.getElement2();
-        nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
-
-        invalidateOrdered(currentCommitInfo, currentSender);
+        currentPair = outOfSequenceInvalidations.remove(nextPreviousTimeStamp);
       }
+
+      // If we don't have the invalidation that follows the last one we processed,
+      // then there is nothing we can do right now
+      if (currentPair == null)
+      {
+        break;
+      }
+
+      CDOCommitInfo currentCommitInfo = currentPair.getElement1();
+      InternalCDOTransaction currentSender = currentPair.getElement2();
+      nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
+
+      invalidateOrdered(currentCommitInfo, currentSender);
     }
   }
 

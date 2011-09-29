@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * See bug 341995.
  * 
@@ -29,7 +31,7 @@ import org.eclipse.emf.cdo.util.CommitException;
  */
 public class Bugzilla_341995_Test extends AbstractCDOTest
 {
-  public void test() throws CommitException, InterruptedException
+  public void test() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
@@ -51,14 +53,14 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
     try
     {
       doSecondSessionAsync();
-      sessionManager.getDelayLatch().await(); // Wait until the delay commences
+      sessionManager.getDelayLatch().await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS); // Wait until the delay commences
 
       long time1 = System.currentTimeMillis();
 
       // Attempt the lock; this must block for a while, because it needs to receive
       // the commitNotification from the commit in the other session, which we are
       // artificially delaying
-      cdoCat.cdoWriteLock().lock();
+      cdoCat.cdoWriteLock().lock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
 
       long timeTaken = System.currentTimeMillis() - time1;
 
@@ -105,6 +107,8 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
       }
     };
 
-    new Thread(r).start();
+    Thread thread = new Thread(r);
+    thread.setDaemon(true);
+    thread.start();
   }
 }

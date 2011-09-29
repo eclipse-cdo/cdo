@@ -22,12 +22,16 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import java.util.concurrent.TimeUnit;
+
 /**
+ * Bug 341995.
+ * 
  * @author Caspar De Groot
  */
 public class Bugzilla_341995_Test extends AbstractCDOTest
 {
-  public void test() throws CommitException, InterruptedException
+  public void test() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction tx = session.openTransaction();
@@ -44,17 +48,18 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
     long delay = 2000L;
     TestSessionManager sessionManager = (TestSessionManager)getRepository().getSessionManager();
     sessionManager.setCommitNotificationDelay(delay);
+
     try
     {
       doSecondSessionAsync();
-      sessionManager.getDelayLatch().await(); // Wait until the delay commences
+      sessionManager.getDelayLatch().await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS); // Wait until the delay commences
 
       long time1 = System.currentTimeMillis();
 
       // Attempt the lock; this must block for a while, because it needs to receive
       // the commitNotification from the commit in the other session, which we are
       // artificially delaying
-      cdoCat.cdoWriteLock().lock();
+      cdoCat.cdoWriteLock().lock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
 
       long timeTaken = System.currentTimeMillis() - time1;
 
@@ -83,6 +88,7 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
         Category cat = (Category)resource.getContents().get(0);
         cat.setName("dirty");
         CDOCommitInfo info;
+
         try
         {
           info = tx.commit();
@@ -98,6 +104,9 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
         session.close();
       }
     };
-    new Thread(r).start();
+
+    Thread thread = new Thread(r);
+    thread.setDaemon(true);
+    thread.start();
   }
 }

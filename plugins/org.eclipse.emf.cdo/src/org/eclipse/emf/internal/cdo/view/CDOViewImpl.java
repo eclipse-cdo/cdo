@@ -256,6 +256,8 @@ public class CDOViewImpl extends AbstractCDOView
     checkActive();
     checkState(getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE, "Locking not supported for historial views");
 
+    long endMillis = System.currentTimeMillis() + timeout;
+
     List<InternalCDORevision> revisions = new LinkedList<InternalCDORevision>();
     for (CDOObject object : objects)
     {
@@ -299,7 +301,8 @@ public class CDOViewImpl extends AbstractCDOView
       }
 
       long requiredTimestamp = result.getRequiredTimestamp();
-      waitForUpdate(requiredTimestamp);
+      long waitMillis = endMillis - System.currentTimeMillis();
+      waitForUpdate(requiredTimestamp, waitMillis);
     }
   }
 
@@ -837,9 +840,9 @@ public class CDOViewImpl extends AbstractCDOView
   public boolean waitForUpdate(long updateTime, long timeoutMillis)
   {
     long end = timeoutMillis == NO_TIMEOUT ? Long.MAX_VALUE : System.currentTimeMillis() + timeoutMillis;
-    for (;;)
+    synchronized (this)
     {
-      synchronized (this)
+      for (;;)
       {
         if (lastUpdateTime >= updateTime)
         {
@@ -854,7 +857,8 @@ public class CDOViewImpl extends AbstractCDOView
 
         try
         {
-          wait(end - now);
+          long waitMillis = end - now;
+          wait(waitMillis);
         }
         catch (InterruptedException ex)
         {

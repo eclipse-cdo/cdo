@@ -29,6 +29,9 @@ public abstract class ConcurrentArray<E>
     return elements == null;
   }
 
+  /**
+   * Returns the elements, never <code>null</code>.
+   */
   public E[] get()
   {
     return elements == null ? EMPTY : elements;

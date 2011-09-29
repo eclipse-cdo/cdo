@@ -1142,13 +1142,10 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
   public synchronized void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState)
   {
     CDOObjectHandler[] handlers = getObjectHandlers();
-    if (handlers != null)
+    for (int i = 0; i < handlers.length; i++)
     {
-      for (int i = 0; i < handlers.length; i++)
-      {
-        CDOObjectHandler handler = handlers[i];
-        handler.objectStateChanged(this, object, oldState, newState);
-      }
+      CDOObjectHandler handler = handlers[i];
+      handler.objectStateChanged(this, object, oldState, newState);
     }
   }
 

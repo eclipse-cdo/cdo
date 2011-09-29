@@ -106,14 +106,11 @@ public class CDOLazyContentAdapter extends EContentAdapter
     if (view != null)
     {
       CDOObjectHandler[] handlers = view.getObjectHandlers();
-      if (handlers != null)
+      for (CDOObjectHandler handler : handlers)
       {
-        for (CDOObjectHandler handler : handlers)
+        if (handler.equals(this.handler))
         {
-          if (handler.equals(this.handler))
-          {
-            return;
-          }
+          return;
         }
       }
 
@@ -136,15 +133,12 @@ public class CDOLazyContentAdapter extends EContentAdapter
     if (view != null)
     {
       CDOObjectHandler[] handlers = view.getObjectHandlers();
-      if (handlers != null)
+      for (CDOObjectHandler handler : handlers)
       {
-        for (CDOObjectHandler handler : handlers)
+        if (handler.equals(this.handler))
         {
-          if (handler.equals(this.handler))
-          {
-            view.removeObjectHandler(handler);
-            break;
-          }
+          view.removeObjectHandler(handler);
+          break;
         }
       }
     }

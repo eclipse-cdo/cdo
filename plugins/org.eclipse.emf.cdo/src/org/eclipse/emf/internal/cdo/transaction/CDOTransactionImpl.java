@@ -1327,13 +1327,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public synchronized void detachObject(InternalCDOObject object)
   {
     CDOTransactionHandler1[] handlers = getTransactionHandlers1();
-    if (handlers != null)
+    for (int i = 0; i < handlers.length; i++)
     {
-      for (int i = 0; i < handlers.length; i++)
-      {
-        CDOTransactionHandler1 handler = handlers[i];
-        handler.detachingObject(this, object);
-      }
+      CDOTransactionHandler1 handler = handlers[i];
+      handler.detachingObject(this, object);
     }
 
     // deregister object
@@ -1477,20 +1474,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       CDOTransactionHandler2[] handlers = getTransactionHandlers2();
-      if (handlers != null)
+      for (int i = 0; i < handlers.length; i++)
       {
-        for (int i = 0; i < handlers.length; i++)
-        {
-          CDOTransactionHandler2 handler = handlers[i];
+        CDOTransactionHandler2 handler = handlers[i];
 
-          try
-          {
-            handler.rolledBackTransaction(this);
-          }
-          catch (RuntimeException ex)
-          {
-            OM.LOG.error(ex);
-          }
+        try
+        {
+          handler.rolledBackTransaction(this);
+        }
+        catch (RuntimeException ex)
+        {
+          OM.LOG.error(ex);
         }
       }
     }
@@ -1557,13 +1551,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     CDOTransactionHandler1[] handlers = getTransactionHandlers1();
-    if (handlers != null)
+    for (int i = 0; i < handlers.length; i++)
     {
-      for (int i = 0; i < handlers.length; i++)
-      {
-        CDOTransactionHandler1 handler = handlers[i];
-        handler.attachingObject(this, object);
-      }
+      CDOTransactionHandler1 handler = handlers[i];
+      handler.attachingObject(this, object);
     }
 
     if (isNew)
@@ -1617,13 +1608,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     CDOTransactionHandler1[] handlers = getTransactionHandlers1();
-    if (handlers != null)
+    for (int i = 0; i < handlers.length; i++)
     {
-      for (int i = 0; i < handlers.length; i++)
-      {
-        CDOTransactionHandler1 handler = handlers[i];
-        handler.modifyingObject(this, object, featureDelta);
-      }
+      CDOTransactionHandler1 handler = handlers[i];
+      handler.modifyingObject(this, object, featureDelta);
     }
   }
 
@@ -2516,7 +2504,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         CDOTransactionHandler2[] handlers = getTransactionHandlers2();
-        if (handlers != null)
+        if (handlers.length != 0)
         {
           final boolean[] modifiedAgain = { false };
           CDOTransactionHandler1 modifiedAgainHandler = new CDODefaultTransactionHandler1()
@@ -2649,20 +2637,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           }
 
           CDOTransactionHandler2[] handlers = getTransactionHandlers2();
-          if (handlers != null)
+          for (int i = 0; i < handlers.length; i++)
           {
-            for (int i = 0; i < handlers.length; i++)
+            CDOTransactionHandler2 handler = handlers[i];
+            if (handler instanceof CDOTransactionHandler3)
             {
-              CDOTransactionHandler2 handler = handlers[i];
-              if (handler instanceof CDOTransactionHandler3)
-              {
-                CDOTransactionHandler3 handler3 = (CDOTransactionHandler3)handler;
-                handler3.committedTransaction(transaction, this, commitInfo);
-              }
-              else
-              {
-                handler.committedTransaction(transaction, this);
-              }
+              CDOTransactionHandler3 handler3 = (CDOTransactionHandler3)handler;
+              handler3.committedTransaction(transaction, this, commitInfo);
+            }
+            else
+            {
+              handler.committedTransaction(transaction, this);
             }
           }
 

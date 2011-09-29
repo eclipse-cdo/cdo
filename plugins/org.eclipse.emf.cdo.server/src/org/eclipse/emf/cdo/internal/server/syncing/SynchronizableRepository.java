@@ -14,11 +14,14 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
@@ -36,13 +39,16 @@ import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
-import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone.CommitContextData;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.CDOChangeKindCache;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -56,6 +62,7 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.spi.server.SyncingUtil;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -696,6 +703,127 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     public String toString()
     {
       return "[" + CDOCommonUtil.formatTimeStamp(time1) + " - " + CDOCommonUtil.formatTimeStamp(time1) + "]";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CommitContextData implements CDOCommitData
+  {
+    private InternalCommitContext commitContext;
+
+    private CDOChangeKindCache changeKindCache;
+
+    public CommitContextData(InternalCommitContext commitContext)
+    {
+      this.commitContext = commitContext;
+    }
+
+    public boolean isEmpty()
+    {
+      return false;
+    }
+
+    public CDOChangeSetData copy()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void merge(CDOChangeSetData changeSetData)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public List<CDOPackageUnit> getNewPackageUnits()
+    {
+      final InternalCDOPackageUnit[] newPackageUnits = commitContext.getNewPackageUnits();
+      return new IndexedList<CDOPackageUnit>()
+      {
+        @Override
+        public CDOPackageUnit get(int index)
+        {
+          return newPackageUnits[index];
+        }
+
+        @Override
+        public int size()
+        {
+          return newPackageUnits.length;
+        }
+      };
+    }
+
+    public List<CDOIDAndVersion> getNewObjects()
+    {
+      final InternalCDORevision[] newObjects = commitContext.getNewObjects();
+      return new IndexedList<CDOIDAndVersion>()
+      {
+        @Override
+        public CDOIDAndVersion get(int index)
+        {
+          return newObjects[index];
+        }
+
+        @Override
+        public int size()
+        {
+          return newObjects.length;
+        }
+      };
+    }
+
+    public List<CDORevisionKey> getChangedObjects()
+    {
+      final InternalCDORevisionDelta[] changedObjects = commitContext.getDirtyObjectDeltas();
+      return new IndexedList<CDORevisionKey>()
+      {
+        @Override
+        public CDORevisionKey get(int index)
+        {
+          return changedObjects[index];
+        }
+
+        @Override
+        public int size()
+        {
+          return changedObjects.length;
+        }
+      };
+    }
+
+    public List<CDOIDAndVersion> getDetachedObjects()
+    {
+      final CDOID[] detachedObjects = commitContext.getDetachedObjects();
+      return new IndexedList<CDOIDAndVersion>()
+      {
+        @Override
+        public CDOIDAndVersion get(int index)
+        {
+          return CDOIDUtil.createIDAndVersion(detachedObjects[index], CDOBranchVersion.UNSPECIFIED_VERSION);
+        }
+
+        @Override
+        public int size()
+        {
+          return detachedObjects.length;
+        }
+      };
+    }
+
+    public synchronized Map<CDOID, CDOChangeKind> getChangeKinds()
+    {
+      if (changeKindCache == null)
+      {
+        changeKindCache = new CDOChangeKindCache(this);
+      }
+
+      return changeKindCache;
+    }
+
+    public CDOChangeKind getChangeKind(CDOID id)
+    {
+      return getChangeKinds().get(id);
     }
   }
 

@@ -401,7 +401,8 @@
 			       branch="${branch}"
 			       job="${env.JOB_NAME}"
 			       number="${env.BUILD_NUMBER}"
-			       trigger="${build.trigger}" />
+			       trigger="${build.trigger}"
+			       train="indigo" />
 		</echoxml>
 	</target>
 

@@ -60,7 +60,91 @@ public class Bugzilla_351078_Test extends AbstractSyncingTest
     run(new CompanyChanger());
   }
 
+  public void testAddTwoRemoveFirst_DoNothing() throws Exception
+  {
+    run(new CompanyChanger()
+    {
+      @Override
+      public void beforeConnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.remove(0);
+        transaction.commit();
+      }
+
+      @Override
+      public void beforeReconnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+      }
+    });
+  }
+
+  public void testAddTwoRemoveFirst_AddTwo() throws Exception
+  {
+    run(new CompanyChanger()
+    {
+      @Override
+      public void beforeConnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.remove(0);
+        transaction.commit();
+      }
+
+      @Override
+      public void beforeReconnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+      }
+    });
+  }
+
   public void testAddTwoRemoveSecond_DoNothing() throws Exception
+  {
+    run(new CompanyChanger()
+    {
+      @Override
+      public void beforeConnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.remove(1);
+        transaction.commit();
+      }
+
+      @Override
+      public void beforeReconnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+      }
+    });
+  }
+
+  public void testAddTwoRemoveSecond_AddTwo() throws Exception
   {
     run(new CompanyChanger()
     {
@@ -102,6 +186,32 @@ public class Bugzilla_351078_Test extends AbstractSyncingTest
       public void beforeReconnect(EList<Category> categories, CDOTransaction transaction) throws Exception
       {
         categories.remove(0);
+        transaction.commit();
+      }
+    });
+  }
+
+  public void testAddTwo_RemoveFirstAddOne() throws Exception
+  {
+    run(new CompanyChanger()
+    {
+      @Override
+      public void beforeConnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
+        transaction.commit();
+      }
+
+      @Override
+      public void beforeReconnect(EList<Category> categories, CDOTransaction transaction) throws Exception
+      {
+        categories.remove(0);
+        transaction.commit();
+
+        categories.add(getModel1Factory().createCategory());
         transaction.commit();
       }
     });

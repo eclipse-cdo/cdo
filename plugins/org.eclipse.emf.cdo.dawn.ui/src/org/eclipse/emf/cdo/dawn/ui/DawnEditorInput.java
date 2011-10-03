@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.dawn.ui;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.ui.URIEditorInput;
@@ -20,9 +19,8 @@ import org.eclipse.emf.common.util.URI;
 /**
  * @author Martin Fluegge
  */
-public class DawnEditorInput extends URIEditorInput implements CDOEditorInput
+public class DawnEditorInput extends URIEditorInput implements IDawnEditorInput
 {
-
   private CDOResource resource = null;
 
   public DawnEditorInput(URI uri)

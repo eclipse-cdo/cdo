@@ -38,7 +38,7 @@ public class EditorDescriptionHelper
     for (IEditorDescriptor editorDescriptor : editors)
     {
       // TODO make this more stable by getting the class name more reliably
-      if (editorDescriptor.getId().contains(".Dawn"))
+      if (editorDescriptor.getId().contains(".Dawn") || editorDescriptor.getId().contains(".dawn"))
       {
         return editorDescriptor;
       }

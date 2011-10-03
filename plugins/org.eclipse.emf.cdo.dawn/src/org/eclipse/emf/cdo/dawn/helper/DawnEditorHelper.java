@@ -18,6 +18,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 /**
+ * TODO move this one to the dawn.util bundle
+ * 
  * @author Martin Fluegge
  */
 public class DawnEditorHelper
@@ -41,5 +43,22 @@ public class DawnEditorHelper
       }
     }
     return editor;
+  }
+
+  /**
+   * This method tries to retrieve a Display. First it tries to get the current display. If this fails it will return
+   * the default display.
+   * 
+   * @return the current display, if not null. If the current Display is null then the default Display.
+   * @since 2.0
+   */
+  public static Display getDisplay()
+  {
+    Display display = Display.getCurrent();
+    if (display == null)
+    {
+      display = Display.getDefault();
+    }
+    return display;
   }
 }

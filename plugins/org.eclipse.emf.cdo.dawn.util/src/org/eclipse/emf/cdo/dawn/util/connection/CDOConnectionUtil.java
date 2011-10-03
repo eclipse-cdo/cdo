@@ -153,6 +153,11 @@ public class CDOConnectionUtil
 
   public CDOSession getCurrentSession()
   {
+    if (currentSession == null)
+    {
+      currentSession = openSession();
+    }
+
     return currentSession;
   }
 

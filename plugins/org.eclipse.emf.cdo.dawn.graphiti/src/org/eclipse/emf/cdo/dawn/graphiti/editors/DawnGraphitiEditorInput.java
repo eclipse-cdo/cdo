@@ -1,0 +1,77 @@
+/*
+ * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *    Martin Fluegge - initial API and implementation
+ */
+package org.eclipse.emf.cdo.dawn.graphiti.editors;
+
+import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
+import org.eclipse.emf.cdo.dawn.ui.IDawnEditorInput;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+
+import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
+
+/**
+ * @author Martin Fluegge
+ */
+public class DawnGraphitiEditorInput extends DiagramEditorInput implements IDawnEditorInput
+{
+  private DawnEditorInput input;
+
+  public DawnGraphitiEditorInput(URI uri, TransactionalEditingDomain domain, String providerId,
+      boolean disposeEditingDomain)
+  {
+    super(uri, domain, providerId, disposeEditingDomain);
+    input = new DawnEditorInput(uri);
+  }
+
+  public DawnGraphitiEditorInput(URI uri, TransactionalEditingDomain domain, String providerId,
+      boolean disposeEditingDomain, Resource resource)
+  {
+    this(uri, domain, providerId, disposeEditingDomain);
+    input.setResource((CDOResource)resource);
+  }
+
+  public DawnGraphitiEditorInput(String diagramUriString, TransactionalEditingDomain domain, String providerID,
+      boolean disposeEditingDomain)
+  {
+    super(diagramUriString, domain, providerID, disposeEditingDomain);
+    input = new DawnEditorInput(URI.createURI(diagramUriString));
+  }
+
+  public CDOView getView()
+  {
+    return input.getView();
+  }
+
+  public boolean isViewOwned()
+  {
+    return input.isViewOwned();
+  }
+
+  public String getResourcePath()
+  {
+    return input.getResourcePath();
+  }
+
+  /**
+   * This id is needed to provide the correct IElementFactory to the framework and allow to create a
+   * DawnGraphitiEditorInput from the persisted state on restoring an editor. See extension point
+   * org.eclipse.ui.elementFactories.
+   */
+  @Override
+  public String getFactoryId()
+  {
+    return DawnGraphitiDiagramEditorFactory.class.getName();
+  }
+}

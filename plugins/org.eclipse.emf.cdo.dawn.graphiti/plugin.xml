@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+	Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License v1.0
+	which accompanies this distribution, and is available at
+	http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+	  Martin Fluegge - initial API and implementation
+-->
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.emf.cdo.dawn.ui.category.dawn"
+            class="org.eclipse.emf.cdo.dawn.graphiti.wizards.DawnGenericGraphitiWizard"
+            id="org.eclipse.emf.cdo.dawn.graphiti.wizard1"
+            name="Dawn Generic Graphiti Diagram">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.emf.cdo.dawn.graphiti.editors.DawnGraphitiDiagramEditor"
+            default="false"
+            extensions="acore_graphiti"
+            id="org.eclipse.emf.cdo.dawn.graphiti.editor"
+            name="Dawn Graphiti Editor">
+      </editor>
+   </extension>
+ <extension point="org.eclipse.ui.elementFactories" id=".DiagramEditorFactory" name="%_diagram_editor_factory">
+      <factory class="org.eclipse.emf.cdo.dawn.graphiti.editors.DawnGraphitiDiagramEditorFactory" id="org.eclipse.emf.cdo.dawn.graphiti.editors.DawnGraphitiDiagramEditorFactory">
+      </factory>
+   </extension>
+</plugin>

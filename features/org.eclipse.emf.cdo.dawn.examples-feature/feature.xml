@@ -14,7 +14,9 @@
       label="%featureName"
       version="1.0.0.qualifier"
       provider-name="%providerName"
-      image="eclipse_update_120.jpg" license-feature="org.eclipse.emf.cdo.license" license-feature-version="4.0.0.qualifier">
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.cdo.license"
+      license-feature-version="4.0.0.qualifier">
 
    <description>
       %description
@@ -86,6 +88,13 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.dawn.examples.acore.graphiti"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

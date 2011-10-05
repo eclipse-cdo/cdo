@@ -40,7 +40,7 @@
       <property name="connectionKeepAlivePeriod" value="60"/>
 
       <mappingStrategy type="horizontal">
-        <property name="qualifiedNames" value="false"/>
+        <property name="qualifiedNames" value="true"/>
         <property name="toManyReferences" value="ONE_TABLE_PER_REFERENCE"/>
         <property name="toOneReferences" value="LIKE_ATTRIBUTES"/>
 

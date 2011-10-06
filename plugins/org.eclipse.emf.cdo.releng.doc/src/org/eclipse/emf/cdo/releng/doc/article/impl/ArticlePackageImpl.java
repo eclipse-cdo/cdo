@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Diagram;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
+import org.eclipse.emf.cdo.releng.doc.article.Excel;
 import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
@@ -269,6 +270,13 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * @generated
    */
   private EClass pluginResourceEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass excelEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1055,6 +1063,16 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
+  public EClass getExcel()
+  {
+    return excelEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EDataType getRootDoc()
   {
     return rootDocEDataType;
@@ -1219,6 +1237,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     pluginResourceEClass = createEClass(PLUGIN_RESOURCE);
 
+    excelEClass = createEClass(EXCEL);
+
     // Create data types
     rootDocEDataType = createEDataType(ROOT_DOC);
     fileEDataType = createEDataType(FILE);
@@ -1279,6 +1299,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     schemadocEClass.getESuperTypes().add(this.getCategory());
     tocEClass.getESuperTypes().add(this.getBodyElement());
     pluginResourceEClass.getESuperTypes().add(this.getExternalArticle());
+    excelEClass.getESuperTypes().add(this.getBodyElement());
 
     // Initialize classes and features; add operations and parameters
     initEClass(documentationEClass, Documentation.class, "Documentation", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1460,6 +1481,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     initEClass(pluginResourceEClass, PluginResource.class, "PluginResource", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(excelEClass, Excel.class, "Excel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Initialize data types
     initEDataType(rootDocEDataType, RootDoc.class, "RootDoc", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

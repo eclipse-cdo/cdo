@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Diagram;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
+import org.eclipse.emf.cdo.releng.doc.article.Excel;
 import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
@@ -279,6 +280,12 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
     public Adapter casePluginResource(PluginResource object)
     {
       return createPluginResourceAdapter();
+    }
+
+    @Override
+    public Adapter caseExcel(Excel object)
+    {
+      return createExcelAdapter();
     }
 
     @Override
@@ -721,6 +728,20 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPluginResourceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Excel <em>Excel</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Excel
+   * @generated
+   */
+  public Adapter createExcelAdapter()
   {
     return null;
   }

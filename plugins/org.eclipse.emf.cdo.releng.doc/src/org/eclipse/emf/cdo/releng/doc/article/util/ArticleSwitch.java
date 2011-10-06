@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Diagram;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
+import org.eclipse.emf.cdo.releng.doc.article.Excel;
 import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
@@ -699,6 +700,20 @@ public class ArticleSwitch<T>
       }
       return result;
     }
+    case ArticlePackage.EXCEL:
+    {
+      Excel excel = (Excel)theEObject;
+      T result = caseExcel(excel);
+      if (result == null)
+      {
+        result = caseBodyElement(excel);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     default:
       return defaultCase(theEObject);
     }
@@ -1151,6 +1166,21 @@ public class ArticleSwitch<T>
    * @generated
    */
   public T casePluginResource(PluginResource object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Excel</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Excel</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExcel(Excel object)
   {
     return null;
   }

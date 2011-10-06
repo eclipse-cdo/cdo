@@ -142,4 +142,5 @@
         changeable="false" defaultValueLiteral="-1" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PluginResource" eSuperTypes="#//ExternalArticle"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Excel" eSuperTypes="#//BodyElement"/>
 </ecore:EPackage>

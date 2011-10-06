@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.Diagram;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
+import org.eclipse.emf.cdo.releng.doc.article.Excel;
 import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
@@ -137,6 +138,8 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
       return createToc();
     case ArticlePackage.PLUGIN_RESOURCE:
       return createPluginResource();
+    case ArticlePackage.EXCEL:
+      return createExcel();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -427,6 +430,17 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
   {
     PluginResourceImpl pluginResource = new PluginResourceImpl();
     return pluginResource;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Excel createExcel()
+  {
+    ExcelImpl excel = new ExcelImpl();
+    return excel;
   }
 
   /**

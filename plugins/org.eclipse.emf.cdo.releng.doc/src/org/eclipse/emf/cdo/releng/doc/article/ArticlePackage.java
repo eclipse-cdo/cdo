@@ -1926,13 +1926,48 @@ public interface ArticlePackage extends EPackage
   int PLUGIN_RESOURCE_FEATURE_COUNT = EXTERNAL_ARTICLE_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExcelImpl <em>Excel</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExcelImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExcel()
+   * @generated
+   */
+  int EXCEL = 30;
+
+  /**
+   * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXCEL__CONTAINER = BODY_ELEMENT__CONTAINER;
+
+  /**
+   * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXCEL__TAG = BODY_ELEMENT__TAG;
+
+  /**
+   * The number of structural features of the '<em>Excel</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EXCEL_FEATURE_COUNT = BODY_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see com.sun.javadoc.RootDoc
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getRootDoc()
    * @generated
    */
-  int ROOT_DOC = 30;
+  int ROOT_DOC = 31;
 
   /**
    * The meta object id for the '<em>File</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1941,7 +1976,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFile()
    * @generated
    */
-  int FILE = 31;
+  int FILE = 32;
 
   /**
    * The meta object id for the '<em>Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1950,7 +1985,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDoc()
    * @generated
    */
-  int DOC = 32;
+  int DOC = 33;
 
   /**
    * The meta object id for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1959,7 +1994,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
    * @generated
    */
-  int TAG = 33;
+  int TAG = 34;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation
@@ -2710,6 +2745,16 @@ public interface ArticlePackage extends EPackage
   EClass getPluginResource();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Excel <em>Excel</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Excel</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Excel
+   * @generated
+   */
+  EClass getExcel();
+
+  /**
    * Returns the meta object for data type '{@link com.sun.javadoc.RootDoc <em>Root Doc</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
@@ -3386,6 +3431,16 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EClass PLUGIN_RESOURCE = eINSTANCE.getPluginResource();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExcelImpl <em>Excel</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExcelImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExcel()
+     * @generated
+     */
+    EClass EXCEL = eINSTANCE.getExcel();
 
     /**
      * The meta object literal for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

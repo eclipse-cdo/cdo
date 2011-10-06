@@ -236,6 +236,10 @@ public abstract class BodyElementContainerImpl extends EObjectImpl implements Bo
     {
       elements.add(new TocImpl(tag));
     }
+    else if (name.equals("@excel"))
+    {
+      elements.add(new ExcelImpl(tag));
+    }
     else if (name.equals("@diagram"))
     {
       elements.add(new DiagramImpl(tag));

@@ -248,7 +248,7 @@
 		         private="true">
 
 			<doclet name="org.eclipse.emf.cdo.releng.doc.article.impl.ArticleDoclet"
-			        path="plugins/org.eclipse.emf.cdo.releng.doc/bin;${supplemental}/bin;${supplemental}/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar;${supplemental}/org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar;${supplemental}/org.eclipse.emf.common_2.7.0.v20110605-0747.jar">
+			        path="plugins/org.eclipse.emf.cdo.releng.doc/bin;${supplemental}/bin;${supplemental}/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar;${supplemental}/org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar;${supplemental}/org.eclipse.emf.common_2.7.0.v20110605-0747.jar;${supplemental}/dom4j-1.6.1.jar;${supplemental}/poi-3.8-beta4-20110826.jar;${supplemental}/poi-ooxml-3.8-beta4-20110826.jar;${supplemental}/poi-ooxml-schemas-3.8-beta4-20110826.jar;${supplemental}/xmlbeans-2.3.0.jar">
 				<param name="-starttime" value="${start.time}" />
 				<param name="-basefolder" value="${basedir}" />
 				<param name="-project" value="org.eclipse.net4j.db.doc" />

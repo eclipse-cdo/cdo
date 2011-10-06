@@ -96,6 +96,8 @@
         <topic label="mappingProviderFactories" href="schemadoc/org_eclipse_emf_cdo_server_hibernate_mappingProviderFactories.html" icon="extpoint" />
       </topic>
     </topic>
+    <topic label="Store Feature Matrix" href="html/reference/StoreFeatures.html" />
+    <topic label="DBStore Mapping Strategies" href="html/reference/MappingStrategies.html" />
   </topic>
   <topic label="Online Docs" href="html/online/index.html">
     <topic label="Homepage" href="http://www.eclipse.org/cdo" icon="external" />

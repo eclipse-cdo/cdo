@@ -11,15 +11,22 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import java.text.MessageFormat;
 
 /**
+ * An unchecked exception being thrown from {@link CDOTransaction#commit()} if the commit {@link CDOCommitData change
+ * set} is referencing {@link EObject objects} that are not contained by any {@link Resource resource} before the server
+ * is contacted.
+ * 
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

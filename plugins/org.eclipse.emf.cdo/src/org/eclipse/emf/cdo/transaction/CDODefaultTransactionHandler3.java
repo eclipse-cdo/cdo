@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.transaction;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 
 /**
+ * An empty default implementation of {@link CDOTransactionHandler3}.
+ * 
  * @author Eike Stepper
  * @since 4.1
  */

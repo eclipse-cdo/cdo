@@ -21,6 +21,8 @@ import org.eclipse.core.runtime.Path;
 import java.util.Map;
 
 /**
+ * Represents the CDO-specific URI data needed to access a resource in a repository.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

@@ -11,8 +11,12 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.view.CDOQuery;
 
 /**
+ * Represents the execution state of a {@link CDOQuery query} in the server towards a {@link IQueryHandler query
+ * handler}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

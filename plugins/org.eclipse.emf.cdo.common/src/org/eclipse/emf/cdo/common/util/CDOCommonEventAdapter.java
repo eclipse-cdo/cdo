@@ -19,6 +19,8 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 
 /**
+ * A convenience adapter for common CDO {@link IEvent events}.
+ * 
  * @author Eike Stepper
  * @since 3.0
  */

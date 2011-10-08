@@ -128,7 +128,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOExcepti
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/TransportException.html" title="class in org.eclipse.emf.cdo.common.util">TransportException</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An unchecked exception that indicates transport-level problems.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -153,7 +153,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOExcepti
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/RepositoryNotFoundException.html" title="class in org.eclipse.emf.cdo.server">RepositoryNotFoundException</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An unchecked exception being thrown when opening a <A HREF="../../../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A> to a named <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><CODE>repository</CODE></A> that cannot be found.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -178,7 +178,9 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOExcepti
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/util/DanglingReferenceException.html" title="class in org.eclipse.emf.cdo.util">DanglingReferenceException</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An unchecked exception being thrown from <A HREF="../../../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> if the commit <A HREF="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change
+ set</CODE></A> is referencing <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>objects</CODE></A> that are not contained by any <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resource</CODE></A> before the server
+ is contacted.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -194,7 +196,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOExcepti
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An unchecked exception being thrown to indicate problems with the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>URI</CODE></A> of a <A HREF="../../../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>resource</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -202,7 +204,8 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOExcepti
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/util/LockTimeoutException.html" title="class in org.eclipse.emf.cdo.util">LockTimeoutException</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An unchecked exception being thrown if <A HREF="../../../../../../../org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo"><CODE>locks</CODE></A> could not be
+ <A HREF="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)"><CODE>acquired</CODE></A> within the specified timeout period.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -218,7 +221,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOExcepti
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/util/ReadOnlyException.html" title="class in org.eclipse.emf.cdo.util">ReadOnlyException</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An unchecked exception being thrown if write access to <A HREF="../../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> of a <A HREF="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#isReadOnly()"><CODE>read-only</CODE></A> view is attempted.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -226,7 +229,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOExcepti
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/util/ServerException.html" title="class in org.eclipse.emf.cdo.util">ServerException</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not used.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -234,7 +237,8 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/util/CDOExcepti
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/util/StaleRevisionLockException.html" title="class in org.eclipse.emf.cdo.util">StaleRevisionLockException</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An unchecked exception being thrown when attempting to
+ <A HREF="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)"><CODE>lock</CODE></A> <i>stale</i> objects.</TD>
 </TR>
 </TABLE>
 &nbsp;

@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.util;
 import org.eclipse.emf.cdo.session.CDOSession.Options;
 
 /**
+ * Represents facilities that can receive
+ * {@link org.eclipse.emf.cdo.session.CDOSession.Options#setPassiveUpdateEnabled(boolean) passive updates}.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

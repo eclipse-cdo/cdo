@@ -10,9 +10,13 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOObject;
+
 import org.eclipse.emf.ecore.EFactory;
 
 /**
+ * Creates CDO {@link CDOObject objects}.
+ * 
  * @author Eike Stepper
  */
 public interface CDOFactory extends EFactory

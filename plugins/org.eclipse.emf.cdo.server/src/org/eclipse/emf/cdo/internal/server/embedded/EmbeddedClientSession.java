@@ -26,7 +26,9 @@ import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
 /**
  * @author Eike Stepper
+ * @deprecated Not yet supported.
  */
+@Deprecated
 public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
 {
   private InternalRepository repository;

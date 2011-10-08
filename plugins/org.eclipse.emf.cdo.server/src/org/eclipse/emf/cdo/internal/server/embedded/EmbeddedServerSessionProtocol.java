@@ -25,7 +25,9 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 /**
  * @author Eike Stepper
+ * @deprecated Not yet supported.
  */
+@Deprecated
 public class EmbeddedServerSessionProtocol extends Lifecycle implements ISessionProtocol
 {
   // A separate session protocol instance is required because the getSession() methods are ambiguous!

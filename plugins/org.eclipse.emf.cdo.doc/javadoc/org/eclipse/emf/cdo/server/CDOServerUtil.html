@@ -110,6 +110,10 @@ Class CDOServerUtil</H2>
 
 
 <P>
+Various static methods that may help with CDO <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><CODE>repositories</CODE></A> and server-side <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>views</CODE></A>.
+<P>
+
+<P>
 <HR>
 
 <P>
@@ -127,7 +131,8 @@ Class CDOServerUtil</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.RepositoryReadAccessValidator.html" title="class in org.eclipse.emf.cdo.server">CDOServerUtil.RepositoryReadAccessValidator</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An abstract <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server"><CODE>read-access handler</CODE></A> that grants or denies access to single
+ <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -229,7 +234,7 @@ Class CDOServerUtil</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#createSessionConfiguration()">createSessionConfiguration</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Not yet supported.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -380,8 +385,11 @@ public static <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" tit
 <A NAME="createSessionConfiguration()"><!-- --></A><H3>
 createSessionConfiguration</H3>
 <PRE>
-public static <A HREF="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSessionConfiguration</A> <B>createSessionConfiguration</B>()</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT>public static <A HREF="../../../../../org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">CDOSessionConfiguration</A> <B>createSessionConfiguration</B>()</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>Not yet supported.</I>
+<P>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>3.0</DD>

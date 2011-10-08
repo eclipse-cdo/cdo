@@ -10,11 +10,16 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.Set;
 
 /**
+ * A {@link CommitException commit exception} that indicates referential integrity problems with
+ * {@link CDOTransaction#setCommittables(Set) partial commits} before the server is contacted.
+ * 
  * @author Caspar De Groot
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

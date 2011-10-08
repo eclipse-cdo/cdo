@@ -118,6 +118,10 @@ Enum IStore.RevisionTemporality</H2>
 
 
 <P>
+Enumerates the possible history recording options a <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><CODE>store</CODE></A> can accept.
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>2.0</DD>
@@ -137,13 +141,13 @@ Enum IStore.RevisionTemporality</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html#AUDITING">AUDITING</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An indication that the store can work <b>with</b> <i>auditing</i>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html#NONE">NONE</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An indication that the store can work <b>without</b> <i>auditing</i>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -209,6 +213,8 @@ NONE</H3>
 <PRE>
 public static final <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A> <B>NONE</B></PRE>
 <DL>
+<DD>An indication that the store can work <b>without</b> <i>auditing</i>.
+<P>
 <DL>
 </DL>
 </DL>
@@ -219,6 +225,8 @@ AUDITING</H3>
 <PRE>
 public static final <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</A> <B>AUDITING</B></PRE>
 <DL>
+<DD>An indication that the store can work <b>with</b> <i>auditing</i>.
+<P>
 <DL>
 </DL>
 </DL>

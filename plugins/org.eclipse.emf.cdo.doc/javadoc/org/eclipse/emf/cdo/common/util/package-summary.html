@@ -99,7 +99,8 @@ Common utility classes, some common interfaces and exceptions.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCloseableIterator.html" title="interface in org.eclipse.emf.cdo.common.util">BlockingCloseableIterator&lt;T&gt;</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A closeable iterator that blocks on <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true#hasNext()" title="class or interface in java.util"><CODE>Iterator.hasNext()</CODE></A> until the next element is available or the end of the
+ iteration is reached.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</A></B></TD>
@@ -108,7 +109,7 @@ Common utility classes, some common interfaces and exceptions.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Provides the consumer with a long-valued time stamp.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -122,27 +123,29 @@ Common utility classes, some common interfaces and exceptions.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOCommonEventAdapter.html" title="class in org.eclipse.emf.cdo.common.util">CDOCommonEventAdapter</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A convenience adapter for common CDO <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>events</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOCommonUtil.html" title="class in org.eclipse.emf.cdo.common.util">CDOCommonUtil</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Various static methods that may help with I/O and time stamps.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOFetchRule.html" title="class in org.eclipse.emf.cdo.common.util">CDOFetchRule</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Represents a subset of the <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>features</CODE></A> of a <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>class</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryQueue.html" title="class in org.eclipse.emf.cdo.common.util">CDOQueryQueue&lt;E&gt;</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>The <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util"><CODE>queue</CODE></A> that represents the result of a CDOQuery.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/RepositoryStateChangedEvent.html" title="class in org.eclipse.emf.cdo.common.util">RepositoryStateChangedEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired when the <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common"><CODE>state</CODE></A> of a
+ repository has changed.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/RepositoryTypeChangedEvent.html" title="class in org.eclipse.emf.cdo.common.util">RepositoryTypeChangedEvent</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An <A HREF="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><CODE>event</CODE></A> fired when the <A HREF="../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common"><CODE>type</CODE></A> of a
+ repository has changed.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -156,11 +159,11 @@ Common utility classes, some common interfaces and exceptions.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util">CDOException</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An unchecked exception for general CDO purposes.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../../org/eclipse/emf/cdo/common/util/TransportException.html" title="class in org.eclipse.emf.cdo.common.util">TransportException</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An unchecked exception that indicates transport-level problems.</TD>
 </TR>
 </TABLE>
 &nbsp;

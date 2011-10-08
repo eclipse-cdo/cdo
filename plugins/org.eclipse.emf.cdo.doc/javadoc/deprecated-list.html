@@ -87,6 +87,7 @@ function windowTitle()
 <B>Contents</B><UL>
 <LI><A HREF="#interface">Deprecated Interfaces</A>
 <LI><A HREF="#class">Deprecated Classes</A>
+<LI><A HREF="#exception">Deprecated Exceptions</A>
 <LI><A HREF="#method">Deprecated Methods</A>
 </UL>
 
@@ -102,6 +103,11 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>CDONet4jSession</CODE></A>.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/embedded/CDOSession.html" title="interface in org.eclipse.emf.cdo.server.embedded">org.eclipse.emf.cdo.server.embedded.CDOSession</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not yet supported.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/net4j/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">org.eclipse.emf.cdo.net4j.CDOSession.Options</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>CDONet4jSession.Options</CODE></A>.</I>&nbsp;</TD>
@@ -110,6 +116,11 @@ function windowTitle()
 <TD><A HREF="org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">org.eclipse.emf.cdo.net4j.CDOSessionConfiguration</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>CDONet4jSessionConfiguration</CODE></A>.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/embedded/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.server.embedded">org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not yet supported.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/view/CDOView.Options.ReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view.CDOView.Options.ReferencePolicyEvent</A>
@@ -138,6 +149,20 @@ function windowTitle()
 </TABLE>
 &nbsp;
 <P>
+<A NAME="exception"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Deprecated Exceptions</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/util/ServerException.html" title="class in org.eclipse.emf.cdo.util">org.eclipse.emf.cdo.util.ServerException</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not used.</I>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
 <A NAME="method"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
@@ -155,9 +180,19 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/net4j/CDONet4jUtil.html#createNet4jSessionConfiguration()"><CODE>createNet4jSessionConfiguration()</CODE></A>.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/CDOServerUtil.html#createSessionConfiguration()">org.eclipse.emf.cdo.server.CDOServerUtil.createSessionConfiguration()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Not yet supported.</I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean)">org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade.get(boolean, boolean)</A>
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>Use <A HREF="org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockGrade.html#get(boolean, boolean, boolean)"><CODE>IDurableLockingManager.LockGrade.get(boolean, boolean, boolean)</CODE></A></I>&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="org/eclipse/emf/cdo/server/IRepository.html#getLockManager()">org.eclipse.emf.cdo.server.IRepository.getLockManager()</A>
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<I>As of 4.1 use <A HREF="org/eclipse/emf/cdo/server/IRepository.html#getLockingManager()"><CODE>IRepository.getLockingManager()</CODE></A>.</I>&nbsp;</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><A HREF="org/eclipse/emf/cdo/eresource/impl/EresourceFactoryImpl.html#getPackage()">org.eclipse.emf.cdo.eresource.impl.EresourceFactoryImpl.getPackage()</A>

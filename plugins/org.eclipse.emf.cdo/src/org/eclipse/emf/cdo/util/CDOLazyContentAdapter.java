@@ -28,6 +28,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * A scalable {@link EContentAdapter content adapter} that uses CDO mechansims to attach itself to {@link CDOObject
+ * objects} when they are lazily loaded.
+ * 
  * @author Victor Roldan Betancort
  * @since 4.0
  */

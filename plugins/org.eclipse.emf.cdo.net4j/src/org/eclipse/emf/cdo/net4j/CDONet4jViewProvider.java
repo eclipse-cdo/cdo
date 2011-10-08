@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.util.CDOURIData;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
@@ -31,6 +32,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * A {@link CDOViewProvider view provider} that uses Net4j-specific CDO {@link CDONet4jSession sessions} to open views.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */
@@ -230,6 +233,8 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   }
 
   /**
+   * A TCP-based {@link CDONet4jViewProvider view provider}.
+   * 
    * @author Eike Stepper
    */
   public static class TCP extends CDONet4jViewProvider
@@ -247,6 +252,8 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   }
 
   /**
+   * An SSL-based {@link CDONet4jViewProvider view provider}.
+   * 
    * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
    */
   public static class SSL extends CDONet4jViewProvider
@@ -264,6 +271,8 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   }
 
   /**
+   * A JVM-based {@link CDONet4jViewProvider view provider}.
+   * 
    * @author Eike Stepper
    */
   public static class JVM extends CDONet4jViewProvider

@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 
@@ -22,6 +24,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Represents the physical data storage back-end of a CDO {@link IRepository repository}, such as a database or a file
+ * system folder.
+ * 
  * @author Eike Stepper
  * @apiviz.landmark
  * @apiviz.has {@link IStore.ChangeFormat}
@@ -173,30 +178,60 @@ public interface IStore
   public ProgressDistributor getIndicatingCommitDistributor();
 
   /**
+   * Enumerates the possible data formats a {@link IStore store} can accept for commit operations.
+   * 
    * @author Eike Stepper
    * @since 2.0
    */
   public enum ChangeFormat
   {
-    REVISION, DELTA
+    /**
+     * An indication that the store accepts full {@link CDORevision revisions} for dirty objects.
+     */
+    REVISION,
+
+    /**
+     * An indication that the store accepts incremental {@link CDORevisionDelta revision deltas} for dirty objects.
+     */
+    DELTA
   }
 
   /**
+   * Enumerates the possible history recording options a {@link IStore store} can accept.
+   * 
    * @author Eike Stepper
    * @since 2.0
    */
   public enum RevisionTemporality
   {
-    NONE, AUDITING
+    /**
+     * An indication that the store can work <b>without</b> <i>auditing</i>.
+     */
+    NONE,
+
+    /**
+     * An indication that the store can work <b>with</b> <i>auditing</i>.
+     */
+    AUDITING
   }
 
   /**
+   * Enumerates the possible branching options a {@link IStore store} can accept.
+   * 
    * @author Eike Stepper
    * @since 2.0
    */
   public enum RevisionParallelism
   {
-    NONE, BRANCHING
+    /**
+     * An indication that the store can work <b>without</b> <i>branching</i>.
+     */
+    NONE,
+
+    /**
+     * An indication that the store can work <b>with</b> <i>branching</i>.
+     */
+    BRANCHING
   }
 
   /**

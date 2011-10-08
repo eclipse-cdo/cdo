@@ -13,6 +13,8 @@ package org.eclipse.net4j.util.collection;
 import java.util.Iterator;
 
 /**
+ * A closeable iterator.
+ * 
  * @author Eike Stepper
  */
 public interface CloseableIterator<E> extends Iterator<E>, Closeable

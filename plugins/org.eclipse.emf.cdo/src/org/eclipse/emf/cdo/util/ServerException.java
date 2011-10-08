@@ -13,10 +13,14 @@ package org.eclipse.emf.cdo.util;
 import org.eclipse.emf.cdo.common.util.CDOException;
 
 /**
+ * An unchecked exception that indicates server-side problems.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
+ * @deprecated Not used.
  */
+@Deprecated
 public class ServerException extends CDOException
 {
   private static final long serialVersionUID = 1L;

@@ -10,7 +10,13 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.view.CDOView;
+
 /**
+ * An unchecked exception being thrown if <i><a href="http://wiki.eclipse.org/CDO_Legacy_Mode">legacy objects</a></i>
+ * are to be accessed and the associated {@link CDOView view} is not in {@link CDOView#isLegacyModeEnabled() legacy
+ * mode}.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

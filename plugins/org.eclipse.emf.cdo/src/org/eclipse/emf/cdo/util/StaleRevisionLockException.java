@@ -10,12 +10,23 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.CheckUtil;
 
 /**
+ * An unchecked exception being thrown when attempting to
+ * {@link CDOView#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)
+ * lock} <i>stale</i> objects.
+ * <p>
+ * An {@link CDOObject object} is considered stale if its {@link CDORevision revision} is older than the latest server
+ * revision in the same {@link CDOBranch branch}.
+ * 
  * @author Caspar De Groot
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

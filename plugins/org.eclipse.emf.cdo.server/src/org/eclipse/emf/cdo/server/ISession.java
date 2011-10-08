@@ -13,11 +13,14 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 
 import org.eclipse.net4j.util.container.IContainer;
 
 /**
+ * The server-side representation of a client {@link CDOSession session}.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

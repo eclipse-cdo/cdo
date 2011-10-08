@@ -19,11 +19,9 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.ServerCDOView;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
-import org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration;
 import org.eclipse.emf.cdo.internal.server.syncing.FailoverParticipant;
 import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
 import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
-import org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
@@ -56,6 +54,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Various static methods that may help with CDO {@link IRepository repositories} and server-side {@link CDOView views}.
+ * 
  * @author Eike Stepper
  * @apiviz.exclude
  */
@@ -106,10 +106,12 @@ public final class CDOServerUtil
 
   /**
    * @since 3.0
+   * @deprecated Not yet supported.
    */
-  public static CDOSessionConfiguration createSessionConfiguration()
+  @Deprecated
+  public static org.eclipse.emf.cdo.server.embedded.CDOSessionConfiguration createSessionConfiguration()
   {
-    return new EmbeddedClientSessionConfiguration();
+    return new org.eclipse.emf.cdo.internal.server.embedded.EmbeddedClientSessionConfiguration();
   }
 
   /**
@@ -234,6 +236,9 @@ public final class CDOServerUtil
   }
 
   /**
+   * An abstract {@link IRepository.ReadAccessHandler read-access handler} that grants or denies access to single
+   * {@link CDORevision revisions}.
+   * 
    * @author Eike Stepper
    * @since 2.0
    * @apiviz.exclude

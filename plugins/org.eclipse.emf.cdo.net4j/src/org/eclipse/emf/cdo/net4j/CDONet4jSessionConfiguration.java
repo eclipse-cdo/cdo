@@ -13,11 +13,14 @@ package org.eclipse.emf.cdo.net4j;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
 /**
+ * Configures and opens new Net4j-specific CDO {@link CDOSession sessions}.
+ * 
  * @since 4.1
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

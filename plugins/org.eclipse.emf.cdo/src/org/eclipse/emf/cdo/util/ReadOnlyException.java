@@ -10,9 +10,14 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 /**
+ * An unchecked exception being thrown if write access to {@link CDOObject objects} of a {@link CDOView#isReadOnly()
+ * read-only} view is attempted.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.

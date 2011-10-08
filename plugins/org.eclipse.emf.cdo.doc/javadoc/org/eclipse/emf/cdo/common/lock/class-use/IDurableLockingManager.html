@@ -112,11 +112,21 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLo
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/ILockingManager.html" title="interface in org.eclipse.emf.cdo.server">ILockingManager</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manages all persistent aspects of durable CDO views and provides for vetoable
+ <A HREF="../../../../../../../org/eclipse/emf/cdo/server/ILockingManager.html#addDurableViewHandler(org.eclipse.emf.cdo.server.ILockingManager.DurableViewHandler)"><CODE>interception</CODE></A> of the durable view resumption
+ process.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;interface</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.DurableLocking.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.DurableLocking</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An extension interface for <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>store accessors</CODE></A> that support <i>durable locking</i>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -124,7 +134,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLo
 <TD><CODE><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.DurableLocking2.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.DurableLocking2</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An extension interface for <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><CODE>store accessors</CODE></A> that support <i>durable locking</i>.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -140,7 +150,7 @@ Uses of <A HREF="../../../../../../../org/eclipse/emf/cdo/common/lock/IDurableLo
 <TD><CODE><B>IRepository.</B><B><A HREF="../../../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLockManager()">getLockManager</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.1 use <A HREF="../../../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLockingManager()"><CODE>IRepository.getLockingManager()</CODE></A>.</I></TD>
 </TR>
 </TABLE>
 &nbsp;

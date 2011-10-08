@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.server;
 
 /**
+ * An unchecked exception that is thrown from concurrent commit operations if cycles in the tree containmnent structure
+ * would result.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUpdatable;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -153,6 +154,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   public boolean isInvalidationRunnerActive();
 
   /**
+   * @see CDOUtil#setLegacyModeDefault(boolean)
    * @since 3.0
    */
   public boolean isLegacyModeEnabled();

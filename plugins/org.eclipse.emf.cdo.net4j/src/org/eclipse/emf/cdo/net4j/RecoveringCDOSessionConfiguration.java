@@ -10,7 +10,12 @@
  */
 package org.eclipse.emf.cdo.net4j;
 
+import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
+
 /**
+ * A {@link CDONet4jSessionConfiguration session configuration} that uses a {@link HeartBeatProtocol heart beat
+ * protocol} to detect network problems. Subtypes specify the exact behaviour to recover from these problems.
+ * 
  * @author Caspar De Groot
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

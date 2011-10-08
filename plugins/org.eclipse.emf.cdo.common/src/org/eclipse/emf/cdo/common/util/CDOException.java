@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.common.util;
 
 /**
+ * An unchecked exception for general CDO purposes.
+ * 
  * @author Eike Stepper
  */
 public class CDOException extends RuntimeException

@@ -10,11 +10,16 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
+ * Provides server-side consumers with the {@link IStoreAccessor store accessor} that is valid in the context of a
+ * specific {@link ISession session} during read operations or a specific {@link CommitContext commit context} during
+ * write operations.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @apiviz.exclude

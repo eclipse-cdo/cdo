@@ -15,12 +15,16 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 /**
+ * Maintains the {@link Resource#isModified() modified state} of a CDO {@link CDOResource resource} with the help of a
+ * {@link CDOTransactionHandler transaction handler}.
+ * 
  * @author Victor Roldan Betancort
  * @since 4.0
  */

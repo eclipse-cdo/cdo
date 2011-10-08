@@ -62,6 +62,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Represents a <i>connection</i> to a physical data storage back-end.
+ * 
  * @author Eike Stepper
  * @apiviz.uses {@link IStoreChunkReader} - - creates
  */
@@ -404,6 +406,9 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   }
 
   /**
+   * Represents the query execution state of a {@link IStoreAccessor#queryResources(QueryResourcesContext) resources
+   * query}.
+   * 
    * @author Eike Stepper
    * @since 2.0
    * @noimplement This interface is not intended to be implemented by clients.
@@ -432,6 +437,9 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public boolean addResource(CDOID resourceID);
 
     /**
+     * Represents the query execution state of a {@link IStoreAccessor#queryResources(QueryResourcesContext) resources
+     * query} that is supposed to deliver one exact resource, or <code>null</code>.
+     * 
      * @author Eike Stepper
      * @since 2.0
      * @apiviz.exclude
@@ -443,6 +451,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   }
 
   /**
+   * Represents the query execution state of a {@link IStoreAccessor#queryXRefs(QueryXRefsContext) XRefs query}.
+   * 
    * @author Eike Stepper
    * @since 3.0
    * @noimplement This interface is not intended to be implemented by clients.
@@ -478,6 +488,9 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   }
 
   /**
+   * An extension interface for {@link IStoreAccessor store accessors} that support <i>raw data access</i> as needed by
+   * {@link IRepositorySynchronizer repository synchronizers} or {@link CDOServerImporter server importers}.
+   * 
    * @author Eike Stepper
    * @since 4.0
    * @apiviz.exclude
@@ -701,6 +714,9 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   }
 
   /**
+   * An extension interface for {@link IStoreAccessor store accessors} that support <i>durable locking</i>.
+   * 
+   * @see DurableLocking2
    * @author Eike Stepper
    * @since 4.0
    * @apiviz.exclude
@@ -715,6 +731,8 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
   }
 
   /**
+   * An extension interface for {@link IStoreAccessor store accessors} that support <i>durable locking</i>.
+   * 
    * @author Caspar De Groot
    * @since 4.1
    * @apiviz.exclude

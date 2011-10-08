@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.CDOObjectReference;
 import java.util.List;
 
 /**
+ * A {@link CommitException commit exception} that indicates referential integrity problems detected by the server.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

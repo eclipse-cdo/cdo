@@ -203,7 +203,9 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   /**
    * @author Eike Stepper
+   * @deprecated Not yet supported.
    */
+  @Deprecated
   public static final class Embedded extends SessionConfig
   {
     public static final String NAME = "Embedded";

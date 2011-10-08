@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.net4j;
 
 /**
+ * Deprecated, use {@link org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration CDONet4jSessionConfiguration}.
+ * 
  * @since 3.0
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

@@ -118,6 +118,10 @@ Enum IStore.ChangeFormat</H2>
 
 
 <P>
+Enumerates the possible data formats a <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><CODE>store</CODE></A> can accept for commit operations.
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>2.0</DD>
@@ -137,13 +141,13 @@ Enum IStore.ChangeFormat</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html#DELTA">DELTA</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An indication that the store accepts incremental <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><CODE>revision deltas</CODE></A> for dirty objects.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html#REVISION">REVISION</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An indication that the store accepts full <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> for dirty objects.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -209,6 +213,8 @@ REVISION</H3>
 <PRE>
 public static final <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server">IStore.ChangeFormat</A> <B>REVISION</B></PRE>
 <DL>
+<DD>An indication that the store accepts full <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revisions</CODE></A> for dirty objects.
+<P>
 <DL>
 </DL>
 </DL>
@@ -219,6 +225,8 @@ DELTA</H3>
 <PRE>
 public static final <A HREF="../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server">IStore.ChangeFormat</A> <B>DELTA</B></PRE>
 <DL>
+<DD>An indication that the store accepts incremental <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><CODE>revision deltas</CODE></A> for dirty objects.
+<P>
 <DL>
 </DL>
 </DL>

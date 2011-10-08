@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
+ * Synchronizes a {@link ISynchronizableRepository synchronizable repository} with a master repository.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

@@ -127,6 +127,10 @@ Interface IRepository</H2>
 
 
 <P>
+A CDO repository.
+<P>
+
+<P>
 <DL>
 <DT><B>No Implement</B></DT>
   <DD>This interface is not intended to be implemented by clients.</DD>
@@ -159,7 +163,7 @@ Interface IRepository</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.Props.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Props</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contains symbolic constants that specifiy valid keys of <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getProperties()"><CODE>repository properties</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -175,7 +179,7 @@ Interface IRepository</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</A></B></CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Provides a way to handle commits that are received from a client.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.cdo.common.CDOCommonRepository"><!-- --></A>
@@ -258,11 +262,19 @@ Interface IRepository</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/server/ILockingManager.html" title="interface in org.eclipse.emf.cdo.server">ILockingManager</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLockingManager()">getLockingManager</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLockManager()">getLockManager</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>As of 4.1 use <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLockingManager()"><CODE>getLockingManager()</CODE></A>.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -528,14 +540,33 @@ getSessionManager</H3>
 <A NAME="getLockManager()"><!-- --></A><H3>
 getLockManager</H3>
 <PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager</A> <B>getLockManager</B>()</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT><A HREF="../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager</A> <B>getLockManager</B>()</PRE>
 <DL>
+<DD><B>Deprecated.</B>&nbsp;<I>As of 4.1 use <A HREF="../../../../../org/eclipse/emf/cdo/server/IRepository.html#getLockingManager()"><CODE>getLockingManager()</CODE></A>.</I>
+<P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLockingManager()"><!-- --></A><H3>
+getLockingManager</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/server/ILockingManager.html" title="interface in org.eclipse.emf.cdo.server">ILockingManager</A> <B>getLockingManager</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>

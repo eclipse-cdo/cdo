@@ -118,6 +118,12 @@ Class DanglingReferenceException</H2>
 
 
 <P>
+An unchecked exception being thrown from <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><CODE>CDOUserTransaction.commit()</CODE></A> if the commit <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change
+ set</CODE></A> is referencing <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><CODE>objects</CODE></A> that are not contained by any <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resource</CODE></A> before the server
+ is contacted.
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>2.0</DD>

@@ -10,7 +10,11 @@
  */
 package org.eclipse.emf.cdo.location;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+
 /**
+ * A CDO server independent representation of a {@link CDOBranchPoint branch point} in a repository.
+ * 
  * @author Eike Stepper
  */
 public interface ICheckoutSource

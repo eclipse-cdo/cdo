@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.net4j;
 
 /**
+ * A {@link RecoveringCDOSessionConfiguration session configuration} that recovers from network problems by failing over
+ * to backup repositories as directed by a fail-over monitor.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

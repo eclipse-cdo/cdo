@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * A CDO repository.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -182,6 +184,8 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   }
 
   /**
+   * Provides a way to handle commits that are received from a client.
+   * 
    * @author Eike Stepper
    * @since 2.0
    */
@@ -223,6 +227,8 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   }
 
   /**
+   * Contains symbolic constants that specifiy valid keys of {@link IRepository#getProperties() repository properties}.
+   * 
    * @author Eike Stepper
    * @noimplement This interface is not intended to be implemented by clients.
    * @noextend This interface is not intended to be extended by clients.

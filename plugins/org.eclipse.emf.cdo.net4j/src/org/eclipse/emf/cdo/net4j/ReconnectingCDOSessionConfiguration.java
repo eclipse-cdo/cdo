@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.net4j;
 
 /**
+ * A {@link RecoveringCDOSessionConfiguration session configuration} that recovers from network problems by attempting
+ * to reconnect to the same repository in specific intervals.
+ * 
  * @author Caspar De Groot
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

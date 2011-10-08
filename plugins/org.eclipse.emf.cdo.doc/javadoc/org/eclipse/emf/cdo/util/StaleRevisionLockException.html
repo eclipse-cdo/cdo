@@ -118,6 +118,14 @@ Class StaleRevisionLockException</H2>
 
 
 <P>
+An unchecked exception being thrown when attempting to
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)"><CODE>lock</CODE></A> <i>stale</i> objects.
+ <p>
+ An <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>object</CODE></A> is considered stale if its <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><CODE>revision</CODE></A> is older than the latest server
+ revision in the same <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch</CODE></A>.
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>

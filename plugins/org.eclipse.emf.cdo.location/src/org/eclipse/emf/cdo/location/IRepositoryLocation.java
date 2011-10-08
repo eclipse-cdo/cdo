@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
+ * A CDO server independent representation of a repository.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @apiviz.landmark

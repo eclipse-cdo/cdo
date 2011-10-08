@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.net4j;
 
 /**
+ * Deprecated, use {@link org.eclipse.emf.cdo.net4j.CDONet4jSession CDONet4jSession}.
+ * 
  * @since 2.0
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
@@ -29,6 +31,8 @@ public interface CDOSession extends CDONet4jSession
   public Options options();
 
   /**
+   * Deprecated, use {@link org.eclipse.emf.cdo.net4j.CDONet4jSession.Options CDONet4jSession.Options}.
+   * 
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.

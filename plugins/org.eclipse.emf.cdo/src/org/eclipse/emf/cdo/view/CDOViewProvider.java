@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * Capable of opening a <code>CDOView</code> on a target repository, defined by a URI. A regular expression and the
- * priority are used to determine which is the most suitable provider
+ * priority are used to determine the most suitable provider.
  * 
  * @since 2.0
  * @author Victor Roldan Betancort

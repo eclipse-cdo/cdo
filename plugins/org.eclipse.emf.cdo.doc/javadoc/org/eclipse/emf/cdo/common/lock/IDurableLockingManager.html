@@ -92,7 +92,7 @@ org.eclipse.emf.cdo.common.lock</FONT>
 <BR>
 Interface IDurableLockingManager</H2>
 <DL>
-<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.DurableLocking.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.DurableLocking</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.DurableLocking2.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.DurableLocking2</A></DD>
+<DT><B>All Known Subinterfaces:</B> <DD><A HREF="../../../../../../org/eclipse/emf/cdo/server/ILockingManager.html" title="interface in org.eclipse.emf.cdo.server">ILockingManager</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.DurableLocking.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.DurableLocking</A>, <A HREF="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.DurableLocking2.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.DurableLocking2</A></DD>
 </DL>
 <HR>
 <DL>
@@ -100,10 +100,11 @@ Interface IDurableLockingManager</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../../server/IStoreAccessor.DurableLocking.html" title="&#171;interface&#187; IStoreAccessor.DurableLocking (org.eclipse.emf.cdo.server)" alt="" coords="110,201,313,255"/>
-<area shape="rect" id="node2" href="../../server/IRepository.html" title="&#171;interface&#187; IRepository (org.eclipse.emf.cdo.server)" alt="" coords="5,6,187,61"/>
-<area shape="rect" id="node3" href="IDurableLockingManager.LockArea.html" title="&#171;interface&#187; IDurableLockingManager.LockArea" alt="" coords="217,13,439,53"/>
-<area shape="rect" id="node4" href="IDurableLockingManager.html" title="&#171;interface&#187; IDurableLockingManager" alt="" coords="130,117,293,157"/>
+<area shape="rect" id="node1" href="../../server/IStoreAccessor.DurableLocking.html" title="&#171;interface&#187; IStoreAccessor.DurableLocking (org.eclipse.emf.cdo.server)" alt="" coords="5,201,208,255"/>
+<area shape="rect" id="node2" href="../../server/IRepository.html" title="&#171;interface&#187; IRepository (org.eclipse.emf.cdo.server)" alt="" coords="11,6,192,61"/>
+<area shape="rect" id="node3" href="../../server/ILockingManager.html" title="&#171;interface&#187; ILockingManager (org.eclipse.emf.cdo.server)" alt="" coords="239,201,420,255"/>
+<area shape="rect" id="node4" href="IDurableLockingManager.LockArea.html" title="&#171;interface&#187; IDurableLockingManager.LockArea" alt="" coords="222,13,444,53"/>
+<area shape="rect" id="node5" href="IDurableLockingManager.html" title="&#171;interface&#187; IDurableLockingManager" alt="" coords="135,117,299,157"/>
 </map>
 
 <CENTER><IMG SRC="IDurableLockingManager.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -111,8 +112,7 @@ Interface IDurableLockingManager</H2>
 
 
 <P>
-Manages all aspects of durable CDO views like persisting informations like <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch point</CODE></A> and
- acquired locks.
+Manages all persistent aspects of durable CDO views such as <A HREF="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch point</CODE></A> and acquired locks.
 <P>
 
 <P>

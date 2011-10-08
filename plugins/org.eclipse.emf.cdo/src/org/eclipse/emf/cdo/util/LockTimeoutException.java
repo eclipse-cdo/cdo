@@ -10,9 +10,15 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 /**
+ * An unchecked exception being thrown if {@link CDOLock locks} could not be
+ * {@link CDOView#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)
+ * acquired} within the specified timeout period.
+ * 
  * @author Caspar De Groot
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

@@ -14,6 +14,9 @@ package org.eclipse.emf.cdo.common.util;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 
 /**
+ * A closeable iterator that blocks on {@link #hasNext()} until the next element is available or the end of the
+ * iteration is reached.
+ * 
  * @author Simon McDuff
  * @since 2.0
  */

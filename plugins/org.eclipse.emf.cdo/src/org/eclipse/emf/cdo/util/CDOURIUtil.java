@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 /**
+ * Various static methods that may help with CDO-specific {@link URI URIs}.
+ * 
  * @author Simon McDuff
  * @since 2.0
  */

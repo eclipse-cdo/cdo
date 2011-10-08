@@ -10,7 +10,12 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
 /**
+ * A checked exception being thrown from {@link CDOTransaction#commit()} in case of unrecoverable commit problems such
+ * as commit conflicts.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

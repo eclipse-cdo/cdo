@@ -33,6 +33,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import java.util.Map;
 
 /**
+ * Various static methods that may help with Net4j-specific CDO {@link CDONet4jSession sessions}.
+ * 
  * @since 2.0
  * @author Eike Stepper
  * @apiviz.uses {@link CDONet4jSessionConfiguration} - - creates

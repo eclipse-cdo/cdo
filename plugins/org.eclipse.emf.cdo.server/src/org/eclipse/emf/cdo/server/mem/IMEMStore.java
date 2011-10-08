@@ -21,7 +21,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.emf.ecore.EClass;
 
 /**
- * A simple in-memory store.
+ * A simple in-memory {@link IStore store}.
  * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

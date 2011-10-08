@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.server;
 
 /**
+ * Provides the consumer with CDO {@link IRepository repositories} specified by their name.
+ * 
  * @author Eike Stepper
  * @apiviz.uses {@link IRepository} - - provides
  */

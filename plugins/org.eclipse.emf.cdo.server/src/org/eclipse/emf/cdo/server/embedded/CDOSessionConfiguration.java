@@ -14,11 +14,15 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 
 /**
+ * Deprecated, not yet supported.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @deprecated Not yet supported.
  */
+@Deprecated
 public interface CDOSessionConfiguration extends org.eclipse.emf.cdo.session.CDOSessionConfiguration
 {
   public IRepository getRepository();

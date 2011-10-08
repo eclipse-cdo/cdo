@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
+ * Manages a set of {@link IRepositoryLocation repository locations}.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @apiviz.landmark

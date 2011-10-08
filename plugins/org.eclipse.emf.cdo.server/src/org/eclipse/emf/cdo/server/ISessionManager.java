@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.net4j.util.container.IContainer;
 
 /**
+ * Manages the user {@link ISession sessions} of a {@link IRepository repository}.
+ * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

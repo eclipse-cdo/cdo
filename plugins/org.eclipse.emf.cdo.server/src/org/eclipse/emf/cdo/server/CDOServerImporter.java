@@ -69,6 +69,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Imports the complete contents of a {@link IRepository repository} from the output created by a
+ * {@link CDOServerExporter exporter} into a new repository.
+ * <p>
+ * Subtypes specifiy the actual exchange format.
+ * 
  * @author Eike Stepper
  * @since 4.0
  * @apiviz.has {@link CDOServerImporter.Handler}
@@ -114,6 +119,9 @@ public abstract class CDOServerImporter
   protected abstract void importAll(InputStream in, Handler handler) throws Exception;
 
   /**
+   * Persists the data that has been read by a {@link CDOServerImporter importer} into a new {@link IRepository
+   * repository}.
+   * 
    * @author Eike Stepper
    */
   public static interface Handler extends CDORevisionHandler, CDOLobHandler
@@ -131,7 +139,6 @@ public abstract class CDOServerImporter
     public void handleCommitInfo(long time, long previous, int branch, String user, String comment);
 
     public void flush();
-
   }
 
   /**
@@ -298,6 +305,9 @@ public abstract class CDOServerImporter
   }
 
   /**
+   * An {@link CDOServerImporter importer} that reads and interprets XML output created by an
+   * {@link CDOServerExporter.XML XML exporter}.
+   * 
    * @author Eike Stepper
    */
   public static class XML extends CDOServerImporter implements CDOServerExporter.XMLConstants

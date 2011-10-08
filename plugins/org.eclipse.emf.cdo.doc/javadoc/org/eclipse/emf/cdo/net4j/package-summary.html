@@ -116,15 +116,15 @@ Client concepts for dealing with Net4j-based sessions to remote repositories.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A Net4j-specific CDO <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>session</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession.Options</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>session</CODE></A> configuration options.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Configures and opens new Net4j-specific CDO <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>sessions</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDOSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSession</A></B></TD>
@@ -145,15 +145,18 @@ Client concepts for dealing with Net4j-based sessions to remote repositories.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>session configuration</CODE></A> that recovers from network problems by failing over
+ to backup repositories as directed by a fail-over monitor.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>session configuration</CODE></A> that recovers from network problems by attempting
+ to reconnect to the same repository in specific intervals.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">RecoveringCDOSessionConfiguration</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>session configuration</CODE></A> that uses a <A HREF="../../../../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.html?is-external=true" title="class or interface in org.eclipse.net4j.signal.heartbeat"><CODE>heart beat
+ protocol</CODE></A> to detect network problems.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -167,23 +170,23 @@ Client concepts for dealing with Net4j-based sessions to remote repositories.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jUtil.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jUtil</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>Various static methods that may help with Net4j-specific CDO <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>sessions</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view provider</CODE></A> that uses Net4j-specific CDO <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><CODE>sessions</CODE></A> to open views.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.JVM</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A JVM-based <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><CODE>view provider</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.SSL.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.SSL</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>An SSL-based <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><CODE>view provider</CODE></A>.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD WIDTH="15%"><B><A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.TCP.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.TCP</A></B></TD>
-<TD>&nbsp;</TD>
+<TD>A TCP-based <A HREF="../../../../../org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><CODE>view provider</CODE></A>.</TD>
 </TR>
 </TABLE>
 &nbsp;

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.util;
 
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
@@ -19,6 +20,8 @@ import org.eclipse.emf.common.util.URI;
 import java.text.MessageFormat;
 
 /**
+ * An unchecked exception being thrown to indicate problems with the {@link URI} of a {@link CDOResource resource}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

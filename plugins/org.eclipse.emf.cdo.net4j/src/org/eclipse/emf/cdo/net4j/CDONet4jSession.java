@@ -12,11 +12,15 @@
  */
 package org.eclipse.emf.cdo.net4j;
 
+import org.eclipse.emf.cdo.session.CDOSession;
+
 import org.eclipse.net4j.signal.ISignalProtocol;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 /**
+ * A Net4j-specific CDO {@link CDOSession session}.
+ * 
  * @since 4.1
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
@@ -32,6 +36,8 @@ public interface CDONet4jSession extends org.eclipse.emf.cdo.session.CDOSession
   public Options options();
 
   /**
+   * Encapsulates a set of notifying {@link CDONet4jSession session} configuration options.
+   * 
    * @since 4.1
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.

@@ -26,7 +26,9 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @deprecated Not yet supported.
  */
+@Deprecated
 public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationImpl implements CDOSessionConfiguration
 {
   private InternalRepository repository;

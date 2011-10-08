@@ -33,6 +33,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
+ * Various static methods that may help with I/O and time stamps.
+ * 
  * @author Eike Stepper
  * @since 3.0
  */

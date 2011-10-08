@@ -13,9 +13,13 @@ package org.eclipse.emf.cdo.common.util;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
+ * An {@link IEvent event} fired when the {@link org.eclipse.emf.cdo.common.CDOCommonRepository.Type type} of a
+ * repository has changed.
+ * 
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

@@ -74,7 +74,9 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
+ * @deprecated Not yet supported.
  */
+@Deprecated
 public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessionProtocol
 {
   private EmbeddedClientSession session;

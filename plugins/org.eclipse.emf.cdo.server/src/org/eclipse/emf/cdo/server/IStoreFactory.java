@@ -15,6 +15,8 @@ import org.w3c.dom.Element;
 import java.util.Map;
 
 /**
+ * Creates {@link IStore stores}.
+ * 
  * @author Eike Stepper
  * @apiviz.uses {@link IStore} - - creates
  */

@@ -77,15 +77,20 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   @Override
   public String getListJoin(String attrTable, String listTable)
   {
-    String join = super.getListJoin(attrTable, listTable);
+    String join = getListJoinBasic(attrTable, listTable);
     return modifyListJoin(attrTable, listTable, join, false);
   }
 
   @Override
   protected String getListJoinForRawExport(String attrTable, String listTable)
   {
-    String join = super.getListJoin(attrTable, listTable);
+    String join = getListJoinBasic(attrTable, listTable);
     return modifyListJoin(attrTable, listTable, join, true);
+  }
+
+  protected String getListJoinBasic(String attrTable, String listTable)
+  {
+    return super.getListJoin(attrTable, listTable);
   }
 
   protected String modifyListJoin(String attrTable, String listTable, String join, boolean forRawExport)

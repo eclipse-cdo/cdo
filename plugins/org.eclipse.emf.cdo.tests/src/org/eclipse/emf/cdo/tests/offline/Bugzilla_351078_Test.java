@@ -558,7 +558,7 @@ public class Bugzilla_351078_Test extends AbstractSyncingTest
     });
   }
 
-  private void run(CompanyChanger changer) throws Exception
+  protected void run(CompanyChanger changer) throws Exception
   {
     // Create master session & transaction.
     InternalRepository master = getRepository("master");
@@ -578,7 +578,7 @@ public class Bugzilla_351078_Test extends AbstractSyncingTest
     waitForOnline(clone);
     sleep(500); // TODO Clarify why waitForOnline() alone is not enough
 
-    check(masterCompany, "after connect");
+    check(master, masterCompany, "after connect");
 
     getOfflineConfig().stopMasterTransport();
     waitForOffline(clone);
@@ -590,10 +590,10 @@ public class Bugzilla_351078_Test extends AbstractSyncingTest
     waitForOnline(clone);
     sleep(500);
 
-    check(masterCompany, "after reconnect");
+    check(master, masterCompany, "after reconnect");
   }
 
-  private void check(Company masterCompany, String when)
+  protected void check(InternalRepository master, Company masterCompany, String when)
   {
     EList<Category> masterCategories = masterCompany.getCategories();
 
@@ -619,7 +619,7 @@ public class Bugzilla_351078_Test extends AbstractSyncingTest
   /**
    * @author Eike Stepper
    */
-  private static class CompanyChanger
+  protected static class CompanyChanger
   {
     public void beforeConnect(EList<Category> categories, CDOTransaction transaction) throws Exception
     {

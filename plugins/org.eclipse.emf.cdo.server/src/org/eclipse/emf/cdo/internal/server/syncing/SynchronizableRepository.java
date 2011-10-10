@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server.syncing;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -34,6 +35,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
@@ -74,6 +76,8 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -415,6 +419,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       List<CDOIDAndVersion> newObjects = changeSet.getNewObjects();
       List<CDORevisionKey> changedObjects = changeSet.getChangedObjects();
       List<CDOIDAndVersion> detachedObjects = changeSet.getDetachedObjects();
+
       CDOCommitData data = new CDOCommitDataImpl(newPackages, newObjects, changedObjects, detachedObjects);
 
       String comment = "<replicate raw commits>"; //$NON-NLS-1$
@@ -709,7 +714,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   /**
    * @author Eike Stepper
    */
-  private static final class CommitContextData implements CDOCommitData
+  protected static final class CommitContextData implements CDOCommitData
   {
     private InternalCommitContext commitContext;
 
@@ -832,6 +837,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
    */
   protected final class WriteThroughCommitContext extends TransactionCommitContext
   {
+    private static final int ARTIFICIAL_VIEW_ID = 0;
+
     public WriteThroughCommitContext(InternalTransaction transaction)
     {
       super(transaction);
@@ -852,19 +859,102 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     @Override
     public void commit(OMMonitor monitor)
     {
-      InternalTransaction transaction = getTransaction();
-
       // Prepare commit to the master
-      CDOBranch branch = transaction.getBranch();
-      String userID = getUserID();
-      String comment = getCommitComment();
-      CDOCommitData commitData = new CommitContextData(this);
-      Collection<CDOLob<?>> lobs = Collections.emptySet();
+      final CDOCommitData commitData = new CommitContextData(this);
+
+      InternalCDOCommitContext ctx = new InternalCDOCommitContext()
+      {
+        public boolean isPartialCommit()
+        {
+          return false;
+        }
+
+        public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
+        {
+          throw new UnsupportedOperationException();
+        }
+
+        public List<CDOPackageUnit> getNewPackageUnits()
+        {
+          return commitData.getNewPackageUnits();
+        }
+
+        public Map<CDOID, CDOObject> getNewObjects()
+        {
+          throw new UnsupportedOperationException();
+        }
+
+        public Collection<CDOLockState> getLocksOnNewObjects()
+        {
+          CDOLockState[] locksOnNewObjectsArr = WriteThroughCommitContext.this.getLocksOnNewObjects();
+          Collection<CDOLockState> locksOnNewObjects = Arrays.asList(locksOnNewObjectsArr);
+          return locksOnNewObjects;
+        }
+
+        public Collection<CDOLob<?>> getLobs()
+        {
+          return Collections.emptySet(); // TODO (CD) Did we forget to support this earlier?
+        }
+
+        public Map<CDOID, CDOObject> getDirtyObjects()
+        {
+          throw new UnsupportedOperationException();
+        }
+
+        public Map<CDOID, CDOObject> getDetachedObjects()
+        {
+          throw new UnsupportedOperationException();
+        }
+
+        public void preCommit()
+        {
+          throw new UnsupportedOperationException();
+        }
+
+        public void postCommit(CommitTransactionResult result)
+        {
+          throw new UnsupportedOperationException();
+        }
+
+        public InternalCDOTransaction getTransaction()
+        {
+          return null;
+        }
+
+        public CDOCommitData getCommitData()
+        {
+          return commitData;
+        }
+
+        public int getViewID()
+        {
+          return ARTIFICIAL_VIEW_ID;
+        }
+
+        public String getUserID()
+        {
+          return WriteThroughCommitContext.this.getUserID();
+        }
+
+        public boolean isAutoReleaseLocks()
+        {
+          return WriteThroughCommitContext.this.isAutoReleaseLocksEnabled();
+        }
+
+        public String getCommitComment()
+        {
+          return WriteThroughCommitContext.this.getCommitComment();
+        }
+
+        public CDOBranch getBranch()
+        {
+          return WriteThroughCommitContext.this.getTransaction().getBranch();
+        }
+      };
 
       // Delegate commit to the master
       CDOSessionProtocol sessionProtocol = getSynchronizer().getRemoteSession().getSessionProtocol();
-      CommitTransactionResult result = sessionProtocol.commitDelegation(branch, userID, comment, commitData,
-          getDetachedObjectTypes(), lobs, monitor);
+      CommitTransactionResult result = sessionProtocol.commitDelegation(ctx, monitor);
 
       // Stop if commit to master failed
       String rollbackMessage = result.getRollbackMessage();

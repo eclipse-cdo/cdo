@@ -12,8 +12,11 @@
 package org.eclipse.emf.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
@@ -32,14 +35,54 @@ import java.util.Map;
 public interface CDOCommitContext
 {
   /**
+   * @since 4.1
+   */
+  public String getUserID();
+
+  /**
+   * @since 4.1
+   */
+  public int getViewID();
+
+  /**
+   * @since 4.1
+   */
+  public CDOBranch getBranch();
+
+  /**
    * Returns the {@link CDOTransaction transaction} associated with this commit context.
    */
   public CDOTransaction getTransaction();
 
   /**
+   * @since 4.1
+   */
+  public boolean isAutoReleaseLocks();
+
+  /**
+   * @since 4.0
+   */
+  public boolean isPartialCommit();
+
+  /**
+   * @since 4.1
+   */
+  public CDOCommitData getCommitData();
+
+  /**
+   * @since 4.1
+   */
+  public String getCommitComment();
+
+  /**
    * Returns a list of the new {@link CDOPackageUnit package units} that are to be committed with this commit context.
    */
   public List<CDOPackageUnit> getNewPackageUnits();
+
+  /**
+   * @since 4.1
+   */
+  public Collection<CDOLockState> getLocksOnNewObjects();
 
   /**
    * Returns a map of the new {@link CDOObject objects} that are to be committed with this commit context.
@@ -65,9 +108,4 @@ public interface CDOCommitContext
    * @since 4.0
    */
   public Collection<CDOLob<?>> getLobs();
-
-  /**
-   * @since 4.0
-   */
-  public boolean isPartialCommit();
 }

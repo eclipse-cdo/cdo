@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.LockTimeoutException;
 import org.eclipse.emf.cdo.util.StaleRevisionLockException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
@@ -1083,5 +1084,68 @@ public class LockingManagerTest extends AbstractLockingTest
     assertWriteLock(false, category3);
 
     session.close();
+  }
+
+  public void testLockOnNewObject() throws Exception
+  {
+    CDOSession session1 = openSession();
+    CDOSession session2 = openSession();
+
+    CDOTransaction transaction = session1.openTransaction();
+    transaction.options().setAutoReleaseLocksEnabled(false);
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    transaction.commit();
+
+    Category category1 = getModel1Factory().createCategory();
+    Category category2 = getModel1Factory().createCategory();
+    Category category3 = getModel1Factory().createCategory();
+    resource.getContents().add(category1);
+    resource.getContents().add(category2);
+    resource.getContents().add(category3);
+
+    readLock(category1);
+    writeLock(category2);
+    writeOption(category3);
+
+    assertReadLock(true, category1);
+    assertWriteLock(true, category2);
+    assertWriteOption(true, category3);
+
+    readUnlock(category1);
+    writeUnlock(category2);
+    writeUnoption(category3);
+
+    assertReadLock(false, category1);
+    assertWriteLock(false, category2);
+    assertWriteLock(false, category3);
+
+    readLock(category1);
+    writeLock(category2);
+    writeOption(category3);
+
+    transaction.commit();
+
+    CDOView controlView = session2.openView();
+    controlView.options().setLockNotificationEnabled(true);
+    CDOResource r = controlView.getResource(getResourcePath("/res1"));
+
+    CDOObject category1cv = CDOUtil.getCDOObject(r.getContents().get(0));
+    CDOObject category2cv = CDOUtil.getCDOObject(r.getContents().get(1));
+    CDOObject category3cv = CDOUtil.getCDOObject(r.getContents().get(2));
+
+    assertEquals(true, category1cv.cdoReadLock().isLockedByOthers());
+    assertEquals(true, category2cv.cdoWriteLock().isLockedByOthers());
+    assertEquals(true, category3cv.cdoWriteOption().isLockedByOthers());
+
+    readUnlock(category1);
+    writeUnlock(category2);
+    writeUnoption(category3);
+
+    assertEquals(false, category1cv.cdoReadLock().isLockedByOthers());
+    assertEquals(false, category2cv.cdoReadLock().isLockedByOthers());
+    assertEquals(false, category3cv.cdoReadLock().isLockedByOthers());
+
+    session1.close();
+    session2.close();
   }
 }

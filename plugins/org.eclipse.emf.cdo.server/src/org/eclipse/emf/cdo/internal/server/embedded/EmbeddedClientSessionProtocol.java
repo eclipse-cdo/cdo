@@ -64,6 +64,8 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.util.ArrayList;
@@ -412,8 +414,14 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
       CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CommitTransactionResult commitTransaction(InternalCDOCommitContext context, OMMonitor monitor)
   {
     monitor.begin(2);
     boolean success = false;
@@ -422,11 +430,15 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
 
     try
     {
+      InternalCDOTransaction transaction = context.getTransaction();
+      CDOCommitData commitData = context.getCommitData();
+
+      int transactionID = transaction.getViewID();
       InternalTransaction serverTransaction = (InternalTransaction)serverSessionProtocol.getSession().getView(
           transactionID);
       serverCommitContext = serverTransaction.createCommitContext();
       serverCommitContext.preWrite();
-      serverCommitContext.setAutoReleaseLocksEnabled(releaseLocks);
+      serverCommitContext.setAutoReleaseLocksEnabled(transaction.options().isAutoReleaseLocksEnabled());
 
       List<CDOPackageUnit> npu = commitData.getNewPackageUnits();
       serverCommitContext.setNewPackageUnits(npu.toArray(new InternalCDOPackageUnit[npu.size()]));
@@ -479,8 +491,14 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     return result;
   }
 
+  @Deprecated
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
       CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CommitTransactionResult commitDelegation(InternalCDOCommitContext context, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

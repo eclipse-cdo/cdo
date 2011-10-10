@@ -18,8 +18,6 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import junit.framework.Assert;
-
 /**
  * NullPointerException on reload
  * <p>
@@ -81,7 +79,7 @@ public class Bugzilla_267352_Test extends AbstractCDOTest
     if (exception[0] != null)
     {
       exception[0].printStackTrace();
-      Assert.fail(exception[0].getMessage());
+      fail(exception[0].getMessage());
     }
 
     session.close();

@@ -200,6 +200,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/server/syncing/SynchronizableRepository.java" type="org.eclipse.emf.cdo.internal.server.syncing.SynchronizableRepository$WriteThroughCommitContext">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="InternalCDOCommitContext"/>
+                <message_argument value="WriteThroughCommitContext"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/IQueryContext.java" type="org.eclipse.emf.cdo.server.IQueryContext">
         <filter id="571473929">
             <message_arguments>

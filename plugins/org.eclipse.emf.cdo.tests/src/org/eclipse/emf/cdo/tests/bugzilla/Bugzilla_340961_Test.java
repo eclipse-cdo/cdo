@@ -43,8 +43,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.Assert;
-
 /**
  * @author Egidijus Vaisnora
  */
@@ -115,8 +113,8 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       closedCategory.getCategories().add(getModel1Factory().createCategory());
       rootObject.getCategories().add(getModel1Factory().createCategory());
       transaction.commit();
-      Assert.assertEquals("ProtectedName", closedCategory.getName());
-      Assert.assertEquals(1, closedCategory.getCategories().size());
+      assertEquals("ProtectedName", closedCategory.getName());
+      assertEquals(1, closedCategory.getCategories().size());
       closedCdoID = CDOUtil.getCDOObject(closedCategory).cdoID();
       rootObjectID = CDOUtil.getCDOObject(rootObject).cdoID();
       handler.setProtectedIDs(Arrays.asList(new CDOID[] { closedCdoID }));
@@ -127,17 +125,17 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource openResource = transaction.getResource(getResourcePath("openResource"));
-      Assert.assertEquals(1, openResource.getContents().size());
+      assertEquals(1, openResource.getContents().size());
 
       // checking if protected object is empty - not readable for user
       CDOObject object = transaction.getObject(closedCdoID);
       CDOUtil.load(object, object.cdoView());
       Category eObject = (Category)CDOUtil.getEObject(object);
-      Assert.assertEquals(null, eObject.getName());
-      Assert.assertEquals(0, eObject.getCategories().size());
+      assertEquals(null, eObject.getName());
+      assertEquals(0, eObject.getCategories().size());
 
       Category rootCategory = (Category)CDOUtil.getEObject(transaction.getObject(rootObjectID));
-      Assert.assertEquals(3, rootCategory.getCategories().size());
+      assertEquals(3, rootCategory.getCategories().size());
 
       // simple editing not protected elements. It must not fail
       EcoreUtil.delete(rootCategory.getCategories().get(0), false);
@@ -153,7 +151,7 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       Category rootCategory = (Category)CDOUtil.getEObject(transaction.getObject(rootObjectID));
-      Assert.assertEquals(2, rootCategory.getCategories().size());
+      assertEquals(2, rootCategory.getCategories().size());
       session.close();
     }
 
@@ -179,8 +177,8 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       closedCategory.getCategories().add(getModel1Factory().createCategory());
       transaction.commit();
 
-      Assert.assertEquals("ProtectedName", closedCategory.getName());
-      Assert.assertEquals(1, closedCategory.getCategories().size());
+      assertEquals("ProtectedName", closedCategory.getName());
+      assertEquals(1, closedCategory.getCategories().size());
       closedCdoID = CDOUtil.getCDOObject(closedCategory).cdoID();
       handler.setProtectedIDs(Arrays.asList(new CDOID[] { closedCdoID }));
       session.close();
@@ -191,14 +189,14 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource openResource = transaction.getResource(getResourcePath("test"));
-      Assert.assertEquals(1, openResource.getContents().size());
+      assertEquals(1, openResource.getContents().size());
 
       // checking if protected object is empty - not readable for user
       CDOObject object = transaction.getObject(closedCdoID);
       CDOUtil.load(object, object.cdoView());
       Category eObject = (Category)CDOUtil.getEObject(object);
-      Assert.assertEquals(null, eObject.getName());
-      Assert.assertEquals(0, eObject.getCategories().size());
+      assertEquals(null, eObject.getName());
+      assertEquals(0, eObject.getCategories().size());
       session.close();
     }
 
@@ -208,14 +206,14 @@ public class Bugzilla_340961_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource openResource = transaction.getResource(getResourcePath("test"));
-      Assert.assertEquals(1, openResource.getContents().size());
+      assertEquals(1, openResource.getContents().size());
 
       // checking if protected object is empty - not readable for user
       CDOObject object = transaction.getObject(closedCdoID);
       CDOUtil.load(object, object.cdoView());
       Category eObject = (Category)CDOUtil.getEObject(object);
-      Assert.assertEquals("ProtectedName", eObject.getName());
-      Assert.assertEquals(1, eObject.getCategories().size());
+      assertEquals("ProtectedName", eObject.getName());
+      assertEquals(1, eObject.getCategories().size());
       session.close();
     }
   }

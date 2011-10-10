@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import junit.framework.Assert;
-
 /**
  * @author Eike Stepper
  */
@@ -51,7 +49,7 @@ public class Bugzilla_321986_Test extends AbstractCDOTest
     {
       // We must fail here, because object was locked
       tx2.commit();
-      Assert.fail("Commit should have failed");
+      fail("Commit should have failed");
     }
     catch (CommitException e)
     {
@@ -69,7 +67,7 @@ public class Bugzilla_321986_Test extends AbstractCDOTest
     catch (Exception ex)
     {
       ex.printStackTrace();
-      Assert.fail("Exception on rollbak:" + ex.getMessage());
+      fail("Exception on rollbak:" + ex.getMessage());
     }
 
     session2.close();

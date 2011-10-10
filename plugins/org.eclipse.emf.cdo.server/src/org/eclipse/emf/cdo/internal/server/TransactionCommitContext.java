@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -127,6 +129,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[0];
 
+  private CDOLockState[] locksOnNewObjects = new CDOLockState[0];
+
   private InternalCDORevision[] newObjects = new InternalCDORevision[0];
 
   private InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[0];
@@ -220,6 +224,11 @@ public class TransactionCommitContext implements InternalCommitContext
     return newPackageUnits;
   }
 
+  public CDOLockState[] getLocksOnNewObjects()
+  {
+    return locksOnNewObjects;
+  }
+
   public InternalCDORevision[] getNewObjects()
   {
     return newObjects;
@@ -242,7 +251,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public InternalCDORevision[] getDetachedRevisions()
   {
-    // TODO This array can contain null values as they only come from the cache
+    // This array can contain null values as they only come from the cache!
     for (InternalCDORevision cachedDetachedRevision : cachedDetachedRevisions)
     {
       if (cachedDetachedRevision == null)
@@ -370,6 +379,11 @@ public class TransactionCommitContext implements InternalCommitContext
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits)
   {
     this.newPackageUnits = newPackageUnits;
+  }
+
+  public void setLocksOnNewObjects(CDOLockState[] locksOnNewObjects)
+  {
+    this.locksOnNewObjects = locksOnNewObjects;
   }
 
   public void setNewObjects(InternalCDORevision[] newObjects)
@@ -1048,7 +1062,7 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     try
     {
-      monitor.begin(7);
+      monitor.begin(8);
       addNewPackageUnits(monitor.fork());
       addRevisions(newObjects, monitor.fork());
       addRevisions(dirtyObjects, monitor.fork());
@@ -1057,11 +1071,16 @@ public class TransactionCommitContext implements InternalCommitContext
       unlockObjects();
       monitor.worked();
 
+      applyLocksOnNewObjects();
+      monitor.worked();
+
       if (isAutoReleaseLocksEnabled())
       {
         postCommitLockStates = repository.getLockingManager().unlock2(true, transaction);
         if (!postCommitLockStates.isEmpty())
         {
+          // TODO (CD) Does doing this here make sense?
+          // The commit notifications get sent later, from postCommit.
           sendLockNotifications(postCommitLockStates);
         }
       }
@@ -1069,9 +1088,41 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.worked();
       repository.notifyWriteAccessHandlers(transaction, this, false, monitor.fork());
     }
+    catch (Throwable t)
+    {
+      handleException(t);
+    }
     finally
     {
       monitor.done();
+    }
+  }
+
+  private void applyLocksOnNewObjects() throws InterruptedException
+  {
+    final CDOLockOwner owner = CDOLockUtil.createLockOwner(transaction);
+
+    for (CDOLockState lockState : locksOnNewObjects)
+    {
+      Object target = lockState.getLockedObject();
+
+      if (transaction.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+      {
+        CDOIDAndBranch idAndBranch = target instanceof CDOIDAndBranch ? (CDOIDAndBranch)target : null;
+        CDOID id = idAndBranch != null ? ((CDOIDAndBranch)target).getID() : (CDOID)target;
+        CDOID newID = idMappings.get(id);
+        CheckUtil.checkNull(newID, "newID");
+
+        target = idAndBranch != null ? CDOIDUtil.createIDAndBranch(newID, idAndBranch.getBranch()) : newID;
+      }
+
+      for (LockType type : LockType.values())
+      {
+        if (lockState.isLocked(type, owner, false))
+        {
+          lockManager.lock2(type, transaction, Collections.singleton(target), 0);
+        }
+      }
     }
   }
 

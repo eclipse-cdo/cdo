@@ -14,7 +14,6 @@ package org.eclipse.emf.internal.cdo.object;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -58,7 +57,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -121,16 +119,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   public InternalCDORevision cdoRevision()
   {
     return revision;
-  }
-
-  public synchronized CDOLockState cdoLockState()
-  {
-    if (!FSMUtil.isTransient(this) && !FSMUtil.isNew(this))
-    {
-      return view.getLockStates(Collections.singletonList(id))[0];
-    }
-
-    return null;
   }
 
   @Override

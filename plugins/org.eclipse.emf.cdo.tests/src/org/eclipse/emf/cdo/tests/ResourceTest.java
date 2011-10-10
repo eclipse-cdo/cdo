@@ -48,8 +48,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
-
 /**
  * @author Eike Stepper
  */
@@ -389,12 +387,12 @@ public class ResourceTest extends AbstractCDOTest
       assertActive(resource);
 
       transaction.commit();
-      Assert.assertEquals(1, rset.getResources().size()); // Bug 346636
-      Assert.assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
+      assertEquals(1, rset.getResources().size()); // Bug 346636
+      assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
 
       transaction.close();
-      Assert.assertEquals(0, CDOUtil.getViewSet(rset).getViews().length);
-      Assert.assertEquals(0, rset.getResources().size());
+      assertEquals(0, CDOUtil.getViewSet(rset).getViews().length);
+      assertEquals(0, rset.getResources().size());
       session.close();
     }
 

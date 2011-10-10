@@ -34,8 +34,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
-import junit.framework.Assert;
-
 /**
  * @author Simon McDuff
  */
@@ -234,8 +232,8 @@ public class DetachTest extends AbstractCDOTest
     order.getOrderDetails().add(orderDetail);
     orderDetail.setProduct(product1);
     assertActive(resource);
-    Assert.assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
-    Assert.assertEquals(1, rset.getResources().size());// Bug 346636
+    assertEquals(1, CDOUtil.getViewSet(rset).getViews().length);
+    assertEquals(1, rset.getResources().size());// Bug 346636
     if (commitBeforeDelete == true)
     {
       transaction.commit();

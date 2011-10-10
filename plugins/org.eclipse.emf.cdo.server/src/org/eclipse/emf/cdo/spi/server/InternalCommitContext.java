@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -76,6 +77,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext
   public InternalCDORevision[] getDetachedRevisions();
 
   public void setNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits);
+
+  /**
+   * @since 4.1
+   */
+  public void setLocksOnNewObjects(CDOLockState[] locksOnNewObjects);
 
   public void setNewObjects(InternalCDORevision[] newObjects);
 

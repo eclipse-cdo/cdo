@@ -14,7 +14,6 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
-import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
@@ -135,15 +134,12 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    * Provides a context for a commit operation.
    * 
    * @author Simon McDuff
+   * @noimplement This interface is not intended to be implemented by clients.
+   * @noextend This interface is not intended to be extended by clients.
    */
   public interface InternalCDOCommitContext extends CDOCommitContext
   {
     public InternalCDOTransaction getTransaction();
-
-    /**
-     * @since 3.0
-     */
-    public CDOCommitData getCommitData();
 
     public void preCommit();
 

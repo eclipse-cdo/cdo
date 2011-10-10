@@ -424,11 +424,20 @@ public class LockingNotificationsTest extends AbstractLockingTest
     CDOResource res1 = tx1.createResource(getResourcePath("r1"));
     res1.getContents().add(company1);
     assertNew(cdoObj, tx1);
+    assertNotNull(cdoObj.cdoLockState());
+
+    res1.getContents().remove(company1);
+    assertTransient(cdoObj);
     assertNull(cdoObj.cdoLockState());
 
+    res1.getContents().add(company1);
     tx1.commit();
     assertClean(cdoObj, tx1);
     assertNotNull(cdoObj.cdoLockState());
+
+    res1.getContents().remove(company1);
+    assertTransient(cdoObj);
+    assertNull(cdoObj.cdoLockState());
 
     session1.close();
   }

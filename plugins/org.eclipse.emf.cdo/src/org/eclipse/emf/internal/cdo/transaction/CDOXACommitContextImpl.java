@@ -11,9 +11,11 @@
 package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.id.CDOIDTempObjectExternalImpl;
@@ -97,9 +99,44 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     this.result = result;
   }
 
+  public int getViewID()
+  {
+    return delegateCommitContext.getViewID();
+  }
+
+  public String getUserID()
+  {
+    return delegateCommitContext.getUserID();
+  }
+
+  public CDOBranch getBranch()
+  {
+    return delegateCommitContext.getBranch();
+  }
+
   public InternalCDOTransaction getTransaction()
   {
     return delegateCommitContext.getTransaction();
+  }
+
+  public boolean isAutoReleaseLocks()
+  {
+    return delegateCommitContext.isAutoReleaseLocks();
+  }
+
+  public boolean isPartialCommit()
+  {
+    return delegateCommitContext.isPartialCommit();
+  }
+
+  public CDOCommitData getCommitData()
+  {
+    return delegateCommitContext.getCommitData();
+  }
+
+  public String getCommitComment()
+  {
+    return delegateCommitContext.getCommitComment();
   }
 
   public Map<CDOIDTempObjectExternalImpl, InternalCDOTransaction> getRequestedIDs()
@@ -122,6 +159,11 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     return delegateCommitContext.getNewPackageUnits();
   }
 
+  public Collection<CDOLockState> getLocksOnNewObjects()
+  {
+    return delegateCommitContext.getLocksOnNewObjects();
+  }
+
   public Map<CDOID, CDOObject> getDetachedObjects()
   {
     return delegateCommitContext.getDetachedObjects();
@@ -132,19 +174,9 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     return delegateCommitContext.getRevisionDeltas();
   }
 
-  public CDOCommitData getCommitData()
-  {
-    return delegateCommitContext.getCommitData();
-  }
-
   public Collection<CDOLob<?>> getLobs()
   {
     return delegateCommitContext.getLobs();
-  }
-
-  public boolean isPartialCommit()
-  {
-    return delegateCommitContext.isPartialCommit();
   }
 
   public Object call() throws Exception

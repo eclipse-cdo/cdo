@@ -24,8 +24,6 @@ import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import org.junit.Assert;
-
 import java.text.MessageFormat;
 
 /**
@@ -85,8 +83,8 @@ public class Bugzilla_343332_Test extends AbstractCDOTest
       attachedObject[0] = null;
       ((Category)resource.getContents().get(1)).getCategories().add(nestedCategory);
 
-      Assert.assertNotNull("CDOTransactionHandler1.attachingObject was not called", attachedObject[0]);
-      Assert.assertEquals(MessageFormat.format("Re-attached object was not the expected object {0}", cdoCategory),
+      assertNotNull("CDOTransactionHandler1.attachingObject was not called", attachedObject[0]);
+      assertEquals(MessageFormat.format("Re-attached object was not the expected object {0}", cdoCategory),
           cdoCategory, attachedObject[0]);
     }
   }

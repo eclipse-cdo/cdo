@@ -22,8 +22,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.junit.Assert;
-
 /**
  * Bug 330052 - Breakage related to sticky views
  * 
@@ -47,7 +45,7 @@ public class Bugzilla_330052_Test extends AbstractCDOTest
     tx.commit();
 
     CDOObject object = view.getObject(CDOUtil.getCDOObject(address).cdoID());
-    Assert.assertNotNull(object);
+    assertNotNull(object);
     session.close();
   }
 
@@ -75,7 +73,7 @@ public class Bugzilla_330052_Test extends AbstractCDOTest
     CDOView view = session.openView(commitTime);
     Address historicalAddress = (Address)CDOUtil.getEObject(view.getObject(CDOUtil.getCDOObject(address).cdoID()));
 
-    Assert.assertEquals(testName1, historicalAddress.getName());
+    assertEquals(testName1, historicalAddress.getName());
 
     session.close();
   }

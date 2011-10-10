@@ -25,8 +25,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import junit.framework.Assert;
-
 /**
  * @author Egidijus Vaishnora, Caspar De Groot
  */
@@ -70,15 +68,15 @@ public class Bugzilla_333950_Test extends AbstractCDOTest
 
       instanceA.eSet(eStructuralFeatureA, instanceB);
 
-      Assert.assertEquals(instanceA, instanceB.eGet(eStructuralFeatureB));
+      assertEquals(instanceA, instanceB.eGet(eStructuralFeatureB));
 
       createResource.getContents().add(instanceA);
       createResource.getContents().add(instanceB);
 
       openTransaction.commit();
 
-      Assert.assertTrue(eStructuralFeatureB.isTransient());
-      Assert.assertEquals(instanceA, instanceB.eGet(eStructuralFeatureB));
+      assertEquals(true, eStructuralFeatureB.isTransient());
+      assertEquals(instanceA, instanceB.eGet(eStructuralFeatureB));
 
       System.out.println("---> instanceA: " + CDOUtil.getCDOObject(instanceA).cdoID());
       System.out.println("---> instanceB: " + CDOUtil.getCDOObject(instanceB).cdoID());
@@ -94,12 +92,12 @@ public class Bugzilla_333950_Test extends AbstractCDOTest
     EObject eObjectB = resource.getContents().get(1);
 
     EStructuralFeature eStructuralFeatureA = eObjectA.eClass().getEStructuralFeature("AB");
-    Assert.assertFalse(eStructuralFeatureA.isTransient());
-    Assert.assertEquals(eObjectB, eObjectA.eGet(eStructuralFeatureA));
+    assertEquals(false, eStructuralFeatureA.isTransient());
+    assertEquals(eObjectB, eObjectA.eGet(eStructuralFeatureA));
 
     EStructuralFeature eStructuralFeatureB = eObjectB.eClass().getEStructuralFeature("_AB");
-    Assert.assertTrue(eStructuralFeatureB.isTransient());
-    Assert.assertEquals(eObjectA, eObjectB.eGet(eStructuralFeatureB));
+    assertEquals(true, eStructuralFeatureB.isTransient());
+    assertEquals(eObjectA, eObjectB.eGet(eStructuralFeatureB));
   }
 
   private void createOpposites(EClass A, EClass B)
@@ -117,6 +115,6 @@ public class Bugzilla_333950_Test extends AbstractCDOTest
 
     tmpRefA_B.setEOpposite(tmpRefB_A);
     tmpRefB_A.setEOpposite(tmpRefA_B);
-    Assert.assertSame(tmpRefA_B, tmpRefB_A.getEOpposite());
+    assertSame(tmpRefA_B, tmpRefB_A.getEOpposite());
   }
 }

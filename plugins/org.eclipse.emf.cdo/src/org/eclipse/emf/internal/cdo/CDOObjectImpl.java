@@ -186,7 +186,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public CDOLock cdoReadLock()
   {
-    return createCDOLock(LockType.READ);
+    return createLock(this, LockType.READ);
   }
 
   /**
@@ -194,7 +194,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public CDOLock cdoWriteLock()
   {
-    return createCDOLock(LockType.WRITE);
+    return createLock(this, LockType.WRITE);
   }
 
   /**
@@ -202,22 +202,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public CDOLock cdoWriteOption()
   {
-    return createCDOLock(LockType.OPTION);
-  }
-
-  private CDOLock createCDOLock(LockType type)
-  {
-    if (FSMUtil.isTransient(this))
-    {
-      throw new IllegalStateException("Call CDOView.lockObjects() for transient object " + this);
-    }
-
-    if (FSMUtil.isNew(this))
-    {
-      return CDOLockImpl.NOOP;
-    }
-
-    return new CDOLockImpl(this, type);
+    return createLock(this, LockType.OPTION);
   }
 
   /**
@@ -225,12 +210,7 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
    */
   public CDOLockState cdoLockState()
   {
-    if (!FSMUtil.isTransient(this) && !FSMUtil.isNew(this))
-    {
-      return view.getLockStates(Collections.singletonList(id))[0];
-    }
-
-    return null;
+    return getLockState(this);
   }
 
   public void cdoInternalSetID(CDOID id)
@@ -1184,6 +1164,35 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       setting = cdoStore.convertToCDO(object, feature, setting);
       revision.set(feature, 0, setting);
     }
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static CDOLock createLock(InternalCDOObject object, LockType type)
+  {
+    if (FSMUtil.isTransient(object))
+    {
+      throw new IllegalStateException("Call CDOView.lockObjects() for transient object " + object);
+    }
+
+    return new CDOLockImpl(object, type);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static CDOLockState getLockState(InternalCDOObject object)
+  {
+    if (!FSMUtil.isTransient(object))
+    {
+      InternalCDOView view = object.cdoView();
+      CDOID id = object.cdoID();
+  
+      return view.getLockStates(Collections.singletonList(id))[0];
+    }
+  
+    return null;
   }
 
   /**

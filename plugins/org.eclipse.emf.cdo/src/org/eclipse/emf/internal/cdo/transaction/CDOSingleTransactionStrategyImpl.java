@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ReferentialIntegrityException;
@@ -36,7 +35,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -66,18 +64,15 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     commitContext.preCommit();
 
     CDOCommitData commitData = commitContext.getCommitData();
-    Collection<CDOLob<?>> lobs = commitContext.getLobs();
     InternalCDOSession session = transaction.getSession();
     CommitTransactionResult result = null;
 
     if (transaction.isDirty())
     {
-      int viewID = transaction.getViewID();
-      boolean releaseLocks = transaction.options().isAutoReleaseLocksEnabled();
       OMMonitor monitor = new EclipseMonitor(progressMonitor);
 
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-      result = sessionProtocol.commitTransaction(viewID, comment, releaseLocks, transaction, commitData, lobs, monitor);
+      result = sessionProtocol.commitTransaction(commitContext, monitor);
 
       String rollbackMessage = result.getRollbackMessage();
       if (rollbackMessage != null)

@@ -60,6 +60,7 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.util.Collection;
@@ -274,15 +275,21 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Deprecated
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
       CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CommitTransactionResult commitTransaction(InternalCDOCommitContext context, OMMonitor monitor)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.commitTransaction(transactionID, comment, releaseLocks, idProvider, commitData, lobs, monitor);
+        return delegate.commitTransaction(context, monitor);
       }
       catch (Exception ex)
       {
@@ -291,15 +298,21 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Deprecated
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
       CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CommitTransactionResult commitDelegation(InternalCDOCommitContext context, OMMonitor monitor)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.commitDelegation(branch, userID, comment, commitData, detachedObjectTypes, lobs, monitor);
+        return delegate.commitDelegation(context, monitor);
       }
       catch (Exception ex)
       {
@@ -620,18 +633,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
       LockType lockType, long timeout) throws InterruptedException
   {
-    int attempt = 0;
-    for (;;)
-    {
-      try
-      {
-        return delegate.lockObjects(viewedRevisions, viewID, viewedBranch, lockType, timeout);
-      }
-      catch (Exception ex)
-      {
-        handleException(++attempt, ex);
-      }
-    }
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -778,19 +780,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
   {
-    int attempt = 0;
-    for (;;)
-    {
-      try
-      {
-        delegate.unlockObjects(view, objectIDs, lockType);
-        return;
-      }
-      catch (Exception ex)
-      {
-        handleException(++attempt, ex);
-      }
-    }
+    throw new UnsupportedOperationException();
   }
 
   public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType,

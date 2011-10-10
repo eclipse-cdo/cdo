@@ -33,8 +33,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.Date;
 
-import junit.framework.Assert;
-
 /**
  * @author Simon McDuff
  */
@@ -341,8 +339,8 @@ public class XATransactionTest extends AbstractCDOTest
     {
     }
 
-    Assert.assertEquals(false, CDOUtil.getCDOObject(supplier).cdoWriteLock().isLocked());
-    Assert.assertEquals(false, CDOUtil.getCDOObject(purchaseOrder).cdoWriteLock().isLocked());
+    assertEquals(false, CDOUtil.getCDOObject(supplier).cdoWriteLock().isLocked());
+    assertEquals(false, CDOUtil.getCDOObject(purchaseOrder).cdoWriteLock().isLocked());
 
     xaTransaction.rollback();
 

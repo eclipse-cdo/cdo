@@ -30,7 +30,7 @@ public class AllTestsDBH2All extends DBConfigs
   protected void initConfigSuites(TestSuite parent)
   {
     addScenarios(parent, IDGenerationLocation.STORE);
-    // addScenarios(parent, IDGenerationLocation.CLIENT);
+    addScenarios(parent, IDGenerationLocation.CLIENT);
   }
 
   private void addScenarios(TestSuite parent, IDGenerationLocation idGenerationLocation)

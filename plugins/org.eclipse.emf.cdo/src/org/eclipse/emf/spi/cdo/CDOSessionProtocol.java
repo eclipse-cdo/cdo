@@ -54,6 +54,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.io.IOException;
@@ -199,15 +200,29 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 4.0
+   * @deprecated Not called anymore. Use {@link #commitTransaction(InternalCDOCommitContext, OMMonitor)} instead.
    */
+  @Deprecated
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
       CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs, OMMonitor monitor);
 
   /**
-   * @since 4.0
+   * @since 4.1
    */
+  public CommitTransactionResult commitTransaction(InternalCDOCommitContext context, OMMonitor monitor);
+
+  /**
+   * @since 4.0
+   * @deprecated Not called anymore. Use {@link #commitDelegation(InternalCDOCommitContext, OMMonitor)} instead.
+   */
+  @Deprecated
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
       CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor);
+
+  /**
+   * @since 4.1
+   */
+  public CommitTransactionResult commitDelegation(InternalCDOCommitContext context, OMMonitor monitor);
 
   /**
    * @since 3.0

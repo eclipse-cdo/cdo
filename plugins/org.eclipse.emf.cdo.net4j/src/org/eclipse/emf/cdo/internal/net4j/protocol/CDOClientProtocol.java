@@ -64,11 +64,11 @@ import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -226,13 +226,15 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   public LockObjectsResult lockObjects(List<InternalCDORevision> revisions, int viewID, CDOBranch viewedBranch,
       LockType lockType, long timeout) throws InterruptedException
   {
-    List<CDORevisionKey> revisionKeys = new LinkedList<CDORevisionKey>();
-    for (InternalCDORevision rev : revisions)
-    {
-      revisionKeys.add(rev);
-    }
+    // List<CDORevisionKey> revisionKeys = new LinkedList<CDORevisionKey>();
+    // for (InternalCDORevision rev : revisions)
+    // {
+    // revisionKeys.add(rev);
+    // }
+    //
+    // return lockObjects2(revisionKeys, viewID, viewedBranch, lockType, false, timeout);
 
-    return lockObjects2(revisionKeys, viewID, viewedBranch, lockType, false, timeout);
+    throw new UnsupportedOperationException();
   }
 
   public LockObjectsResult lockObjects2(List<CDORevisionKey> revisionKeys, int viewID, CDOBranch viewedBranch,
@@ -315,7 +317,9 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
   @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
   {
-    send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType, false));
+    // send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType, false));
+
+    throw new UnsupportedOperationException();
   }
 
   public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType,
@@ -371,18 +375,28 @@ public class CDOClientProtocol extends SignalProtocol<CDOSession> implements CDO
     send(new HandleRevisionsRequest(this, eClass, branch, exactBranch, timeStamp, exactTime, handler));
   }
 
+  @Deprecated
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks,
       CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs, OMMonitor monitor)
   {
-    return send(new CommitTransactionRequest(this, transactionID, comment, releaseLocks, idProvider, commitData, lobs),
-        monitor);
+    throw new UnsupportedOperationException();
   }
 
+  public CommitTransactionResult commitTransaction(InternalCDOCommitContext context, OMMonitor monitor)
+  {
+    return send(new CommitTransactionRequest(this, context), monitor);
+  }
+
+  @Deprecated
   public CommitTransactionResult commitDelegation(CDOBranch branch, String userID, String comment,
       CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs, OMMonitor monitor)
   {
-    return send(new CommitDelegationRequest(this, branch, userID, comment, commitData, detachedObjectTypes, lobs),
-        monitor);
+    throw new UnsupportedOperationException();
+  }
+
+  public CommitTransactionResult commitDelegation(InternalCDOCommitContext context, OMMonitor monitor)
+  {
+    return send(new CommitDelegationRequest(this, context), monitor);
   }
 
   public CommitTransactionResult commitXATransactionPhase1(InternalCDOXACommitContext xaContext, OMMonitor monitor)

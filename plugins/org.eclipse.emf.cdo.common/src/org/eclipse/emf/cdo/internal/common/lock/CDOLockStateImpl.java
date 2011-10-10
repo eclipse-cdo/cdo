@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.internal.common.lock;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 
 import org.eclipse.net4j.util.CheckUtil;
@@ -36,7 +38,22 @@ public class CDOLockStateImpl implements InternalCDOLockState
   public CDOLockStateImpl(Object lockedObject)
   {
     CheckUtil.checkArg(lockedObject, "lockedObject");
+    CheckUtil.checkState(lockedObject instanceof CDOID || lockedObject instanceof CDOIDAndBranch,
+        "lockedObject is of wrong type");
     this.lockedObject = lockedObject;
+  }
+
+  public CDOLockStateImpl copy()
+  {
+    CDOLockStateImpl newLockState = new CDOLockStateImpl(lockedObject);
+    for (CDOLockOwner owner : readLockOwners)
+    {
+      newLockState.readLockOwners.add(owner);
+    }
+
+    newLockState.writeLockOwner = writeLockOwner;
+    newLockState.writeOptionOwner = writeOptionOwner;
+    return newLockState;
   }
 
   public boolean isLocked(LockType lockType, CDOLockOwner lockOwner, boolean others)

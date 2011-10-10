@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
@@ -270,6 +271,7 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
    * @author Eike Stepper
    * @since 2.0
    * @noimplement This interface is not intended to be implemented by clients.
+   * @noextend This interface is not intended to be extended by clients.
    * @apiviz.exclude
    */
   public interface CommitContext extends CDORevisionProvider
@@ -321,6 +323,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <code>CommitContext</code>.
      */
     public InternalCDOPackageUnit[] getNewPackageUnits();
+
+    /**
+     * Returns an array of the locks on the new objects that are part of the commit operation represented by this
+     * <code>CommitContext</code>.
+     * 
+     * @since 4.1
+     */
+    public CDOLockState[] getLocksOnNewObjects();
 
     /**
      * Returns an array of the new objects that are part of the commit operation represented by this

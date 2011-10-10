@@ -40,8 +40,18 @@ import java.util.Random;
  */
 public final class CDOLockUtil
 {
+  private static final int DURABLE_SESSION_ID = 0;
+
+  private static final int DURABLE_VIEW_ID = 0;
+
   private CDOLockUtil()
   {
+  }
+
+  public static CDOLockState copyLockState(CDOLockState lockState)
+  {
+    CheckUtil.checkArg(lockState instanceof CDOLockStateImpl, "lockState instanceof CDOLockStateImpl");
+    return ((CDOLockStateImpl)lockState).copy();
   }
 
   public static CDOLockState createLockState(Object target)
@@ -52,7 +62,6 @@ public final class CDOLockUtil
   public static CDOLockState createLockState(LockState<Object, ? extends CDOCommonView> lockState)
   {
     CheckUtil.checkArg(lockState, "lockState");
-
     InternalCDOLockState cdoLockState = new CDOLockStateImpl(lockState.getLockedObject());
 
     for (CDOCommonView view : lockState.getReadLockOwners())
@@ -63,9 +72,8 @@ public final class CDOLockUtil
       boolean isDurableView = session == null;
       if (isDurableView)
       {
-        // TODO (CD) Use some symbolic constants here?
-        sessionID = 0;
-        viewID = 0;
+        sessionID = DURABLE_SESSION_ID;
+        viewID = DURABLE_VIEW_ID;
       }
       else
       {
@@ -106,7 +114,7 @@ public final class CDOLockUtil
     }
 
     CheckUtil.checkNull(durableLockingID, "durableLockingID");
-    return new CDOLockOwnerImpl(0, 0, durableLockingID, true); // TODO (CD) Symbolic constants?
+    return new CDOLockOwnerImpl(DURABLE_SESSION_ID, DURABLE_VIEW_ID, durableLockingID, true);
   }
 
   public static CDOLockChangeInfo createLockChangeInfo(long timestamp, CDOLockOwner lockOwner, CDOBranch branch,

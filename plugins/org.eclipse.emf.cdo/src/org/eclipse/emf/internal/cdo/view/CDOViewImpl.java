@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
@@ -130,7 +131,7 @@ public class CDOViewImpl extends AbstractCDOView
 
   private QueueRunner invalidationRunner;
 
-  private Map<InternalCDOObject, CDOLockState> lockStates = new WeakHashMap<InternalCDOObject, CDOLockState>();
+  private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>();
 
   @ExcludeFromDump
   private InvalidationRunnerLock invalidationRunnerLock = new InvalidationRunnerLock();
@@ -276,59 +277,66 @@ public class CDOViewImpl extends AbstractCDOView
     checkActive();
     checkState(getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE, "Locking not supported for historial views");
 
-    long endMillis = System.currentTimeMillis() + timeout;
-
     List<CDORevisionKey> revisionKeys = new LinkedList<CDORevisionKey>();
+    List<CDOLockState> locksOnNewObjects = new LinkedList<CDOLockState>();
     for (CDOObject object : objects)
     {
-      InternalCDORevision revision = getRevision(object);
-      if (revision != null)
+      if (FSMUtil.isNew(object))
       {
-        revisionKeys.add(revision);
+        CDOLockState lockState = createUpdatedLockStateForNewObject(object, lockType, true);
+        locksOnNewObjects.add(lockState);
+      }
+      else
+      {
+        InternalCDORevision revision = getRevision(object);
+        if (revision != null)
+        {
+          revisionKeys.add(revision);
+        }
       }
     }
 
-    // Even if objects is not empty, revisionKeys may be empty, due to all of the
-    // objects being NEW or TRANSIENT. In such a case there is nothing to do
-    if (revisionKeys.isEmpty())
+    LockObjectsResult result = null;
+    if (!revisionKeys.isEmpty())
     {
-      return;
+      CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+      result = sessionProtocol.lockObjects2(revisionKeys, viewID, getBranch(), lockType, recursive, timeout);
+
+      if (!result.isSuccessful())
+      {
+        if (result.isTimedOut())
+        {
+          throw new LockTimeoutException();
+        }
+
+        CDORevisionKey[] staleRevisions = result.getStaleRevisions();
+        if (staleRevisions != null)
+        {
+          throw new StaleRevisionLockException(staleRevisions);
+        }
+
+        throw new AssertionError("Unexpected lock result state");
+      }
+
+      if (result.isWaitForUpdate())
+      {
+        if (!getSession().options().isPassiveUpdateEnabled())
+        {
+          throw new AssertionError(
+              "Lock result requires client to wait, but client does not have passiveUpdates enabled.");
+        }
+
+        long requiredTimestamp = result.getRequiredTimestamp();
+        waitForUpdate(requiredTimestamp);
+      }
     }
 
-    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    LockObjectsResult result = sessionProtocol.lockObjects2(revisionKeys, viewID, getBranch(), lockType, recursive,
-        timeout);
+    CDOLockState[] locksOnNewObjectsArray = locksOnNewObjects.toArray(new CDOLockState[locksOnNewObjects.size()]);
+    updateLockStates(locksOnNewObjectsArray);
 
-    if (!result.isSuccessful())
+    if (result != null)
     {
-      if (result.isTimedOut())
-      {
-        throw new LockTimeoutException();
-      }
-
-      CDORevisionKey[] staleRevisions = result.getStaleRevisions();
-      if (staleRevisions != null)
-      {
-        throw new StaleRevisionLockException(staleRevisions);
-      }
-
-      throw new AssertionError("Unexpected lock result state");
-    }
-
-    // Update the lock states in this view
-    updateAndNotifyLockStates(Operation.LOCK, lockType, result.getTimestamp(), result.getNewLockStates());
-
-    if (result.isWaitForUpdate())
-    {
-      if (!getSession().options().isPassiveUpdateEnabled())
-      {
-        throw new AssertionError(
-            "Lock result requires client to wait, but client does not have passiveUpdates enabled.");
-      }
-
-      long requiredTimestamp = result.getRequiredTimestamp();
-      long waitMillis = endMillis - System.currentTimeMillis();
-      waitForUpdate(requiredTimestamp, waitMillis);
+      updateAndNotifyLockStates(Operation.LOCK, lockType, result.getTimestamp(), result.getNewLockStates());
     }
   }
 
@@ -345,21 +353,31 @@ public class CDOViewImpl extends AbstractCDOView
   {
     for (CDOLockState lockState : newLockStates)
     {
-      Object o = lockState.getLockedObject();
+      Object lockedObject = lockState.getLockedObject();
       CDOID id;
-      if (o instanceof CDOID)
+
+      if (lockedObject instanceof CDOID)
       {
-        id = (CDOID)o;
+        id = (CDOID)lockedObject;
+      }
+      else if (lockedObject instanceof CDOIDAndBranch)
+      {
+        id = ((CDOIDAndBranch)lockedObject).getID();
+      }
+      else if (lockedObject instanceof EObject)
+      {
+        CDOObject newObj = CDOUtil.getCDOObject((EObject)lockedObject);
+        id = newObj.cdoID();
       }
       else
       {
-        id = ((CDOIDAndBranch)o).getID();
+        throw new IllegalStateException("Unexpected: " + lockedObject.getClass().getSimpleName());
       }
 
-      InternalCDOObject obj = getObject(id, false);
-      if (obj != null)
+      InternalCDOObject object = getObject(id, false);
+      if (object != null)
       {
-        lockStates.put(obj, lockState);
+        lockStates.put(object, lockState);
       }
     }
   }
@@ -467,20 +485,58 @@ public class CDOViewImpl extends AbstractCDOView
   {
     checkActive();
 
+    // Note: This may get called with objects == null, and lockType == null, which is a request
+    // to remove all locks on all objects in this view.
+
     List<CDOID> objectIDs = null;
+    List<CDOLockState> locksOnNewObjects = new LinkedList<CDOLockState>();
+
     if (objects != null)
     {
-      objectIDs = new LinkedList<CDOID>();
-      for (CDOObject obj : objects)
+      objectIDs = new ArrayList<CDOID>();
+
+      for (CDOObject object : objects)
       {
-        objectIDs.add(obj.cdoID());
+        if (FSMUtil.isNew(object))
+        {
+          CDOLockState lockState = createUpdatedLockStateForNewObject(object, lockType, false);
+          locksOnNewObjects.add(lockState);
+        }
+        else
+        {
+          objectIDs.add(object.cdoID());
+        }
       }
     }
+    else
+    {
+      locksOnNewObjects.addAll(createUnlockedLockStatesForAllNewObjects());
+    }
 
-    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    UnlockObjectsResult result = sessionProtocol.unlockObjects2(this, objectIDs, lockType, recursive);
+    UnlockObjectsResult result = null;
+    if (objectIDs == null || !objectIDs.isEmpty())
+    {
+      CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+      result = sessionProtocol.unlockObjects2(this, objectIDs, lockType, recursive);
+    }
 
-    updateAndNotifyLockStates(Operation.UNLOCK, lockType, result.getTimestamp(), result.getNewLockStates());
+    CDOLockState[] locksOnNewObjectsArray = locksOnNewObjects.toArray(new CDOLockState[locksOnNewObjects.size()]);
+    updateLockStates(locksOnNewObjectsArray);
+
+    if (result != null)
+    {
+      updateAndNotifyLockStates(Operation.UNLOCK, lockType, result.getTimestamp(), result.getNewLockStates());
+    }
+  }
+
+  protected InternalCDOLockState createUpdatedLockStateForNewObject(CDOObject object, LockType lockType, boolean on)
+  {
+    throw new ReadOnlyException();
+  }
+
+  protected Collection<CDOLockState> createUnlockedLockStatesForAllNewObjects()
+  {
+    return Collections.emptyList();
   }
 
   /**
@@ -599,6 +655,11 @@ public class CDOViewImpl extends AbstractCDOView
 
   public synchronized CDOLockState[] getLockStates(Collection<CDOID> ids)
   {
+    return getLockStates(ids, true);
+  }
+
+  protected synchronized CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand)
+  {
     List<CDOID> missing = new LinkedList<CDOID>();
     List<CDOLockState> lockStates = new LinkedList<CDOLockState>();
     for (CDOID id : ids)
@@ -609,6 +670,7 @@ public class CDOViewImpl extends AbstractCDOView
       {
         lockState = this.lockStates.get(obj);
       }
+
       if (lockState != null)
       {
         lockStates.add(lockState);
@@ -619,7 +681,7 @@ public class CDOViewImpl extends AbstractCDOView
       }
     }
 
-    if (missing.size() > 0)
+    if (loadOnDemand && missing.size() > 0)
     {
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
       CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, missing);
@@ -630,6 +692,11 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     return lockStates.toArray(new CDOLockState[lockStates.size()]);
+  }
+
+  protected CDOLockState getLockState(CDOObject object)
+  {
+    return lockStates.get(object);
   }
 
   private CDOBranchPoint getBranchPointForID(CDOID id)

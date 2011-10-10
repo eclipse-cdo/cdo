@@ -45,8 +45,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
-import junit.framework.Assert;
-
 /**
  * See bug 201266
  * 
@@ -142,7 +140,7 @@ public class RevisionDeltaTest extends AbstractCDOTest
     EStructuralFeature customerFeature = getModel1Package().getSalesOrder_Customer();
 
     Object value = salesRevision.data().get(customerFeature, 0);
-    Assert.assertEquals(true, value instanceof CDOID);
+    assertEquals(true, value instanceof CDOID);
     transaction2.close();
     session.close();
   }

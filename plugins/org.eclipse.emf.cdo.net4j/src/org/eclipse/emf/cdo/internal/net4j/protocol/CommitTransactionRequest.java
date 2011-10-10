@@ -48,6 +48,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -74,26 +75,29 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   private Collection<CDOLob<?>> lobs;
 
+  private Collection<CDOLockState> locksOnNewObjects;
+
+  private int viewID;
+
   private CDOTransaction transaction;
 
-  public CommitTransactionRequest(CDOClientProtocol protocol, int transactionID, String comment, boolean releaseLocks,
-      CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs)
+  public CommitTransactionRequest(CDOClientProtocol protocol, InternalCDOCommitContext context)
   {
-    this(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION, transactionID, comment, releaseLocks, idProvider,
-        commitData, lobs);
+    this(protocol, CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION, context);
   }
 
-  public CommitTransactionRequest(CDOClientProtocol protocol, short signalID, int transactionID, String comment,
-      boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData, Collection<CDOLob<?>> lobs)
+  public CommitTransactionRequest(CDOClientProtocol protocol, short signalID, InternalCDOCommitContext context)
   {
     super(protocol, signalID);
 
-    transaction = (CDOTransaction)getSession().getView(transactionID);
-    this.comment = comment;
-    this.releaseLocks = releaseLocks;
-    this.idProvider = idProvider;
-    this.commitData = commitData;
-    this.lobs = lobs;
+    transaction = context.getTransaction();
+    comment = context.getCommitComment();
+    releaseLocks = context.isAutoReleaseLocks();
+    idProvider = context.getTransaction();
+    commitData = context.getCommitData();
+    lobs = context.getLobs();
+    locksOnNewObjects = context.getLocksOnNewObjects();
+    viewID = context.getViewID();
   }
 
   @Override
@@ -118,7 +122,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   protected void requestingTransactionInfo(CDODataOutput out) throws IOException
   {
-    out.writeInt(transaction.getViewID());
+    out.writeInt(viewID);
   }
 
   protected void requestingCommit(CDODataOutput out) throws IOException
@@ -131,6 +135,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     out.writeBoolean(releaseLocks);
     out.writeString(comment);
     out.writeInt(newPackageUnits.size());
+    out.writeInt(locksOnNewObjects.size());
     out.writeInt(newObjects.size());
     out.writeInt(changedObjects.size());
     out.writeInt(detachedObjects.size());
@@ -143,6 +148,16 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     for (CDOPackageUnit newPackageUnit : newPackageUnits)
     {
       out.writeCDOPackageUnit(newPackageUnit, true);
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing {0} locks on new objects", locksOnNewObjects.size()); //$NON-NLS-1$
+    }
+
+    for (CDOLockState lockState : locksOnNewObjects)
+    {
+      out.writeCDOLockState(lockState);
     }
 
     if (TRACER.isEnabled())

@@ -11,41 +11,33 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
-import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
 public class CommitDelegationRequest extends CommitTransactionRequest
 {
-  private static final int UNKNOWN_TRANSACTION_ID = 0;
-
   private CDOBranch branch;
 
   private String userID;
 
-  private Map<CDOID, EClass> detachedObjectTypes;
+  private static final DelegationIDProvider delegationIDProvider = new DelegationIDProvider();
 
-  public CommitDelegationRequest(CDOClientProtocol protocol, CDOBranch branch, String userID, String comment,
-      CDOCommitData commitData, Map<CDOID, EClass> detachedObjectTypes, Collection<CDOLob<?>> lobs)
+  public CommitDelegationRequest(CDOClientProtocol protocol, InternalCDOCommitContext context)
   {
-    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_DELEGATION, UNKNOWN_TRANSACTION_ID, comment, false,
-        CDOIDProvider.NOOP, commitData, lobs);
+    super(protocol, CDOProtocolConstants.SIGNAL_COMMIT_DELEGATION, context);
 
-    this.branch = branch;
-    this.userID = userID;
-    this.detachedObjectTypes = detachedObjectTypes;
+    branch = context.getBranch();
+    userID = context.getUserID();
   }
 
   @Override
@@ -58,6 +50,24 @@ public class CommitDelegationRequest extends CommitTransactionRequest
   @Override
   protected EClass getObjectType(CDOID id)
   {
-    return detachedObjectTypes.get(id);
+    // The types of detached objects are delivered through the wire and don't need to be queried locally.
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  protected CDOIDProvider getIDProvider()
+  {
+    return delegationIDProvider;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class DelegationIDProvider implements CDOIDProvider
+  {
+    public CDOID provideCDOID(Object idOrObject)
+    {
+      return (CDOID)idOrObject;
+    }
   }
 }

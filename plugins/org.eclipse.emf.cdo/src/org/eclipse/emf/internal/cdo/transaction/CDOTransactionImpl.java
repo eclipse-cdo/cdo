@@ -35,7 +35,9 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -67,6 +69,7 @@ import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImp
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -92,6 +95,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.LegacyModeNotEnabledException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
@@ -105,11 +109,13 @@ import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.ByteArrayWrapper;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -148,6 +154,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -2320,6 +2327,96 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return super.getRevision(object);
   }
 
+  @Override
+  protected InternalCDOLockState createUpdatedLockStateForNewObject(CDOObject object, LockType lockType, boolean on)
+  {
+    CheckUtil.checkState(FSMUtil.isNew(object), "Object is not in NEW state");
+    CheckUtil.checkArg(lockType, "lockType");
+
+    InternalCDOLockState lockState = (InternalCDOLockState)getLockState(object);
+    if (lockState == null)
+    {
+      CheckUtil.checkArg(on == true, "on != true");
+      Object lockTarget = getLockTarget(object);
+      lockState = (InternalCDOLockState)CDOLockUtil.createLockState(lockTarget);
+    }
+    else
+    {
+      lockState = (InternalCDOLockState)CDOLockUtil.copyLockState(lockState);
+    }
+
+    CDOLockOwner lockOwner = CDOLockUtil.createLockOwner(this);
+
+    if (on)
+    {
+      switch (lockType)
+      {
+      case READ:
+        lockState.addReadLockOwner(lockOwner);
+        break;
+      case WRITE:
+        lockState.setWriteLockOwner(lockOwner);
+        break;
+      case OPTION:
+        lockState.setWriteOptionOwner(lockOwner);
+        break;
+      default:
+        throw new IllegalArgumentException("Unknown lock type " + lockType);
+      }
+    }
+    else
+    {
+      switch (lockType)
+      {
+      case READ:
+        lockState.removeReadLockOwner(lockOwner);
+        break;
+      case WRITE:
+        lockState.setWriteLockOwner(null);
+        break;
+      case OPTION:
+        lockState.setWriteOptionOwner(null);
+        break;
+      default:
+        throw new IllegalArgumentException("Unknown lock type " + lockType);
+      }
+    }
+
+    return lockState;
+  }
+
+  @Override
+  protected List<CDOLockState> createUnlockedLockStatesForAllNewObjects()
+  {
+    List<CDOLockState> locksOnNewObjects = new LinkedList<CDOLockState>();
+    for (CDOObject object : getNewObjects().values())
+    {
+      Object lockTarget = getLockTarget(object);
+      CDOLockState lockState = CDOLockUtil.createLockState(lockTarget);
+      locksOnNewObjects.add(lockState);
+    }
+
+    return locksOnNewObjects;
+  }
+
+  private static Object getLockTarget(CDOObject object)
+  {
+    CDOView view = object.cdoView();
+    if (view == null)
+    {
+      return null;
+    }
+
+    CDOID id = object.cdoID();
+    boolean branching = view.getSession().getRepositoryInfo().isSupportingBranches();
+    if (branching)
+    {
+      return CDOIDUtil.createIDAndBranch(id, view.getBranch());
+    }
+
+    return id;
+  }
+
   private final class ResolvingRevisionMap extends HashMap<InternalCDOObject, InternalCDORevision>
   {
     private static final long serialVersionUID = 1L;
@@ -2372,7 +2469,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     private InternalCDOTransaction transaction;
 
+    /**
+     * Tracks whether this commit is *actually* partial or not. (Having tx.committables != null does not in itself mean
+     * that the commit will be partial, because the committables could cover all dirty/new/detached objects. But this
+     * boolean gets set to reflect whether the commit will really commit less than all dirty/new/detached objects.)
+     */
+    private boolean isPartialCommit;
+
     private CDOCommitData commitData;
+
+    private Collection<CDOLockState> locksOnNewObjects;
 
     private Map<CDOID, CDOObject> newObjects;
 
@@ -2381,13 +2487,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     private Map<CDOID, CDORevisionDelta> revisionDeltas;
 
     private Map<CDOID, CDOObject> dirtyObjects;
-
-    /**
-     * Tracks whether this commit is *actually* partial or not. (Having tx.committables != null does not in itself mean
-     * that the commit will be partial, because the committables could cover all dirty/new/detached objects. But this
-     * boolean gets set to reflect whether the commit will really commit less than all dirty/new/detached objects.)
-     */
-    private boolean isPartialCommit;
 
     private Map<ByteArrayWrapper, CDOLob<?>> lobs = new HashMap<ByteArrayWrapper, CDOLob<?>>();
 
@@ -2425,6 +2524,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       dirtyObjects = filterCommittables(transaction.getDirtyObjects());
 
+      CDOLockState[] locksOnNewObjectsArray = getLockStates(newObjects.keySet(), false);
+      locksOnNewObjects = Arrays.asList(locksOnNewObjectsArray);
+
       commitData = new CDOCommitDataImpl(newPackageUnits, revisions, deltas, detached);
     }
 
@@ -2454,9 +2556,39 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return newMap;
     }
 
+    public String getUserID()
+    {
+      return transaction.getSession().getUserID();
+    }
+
+    public int getViewID()
+    {
+      return transaction.getViewID();
+    }
+
+    public CDOBranch getBranch()
+    {
+      return transaction.getBranch();
+    }
+
     public InternalCDOTransaction getTransaction()
     {
       return transaction;
+    }
+
+    public boolean isPartialCommit()
+    {
+      return isPartialCommit;
+    }
+
+    public boolean isAutoReleaseLocks()
+    {
+      return transaction.options().isAutoReleaseLocksEnabled();
+    }
+
+    public String getCommitComment()
+    {
+      return transaction.getCommitComment();
     }
 
     public CDOCommitData getCommitData()
@@ -2477,6 +2609,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     public List<CDOPackageUnit> getNewPackageUnits()
     {
       return commitData.getNewPackageUnits();
+    }
+
+    public Collection<CDOLockState> getLocksOnNewObjects()
+    {
+      return locksOnNewObjects;
     }
 
     public Map<CDOID, CDOObject> getDetachedObjects()
@@ -2747,11 +2884,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           CDOStateMachine.INSTANCE.commit((InternalCDOObject)object, result);
         }
       }
-    }
-
-    public boolean isPartialCommit()
-    {
-      return isPartialCommit;
     }
   }
 

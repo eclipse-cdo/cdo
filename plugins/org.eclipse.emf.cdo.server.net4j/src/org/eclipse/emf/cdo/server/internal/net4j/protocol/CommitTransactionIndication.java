@@ -121,6 +121,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     String commitComment = in.readString();
 
     InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
+    CDOLockState[] locksOnNewObjects = new CDOLockState[in.readInt()];
     InternalCDORevision[] newObjects = new InternalCDORevision[in.readInt()];
     InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[in.readInt()];
     CDOID[] detachedObjects = new CDOID[in.readInt()];
@@ -146,6 +147,18 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       // When all packages are deserialized and registered, resolve them
       // Note: EcoreUtil.resolveAll(resourceSet) does *not* do the trick
       EMFUtil.safeResolveAll(resourceSet);
+
+      // Locks on new objects
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Reading {0} locks on new objects", locksOnNewObjects.length); //$NON-NLS-1$
+      }
+
+      for (int i = 0; i < locksOnNewObjects.length; i++)
+      {
+        locksOnNewObjects[i] = in.readCDOLockState();
+        monitor.worked();
+      }
 
       // New objects
       if (TRACER.isEnabled())
@@ -206,6 +219,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       }
 
       commitContext.setNewPackageUnits(newPackageUnits);
+      commitContext.setLocksOnNewObjects(locksOnNewObjects);
       commitContext.setNewObjects(newObjects);
       commitContext.setDirtyObjectDeltas(dirtyObjectDeltas);
       commitContext.setDetachedObjects(detachedObjects);

@@ -28,8 +28,6 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
-import junit.framework.Assert;
-
 /**
  * Bug 334608 - CommitIntegrityCheck erroneously checks non-persistent features
  * 
@@ -77,9 +75,9 @@ public class Bugzilla_334608_Test extends AbstractCDOTest
       resource.getContents().add(instanceA);
       resource.getContents().add(instanceB);
 
-      Assert.assertTrue(eStructuralFeatureB.isTransient());
-      Assert.assertTrue(eStructuralFeatureA.isTransient());
-      Assert.assertEquals(instanceA, instanceB.eGet(eStructuralFeatureB));
+      assertEquals(true, eStructuralFeatureB.isTransient());
+      assertEquals(true, eStructuralFeatureA.isTransient());
+      assertEquals(instanceA, instanceB.eGet(eStructuralFeatureB));
       transaction.commit();
 
       resource.getContents().remove(instanceA);
@@ -111,6 +109,6 @@ public class Bugzilla_334608_Test extends AbstractCDOTest
 
     tmpRefA_B.setEOpposite(tmpRefB_A);
     tmpRefB_A.setEOpposite(tmpRefA_B);
-    Assert.assertSame(tmpRefA_B, tmpRefB_A.getEOpposite());
+    assertSame(tmpRefA_B, tmpRefB_A.getEOpposite());
   }
 }

@@ -12,9 +12,11 @@ package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -177,17 +179,7 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
    */
   public CDOLock cdoReadLock()
   {
-    if (FSMUtil.isTransient(this))
-    {
-      throw new IllegalStateException("Call CDOView.lockObjects() for transient object " + this);
-    }
-
-    if (FSMUtil.isNew(this))
-    {
-      return CDOLockImpl.NOOP;
-    }
-
-    return new CDOLockImpl(this, LockType.READ);
+    return CDOObjectImpl.createLock(this, LockType.READ);
   }
 
   /**
@@ -195,17 +187,7 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
    */
   public CDOLock cdoWriteLock()
   {
-    if (FSMUtil.isTransient(this))
-    {
-      throw new IllegalStateException("Call CDOView.lockObjects() for transient object " + this);
-    }
-
-    if (FSMUtil.isNew(this))
-    {
-      return CDOLockImpl.NOOP;
-    }
-
-    return new CDOLockImpl(this, LockType.WRITE);
+    return CDOObjectImpl.createLock(this, LockType.WRITE);
   }
 
   /**
@@ -213,17 +195,12 @@ public abstract class CDOObjectWrapper implements InternalCDOObject
    */
   public CDOLock cdoWriteOption()
   {
-    if (FSMUtil.isTransient(this))
-    {
-      throw new IllegalStateException("Call CDOView.lockObjects() for transient object " + this);
-    }
+    return CDOObjectImpl.createLock(this, LockType.OPTION);
+  }
 
-    if (FSMUtil.isNew(this))
-    {
-      return CDOLockImpl.NOOP;
-    }
-
-    return new CDOLockImpl(this, LockType.OPTION);
+  public synchronized CDOLockState cdoLockState()
+  {
+    return CDOObjectImpl.getLockState(this);
   }
 
   public EList<Adapter> eAdapters()

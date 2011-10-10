@@ -70,8 +70,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -618,7 +620,6 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
    */
   public EObject getEObject(String uriFragment)
   {
-    // Should we return CDOResource (this ?) ?
     if (uriFragment == null)
     {
       return null;
@@ -626,6 +627,13 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
 
     try
     {
+      EObject eObjectByFragment = getEObjectByFragment(uriFragment);
+
+      if (eObjectByFragment != null)
+      {
+        return eObjectByFragment;
+      }
+
       CDOID id = CDOIDUtil.read(uriFragment);
       InternalCDOView view = cdoView();
       if (CDOIDUtil.isNull(id) || view.isObjectNew(id) && !view.isObjectRegistered(id))
@@ -646,6 +654,76 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     }
 
     // If it doesn't match to anything we return null like ResourceImpl.getEObject
+    return null;
+  }
+
+  private EObject getEObjectByFragment(String uriFragment)
+  {
+    int length = uriFragment.length();
+    if (length > 0)
+    {
+      if (uriFragment.charAt(0) == '/')
+      {
+        ArrayList<String> uriFragmentPath = new ArrayList<String>(4);
+        int start = 1;
+        for (int i = 1; i < length; ++i)
+        {
+          if (uriFragment.charAt(i) == '/')
+          {
+            uriFragmentPath.add(start == i ? "" : uriFragment.substring(start, i));
+            start = i + 1;
+          }
+        }
+
+        uriFragmentPath.add(uriFragment.substring(start));
+        return getEObject(uriFragmentPath);
+      }
+      else if (uriFragment.charAt(length - 1) == '?')
+      {
+        int index = uriFragment.lastIndexOf('?', length - 2);
+        if (index > 0)
+        {
+          uriFragment = uriFragment.substring(0, index);
+        }
+      }
+    }
+
+    return null;
+  }
+
+  private EObject getEObject(List<String> uriFragmentPath)
+  {
+    int size = uriFragmentPath.size();
+    EObject eObject = getEObjectForURIFragmentRootSegment(size == 0 ? "" : uriFragmentPath.get(0));
+    for (int i = 1; i < size && eObject != null; ++i)
+    {
+      eObject = ((InternalEObject)eObject).eObjectForURIFragmentSegment(uriFragmentPath.get(i));
+    }
+
+    return eObject;
+  }
+
+  private EObject getEObjectForURIFragmentRootSegment(String uriFragmentRootSegment)
+  {
+    int position = 0;
+    if (uriFragmentRootSegment.length() > 0)
+    {
+      try
+      {
+        position = Integer.parseInt(uriFragmentRootSegment);
+      }
+      catch (NumberFormatException exception)
+      {
+        throw new RuntimeException(exception);
+      }
+    }
+
+    List<EObject> contents = getContents();
+    if (position < contents.size() && position >= 0)
+    {
+      return contents.get(position);
+    }
+
     return null;
   }
 

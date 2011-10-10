@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDODeltaNotification;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -94,6 +95,11 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
       {
         // Do nothing
       }
+    }
+    
+    if (object instanceof CDOObject)
+    {
+      object = CDOUtil.getEObject((EObject)object);
     }
 
     return object;

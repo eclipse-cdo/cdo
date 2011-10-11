@@ -82,9 +82,21 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
 
   public <T> List<T> getResult(Class<T> classObject)
   {
-    AbstractQueryIterator<T> queryResult = createQueryResult(classObject);
-    view.getSession().getSessionProtocol().query(view, queryResult);
-    return queryResult.asList();
+    AbstractQueryIterator<T> queryResult = null;
+
+    try
+    {
+      queryResult = createQueryResult(classObject);
+      view.getSession().getSessionProtocol().query(view, queryResult);
+      return queryResult.asList();
+    }
+    finally
+    {
+      if (queryResult != null)
+      {
+        queryResult.close();
+      }
+    }
   }
 
   public <T> List<T> getResult()

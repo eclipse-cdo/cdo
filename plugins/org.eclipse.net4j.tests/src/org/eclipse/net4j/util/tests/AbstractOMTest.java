@@ -172,9 +172,6 @@ public abstract class AbstractOMTest extends TestCase
   @Override
   public void tearDown() throws Exception
   {
-    OMPlatform platform = OMPlatform.INSTANCE;
-    System.out.println(platform);
-
     enableConsole();
     if (!SUPPRESS_OUTPUT)
     {

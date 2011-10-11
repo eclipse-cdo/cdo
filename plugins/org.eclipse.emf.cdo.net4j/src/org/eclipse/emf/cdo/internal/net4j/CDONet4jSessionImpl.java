@@ -16,10 +16,7 @@
  **************************************************************************/
 package org.eclipse.emf.cdo.internal.net4j;
 
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl.RepositoryInfo;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
@@ -41,7 +38,6 @@ import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 
@@ -176,17 +172,6 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
 
     for (InternalCDOPackageUnit packageUnit : result.getPackageUnits())
     {
-      if (EcorePackage.eINSTANCE.getNsURI().equals(packageUnit.getID()))
-      {
-        EMFUtil.addAdapter(EcorePackage.eINSTANCE, packageUnit.getTopLevelPackageInfo());
-        packageUnit.setState(CDOPackageUnit.State.LOADED);
-      }
-      else if (EresourcePackage.eINSTANCE.getNsURI().equals(packageUnit.getID()))
-      {
-        EMFUtil.addAdapter(EresourcePackage.eINSTANCE, packageUnit.getTopLevelPackageInfo());
-        packageUnit.setState(CDOPackageUnit.State.LOADED);
-      }
-
       getPackageRegistry().putPackageUnit(packageUnit);
     }
 
@@ -249,6 +234,8 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
 
     getCommitInfoManager().deactivate();
     getRevisionManager().deactivate();
+    getBranchManager().deactivate();
+    getPackageRegistry().deactivate();
   }
 
   /**

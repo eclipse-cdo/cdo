@@ -40,6 +40,7 @@
     <topic label="Examples" href="html/writer/examples/index.html">
       <topic label="Connecting To Repositories" href="html/writer/examples/ConnectingToRepositories.html" />
       <topic label="Creating Transport Connections" href="html/writer/examples/CreatingTransportConnections.html" />
+      <topic label="Embedding XML Snippets" href="html/writer/examples/XmlSnippets.html" />
     </topic>
   </topic>
   <topic label="Reference" href="html/reference/index.html">

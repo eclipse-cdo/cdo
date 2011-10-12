@@ -1567,6 +1567,9 @@ Method in interface org.eclipse.emf.cdo.common.revision.delta.<A HREF="./org/ecl
 <DT><A HREF="./org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#copy()"><B>copy()</B></A> - 
 Method in interface org.eclipse.emf.cdo.common.revision.delta.<A HREF="./org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#copyLockState(org.eclipse.emf.cdo.common.lock.CDOLockState)"><B>copyLockState(CDOLockState)</B></A> - 
+Static method in class org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockUtil.html" title="class in org.eclipse.emf.cdo.common.lock">CDOLockUtil</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#copyRevisable(org.eclipse.emf.cdo.common.revision.CDORevisable)"><B>copyRevisable(CDORevisable)</B></A> - 
 Static method in class org.eclipse.emf.cdo.common.revision.<A HREF="./org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil</A>
 <DD>&nbsp;
@@ -1869,6 +1872,9 @@ Method in class org.eclipse.emf.internal.cdo.<A HREF="./org/eclipse/emf/internal
 <DT><A HREF="./org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createListMapping(org.eclipse.emf.ecore.EClass, org.eclipse.emf.ecore.EStructuralFeature)"><B>createListMapping(EClass, EStructuralFeature)</B></A> - 
 Method in interface org.eclipse.emf.cdo.server.db.mapping.<A HREF="./org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</A>
 <DD>Factory for value mappings of multi-valued-attributes.
+<DT><A HREF="./org/eclipse/emf/internal/cdo/CDOObjectImpl.html#createLock(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)"><B>createLock(InternalCDOObject, IRWLockManager.LockType)</B></A> - 
+Static method in class org.eclipse.emf.internal.cdo.<A HREF="./org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockArea(java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, boolean, java.util.Map)"><B>createLockArea(String, String, CDOBranchPoint, boolean, Map&lt;CDOID, IDurableLockingManager.LockGrade&gt;)</B></A> - 
 Static method in class org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockUtil.html" title="class in org.eclipse.emf.cdo.common.lock">CDOLockUtil</A>
 <DD>&nbsp;
@@ -3157,6 +3163,9 @@ Method in interface org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/c
 <DT><A HREF="./org/eclipse/emf/cdo/common/revision/CDOIDAndBranch.html#getBranch()"><B>getBranch()</B></A> - 
 Method in interface org.eclipse.emf.cdo.common.revision.<A HREF="./org/eclipse/emf/cdo/common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html#getBranch()"><B>getBranch()</B></A> - 
+Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getBranch()"><B>getBranch()</B></A> - 
 Method in class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</A>
 <DD>&nbsp;
@@ -3471,6 +3480,9 @@ Method in interface org.eclipse.emf.cdo.common.commit.<A HREF="./org/eclipse/emf
 <DT><A HREF="./org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getCommitComment()"><B>getCommitComment()</B></A> - 
 Method in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html#getCommitComment()"><B>getCommitComment()</B></A> - 
+Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getCommitComment()"><B>getCommitComment()</B></A> - 
 Method in class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</A>
 <DD>&nbsp;
@@ -3479,6 +3491,9 @@ Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/c
 <DD>Returns the comment to be used in the next commit operation.
 <DT><A HREF="./org/eclipse/emf/cdo/server/StoreThreadLocal.html#getCommitContext()"><B>getCommitContext()</B></A> - 
 Static method in class org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/StoreThreadLocal.html" title="class in org.eclipse.emf.cdo.server">StoreThreadLocal</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html#getCommitData()"><B>getCommitData()</B></A> - 
+Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html#getCommitInfo(long)"><B>getCommitInfo(long)</B></A> - 
 Method in interface org.eclipse.emf.cdo.common.commit.<A HREF="./org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</A>
@@ -4384,6 +4399,16 @@ Method in interface org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/c
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html#getLocks()"><B>getLocks()</B></A> - 
 Method in interface org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLocksOnNewObjects()"><B>getLocksOnNewObjects()</B></A> - 
+Method in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>
+<DD>Returns an array of the locks on the new objects that are part of the commit operation represented by this
+ <code>CommitContext</code>.
+<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html#getLocksOnNewObjects()"><B>getLocksOnNewObjects()</B></A> - 
+Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/internal/cdo/CDOObjectImpl.html#getLockState(org.eclipse.emf.spi.cdo.InternalCDOObject)"><B>getLockState(InternalCDOObject)</B></A> - 
+Static method in class org.eclipse.emf.internal.cdo.<A HREF="./org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html#getLockStates()"><B>getLockStates()</B></A> - 
 Method in interface org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</A>
@@ -5905,6 +5930,9 @@ Method in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/se
 <DT><A HREF="./org/eclipse/emf/cdo/session/remote/CDORemoteSession.html#getUserID()"><B>getUserID()</B></A> - 
 Method in interface org.eclipse.emf.cdo.session.remote.<A HREF="./org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</A>
 <DD>Returns the user ID of this remote session.
+<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html#getUserID()"><B>getUserID()</B></A> - 
+Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/util/CDOURIData.html#getUserName()"><B>getUserName()</B></A> - 
 Method in class org.eclipse.emf.cdo.util.<A HREF="./org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util">CDOURIData</A>
 <DD>&nbsp;
@@ -5991,6 +6019,9 @@ Method in interface org.eclipse.emf.cdo.common.<A HREF="./org/eclipse/emf/cdo/co
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#getViewID()"><B>getViewID()</B></A> - 
 Method in interface org.eclipse.emf.cdo.common.lock.<A HREF="./org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html#getViewID()"><B>getViewID()</B></A> - 
+Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getViewID()"><B>getViewID()</B></A> - 
 Method in class org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</A>
@@ -6387,6 +6418,9 @@ Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/c
 <DD>Allow request that come from contains <A HREF="./org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>CDOTransaction</CODE></A>.
 <DT><A HREF="./org/eclipse/emf/cdo/ui/widgets/SessionComposite.html#isAutomaticRegistry()"><B>isAutomaticRegistry()</B></A> - 
 Method in class org.eclipse.emf.cdo.ui.widgets.<A HREF="./org/eclipse/emf/cdo/ui/widgets/SessionComposite.html" title="class in org.eclipse.emf.cdo.ui.widgets">SessionComposite</A>
+<DD>&nbsp;
+<DT><A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html#isAutoReleaseLocks()"><B>isAutoReleaseLocks()</B></A> - 
+Method in interface org.eclipse.emf.cdo.transaction.<A HREF="./org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isAutoReleaseLocksEnabled()"><B>isAutoReleaseLocksEnabled()</B></A> - 
 Method in interface org.eclipse.emf.cdo.server.<A HREF="./org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</A>

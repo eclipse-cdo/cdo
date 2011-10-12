@@ -39,7 +39,7 @@
       <!-- Period at which to execute an SQL statement to keep DB connection alive, in minutes -->
       <property name="connectionKeepAlivePeriod" value="60"/>
 
-      <mappingStrategy type="horizontal">
+      <mappingStrategy type="horizontal"> <!-- callout -->
         <property name="qualifiedNames" value="true"/>
         <property name="toManyReferences" value="ONE_TABLE_PER_REFERENCE"/>
         <property name="toOneReferences" value="LIKE_ATTRIBUTES"/>

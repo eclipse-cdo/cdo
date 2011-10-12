@@ -6,6 +6,8 @@
  */
 package org.eclipse.emf.cdo.releng.doc.article;
 
+import com.sun.javadoc.Doc;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -54,6 +56,21 @@ public interface EmbeddableElement extends Identifiable
    * @generated
    */
   void setDocumentation(Documentation value);
+
+  /**
+   * Returns the value of the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Doc</em>' attribute isn't clear, there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @return the value of the '<em>Doc</em>' attribute.
+   * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getEmbeddableElement_Doc()
+   * @model dataType="org.eclipse.emf.cdo.releng.doc.article.Doc" required="true" transient="true" changeable="false"
+   *        volatile="true"
+   * @generated
+   */
+  Doc getDoc();
 
   void generate(PrintWriter out, Embedding embedder) throws IOException;
 } // EmbeddableElement

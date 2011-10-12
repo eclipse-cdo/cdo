@@ -831,13 +831,21 @@ public interface ArticlePackage extends EPackage
   int EMBEDDABLE_ELEMENT__DOCUMENTATION = IDENTIFIABLE_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int EMBEDDABLE_ELEMENT__DOC = IDENTIFIABLE_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Embeddable Element</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int EMBEDDABLE_ELEMENT_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 1;
+  int EMBEDDABLE_ELEMENT_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.SnippetImpl <em>Snippet</em>}'
@@ -867,6 +875,14 @@ public interface ArticlePackage extends EPackage
   int SNIPPET__DOCUMENTATION = EMBEDDABLE_ELEMENT__DOCUMENTATION;
 
   /**
+   * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SNIPPET__DOC = EMBEDDABLE_ELEMENT__DOC;
+
+  /**
    * The feature id for the '<em><b>Callouts</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
    * 
@@ -876,12 +892,21 @@ public interface ArticlePackage extends EPackage
   int SNIPPET__CALLOUTS = EMBEDDABLE_ELEMENT_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Formatter</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int SNIPPET__FORMATTER = EMBEDDABLE_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Snippet</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int SNIPPET_FEATURE_COUNT = EMBEDDABLE_ELEMENT_FEATURE_COUNT + 1;
+  int SNIPPET_FEATURE_COUNT = EMBEDDABLE_ELEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl
@@ -980,6 +1005,14 @@ public interface ArticlePackage extends EPackage
    * @ordered
    */
   int FACTORY__DOCUMENTATION = EMBEDDABLE_ELEMENT__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int FACTORY__DOC = EMBEDDABLE_ELEMENT__DOC;
 
   /**
    * The number of structural features of the '<em>Factory</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1961,13 +1994,101 @@ public interface ArticlePackage extends EPackage
   int EXCEL_FEATURE_COUNT = BODY_ELEMENT_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.FormatterImpl <em>Formatter</em>}'
+   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.FormatterImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFormatter()
+   * @generated
+   */
+  int FORMATTER = 31;
+
+  /**
+   * The feature id for the '<em><b>Snippet</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int FORMATTER__SNIPPET = 0;
+
+  /**
+   * The number of structural features of the '<em>Formatter</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int FORMATTER_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaFormatterImpl
+   * <em>Java Formatter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavaFormatterImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavaFormatter()
+   * @generated
+   */
+  int JAVA_FORMATTER = 32;
+
+  /**
+   * The feature id for the '<em><b>Snippet</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int JAVA_FORMATTER__SNIPPET = FORMATTER__SNIPPET;
+
+  /**
+   * The number of structural features of the '<em>Java Formatter</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int JAVA_FORMATTER_FEATURE_COUNT = FORMATTER_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.XmlFormatterImpl
+   * <em>Xml Formatter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.XmlFormatterImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getXmlFormatter()
+   * @generated
+   */
+  int XML_FORMATTER = 33;
+
+  /**
+   * The feature id for the '<em><b>Snippet</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int XML_FORMATTER__SNIPPET = FORMATTER__SNIPPET;
+
+  /**
+   * The feature id for the '<em><b>File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int XML_FORMATTER__FILE = FORMATTER_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Xml Formatter</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int XML_FORMATTER_FEATURE_COUNT = FORMATTER_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see com.sun.javadoc.RootDoc
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getRootDoc()
    * @generated
    */
-  int ROOT_DOC = 31;
+  int ROOT_DOC = 34;
 
   /**
    * The meta object id for the '<em>File</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1976,7 +2097,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFile()
    * @generated
    */
-  int FILE = 32;
+  int FILE = 35;
 
   /**
    * The meta object id for the '<em>Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1985,7 +2106,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDoc()
    * @generated
    */
-  int DOC = 33;
+  int DOC = 36;
 
   /**
    * The meta object id for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1994,7 +2115,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
    * @generated
    */
-  int TAG = 34;
+  int TAG = 37;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation
@@ -2184,6 +2305,18 @@ public interface ArticlePackage extends EPackage
   EReference getSnippet_Callouts();
 
   /**
+   * Returns the meta object for the containment reference '
+   * {@link org.eclipse.emf.cdo.releng.doc.article.Snippet#getFormatter <em>Formatter</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference '<em>Formatter</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Snippet#getFormatter()
+   * @see #getSnippet()
+   * @generated
+   */
+  EReference getSnippet_Formatter();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Diagram <em>Diagram</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -2369,6 +2502,17 @@ public interface ArticlePackage extends EPackage
    * @generated
    */
   EReference getEmbeddableElement_Documentation();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDoc
+   * <em>Doc</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Doc</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDoc()
+   * @see #getEmbeddableElement()
+   * @generated
+   */
+  EAttribute getEmbeddableElement_Doc();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalTarget
@@ -2755,6 +2899,59 @@ public interface ArticlePackage extends EPackage
   EClass getExcel();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Formatter <em>Formatter</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Formatter</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Formatter
+   * @generated
+   */
+  EClass getFormatter();
+
+  /**
+   * Returns the meta object for the container reference '
+   * {@link org.eclipse.emf.cdo.releng.doc.article.Formatter#getSnippet <em>Snippet</em>}'. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @return the meta object for the container reference '<em>Snippet</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Formatter#getSnippet()
+   * @see #getFormatter()
+   * @generated
+   */
+  EReference getFormatter_Snippet();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.JavaFormatter
+   * <em>Java Formatter</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Java Formatter</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.JavaFormatter
+   * @generated
+   */
+  EClass getJavaFormatter();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.XmlFormatter
+   * <em>Xml Formatter</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Xml Formatter</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.XmlFormatter
+   * @generated
+   */
+  EClass getXmlFormatter();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.XmlFormatter#getFile
+   * <em>File</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>File</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.XmlFormatter#getFile()
+   * @see #getXmlFormatter()
+   * @generated
+   */
+  EAttribute getXmlFormatter_File();
+
+  /**
    * Returns the meta object for data type '{@link com.sun.javadoc.RootDoc <em>Root Doc</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
@@ -2969,6 +3166,14 @@ public interface ArticlePackage extends EPackage
     EReference SNIPPET__CALLOUTS = eINSTANCE.getSnippet_Callouts();
 
     /**
+     * The meta object literal for the '<em><b>Formatter</b></em>' containment reference feature. <!-- begin-user-doc
+     * --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference SNIPPET__FORMATTER = eINSTANCE.getSnippet_Formatter();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.DiagramImpl <em>Diagram</em>}
      * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
@@ -3117,6 +3322,14 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EReference EMBEDDABLE_ELEMENT__DOCUMENTATION = eINSTANCE.getEmbeddableElement_Documentation();
+
+    /**
+     * The meta object literal for the '<em><b>Doc</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute EMBEDDABLE_ELEMENT__DOC = eINSTANCE.getEmbeddableElement_Doc();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExternalTargetImpl
@@ -3441,6 +3654,52 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EClass EXCEL = eINSTANCE.getExcel();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.FormatterImpl
+     * <em>Formatter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.FormatterImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFormatter()
+     * @generated
+     */
+    EClass FORMATTER = eINSTANCE.getFormatter();
+
+    /**
+     * The meta object literal for the '<em><b>Snippet</b></em>' container reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference FORMATTER__SNIPPET = eINSTANCE.getFormatter_Snippet();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaFormatterImpl
+     * <em>Java Formatter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavaFormatterImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavaFormatter()
+     * @generated
+     */
+    EClass JAVA_FORMATTER = eINSTANCE.getJavaFormatter();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.XmlFormatterImpl
+     * <em>Xml Formatter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.XmlFormatterImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getXmlFormatter()
+     * @generated
+     */
+    EClass XML_FORMATTER = eINSTANCE.getXmlFormatter();
+
+    /**
+     * The meta object literal for the '<em><b>File</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute XML_FORMATTER__FILE = eINSTANCE.getXmlFormatter_File();
 
     /**
      * The meta object literal for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

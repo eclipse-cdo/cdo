@@ -39,6 +39,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Snippet" eSuperTypes="#//EmbeddableElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="callouts" upperBound="-1"
         eType="#//Callout" containment="true" resolveProxies="false" eOpposite="#//Callout/snippet"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="formatter" lowerBound="1"
+        eType="#//Formatter" containment="true" eOpposite="#//Formatter/snippet"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Diagram" eSuperTypes="#//BodyElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Factory" eSuperTypes="#//EmbeddableElement"/>
@@ -78,6 +80,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="EmbeddableElement" abstract="true" eSuperTypes="#//Identifiable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="documentation" lowerBound="1"
         eType="#//Documentation" resolveProxies="false" eOpposite="#//Documentation/embeddableElements"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="doc" lowerBound="1" eType="#//Doc"
+        changeable="false" volatile="true" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExternalTarget" eSuperTypes="#//LinkTarget">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -143,4 +147,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PluginResource" eSuperTypes="#//ExternalArticle"/>
   <eClassifiers xsi:type="ecore:EClass" name="Excel" eSuperTypes="#//BodyElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Formatter" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="snippet" lowerBound="1"
+        eType="#//Snippet" eOpposite="#//Snippet/formatter"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JavaFormatter" eSuperTypes="#//Formatter"/>
+  <eClassifiers xsi:type="ecore:EClass" name="XmlFormatter" eSuperTypes="#//Formatter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" eType="#//File"/>
+  </eClassifiers>
 </ecore:EPackage>

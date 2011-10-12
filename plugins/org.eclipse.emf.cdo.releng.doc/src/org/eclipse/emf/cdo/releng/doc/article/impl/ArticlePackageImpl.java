@@ -25,8 +25,10 @@ import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
+import org.eclipse.emf.cdo.releng.doc.article.Formatter;
 import org.eclipse.emf.cdo.releng.doc.article.Identifiable;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
+import org.eclipse.emf.cdo.releng.doc.article.JavaFormatter;
 import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
@@ -39,6 +41,7 @@ import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
 import org.eclipse.emf.cdo.releng.doc.article.Toc;
+import org.eclipse.emf.cdo.releng.doc.article.XmlFormatter;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -277,6 +280,27 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * @generated
    */
   private EClass excelEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass formatterEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass javaFormatterEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass xmlFormatterEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -543,6 +567,16 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
+  public EReference getSnippet_Formatter()
+  {
+    return (EReference)snippetEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getDiagram()
   {
     return diagramEClass;
@@ -706,6 +740,16 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
   public EReference getEmbeddableElement_Documentation()
   {
     return (EReference)embeddableElementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getEmbeddableElement_Doc()
+  {
+    return (EAttribute)embeddableElementEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1073,6 +1117,56 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
+  public EClass getFormatter()
+  {
+    return formatterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getFormatter_Snippet()
+  {
+    return (EReference)formatterEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getJavaFormatter()
+  {
+    return javaFormatterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getXmlFormatter()
+  {
+    return xmlFormatterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getXmlFormatter_File()
+  {
+    return (EAttribute)xmlFormatterEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EDataType getRootDoc()
   {
     return rootDocEDataType;
@@ -1160,6 +1254,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     snippetEClass = createEClass(SNIPPET);
     createEReference(snippetEClass, SNIPPET__CALLOUTS);
+    createEReference(snippetEClass, SNIPPET__FORMATTER);
 
     diagramEClass = createEClass(DIAGRAM);
 
@@ -1184,6 +1279,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     embeddableElementEClass = createEClass(EMBEDDABLE_ELEMENT);
     createEReference(embeddableElementEClass, EMBEDDABLE_ELEMENT__DOCUMENTATION);
+    createEAttribute(embeddableElementEClass, EMBEDDABLE_ELEMENT__DOC);
 
     externalTargetEClass = createEClass(EXTERNAL_TARGET);
     createEAttribute(externalTargetEClass, EXTERNAL_TARGET__URL);
@@ -1238,6 +1334,14 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     pluginResourceEClass = createEClass(PLUGIN_RESOURCE);
 
     excelEClass = createEClass(EXCEL);
+
+    formatterEClass = createEClass(FORMATTER);
+    createEReference(formatterEClass, FORMATTER__SNIPPET);
+
+    javaFormatterEClass = createEClass(JAVA_FORMATTER);
+
+    xmlFormatterEClass = createEClass(XML_FORMATTER);
+    createEAttribute(xmlFormatterEClass, XML_FORMATTER__FILE);
 
     // Create data types
     rootDocEDataType = createEDataType(ROOT_DOC);
@@ -1300,6 +1404,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     tocEClass.getESuperTypes().add(this.getBodyElement());
     pluginResourceEClass.getESuperTypes().add(this.getExternalArticle());
     excelEClass.getESuperTypes().add(this.getBodyElement());
+    javaFormatterEClass.getESuperTypes().add(this.getFormatter());
+    xmlFormatterEClass.getESuperTypes().add(this.getFormatter());
 
     // Initialize classes and features; add operations and parameters
     initEClass(documentationEClass, Documentation.class, "Documentation", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1342,6 +1448,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     initEClass(snippetEClass, Snippet.class, "Snippet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSnippet_Callouts(), this.getCallout(), this.getCallout_Snippet(), "callouts", null, 0, -1,
+        Snippet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSnippet_Formatter(), this.getFormatter(), this.getFormatter_Snippet(), "formatter", null, 1, 1,
         Snippet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1393,6 +1502,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         this.getDocumentation_EmbeddableElements(), "documentation", null, 1, 1, EmbeddableElement.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEmbeddableElement_Doc(), this.getDoc(), "doc", null, 1, 1, EmbeddableElement.class, IS_TRANSIENT,
+        IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(externalTargetEClass, ExternalTarget.class, "ExternalTarget", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -1483,6 +1594,19 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(excelEClass, Excel.class, "Excel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(formatterEClass, Formatter.class, "Formatter", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getFormatter_Snippet(), this.getSnippet(), this.getSnippet_Formatter(), "snippet", null, 1, 1,
+        Formatter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(javaFormatterEClass, JavaFormatter.class, "JavaFormatter", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(xmlFormatterEClass, XmlFormatter.class, "XmlFormatter", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getXmlFormatter_File(), this.getFile(), "file", null, 0, 1, XmlFormatter.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(rootDocEDataType, RootDoc.class, "RootDoc", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

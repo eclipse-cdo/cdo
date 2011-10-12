@@ -11,31 +11,30 @@ import org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer;
 import org.eclipse.emf.cdo.releng.doc.article.Callout;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.Embedding;
+import org.eclipse.emf.cdo.releng.doc.article.Formatter;
 import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.XmlFormatter;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleException;
 import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.Doc;
 import com.sun.javadoc.SeeTag;
-import com.sun.javadoc.SourcePosition;
 import com.sun.javadoc.Tag;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -44,6 +43,7 @@ import java.util.regex.Pattern;
  * The following features are implemented:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.SnippetImpl#getCallouts <em>Callouts</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.SnippetImpl#getFormatter <em>Formatter</em>}</li>
  * </ul>
  * </p>
  * 
@@ -51,13 +51,7 @@ import java.util.regex.Pattern;
  */
 public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 {
-  private static final String CALLOUT = "<font color=\"#3f7f5f\">/*&nbsp;callout&nbsp;*/</font>";
-
   private static final Pattern PATTERN = Pattern.compile("<[^>]+?>", Pattern.MULTILINE | Pattern.DOTALL);
-
-  private static Constructor<?> snippet;
-
-  private static Method getHtml;
 
   /**
    * The cached value of the '{@link #getCallouts() <em>Callouts</em>}' containment reference list. <!-- begin-user-doc
@@ -69,7 +63,15 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
    */
   protected EList<Callout> callouts;
 
-  private Doc doc;
+  /**
+   * The cached value of the '{@link #getFormatter() <em>Formatter</em>}' containment reference. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @see #getFormatter()
+   * @generated
+   * @ordered
+   */
+  protected Formatter formatter;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -83,10 +85,70 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
   SnippetImpl(Documentation documentation, Doc doc)
   {
-    setDocumentation(documentation);
-    this.doc = doc;
-    documentation.getContext().register(getId(), this);
+    super(documentation, doc);
+    initFormatter(doc);
+    initCallouts(doc);
+  }
 
+  private void initFormatter(Doc doc)
+  {
+    Tag[] tags = doc.tags("@snippet");
+    if (tags.length > 1)
+    {
+      throw new ArticleException("More than one format not allowed: " + ArticleUtil.makeConsoleLink(doc));
+    }
+
+    if (tags.length == 1)
+    {
+      String text = tags[0].text();
+      if (text.length() != 0)
+      {
+        String format;
+        String args;
+
+        int pos = text.indexOf(' ');
+        if (pos != -1)
+        {
+          format = text.substring(0, pos).trim().toLowerCase();
+          args = text.substring(pos + 1).trim();
+        }
+        else
+        {
+          format = text;
+          args = "";
+        }
+
+        format = format.trim().toLowerCase();
+        args = args.trim();
+
+        if (format.equals("xml"))
+        {
+          try
+          {
+            File folder = doc.position().file().getParentFile();
+            File file = new File(folder, args).getCanonicalFile();
+
+            XmlFormatter formatter = new XmlFormatterImpl();
+            formatter.setFile(file);
+
+            setFormatter(formatter);
+          }
+          catch (IOException ex)
+          {
+            ex.printStackTrace();
+          }
+        }
+      }
+    }
+
+    if (getFormatter() == null)
+    {
+      setFormatter(new JavaFormatterImpl());
+    }
+  }
+
+  private void initCallouts(Doc doc)
+  {
     int index = 0;
     for (Tag tag : doc.tags("@callout"))
     {
@@ -125,6 +187,74 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
    * 
    * @generated
    */
+  public Formatter getFormatter()
+  {
+    return formatter;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public NotificationChain basicSetFormatter(Formatter newFormatter, NotificationChain msgs)
+  {
+    Formatter oldFormatter = formatter;
+    formatter = newFormatter;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ArticlePackage.SNIPPET__FORMATTER,
+          oldFormatter, newFormatter);
+      if (msgs == null)
+      {
+        msgs = notification;
+      }
+      else
+      {
+        msgs.add(notification);
+      }
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setFormatter(Formatter newFormatter)
+  {
+    if (newFormatter != formatter)
+    {
+      NotificationChain msgs = null;
+      if (formatter != null)
+      {
+        msgs = ((InternalEObject)formatter).eInverseRemove(this, ArticlePackage.FORMATTER__SNIPPET, Formatter.class,
+            msgs);
+      }
+      if (newFormatter != null)
+      {
+        msgs = ((InternalEObject)newFormatter).eInverseAdd(this, ArticlePackage.FORMATTER__SNIPPET, Formatter.class,
+            msgs);
+      }
+      msgs = basicSetFormatter(newFormatter, msgs);
+      if (msgs != null)
+      {
+        msgs.dispatch();
+      }
+    }
+    else if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.SNIPPET__FORMATTER, newFormatter,
+          newFormatter));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -133,6 +263,13 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     {
     case ArticlePackage.SNIPPET__CALLOUTS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getCallouts()).basicAdd(otherEnd, msgs);
+    case ArticlePackage.SNIPPET__FORMATTER:
+      if (formatter != null)
+      {
+        msgs = ((InternalEObject)formatter).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+            - ArticlePackage.SNIPPET__FORMATTER, null, msgs);
+      }
+      return basicSetFormatter((Formatter)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -149,6 +286,8 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     {
     case ArticlePackage.SNIPPET__CALLOUTS:
       return ((InternalEList<?>)getCallouts()).basicRemove(otherEnd, msgs);
+    case ArticlePackage.SNIPPET__FORMATTER:
+      return basicSetFormatter(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -165,6 +304,8 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     {
     case ArticlePackage.SNIPPET__CALLOUTS:
       return getCallouts();
+    case ArticlePackage.SNIPPET__FORMATTER:
+      return getFormatter();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -184,6 +325,9 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
       getCallouts().clear();
       getCallouts().addAll((Collection<? extends Callout>)newValue);
       return;
+    case ArticlePackage.SNIPPET__FORMATTER:
+      setFormatter((Formatter)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -201,6 +345,9 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     case ArticlePackage.SNIPPET__CALLOUTS:
       getCallouts().clear();
       return;
+    case ArticlePackage.SNIPPET__FORMATTER:
+      setFormatter((Formatter)null);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -217,19 +364,17 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     {
     case ArticlePackage.SNIPPET__CALLOUTS:
       return callouts != null && !callouts.isEmpty();
+    case ArticlePackage.SNIPPET__FORMATTER:
+      return formatter != null;
     }
     return super.eIsSet(featureID);
   }
 
-  @Override
-  public Object getId()
-  {
-    return doc;
-  }
-
   public void generate(PrintWriter out, Embedding embedder) throws IOException
   {
-    String id = doc.name();
+    Formatter formatter = getFormatter();
+
+    String id = getDoc().name();
     int lastDot = id.lastIndexOf('.');
     if (lastDot != -1)
     {
@@ -243,19 +388,19 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     String title = embedderTag.label();
     if (title == null || title.length() == 0)
     {
-      title = embedderTag.text() + ".java";
+      title = formatter.getDefaultTitle(embedderTag);
     }
 
     out.write("\n\n");
 
-    String html = getCodeSnippetHtml(out, id, title);
+    String html = formatter.getSnippetHtml(out, id, title);
     html = processCallouts(id, html, imagePath);
 
     out.write("<div class=\"snippet\" style=\"margin-left:24px;\" align=\"left\">\n");
     out.write("  <a name=\"snippet_" + id + "\"></a>\n");
     out.write("  <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
     out.write("    <tr>\n");
-    out.write("      <td><img src=\"" + imagePath + "editor-top-left.png\"></td>\n");
+    out.write("      <td><img src=\"" + formatter.getTopLeftEditorIcon(imagePath) + "\"></td>\n");
     out.write("      <td style=\"background-image:url(" + imagePath
         + "editor-top1.png); background-repeat:repeat-x;\" width=\"1px\"><font face=\"Segoe UI,Arial\" size=\"-1\">"
         + title + "</font></td>\n");
@@ -325,41 +470,17 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     throw new ArticleException(ArticleUtil.makeConsoleLink("Nested embedding in ", embedder.getTag().position()));
   }
 
-  private String getCodeSnippetHtml(PrintWriter out, String id, String title)
-  {
-    Map<String, Object> options = new HashMap<String, Object>();
-    options.put("id", id);
-    options.put("title", title);
-    options.put("includeSignature", doc instanceof ClassDoc);
-
-    try
-    {
-      Object instance = snippet.newInstance(doc, options);
-      return (String)getHtml.invoke(instance);
-    }
-    catch (Error ex)
-    {
-      throw ex;
-    }
-    catch (RuntimeException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw new RuntimeException(ex);
-    }
-  }
-
   private String processCallouts(String id, String html, String imagePath)
   {
     EList<Callout> callouts = getCallouts();
     int size = callouts.size();
     int callout = 0;
 
+    String calloutMarker = getFormatter().getCalloutMarker();
+
     for (;;)
     {
-      int pos = html.indexOf(CALLOUT);
+      int pos = html.indexOf(calloutMarker);
       if (pos == -1)
       {
         break;
@@ -368,7 +489,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
       ++callout;
 
       String start = html.substring(0, pos);
-      String rest = html.substring(pos + CALLOUT.length());
+      String rest = html.substring(pos + calloutMarker.length());
       if (!rest.startsWith("&nbsp;"))
       {
         rest = "&nbsp;" + rest;
@@ -391,16 +512,15 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
 
     if (callout != size)
     {
-      Tag tag = callouts.get(size - 1).getTag();
-      SourcePosition position = tag.position();
-      String link = ArticleUtil.makeConsoleLink(tag.holder(), position);
-
       if (callout < size)
       {
+        Tag tag = callouts.get(size).getTag();
+        String link = ArticleUtil.makeConsoleLink(tag.holder(), tag.position());
         System.err.println("Too many callout descriptions: " + link);
       }
-      else if (callout > size)
+      else
       {
+        String link = ArticleUtil.makeConsoleLink(getDoc(), getDoc().position());
         System.err.println("Callout descriptions missing: " + link);
       }
     }
@@ -424,17 +544,4 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
         + alt + "\">" + image + "</a>";
   }
 
-  static
-  {
-    try
-    {
-      Class<?> c = Class.forName("de.escnet.CodeSnippet");
-      snippet = c.getConstructor(Doc.class, Map.class);
-      getHtml = c.getMethod("getHtml");
-    }
-    catch (Throwable ex)
-    {
-      ex.printStackTrace();
-    }
-  }
 } // SnippetImpl

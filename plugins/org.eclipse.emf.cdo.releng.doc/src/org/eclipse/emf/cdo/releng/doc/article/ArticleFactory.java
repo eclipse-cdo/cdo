@@ -217,6 +217,22 @@ public interface ArticleFactory extends EFactory
   Excel createExcel();
 
   /**
+   * Returns a new object of class '<em>Java Formatter</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Java Formatter</em>'.
+   * @generated
+   */
+  JavaFormatter createJavaFormatter();
+
+  /**
+   * Returns a new object of class '<em>Xml Formatter</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Xml Formatter</em>'.
+   * @generated
+   */
+  XmlFormatter createXmlFormatter();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

@@ -24,8 +24,10 @@ import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
+import org.eclipse.emf.cdo.releng.doc.article.Formatter;
 import org.eclipse.emf.cdo.releng.doc.article.Identifiable;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
+import org.eclipse.emf.cdo.releng.doc.article.JavaFormatter;
 import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
@@ -38,6 +40,7 @@ import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
 import org.eclipse.emf.cdo.releng.doc.article.Toc;
+import org.eclipse.emf.cdo.releng.doc.article.XmlFormatter;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -286,6 +289,24 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
     public Adapter caseExcel(Excel object)
     {
       return createExcelAdapter();
+    }
+
+    @Override
+    public Adapter caseFormatter(Formatter object)
+    {
+      return createFormatterAdapter();
+    }
+
+    @Override
+    public Adapter caseJavaFormatter(JavaFormatter object)
+    {
+      return createJavaFormatterAdapter();
+    }
+
+    @Override
+    public Adapter caseXmlFormatter(XmlFormatter object)
+    {
+      return createXmlFormatterAdapter();
     }
 
     @Override
@@ -742,6 +763,48 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createExcelAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Formatter
+   * <em>Formatter</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
+   * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Formatter
+   * @generated
+   */
+  public Adapter createFormatterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.JavaFormatter
+   * <em>Java Formatter</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.JavaFormatter
+   * @generated
+   */
+  public Adapter createJavaFormatterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.XmlFormatter
+   * <em>Xml Formatter</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
+   * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.XmlFormatter
+   * @generated
+   */
+  public Adapter createXmlFormatterAdapter()
   {
     return null;
   }

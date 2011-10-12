@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
+import org.eclipse.emf.cdo.releng.doc.article.JavaFormatter;
 import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
 import org.eclipse.emf.cdo.releng.doc.article.Javadoc;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
@@ -32,6 +33,7 @@ import org.eclipse.emf.cdo.releng.doc.article.Snippet;
 import org.eclipse.emf.cdo.releng.doc.article.SourceCode;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
 import org.eclipse.emf.cdo.releng.doc.article.Toc;
+import org.eclipse.emf.cdo.releng.doc.article.XmlFormatter;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -140,6 +142,10 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
       return createPluginResource();
     case ArticlePackage.EXCEL:
       return createExcel();
+    case ArticlePackage.JAVA_FORMATTER:
+      return createJavaFormatter();
+    case ArticlePackage.XML_FORMATTER:
+      return createXmlFormatter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -441,6 +447,28 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
   {
     ExcelImpl excel = new ExcelImpl();
     return excel;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public JavaFormatter createJavaFormatter()
+  {
+    JavaFormatterImpl javaFormatter = new JavaFormatterImpl();
+    return javaFormatter;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public XmlFormatter createXmlFormatter()
+  {
+    XmlFormatterImpl xmlFormatter = new XmlFormatterImpl();
+    return xmlFormatter;
   }
 
   /**

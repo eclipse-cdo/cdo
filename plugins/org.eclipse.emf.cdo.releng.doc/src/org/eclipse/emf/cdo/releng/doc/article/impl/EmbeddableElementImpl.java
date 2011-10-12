@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import com.sun.javadoc.Doc;
+
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Embeddable Element</b></em>'. <!-- end-user-doc
  * -->
@@ -44,6 +46,17 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
   protected static final Object ID_EDEFAULT = null;
 
   /**
+   * The default value of the '{@link #getDoc() <em>Doc</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getDoc()
+   * @generated
+   * @ordered
+   */
+  protected static final Doc DOC_EDEFAULT = null;
+
+  private Doc doc;
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -51,6 +64,13 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
   protected EmbeddableElementImpl()
   {
     super();
+  }
+
+  public EmbeddableElementImpl(Documentation documentation, Doc doc)
+  {
+    this.doc = doc;
+    setDocumentation(documentation);
+    documentation.getContext().register(getId(), this);
   }
 
   /**
@@ -69,7 +89,10 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
    * 
    * @generated NOT
    */
-  public abstract Object getId();
+  public Object getId()
+  {
+    return doc;
+  }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -79,7 +102,9 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
   public Documentation getDocumentation()
   {
     if (eContainerFeatureID() != ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION)
+    {
       return null;
+    }
     return (Documentation)eContainer();
   }
 
@@ -102,23 +127,43 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
   public void setDocumentation(Documentation newDocumentation)
   {
     if (newDocumentation != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION && newDocumentation != null))
+        || eContainerFeatureID() != ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION && newDocumentation != null)
     {
       if (EcoreUtil.isAncestor(this, newDocumentation))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newDocumentation != null)
+      {
         msgs = ((InternalEObject)newDocumentation).eInverseAdd(this, ArticlePackage.DOCUMENTATION__EMBEDDABLE_ELEMENTS,
             Documentation.class, msgs);
+      }
       msgs = basicSetDocumentation(newDocumentation, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION,
           newDocumentation, newDocumentation));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated NOT
+   */
+  public Doc getDoc()
+  {
+    return doc;
   }
 
   /**
@@ -133,7 +178,9 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
     {
     case ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetDocumentation((Documentation)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -186,6 +233,8 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
       return getId();
     case ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION:
       return getDocumentation();
+    case ArticlePackage.EMBEDDABLE_ELEMENT__DOC:
+      return getDoc();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -238,6 +287,8 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
       return ID_EDEFAULT == null ? getId() != null : !ID_EDEFAULT.equals(getId());
     case ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION:
       return getDocumentation() != null;
+    case ArticlePackage.EMBEDDABLE_ELEMENT__DOC:
+      return DOC_EDEFAULT == null ? getDoc() != null : !DOC_EDEFAULT.equals(getDoc());
     }
     return super.eIsSet(featureID);
   }

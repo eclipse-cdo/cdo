@@ -34,6 +34,13 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 
+import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.http.common.IHTTPConnector;
+import org.eclipse.net4j.jvm.IJVMConnector;
+import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.tcp.ITCPConnector;
+import org.eclipse.net4j.tcp.ssl.SSLUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -132,6 +139,17 @@ public class Architecture
   }
 
   /**
+   * Protocol
+   * <p>
+   * A concrete communications adapter, an {@link ISessionProtocol} implementation, operates on top of the generic
+   * {@link Core server core}. The only session protocol implementation that currently ships with CDO is based on
+   * {@link Net4j}.
+   */
+  public class Protocol
+  {
+  }
+
+  /**
    * OCL
    */
   public class OCL
@@ -140,15 +158,18 @@ public class Architecture
 
   /**
    * Net4j Core
+   * <p>
+   * The <i>Net4j Signalling Platform</i> is an extensible client/server communications framework. Net4j eases the
+   * development of fast and maintainable application {@link ISignalProtocol protocols} that are independent of the
+   * physical {@link IConnector transport} medium. Transport protocols are pluggable and Net4j ships with support for
+   * {@link ITCPConnector TCP}, {@link SSLUtil SSL}, {@link IHTTPConnector HTTP} and {@link IJVMConnector JVM}
+   * (in-process) transport. The core of Net4j is a fast, asynchronous and non-blocking {@link IBuffer buffer}
+   * multiplexing kernel, based on {@link OSGi} but also executable stand-alone.
+   * 
+   * @see Transport
+   * @see Protocol
    */
   public class Net4j
-  {
-  }
-
-  /**
-   * Protocol
-   */
-  public class Protocol
   {
   }
 

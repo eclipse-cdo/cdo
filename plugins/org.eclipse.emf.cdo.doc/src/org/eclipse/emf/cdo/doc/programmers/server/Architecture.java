@@ -26,6 +26,8 @@ import org.eclipse.emf.ecore.EObject;
  * the server.
  * <p>
  * The following diagram illustrates the major building blocks of a CDO repository: {@img repository-architecture.png}
+ * 
+ * @author Eike Stepper
  */
 public class Architecture
 {

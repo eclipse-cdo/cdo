@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.sun.javadoc.Doc;
+import com.sun.javadoc.Tag;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -287,6 +288,34 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   @Override
   public void generate(PrintWriter out) throws IOException
   {
+    Tag[] authors = getDoc().tags("@author");
+    if (authors.length > 0)
+    {
+      out.write("<p class=\"author\">Author");
+      if (authors.length > 1)
+      {
+        out.write("s");
+      }
+
+      boolean first = true;
+      for (Tag tag : authors)
+      {
+        if (first)
+        {
+          out.write(": ");
+          first = false;
+        }
+        else
+        {
+          out.write(", ");
+        }
+
+        out.write(tag.text());
+      }
+
+      out.write("</p>\n");
+    }
+
     EList<BodyElement> elements = getElements();
     BodyElementContainerImpl.generate(out, this, elements);
     super.generate(out);

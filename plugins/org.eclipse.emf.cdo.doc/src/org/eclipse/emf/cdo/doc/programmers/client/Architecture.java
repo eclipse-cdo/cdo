@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EObject;
  * dependendcies on CDO to your application code.
  * <p>
  * The following diagram illustrates the major building blocks of a CDO application: {@img application-architecture.png}
+ * 
+ * @author Eike Stepper
  */
 public class Architecture
 {

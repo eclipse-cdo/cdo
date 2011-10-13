@@ -22,6 +22,7 @@ package org.eclipse.emf.cdo.doc;
  * following diagram illustrates the most common scenario: {@img cdo-overview.png}
  * 
  * @default
+ * @author Eike Stepper
  */
 public class Overview
 {

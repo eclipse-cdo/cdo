@@ -106,3 +106,5 @@ var	     { font-style: italic}
 div.revision { border-left-style: solid; border-left-width: thin; 
 				   border-left-color: #7B68EE; padding-left:5 }
 th	     { font-weight: bold }
+
+.author { color:#888888; font-style:italic; font-weight:bold; font-size:83%; margin-left:6px; margin-bottom:16px }

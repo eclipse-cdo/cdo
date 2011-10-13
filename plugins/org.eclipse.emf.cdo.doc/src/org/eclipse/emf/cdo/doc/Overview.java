@@ -128,13 +128,13 @@ public class Overview
   public class Architecture
   {
     /**
-     * Application Architecture
+     * Client Architecture
      * <p>
      * {@link org.eclipse.emf.cdo.doc.programmers.client.Architecture !!inline!!}
      * 
      * @see org.eclipse.emf.cdo.doc.programmers.client.Architecture
      */
-    public class Application
+    public class Client
     {
     }
 

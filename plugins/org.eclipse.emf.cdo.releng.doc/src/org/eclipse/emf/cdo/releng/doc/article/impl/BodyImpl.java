@@ -67,7 +67,8 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
   {
     super(parent, path, doc);
 
-    String title = BodyElementContainerImpl.analyzeTags(getElements(), doc.inlineTags(), true);
+    EList<BodyElement> elements = getElements();
+    String title = BodyElementContainerImpl.analyzeTags(elements, doc.inlineTags(), true);
     if (title != null)
     {
       setTitle(title);
@@ -75,6 +76,21 @@ public abstract class BodyImpl extends StructuralElementImpl implements Body
     else
     {
       titleMissing();
+    }
+
+    Tag[] seeTags = doc.tags("@see");
+    if (seeTags.length > 0)
+    {
+      elements.add(new TextImpl(new TextTag(seeTags[0], "<p><b>See Also:</b></p>\n<ul>\n")));
+
+      for (Tag tag : seeTags)
+      {
+        elements.add(new TextImpl(new TextTag(seeTags[0], "\t<li>")));
+        elements.add(new UnresolvedBodyElement(tag));
+        elements.add(new TextImpl(new TextTag(seeTags[0], "</li>\n")));
+      }
+
+      elements.add(new TextImpl(new TextTag(seeTags[0], "</ul>\n")));
     }
   }
 

@@ -7,6 +7,7 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Link;
 import org.eclipse.emf.cdo.releng.doc.article.LinkTarget;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
@@ -90,7 +91,9 @@ public class LinkImpl extends BodyElementImpl implements Link
     LinkTarget oldTarget = target;
     target = newTarget;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.LINK__TARGET, oldTarget, target));
+    }
   }
 
   /**
@@ -163,6 +166,11 @@ public class LinkImpl extends BodyElementImpl implements Link
   public SeeTag getTag()
   {
     return (SeeTag)super.getTag();
+  }
+
+  public BodyElement copy()
+  {
+    return new LinkImpl(getTag(), target);
   }
 
   public void generate(PrintWriter out, StructuralElement linkSource) throws IOException

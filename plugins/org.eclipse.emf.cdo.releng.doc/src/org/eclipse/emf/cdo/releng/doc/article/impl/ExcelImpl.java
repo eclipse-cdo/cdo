@@ -7,6 +7,7 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Excel;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 
@@ -53,6 +54,11 @@ public class ExcelImpl extends BodyElementImpl implements Excel
   protected EClass eStaticClass()
   {
     return ArticlePackage.Literals.EXCEL;
+  }
+
+  public BodyElement copy()
+  {
+    return new ExcelImpl(getTag());
   }
 
   public void generate(PrintWriter out, StructuralElement linkSource) throws IOException

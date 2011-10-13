@@ -7,6 +7,7 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Diagram;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 
@@ -82,6 +83,12 @@ public class DiagramImpl extends BodyElementImpl implements Diagram
   protected EClass eStaticClass()
   {
     return ArticlePackage.Literals.DIAGRAM;
+  }
+
+  public BodyElement copy()
+  {
+    // TODO: implement DiagramImpl.copy()
+    throw new UnsupportedOperationException();
   }
 
   public void generate(PrintWriter out, StructuralElement linkSource) throws IOException

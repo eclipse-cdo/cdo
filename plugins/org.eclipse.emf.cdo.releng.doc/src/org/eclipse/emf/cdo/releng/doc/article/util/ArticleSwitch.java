@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
 import org.eclipse.emf.cdo.releng.doc.article.Formatter;
 import org.eclipse.emf.cdo.releng.doc.article.Identifiable;
+import org.eclipse.emf.cdo.releng.doc.article.Image;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
 import org.eclipse.emf.cdo.releng.doc.article.JavaFormatter;
 import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
@@ -537,6 +538,16 @@ public class ArticleSwitch<T>
       T result = caseXmlFormatter(xmlFormatter);
       if (result == null)
         result = caseFormatter(xmlFormatter);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case ArticlePackage.IMAGE:
+    {
+      Image image = (Image)theEObject;
+      T result = caseImage(image);
+      if (result == null)
+        result = caseBodyElement(image);
       if (result == null)
         result = defaultCase(theEObject);
       return result;
@@ -1053,6 +1064,21 @@ public class ArticleSwitch<T>
    * @generated
    */
   public T caseXmlFormatter(XmlFormatter object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Image</em>'. <!-- begin-user-doc --> This
+   * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Image</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseImage(Image object)
   {
     return null;
   }

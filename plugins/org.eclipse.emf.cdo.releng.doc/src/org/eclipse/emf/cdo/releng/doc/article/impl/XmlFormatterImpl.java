@@ -105,9 +105,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
     File oldFile = file;
     file = newFile;
     if (eNotificationRequired())
-    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.XML_FORMATTER__FILE, oldFile, file));
-    }
   }
 
   /**
@@ -185,9 +183,7 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
   public String toString()
   {
     if (eIsProxy())
-    {
       return super.toString();
-    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (file: ");

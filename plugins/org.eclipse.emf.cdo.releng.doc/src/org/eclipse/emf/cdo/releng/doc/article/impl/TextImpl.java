@@ -7,6 +7,7 @@
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
 import org.eclipse.emf.cdo.releng.doc.article.Text;
 
@@ -50,6 +51,11 @@ public class TextImpl extends BodyElementImpl implements Text
   protected EClass eStaticClass()
   {
     return ArticlePackage.Literals.TEXT;
+  }
+
+  public BodyElement copy()
+  {
+    return new TextImpl(getTag());
   }
 
   public void generate(PrintWriter out, StructuralElement linkSource) throws IOException

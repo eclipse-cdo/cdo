@@ -3,6 +3,14 @@
 
 <toc label="CDO Model Repository Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
+  <topic label="Programmer's Guide" href="html/programmers/index.html">
+    <topic label="Developing Client Applications" href="html/programmers/client/index.html">
+      <topic label="Understanding the Architecture of a Client Application" href="html/programmers/client/Architecture.html" />
+    </topic>
+    <topic label="Dealing with Servers" href="html/programmers/server/index.html">
+      <topic label="Understanding the Architecture of a Repository" href="html/programmers/server/Architecture.html" />
+    </topic>
+  </topic>
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">
       <topic label="CDO Model Repository Client" href="javadoc/org/eclipse/emf/cdo/package-summary.html" icon="plugin">

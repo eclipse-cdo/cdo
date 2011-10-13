@@ -19,5 +19,64 @@ package org.eclipse.emf.cdo.releng.help.writer.authoring;
  */
 public class Articles
 {
+  /**
+   * Referencing Existing Content
+   */
+  public class Referencing
+  {
+    /**
+     * Referencing Categories
+     */
+    public class ReferencingCategories
+    {
+    }
 
+    /**
+     * Referencing Articles
+     */
+    public class ReferencingArticles
+    {
+    }
+
+    /**
+     * Referencing Chapters
+     */
+    public class ReferencingChapters
+    {
+    }
+
+    /**
+     * Reusing Content by Inlining
+     */
+    public class Inlining
+    {
+    }
+
+    /**
+     * Embedding External Content
+     */
+    public class Embedding
+    {
+      /**
+       * Embedding Java Code
+       */
+      public class Java
+      {
+      }
+    
+      /**
+       * Embedding XML Code
+       */
+      public class XML
+      {
+      }
+    
+      /**
+       * Embedding Excel Tables
+       */
+      public class Excel
+      {
+      }
+    }
+  }
 }

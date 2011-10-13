@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
 import org.eclipse.emf.cdo.releng.doc.article.Formatter;
 import org.eclipse.emf.cdo.releng.doc.article.Identifiable;
+import org.eclipse.emf.cdo.releng.doc.article.Image;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
 import org.eclipse.emf.cdo.releng.doc.article.JavaFormatter;
 import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
@@ -301,6 +302,13 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * @generated
    */
   private EClass xmlFormatterEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass imageEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1167,6 +1175,26 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * 
    * @generated
    */
+  public EClass getImage()
+  {
+    return imageEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EAttribute getImage_File()
+  {
+    return (EAttribute)imageEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EDataType getRootDoc()
   {
     return rootDocEDataType;
@@ -1343,6 +1371,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     xmlFormatterEClass = createEClass(XML_FORMATTER);
     createEAttribute(xmlFormatterEClass, XML_FORMATTER__FILE);
 
+    imageEClass = createEClass(IMAGE);
+    createEAttribute(imageEClass, IMAGE__FILE);
+
     // Create data types
     rootDocEDataType = createEDataType(ROOT_DOC);
     fileEDataType = createEDataType(FILE);
@@ -1406,6 +1437,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     excelEClass.getESuperTypes().add(this.getBodyElement());
     javaFormatterEClass.getESuperTypes().add(this.getFormatter());
     xmlFormatterEClass.getESuperTypes().add(this.getFormatter());
+    imageEClass.getESuperTypes().add(this.getBodyElement());
 
     // Initialize classes and features; add operations and parameters
     initEClass(documentationEClass, Documentation.class, "Documentation", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1607,6 +1639,10 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getXmlFormatter_File(), this.getFile(), "file", null, 0, 1, XmlFormatter.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(imageEClass, Image.class, "Image", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getImage_File(), this.getFile(), "file", null, 1, 1, Image.class, IS_TRANSIENT, IS_VOLATILE,
+        !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(rootDocEDataType, RootDoc.class, "RootDoc", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

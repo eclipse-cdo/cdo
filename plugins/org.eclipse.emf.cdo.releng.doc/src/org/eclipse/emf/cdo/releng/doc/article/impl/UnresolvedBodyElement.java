@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
+import org.eclipse.emf.cdo.releng.doc.article.Body;
 import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Context;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
@@ -28,6 +29,9 @@ import com.sun.javadoc.Tag;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -51,29 +55,41 @@ public class UnresolvedBodyElement extends BodyElementImpl
     return getTag().text();
   }
 
+  public BodyElement copy()
+  {
+    return new UnresolvedBodyElement(getTag());
+  }
+
   public void generate(PrintWriter out, StructuralElement linkSource) throws IOException
   {
     out.write(getText());
   }
 
-  public BodyElement resolve(Context context)
+  public List<? extends BodyElement> resolve(Context context)
   {
+    List<? extends BodyElement> resolved = null;
+
     Tag tag = getTag();
     if (tag instanceof SeeTag)
     {
       SeeTag seeTag = (SeeTag)tag;
-      BodyElement resolved = resolveSeeTag(context, seeTag);
-      if (resolved != null)
-      {
-        return resolved;
-      }
+      resolved = resolveSeeTag(context, seeTag);
+    }
+    else if (tag.name().equals("@img"))
+    {
+      resolved = resolveImgTag(context, tag);
+    }
+
+    if (resolved != null)
+    {
+      return resolved;
     }
 
     System.err.println(ArticleUtil.makeConsoleLink("Unresolved link " + tag + " in ", tag.position()));
-    return this;
+    return Collections.singletonList(this);
   }
 
-  private BodyElement resolveSeeTag(Context context, SeeTag tag)
+  private List<? extends BodyElement> resolveSeeTag(Context context, SeeTag tag)
   {
     MemberDoc referencedMember = tag.referencedMember();
     if (referencedMember != null)
@@ -81,7 +97,7 @@ public class UnresolvedBodyElement extends BodyElementImpl
       Object target = context.lookup(referencedMember);
       if (target != null)
       {
-        return createBodyElement(tag, target);
+        return createBodyElements(context, tag, target);
       }
     }
 
@@ -96,7 +112,7 @@ public class UnresolvedBodyElement extends BodyElementImpl
 
       if (target != null)
       {
-        return createBodyElement(tag, target);
+        return createBodyElements(context, tag, target);
       }
     }
 
@@ -128,16 +144,47 @@ public class UnresolvedBodyElement extends BodyElementImpl
     return null;
   }
 
-  private BodyElement createBodyElement(SeeTag tag, Object target)
+  private List<? extends BodyElement> resolveImgTag(Context context, Tag tag)
+  {
+    File source = tag.position().file().getParentFile();
+    String path = tag.text();
+
+    try
+    {
+      File target = new File(source, path).getCanonicalFile();
+      return Collections.singletonList(new ImageImpl(tag, target));
+    }
+    catch (Exception ex)
+    {
+      return null;
+    }
+  }
+
+  private List<? extends BodyElement> createBodyElements(Context context, SeeTag tag, Object target)
   {
     if (target instanceof LinkTarget)
     {
-      return new LinkImpl(tag, (LinkTarget)target);
+      if (target instanceof Body && tag.label().equals("!!inline!!"))
+      {
+        Body body = (Body)target;
+        EList<BodyElement> elements = body.getElements();
+        resolve(context, elements);
+
+        List<BodyElement> inlined = new ArrayList<BodyElement>();
+        for (BodyElement element : elements)
+        {
+          inlined.add(element.copy());
+        }
+
+        return inlined;
+      }
+
+      return Collections.singletonList(new LinkImpl(tag, (LinkTarget)target));
     }
 
     if (target instanceof EmbeddableElement)
     {
-      return new EmbeddingImpl(tag, (EmbeddableElement)target);
+      return Collections.singletonList(new EmbeddingImpl(tag, (EmbeddableElement)target));
     }
 
     return null;
@@ -145,26 +192,22 @@ public class UnresolvedBodyElement extends BodyElementImpl
 
   public static void resolve(Context context, EList<BodyElement> elements)
   {
+    List<BodyElement> resolved = new ArrayList<BodyElement>();
     for (int i = 0; i < elements.size(); i++)
     {
       BodyElement element = elements.get(i);
       if (element instanceof UnresolvedBodyElement)
       {
         UnresolvedBodyElement unresolved = (UnresolvedBodyElement)element;
-        BodyElement resolved = unresolved.resolve(context);
-        if (resolved != unresolved)
-        {
-          try
-          {
-            elements.set(i, resolved);
-          }
-          catch (Exception ex)
-          {
-            resolved = unresolved.resolve(context);
-            ex.printStackTrace();
-          }
-        }
+        resolved.addAll(unresolved.resolve(context));
+      }
+      else
+      {
+        resolved.add(element);
       }
     }
+
+    elements.clear();
+    elements.addAll(resolved);
   }
 }

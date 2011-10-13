@@ -155,4 +155,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="XmlFormatter" eSuperTypes="#//Formatter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" eType="#//File"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Image" eSuperTypes="#//BodyElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="file" lowerBound="1" eType="#//File"
+        changeable="false" volatile="true" transient="true"/>
+  </eClassifiers>
 </ecore:EPackage>

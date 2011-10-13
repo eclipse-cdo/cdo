@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
 import org.eclipse.emf.cdo.releng.doc.article.Formatter;
 import org.eclipse.emf.cdo.releng.doc.article.Identifiable;
+import org.eclipse.emf.cdo.releng.doc.article.Image;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
 import org.eclipse.emf.cdo.releng.doc.article.JavaFormatter;
 import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
@@ -307,6 +308,12 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
     public Adapter caseXmlFormatter(XmlFormatter object)
     {
       return createXmlFormatterAdapter();
+    }
+
+    @Override
+    public Adapter caseImage(Image object)
+    {
+      return createImageAdapter();
     }
 
     @Override
@@ -805,6 +812,20 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createXmlFormatterAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Image <em>Image</em>}'.
+   * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Image
+   * @generated
+   */
+  public Adapter createImageAdapter()
   {
     return null;
   }

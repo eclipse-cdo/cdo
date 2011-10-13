@@ -2082,13 +2082,56 @@ public interface ArticlePackage extends EPackage
   int XML_FORMATTER_FEATURE_COUNT = FORMATTER_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ImageImpl <em>Image</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ImageImpl
+   * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getImage()
+   * @generated
+   */
+  int IMAGE = 34;
+
+  /**
+   * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int IMAGE__CONTAINER = BODY_ELEMENT__CONTAINER;
+
+  /**
+   * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int IMAGE__TAG = BODY_ELEMENT__TAG;
+
+  /**
+   * The feature id for the '<em><b>File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int IMAGE__FILE = BODY_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Image</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int IMAGE_FEATURE_COUNT = BODY_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see com.sun.javadoc.RootDoc
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getRootDoc()
    * @generated
    */
-  int ROOT_DOC = 34;
+  int ROOT_DOC = 35;
 
   /**
    * The meta object id for the '<em>File</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2097,7 +2140,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFile()
    * @generated
    */
-  int FILE = 35;
+  int FILE = 36;
 
   /**
    * The meta object id for the '<em>Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2106,7 +2149,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDoc()
    * @generated
    */
-  int DOC = 36;
+  int DOC = 37;
 
   /**
    * The meta object id for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2115,7 +2158,7 @@ public interface ArticlePackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
    * @generated
    */
-  int TAG = 37;
+  int TAG = 38;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation
@@ -2952,6 +2995,27 @@ public interface ArticlePackage extends EPackage
   EAttribute getXmlFormatter_File();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Image <em>Image</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Image</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Image
+   * @generated
+   */
+  EClass getImage();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Image#getFile
+   * <em>File</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>File</em>'.
+   * @see org.eclipse.emf.cdo.releng.doc.article.Image#getFile()
+   * @see #getImage()
+   * @generated
+   */
+  EAttribute getImage_File();
+
+  /**
    * Returns the meta object for data type '{@link com.sun.javadoc.RootDoc <em>Root Doc</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * 
@@ -3700,6 +3764,24 @@ public interface ArticlePackage extends EPackage
      * @generated
      */
     EAttribute XML_FORMATTER__FILE = eINSTANCE.getXmlFormatter_File();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ImageImpl <em>Image</em>}'
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ImageImpl
+     * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getImage()
+     * @generated
+     */
+    EClass IMAGE = eINSTANCE.getImage();
+
+    /**
+     * The meta object literal for the '<em><b>File</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute IMAGE__FILE = eINSTANCE.getImage_File();
 
     /**
      * The meta object literal for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

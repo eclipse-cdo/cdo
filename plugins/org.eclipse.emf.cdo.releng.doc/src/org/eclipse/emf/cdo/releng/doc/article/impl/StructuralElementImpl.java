@@ -130,8 +130,6 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
 
       Documentation documentation = getDocumentation();
       documentation.setDefaultElement(this);
-      System.out.println("Default element of " + documentation.getProject() + ": " + getFullPath());
-
     }
 
     Tag[] tags = doc.tags("@number");
@@ -189,7 +187,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   public StructuralElement getParent()
   {
     if (eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT)
+    {
       return null;
+    }
     return (StructuralElement)eContainer();
   }
 
@@ -211,24 +211,34 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
    */
   public void setParent(StructuralElement newParent)
   {
-    if (newParent != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT && newParent != null))
+    if (newParent != eInternalContainer() || eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT
+        && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, ArticlePackage.STRUCTURAL_ELEMENT__CHILDREN,
             StructuralElement.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.STRUCTURAL_ELEMENT__PARENT, newParent,
           newParent));
+    }
   }
 
   /**
@@ -290,7 +300,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
     case ArticlePackage.STRUCTURAL_ELEMENT__PARENT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetParent((StructuralElement)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -430,7 +442,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (title: ");
@@ -678,6 +692,8 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
   protected void copyResources(File sourceFolder)
   {
     File targetFolder = getOutputFile().getParentFile();
+    targetFolder.mkdirs();
+
     for (File file : sourceFolder.listFiles())
     {
       if (file.isFile())

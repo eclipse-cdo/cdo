@@ -74,4 +74,6 @@ public interface BodyElement extends EObject
   Tag getTag();
 
   void generate(PrintWriter out, StructuralElement linkSource) throws IOException;
+
+  BodyElement copy();
 } // BodyElement

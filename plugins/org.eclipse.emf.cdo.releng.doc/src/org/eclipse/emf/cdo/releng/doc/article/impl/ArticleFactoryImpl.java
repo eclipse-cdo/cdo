@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalArticle;
 import org.eclipse.emf.cdo.releng.doc.article.ExternalTarget;
 import org.eclipse.emf.cdo.releng.doc.article.Factory;
+import org.eclipse.emf.cdo.releng.doc.article.Image;
 import org.eclipse.emf.cdo.releng.doc.article.JavaElement;
 import org.eclipse.emf.cdo.releng.doc.article.JavaFormatter;
 import org.eclipse.emf.cdo.releng.doc.article.JavaPackage;
@@ -146,6 +147,8 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
       return createJavaFormatter();
     case ArticlePackage.XML_FORMATTER:
       return createXmlFormatter();
+    case ArticlePackage.IMAGE:
+      return createImage();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -469,6 +472,17 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
   {
     XmlFormatterImpl xmlFormatter = new XmlFormatterImpl();
     return xmlFormatter;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Image createImage()
+  {
+    ImageImpl image = new ImageImpl();
+    return image;
   }
 
   /**

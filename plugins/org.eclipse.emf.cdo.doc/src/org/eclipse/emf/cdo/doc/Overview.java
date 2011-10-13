@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.doc;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * Overview
  * <p>
@@ -21,10 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * describe the structure of and the possible relations between these objects.
  * <p>
  * CDO supports plentyfold deployments such as embedded repositories, offline clones or replicated clusters. The
- * following diagram illustrates the most common scenario:
- * <p align="center">
- * <img src="cdo-overview.png"/>
- * </p>
+ * following diagram illustrates the most common scenario: {@img cdo-overview.png}
  * 
  * @default
  */
@@ -134,137 +129,23 @@ public class Overview
     /**
      * Application Architecture
      * <p>
-     * The architecture of a CDO application is characterized by its mandatory dependency on EMF, the Eclipse Modeling
-     * Framework. Most of the time an application interacts with the object graph of the model through standard EMF APIs
-     * because CDO model graph objects are {@link EObject EObjects}. While CDO's basic functionality integrates nicely
-     * and transparently with EMF's extension mechansims some of the more advanced functions may require to add direct
-     * dependendcies on CDO to your application code.
-     * <p>
-     * The following diagram illustrates the major building blocks of a CDO application:
-     * <p align="center">
-     * <img src="application-architecture.png"/>
-     * </p>
+     * {@link org.eclipse.emf.cdo.doc.programmers.client.Architecture !!inline!!}
+     * 
+     * @see org.eclipse.emf.cdo.doc.programmers.client.Architecture
      */
     public class Application
     {
-      // /**
-      // * OSGi
-      // */
-      // public class OSGi
-      // {
-      // }
-      //
-      // /**
-      // * EMF
-      // */
-      // public class EMF
-      // {
-      // }
-      //
-      // /**
-      // * CDO Client
-      // */
-      // public class CDOClient
-      // {
-      // }
-      //
-      // /**
-      // * Net4j Core
-      // */
-      // public class Net4j
-      // {
-      // }
-      //
-      // /**
-      // * Models
-      // */
-      // public class Models
-      // {
-      // }
-      //
-      // /**
-      // * Protocol
-      // */
-      // public class Protocol
-      // {
-      // }
-      //
-      // /**
-      // * Transport
-      // */
-      // public class Transport
-      // {
-      // }
     }
 
     /**
      * Repository Architecture
      * <p>
-     * The main building block of a CDO repository is split into two layers, the generic repository layer that client
-     * applications interact with and the database integration layer that providers can hook into to integrate their
-     * data storage solutions with CDO. A number of such integrations already ship with CDO, making it possible to
-     * connect a repository to all sorts of JDBC databases, Hibernate, Objectivity/DB, MongoDB or DB4O.
-     * <p>
-     * While technically a CDO repository depends on EMF this dependency is not of equal importance as it is in a CDO
-     * application. In particular the generated application models are not required to be deployed to the server because
-     * a CDO repository accesses models reflectively and the model objects are not implemented as {@link EObject
-     * EObjects} on the server.
-     * <p>
-     * The following diagram illustrates the major building blocks of a CDO repository:
-     * <p align="center">
-     * <img src="repository-architecture.png"/>.
-     * </p>
+     * {@link org.eclipse.emf.cdo.doc.programmers.server.Architecture !!inline!!}
+     * 
+     * @see org.eclipse.emf.cdo.doc.programmers.server.Architecture
      */
     public class Repository
     {
-      // /**
-      // * OSGi
-      // */
-      // public class RepositoryOSGi
-      // {
-      // }
-      //
-      // /**
-      // * CDO Server Core
-      // */
-      // public class CDOServerCore
-      // {
-      // }
-      //
-      // /**
-      // * CDO Store
-      // */
-      // public class CDOStore
-      // {
-      // }
-      //
-      // /**
-      // * OCL
-      // */
-      // public class OCL
-      // {
-      // }
-      //
-      // /**
-      // * Net4j
-      // */
-      // public class RepositoryNet4j
-      // {
-      // }
-      //
-      // /**
-      // * Protocol
-      // */
-      // public class RepositoryProtocol
-      // {
-      // }
-      //
-      // /**
-      // * Transport
-      // */
-      // public class RepositoryTransport
-      // {
-      // }
     }
   }
 }

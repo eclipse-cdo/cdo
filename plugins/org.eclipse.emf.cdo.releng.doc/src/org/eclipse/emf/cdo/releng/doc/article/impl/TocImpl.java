@@ -8,6 +8,7 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.Article;
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
+import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
 import org.eclipse.emf.cdo.releng.doc.article.Category;
 import org.eclipse.emf.cdo.releng.doc.article.Documentation;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
@@ -136,13 +137,20 @@ public class TocImpl extends BodyElementImpl implements Toc
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (levels: ");
     result.append(levels);
     result.append(')');
     return result.toString();
+  }
+
+  public BodyElement copy()
+  {
+    return new TocImpl(getTag());
   }
 
   public void generate(PrintWriter out, StructuralElement linkSource) throws IOException

@@ -360,6 +360,8 @@
 			<package name="org.eclipse.emf.cdo.doc" />
 			<package name="org.eclipse.emf.cdo.doc.online" />
 			<package name="org.eclipse.emf.cdo.doc.programmers" />
+			<package name="org.eclipse.emf.cdo.doc.programmers.client" />
+			<package name="org.eclipse.emf.cdo.doc.programmers.server" />
 			<package name="org.eclipse.emf.cdo.doc.reference" />
 			<package name="org.eclipse.emf.cdo.doc.reference.api" />
 			<package name="org.eclipse.emf.cdo.doc.reference.schema" />

@@ -1,4 +1,4 @@
-/*
+/**
  * <copyright>
  * </copyright>
  *
@@ -8,54 +8,57 @@ package org.eclipse.emf.cdo.releng.doc.article.impl;
 
 import org.eclipse.emf.cdo.releng.doc.article.ArticlePackage;
 import org.eclipse.emf.cdo.releng.doc.article.BodyElement;
-import org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement;
-import org.eclipse.emf.cdo.releng.doc.article.Embedding;
+import org.eclipse.emf.cdo.releng.doc.article.Image;
 import org.eclipse.emf.cdo.releng.doc.article.StructuralElement;
+import org.eclipse.emf.cdo.releng.doc.article.util.ArticleUtil;
 
 import org.eclipse.emf.ecore.EClass;
 
-import com.sun.javadoc.SeeTag;
+import com.sun.javadoc.Tag;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model object '<em><b>Embedding</b></em>'. <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Image</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddingImpl#getElement <em>Element</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.ImageImpl#getFile <em>File</em>}</li>
  * </ul>
  * </p>
  * 
  * @generated
  */
-public class EmbeddingImpl extends BodyElementImpl implements Embedding
+public class ImageImpl extends BodyElementImpl implements Image
 {
   /**
-   * The cached value of the '{@link #getElement() <em>Element</em>}' reference. <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * The default value of the '{@link #getFile() <em>File</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
    * 
-   * @see #getElement()
+   * @see #getFile()
    * @generated
    * @ordered
    */
-  protected EmbeddableElement element;
+  protected static final File FILE_EDEFAULT = null;
+
+  private File file;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    */
-  protected EmbeddingImpl()
+  protected ImageImpl()
   {
     super();
   }
 
-  EmbeddingImpl(SeeTag tag, EmbeddableElement element)
+  public ImageImpl(Tag tag, File file)
   {
     super(tag);
-    this.element = element;
+    this.file = file;
   }
 
   /**
@@ -66,17 +69,17 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
   @Override
   protected EClass eStaticClass()
   {
-    return ArticlePackage.Literals.EMBEDDING;
+    return ArticlePackage.Literals.IMAGE;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
-  public EmbeddableElement getElement()
+  public File getFile()
   {
-    return element;
+    return file;
   }
 
   /**
@@ -89,8 +92,8 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
   {
     switch (featureID)
     {
-    case ArticlePackage.EMBEDDING__ELEMENT:
-      return getElement();
+    case ArticlePackage.IMAGE__FILE:
+      return getFile();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -105,26 +108,25 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
   {
     switch (featureID)
     {
-    case ArticlePackage.EMBEDDING__ELEMENT:
-      return element != null;
+    case ArticlePackage.IMAGE__FILE:
+      return FILE_EDEFAULT == null ? getFile() != null : !FILE_EDEFAULT.equals(getFile());
     }
     return super.eIsSet(featureID);
   }
 
-  @Override
-  public SeeTag getTag()
-  {
-    return (SeeTag)super.getTag();
-  }
-
   public BodyElement copy()
   {
-    return new EmbeddingImpl(getTag(), element);
+    return new ImageImpl(getTag(), file);
   }
 
   public void generate(PrintWriter out, StructuralElement linkSource) throws IOException
   {
-    element.generate(out, this);
+    File source = linkSource.getDoc().position().file().getParentFile();
+    String link = ArticleUtil.createLink(source, file);
+
+    out.write("<p align=\"center\"><img src=\"");
+    out.write(link);
+    out.write("\"></p>\n");
   }
 
-} // EmbeddingImpl
+} // ImageImpl

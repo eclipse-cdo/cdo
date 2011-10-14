@@ -337,7 +337,7 @@
 			       qualifier="${build.qualifier}"
 			       trigger="${build.trigger}"
 			       hudson="${hudson.HUDSON_URL}"
-			       revision="${hudson.SVN_REVISION}"
+			       revision="${hudson.GIT_COMMIT}"
 			       job="${hudson.JOB_NAME}"
 			       number="${hudson.BUILD_NUMBER}" />
 		</echoxml>

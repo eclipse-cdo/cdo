@@ -266,7 +266,7 @@
 						<arg value="-i" />
 						<arg value="org.eclipse.buckminster.pde.headless.feature.feature.group" />
 						<arg value="-i" />
-						<arg value="org.eclipse.buckminster.subversive.headless.feature.feature.group" />
+						<arg value="org.eclipse.buckminster.git.headless.feature.feature.group" />
 					</args>
 				</eclipse.launch>
 			</then>

@@ -168,7 +168,7 @@
 			<isset property="hudson.no_proxy" />
 		</condition>
 
-		<property name="git.clone" location="${hudson.WORKSPACE}/org.eclipse.emf.cdo.git"/>
+		<property name="git.clone" location="${hudson.WORKSPACE}/git"/>
 		<property name="releng" location="${git.clone}/plugins/org.eclipse.emf.cdo.releng" />
 		<property name="test.report" location="${hudson.WORKSPACE}/test-report.xml" />
 

@@ -9,52 +9,34 @@
 	<rm:property key="emf.version" mutable="true" value="2.8"/>
 	<rm:property key="orbit.version" mutable="true" value="S20110907174232"/>
 
-	<rm:property key="checkout" mutable="true" value="/replaced/by/hudson/builds"/>
-	<rm:property key="svn.repository" mutable="true" value="https://dev.eclipse.org/svnroot/modeling/org.eclipse.emf.cdo"/>
+	<rm:property key="git.repository" mutable="true" value="git://git.eclipse.org/gitroot/cdo/org.eclipse.emf.cdo.git"/>
+	<rm:property key="git.clone" mutable="true" value="${user.home}/org.eclipse.emf.cdo.git"/>
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
 	<rm:property key="resolve.target.platform" mutable="true" value="true"/>
 	<rm:property key="build.type" mutable="true" value="N"/>
 	
 	<!-- Locators -->
 	
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$" searchPathRef="local" failOnError="false"/>
-	<rm:locator pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$" searchPathRef="svn"/>
-	
-	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="local" failOnError="false"/>
-	<rm:locator pattern="^org\.eclipse\.net4j(?:\..+)?$" searchPathRef="svn"/>
-	
-	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="local" failOnError="false"/>
-	<rm:locator pattern="^org\.gastro(?:\..+)?$" searchPathRef="svn"/>
+	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$"/>
+	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.net4j(?:\..+)?$"/>
+	<rm:locator searchPathRef="git" pattern="^org\.gastro(?:\..+)?$"/>
 	
 	<rm:locator searchPathRef="p2"/>
 	
 	<!-- Search Paths -->
 	
-	<rm:searchPath name="local">
-		<rm:provider componentTypes="osgi.bundle" readerType="local">
-			<rm:uri format="file://{0}/plugins/{1}">
-				<bc:propertyRef key="checkout"/>
+	<rm:searchPath name="git">
+		<rm:provider componentTypes="osgi.bundle" readerType="git">
+			<rm:property key="git.remote.uri" value="${git.repository}"/>
+			<rm:uri format="{0},plugins/{1}">
+				<bc:propertyRef key="git.clone"/>
 				<bc:propertyRef key="buckminster.component"/>
 			</rm:uri>
 		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature" readerType="local">
-			<rm:uri format="file://{0}/features/{1}-feature">
-				<bc:propertyRef key="checkout"/>
-				<bc:propertyRef key="buckminster.component"/>
-			</rm:uri>
-		</rm:provider>
-	</rm:searchPath>
-	
-	<rm:searchPath name="svn">
-		<rm:provider componentTypes="osgi.bundle" readerType="svn">
-			<rm:uri format="{0}/trunk/plugins/{1}?moduleAfterTag&amp;moduleAfterBranch">
-				<bc:propertyRef key="svn.repository"/>
-				<bc:propertyRef key="buckminster.component"/>
-			</rm:uri>
-		</rm:provider>
-		<rm:provider componentTypes="eclipse.feature" readerType="svn">
-			<rm:uri format="{0}/trunk/features/{1}-feature?moduleAfterTag&amp;moduleAfterBranch">
-				<bc:propertyRef key="svn.repository"/>
+		<rm:provider componentTypes="eclipse.feature" readerType="git">
+			<rm:property key="git.remote.uri" value="${git.repository}"/>
+			<rm:uri format="{0},features/{1}-feature">
+				<bc:propertyRef key="git.clone"/>
 				<bc:propertyRef key="buckminster.component"/>
 			</rm:uri>
 		</rm:provider>

@@ -15,5 +15,4 @@ package org.eclipse.emf.cdo.releng;
  */
 public class Dummy
 {
-
 }

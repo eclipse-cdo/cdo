@@ -8,7 +8,7 @@
 	<rm:property key="emf.version" mutable="true" value="2.8"/>
 	<rm:property key="orbit.version" mutable="true" value="S20110907174232"/>
 	
-	<rm:property key="git.clone" mutable="true" value="${user.home}/org.eclipse.emf.cdo.git"/>
+	<rm:property key="git.clone" mutable="true" value="${user.home}/git/cdo"/>
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
 	<rm:property key="resolve.target.platform" mutable="true" value="true"/>
 	<rm:property key="build.type" mutable="true" value="N"/>

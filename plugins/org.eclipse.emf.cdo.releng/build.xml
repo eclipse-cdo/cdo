@@ -61,8 +61,8 @@
 					<jvmarg value="-Xmx4096m" />
 					<jvmarg value="-Declipse.p2.mirrors=false" />
 					<jvmarg value="-Declipse.p2.unsignedPolicy=allow" />
-					<jvmarg value="-Dgit.repository=${git.repository}"/>
-					<jvmarg value="-Dgit.clone=${git.clone}"/>
+					<jvmarg value="-Dgit.repository=${git.repository}" />
+					<jvmarg value="-Dgit.clone=${git.clone}" />
 					<arg value="-data" />
 					<arg value="@{workspace}" />
 					<arg value="--loglevel" />
@@ -168,7 +168,7 @@
 			<isset property="hudson.no_proxy" />
 		</condition>
 
-		<property name="git.clone" location="${hudson.WORKSPACE}/git"/>
+		<property name="git.clone" location="${hudson.WORKSPACE}/git" />
 		<property name="releng" location="${git.clone}/plugins/org.eclipse.emf.cdo.releng" />
 		<property name="test.report" location="${hudson.WORKSPACE}/test-report.xml" />
 
@@ -541,7 +541,7 @@
 	<target name="-generate.help">
 		<copy todir="${hudson.WORKSPACE}">
 			<fileset dir="${releng}">
-				<include name="help/**"/>
+				<include name="help/**" />
 			</fileset>
 		</copy>
 	</target>

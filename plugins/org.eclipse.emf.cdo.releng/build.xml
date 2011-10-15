@@ -135,7 +135,7 @@
 					</delete>
 
 					<copy todir="${temp.products}/@{profile}-@{platform}" failonerror="true">
-						<fileset dir="${ws}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
+						<fileset dir="${git.clone}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
 							<include name="epl-v10.html" />
 							<include name="notice.html" />
 						</fileset>
@@ -592,7 +592,7 @@
 		<mkdir dir="${temp.dropins}" />
 
 		<copy todir="${temp.dropins}" failonerror="true">
-			<fileset dir="${ws}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
+			<fileset dir="${git.clone}/features/org.eclipse.emf.cdo.license-feature/rootfiles">
 				<include name="epl-v10.html" />
 				<include name="notice.html" />
 			</fileset>

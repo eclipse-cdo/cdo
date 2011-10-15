@@ -401,18 +401,6 @@
 		<delete dir="${ws}" includeemptydirs="true" failonerror="true" quiet="true" />
 		<unzip dest="${ws}" src="${releng}/hudson/workspace.zip" />
 		<copy file="${releng}/hudson/test-report-empty.xml" tofile="${test.report}" />
-
-		<if>
-			<available file="${checkout}" type="dir" />
-			<then>
-				<copy todir="${ws}" includeemptydirs="true" overwrite="true" preservelastmodified="true">
-					<fileset dir="${checkout}">
-						<include name="features/**" />
-						<include name="plugins/**" />
-					</fileset>
-				</copy>
-			</then>
-		</if>
 	</target>
 
 	<!-- ========= -->

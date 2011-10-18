@@ -115,6 +115,30 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.releng.launches"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.manifests"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.relativepaths"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.windowtitle"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.winexplorer"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.workingsets"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.dawn.codegen.gmf"
          version="0.0.0"/>
 

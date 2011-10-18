@@ -114,6 +114,24 @@
    <feature id="org.eclipse.emf.cdo.releng.help" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
+   <feature url="features/org.eclipse.emf.cdo.releng.launches_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.launches" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.cdo.releng.manifests_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.manifests" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.cdo.releng.relativepaths_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.relativepaths" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.cdo.releng.windowtitle_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.windowtitle" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.cdo.releng.winexplorer_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.winexplorer" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.cdo.releng.workingsets_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.workingsets" version="1.0.0.qualifier">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
    <category-def name="org.eclipse.emf.releng.category" label="CDO Release Engineering"/>
    <category-def name="org.eclipse.emf.cdo.category" label="CDO Model Repository"/>
    <category-def name="org.eclipse.emf.cdo.hibernate.category" label="CDO Model Repository Hibernate (optional)"/>

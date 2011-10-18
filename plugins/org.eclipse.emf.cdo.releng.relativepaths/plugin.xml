@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.net4j.tools.ide.contribution1"
+            objectClass="org.eclipse.core.resources.IResource">
+         <menu
+               id="org.eclipse.emf.cdo.releng"
+               label="CDO Release Engineering"
+               path="additions">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               class="org.eclipse.emf.cdo.releng.relativepaths.CreateRelativePathAction"
+               enablesFor="1"
+               id="org.eclipse.emf.cdo.releng.CreateRelativePathAction"
+               label="Create Relative Path..."
+               menubarPath="org.eclipse.net4j.tools.menu/group1"
+               style="push">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>

@@ -21,7 +21,7 @@
                enablesFor="1"
                id="org.eclipse.emf.cdo.releng.CreateRelativePathAction"
                label="Create Relative Path..."
-               menubarPath="org.eclipse.net4j.tools.menu/group1"
+               menubarPath="org.eclipse.emf.cdo.releng/group1"
                style="push">
          </action>
       </objectContribution>

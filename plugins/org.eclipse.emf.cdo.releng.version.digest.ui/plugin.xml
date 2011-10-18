@@ -20,8 +20,8 @@
             nameFilter="release.xml"
             objectClass="org.eclipse.core.resources.IFile">
          <menu
-               id="org.eclipse.emf.cdo.releng.version.digest.ui.menu1"
-               label="Releng Tools"
+               id="org.eclipse.emf.cdo.releng"
+               label="CDO Release Engineering"
                path="additions">
             <separator
                   name="group1">
@@ -30,9 +30,9 @@
          <action
                class="org.eclipse.emf.cdo.releng.version.digest.ui.CreateDigestAction"
                enablesFor="1"
-               id="org.eclipse.emf.cdo.releng.version.digest.ui.newAction"
+               id="org.eclipse.emf.cdo.releng.CreateDigestAction"
                label="Create Digest"
-               menubarPath="org.eclipse.emf.cdo.releng.version.digest.ui.menu1/group1"
+               menubarPath="org.eclipse.emf.cdo.releng/group1"
                state="true"
                style="push"
                tooltip="Creates a digest file for this release">

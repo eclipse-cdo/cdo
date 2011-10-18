@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="true"
+            class="org.eclipse.emf.cdo.releng.launches.LaunchConfigLabelDecorator"
+            icon="icons/local_deco.gif"
+            id="org.eclipse.emf.cdo.releng.LaunchConfigLabelDecorator"
+            label="Unshared Launch Configs"
+            lightweight="false"
+            location="TOP_LEFT"
+            state="true">
+         <enablement>
+            <objectClass
+                  name="org.eclipse.debug.core.ILaunchConfiguration">
+            </objectClass>
+         </enablement>
+      </decorator>
+   </extension>
+
+</plugin>

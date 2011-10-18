@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.cdo.releng.winexplorer.contribution"
+            objectClass="org.eclipse.core.resources.IResource">
+         <action
+               class="org.eclipse.emf.cdo.releng.winexplorer.ExplorerAction"
+               enablesFor="1"
+               icon="explorer.gif"
+               id="org.eclipse.emf.cdo.releng.ExplorerAction"
+               label="Windows Explorer"
+               menubarPath="additions"
+               state="true"
+               style="push"
+               tooltip="Open Windows Explorer">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>

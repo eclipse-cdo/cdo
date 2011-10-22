@@ -12,19 +12,21 @@
 package org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.AClass;
+import org.eclipse.emf.cdo.dawn.helper.DawnEditorHelper;
 
-import org.eclipse.graphiti.examples.common.ExampleUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.window.Window;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Martin Fluegge
  */
 public class AcoreRenameAClassFeature extends AbstractCustomFeature
 {
-
   private boolean hasDoneChanges = false;
 
   public AcoreRenameAClassFeature(IFeatureProvider fp)
@@ -73,7 +75,7 @@ public class AcoreRenameAClassFeature extends AbstractCustomFeature
         AClass AClass = (AClass)bo;
         String currentName = AClass.getName();
         // ask user for a new class name
-        String newName = ExampleUtil.askString(getName(), getDescription(), currentName);
+        String newName = askString(getName(), getDescription(), currentName);
         if (newName != null && !newName.equals(currentName))
         {
           hasDoneChanges = true;
@@ -88,5 +90,18 @@ public class AcoreRenameAClassFeature extends AbstractCustomFeature
   public boolean hasDoneChanges()
   {
     return hasDoneChanges;
+  }
+
+  public String askString(String dialogTitle, String dialogMessage, String initialValue)
+  {
+    String ret = null;
+    Shell shell = DawnEditorHelper.getActiveShell();
+    InputDialog inputDialog = new InputDialog(shell, dialogTitle, dialogMessage, initialValue, null);
+    int retDialog = inputDialog.open();
+    if (retDialog == Window.OK)
+    {
+      ret = inputDialog.getValue();
+    }
+    return ret;
   }
 }

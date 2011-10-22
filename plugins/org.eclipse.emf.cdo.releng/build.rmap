@@ -25,14 +25,14 @@
 	
 	<rm:searchPath name="git">
 		<rm:provider componentTypes="osgi.bundle" readerType="git">
-			<rm:property key="git.remote.uri" value="git://git.eclipse.org/gitroot/cdo/org.eclipse.emf.cdo.git"/>
+			<rm:property key="git.remote.uri" value="git://git.eclipse.org/gitroot/cdo/cdo.git"/>
 			<rm:uri format="{0},plugins/{1}">
 				<bc:propertyRef key="git.clone"/>
 				<bc:propertyRef key="buckminster.component"/>
 			</rm:uri>
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature" readerType="git">
-			<rm:property key="git.remote.uri" value="git://git.eclipse.org/gitroot/cdo/org.eclipse.emf.cdo.git"/>
+			<rm:property key="git.remote.uri" value="git://git.eclipse.org/gitroot/cdo/cdo.git"/>
 			<rm:uri format="{0},features/{1}-feature">
 				<bc:propertyRef key="git.clone"/>
 				<bc:propertyRef key="buckminster.component"/>

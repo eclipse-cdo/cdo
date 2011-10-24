@@ -80,6 +80,10 @@ public class CDOEntityMapper extends EntityMapper
       versionElement.addElement("column").addAttribute("name", getHbmContext().getVersionColumnName()); //$NON-NLS-1$//$NON-NLS-2$
       versionElement.addAttribute("type", Integer.class.getName()); //$NON-NLS-1$
 
+      final Element timeStampElement = entityElement.addElement("property"); //$NON-NLS-1$
+      timeStampElement.addAttribute("name", CDOHibernateConstants.COMMITTIMESTAMP_PROPERTY); //$NON-NLS-1$
+      timeStampElement.addAttribute("type", Long.class.getName()); //$NON-NLS-1$
+
       if (getHbmContext().getCurrentEClass() == EresourcePackage.eINSTANCE.getCDOResourceNode())
       {
         // not nice but teneo will assign the first unique-key the number c0

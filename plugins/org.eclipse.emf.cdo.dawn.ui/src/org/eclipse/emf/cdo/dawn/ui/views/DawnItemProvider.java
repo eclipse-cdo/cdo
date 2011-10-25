@@ -61,7 +61,6 @@ public class DawnItemProvider extends CDOItemProvider
   @Override
   public Image getImage(Object obj)
   {
-
     if (obj instanceof CDOResource)
     {
       CDOResource resource = (CDOResource)obj;

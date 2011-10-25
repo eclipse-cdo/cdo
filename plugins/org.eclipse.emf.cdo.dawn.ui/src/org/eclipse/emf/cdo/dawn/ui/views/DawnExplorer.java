@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
@@ -39,6 +40,8 @@ import org.eclipse.ui.PartInitException;
  */
 public class DawnExplorer extends CDOSessionsView
 {
+  private static final int DEFAULT_SLEEP_INTERVAL = 5000;
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnExplorer.class);
 
   public static final String ID = "org.eclipse.emf.cdo.dawn.ui.views.DawnExplorer";
@@ -55,10 +58,48 @@ public class DawnExplorer extends CDOSessionsView
    */
   public DawnExplorer()
   {
-    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
-        PreferenceConstants.getServerName());
-    CDOSession session = CDOConnectionUtil.instance.openSession();
-    view = CDOConnectionUtil.instance.openView(session);
+    boolean initialize = initialize();
+
+    if (!initialize)
+    {
+      Thread thread = new Thread(new Runnable()
+      {
+        public void run()
+        {
+          while (!initialize())
+          {
+            try
+            {
+              Thread.sleep(DEFAULT_SLEEP_INTERVAL);
+            }
+            catch (InterruptedException ex)
+            {
+              ex.printStackTrace();
+            }
+          }
+        }
+      });
+      thread.start();
+    }
+  }
+
+  /**
+   * Initializes the view of the DawnExplorer
+   */
+  private boolean initialize()
+  {
+    try
+    {
+      CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
+          PreferenceConstants.getServerName());
+      CDOSession session = CDOConnectionUtil.instance.openSession();
+      view = CDOConnectionUtil.instance.openView(session);
+    }
+    catch (ConnectorException ex)
+    {
+      return false;
+    }
+    return true;
   }
 
   @Override

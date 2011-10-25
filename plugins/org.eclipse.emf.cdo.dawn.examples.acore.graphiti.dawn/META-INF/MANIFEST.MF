@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Dawn
+Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.examples.acore.graphiti.dawn;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: org.eclipse.emf.cdo.dawn.examples.acore.graphiti
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.emf.cdo.dawn.graphiti;bundle-version="[2.0.0,3.0.0)"
+Export-Package: org.eclipse.emf.cdo.dawn.examples.acore.graphiti.dawn;version="1.0.0"

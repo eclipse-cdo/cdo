@@ -11,7 +11,11 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.graphiti.diagram;
 
+import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.util.DawnGraphitiAcoreResourceUtil;
+
 import org.eclipse.graphiti.dt.AbstractDiagramTypeProvider;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.platform.IDiagramEditor;
 import org.eclipse.graphiti.tb.IToolBehaviorProvider;
 
 /**
@@ -41,5 +45,13 @@ public class AcoreDiagramTypeProvider extends AbstractDiagramTypeProvider
       toolBehaviorProviders = new IToolBehaviorProvider[] { new AcoreToolBehaviorProvider(this) };
     }
     return toolBehaviorProviders;
+  }
+
+  @Override
+  public void init(Diagram diagram, IDiagramEditor diagramEditor)
+  {
+    super.init(diagram, diagramEditor);
+    DawnGraphitiAcoreResourceUtil.wireDomainModel(diagram, diagram.eResource().getResourceSet(), getDiagramEditor()
+        .getEditingDomain());
   }
 }

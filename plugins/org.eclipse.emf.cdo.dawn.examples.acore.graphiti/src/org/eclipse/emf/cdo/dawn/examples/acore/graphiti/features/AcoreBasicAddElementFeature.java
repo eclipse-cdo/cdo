@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.ABasicClass;
+import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.util.DawnGraphitiAcoreResourceUtil;
 
 import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -160,7 +161,8 @@ public abstract class AcoreBasicAddElementFeature extends AbstractAddShapeFeatur
     // in a real scenario the business model would have its own resource
     if (addedClass.eResource() == null)
     {
-      getDiagram().eResource().getContents().add(addedClass);
+      // getDiagram().eResource().getContents().add(addedClass);
+      DawnGraphitiAcoreResourceUtil.addToModelResource(addedClass, getDiagram().eResource().getResourceSet());
     }
   }
 }

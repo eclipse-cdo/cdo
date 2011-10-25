@@ -24,12 +24,22 @@ import org.eclipse.ui.PlatformUI;
  */
 public class DawnEditorHelper
 {
+  /**
+   * Delivers the active shell from the current display.
+   * 
+   * @return the active shell on the current display
+   */
   public static Shell getActiveShell()
   {
     Shell shell = Display.getCurrent().getActiveShell();
     return shell;
   }
 
+  /**
+   * This method returns the active editor from the active workbench page
+   * 
+   * @return the active editor from the active workbench page or null if there is none
+   */
   public static IEditorPart getActiveEditor()
   {
     IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();

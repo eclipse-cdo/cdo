@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.graphiti.features;
 
+import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.util.DawnGraphitiAcoreResourceUtil;
+
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -37,11 +39,7 @@ public abstract class AcoreBasicCreateElementFeature extends AbstractCreateFeatu
   {
     EObject newObject = createElement();
 
-    // Add model element to resource.
-    // We add the model element to the resource of the diagram for
-    // simplicity's sake. Normally, a customer would use its own
-    // model persistence layer for storing the business model separately.
-    getDiagram().eResource().getContents().add(newObject);
+    DawnGraphitiAcoreResourceUtil.addToModelResource(newObject, getDiagram().eResource().getResourceSet());
 
     // do the add
     addGraphicalRepresentation(context, newObject);

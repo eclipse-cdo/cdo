@@ -52,6 +52,7 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
 
     editor.getDawnEditorSupport().refresh();
     // CDOViewInvalidationEvent e = event;
+
     //
     // adjustDeletedEdges(e);
     //

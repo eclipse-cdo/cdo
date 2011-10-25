@@ -38,12 +38,25 @@ public class EditorDescriptionHelper
     for (IEditorDescriptor editorDescriptor : editors)
     {
       // TODO make this more stable by getting the class name more reliably
-      if (editorDescriptor.getId().contains(".Dawn") || editorDescriptor.getId().contains(".dawn"))
+      String id = editorDescriptor.getId();
+      int lastIndexOf = id.lastIndexOf('.');
+      String lastSegment = id.substring(lastIndexOf + 1, id.length());
+
+      if (lastSegment.toLowerCase().startsWith("dawn"))
       {
         return editorDescriptor;
       }
     }
-
+    // if this fails we try to get one that contains .dawn
+    for (IEditorDescriptor editorDescriptor : editors)
+    {
+      // TODO make this more stable by getting the class name more reliably
+      String id = editorDescriptor.getId();
+      if (id.toLowerCase().contains(".dawn"))
+      {
+        return editorDescriptor;
+      }
+    }
     return null;
   }
 

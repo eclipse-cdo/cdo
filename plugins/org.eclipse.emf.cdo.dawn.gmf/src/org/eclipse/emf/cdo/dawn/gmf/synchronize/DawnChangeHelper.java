@@ -35,6 +35,7 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.requests.ChangeBoundsRequest;
 import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.gmf.runtime.diagram.core.commands.SetPropertyCommand;
@@ -499,19 +500,21 @@ public class DawnChangeHelper
   /**
    * deactivates the given EditPart
    * 
-   * @param e
+   * @param editPart
    */
-  public static void deactivateEditPart(final EditPart e)
+  public static void deactivateEditPart(final EditPart editPart)
   {
     Display.getDefault().asyncExec(new Runnable()
     {
       public void run()
       {
-        e.deactivate();
-        e.getViewer().deselect(e);
+        editPart.deactivate();
+        editPart.getViewer().deselect(editPart);
 
-        org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart g = (org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart)e;
-        g.getFigure().setEnabled(false);
+        // org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart g =
+        // (org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart)e;
+        AbstractGraphicalEditPart graphicalEditPart = (AbstractGraphicalEditPart)editPart;
+        graphicalEditPart.getFigure().setEnabled(false);
       }
     });
   }

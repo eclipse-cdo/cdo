@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.dawn.gmf.appearance;
 
 import org.eclipse.emf.cdo.dawn.appearance.DawnElementStylizer;
+import org.eclipse.emf.cdo.dawn.helper.DawnEditorHelper;
 import org.eclipse.emf.cdo.dawn.ui.stylizer.DawnElementStylizerRegistry;
 
 import org.eclipse.gef.EditPart;
@@ -79,12 +80,18 @@ public class DawnAppearancer
   /**
    * @since 2.0
    */
-  public static void setEditPartLocked(EditPart editPart, int type)
+  public static void setEditPartLocked(final EditPart editPart, final int type)
   {
-    DawnElementStylizer stylizer = DawnElementStylizerRegistry.instance.getStylizer(editPart);
+    final DawnElementStylizer stylizer = DawnElementStylizerRegistry.instance.getStylizer(editPart);
     if (stylizer != null)
     {
-      stylizer.setLocked(editPart, type);
+      DawnEditorHelper.getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          stylizer.setLocked(editPart, type);
+        }
+      });
     }
   }
 }

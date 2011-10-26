@@ -13,8 +13,11 @@ package org.eclipse.emf.cdo.dawn.graphiti.notifications;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
+import org.eclipse.emf.cdo.dawn.gmf.appearance.DawnAppearancer;
 import org.eclipse.emf.cdo.dawn.gmf.synchronize.DawnConflictHelper;
 import org.eclipse.emf.cdo.dawn.gmf.util.DawnDiagramUpdater;
+import org.eclipse.emf.cdo.dawn.graphiti.util.DawnGraphitiUtil;
+import org.eclipse.emf.cdo.dawn.helper.DawnEditorHelper;
 import org.eclipse.emf.cdo.dawn.notifications.BasicDawnTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
@@ -29,7 +32,10 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import org.eclipse.draw2d.graph.Edge;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.RootEditPart;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.swt.widgets.Display;
 
@@ -44,32 +50,18 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
   }
 
   /**
-   * @since 1.0
+   * @since 2.0
    */
   @Override
   public void handleViewInvalidationEvent(CDOViewInvalidationEvent event)
   {
-
     editor.getDawnEditorSupport().refresh();
-    // CDOViewInvalidationEvent e = event;
-
-    //
-    // adjustDeletedEdges(e);
-    //
-    // for (CDOObject dirtyObject : e.getDirtyObjects())
-    // {
-    // handleObject(dirtyObject);
-    // }
-    //
-    // for (CDOObject detachedObject : e.getDetachedObjects())
-    // {
-    // handleObject(detachedObject);
-    // }
   }
 
   /**
-   * @since 1.0
+   * @since 2.0
    */
+  @SuppressWarnings("restriction")
   @Override
   public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
   {
@@ -77,55 +69,40 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
 
     CDOObject cdoObject = cdoTransactionConflictEvent.getConflictingObject();
 
-    @SuppressWarnings("unused")
     EObject element = CDOUtil.getEObject(cdoObject); // either semantic object or notational
-    // View view = DawnDiagramUpdater.findView(element);
-    //
-    // if (DawnConflictHelper.isConflicted(cdoObject))
-    // {
-    // DawnConflictHelper.handleConflictedView(cdoObject, view, (DiagramDocumentEditor)editor);
-    // return;
-    // }
+
+    PictogramElement pictgramElement = DawnGraphitiUtil.getPictgramElement(element);
+
+    GraphicalViewer graphicalViewer = ((DiagramEditor)editor).getGraphicalViewer();
+    final EditPart editpart = DawnGraphitiUtil.getEditpart(pictgramElement, graphicalViewer.getRootEditPart());
+
+    if (DawnConflictHelper.isConflicted(cdoObject))
+    {
+      DawnEditorHelper.getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          int typeConflictLocallyDeleted = DawnAppearancer.TYPE_CONFLICT_REMOTELY_DELETED;
+          DawnAppearancer.setEditPartConflicted(editpart, typeConflictLocallyDeleted);
+        }
+      });
+    }
   }
 
   @Override
   public void modifyingObject(CDOTransaction transaction, final CDOObject object, CDOFeatureDelta featureDelta)
   {
-    // refresh(object);
-    // editor.setDirty();
-    // object.eAdapters().add(new Adapter()
-    // {
-    // public void setTarget(Notifier newTarget)
-    // {
-    // }
-    //
-    // public void notifyChanged(Notification notification)
-    // {
-    // DawnDiagramUpdater.refreshEditPart(((DiagramEditor)editor).getGraphicalViewer().getRootEditPart());
-    //
-    // object.eAdapters().remove(this);
-    // }
-    //
-    // public boolean isAdapterForType(Object type)
-    // {
-    // return false;
-    // }
-    //
-    // public Notifier getTarget()
-    // {
-    // return null;
-    // }
-    // });
+    editor.getDawnEditorSupport().refresh();
   }
 
   /**
-   * @since 1.0
+   * @since 2.0
    */
   @Override
   public void attachingObject(CDOTransaction transaction, CDOObject object)
   {
-    // super.attachingObject(transaction, object);
-    // refresh(object);
+    super.attachingObject(transaction, object);
+    editor.getDawnEditorSupport().refresh();
   }
 
   /**
@@ -174,16 +151,6 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
         }
       }
     });
-  }
-
-  protected void handleConflicts(CDOViewInvalidationEvent e)
-  {
-    // for (CDOObject obj : e.getDetachedObjects())
-    // {
-    // EObject element = CDOUtil.getEObject(obj);
-    // View view = DawnDiagramUpdater.findViewByContainer(element);
-    // DawnConflictHelper.handleConflictedView(CDOUtil.getCDOObject(element), view, (DiagramDocumentEditor)editor);
-    // }
   }
 
   @SuppressWarnings("unused")
@@ -246,39 +213,5 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
   protected void refresh(CDOObject object)
   {
     DawnDiagramUpdater.refreshEditPart(((DiagramEditor)editor).getGraphicalViewer().getRootEditPart());
-
-    // View view = DawnDiagramUpdater.findViewByContainer(object);
-    // if (view == null)
-    // {
-    // view = DawnDiagramUpdater.findViewForModel(object, (DiagramDocumentEditor)editor);
-    // }
-    // if (view == null)
-    // {
-    // DawnDiagramUpdater.findViewFromCrossReferences(object);
-    // }
-    //
-    // EditPart relatedEditPart = DawnDiagramUpdater.findEditPart(view, ((DiagramDocumentEditor)editor)
-    // .getDiagramEditPart().getViewer());
-    //
-    // if (relatedEditPart != null)
-    // {
-    // if (TRACER.isEnabled())
-    // {
-    //        TRACER.format("Updating EditPart {0} ", relatedEditPart); //$NON-NLS-1$
-    // }
-    // EditPart parent = relatedEditPart.getParent();
-    // if (parent instanceof IGraphicalEditPart)
-    // {
-    // DawnDiagramUpdater.refresh((IGraphicalEditPart)parent);
-    // }
-    // else
-    // {
-    // DawnDiagramUpdater.refreshEditPart(parent, (DiagramDocumentEditor)editor);
-    // }
-    // }
-    // else
-    // {
-    // DawnDiagramUpdater.refresh(((DiagramDocumentEditor)editor).getDiagramEditPart());
-    // }
   }
 }

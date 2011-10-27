@@ -14,13 +14,13 @@ import org.eclipse.emf.workspace.WorkspaceEditingDomainFactory;
 
 import org.eclipse.core.commands.operations.DefaultOperationHistory;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.graphiti.ui.editor.DiagramEditorFactory;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
+import org.eclipse.graphiti.ui.editor.DiagramEditorInputFactory;
 import org.eclipse.graphiti.ui.internal.editor.GFWorkspaceCommandStackImpl;
 import org.eclipse.ui.IMemento;
 
 @SuppressWarnings("restriction")
-public class DawnGraphitiDiagramEditorFactory extends DiagramEditorFactory
+public class DawnGraphitiDiagramEditorFactory extends DiagramEditorInputFactory
 {
   @Override
   public IAdaptable createElement(IMemento memento)

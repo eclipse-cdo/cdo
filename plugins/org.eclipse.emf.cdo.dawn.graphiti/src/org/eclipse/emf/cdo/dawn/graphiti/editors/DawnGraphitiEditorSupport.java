@@ -38,6 +38,7 @@ import org.eclipse.gef.RootEditPart;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -189,24 +190,39 @@ public class DawnGraphitiEditorSupport extends DawnAbstractEditorSupport
     refresh();
   }
 
-  public void handleRemoteLockChanges(Map<Object, DawnState> changedObjects)
+  public void handleRemoteLockChanges(final Map<Object, DawnState> changedObjects)
   {
-    for (Object o : changedObjects.keySet())
+    DawnEditorHelper.getDisplay().asyncExec(new Runnable()
     {
-      handleLock((CDOObject)o, getView());
-    }
+      public void run()
+      {
+        for (Object o : changedObjects.keySet())
+        {
+          handleLock((CDOObject)o, getView());
+        }
+      }
+    });
+
     refresh();
   }
 
   private void handleLock(CDOObject object, CDOView cdoView)
   {
     EObject element = CDOUtil.getEObject(object); // either semantic object or notational
-    PictogramElement pictogramElement = DawnGraphitiUtil.getPictgramElement(element);
-    if (pictogramElement != null)
+
+    DiagramEditor editor = (DiagramEditor)getEditor();
+
+    List<PictogramElement> pictogramElements = DawnGraphitiUtil.getPictgramElements(editor.getDiagramTypeProvider()
+        .getDiagram(), element);
+
+    for (PictogramElement pictogramElement : pictogramElements)
     {
-      // if there is no view, the semantic object is not displayed.
-      EditPart editPart = DawnGraphitiUtil.getEditpart(pictogramElement, ((DiagramEditor)getEditor())
-          .getGraphicalViewer().getRootEditPart());
+      EditPart editPart = DawnGraphitiUtil.getEditpart(pictogramElement, editor.getGraphicalViewer().getRootEditPart());
+
+      if (editPart == null)
+      {
+        continue;
+      }
 
       if (object.cdoWriteLock().isLocked())
       {

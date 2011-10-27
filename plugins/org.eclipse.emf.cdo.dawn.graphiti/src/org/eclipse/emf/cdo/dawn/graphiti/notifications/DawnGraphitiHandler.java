@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
+import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.emf.ecore.EObject;
@@ -38,6 +39,8 @@ import org.eclipse.gef.RootEditPart;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.swt.widgets.Display;
+
+import java.util.List;
 
 /**
  * @author Martin Fluegge
@@ -55,7 +58,9 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
   @Override
   public void handleViewInvalidationEvent(CDOViewInvalidationEvent event)
   {
+    CDOView view = editor.getDawnEditorSupport().getView();
     editor.getDawnEditorSupport().refresh();
+    System.out.println(view);
   }
 
   /**
@@ -71,27 +76,33 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
 
     EObject element = CDOUtil.getEObject(cdoObject); // either semantic object or notational
 
-    PictogramElement pictgramElement = DawnGraphitiUtil.getPictgramElement(element);
+    List<PictogramElement> pictgramElements = DawnGraphitiUtil.getPictgramElements(((DiagramEditor)editor)
+        .getDiagramTypeProvider().getDiagram(), element);
 
     GraphicalViewer graphicalViewer = ((DiagramEditor)editor).getGraphicalViewer();
-    final EditPart editpart = DawnGraphitiUtil.getEditpart(pictgramElement, graphicalViewer.getRootEditPart());
 
-    if (DawnConflictHelper.isConflicted(cdoObject))
+    for (PictogramElement pictgramElement : pictgramElements)
     {
-      DawnEditorHelper.getDisplay().syncExec(new Runnable()
+      final EditPart editpart = DawnGraphitiUtil.getEditpart(pictgramElement, graphicalViewer.getRootEditPart());
+
+      if (DawnConflictHelper.isConflicted(cdoObject))
       {
-        public void run()
+        DawnEditorHelper.getDisplay().syncExec(new Runnable()
         {
-          int typeConflictLocallyDeleted = DawnAppearancer.TYPE_CONFLICT_REMOTELY_DELETED;
-          DawnAppearancer.setEditPartConflicted(editpart, typeConflictLocallyDeleted);
-        }
-      });
+          public void run()
+          {
+            int typeConflictLocallyDeleted = DawnAppearancer.TYPE_CONFLICT_REMOTELY_DELETED;
+            DawnAppearancer.setEditPartConflicted(editpart, typeConflictLocallyDeleted);
+          }
+        });
+      }
     }
   }
 
   @Override
   public void modifyingObject(CDOTransaction transaction, final CDOObject object, CDOFeatureDelta featureDelta)
   {
+    super.modifyingObject(transaction, object, featureDelta);
     editor.getDawnEditorSupport().refresh();
   }
 

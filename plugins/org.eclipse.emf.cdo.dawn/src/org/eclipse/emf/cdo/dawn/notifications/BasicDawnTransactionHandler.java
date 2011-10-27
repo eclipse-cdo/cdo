@@ -55,7 +55,13 @@ public class BasicDawnTransactionHandler extends BasicDawnListener implements ID
   }
 
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
-  { // This method can be overwritten be subclasses
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("modifyingObject {0}", object); //$NON-NLS-1$
+    }
+
+    editor.setDirty();
   }
 
   public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)

@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
 import org.eclipse.graphiti.ui.internal.services.GraphitiUiInternal;
@@ -111,12 +112,20 @@ public class DawnGraphitiDiagramEditor extends DiagramEditor implements IDawnEdi
   @Override
   public boolean isDirty()
   {
-    return super.isDirty() || dawnEditorSupport.isDirty();
+    // return super.isDirty() || dawnEditorSupport.isDirty();
+    return dawnEditorSupport.isDirty();
   }
 
   public void setDirty()
   {
     dawnEditorSupport.setDirty(true);
+  }
+
+  @Override
+  public void doSave(IProgressMonitor monitor)
+  {
+    dawnEditorSupport.setDirty(false);
+    super.doSave(monitor);
   }
 
   @Override

@@ -466,20 +466,19 @@ public class DawnChangeHelper
   /**
    * activates a given EditPart
    * 
-   * @param e
+   * @param editPart
    */
-  public static void activateEditPart(final EditPart e)
+  public static void activateEditPart(final EditPart editPart)
   {
     Display.getDefault().asyncExec(new Runnable()
     {
       public void run()
       {
-        e.activate();
-        org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart g = (org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart)e;
-        g.getFigure().setEnabled(true);
+        editPart.activate();
+        AbstractGraphicalEditPart graphicalEditPart = (AbstractGraphicalEditPart)editPart;
+        graphicalEditPart.getFigure().setEnabled(true);
       }
     });
-
   }
 
   /**
@@ -511,8 +510,6 @@ public class DawnChangeHelper
         editPart.deactivate();
         editPart.getViewer().deselect(editPart);
 
-        // org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart g =
-        // (org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart)e;
         AbstractGraphicalEditPart graphicalEditPart = (AbstractGraphicalEditPart)editPart;
         graphicalEditPart.getFigure().setEnabled(false);
       }

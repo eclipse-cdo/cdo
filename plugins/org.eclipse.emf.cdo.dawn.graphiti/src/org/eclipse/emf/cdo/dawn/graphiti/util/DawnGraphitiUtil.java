@@ -13,7 +13,12 @@ package org.eclipse.emf.cdo.dawn.graphiti.util;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.gef.EditPart;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.services.Graphiti;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Martin Fluegge
@@ -33,14 +38,36 @@ public class DawnGraphitiUtil
       {
         return child;
       }
-      return getEditpart(pictogramElement, child);
+
+      EditPart childEditPart = getEditpart(pictogramElement, child);
+      if (childEditPart != null)
+      {
+        return childEditPart;
+      }
     }
     return null;
   }
 
+  public static List<PictogramElement> getPictgramElements(Diagram diagram, EObject element)
+  {
+    PictogramElement pictgramElement = getPictgramElement(element);
+
+    if (element instanceof PictogramElement)
+    {
+      return Collections.singletonList((PictogramElement)element);
+    }
+
+    if (pictgramElement != null)
+    {
+      return Collections.singletonList(pictgramElement);
+    }
+
+    return Graphiti.getLinkService().getPictogramElements(diagram, element);
+  }
+
   /**
    * Tries to retriev the pictogram element from a given element. If the element itself is a PictogramElement, the
-   * element will be returned. Otherwise all eContainers will be checked until a PictogramElement ist found.
+   * element will be returned. Otherwise all eContainers will be checked until a PictogramElement is found.
    */
   public static PictogramElement getPictgramElement(EObject element)
   {

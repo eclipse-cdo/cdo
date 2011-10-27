@@ -60,7 +60,7 @@ public class DawnEMFEditorSupport extends DawnAbstractEditorSupport
   @Override
   protected CDOTransactionHandlerBase getTransactionHandler()
   {
-    return null;
+    return new DawnEMFHandler(getEditor());
   }
 
   @Override

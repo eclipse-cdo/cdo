@@ -36,6 +36,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Bug 359992.
+ * 
  * @author Martin Fluegge
  */
 public class Bugzilla_359992_Test extends AbstractCDOTest
@@ -53,7 +55,7 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
 
   @Requires(IModelConfig.CAPABILITY_LEGACY)
   @CleanRepositoriesBefore
-  public void _testInvalidationNotification() throws Exception
+  public void testInvalidationNotification() throws Exception
   {
     CDOSession session = openSession();
     CDOUtil.setLegacyModeDefault(true);
@@ -86,10 +88,7 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
     TestAdapter adapter = new TestAdapter();
     customer1.eAdapters().add(adapter);
 
-    Thread thread = new Thread(new RemoteClient());
-
-    thread.start();
-    thread.join();
+    doClient2();
 
     latch.await(10 * DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
     assertEquals(true, adapter.notified());
@@ -131,10 +130,7 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
     TestAdapter adapter = new TestAdapter();
     customer1.eAdapters().add(adapter);
 
-    Thread thread = new Thread(new RemoteClient());
-
-    thread.start();
-    thread.join();
+    doClient2();
 
     latch.await(10 * DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
     assertEquals(true, adapter.notified());
@@ -155,35 +151,25 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
     return customer1;
   }
 
-  class RemoteClient implements Runnable
+  private void doClient2() throws CommitException
   {
-    public void run()
-    {
-      CDOSession session = openSession();
-      CDOUtil.setLegacyModeDefault(true);
-      CDONet4jSession.Options options = (Options)session.options();
-      options.setCommitTimeout(10 * CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS);
-      CDOTransaction transaction2 = session.openTransaction();
+    CDOSession session = openSession();
+    CDOUtil.setLegacyModeDefault(true);
+    CDONet4jSession.Options options = (Options)session.options();
+    options.setCommitTimeout(10 * CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS);
+    CDOTransaction transaction2 = session.openTransaction();
 
-      Resource resource2 = transaction2.getResource(getResourcePath(RESOURCE_PATH));
-      Customer customer2 = (Customer)resource2.getContents().get(1);
+    Resource resource2 = transaction2.getResource(getResourcePath(RESOURCE_PATH));
+    Customer customer2 = (Customer)resource2.getContents().get(1);
 
-      SalesOrder existingSalesOrder = customer2.getSalesOrders().get(0);
-      EcoreUtil.delete(existingSalesOrder);
+    SalesOrder existingSalesOrder = customer2.getSalesOrders().get(0);
+    EcoreUtil.delete(existingSalesOrder);
 
-      SalesOrder newSalesOrder = Model1Factory.eINSTANCE.createSalesOrder();
-      customer2.getSalesOrders().add(newSalesOrder);
-      resource2.getContents().add(newSalesOrder);
+    SalesOrder newSalesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    customer2.getSalesOrders().add(newSalesOrder);
+    resource2.getContents().add(newSalesOrder);
 
-      try
-      {
-        transaction2.commit();
-      }
-      catch (CommitException ex)
-      {
-        ex.printStackTrace();
-      }
-    }
+    transaction2.commit();
   }
 
   /**
@@ -231,8 +217,9 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
             }
           }
         }
-        latch.countDown();
+
         notified = true;
+        latch.countDown();
       }
     }
 
@@ -251,5 +238,4 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
       return failureMessage;
     }
   }
-
 }

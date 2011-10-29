@@ -210,6 +210,10 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       return new CDOContainerGetter(this, mappedProperty.getName());
     }
+    else if (mappedProperty.getName().compareTo(CDOHibernateConstants.COMMITTIMESTAMP_PROPERTY) == 0)
+    {
+      return new CDOBranchTimeStampGetter(this, mappedProperty.getName());
+    }
 
     EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());
     if (feature instanceof EReference && feature.isMany())
@@ -261,6 +265,11 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     if (mappedProperty.getName().compareTo(CDOHibernateConstants.CONTAINER_PROPERTY) == 0)
     {
       return new CDOContainerSetter(this, mappedProperty.getName());
+    }
+
+    if (mappedProperty.getName().compareTo(CDOHibernateConstants.COMMITTIMESTAMP_PROPERTY) == 0)
+    {
+      return new CDOBranchTimeStampSetter(this, mappedProperty.getName());
     }
 
     EStructuralFeature feature = getEClass().getEStructuralFeature(mappedProperty.getName());

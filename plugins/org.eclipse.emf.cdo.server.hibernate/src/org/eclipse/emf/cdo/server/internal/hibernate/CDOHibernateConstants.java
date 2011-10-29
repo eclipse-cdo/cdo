@@ -20,6 +20,8 @@ public class CDOHibernateConstants
 {
   public static final String ID_PROPERTY = "id"; //$NON-NLS-1$
 
+  public static final String COMMITTIMESTAMP_PROPERTY = "commit_TimeStamp"; //$NON-NLS-1$
+
   public static final String RESOURCE_PROPERTY = "resourceID"; //$NON-NLS-1$
 
   public static final String RESOURCE_PROPERTY_COLUMN = "resource_id"; //$NON-NLS-1$

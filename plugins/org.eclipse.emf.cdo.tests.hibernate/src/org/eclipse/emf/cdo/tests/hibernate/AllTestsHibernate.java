@@ -21,6 +21,9 @@ import org.eclipse.emf.cdo.tests.CommitInfoTest;
 import org.eclipse.emf.cdo.tests.ComplexTest;
 import org.eclipse.emf.cdo.tests.ContainmentTest;
 import org.eclipse.emf.cdo.tests.ExternalReferenceTest;
+import org.eclipse.emf.cdo.tests.LockingManagerRestartRepositoryTest;
+import org.eclipse.emf.cdo.tests.LockingManagerRestartSessionTest;
+import org.eclipse.emf.cdo.tests.LockingManagerRestartTransactionTest;
 import org.eclipse.emf.cdo.tests.LockingManagerTest;
 import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.MergingTest;
@@ -75,12 +78,13 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses)
   {
     // testClasses.clear();
-    // testClasses.add(XRefTest.class);
+    // testClasses.add(HibernateTimeStampTest.class);
     // if (true)
     // {
     // return;
     // }
 
+    testClasses.add(HibernateTimeStampTest.class);
     testClasses.add(Hibernate_Bugzilla_279982_Test.class);
     testClasses.add(Hibernate_ContainmentTest.class);
     testClasses.add(HibernateXATransactionTest.class);
@@ -107,6 +111,12 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.remove(Bugzilla_322804_Test.class);
 
     testClasses.remove(Bugzilla_279982_Test.class);
+
+    // locking not supported
+    testClasses.remove(LockingManagerRestartRepositoryTest.class);
+    testClasses.remove(LockingManagerRestartSessionTest.class);
+    testClasses.remove(LockingManagerRestartTransactionTest.class);
+    testClasses.remove(LockingManagerRestartRepositoryTest.class);
 
     // are replaced by Hibernate specific ones, mostly
     // to prevent tests doing move from one container to another

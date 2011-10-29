@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.server.hibernate" version="2">
+    <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/CDOHibernateBranchPointImpl.java" type="org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateBranchPointImpl">
+        <filter comment="Need to implement own version of branch point to store commit information" id="574619656">
+            <message_arguments>
+                <message_argument value="CDOBranchPoint"/>
+                <message_argument value="CDOHibernateBranchPointImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/hibernate/tuplizer/WrappedHibernateList.java" type="org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.WrappedHibernateList">
         <filter id="574660632">
             <message_arguments>

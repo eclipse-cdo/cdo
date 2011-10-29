@@ -699,6 +699,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         try
         {
           final CDORevision revision = HibernateUtil.getInstance().getCDORevision(id);
+
           // maybe deleted in parallell?
           if (revision != null)
           {

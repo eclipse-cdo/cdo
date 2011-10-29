@@ -14,12 +14,16 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 
 /**
- * Encapsulates the immutable information of a single CDO object between two commits in a {@link CDOBranch branch}.
+ * Encapsulates the immutable system information of a <b>single</b> CDO {@link EObject object} between two
+ * {@link CDOCommitInfo commits} in a {@link CDOBranch branch} and provides access to its modeled
+ * {@link CDORevisionData data}.
  * 
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

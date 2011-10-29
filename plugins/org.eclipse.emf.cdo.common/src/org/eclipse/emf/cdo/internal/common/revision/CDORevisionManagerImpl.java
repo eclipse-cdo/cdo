@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -151,9 +152,25 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     this.cache = (InternalCDORevisionCache)cache;
   }
 
+  public EClass getObjectType(CDOID id, CDOBranchManager branchManagerForLoadOnDemand)
+  {
+    EClass type = cache.getObjectType(id);
+    if (type == null && branchManagerForLoadOnDemand != null)
+    {
+      CDOBranch mainBranch = branchManagerForLoadOnDemand.getMainBranch();
+      CDORevision revision = getRevisionByVersion(id, mainBranch.getVersion(CDOBranchVersion.FIRST_VERSION), 0, true);
+      if (revision != null)
+      {
+        type = revision.getEClass();
+      }
+    }
+
+    return type;
+  }
+
   public EClass getObjectType(CDOID id)
   {
-    return cache.getObjectType(id);
+    return getObjectType(id, null);
   }
 
   public boolean containsRevision(CDOID id, CDOBranchPoint branchPoint)

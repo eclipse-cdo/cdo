@@ -23,10 +23,6 @@ public class DawnRuntimePlugin extends AbstractUIPlugin
 
   private static DawnRuntimePlugin plugin;
 
-  public DawnRuntimePlugin()
-  {
-  }
-
   @Override
   public void start(BundleContext context) throws Exception
   {

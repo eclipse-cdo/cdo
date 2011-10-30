@@ -30,7 +30,7 @@ public class Architecture
   /**
    * OSGi
    * <p>
-   * The Open Services Gateway Initiative...
+   * The <i>Open Services Gateway Initiative</i> (OSGi)...
    */
   public class OSGi
   {

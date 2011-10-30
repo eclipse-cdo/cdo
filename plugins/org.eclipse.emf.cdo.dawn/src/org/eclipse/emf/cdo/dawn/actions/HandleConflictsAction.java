@@ -39,10 +39,6 @@ public class HandleConflictsAction implements IObjectActionDelegate
 
   public final static String ID = "org.eclipse.emf.cdo.dawn.actions.HandleConflictAction";
 
-  public HandleConflictsAction()
-  {
-  }
-
   public void run(IAction action)
   {
 

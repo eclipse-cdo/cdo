@@ -10,15 +10,21 @@
  */
 package org.eclipse.emf.cdo.dawn.ui.helper;
 
+import org.eclipse.emf.cdo.dawn.spi.IDawnUIElement;
+
 import org.eclipse.emf.ecore.resource.Resource;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.registry.EditorDescriptor;
 
 /**
  * @author Martin Fluegge
  */
+@SuppressWarnings("restriction")
 public class EditorDescriptionHelper
 {
   public static String getEditorIdForDawnEditor(String resourceName)
@@ -37,24 +43,19 @@ public class EditorDescriptionHelper
 
     for (IEditorDescriptor editorDescriptor : editors)
     {
-      // TODO make this more stable by getting the class name more reliably
-      String id = editorDescriptor.getId();
-      int lastIndexOf = id.lastIndexOf('.');
-      String lastSegment = id.substring(lastIndexOf + 1, id.length());
+      EditorDescriptor des = (EditorDescriptor)editorDescriptor;
 
-      if (lastSegment.toLowerCase().startsWith("dawn"))
+      try
       {
-        return editorDescriptor;
+        IEditorPart editor = des.createEditor();
+        if (editor instanceof IDawnUIElement)
+        {
+          return editorDescriptor;
+        }
       }
-    }
-    // if this fails we try to get one that contains .dawn
-    for (IEditorDescriptor editorDescriptor : editors)
-    {
-      // TODO make this more stable by getting the class name more reliably
-      String id = editorDescriptor.getId();
-      if (id.toLowerCase().contains(".dawn"))
+      catch (CoreException ex)
       {
-        return editorDescriptor;
+        throw new RuntimeException(ex);
       }
     }
     return null;

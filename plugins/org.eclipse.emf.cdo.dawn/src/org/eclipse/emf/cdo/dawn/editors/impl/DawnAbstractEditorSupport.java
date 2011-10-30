@@ -100,6 +100,7 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
         transaction.addTransactionHandler(transactionHandler);
       }
       transaction.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.CDO);
+      transaction.options().setAutoReleaseLocksEnabled(false);
     }
   }
 

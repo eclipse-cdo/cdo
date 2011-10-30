@@ -29,6 +29,8 @@ public class Architecture
 {
   /**
    * OSGi
+   * <p>
+   * The Open Services Gateway Initiative...
    */
   public class OSGi
   {

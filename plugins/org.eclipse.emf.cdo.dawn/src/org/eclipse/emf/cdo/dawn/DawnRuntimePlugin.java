@@ -25,6 +25,7 @@ public class DawnRuntimePlugin extends AbstractUIPlugin
 
   public DawnRuntimePlugin()
   {
+    System.out.println();
   }
 
   @Override

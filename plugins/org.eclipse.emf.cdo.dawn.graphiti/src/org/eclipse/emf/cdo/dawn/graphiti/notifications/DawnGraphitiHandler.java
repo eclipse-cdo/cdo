@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
-import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.emf.ecore.EObject;
@@ -58,9 +57,7 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
   @Override
   public void handleViewInvalidationEvent(CDOViewInvalidationEvent event)
   {
-    CDOView view = editor.getDawnEditorSupport().getView();
     editor.getDawnEditorSupport().refresh();
-    System.out.println(view);
   }
 
   /**

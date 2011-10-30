@@ -107,19 +107,6 @@ public class DawnGraphitiEditorSupport extends DawnAbstractEditorSupport
 
   public void refresh()
   {
-    // final DiagramEditor editor = (DiagramEditor)getEditor();
-    // TransactionalEditingDomain editingDomain = editor.getEditingDomain();
-    // editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
-    // {
-    // @Override
-    // public void doExecute()
-    // {
-    // RootEditPart rootEditPart = editor.getGraphicalViewer().getRootEditPart();
-    // DawnAppearancer.setEditPartDefaultAllChildren(rootEditPart);
-    // DawnDiagramUpdater.refreshEditPart(rootEditPart);
-    // }
-    // });
-
     DawnEditorHelper.getDisplay().asyncExec(new Runnable()
     {
       public void run()

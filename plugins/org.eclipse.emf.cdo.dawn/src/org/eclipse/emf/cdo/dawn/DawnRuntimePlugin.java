@@ -23,17 +23,10 @@ public class DawnRuntimePlugin extends AbstractUIPlugin
 
   private static DawnRuntimePlugin plugin;
 
-  /**
-   * The constructor
-   */
   public DawnRuntimePlugin()
   {
   }
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-   */
   @Override
   public void start(BundleContext context) throws Exception
   {
@@ -41,10 +34,6 @@ public class DawnRuntimePlugin extends AbstractUIPlugin
     plugin = this;
   }
 
-  /*
-   * (non-Javadoc)
-   * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-   */
   @Override
   public void stop(BundleContext context) throws Exception
   {
@@ -52,11 +41,6 @@ public class DawnRuntimePlugin extends AbstractUIPlugin
     super.stop(context);
   }
 
-  /**
-   * Returns the shared instance
-   * 
-   * @return the shared instance
-   */
   public static DawnRuntimePlugin getDefault()
   {
     return plugin;

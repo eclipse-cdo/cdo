@@ -53,6 +53,7 @@
 	</condition>
 
 	<!-- Default properties intended to be overridden by entries in the above property file -->
+	<property name="git.clone" location="${build.root}/git" />
 	<property name="tools" location="${build.root}/tools" />
 	<property name="result" location="${build.root}/result" />
 	<property name="workspace" location="${result}/workspace" />
@@ -61,7 +62,6 @@
 	<property name="buckminster.temp.root" location="${result}/temp" />
 	<property name="buckminster.temp.zips" value="${buckminster.temp.root}/zips" />
 	<property name="temp" location="${workspace}/_temp" />
-	<property name="git.clone" location="${hudson.WORKSPACE}/git" />
 
 	<!-- This macro executes the default application of an eclipse installation
 			 that resides in the folder ${buildtools}/@app -->

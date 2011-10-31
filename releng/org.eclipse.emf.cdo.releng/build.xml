@@ -333,7 +333,7 @@
 			</cmdargs>
 		</buckminster>
 
-		<echo message="Creating a empty test report to make Hudson happy" />
+		<echo message="Creating an empty test report to make Hudson happy" />
 		<copy file="${git.clone}/releng/org.eclipse.emf.cdo.releng/hudson/test-report-empty.xml"
 		      tofile="${result}/test-report.xml" />
 	</target>

@@ -2,7 +2,7 @@
 <project name="CDO">
 
 	<property name="stream" value="4.0" />
-	<property name="branch" value="branches/4.0-maintenance" />
+	<property name="branch" value="streams/4.0-maintenance" />
 	<property name="weekly.build.type" value="M" />
 
 	<condition property="properties.file" value="build.properties" else="local.properties">
@@ -312,14 +312,14 @@
 		-->
 
 		<unzip dest="${workspace}"
-		       src="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
+		       src="${build.root}/git/cdo-4.0/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
 
 		<mkdir dir="${targetPlatformPath}" />
 		<buckminster command="import">
 			<cmdargs>
 				<!--
 				<arg value="-T" />
-				<arg value="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
+				<arg value="${build.root}/git/cdo-4.0/releng/org.eclipse.emf.cdo.releng/hudson/workspace.zip" />
 				-->
 
 				<arg value="-B" />
@@ -334,7 +334,7 @@
 		</buckminster>
 
 		<echo message="Creating a empty test report to make Hudson happy" />
-		<copy file="${build.root}/org.eclipse.emf.cdo/releng/org.eclipse.emf.cdo.releng/hudson/test-report-empty.xml"
+		<copy file="${build.root}/git/cdo-4.0/releng/org.eclipse.emf.cdo.releng/hudson/test-report-empty.xml"
 		      tofile="${result}/test-report.xml" />
 	</target>
 
@@ -353,7 +353,7 @@
 		          deleteonexit="true"
 		          property="build.qualifier.file.name" />
 		<java classname="org.eclipse.emf.cdo.releng.GenerateBuildQualifier" dir="${basedir}" fork="true">
-			<classpath path="${workspace}/plugins/org.eclipse.emf.cdo.releng/bin" />
+			<classpath path="${build.root}/git/cdo-4.0/releng/org.eclipse.emf.cdo.releng/bin" />
 			<arg value="${build.type}" />
 			<arg value="${build.timestamp}" />
 			<arg value="${build.qualifier.file.name}" />

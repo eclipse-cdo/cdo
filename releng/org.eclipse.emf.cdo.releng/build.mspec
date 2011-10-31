@@ -4,6 +4,8 @@
   <mspec:property key="target.ws" value="*"/>
   <mspec:property key="target.arch" value="*"/>
   <mspec:property key="resolve.target.platform" value="true"/>
+	
   <mspec:mspecNode namePattern="^org\.eclipse\.emf\.cdo\.server\.product$" materializer="workspace" resourcePath="org.eclipse.emf.cdo.server.product-feature"/>
-  <mspec:mspecNode materializer="workspace" filter="(buckminster.source=true)"/>
+  
+	<mspec:mspecNode materializer="workspace" filter="(buckminster.source=true)"/>
 </mspec:mspec>

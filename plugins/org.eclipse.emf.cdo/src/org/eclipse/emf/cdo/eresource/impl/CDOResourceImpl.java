@@ -99,7 +99,7 @@ import java.util.concurrent.Callable;
  *           </p>
  * @generated
  */
-public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource, Resource.Internal
+public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource, Resource.Internal
 {
   private static final EReference CDO_RESOURCE_CONTENTS = EresourcePackage.eINSTANCE.getCDOResource_Contents();
 

@@ -10,9 +10,13 @@
  */
 package org.eclipse.emf.cdo.eresource.util;
 
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
+import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
 import org.eclipse.emf.ecore.EClass;
@@ -76,7 +80,6 @@ public class EresourceSwitch<T>
     {
       return doSwitch(theEClass.getClassifierID(), theEObject);
     }
-
     List<EClass> eSuperTypes = theEClass.getESuperTypes();
     return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
   }
@@ -122,7 +125,87 @@ public class EresourceSwitch<T>
       T result = caseCDOResource(cdoResource);
       if (result == null)
       {
+        result = caseCDOResourceLeaf(cdoResource);
+      }
+      if (result == null)
+      {
         result = caseCDOResourceNode(cdoResource);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case EresourcePackage.CDO_RESOURCE_LEAF:
+    {
+      CDOResourceLeaf cdoResourceLeaf = (CDOResourceLeaf)theEObject;
+      T result = caseCDOResourceLeaf(cdoResourceLeaf);
+      if (result == null)
+      {
+        result = caseCDOResourceNode(cdoResourceLeaf);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case EresourcePackage.CDO_FILE_RESOURCE:
+    {
+      CDOFileResource<?> cdoFileResource = (CDOFileResource<?>)theEObject;
+      T result = caseCDOFileResource(cdoFileResource);
+      if (result == null)
+      {
+        result = caseCDOResourceLeaf(cdoFileResource);
+      }
+      if (result == null)
+      {
+        result = caseCDOResourceNode(cdoFileResource);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case EresourcePackage.CDO_BINARY_RESOURCE:
+    {
+      CDOBinaryResource cdoBinaryResource = (CDOBinaryResource)theEObject;
+      T result = caseCDOBinaryResource(cdoBinaryResource);
+      if (result == null)
+      {
+        result = caseCDOFileResource(cdoBinaryResource);
+      }
+      if (result == null)
+      {
+        result = caseCDOResourceLeaf(cdoBinaryResource);
+      }
+      if (result == null)
+      {
+        result = caseCDOResourceNode(cdoBinaryResource);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case EresourcePackage.CDO_TEXT_RESOURCE:
+    {
+      CDOTextResource cdoTextResource = (CDOTextResource)theEObject;
+      T result = caseCDOTextResource(cdoTextResource);
+      if (result == null)
+      {
+        result = caseCDOFileResource(cdoTextResource);
+      }
+      if (result == null)
+      {
+        result = caseCDOResourceLeaf(cdoTextResource);
+      }
+      if (result == null)
+      {
+        result = caseCDOResourceNode(cdoTextResource);
       }
       if (result == null)
       {
@@ -178,6 +261,70 @@ public class EresourceSwitch<T>
    * @generated
    */
   public T caseCDOResource(CDOResource object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>CDO Resource Leaf</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch.
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>CDO Resource Leaf</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCDOResourceLeaf(CDOResourceLeaf object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>CDO File Resource</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch.
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>CDO File Resource</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCDOFileResource(CDOFileResource<?> object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>CDO Binary Resource</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch.
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>CDO Binary Resource</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCDOBinaryResource(CDOBinaryResource object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>CDO Text Resource</em>'. <!-- begin-user-doc
+   * --> This implementation returns null; returning a non-null result will terminate the switch.
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>CDO Text Resource</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCDOTextResource(CDOTextResource object)
   {
     return null;
   }

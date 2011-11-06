@@ -1,12 +1,8 @@
-/*
- * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/**
+ * <copyright>
+ * </copyright>
  *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+ * $Id$
  */
 package org.eclipse.emf.cdo.etypes;
 
@@ -17,16 +13,16 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 /**
- * <!-- begin-user-doc --> The <b>Package</b> for the Etypes model. It contains accessors for the meta objects to
- * represent
+ * <!-- begin-user-doc --> The <b>Package</b> for the model. It contains accessors for the meta objects to represent
  * <ul>
  * <li>each class,</li>
  * <li>each feature of each class,</li>
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * <!-- end-user-doc -->
  * 
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.etypes.EtypesFactory
  * @model kind="package"
  * @generated
@@ -177,6 +173,16 @@ public interface EtypesPackage extends EPackage
   int CLOB = 3;
 
   /**
+   * The meta object id for the '<em>Lob</em>' data type. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.common.lob.CDOLob
+   * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getLob()
+   * @generated
+   */
+  int LOB = 4;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.etypes.ModelElement <em>Model Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -270,7 +276,7 @@ public interface EtypesPackage extends EPackage
    * 
    * @return the meta object for data type '<em>Blob</em>'.
    * @see org.eclipse.emf.cdo.common.lob.CDOBlob
-   * @model instanceClass="org.eclipse.emf.cdo.etypes.CDOBlob"
+   * @model instanceClass="org.eclipse.emf.cdo.common.lob.CDOBlob"
    * @generated
    */
   EDataType getBlob();
@@ -281,10 +287,22 @@ public interface EtypesPackage extends EPackage
    * 
    * @return the meta object for data type '<em>Clob</em>'.
    * @see org.eclipse.emf.cdo.common.lob.CDOClob
-   * @model instanceClass="org.eclipse.emf.cdo.etypes.CDOClob"
+   * @model instanceClass="org.eclipse.emf.cdo.common.lob.CDOClob"
    * @generated
    */
   EDataType getClob();
+
+  /**
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.lob.CDOLob <em>Lob</em>}'. <!--
+   * begin-user-doc -->
+   * 
+   * @since 4.1<!-- end-user-doc -->
+   * @return the meta object for data type '<em>Lob</em>'.
+   * @see org.eclipse.emf.cdo.common.lob.CDOLob
+   * @model instanceClass="org.eclipse.emf.cdo.common.lob.CDOLob"
+   * @generated
+   */
+  EDataType getLob();
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -302,17 +320,17 @@ public interface EtypesPackage extends EPackage
    * <li>each enum,</li>
    * <li>and each data type</li>
    * </ul>
-   * <!-- end-user-doc -->
    * 
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
    * @generated
    */
   interface Literals
   {
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.etypes.impl.ModelElementImpl <em>Model Element</em>}'
-     * class. <!-- begin-user-doc -->
+     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @apiviz.exclude <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.etypes.impl.ModelElementImpl
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getModelElement()
      * @generated
@@ -394,6 +412,16 @@ public interface EtypesPackage extends EPackage
      * @generated
      */
     EDataType CLOB = eINSTANCE.getClob();
+
+    /**
+     * The meta object literal for the '<em>Lob</em>' data type. <!-- begin-user-doc -->
+     * 
+     * @since 4.1<!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.common.lob.CDOLob
+     * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getLob()
+     * @generated
+     */
+    EDataType LOB = eINSTANCE.getLob();
 
   }
 

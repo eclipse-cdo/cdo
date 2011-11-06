@@ -35,8 +35,9 @@ import java.util.List;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.eresource.CDOResourceFolder} object. <!--
- * begin-user-doc --> <!-- end-user-doc -->
+ * begin-user-doc -->
  * 
+ * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  * @generated
  * @since 2.0
  */
@@ -173,6 +174,12 @@ public class CDOResourceFolderItemProvider extends CDOResourceNodeItemProvider i
 
     newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES,
         EresourceFactory.eINSTANCE.createCDOResource()));
+
+    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES,
+        EresourceFactory.eINSTANCE.createCDOBinaryResource()));
+
+    newChildDescriptors.add(createChildParameter(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES,
+        EresourceFactory.eINSTANCE.createCDOTextResource()));
   }
 
 }

@@ -65,9 +65,8 @@ public interface EresourcePackage extends EPackage
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl
-   * <em>CDO Resource Node</em>}' class. <!-- begin-user-doc -->
+   * <em>CDO Resource Node</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl
    * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOResourceNode()
    * @generated
@@ -75,36 +74,33 @@ public interface EresourcePackage extends EPackage
   int CDO_RESOURCE_NODE = 0;
 
   /**
-   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CDO_RESOURCE_NODE__FOLDER = 0;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CDO_RESOURCE_NODE__NAME = 1;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CDO_RESOURCE_NODE__PATH = 2;
 
   /**
-   * The number of structural features of the '<em>CDO Resource Node</em>' class. <!-- begin-user-doc -->
+   * The number of structural features of the '<em>CDO Resource Node</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -112,9 +108,8 @@ public interface EresourcePackage extends EPackage
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl
-   * <em>CDO Resource Folder</em>}' class. <!-- begin-user-doc -->
+   * <em>CDO Resource Folder</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl
    * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOResourceFolder()
    * @generated
@@ -122,49 +117,93 @@ public interface EresourcePackage extends EPackage
   int CDO_RESOURCE_FOLDER = 1;
 
   /**
-   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CDO_RESOURCE_FOLDER__FOLDER = CDO_RESOURCE_NODE__FOLDER;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CDO_RESOURCE_FOLDER__NAME = CDO_RESOURCE_NODE__NAME;
 
   /**
-   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CDO_RESOURCE_FOLDER__PATH = CDO_RESOURCE_NODE__PATH;
 
   /**
-   * The feature id for the '<em><b>Nodes</b></em>' containment reference list. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Nodes</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CDO_RESOURCE_FOLDER__NODES = CDO_RESOURCE_NODE_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>CDO Resource Folder</em>' class. <!-- begin-user-doc -->
+   * The number of structural features of the '<em>CDO Resource Folder</em>' class. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CDO_RESOURCE_FOLDER_FEATURE_COUNT = CDO_RESOURCE_NODE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceLeafImpl
+   * <em>CDO Resource Leaf</em>}' class. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.eresource.impl.CDOResourceLeafImpl
+   * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOResourceLeaf()
+   * @generated NOT
+   */
+  int CDO_RESOURCE_LEAF = 7;
+
+  /**
+   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_LEAF__FOLDER = CDO_RESOURCE_NODE__FOLDER;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_LEAF__NAME = CDO_RESOURCE_NODE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_LEAF__PATH = CDO_RESOURCE_NODE__PATH;
+
+  /**
+   * The number of structural features of the '<em>CDO Resource Leaf</em>' class. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_RESOURCE_LEAF_FEATURE_COUNT = CDO_RESOURCE_NODE_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl <em>CDO Resource</em>}'
@@ -177,22 +216,20 @@ public interface EresourcePackage extends EPackage
   int CDO_RESOURCE = 2;
 
   /**
-   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__FOLDER = CDO_RESOURCE_NODE__FOLDER;
+  int CDO_RESOURCE__FOLDER = CDO_RESOURCE_LEAF__FOLDER;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @since 2.0<!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__NAME = CDO_RESOURCE_NODE__NAME;
+  int CDO_RESOURCE__NAME = CDO_RESOURCE_LEAF__NAME;
 
   /**
    * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -200,7 +237,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__PATH = CDO_RESOURCE_NODE__PATH;
+  int CDO_RESOURCE__PATH = CDO_RESOURCE_LEAF__PATH;
 
   /**
    * The feature id for the '<em><b>Resource Set</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -208,7 +245,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__RESOURCE_SET = CDO_RESOURCE_NODE_FEATURE_COUNT + 0;
+  int CDO_RESOURCE__RESOURCE_SET = CDO_RESOURCE_LEAF_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>URI</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -216,7 +253,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__URI = CDO_RESOURCE_NODE_FEATURE_COUNT + 1;
+  int CDO_RESOURCE__URI = CDO_RESOURCE_LEAF_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Contents</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -225,7 +262,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__CONTENTS = CDO_RESOURCE_NODE_FEATURE_COUNT + 2;
+  int CDO_RESOURCE__CONTENTS = CDO_RESOURCE_LEAF_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Modified</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -233,7 +270,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__MODIFIED = CDO_RESOURCE_NODE_FEATURE_COUNT + 3;
+  int CDO_RESOURCE__MODIFIED = CDO_RESOURCE_LEAF_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Loaded</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -241,7 +278,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__LOADED = CDO_RESOURCE_NODE_FEATURE_COUNT + 4;
+  int CDO_RESOURCE__LOADED = CDO_RESOURCE_LEAF_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Tracking Modification</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
@@ -250,7 +287,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__TRACKING_MODIFICATION = CDO_RESOURCE_NODE_FEATURE_COUNT + 5;
+  int CDO_RESOURCE__TRACKING_MODIFICATION = CDO_RESOURCE_LEAF_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Errors</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -258,7 +295,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__ERRORS = CDO_RESOURCE_NODE_FEATURE_COUNT + 6;
+  int CDO_RESOURCE__ERRORS = CDO_RESOURCE_LEAF_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Warnings</b></em>' attribute list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -266,7 +303,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__WARNINGS = CDO_RESOURCE_NODE_FEATURE_COUNT + 7;
+  int CDO_RESOURCE__WARNINGS = CDO_RESOURCE_LEAF_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>Time Stamp</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -274,7 +311,7 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE__TIME_STAMP = CDO_RESOURCE_NODE_FEATURE_COUNT + 8;
+  int CDO_RESOURCE__TIME_STAMP = CDO_RESOURCE_LEAF_FEATURE_COUNT + 8;
 
   /**
    * The number of structural features of the '<em>CDO Resource</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
@@ -283,14 +320,173 @@ public interface EresourcePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CDO_RESOURCE_FEATURE_COUNT = CDO_RESOURCE_NODE_FEATURE_COUNT + 9;
+  int CDO_RESOURCE_FEATURE_COUNT = CDO_RESOURCE_LEAF_FEATURE_COUNT + 9;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOFileResourceImpl
+   * <em>CDO File Resource</em>}' class. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.eresource.impl.CDOFileResourceImpl
+   * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOFileResource()
+   * @generated NOT
+   */
+  int CDO_FILE_RESOURCE = 8;
+
+  /**
+   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_FILE_RESOURCE__FOLDER = CDO_RESOURCE_LEAF__FOLDER;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_FILE_RESOURCE__NAME = CDO_RESOURCE_LEAF__NAME;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_FILE_RESOURCE__PATH = CDO_RESOURCE_LEAF__PATH;
+
+  /**
+   * The number of structural features of the '<em>CDO File Resource</em>' class. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_FILE_RESOURCE_FEATURE_COUNT = CDO_RESOURCE_LEAF_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOBinaryResourceImpl
+   * <em>CDO Binary Resource</em>}' class. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.eresource.impl.CDOBinaryResourceImpl
+   * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOBinaryResource()
+   * @generated NOT
+   */
+  int CDO_BINARY_RESOURCE = 9;
+
+  /**
+   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_BINARY_RESOURCE__FOLDER = CDO_FILE_RESOURCE__FOLDER;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_BINARY_RESOURCE__NAME = CDO_FILE_RESOURCE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_BINARY_RESOURCE__PATH = CDO_FILE_RESOURCE__PATH;
+
+  /**
+   * The feature id for the '<em><b>Contents</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_BINARY_RESOURCE__CONTENTS = CDO_FILE_RESOURCE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>CDO Binary Resource</em>' class. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_BINARY_RESOURCE_FEATURE_COUNT = CDO_FILE_RESOURCE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOTextResourceImpl
+   * <em>CDO Text Resource</em>}' class. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.eresource.impl.CDOTextResourceImpl
+   * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOTextResource()
+   * @generated NOT
+   */
+  int CDO_TEXT_RESOURCE = 10;
+
+  /**
+   * The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_TEXT_RESOURCE__FOLDER = CDO_FILE_RESOURCE__FOLDER;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_TEXT_RESOURCE__NAME = CDO_FILE_RESOURCE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_TEXT_RESOURCE__PATH = CDO_FILE_RESOURCE__PATH;
+
+  /**
+   * The feature id for the '<em><b>Contents</b></em>' attribute. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_TEXT_RESOURCE__CONTENTS = CDO_FILE_RESOURCE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>CDO Text Resource</em>' class. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CDO_TEXT_RESOURCE_FEATURE_COUNT = CDO_FILE_RESOURCE_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '<em>Resource Set</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see org.eclipse.emf.ecore.resource.ResourceSet
    * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getResourceSet()
-   * @generated
+   * @generated NOT
    */
   int RESOURCE_SET = 3;
 
@@ -299,7 +495,7 @@ public interface EresourcePackage extends EPackage
    * 
    * @see org.eclipse.emf.common.util.URI
    * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getURI()
-   * @generated
+   * @generated NOT
    */
   int URI = 4;
 
@@ -308,7 +504,7 @@ public interface EresourcePackage extends EPackage
    * 
    * @see org.eclipse.emf.ecore.resource.Resource.Diagnostic
    * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getDiagnostic()
-   * @generated
+   * @generated NOT
    */
   int DIAGNOSTIC = 5;
 
@@ -493,6 +689,74 @@ public interface EresourcePackage extends EPackage
   EAttribute getCDOResource_TimeStamp();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.eresource.CDOResourceLeaf <em>CDO Resource Leaf</em>}
+   * '. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @return the meta object for class '<em>CDO Resource Leaf</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOResourceLeaf
+   * @generated
+   */
+  EClass getCDOResourceLeaf();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.eresource.CDOFileResource <em>CDO File Resource</em>}
+   * '. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @return the meta object for class '<em>CDO File Resource</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOFileResource
+   * @generated
+   */
+  EClass getCDOFileResource();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.eresource.CDOBinaryResource
+   * <em>CDO Binary Resource</em>}'. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @return the meta object for class '<em>CDO Binary Resource</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOBinaryResource
+   * @generated
+   */
+  EClass getCDOBinaryResource();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOBinaryResource#getContents
+   * <em>Contents</em>}'. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Contents</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOBinaryResource#getContents()
+   * @see #getCDOBinaryResource()
+   * @generated
+   */
+  EAttribute getCDOBinaryResource_Contents();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.eresource.CDOTextResource <em>CDO Text Resource</em>}
+   * '. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @return the meta object for class '<em>CDO Text Resource</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOTextResource
+   * @generated
+   */
+  EClass getCDOTextResource();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.eresource.CDOTextResource#getContents
+   * <em>Contents</em>}'. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Contents</em>'.
+   * @see org.eclipse.emf.cdo.eresource.CDOTextResource#getContents()
+   * @see #getCDOTextResource()
+   * @generated
+   */
+  EAttribute getCDOTextResource_Contents();
+
+  /**
    * Returns the meta object for data type '{@link org.eclipse.emf.ecore.resource.ResourceSet <em>Resource Set</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -541,8 +805,10 @@ public interface EresourcePackage extends EPackage
    * <li>each enum,</li>
    * <li>and each data type</li>
    * </ul>
-   * <!-- end-user-doc -->
    * 
+   * @since 4.1
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
    * @generated
    */
   interface Literals
@@ -683,6 +949,66 @@ public interface EresourcePackage extends EPackage
      * @generated
      */
     EAttribute CDO_RESOURCE__TIME_STAMP = eINSTANCE.getCDOResource_TimeStamp();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceLeafImpl
+     * <em>CDO Resource Leaf</em>}' class. <!-- begin-user-doc -->
+     * 
+     * @since 4.1 <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.eresource.impl.CDOResourceLeafImpl
+     * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOResourceLeaf()
+     * @generated
+     */
+    EClass CDO_RESOURCE_LEAF = eINSTANCE.getCDOResourceLeaf();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOFileResourceImpl
+     * <em>CDO File Resource</em>}' class. <!-- begin-user-doc -->
+     * 
+     * @since 4.1 <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.eresource.impl.CDOFileResourceImpl
+     * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOFileResource()
+     * @generated
+     */
+    EClass CDO_FILE_RESOURCE = eINSTANCE.getCDOFileResource();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOBinaryResourceImpl
+     * <em>CDO Binary Resource</em>}' class. <!-- begin-user-doc -->
+     * 
+     * @since 4.1 <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.eresource.impl.CDOBinaryResourceImpl
+     * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOBinaryResource()
+     * @generated
+     */
+    EClass CDO_BINARY_RESOURCE = eINSTANCE.getCDOBinaryResource();
+
+    /**
+     * The meta object literal for the '<em><b>Contents</b></em>' attribute feature. <!-- begin-user-doc -->
+     * 
+     * @since 4.1 <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CDO_BINARY_RESOURCE__CONTENTS = eINSTANCE.getCDOBinaryResource_Contents();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.eresource.impl.CDOTextResourceImpl
+     * <em>CDO Text Resource</em>}' class. <!-- begin-user-doc -->
+     * 
+     * @since 4.1 <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.eresource.impl.CDOTextResourceImpl
+     * @see org.eclipse.emf.cdo.eresource.impl.EresourcePackageImpl#getCDOTextResource()
+     * @generated
+     */
+    EClass CDO_TEXT_RESOURCE = eINSTANCE.getCDOTextResource();
+
+    /**
+     * The meta object literal for the '<em><b>Contents</b></em>' attribute feature. <!-- begin-user-doc -->
+     * 
+     * @since 4.1 <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CDO_TEXT_RESOURCE__CONTENTS = eINSTANCE.getCDOTextResource_Contents();
 
     /**
      * The meta object literal for the '<em>Resource Set</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

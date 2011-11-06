@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.eresource.impl;
 
 //import org.eclipse.emf.cdo.eresource.*;
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
@@ -80,6 +82,10 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
       return (EObject)createCDOResourceFolder();
     case EresourcePackage.CDO_RESOURCE:
       return (EObject)createCDOResource();
+    case EresourcePackage.CDO_BINARY_RESOURCE:
+      return (EObject)createCDOBinaryResource();
+    case EresourcePackage.CDO_TEXT_RESOURCE:
+      return (EObject)createCDOTextResource();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -140,6 +146,30 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
   {
     CDOResourceImpl cdoResource = new CDOResourceImpl();
     return cdoResource;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public CDOBinaryResource createCDOBinaryResource()
+  {
+    CDOBinaryResourceImpl cdoBinaryResource = new CDOBinaryResourceImpl();
+    return cdoBinaryResource;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public CDOTextResource createCDOTextResource()
+  {
+    CDOTextResourceImpl cdoTextResource = new CDOTextResourceImpl();
+    return cdoTextResource;
   }
 
   /**

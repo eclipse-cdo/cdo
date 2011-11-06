@@ -49,6 +49,24 @@ public interface EresourceFactory extends EFactory
   CDOResource createCDOResource();
 
   /**
+   * Returns a new object of class '<em>CDO Binary Resource</em>'. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @return a new object of class '<em>CDO Binary Resource</em>'.
+   * @generated
+   */
+  CDOBinaryResource createCDOBinaryResource();
+
+  /**
+   * Returns a new object of class '<em>CDO Text Resource</em>'. <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @return a new object of class '<em>CDO Text Resource</em>'.
+   * @generated
+   */
+  CDOTextResource createCDOTextResource();
+
+  /**
    * Returns the package supported by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the package supported by this factory.

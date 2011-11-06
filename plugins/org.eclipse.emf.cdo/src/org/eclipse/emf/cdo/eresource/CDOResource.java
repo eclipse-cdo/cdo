@@ -46,7 +46,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * @model
  * @generated
  */
-public interface CDOResource extends CDOResourceNode, Resource
+public interface CDOResource extends CDOResourceLeaf, Resource
 {
   /**
    * @ADDED

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.etypes.impl;
 
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
+import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
@@ -48,6 +49,13 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * @generated
    */
   private EClass annotationEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EDataType lobEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -209,6 +217,17 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public EDataType getLob()
+  {
+    return lobEDataType;
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -271,6 +290,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     // Create data types
     blobEDataType = createEDataType(BLOB);
     clobEDataType = createEDataType(CLOB);
+    lobEDataType = createEDataType(LOB);
   }
 
   /**
@@ -350,6 +370,7 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     // Initialize data types
     initEDataType(blobEDataType, CDOBlob.class, "Blob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEDataType(clobEDataType, CDOClob.class, "Clob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(lobEDataType, CDOLob.class, "Lob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
     // Create resource
     createResource(eNS_URI);

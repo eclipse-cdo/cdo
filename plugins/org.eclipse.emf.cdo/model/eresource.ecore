@@ -25,7 +25,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="#//CDOResourceNode" containment="true" resolveProxies="false" eOpposite="#//CDOResourceNode/folder"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CDOResource" eSuperTypes="#//CDOResourceNode">
+  <eClassifiers xsi:type="ecore:EClass" name="CDOResource" eSuperTypes="#//CDOResourceLeaf">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="resourceSet" eType="#//ResourceSet"
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRI" eType="#//URI" volatile="true"
@@ -54,4 +54,16 @@
   <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Diagnostic" instanceClassName="org.eclipse.emf.ecore.resource.Resource.Diagnostic"
       serializable="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CDOResourceLeaf" abstract="true" eSuperTypes="#//CDOResourceNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CDOFileResource" abstract="true" eSuperTypes="#//CDOResourceLeaf">
+    <eOperations name="getContents" lowerBound="1" eType="ecore:EDataType etypes.ecore#//Lob"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CDOBinaryResource" eSuperTypes="#//CDOFileResource">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contents" lowerBound="1"
+        eType="ecore:EDataType etypes.ecore#//Blob"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CDOTextResource" eSuperTypes="#//CDOFileResource">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contents" lowerBound="1"
+        eType="ecore:EDataType etypes.ecore#//Clob"/>
+  </eClassifiers>
 </ecore:EPackage>

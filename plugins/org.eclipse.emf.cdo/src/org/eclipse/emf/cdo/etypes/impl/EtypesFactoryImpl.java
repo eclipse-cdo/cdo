@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.etypes.impl;
 
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
+import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
@@ -97,6 +98,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
       return createBlobFromString(eDataType, initialValue);
     case EtypesPackage.CLOB:
       return createClobFromString(eDataType, initialValue);
+    case EtypesPackage.LOB:
+      return createLobFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -116,6 +119,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
       return convertBlobToString(eDataType, instanceValue);
     case EtypesPackage.CLOB:
       return convertClobToString(eDataType, instanceValue);
+    case EtypesPackage.LOB:
+      return convertLobToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -133,8 +138,31 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
    * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public CDOLob<?> createLobFromString(EDataType eDataType, String initialValue)
+  {
+    return (CDOLob<?>)super.createFromString(eDataType, initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertLobToString(EDataType eDataType, Object instanceValue)
+  {
+    return super.convertToString(eDataType, instanceValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
   public CDOBlob createBlobFromString(EDataType eDataType, String initialValue)
@@ -143,8 +171,9 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
    * 
+   * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
   public String convertBlobToString(EDataType eDataType, Object instanceValue)

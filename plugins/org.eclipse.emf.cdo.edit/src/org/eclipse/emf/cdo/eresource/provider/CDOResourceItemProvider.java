@@ -37,11 +37,12 @@ import java.util.List;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.eresource.CDOResource} object. <!-- begin-user-doc
- * --> <!-- end-user-doc -->
+ * -->
  * 
+ * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  * @generated
  */
-public class CDOResourceItemProvider extends CDOResourceNodeItemProvider implements IEditingDomainItemProvider,
+public class CDOResourceItemProvider extends CDOResourceLeafItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
     ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {

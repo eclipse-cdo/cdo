@@ -101,18 +101,20 @@ public class AttributeTest extends AbstractCDOTest
 
   // XXX disabled because of Bug 289445
   @Skips("Postgresql")
+  @CleanRepositoriesBefore
   public void testByteArray() throws Exception
   {
     byte saveByteArray[] = new byte[] { 0, 1, 2, 3, 0, 1, 0, 100 };
 
     {
-      EPackage packageBytes = createDynamicEPackageWithByte();
+      EPackage packageWithBytes = createDynamicEPackageWithByte();
       CDOSession session = openSession();
-      session.getPackageRegistry().putEPackage(packageBytes);
+      session.getPackageRegistry().putEPackage(packageWithBytes);
+
       CDOTransaction transaction = session.openTransaction();
 
-      EClass eClass = (EClass)packageBytes.getEClassifier("GenOfByteArray");
-      EObject genOfByteArray = packageBytes.getEFactoryInstance().create(eClass);
+      EClass eClass = (EClass)packageWithBytes.getEClassifier("GenOfByteArray");
+      EObject genOfByteArray = packageWithBytes.getEFactoryInstance().create(eClass);
       genOfByteArray.eSet(genOfByteArray.eClass().getEStructuralFeature("bytes"), saveByteArray);
 
       CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
@@ -143,18 +145,19 @@ public class AttributeTest extends AbstractCDOTest
 
   // XXX disabled because of Bug 289445
   @Skips("Postgresql")
+  @CleanRepositoriesBefore
   public void testByteArrayEmpty() throws Exception
   {
     byte saveByteArray[] = new byte[0];
 
     {
-      EPackage packageBytes = createDynamicEPackageWithByte();
+      EPackage packageWithBytes = createDynamicEPackageWithByte();
       CDOSession session = openSession();
-      session.getPackageRegistry().putEPackage(packageBytes);
+      session.getPackageRegistry().putEPackage(packageWithBytes);
       CDOTransaction transaction = session.openTransaction();
 
-      EClass eClass = (EClass)packageBytes.getEClassifier("GenOfByteArray");
-      EObject genOfByteArray = packageBytes.getEFactoryInstance().create(eClass);
+      EClass eClass = (EClass)packageWithBytes.getEClassifier("GenOfByteArray");
+      EObject genOfByteArray = packageWithBytes.getEFactoryInstance().create(eClass);
       genOfByteArray.eSet(genOfByteArray.eClass().getEStructuralFeature("bytes"), saveByteArray);
 
       CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));
@@ -180,18 +183,19 @@ public class AttributeTest extends AbstractCDOTest
 
   // XXX disabled because of Bug 289445
   @Skips("Postgresql")
+  @CleanRepositoriesBefore
   public void testByteArrayNull() throws Exception
   {
     byte saveByteArray[] = null;
 
     {
-      EPackage packageBytes = createDynamicEPackageWithByte();
+      EPackage packageWithBytes = createDynamicEPackageWithByte();
       CDOSession session = openSession();
-      session.getPackageRegistry().putEPackage(packageBytes);
+      session.getPackageRegistry().putEPackage(packageWithBytes);
       CDOTransaction transaction = session.openTransaction();
 
-      EClass eClass = (EClass)packageBytes.getEClassifier("GenOfByteArray");
-      EObject genOfByteArray = packageBytes.getEFactoryInstance().create(eClass);
+      EClass eClass = (EClass)packageWithBytes.getEClassifier("GenOfByteArray");
+      EObject genOfByteArray = packageWithBytes.getEFactoryInstance().create(eClass);
       genOfByteArray.eSet(genOfByteArray.eClass().getEStructuralFeature("bytes"), saveByteArray);
 
       CDOResource resource = transaction.createResource(getResourcePath("/my/resource"));

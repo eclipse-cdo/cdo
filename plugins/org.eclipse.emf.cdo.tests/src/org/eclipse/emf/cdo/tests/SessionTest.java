@@ -254,12 +254,12 @@ public class SessionTest extends AbstractCDOTest
 
   public void testNoAuthentication() throws Exception
   {
-    IRepository repository = getRepository("authrepo");
+    IRepository repository = getRepository("authrepo1");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD1)));
 
-    CDOSession session = openSession("authrepo");
+    CDOSession session = openSession("authrepo1");
     assertEquals(null, session.getUserID());
     assertEquals(null, repository.getSessionManager().getSessions()[0].getUserID());
     session.close();
@@ -273,12 +273,12 @@ public class SessionTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD1);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
-    IRepository repository = getRepository("authrepo");
+    IRepository repository = getRepository("authrepo2");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD1)));
 
-    CDOSession session = openSession("authrepo");
+    CDOSession session = openSession("authrepo2");
     assertEquals(USER_ID, session.getUserID());
     assertEquals(USER_ID, repository.getSessionManager().getSessions()[0].getUserID());
     session.close();
@@ -291,11 +291,11 @@ public class SessionTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD1);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
-    getRepository("authrepo");
+    getRepository("authrepo3");
 
     try
     {
-      openSession("authrepo");
+      openSession("authrepo3");
       fail("RemoteException expected");
     }
     catch (RemoteException success)
@@ -311,13 +311,13 @@ public class SessionTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD1);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
-    getRepository("authrepo");
+    getRepository("authrepo4");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER, new PasswordCredentialsProvider(null));
 
     try
     {
-      openSession("authrepo");
+      openSession("authrepo4");
       fail("RemoteException expected");
     }
     catch (RemoteException success)
@@ -333,14 +333,14 @@ public class SessionTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD1);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
-    getRepository("authrepo");
+    getRepository("authrepo5");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, PASSWORD2)));
 
     try
     {
-      openSession("authrepo");
+      openSession("authrepo5");
       fail("RemoteException expected");
     }
     catch (RemoteException success)
@@ -356,14 +356,14 @@ public class SessionTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD1);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
-    getRepository("authrepo");
+    getRepository("authrepo6");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(null, PASSWORD2)));
 
     try
     {
-      openSession("authrepo");
+      openSession("authrepo6");
       fail("RemoteException expected");
     }
     catch (RemoteException success)
@@ -379,14 +379,14 @@ public class SessionTest extends AbstractCDOTest
     userManager.addUser(USER_ID, PASSWORD1);
 
     getTestProperties().put(RepositoryConfig.PROP_TEST_USER_MANAGER, userManager);
-    getRepository("authrepo");
+    getRepository("authrepo7");
 
     getTestProperties().put(SessionConfig.PROP_TEST_CREDENTIALS_PROVIDER,
         new PasswordCredentialsProvider(new PasswordCredentials(USER_ID, null)));
 
     try
     {
-      openSession("authrepo");
+      openSession("authrepo7");
       fail("RemoteException expected");
     }
     catch (RemoteException success)

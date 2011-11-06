@@ -43,7 +43,7 @@ import java.util.List;
  */
 public class CommitInfoTest extends AbstractCDOTest
 {
-  private static final String REPO_NAME = "authrepo";
+  private static final String REPO_NAME = "commitinforepo";
 
   private static final String USER_ID = "stepper";
 

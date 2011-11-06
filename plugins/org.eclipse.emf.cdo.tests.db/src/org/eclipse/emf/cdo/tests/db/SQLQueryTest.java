@@ -50,6 +50,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
   private static final int NUM_OF_SALES_ORDERS = 5;
 
+  @CleanRepositoriesBefore
   public void testSimpleQueries() throws Exception
   {
     msg("Opening session");

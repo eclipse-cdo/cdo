@@ -96,7 +96,7 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
         // Do nothing
       }
     }
-    
+
     if (object instanceof CDOObject)
     {
       object = CDOUtil.getEObject((EObject)object);

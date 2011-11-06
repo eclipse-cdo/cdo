@@ -1188,10 +1188,10 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     {
       InternalCDOView view = object.cdoView();
       CDOID id = object.cdoID();
-  
+
       return view.getLockStates(Collections.singletonList(id))[0];
     }
-  
+
     return null;
   }
 

@@ -558,6 +558,11 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     durableViewHandlers.remove(handler);
   }
 
+  public DurableViewHandler[] getDurableViewHandlers()
+  {
+    return durableViewHandlers.get();
+  }
+
   /**
    * @author Eike Stepper
    */

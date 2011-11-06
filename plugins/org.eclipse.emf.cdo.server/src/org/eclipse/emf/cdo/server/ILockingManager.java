@@ -27,6 +27,8 @@ public interface ILockingManager extends IDurableLockingManager
 
   public void removeDurableViewHandler(DurableViewHandler handler);
 
+  public DurableViewHandler[] getDurableViewHandlers();
+
   /**
    * A call-back interface primarily intended to allow implementers to prevent the view from being opened by throwing an
    * exception. See {@link ILockingManager#addDurableViewHandler(DurableViewHandler)}.
@@ -36,6 +38,10 @@ public interface ILockingManager extends IDurableLockingManager
    */
   public interface DurableViewHandler
   {
+    /**
+     * A call-back method primarily intended to allow implementers to prevent the view from being opened by throwing an
+     * exception. See {@link ILockingManager#addDurableViewHandler(DurableViewHandler)}.
+     */
     public void openingView(CDOCommonSession session, int viewID, boolean readOnly, LockArea area) throws Exception;
   }
 }

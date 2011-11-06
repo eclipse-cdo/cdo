@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundEx
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.ILockingManager;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -376,9 +375,8 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
 
     String durableLockingID = transaction.enableDurableLocking(true);
 
-    InternalLockManager mgr = getRepository().getLockingManager();
-    final boolean[] gotCalled = new boolean[1];
-    mgr.addDurableViewHandler(new ILockingManager.DurableViewHandler()
+    final boolean[] gotCalled = { false };
+    getRepository().getLockingManager().addDurableViewHandler(new ILockingManager.DurableViewHandler()
     {
       public void openingView(CDOCommonSession session, int viewID, boolean readOnly, LockArea area)
       {

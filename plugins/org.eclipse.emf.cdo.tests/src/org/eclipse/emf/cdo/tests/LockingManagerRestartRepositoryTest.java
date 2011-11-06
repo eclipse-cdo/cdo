@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.server.ILockingManager.DurableViewHandler;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 
@@ -22,6 +23,12 @@ public class LockingManagerRestartRepositoryTest extends LockingManagerRestartSe
   @Override
   protected void doBetweenSessionCloseAndOpen()
   {
+    DurableViewHandler[] handlers = getRepository().getLockingManager().getDurableViewHandlers();
     restartRepository();
+
+    for (DurableViewHandler handler : handlers)
+    {
+      getRepository().getLockingManager().addDurableViewHandler(handler);
+    }
   }
 }

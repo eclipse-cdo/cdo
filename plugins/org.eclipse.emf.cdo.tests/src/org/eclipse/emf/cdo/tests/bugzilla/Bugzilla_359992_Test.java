@@ -230,8 +230,9 @@ public class Bugzilla_359992_Test extends AbstractCDOTest
             }
           }
         }
-        latch.countDown();
+
         notified = true;
+        latch.countDown();
       }
     }
 

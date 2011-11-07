@@ -155,6 +155,58 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.eresource.CDOBinaryResource} instances.
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  protected CDOBinaryResourceItemProvider cdoBinaryResourceItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.eresource.CDOBinaryResource}. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public Adapter createCDOBinaryResourceAdapter()
+  {
+    if (cdoBinaryResourceItemProvider == null)
+    {
+      cdoBinaryResourceItemProvider = new CDOBinaryResourceItemProvider(this);
+    }
+
+    return cdoBinaryResourceItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.eresource.CDOTextResource} instances.
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  protected CDOTextResourceItemProvider cdoTextResourceItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.eresource.CDOTextResource}. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public Adapter createCDOTextResourceAdapter()
+  {
+    if (cdoTextResourceItemProvider == null)
+    {
+      cdoTextResourceItemProvider = new CDOTextResourceItemProvider(this);
+    }
+
+    return cdoTextResourceItemProvider;
+  }
+
+  /**
    * This returns the root adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -294,6 +346,10 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
       cdoResourceFolderItemProvider.dispose();
     if (cdoResourceItemProvider != null)
       cdoResourceItemProvider.dispose();
+    if (cdoBinaryResourceItemProvider != null)
+      cdoBinaryResourceItemProvider.dispose();
+    if (cdoTextResourceItemProvider != null)
+      cdoTextResourceItemProvider.dispose();
   }
 
 }

@@ -10,11 +10,16 @@
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
+import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -55,6 +60,34 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
    * @generated
    */
   private EClass cdoResourceEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass cdoResourceLeafEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass cdoFileResourceEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass cdoBinaryResourceEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass cdoTextResourceEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -126,7 +159,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     isInited = true;
 
     // Initialize simple dependencies
-    EcorePackage.eINSTANCE.eClass();
+    EtypesPackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theEresourcePackage.createPackageContents();
@@ -309,6 +342,72 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCDOResourceLeaf()
+  {
+    return cdoResourceLeafEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCDOFileResource()
+  {
+    return cdoFileResourceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCDOBinaryResource()
+  {
+    return cdoBinaryResourceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCDOBinaryResource_Contents()
+  {
+    return (EAttribute)cdoBinaryResourceEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCDOTextResource()
+  {
+    return cdoTextResourceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * 
+   * @since 4.1 <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCDOTextResource_Contents()
+  {
+    return (EAttribute)cdoTextResourceEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -387,6 +486,16 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__WARNINGS);
     createEAttribute(cdoResourceEClass, CDO_RESOURCE__TIME_STAMP);
 
+    cdoResourceLeafEClass = createEClass(CDO_RESOURCE_LEAF);
+
+    cdoFileResourceEClass = createEClass(CDO_FILE_RESOURCE);
+
+    cdoBinaryResourceEClass = createEClass(CDO_BINARY_RESOURCE);
+    createEAttribute(cdoBinaryResourceEClass, CDO_BINARY_RESOURCE__CONTENTS);
+
+    cdoTextResourceEClass = createEClass(CDO_TEXT_RESOURCE);
+    createEAttribute(cdoTextResourceEClass, CDO_TEXT_RESOURCE__CONTENTS);
+
     // Create data types
     resourceSetEDataType = createEDataType(RESOURCE_SET);
     uriEDataType = createEDataType(URI);
@@ -419,6 +528,7 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
     // Obtain other dependent packages
     EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+    EtypesPackage theEtypesPackage = (EtypesPackage)EPackage.Registry.INSTANCE.getEPackage(EtypesPackage.eNS_URI);
 
     // Create type parameters
 
@@ -426,7 +536,11 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
 
     // Add supertypes to classes
     cdoResourceFolderEClass.getESuperTypes().add(this.getCDOResourceNode());
-    cdoResourceEClass.getESuperTypes().add(this.getCDOResourceNode());
+    cdoResourceEClass.getESuperTypes().add(this.getCDOResourceLeaf());
+    cdoResourceLeafEClass.getESuperTypes().add(this.getCDOResourceNode());
+    cdoFileResourceEClass.getESuperTypes().add(this.getCDOResourceLeaf());
+    cdoBinaryResourceEClass.getESuperTypes().add(this.getCDOFileResource());
+    cdoTextResourceEClass.getESuperTypes().add(this.getCDOFileResource());
 
     // Initialize classes and features; add operations and parameters
     initEClass(cdoResourceNodeEClass, CDOResourceNode.class,
@@ -499,6 +613,28 @@ public class EresourcePackageImpl extends EPackageImpl implements EresourcePacka
         getCDOResource_TimeStamp(),
         theEcorePackage.getELong(),
         "timeStamp", null, 0, 1, CDOResource.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+    initEClass(cdoResourceLeafEClass, CDOResourceLeaf.class,
+        "CDOResourceLeaf", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+    initEClass(cdoFileResourceEClass, CDOFileResource.class,
+        "CDOFileResource", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+    addEOperation(cdoFileResourceEClass, theEtypesPackage.getLob(), "getContents", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+    initEClass(cdoBinaryResourceEClass, CDOBinaryResource.class,
+        "CDOBinaryResource", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(
+        getCDOBinaryResource_Contents(),
+        theEtypesPackage.getBlob(),
+        "contents", null, 1, 1, CDOBinaryResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+    initEClass(cdoTextResourceEClass, CDOTextResource.class,
+        "CDOTextResource", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(
+        getCDOTextResource_Contents(),
+        theEtypesPackage.getClob(),
+        "contents", null, 1, 1, CDOTextResource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     // Initialize data types
     initEDataType(resourceSetEDataType, ResourceSet.class,

@@ -93,7 +93,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     // builder.append("@");
     // }
 
-    IConnector connector = (IConnector)session.options().getProtocol().getChannel().getMultiplexer();
+    IConnector connector = (IConnector)session.options().getNet4jProtocol().getChannel().getMultiplexer();
     String repositoryName = session.getRepositoryInfo().getName();
     append(builder, connector, repositoryName);
 

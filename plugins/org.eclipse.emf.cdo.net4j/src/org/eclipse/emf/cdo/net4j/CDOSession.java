@@ -10,6 +10,10 @@
  */
 package org.eclipse.emf.cdo.net4j;
 
+import org.eclipse.net4j.signal.ISignalProtocol;
+
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+
 /**
  * Deprecated, use {@link org.eclipse.emf.cdo.net4j.CDONet4jSession CDONet4jSession}.
  * 
@@ -41,5 +45,14 @@ public interface CDOSession extends CDONet4jSession
   @Deprecated
   public interface Options extends CDONet4jSession.Options
   {
+    /**
+     * Returns the Net4j {@link CDOSessionProtocol protocol} instance that represents the underlying
+     * <em>signalling connection</em> to the repository of this session.
+     * 
+     * @see #getNet4jProtocol()
+     * @deprecated Kept for 4.0 compatibility. Newer code should call {@link #getNet4jProtocol()}.
+     */
+    @Deprecated
+    public ISignalProtocol<CDOSession> getProtocol();
   }
 }

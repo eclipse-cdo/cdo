@@ -49,7 +49,7 @@ public interface CDONet4jSession extends org.eclipse.emf.cdo.session.CDOSession
      * Returns the Net4j {@link CDOSessionProtocol protocol} instance that represents the underlying
      * <em>signalling connection</em> to the repository of this session.
      */
-    public ISignalProtocol<CDONet4jSession> getProtocol();
+    public ISignalProtocol<CDONet4jSession> getNet4jProtocol();
 
     /**
      * Returns the timeout for commit operations in <b>seconds</b>.

@@ -400,7 +400,7 @@ public class SessionTest extends AbstractCDOTest
     final boolean[] eventSent = { false };
 
     org.eclipse.emf.cdo.net4j.CDONet4jSession session = (org.eclipse.emf.cdo.net4j.CDONet4jSession)openSession();
-    session.options().getProtocol().addListener(new IListener()
+    session.options().getNet4jProtocol().addListener(new IListener()
     {
       public void notifyEvent(IEvent event)
       {
@@ -413,7 +413,7 @@ public class SessionTest extends AbstractCDOTest
       }
     });
 
-    session.options().getProtocol().setTimeout(20L * 1000L);
+    session.options().getNet4jProtocol().setTimeout(20L * 1000L);
     assertEquals(true, eventSent[0]);
   }
 

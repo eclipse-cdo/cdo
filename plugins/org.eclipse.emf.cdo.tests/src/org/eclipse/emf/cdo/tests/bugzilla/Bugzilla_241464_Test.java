@@ -55,7 +55,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
 
     TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
     revisionManager.setGetRevisionsDelay(10000L); // Make the protocol time out
-    ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getProtocol().setTimeout(2000L);
+    ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(2000L);
 
     try
     {

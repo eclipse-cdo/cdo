@@ -34,7 +34,7 @@ public class CompareTest extends AbstractCDOTest
   public void testFromEmptyBranches() throws Exception
   {
     CDOSession session = openSession();
-    ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getProtocol().setTimeout(1000000000);
+    ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(1000000000);
 
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);

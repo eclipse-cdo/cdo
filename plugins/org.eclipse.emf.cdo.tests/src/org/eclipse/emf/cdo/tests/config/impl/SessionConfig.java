@@ -316,7 +316,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     protected void configureSession(CDOSession session)
     {
       super.configureSession(session);
-      ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getProtocol().setTimeout(-1);
+      ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(-1);
     }
 
     protected abstract CDOViewProvider createViewProvider(IManagedContainer container);

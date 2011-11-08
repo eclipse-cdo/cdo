@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl.Repos
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -260,7 +261,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       return (CDONet4jSession)super.getContainer();
     }
 
-    public ISignalProtocol<org.eclipse.emf.cdo.net4j.CDONet4jSession> getProtocol()
+    public ISignalProtocol<org.eclipse.emf.cdo.net4j.CDONet4jSession> getNet4jProtocol()
     {
       CDOSessionProtocol protocol = getSessionProtocol();
       if (protocol instanceof DelegatingSessionProtocol)
@@ -271,6 +272,13 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       @SuppressWarnings("unchecked")
       ISignalProtocol<CDONet4jSession> signalProtocol = (ISignalProtocol<CDONet4jSession>)protocol;
       return signalProtocol;
+    }
+
+    public ISignalProtocol<CDOSession> getProtocol()
+    {
+      @SuppressWarnings("unchecked")
+      ISignalProtocol<CDOSession> net4jProtocol = (ISignalProtocol<CDOSession>)(ISignalProtocol<?>)getNet4jProtocol();
+      return net4jProtocol;
     }
 
     public int getCommitTimeout()

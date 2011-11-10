@@ -93,7 +93,7 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
       }
       catch (ObjectNotFoundException ex)
       {
-        // Do nothing
+        object = null;
       }
     }
 

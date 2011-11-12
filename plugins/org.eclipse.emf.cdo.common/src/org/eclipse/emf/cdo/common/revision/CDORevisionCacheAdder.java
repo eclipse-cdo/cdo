@@ -20,5 +20,8 @@ package org.eclipse.emf.cdo.common.revision;
  */
 public interface CDORevisionCacheAdder
 {
+  /**
+   * Adds the given revision to this cache.
+   */
   public void addRevision(CDORevision revision);
 }

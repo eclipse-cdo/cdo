@@ -709,7 +709,9 @@ public class CDOServerBrowser extends Worker
         {
           if (versionsBuilder != null)
           {
+            @SuppressWarnings("resource")
             PrintStream out = out();
+
             out.println("<tr>");
             out.println("<td valign=\"top\">&nbsp;&nbsp;&nbsp;&nbsp;");
             out.println(getCDOIDLabel(lastRevision));

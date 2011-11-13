@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.db.capabilities;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 
 import java.sql.Connection;
@@ -48,6 +49,8 @@ public abstract class AbstractCapabilityTest extends TestCase
           IDBConnectionProvider provider = getConnectionProvider();
           Connection transaction1 = provider.getConnection();
           transaction1.setAutoCommit(false);
+
+          @SuppressWarnings("resource")
           Statement tx1stmt = transaction1.createStatement();
           tx1stmt.executeUpdate("update status_table set status = 'changed' where trans = 'transaction1'");
           msg("Read value (transaction 1) is "
@@ -91,7 +94,15 @@ public abstract class AbstractCapabilityTest extends TestCase
     transaction1.setAutoCommit(false);
 
     Statement tx1stmt = transaction1.createStatement();
-    tx1stmt.executeUpdate("update status_table set status = 'changed' where trans = 'transaction1'");
+
+    try
+    {
+      tx1stmt.executeUpdate("update status_table set status = 'changed' where trans = 'transaction1'");
+    }
+    finally
+    {
+      DBUtil.close(tx1stmt);
+    }
 
     msg("Read value before rollback is "
         + select(transaction1, "select status from status_table where trans = 'transaction1'").toUpperCase());

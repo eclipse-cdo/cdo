@@ -426,12 +426,20 @@ public abstract class DBAdapter implements IDBAdapter
         }
 
         ResultSet resultSet = statement.executeQuery(sql);
-        ResultSetMetaData metaData = resultSet.getMetaData();
-        int columnCount = metaData.getColumnCount();
-        if (columnCount != table.getFieldCount())
+
+        try
         {
-          throw new DBException("DBTable " + table + " has " + columnCount + " columns instead of " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-              + table.getFieldCount());
+          ResultSetMetaData metaData = resultSet.getMetaData();
+          int columnCount = metaData.getColumnCount();
+          if (columnCount != table.getFieldCount())
+          {
+            throw new DBException("DBTable " + table + " has " + columnCount + " columns instead of " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                + table.getFieldCount());
+          }
+        }
+        finally
+        {
+          DBUtil.close(resultSet);
         }
       }
       catch (SQLException ex)

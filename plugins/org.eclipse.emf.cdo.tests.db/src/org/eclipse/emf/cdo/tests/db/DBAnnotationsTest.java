@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import org.eclipse.net4j.db.DBUtil;
+
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -139,8 +141,16 @@ public class DBAnnotationsTest extends AbstractCDOTest
       {
         String tableName = model1.getName().toUpperCase() + "_PRODUCT1";
         ResultSet rset = getMetaData().getColumns(null, null, tableName, "NAME");
-        rset.next();
-        assertEquals("8", rset.getString(7));
+
+        try
+        {
+          rset.next();
+          assertEquals("8", rset.getString(7));
+        }
+        finally
+        {
+          DBUtil.close(rset);
+        }
       }
     }.verify();
   }
@@ -179,8 +189,16 @@ public class DBAnnotationsTest extends AbstractCDOTest
       {
         String tableName = model1.getName().toUpperCase() + "_CATEGORY";
         ResultSet rset = getMetaData().getColumns(null, null, tableName, "NAME");
-        rset.next();
-        assertEquals("CLOB", rset.getString(6));
+
+        try
+        {
+          rset.next();
+          assertEquals("CLOB", rset.getString(6));
+        }
+        finally
+        {
+          DBUtil.close(rset);
+        }
       }
     }.verify();
   }
@@ -216,8 +234,16 @@ public class DBAnnotationsTest extends AbstractCDOTest
       protected void doVerify() throws Exception
       {
         ResultSet rset = getMetaData().getTables(null, null, "SUBJECT", null);
-        rset.next();
-        assertEquals("SUBJECT", rset.getString(3));
+
+        try
+        {
+          rset.next();
+          assertEquals("SUBJECT", rset.getString(3));
+        }
+        finally
+        {
+          DBUtil.close(rset);
+        }
       }
     }.verify();
   }
@@ -254,8 +280,16 @@ public class DBAnnotationsTest extends AbstractCDOTest
       {
         String tableName = model1.getName().toUpperCase() + "_CATEGORY";
         ResultSet rset = getMetaData().getColumns(null, null, tableName, "TOPIC");
-        rset.next();
-        assertEquals("TOPIC", rset.getString(4));
+
+        try
+        {
+          rset.next();
+          assertEquals("TOPIC", rset.getString(4));
+        }
+        finally
+        {
+          DBUtil.close(rset);
+        }
       }
     }.verify();
   }
@@ -294,9 +328,17 @@ public class DBAnnotationsTest extends AbstractCDOTest
       {
         String tableName = model1.getName().toUpperCase() + "_CATEGORY";
         ResultSet rset = getMetaData().getColumns(null, null, tableName, "TOPIC");
-        rset.next();
-        assertEquals("TOPIC", rset.getString(4));
-        assertEquals("CLOB", rset.getString(6));
+
+        try
+        {
+          rset.next();
+          assertEquals("TOPIC", rset.getString(4));
+          assertEquals("CLOB", rset.getString(6));
+        }
+        finally
+        {
+          DBUtil.close(rset);
+        }
       }
     }.verify();
   }
@@ -333,31 +375,38 @@ public class DBAnnotationsTest extends AbstractCDOTest
       {
         ResultSet rset = getMetaData().getTables(null, null, null, null);
 
-        boolean orderDetailTableCreated = false;
-        boolean companyTableCreated = false;
-        boolean categoryTableCreated = false;
-
-        String prefix = model1.getName().toUpperCase() + '_';
-        while (rset.next())
+        try
         {
-          String tableName = rset.getString(3);
-          if ((prefix + "ORDERDETAIL").equalsIgnoreCase(tableName))
-          {
-            orderDetailTableCreated = true;
-          }
-          else if ((prefix + "COMPANY").equalsIgnoreCase(tableName))
-          {
-            companyTableCreated = true;
-          }
-          else if ((prefix + "CATEGORY").equalsIgnoreCase(tableName))
-          {
-            categoryTableCreated = true;
-          }
-        }
+          boolean orderDetailTableCreated = false;
+          boolean companyTableCreated = false;
+          boolean categoryTableCreated = false;
 
-        assertEquals(false, orderDetailTableCreated);
-        assertEquals(false, companyTableCreated);
-        assertEquals(true, categoryTableCreated);
+          String prefix = model1.getName().toUpperCase() + '_';
+          while (rset.next())
+          {
+            String tableName = rset.getString(3);
+            if ((prefix + "ORDERDETAIL").equalsIgnoreCase(tableName))
+            {
+              orderDetailTableCreated = true;
+            }
+            else if ((prefix + "COMPANY").equalsIgnoreCase(tableName))
+            {
+              companyTableCreated = true;
+            }
+            else if ((prefix + "CATEGORY").equalsIgnoreCase(tableName))
+            {
+              categoryTableCreated = true;
+            }
+          }
+
+          assertEquals(false, orderDetailTableCreated);
+          assertEquals(false, companyTableCreated);
+          assertEquals(true, categoryTableCreated);
+        }
+        finally
+        {
+          DBUtil.close(rset);
+        }
       }
     }.verify();
   }

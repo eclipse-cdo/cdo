@@ -39,8 +39,11 @@ public class Net4jConnectorInjector implements IElementProcessor
     if (element instanceof CDONet4jSessionImpl)
     {
       CDONet4jSessionImpl session = (CDONet4jSessionImpl)element;
-      IConnector connector = getConnector(container, description);
-      session.setConnector(connector);
+      if (session.getConnector() == null)
+      {
+        IConnector connector = getConnector(container, description);
+        session.setConnector(connector);
+      }
     }
 
     return element;

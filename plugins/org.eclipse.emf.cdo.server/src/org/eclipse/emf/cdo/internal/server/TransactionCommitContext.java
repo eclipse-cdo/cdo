@@ -344,26 +344,34 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public void applyIDMappings(OMMonitor monitor)
   {
-    if (idMappings.isEmpty())
-    {
-      return;
-    }
+    boolean mapIDs = !idMappings.isEmpty();
+    monitor.begin(1 + (mapIDs ? newObjects.length + dirtyObjects.length + dirtyObjectDeltas.length : 0));
 
     try
     {
-      monitor.begin(newObjects.length + dirtyObjects.length + dirtyObjectDeltas.length);
-      applyIDMappings(newObjects, monitor.fork(newObjects.length));
-      applyIDMappings(dirtyObjects, monitor.fork(dirtyObjects.length));
-      for (CDORevisionDelta dirtyObjectDelta : dirtyObjectDeltas)
+      if (mapIDs)
       {
-        ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(idMapper);
-        monitor.worked();
+        applyIDMappings(newObjects, monitor.fork(newObjects.length));
+        applyIDMappings(dirtyObjects, monitor.fork(dirtyObjects.length));
+        for (CDORevisionDelta dirtyObjectDelta : dirtyObjectDeltas)
+        {
+          ((InternalCDORevisionDelta)dirtyObjectDelta).adjustReferences(idMapper);
+          monitor.worked();
+        }
       }
+
+      // Do not notify handlers before the IDs are fully mapped!
+      notifyBeforeCommitting(monitor);
     }
     finally
     {
       monitor.done();
     }
+  }
+
+  protected void notifyBeforeCommitting(OMMonitor monitor)
+  {
+    repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
   }
 
   public void preWrite()
@@ -474,7 +482,6 @@ public class TransactionCommitContext implements InternalCommitContext
       if (rollbackMessage == null)
       {
         detachObjects(monitor.fork());
-        repository.notifyWriteAccessHandlers(transaction, this, true, monitor.fork());
         accessor.write(this, monitor.fork(100));
       }
     }

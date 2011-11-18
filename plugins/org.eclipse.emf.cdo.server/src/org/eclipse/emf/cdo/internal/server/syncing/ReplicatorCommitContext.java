@@ -86,7 +86,16 @@ public final class ReplicatorCommitContext extends TransactionCommitContext
   @Override
   public void applyIDMappings(OMMonitor monitor)
   {
-    monitor.done();
+    monitor.begin();
+
+    try
+    {
+      notifyBeforeCommitting(monitor);
+    }
+    finally
+    {
+      monitor.done();
+    }
   }
 
   @Override

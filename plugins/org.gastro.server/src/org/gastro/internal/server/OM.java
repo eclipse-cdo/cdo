@@ -82,6 +82,7 @@ public abstract class OM
       Map<String, String> props = new HashMap<String, String>();
       props.put(IRepository.Props.OVERRIDE_UUID, "gastro");
       props.put(IRepository.Props.SUPPORTING_AUDITS, "true");
+      props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
 
       repository = CDOServerUtil.createRepository("gastro", store, props);
       CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);

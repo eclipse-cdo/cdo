@@ -35,11 +35,11 @@ import java.text.MessageFormat;
  */
 public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT> extends Lifecycle
 {
-  @SuppressWarnings({ "rawtypes", "deprecation" })
-  public static final ITransition IGNORE = new IgnoreTransition();
+  @SuppressWarnings("rawtypes")
+  public static final ITransition IGNORE = new InternalIgnoreTransition();
 
-  @SuppressWarnings({ "rawtypes", "deprecation" })
-  public static final ITransition FAIL = new FailTransition();
+  @SuppressWarnings("rawtypes")
+  public static final ITransition FAIL = new InternalFailTransition();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, FiniteStateMachine.class);
 
@@ -265,6 +265,46 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
    */
   @Deprecated
   public static class FailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
+  {
+    public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
+    {
+      // Do nothing
+    }
+
+    @Override
+    public String toString()
+    {
+      return "FAIL"; //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * A {@link ITransition transition} that does nothing.
+   * 
+   * @author Eike Stepper
+   * @apiviz.exclude
+   */
+  private static class InternalIgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
+  {
+    public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
+    {
+      // Do nothing
+    }
+
+    @Override
+    public String toString()
+    {
+      return "IGNORE"; //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * A {@link ITransition transition} that throws an {@link IllegalStateException}.
+   * 
+   * @author Eike Stepper
+   * @apiviz.exclude
+   */
+  private static class InternalFailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
     public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
     {

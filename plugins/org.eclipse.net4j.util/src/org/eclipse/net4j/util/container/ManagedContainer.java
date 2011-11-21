@@ -276,17 +276,19 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     synchronized (elementRegistry)
     {
       element = elementRegistry.get(key);
-      if (element == null)
-      {
-        element = createElement(productGroup, factoryType, description);
-        element = postProcessElement(productGroup, factoryType, description, element);
-        if (activate)
-        {
-          LifecycleUtil.activate(element);
-        }
+    }
 
-        putElement(key, element);
+    if (element == null)
+    {
+      element = createElement(productGroup, factoryType, description);
+      element = postProcessElement(productGroup, factoryType, description, element);
+
+      if (activate)
+      {
+        LifecycleUtil.activate(element);
       }
+
+      putElement(key, element);
     }
 
     return element;

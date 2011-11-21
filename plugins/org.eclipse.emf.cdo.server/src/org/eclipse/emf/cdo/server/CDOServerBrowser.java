@@ -709,7 +709,6 @@ public class CDOServerBrowser extends Worker
         {
           if (versionsBuilder != null)
           {
-            @SuppressWarnings("resource")
             PrintStream out = out();
 
             out.println("<tr>");

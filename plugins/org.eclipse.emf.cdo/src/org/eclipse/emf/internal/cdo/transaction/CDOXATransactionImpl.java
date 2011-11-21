@@ -104,7 +104,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
    * <p>
    * Contact the authors if you want to have this executed in parallel.
    */
-  private static final boolean SEQUENTIAL_EXECUTION = true;
+  private static boolean SEQUENTIAL_EXECUTION = true;
 
   private List<InternalCDOTransaction> transactions = new ArrayList<InternalCDOTransaction>();
 

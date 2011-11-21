@@ -35,10 +35,10 @@ import java.text.MessageFormat;
  */
 public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT> extends Lifecycle
 {
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "deprecation" })
   public static final ITransition IGNORE = new IgnoreTransition();
 
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "deprecation" })
   public static final ITransition FAIL = new FailTransition();
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, FiniteStateMachine.class);

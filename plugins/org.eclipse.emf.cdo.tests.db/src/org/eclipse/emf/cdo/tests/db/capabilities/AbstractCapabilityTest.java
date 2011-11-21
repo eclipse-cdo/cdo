@@ -50,7 +50,6 @@ public abstract class AbstractCapabilityTest extends TestCase
           Connection transaction1 = provider.getConnection();
           transaction1.setAutoCommit(false);
 
-          @SuppressWarnings("resource")
           Statement tx1stmt = transaction1.createStatement();
           tx1stmt.executeUpdate("update status_table set status = 'changed' where trans = 'transaction1'");
           msg("Read value (transaction 1) is "

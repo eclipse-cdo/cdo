@@ -237,7 +237,6 @@ public final class DBUtil
     {
       try
       {
-        @SuppressWarnings("resource")
         Statement statement = resultSet.getStatement();
         if (statement != null && statement.getMaxRows() != 0)
         {

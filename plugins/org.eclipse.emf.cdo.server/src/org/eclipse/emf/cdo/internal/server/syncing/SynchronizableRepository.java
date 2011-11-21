@@ -653,7 +653,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     String lockAreaID = view.getDurableLockingID();
     if (lockAreaID == null)
     {
-      throw new IllegalStateException("Durable locking is not enabled.");
+      throw new IllegalStateException("Durable locking is not enabled for view " + view);
     }
 
     sessionProtocol.delegateUnlockObjects(lockAreaID, objectIDs, lockType, recursive);

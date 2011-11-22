@@ -288,6 +288,167 @@ public interface Model6Package extends EPackage
   int CONTAINMENT_OBJECT_FEATURE_COUNT = BASE_OBJECT_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.AImpl <em>A</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model6.impl.AImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getA()
+   * @generated
+   */
+  int A = 4;
+
+  /**
+   * The feature id for the '<em><b>Owned Ds</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int A__OWNED_DS = 0;
+
+  /**
+   * The feature id for the '<em><b>Owned Bs</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int A__OWNED_BS = 1;
+
+  /**
+   * The number of structural features of the '<em>A</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int A_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.BImpl <em>B</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model6.impl.BImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getB()
+   * @generated
+   */
+  int B = 5;
+
+  /**
+   * The feature id for the '<em><b>Owned C</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int B__OWNED_C = 0;
+
+  /**
+   * The number of structural features of the '<em>B</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int B_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.CImpl <em>C</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model6.impl.CImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getC()
+   * @generated
+   */
+  int C = 6;
+
+  /**
+   * The number of structural features of the '<em>C</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int C_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.DImpl <em>D</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model6.impl.DImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getD()
+   * @generated
+   */
+  int D = 7;
+
+  /**
+   * The feature id for the '<em><b>Data</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int D__DATA = 0;
+
+  /**
+   * The number of structural features of the '<em>D</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int D_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.EImpl <em>E</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model6.impl.EImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getE()
+   * @generated
+   */
+  int E = 8;
+
+  /**
+   * The feature id for the '<em><b>Owned As</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int E__OWNED_AS = 0;
+
+  /**
+   * The number of structural features of the '<em>E</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int E_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.FImpl <em>F</em>}' class. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.model6.impl.FImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getF()
+   * @generated
+   */
+  int F = 9;
+
+  /**
+   * The feature id for the '<em><b>Owned Es</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int F__OWNED_ES = 0;
+
+  /**
+   * The number of structural features of the '<em>F</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int F_FEATURE_COUNT = 1;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Root <em>Root</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -454,6 +615,132 @@ public interface Model6Package extends EPackage
   EReference getContainmentObject_ContainmentList();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.A <em>A</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>A</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.A
+   * @generated
+   */
+  EClass getA();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.A#getOwnedDs
+   * <em>Owned Ds</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Owned Ds</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.A#getOwnedDs()
+   * @see #getA()
+   * @generated
+   */
+  EReference getA_OwnedDs();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.A#getOwnedBs
+   * <em>Owned Bs</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Owned Bs</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.A#getOwnedBs()
+   * @see #getA()
+   * @generated
+   */
+  EReference getA_OwnedBs();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.B <em>B</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>B</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.B
+   * @generated
+   */
+  EClass getB();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model6.B#getOwnedC
+   * <em>Owned C</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference '<em>Owned C</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.B#getOwnedC()
+   * @see #getB()
+   * @generated
+   */
+  EReference getB_OwnedC();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.C <em>C</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>C</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.C
+   * @generated
+   */
+  EClass getC();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.D <em>D</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>D</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.D
+   * @generated
+   */
+  EClass getD();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.model6.D#getData
+   * <em>Data</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference '<em>Data</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.D#getData()
+   * @see #getD()
+   * @generated
+   */
+  EReference getD_Data();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.E <em>E</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>E</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.E
+   * @generated
+   */
+  EClass getE();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.E#getOwnedAs
+   * <em>Owned As</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Owned As</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.E#getOwnedAs()
+   * @see #getE()
+   * @generated
+   */
+  EReference getE_OwnedAs();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.F <em>F</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>F</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.F
+   * @generated
+   */
+  EClass getF();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model6.F#getOwnedEs
+   * <em>Owned Es</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Owned Es</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.F#getOwnedEs()
+   * @see #getF()
+   * @generated
+   */
+  EReference getF_OwnedEs();
+
+  /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return the factory that creates the instances of the model.
@@ -602,6 +889,114 @@ public interface Model6Package extends EPackage
      * @generated
      */
     EReference CONTAINMENT_OBJECT__CONTAINMENT_LIST = eINSTANCE.getContainmentObject_ContainmentList();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.AImpl <em>A</em>}' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model6.impl.AImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getA()
+     * @generated
+     */
+    EClass A = eINSTANCE.getA();
+
+    /**
+     * The meta object literal for the '<em><b>Owned Ds</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference A__OWNED_DS = eINSTANCE.getA_OwnedDs();
+
+    /**
+     * The meta object literal for the '<em><b>Owned Bs</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference A__OWNED_BS = eINSTANCE.getA_OwnedBs();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.BImpl <em>B</em>}' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model6.impl.BImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getB()
+     * @generated
+     */
+    EClass B = eINSTANCE.getB();
+
+    /**
+     * The meta object literal for the '<em><b>Owned C</b></em>' containment reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference B__OWNED_C = eINSTANCE.getB_OwnedC();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.CImpl <em>C</em>}' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model6.impl.CImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getC()
+     * @generated
+     */
+    EClass C = eINSTANCE.getC();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.DImpl <em>D</em>}' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model6.impl.DImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getD()
+     * @generated
+     */
+    EClass D = eINSTANCE.getD();
+
+    /**
+     * The meta object literal for the '<em><b>Data</b></em>' containment reference feature. <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference D__DATA = eINSTANCE.getD_Data();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.EImpl <em>E</em>}' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model6.impl.EImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getE()
+     * @generated
+     */
+    EClass E = eINSTANCE.getE();
+
+    /**
+     * The meta object literal for the '<em><b>Owned As</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference E__OWNED_AS = eINSTANCE.getE_OwnedAs();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.FImpl <em>F</em>}' class. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @see org.eclipse.emf.cdo.tests.model6.impl.FImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getF()
+     * @generated
+     */
+    EClass F = eINSTANCE.getF();
+
+    /**
+     * The meta object literal for the '<em><b>Owned Es</b></em>' containment reference list feature. <!--
+     * begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EReference F__OWNED_ES = eINSTANCE.getF_OwnedEs();
 
   }
 

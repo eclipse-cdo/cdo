@@ -12,8 +12,14 @@ package org.eclipse.emf.cdo.tests.legacy.model6.impl;
 
 import org.eclipse.emf.cdo.tests.legacy.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
+import org.eclipse.emf.cdo.tests.model6.A;
+import org.eclipse.emf.cdo.tests.model6.B;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
+import org.eclipse.emf.cdo.tests.model6.C;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
+import org.eclipse.emf.cdo.tests.model6.D;
+import org.eclipse.emf.cdo.tests.model6.E;
+import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 
@@ -88,6 +94,18 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createReferenceObject();
     case Model6Package.CONTAINMENT_OBJECT:
       return createContainmentObject();
+    case Model6Package.A:
+      return createA();
+    case Model6Package.B:
+      return createB();
+    case Model6Package.C:
+      return createC();
+    case Model6Package.D:
+      return createD();
+    case Model6Package.E:
+      return createE();
+    case Model6Package.F:
+      return createF();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -135,6 +153,72 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   {
     ContainmentObjectImpl containmentObject = new ContainmentObjectImpl();
     return containmentObject;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public A createA()
+  {
+    AImpl a = new AImpl();
+    return a;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public B createB()
+  {
+    BImpl b = new BImpl();
+    return b;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public C createC()
+  {
+    CImpl c = new CImpl();
+    return c;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public D createD()
+  {
+    DImpl d = new DImpl();
+    return d;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public E createE()
+  {
+    EImpl e = new EImpl();
+    return e;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public F createF()
+  {
+    FImpl f = new FImpl();
+    return f;
   }
 
   /**

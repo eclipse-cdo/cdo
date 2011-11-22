@@ -30,11 +30,9 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>
- * {@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentOptional <em>Containment
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentOptional <em>Containment
  * Optional</em>}</li>
- * <li>
- * {@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentList <em>Containment List
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentList <em>Containment List
  * </em>}</li>
  * </ul>
  * </p>

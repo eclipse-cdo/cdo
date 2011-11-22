@@ -31,4 +31,30 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="containmentList" upperBound="-1"
         eType="#//BaseObject" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="A">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedDs" upperBound="-1"
+        eType="#//D" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedBs" upperBound="-1"
+        eType="#//B" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="B">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedC" eType="#//C" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The style of the node."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="C"/>
+  <eClassifiers xsi:type="ecore:EClass" name="D">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="data" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="E">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedAs" upperBound="-1"
+        eType="#//A" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="F">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedEs" upperBound="-1"
+        eType="#//E" containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

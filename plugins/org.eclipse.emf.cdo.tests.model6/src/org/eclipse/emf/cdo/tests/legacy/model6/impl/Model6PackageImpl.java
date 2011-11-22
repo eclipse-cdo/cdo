@@ -12,8 +12,14 @@ package org.eclipse.emf.cdo.tests.legacy.model6.impl;
 
 import org.eclipse.emf.cdo.tests.legacy.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.legacy.model6.Model6Package;
+import org.eclipse.emf.cdo.tests.model6.A;
+import org.eclipse.emf.cdo.tests.model6.B;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
+import org.eclipse.emf.cdo.tests.model6.C;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
+import org.eclipse.emf.cdo.tests.model6.D;
+import org.eclipse.emf.cdo.tests.model6.E;
+import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 
@@ -66,6 +72,48 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   private EClass containmentObjectEClass = null;
 
   /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass aEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass bEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass cEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass dEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass eEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass fEClass = null;
+
+  /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
    * EPackage.Registry} by the package package URI value.
    * <p>
@@ -105,7 +153,9 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   public static Model6Package init()
   {
     if (isInited)
+    {
       return (Model6Package)EPackage.Registry.INSTANCE.getEPackage(Model6Package.eNS_URI);
+    }
 
     // Obtain or create and register package
     Model6PackageImpl theModel6Package = (Model6PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model6PackageImpl ? EPackage.Registry.INSTANCE
@@ -282,6 +332,126 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * 
    * @generated
    */
+  public EClass getA()
+  {
+    return aEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getA_OwnedDs()
+  {
+    return (EReference)aEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getA_OwnedBs()
+  {
+    return (EReference)aEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getB()
+  {
+    return bEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getB_OwnedC()
+  {
+    return (EReference)bEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getC()
+  {
+    return cEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getD()
+  {
+    return dEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getD_Data()
+  {
+    return (EReference)dEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getE()
+  {
+    return eEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getE_OwnedAs()
+  {
+    return (EReference)eEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getF()
+  {
+    return fEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getF_OwnedEs()
+  {
+    return (EReference)fEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Model6Factory getModel6Factory()
   {
     return (Model6Factory)getEFactoryInstance();
@@ -303,7 +473,9 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -325,6 +497,24 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     containmentObjectEClass = createEClass(CONTAINMENT_OBJECT);
     createEReference(containmentObjectEClass, CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL);
     createEReference(containmentObjectEClass, CONTAINMENT_OBJECT__CONTAINMENT_LIST);
+
+    aEClass = createEClass(A);
+    createEReference(aEClass, A__OWNED_DS);
+    createEReference(aEClass, A__OWNED_BS);
+
+    bEClass = createEClass(B);
+    createEReference(bEClass, B__OWNED_C);
+
+    cEClass = createEClass(C);
+
+    dEClass = createEClass(D);
+    createEReference(dEClass, D__DATA);
+
+    eEClass = createEClass(E);
+    createEReference(eEClass, E__OWNED_AS);
+
+    fEClass = createEClass(F);
+    createEReference(fEClass, F__OWNED_ES);
   }
 
   /**
@@ -343,7 +533,9 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -356,21 +548,21 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    referenceObjectEClass.getESuperTypes().add(this.getBaseObject());
-    containmentObjectEClass.getESuperTypes().add(this.getBaseObject());
+    referenceObjectEClass.getESuperTypes().add(getBaseObject());
+    containmentObjectEClass.getESuperTypes().add(getBaseObject());
 
     // Initialize classes and features; add operations and parameters
     initEClass(rootEClass, Root.class, "Root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRoot_ListA(), this.getBaseObject(), null, "listA", null, 0, -1, Root.class, !IS_TRANSIENT,
+    initEReference(getRoot_ListA(), getBaseObject(), null, "listA", null, 0, -1, Root.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getRoot_ListB(), this.getBaseObject(), null, "listB", null, 0, -1, Root.class, !IS_TRANSIENT,
+    initEReference(getRoot_ListB(), getBaseObject(), null, "listB", null, 0, -1, Root.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getRoot_ListC(), this.getBaseObject(), null, "listC", null, 0, -1, Root.class, !IS_TRANSIENT,
+    initEReference(getRoot_ListC(), getBaseObject(), null, "listC", null, 0, -1, Root.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEReference(getRoot_ListD(), this.getBaseObject(), null, "listD", null, 0, -1, Root.class, !IS_TRANSIENT,
+    initEReference(getRoot_ListD(), getBaseObject(), null, "listD", null, 0, -1, Root.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
@@ -388,21 +580,46 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     initEClass(referenceObjectEClass, ReferenceObject.class, "ReferenceObject", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getReferenceObject_ReferenceOptional(), this.getBaseObject(), null, "referenceOptional", null, 0, 1,
+    initEReference(getReferenceObject_ReferenceOptional(), getBaseObject(), null, "referenceOptional", null, 0, 1,
         ReferenceObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getReferenceObject_ReferenceList(), this.getBaseObject(), null, "referenceList", null, 0, -1,
+    initEReference(getReferenceObject_ReferenceList(), getBaseObject(), null, "referenceList", null, 0, -1,
         ReferenceObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(containmentObjectEClass, ContainmentObject.class, "ContainmentObject", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getContainmentObject_ContainmentOptional(), this.getBaseObject(), null, "containmentOptional", null,
-        0, 1, ContainmentObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+    initEReference(getContainmentObject_ContainmentOptional(), getBaseObject(), null, "containmentOptional", null, 0,
+        1, ContainmentObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getContainmentObject_ContainmentList(), this.getBaseObject(), null, "containmentList", null, 0, -1,
+    initEReference(getContainmentObject_ContainmentList(), getBaseObject(), null, "containmentList", null, 0, -1,
         ContainmentObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(aEClass, A.class, "A", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getA_OwnedDs(), getD(), null, "ownedDs", null, 0, -1, A.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getA_OwnedBs(), getB(), null, "ownedBs", null, 0, -1, A.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(bEClass, B.class, "B", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getB_OwnedC(), getC(), null, "ownedC", null, 0, 1, B.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(cEClass, C.class, "C", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(dEClass, D.class, "D", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getD_Data(), ecorePackage.getEObject(), null, "data", null, 0, 1, D.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+
+    initEClass(eEClass, E.class, "E", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getE_OwnedAs(), getA(), null, "ownedAs", null, 0, -1, E.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fEClass, F.class, "F", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getF_OwnedEs(), getE(), null, "ownedEs", null, 0, -1, F.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

@@ -59,6 +59,48 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   private EClass containmentObjectEClass = null;
 
   /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass aEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass bEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass cEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass dEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass eEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass fEClass = null;
+
+  /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
    * EPackage.Registry} by the package package URI value.
    * <p>
@@ -275,6 +317,126 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * 
    * @generated
    */
+  public EClass getA()
+  {
+    return aEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getA_OwnedDs()
+  {
+    return (EReference)aEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getA_OwnedBs()
+  {
+    return (EReference)aEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getB()
+  {
+    return bEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getB_OwnedC()
+  {
+    return (EReference)bEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getC()
+  {
+    return cEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getD()
+  {
+    return dEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getD_Data()
+  {
+    return (EReference)dEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getE()
+  {
+    return eEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getE_OwnedAs()
+  {
+    return (EReference)eEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EClass getF()
+  {
+    return fEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getF_OwnedEs()
+  {
+    return (EReference)fEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public Model6Factory getModel6Factory()
   {
     return (Model6Factory)getEFactoryInstance();
@@ -318,6 +480,24 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     containmentObjectEClass = createEClass(CONTAINMENT_OBJECT);
     createEReference(containmentObjectEClass, CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL);
     createEReference(containmentObjectEClass, CONTAINMENT_OBJECT__CONTAINMENT_LIST);
+
+    aEClass = createEClass(A);
+    createEReference(aEClass, A__OWNED_DS);
+    createEReference(aEClass, A__OWNED_BS);
+
+    bEClass = createEClass(B);
+    createEReference(bEClass, B__OWNED_C);
+
+    cEClass = createEClass(C);
+
+    dEClass = createEClass(D);
+    createEReference(dEClass, D__DATA);
+
+    eEClass = createEClass(E);
+    createEReference(eEClass, E__OWNED_AS);
+
+    fEClass = createEClass(F);
+    createEReference(fEClass, F__OWNED_ES);
   }
 
   /**
@@ -396,6 +576,42 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     initEReference(getContainmentObject_ContainmentList(), this.getBaseObject(), null, "containmentList", null, 0, -1,
         ContainmentObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(aEClass, org.eclipse.emf.cdo.tests.model6.A.class, "A", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getA_OwnedDs(), this.getD(), null, "ownedDs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.A.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getA_OwnedBs(), this.getB(), null, "ownedBs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.A.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(bEClass, org.eclipse.emf.cdo.tests.model6.B.class, "B", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getB_OwnedC(), this.getC(), null, "ownedC", null, 0, 1, org.eclipse.emf.cdo.tests.model6.B.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(cEClass, org.eclipse.emf.cdo.tests.model6.C.class, "C", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(dEClass, org.eclipse.emf.cdo.tests.model6.D.class, "D", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getD_Data(), ecorePackage.getEObject(), null, "data", null, 0, 1,
+        org.eclipse.emf.cdo.tests.model6.D.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(eEClass, org.eclipse.emf.cdo.tests.model6.E.class, "E", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getE_OwnedAs(), this.getA(), null, "ownedAs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.E.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fEClass, org.eclipse.emf.cdo.tests.model6.F.class, "F", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getF_OwnedEs(), this.getE(), null, "ownedEs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.F.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

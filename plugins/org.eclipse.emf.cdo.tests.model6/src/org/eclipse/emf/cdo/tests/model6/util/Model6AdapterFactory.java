@@ -10,8 +10,14 @@
  */
 package org.eclipse.emf.cdo.tests.model6.util;
 
+import org.eclipse.emf.cdo.tests.model6.A;
+import org.eclipse.emf.cdo.tests.model6.B;
 import org.eclipse.emf.cdo.tests.model6.BaseObject;
+import org.eclipse.emf.cdo.tests.model6.C;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
+import org.eclipse.emf.cdo.tests.model6.D;
+import org.eclipse.emf.cdo.tests.model6.E;
+import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
@@ -104,6 +110,42 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseA(A object)
+    {
+      return createAAdapter();
+    }
+
+    @Override
+    public Adapter caseB(B object)
+    {
+      return createBAdapter();
+    }
+
+    @Override
+    public Adapter caseC(C object)
+    {
+      return createCAdapter();
+    }
+
+    @Override
+    public Adapter caseD(D object)
+    {
+      return createDAdapter();
+    }
+
+    @Override
+    public Adapter caseE(E object)
+    {
+      return createEAdapter();
+    }
+
+    @Override
+    public Adapter caseF(F object)
+    {
+      return createFAdapter();
+    }
+
+    @Override
     public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -177,6 +219,90 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createContainmentObjectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.A <em>A</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.A
+   * @generated
+   */
+  public Adapter createAAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.B <em>B</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.B
+   * @generated
+   */
+  public Adapter createBAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.C <em>C</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.C
+   * @generated
+   */
+  public Adapter createCAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.D <em>D</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.D
+   * @generated
+   */
+  public Adapter createDAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.E <em>E</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.E
+   * @generated
+   */
+  public Adapter createEAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.F <em>F</em>}'. <!--
+   * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
+   * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+   * 
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.F
+   * @generated
+   */
+  public Adapter createFAdapter()
   {
     return null;
   }

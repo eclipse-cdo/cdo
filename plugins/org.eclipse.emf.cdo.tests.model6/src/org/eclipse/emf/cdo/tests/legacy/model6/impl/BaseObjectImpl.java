@@ -27,14 +27,11 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>
- * {@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeOptional <em>Attribute Optional
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeOptional <em>Attribute Optional
  * </em>}</li>
- * <li>
- * {@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeRequired <em>Attribute Required
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeRequired <em>Attribute Required
  * </em>}</li>
- * <li>
- * {@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeList <em>Attribute List</em>}</li>
+ * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeList <em>Attribute List</em>}</li>
  * </ul>
  * </p>
  * 

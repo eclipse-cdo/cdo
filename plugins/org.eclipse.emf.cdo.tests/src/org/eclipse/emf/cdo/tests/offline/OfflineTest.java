@@ -407,4 +407,22 @@ public class OfflineTest extends AbstractSyncingTest
 
     assertEquals(12, result.size());
   }
+
+  /**
+   * See bug 364548.
+   */
+  public void _testEmptyCommit() throws Exception
+  {
+    InternalRepository master = getRepository("master");
+
+    TestListener listener = new TestListener();
+    CDOSession masterSession = openSession(master.getName());
+    masterSession.addListener(listener);
+
+    CDOSession cloneSession = openSession();
+    waitForOnline(cloneSession.getRepositoryInfo());
+
+    CDOTransaction transaction = cloneSession.openTransaction();
+    transaction.commit();
+  }
 }

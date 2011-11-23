@@ -135,8 +135,8 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
 
     public ReportingMonitor(int monitorProgressSeconds, int monitorTimeoutSeconds)
     {
-      super(monitorTimeoutSeconds * 1000L);
-      long period = monitorProgressSeconds * 1000L;
+      super(1000L * monitorTimeoutSeconds);
+      long period = 1000L * monitorProgressSeconds;
       scheduleAtFixedRate(sendProgressTask, period, period);
     }
 

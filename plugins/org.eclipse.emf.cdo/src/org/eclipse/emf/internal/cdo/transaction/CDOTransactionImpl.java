@@ -1809,7 +1809,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     };
 
     List<CDOSavepoint> savepoints = new ArrayList<CDOSavepoint>();
+    int totalNewObjects = 0;
+
     InternalCDOSavepoint savepoint = firstSavepoint;
+    while (savepoint != null)
+    {
+      Collection<CDOObject> newObjects = savepoint.getNewObjects().values();
+      totalNewObjects += newObjects.size();
+
+      savepoint = savepoint.getNextSavepoint();
+    }
+
+    out.writeInt(totalNewObjects);
+
+    savepoint = firstSavepoint;
     while (savepoint != null)
     {
       Collection<CDOObject> newObjects = savepoint.getNewObjects().values();
@@ -1887,6 +1900,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       };
 
+      // Increase the internal tempID counter to prevent ID collisions during mapping
+      int totalNewObjects = in.readInt();
+      for (int i = 0; i < totalNewObjects; i++)
+      {
+        createIDForNewObject(null);
+      }
+
       Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
       while (in.readBoolean())
       {
@@ -1914,11 +1934,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         // Create new objects
+        List<InternalCDOObject> newObjects = new ArrayList<InternalCDOObject>();
         for (InternalCDORevision revision : revisions)
         {
           InternalCDOObject object = newInstance(revision);
           registerObject(object);
           registerAttached(object, true);
+
+          newObjects.add(object);
+        }
+
+        // Post-load new objects (important for legacy objects!)
+        for (InternalCDOObject object : newObjects)
+        {
+          object.cdoInternalPostLoad();
         }
 
         // Apply deltas
@@ -1926,12 +1955,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         for (InternalCDORevisionDelta delta : revisionDeltas)
         {
           InternalCDOObject object = getObject(delta.getID());
-          CDORevision revision = object.cdoRevision().copy();
+          int oldVersion = object.cdoRevision().getVersion();
+
           merger.merge(object, delta);
           registerRevisionDelta(delta);
           registerDirty(object, null);
 
-          if (delta.getVersion() < revision.getVersion())
+          if (delta.getVersion() < oldVersion)
           {
             setConflict(object);
           }

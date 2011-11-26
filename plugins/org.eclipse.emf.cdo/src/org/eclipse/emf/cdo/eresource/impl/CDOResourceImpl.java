@@ -1216,6 +1216,12 @@ public class CDOResourceImpl extends CDOResourceNodeImpl implements CDOResource,
     if (!FSMUtil.isTransient(this))
     {
       InternalCDOObject cdoObject = FSMUtil.adapt(object, cdoView());
+
+      if (CDOUtil.isLegacyObject(cdoObject) && cdoObject.cdoState() == CDOState.CLEAN)
+      {
+        return;
+      }
+
       attached(cdoObject, cdoView().toTransaction());
     }
   }

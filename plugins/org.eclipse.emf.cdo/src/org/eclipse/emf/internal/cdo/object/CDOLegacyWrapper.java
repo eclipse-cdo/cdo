@@ -384,6 +384,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       registerWrapper(this);
       counter.increment();
       view.registerObject(this);
+
       revisionToInstanceContainer();
 
       for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(revision.getEClass()))
@@ -422,8 +423,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   protected void revisionToInstanceContainer()
   {
     Object containerID = revision.getContainerID();
+    EObject oldContainer = instance.eContainer();
     InternalEObject container = getEObjectFromPotentialID(view, null, containerID);
-    setInstanceContainer(container, revision.getContainingFeatureID());
+
+    if (oldContainer != container)
+    {
+      setInstanceContainer(container, revision.getContainingFeatureID());
+    }
   }
 
   /**
@@ -541,7 +547,27 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
         {
           if (object != CDORevisionData.NIL)
           {
-            instance.eSet(feature, object);
+            EReference reference = (EReference)feature;
+            if (reference.isContainment())
+            {
+              if (object != null)
+              {
+                // Calling eSet it not the optimal approach, but currently there is no other way to set the value here.
+                // To avoid attaching already processed (clean) objects a check was introduced to
+                // CDOResourceImpl.attached(EObject).
+                // If we find a way to avoid the call of eSet and if we are able to only set the feature value directly
+                // this check can be removed from CDOResourceImpl. See also Bug 352204.
+                instance.eSet(feature, object);
+              }
+              else
+              {
+                instance.eSet(feature, null);
+              }
+            }
+            else
+            {
+              instance.eSet(feature, object);
+            }
           }
           else
           {

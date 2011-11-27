@@ -232,10 +232,11 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_350027_Test.class);
     testClasses.add(Bugzilla_351195_Test.class);
     testClasses.add(Bugzilla_351198_Test.class);
-    testClasses.add(Bugzilla_351921_Test.class);
     testClasses.add(Bugzilla_351200_Test.class);
     testClasses.add(Bugzilla_351202_Test.class);
     testClasses.add(Bugzilla_351393_Test.class);
+    testClasses.add(Bugzilla_351921_Test.class);
+    testClasses.add(Bugzilla_352204_Test.class);
     testClasses.add(Bugzilla_352303_Test.class);
     testClasses.add(Bugzilla_352832_Test.class);
     testClasses.add(Bugzilla_354395_Test.class);
@@ -243,6 +244,5 @@ public abstract class AllConfigs extends ConfigTestSuite
     testClasses.add(Bugzilla_359966_Test.class);
     testClasses.add(Bugzilla_359992_Test.class);
     testClasses.add(Bugzilla_363287_Test.class);
-    testClasses.add(Bugzilla_352204_Test.class);
   }
 }

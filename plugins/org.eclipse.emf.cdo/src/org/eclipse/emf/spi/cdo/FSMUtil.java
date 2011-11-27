@@ -63,6 +63,15 @@ public final class FSMUtil
     return state == CDOState.NEW;
   }
 
+  /**
+   * @since 4.1
+   */
+  public static boolean isClean(CDOObject object)
+  {
+    CDOState state = object.cdoState();
+    return state == CDOState.CLEAN;
+  }
+
   public static boolean isNative(EObject eObject)
   {
     return eObject instanceof CDOObjectImpl;

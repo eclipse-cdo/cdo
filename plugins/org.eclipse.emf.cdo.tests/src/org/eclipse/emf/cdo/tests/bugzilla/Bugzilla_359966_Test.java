@@ -63,12 +63,12 @@ public class Bugzilla_359966_Test extends AbstractCDOTest
     checkDiagramAsCorrectlyBeenModified(transaction);
   }
 
-  public void testChangesImportWithNewLegacyElementsWithCustomFileAndReconstructSavePoints() throws Exception
+  public void testWithReconstructSavepoints() throws Exception
   {
     importWithNewLegacyElements(true);
   }
 
-  public void testChangesImportWithNewLegacyElementsWithCustomFileAndNotReconstructSavePoints() throws Exception
+  public void testWithoutReconstructSavepoints() throws Exception
   {
     importWithNewLegacyElements(false);
   }
@@ -120,11 +120,6 @@ public class Bugzilla_359966_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction delegate = session.openTransaction();
-    if (fileForStoringChanges == null)
-    {
-      return new CDOPushTransaction(delegate);
-    }
-
     return new CDOPushTransaction(delegate, fileForStoringChanges, reconstructSavePoints);
   }
 

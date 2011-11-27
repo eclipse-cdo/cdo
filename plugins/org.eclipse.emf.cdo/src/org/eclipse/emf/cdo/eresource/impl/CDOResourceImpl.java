@@ -1290,14 +1290,16 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   {
     if (!FSMUtil.isTransient(this))
     {
-      InternalCDOObject cdoObject = FSMUtil.adapt(object, cdoView());
+      InternalCDOTransaction transaction = cdoView().toTransaction();
+      InternalCDOObject cdoObject = FSMUtil.adapt(object, transaction);
 
-      if (CDOUtil.isLegacyObject(cdoObject) && cdoObject.cdoState() == CDOState.CLEAN)
+      if (CDOUtil.isLegacyObject(cdoObject) && FSMUtil.isClean(cdoObject))
       {
+        // Bug 352204
         return;
       }
 
-      attached(cdoObject, cdoView().toTransaction());
+      attached(cdoObject, transaction);
     }
   }
 

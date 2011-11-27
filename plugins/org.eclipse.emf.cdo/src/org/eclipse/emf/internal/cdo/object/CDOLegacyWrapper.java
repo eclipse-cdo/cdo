@@ -423,9 +423,9 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   protected void revisionToInstanceContainer()
   {
     Object containerID = revision.getContainerID();
-    EObject oldContainer = instance.eContainer();
     InternalEObject container = getEObjectFromPotentialID(view, null, containerID);
 
+    EObject oldContainer = instance.eContainer();
     if (oldContainer != container)
     {
       setInstanceContainer(container, revision.getContainingFeatureID());

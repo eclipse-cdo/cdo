@@ -67,37 +67,25 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     InternalCDOSession session = transaction.getSession();
     CommitTransactionResult result = null;
 
-    if (transaction.isDirty())
-    {
-      OMMonitor monitor = new EclipseMonitor(progressMonitor);
+    OMMonitor monitor = new EclipseMonitor(progressMonitor);
+    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+    result = sessionProtocol.commitTransaction(commitContext, monitor);
 
-      CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-      result = sessionProtocol.commitTransaction(commitContext, monitor);
-
-      String rollbackMessage = result.getRollbackMessage();
-      if (rollbackMessage != null)
-      {
-        // Needed even for failed commits to retain invalidation order in the session
-        commitContext.postCommit(result);
-
-        List<CDOObjectReference> xRefs = result.getXRefs();
-        if (xRefs != null)
-        {
-          throw new ReferentialIntegrityException(rollbackMessage, xRefs);
-        }
-
-        throw new CommitException(rollbackMessage);
-      }
-    }
-
-    // Needed even for non-dirty transactions to release locks
     commitContext.postCommit(result);
-    transaction.setCommitComment(null);
 
-    if (result == null)
+    String rollbackMessage = result.getRollbackMessage();
+    if (rollbackMessage != null)
     {
-      return null;
+      List<CDOObjectReference> xRefs = result.getXRefs();
+      if (xRefs != null)
+      {
+        throw new ReferentialIntegrityException(rollbackMessage, xRefs);
+      }
+
+      throw new CommitException(rollbackMessage);
     }
+
+    transaction.setCommitComment(null);
 
     long previousTimeStamp = result.getPreviousTimeStamp();
     CDOBranch branch = transaction.getBranch();

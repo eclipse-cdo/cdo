@@ -411,7 +411,7 @@ public class OfflineTest extends AbstractSyncingTest
   /**
    * See bug 364548.
    */
-  public void _testEmptyCommit() throws Exception
+  public void testEmptyCommit() throws Exception
   {
     InternalRepository master = getRepository("master");
 

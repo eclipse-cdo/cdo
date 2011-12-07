@@ -127,6 +127,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.releng.tasks"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.releng.windowtitle"
          version="0.0.0"/>
 

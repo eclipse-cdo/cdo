@@ -12,7 +12,7 @@ Export-Package: org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.dawnGmfGenmode
  org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui.actions;version="1.0.0",
  org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.ui.creators;version="1.0.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)";visibility:=reexport,
+ org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.gmf.edit;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;bundle-version="[2.6.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.edit.ui;bundle-version="[2.6.0,3.0.0)";visibility:=reexport,

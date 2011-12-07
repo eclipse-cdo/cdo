@@ -3,7 +3,5 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="org.eclipse.nebula.widgets.pshelf_1.0.0.HEAD.jar"/>
-	<classpathentry exported="true" kind="lib" path="org.eclipse.nebula.widgets.gallery_0.5.2.R_0_20090418.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

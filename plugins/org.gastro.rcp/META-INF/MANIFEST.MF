@@ -12,18 +12,12 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)";visibili
  org.gastro.business;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.gastro.business.edit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.gastro.inventory;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
- org.gastro.inventory.edit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
+ org.gastro.inventory.edit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
+ org.eclipse.nebula.widgets.gallery;bundle-version="[0.0.1,1.0.0)";visibility:=reexport,
+ org.eclipse.nebula.widgets.pshelf;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.nebula.animation;version="0.5.2",
- org.eclipse.nebula.animation.effects;version="0.5.2",
- org.eclipse.nebula.animation.movement;version="0.5.2",
- org.eclipse.nebula.jface.galleryviewer;version="0.5.2",
- org.eclipse.nebula.widgets.gallery;version="0.5.2",
- org.eclipse.nebula.widgets.pshelf;version="1.0.0",
- org.gastro.internal.rcp;version="4.1.0";x-internal:=true,
+Export-Package: org.gastro.internal.rcp;version="4.1.0";x-internal:=true,
  org.gastro.rcp;version="4.1.0"
-Bundle-ClassPath: .,
- org.eclipse.nebula.widgets.pshelf_1.0.0.HEAD.jar,
- org.eclipse.nebula.widgets.gallery_0.5.2.R_0_20090418.jar
+Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Modeling Project

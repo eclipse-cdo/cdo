@@ -114,6 +114,11 @@ public interface CDODataInput extends ExtendedDataInput
   public CDORevision readCDORevision() throws IOException;
 
   /**
+   * @since 4.1
+   */
+  public CDORevision readCDORevision(boolean freeze) throws IOException;
+
+  /**
    * @since 4.0
    */
   public CDORevisable readCDORevisable() throws IOException;

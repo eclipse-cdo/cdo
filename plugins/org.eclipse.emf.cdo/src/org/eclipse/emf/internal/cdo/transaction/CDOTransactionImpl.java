@@ -1950,7 +1950,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     int size = in.readInt();
     for (int i = 0; i < size; i++)
     {
-      InternalCDORevision revision = (InternalCDORevision)in.readCDORevision();
+      // Bug 365993
+      InternalCDORevision revision = (InternalCDORevision)(in instanceof CDODataInputImpl ? ((CDODataInputImpl)in)
+          .readCDORevision(false) : in.readCDORevision());
 
       CDOID oldID = revision.getID();
       CDOIDTemp newID = getNextTemporaryID();

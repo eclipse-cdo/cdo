@@ -365,12 +365,23 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
 
   public CDORevision readCDORevision() throws IOException
   {
+    return readCDORevision(true);
+  }
+
+  public CDORevision readCDORevision(boolean freeze) throws IOException
+  {
     boolean notNull = readBoolean();
     if (notNull)
     {
       InternalCDORevision revision = (InternalCDORevision)getRevisionFactory().createRevision(null);
       revision.read(this);
-      revision.freeze();
+
+      // Bug 365993
+      if (freeze)
+      {
+        revision.freeze();
+      }
+
       return revision;
     }
 

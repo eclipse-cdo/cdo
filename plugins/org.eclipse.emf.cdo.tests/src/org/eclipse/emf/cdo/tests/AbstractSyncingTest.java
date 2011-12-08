@@ -250,7 +250,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   {
     CDOTransaction tx = session.openTransaction();
     tx.options().setLockNotificationEnabled(true);
-    tx.enableDurableLocking(true);
+    tx.enableDurableLocking();
     return tx;
   }
 }

@@ -41,7 +41,7 @@ public class OfflineLockingTest extends AbstractSyncingTest
     waitForOnline(cloneSession.getRepositoryInfo());
 
     CDOTransaction cloneTx = cloneSession.openTransaction();
-    cloneTx.enableDurableLocking(true);
+    cloneTx.enableDurableLocking();
 
     CDOResource res = cloneTx.createResource(getResourcePath("test"));
     Company company = getModel1Factory().createCompany();

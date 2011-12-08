@@ -71,7 +71,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
 
   public void testGetDurableLockingID() throws Exception
   {
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
     String actual = transaction.getDurableLockingID();
     assertEquals(durableLockingID, actual);
 
@@ -83,21 +83,20 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
 
   public void testKeepDurableLockingID() throws Exception
   {
-    String durableLockingID = transaction.enableDurableLocking(true);
-    String actual = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
+    String actual = transaction.enableDurableLocking();
     assertEquals(durableLockingID, actual);
 
     restart(durableLockingID);
 
-    actual = transaction.enableDurableLocking(true);
+    actual = transaction.enableDurableLocking();
     assertEquals(durableLockingID, actual);
   }
 
-  public void testDeleteDurableLockingID() throws Exception
+  public void testDisableDurableLocking() throws Exception
   {
-    String durableLockingID = transaction.enableDurableLocking(true);
-    String actual = transaction.enableDurableLocking(false);
-    assertEquals(durableLockingID, actual);
+    String durableLockingID = transaction.enableDurableLocking();
+    transaction.disableDurableLocking(false);
     assertEquals(null, transaction.getDurableLockingID());
 
     try
@@ -111,13 +110,12 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     }
   }
 
-  public void testDeleteDurableLockingIDAfterRestart() throws Exception
+  public void testDisableDurableLockingAfterRestart() throws Exception
   {
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
     restart(durableLockingID);
 
-    String actual = transaction.enableDurableLocking(false);
-    assertEquals(durableLockingID, actual);
+    transaction.disableDurableLocking(false);
     assertEquals(null, transaction.getDurableLockingID());
 
     try
@@ -130,9 +128,23 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     }
   }
 
+  public void testDisableDurableLockingAndReleaseLocks() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+    readLock(company);
+
+    transaction.enableDurableLocking();
+    assertReadLock(true, company);
+
+    transaction.disableDurableLocking(true);
+    assertReadLock(false, company);
+  }
+
   public void testWrongReadOnly() throws Exception
   {
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
     transaction.close();
 
     try
@@ -147,7 +159,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
 
   public void testWrongReadOnlyAfterRestart() throws Exception
   {
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
     restart(durableLockingID);
     transaction.close();
 
@@ -163,7 +175,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
 
   public void testDuplicateOpenView() throws Exception
   {
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
 
     try
     {
@@ -177,7 +189,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
 
   public void testDuplicateOpenViewAfterRestart() throws Exception
   {
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
     restart(durableLockingID);
 
     try
@@ -196,7 +208,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
     readLock(company);
 
     restart(durableLockingID);
@@ -212,7 +224,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     transaction.commit();
 
     readLock(company);
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
 
     restart(durableLockingID);
 
@@ -226,7 +238,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
     writeLock(company);
 
     restart(durableLockingID);
@@ -242,7 +254,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     transaction.commit();
 
     writeLock(company);
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
 
     restart(durableLockingID);
 
@@ -256,7 +268,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
     writeOption(company);
 
     restart(durableLockingID);
@@ -272,7 +284,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     transaction.commit();
 
     writeOption(company);
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
 
     restart(durableLockingID);
 
@@ -286,7 +298,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
     readLock(company);
     writeLock(company);
 
@@ -304,7 +316,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
 
     readLock(company);
     writeLock(company);
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
 
     restart(durableLockingID);
 
@@ -318,7 +330,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     resource.getContents().add(company);
     transaction.commit();
 
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
 
     readLock(company);
     assertReadLock(true, company);
@@ -356,7 +368,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     writeUnlock(company);
     assertReadLock(true, company);
     assertWriteLock(false, company);
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
 
     restart(durableLockingID);
 
@@ -373,7 +385,7 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
 
     writeLock(company);
 
-    String durableLockingID = transaction.enableDurableLocking(true);
+    String durableLockingID = transaction.enableDurableLocking();
 
     final boolean[] gotCalled = { false };
     getRepository().getLockingManager().addDurableViewHandler(new ILockingManager.DurableViewHandler()

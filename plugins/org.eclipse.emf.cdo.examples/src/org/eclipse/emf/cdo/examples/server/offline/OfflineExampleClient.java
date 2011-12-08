@@ -191,7 +191,7 @@ public class OfflineExampleClient
     System.out.println("Connected to " + repositoryInfo.getName());
 
     tx = session.openTransaction();
-    tx.enableDurableLocking(true);
+    tx.enableDurableLocking();
     createSessionListener(session, autoMerging);
 
     for (;;)

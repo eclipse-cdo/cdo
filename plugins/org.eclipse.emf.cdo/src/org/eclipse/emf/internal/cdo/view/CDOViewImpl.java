@@ -481,12 +481,13 @@ public class CDOViewImpl extends AbstractCDOView
     unlockObjects(objects, lockType, false);
   }
 
+  /**
+   * Note: This may get called with objects == null, and lockType == null, which is a request to remove all locks on all
+   * objects in this view.
+   */
   public synchronized void unlockObjects(Collection<? extends CDOObject> objects, LockType lockType, boolean recursive)
   {
     checkActive();
-
-    // Note: This may get called with objects == null, and lockType == null, which is a request
-    // to remove all locks on all objects in this view.
 
     List<CDOID> objectIDs = null;
     List<CDOLockState> locksOnNewObjects = new LinkedList<CDOLockState>();
@@ -562,7 +563,19 @@ public class CDOViewImpl extends AbstractCDOView
     return durableLockingID;
   }
 
+  @Deprecated
   public String enableDurableLocking(boolean enable)
+  {
+    if (enable)
+    {
+      return enableDurableLocking();
+    }
+
+    disableDurableLocking(false);
+    return null;
+  }
+
+  public String enableDurableLocking()
   {
     final String oldID = durableLockingID;
 
@@ -571,47 +584,68 @@ public class CDOViewImpl extends AbstractCDOView
       synchronized (this)
       {
         CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-        if (enable)
+        if (durableLockingID == null)
         {
-          if (durableLockingID == null)
-          {
-            durableLockingID = sessionProtocol.changeLockArea(this, true);
-          }
-
-          return durableLockingID;
+          durableLockingID = sessionProtocol.changeLockArea(this, true);
         }
 
-        if (durableLockingID != null)
-        {
-          sessionProtocol.changeLockArea(this, false);
-          durableLockingID = null;
-        }
-
-        return oldID;
+        return durableLockingID;
       }
     }
     finally
     {
-      if (!ObjectUtil.equals(oldID, durableLockingID))
+      fireDurabilityChangedEvent(oldID);
+    }
+  }
+
+  public void disableDurableLocking(boolean releaseLocks)
+  {
+    final String oldID = durableLockingID;
+
+    try
+    {
+      synchronized (this)
       {
-        fireEvent(new CDOViewDurabilityChangedEvent()
+        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+        if (durableLockingID != null)
         {
-          public CDOView getSource()
-          {
-            return CDOViewImpl.this;
-          }
+          sessionProtocol.changeLockArea(this, false);
+          durableLockingID = null;
 
-          public String getOldDurableLockingID()
+          if (releaseLocks)
           {
-            return oldID;
+            unlockObjects();
           }
-
-          public String getNewDurableLockingID()
-          {
-            return durableLockingID;
-          }
-        });
+        }
       }
+    }
+    finally
+    {
+      fireDurabilityChangedEvent(oldID);
+    }
+  }
+
+  private void fireDurabilityChangedEvent(final String oldID)
+  {
+    if (!ObjectUtil.equals(oldID, durableLockingID))
+    {
+      fireEvent(new CDOViewDurabilityChangedEvent()
+      {
+        public CDOView getSource()
+        {
+          return CDOViewImpl.this;
+        }
+
+        public String getOldDurableLockingID()
+        {
+          return oldID;
+        }
+
+        public String getNewDurableLockingID()
+        {
+          return durableLockingID;
+        }
+      });
     }
   }
 

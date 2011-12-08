@@ -34,6 +34,6 @@ public final class DisableViewDurabilityAction extends ViewAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
-    getView().enableDurableLocking(false);
+    getView().disableDurableLocking(false);
   }
 }

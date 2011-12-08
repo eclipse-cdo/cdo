@@ -196,7 +196,18 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     return null;
   }
 
+  @Deprecated
   public String enableDurableLocking(boolean enable)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public String enableDurableLocking()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void disableDurableLocking(boolean releaseLocks)
   {
     throw new UnsupportedOperationException();
   }

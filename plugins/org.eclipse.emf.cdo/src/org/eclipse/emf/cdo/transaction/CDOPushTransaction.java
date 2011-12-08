@@ -658,10 +658,28 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
 
   /**
    * @since 4.0
+   * @deprecated Use {@link #enableDurableLocking()} instead or {@link #disableDurableLocking(boolean)}, respectively.
    */
+  @Deprecated
   public String enableDurableLocking(boolean enable)
   {
     return delegate.enableDurableLocking(enable);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public String enableDurableLocking()
+  {
+    return delegate.enableDurableLocking();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void disableDurableLocking(boolean releaseLocks)
+  {
+    delegate.disableDurableLocking(releaseLocks);
   }
 
   public boolean isReadOnly()

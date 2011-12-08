@@ -391,7 +391,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     {
       CDOSession session1 = openSession();
       CDOTransaction tx1 = session1.openTransaction();
-      tx1.enableDurableLocking(true);
+      tx1.enableDurableLocking();
       CDOResource res1 = tx1.createResource(getResourcePath("r1"));
       Company company1 = getModel1Factory().createCompany();
       res1.getContents().add(company1);

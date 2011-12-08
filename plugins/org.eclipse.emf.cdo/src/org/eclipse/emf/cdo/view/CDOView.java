@@ -33,7 +33,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
-import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.options.IOptionsEvent;
@@ -356,23 +355,36 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   public void unlockObjects();
 
   /**
-   * Enables or disables the storage of all information that's needed to {@link CDOSession#openView(String) reopen} this
-   * view at a later point in time. This information includes the {@link CDOBranchPoint branch point}, the user ID of
-   * the {@link CDOSession session}, whether it's a read-only view or a {@link CDOTransaction transaction} and all the
-   * locks that are acquired or will be acquired while durable locking is enabled.
+   * @since 4.0
+   * @deprecated Use {@link #enableDurableLocking()} instead or {@link #disableDurableLocking(boolean)}, respectively.
+   */
+  @Deprecated
+  public String enableDurableLocking(boolean enable);
+
+  /**
+   * Enables the storage of all information that's needed to {@link CDOSession#openView(String) reopen} this view at a
+   * later point in time. This information includes the {@link CDOBranchPoint branch point}, the user ID of the
+   * {@link CDOSession session}, whether it's a read-only view or a {@link CDOTransaction transaction} and all the locks
+   * that are acquired or will be acquired while durable locking is enabled.
    * 
    * @see CDOSession#openView(String)
    * @see CDOSession#openView(String, ResourceSet)
    * @see CDOSession#openTransaction(String)
    * @see CDOSession#openTransaction(String, ResourceSet)
-   * @see #lockObjects(Collection, IRWLockManager.LockType, long)
-   * @see #unlockObjects(Collection, IRWLockManager.LockType)
-   * @see #unlockObjects()
-   * @see CDOObject#cdoReadLock()
-   * @see CDOObject#cdoWriteLock()
-   * @since 4.0
+   * @see #disableDurableLocking(boolean)
+   * @since 4.1
    */
-  public String enableDurableLocking(boolean enable);
+  public String enableDurableLocking();
+
+  /**
+   * Disables the storage of all information that's needed to {@link CDOSession#openView(String) reopen} this view at a
+   * later point in time. If such information is stored when this method is called it is removed. Note that locks
+   * acquired by this view are only released if <code>true</code> is passed to the <code>releaseLocks</code> parameter.
+   * 
+   * @see #enableDurableLocking()
+   * @since 4.1
+   */
+  public void disableDurableLocking(boolean releaseLocks);
 
   /**
    * @since 3.0

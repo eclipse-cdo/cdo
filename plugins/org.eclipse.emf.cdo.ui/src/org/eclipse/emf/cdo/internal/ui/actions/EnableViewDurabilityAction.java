@@ -38,7 +38,7 @@ public final class EnableViewDurabilityAction extends ViewAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
-    final String durableLockingID = getView().enableDurableLocking(true);
+    final String durableLockingID = getView().enableDurableLocking();
 
     final Display display = getDisplay();
     display.syncExec(new Runnable()

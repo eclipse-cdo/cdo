@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.IUserManager;
 
@@ -325,18 +326,21 @@ public class RepositoryConfigurator
   private static <T> T createExecutableExtension(String extPointName, String elementName, String attributeName,
       String type) throws CoreException
   {
-    IExtensionRegistry registry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, extPointName);
-    for (IConfigurationElement element : elements)
+    if (OMPlatform.INSTANCE.isExtensionRegistryAvailable())
     {
-      if (ObjectUtil.equals(element.getName(), elementName))
+      IExtensionRegistry registry = Platform.getExtensionRegistry();
+      IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, extPointName);
+      for (IConfigurationElement element : elements)
       {
-        String storeType = element.getAttribute(attributeName);
-        if (ObjectUtil.equals(storeType, type))
+        if (ObjectUtil.equals(element.getName(), elementName))
         {
-          @SuppressWarnings("unchecked")
-          T result = (T)element.createExecutableExtension("class"); //$NON-NLS-1$
-          return result;
+          String storeType = element.getAttribute(attributeName);
+          if (ObjectUtil.equals(storeType, type))
+          {
+            @SuppressWarnings("unchecked")
+            T result = (T)element.createExecutableExtension("class"); //$NON-NLS-1$
+            return result;
+          }
         }
       }
     }

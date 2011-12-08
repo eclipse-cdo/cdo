@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.windowtitle;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -36,17 +37,27 @@ public class TitleSetter extends Thread
       for (IWorkbenchWindow window : PlatformUI.getWorkbench().getWorkbenchWindows())
       {
         final Shell shell = window.getShell();
-        shell.getDisplay().asyncExec(new Runnable()
+        if (shell != null && !shell.isDisposed())
         {
-          public void run()
+          Display display = shell.getDisplay();
+          if (display != null && !display.isDisposed())
           {
-            String title = shell.getText();
-            if (!title.startsWith(prefix))
+            display.asyncExec(new Runnable()
             {
-              shell.setText(prefix + title);
-            }
+              public void run()
+              {
+                if (!shell.isDisposed())
+                {
+                  String title = shell.getText();
+                  if (!title.startsWith(prefix))
+                  {
+                    shell.setText(prefix + title);
+                  }
+                }
+              }
+            });
           }
-        });
+        }
       }
 
       try

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -29,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class Bugzilla_361819_Test extends AbstractCDOTest
 {
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testDoubleRefreshBug() throws Exception
   {
     createData(getResourcePath("test"));

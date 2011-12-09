@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.internal.cdo.view;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
@@ -688,7 +689,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
 
       // Add the object to the set of reattached objects
-      transaction.getLastSavepoint().getReattachedObjects().put(id, object);
+      Map<CDOID, CDOObject> reattachedObjects = transaction.getLastSavepoint().getReattachedObjects();
+      reattachedObjects.put(id, object);
     }
   }
 

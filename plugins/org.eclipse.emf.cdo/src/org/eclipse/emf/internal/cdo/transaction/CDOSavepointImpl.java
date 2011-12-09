@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.net4j.util.collection.MultiMap;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
@@ -390,7 +391,9 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     {
       InternalCDOTransaction transaction = getTransaction();
       LifecycleUtil.checkActive(transaction);
-      transaction.getTransactionStrategy().rollback(transaction, this);
+
+      CDOTransactionStrategy transactionStrategy = transaction.getTransactionStrategy();
+      transactionStrategy.rollback(transaction, this);
     }
   }
 }

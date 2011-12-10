@@ -61,7 +61,7 @@ public abstract class OSGiActivator implements BundleActivator
 
     try
     {
-      omBundle.setBundleContext(context);
+      setBundleContext(context);
       ((AbstractBundle)omBundle).start();
       doStart();
     }
@@ -89,7 +89,7 @@ public abstract class OSGiActivator implements BundleActivator
     {
       doStop();
       ((AbstractBundle)omBundle).stop();
-      omBundle.setBundleContext(null);
+      setBundleContext(null);
     }
     catch (Error error)
     {
@@ -145,6 +145,12 @@ public abstract class OSGiActivator implements BundleActivator
    */
   protected void doStop() throws Exception
   {
+  }
+
+  @SuppressWarnings("deprecation")
+  private void setBundleContext(BundleContext context)
+  {
+    omBundle.setBundleContext(context);
   }
 
   /**

@@ -63,7 +63,7 @@ public abstract class OM
     public void start(BundleContext context) throws Exception
     {
       AbstractPlatform.systemContext = context;
-      OM.BUNDLE.setBundleContext(context);
+      setBundleContext(context);
       ((OSGiBundle)OM.BUNDLE).start();
 
       // TODO Make configurable
@@ -92,8 +92,14 @@ public abstract class OM
       OSGiActivator.traceStop(context);
       ((OSGiBundle)OM.BUNDLE).stop();
       PluginContainer.dispose();
-      OM.BUNDLE.setBundleContext(null);
+      setBundleContext(null);
       AbstractPlatform.systemContext = null;
+    }
+
+    @SuppressWarnings("deprecation")
+    private void setBundleContext(BundleContext context)
+    {
+      OM.BUNDLE.setBundleContext(context);
     }
   }
 }

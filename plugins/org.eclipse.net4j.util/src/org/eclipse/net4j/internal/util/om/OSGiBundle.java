@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.util.om;
 import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.AbstractIterator;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -22,6 +23,8 @@ import org.osgi.framework.BundleContext;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Enumeration;
+import java.util.Iterator;
 
 /**
  * @author Eike Stepper
@@ -57,6 +60,32 @@ public class OSGiBundle extends AbstractBundle
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  public Iterator<Class<?>> getClasses()
+  {
+    final Bundle bundle = getBundleContext().getBundle();
+
+    return new AbstractIterator<Class<?>>()
+    {
+      private Enumeration<String> entryPaths = bundle.getEntryPaths("/");
+
+      @Override
+      protected Object computeNextElement()
+      {
+        while (entryPaths.hasMoreElements())
+        {
+          String entryPath = entryPaths.nextElement();
+          Class<?> c = getClassFromBundle(entryPath);
+          if (c != null)
+          {
+            return c;
+          }
+        }
+
+        return END_OF_DATA;
+      }
+    };
   }
 
   public String getStateLocation()

@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.File;
@@ -21,9 +22,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.MissingResourceException;
 import java.util.Properties;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * @author Eike Stepper
@@ -60,6 +67,87 @@ public class LegacyBundle extends AbstractBundle
   public URL getBaseURL()
   {
     return baseURL;
+  }
+
+  public Iterator<Class<?>> getClasses()
+  {
+    List<Class<?>> result = new ArrayList<Class<?>>();
+
+    if (isArchiveProtocol(baseURL.getProtocol()))
+    {
+      JarFile jarFile = null;
+
+      try
+      {
+        jarFile = new JarFile(baseURL.getFile());
+
+        Enumeration<JarEntry> entries = jarFile.entries();
+        while (entries.hasMoreElements())
+        {
+          JarEntry jarEntry = entries.nextElement();
+          if (!jarEntry.isDirectory())
+          {
+            Class<?> c = getClassFromBundle(jarEntry.getName());
+            if (c != null)
+            {
+              result.add(c);
+            }
+          }
+        }
+      }
+      catch (IOException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+      finally
+      {
+        IOUtil.close(jarFile);
+      }
+    }
+    else
+    {
+      try
+      {
+        URL url = getClassesURL(getAccessor());
+        File folder = new File(url.getFile());
+        collectFileClasses(folder, null, result);
+      }
+      catch (MalformedURLException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+
+    return result.iterator();
+  }
+
+  private void collectFileClasses(File folder, String path, List<Class<?>> result)
+  {
+    File file = folder;
+    if (path == null)
+    {
+      path = "";
+    }
+    else
+    {
+      file = new File(folder, path);
+    }
+
+    if (file.isDirectory())
+    {
+      for (String child : file.list())
+      {
+        collectFileClasses(folder, path + "/" + child, result);
+      }
+    }
+    else
+    {
+      Class<?> c = getClassFromBundle(path);
+      if (c != null)
+      {
+        result.add(c);
+      }
+    }
   }
 
   private void loadOptions()
@@ -125,11 +213,7 @@ public class LegacyBundle extends AbstractBundle
     // file:/D:/sandbox/unpackage1-3.1M7/eclipse/plugins/org.eclipse.emf.common/bin/org/eclipse/emf/common/CommonPlugin.
     // class
 
-    String className = accessor.getName();
-    URL url = accessor.getResource(ReflectUtil.getSimpleName(accessor) + ".class"); //$NON-NLS-1$
-
-    int segmentsToTrim = 1 + StringUtil.occurrences(className, '.');
-    url = trimSegments(url, segmentsToTrim);
+    URL url = getClassesURL(accessor);
 
     // For an archive URI, check for the plugin.properties in the archive.
     if (isArchiveProtocol(url.getProtocol()))
@@ -138,8 +222,18 @@ public class LegacyBundle extends AbstractBundle
       {
         // If we can open an input stream, then the plugin.properties is there,
         // and we have a good base URL.
-        InputStream inputStream = new URL(url.toString() + "plugin.properties").openStream(); //$NON-NLS-1$
-        inputStream.close();
+        URL u = new URL(url.toString() + "plugin.properties");
+        InputStream inputStream = null;
+
+        try
+        {
+          inputStream = u.openStream();
+        }
+        finally
+        {
+          IOUtil.close(inputStream);
+        }
+
         baseURL = url;
       }
       catch (IOException exception)
@@ -181,6 +275,15 @@ public class LegacyBundle extends AbstractBundle
       throw new MissingResourceException("Missing properties: " + accessor.getName(), accessor.getName(), //$NON-NLS-1$
           "plugin.properties"); //$NON-NLS-1$
     }
+  }
+
+  private static URL getClassesURL(Class<?> accessor) throws MalformedURLException
+  {
+    String className = accessor.getName();
+    URL url = accessor.getResource(ReflectUtil.getSimpleName(accessor) + ".class"); //$NON-NLS-1$
+
+    int segmentsToTrim = 1 + StringUtil.occurrences(className, '.');
+    return trimSegments(url, segmentsToTrim);
   }
 
   private static String lastSegment(URL url)

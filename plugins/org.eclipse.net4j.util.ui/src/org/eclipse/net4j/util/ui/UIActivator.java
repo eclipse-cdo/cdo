@@ -63,7 +63,7 @@ public class UIActivator extends AbstractUIPlugin
     try
     {
       super.start(context);
-      omBundle.setBundleContext(context);
+      setBundleContext(context);
       ((AbstractBundle)omBundle).start();
       doStart();
     }
@@ -92,7 +92,7 @@ public class UIActivator extends AbstractUIPlugin
     {
       doStop();
       ((AbstractBundle)omBundle).stop();
-      omBundle.setBundleContext(null);
+      setBundleContext(null);
       super.stop(context);
     }
     catch (Error error)
@@ -119,6 +119,12 @@ public class UIActivator extends AbstractUIPlugin
    */
   protected void doStop() throws Exception
   {
+  }
+
+  @SuppressWarnings("deprecation")
+  private void setBundleContext(BundleContext context)
+  {
+    omBundle.setBundleContext(context);
   }
 
   /**

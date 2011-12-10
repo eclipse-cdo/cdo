@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -47,7 +48,10 @@ public interface OMBundle
 
   public URL getBaseURL();
 
-  public void setBundleContext(Object bundleContext);
+  /**
+   * @since 3.2
+   */
+  public Iterator<Class<?>> getClasses();
 
   public OMTracer tracer(String name);
 
@@ -66,6 +70,12 @@ public interface OMBundle
   public DebugSupport getDebugSupport();
 
   public TranslationSupport getTranslationSupport();
+
+  /**
+   * @deprecated For internal use only.
+   */
+  @Deprecated
+  public void setBundleContext(Object bundleContext);
 
   /**
    * A facility for accessing OSGi {@link DebugOptions debug options}, whether OSGi {@link OMPlatform#isOSGiRunning() is

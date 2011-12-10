@@ -69,7 +69,7 @@ public final class Activator extends EMFPlugin
       try
       {
         super.start(context);
-        OM.BUNDLE.setBundleContext(context);
+        setBundleContext(context);
         doStart();
       }
       catch (Error error)
@@ -97,7 +97,7 @@ public final class Activator extends EMFPlugin
       try
       {
         doStop();
-        OM.BUNDLE.setBundleContext(null);
+        setBundleContext(null);
         super.stop(context);
       }
       catch (Error error)
@@ -126,6 +126,12 @@ public final class Activator extends EMFPlugin
     protected void doStop() throws Exception
     {
       LifecycleUtil.deactivate(CDOViewProviderRegistryImpl.INSTANCE, OMLogger.Level.WARN);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void setBundleContext(BundleContext context)
+    {
+      OM.BUNDLE.setBundleContext(context);
     }
   }
 }

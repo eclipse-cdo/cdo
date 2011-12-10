@@ -14,7 +14,7 @@ Import-Package: org.eclipse.osgi.service.debug;version="[1.0.0,2.0.0)";resolutio
  org.osgi.framework;version="[1.3.0,2.0.0)";resolution:=optional,
  org.osgi.service.log;version="[1.3.0,2.0.0)";resolution:=optional,
  org.osgi.util.tracker;version="[1.3.0,2.0.0)";resolution:=optional
-Export-Package: org.eclipse.net4j.internal.util.bundle;version="3.1.1";x-friends:="org.eclipse.net4j.util.ui,org.eclipse.net4j.tests",
+Export-Package: org.eclipse.net4j.internal.util.bundle;version="3.1.1";x-friends:="org.eclipse.net4j.util.ui,org.eclipse.net4j.tests,org.eclipse.emf.cdo.tests",
  org.eclipse.net4j.internal.util.container;version="3.1.1";x-friends:="org.eclipse.net4j.util.defs",
  org.eclipse.net4j.internal.util.factory;version="3.1.1";x-friends:="org.eclipse.net4j.util.defs",
  org.eclipse.net4j.internal.util.om;version="3.1.1";x-friends:="org.eclipse.net4j.util.defs",

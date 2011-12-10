@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
@@ -40,6 +41,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport, OMBundle.TranslationSupport
 {
+  private static final String CLASS_EXTENSION = ".class";
+
   private AbstractPlatform platform;
 
   private String bundleID;
@@ -99,6 +102,8 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
   {
     this.bundleContext = bundleContext;
   }
+
+  public abstract Iterator<Class<?>> getClasses();
 
   public DebugSupport getDebugSupport()
   {
@@ -372,6 +377,28 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
   protected String getConfigFileName()
   {
     return bundleID + ".properties"; //$NON-NLS-1$
+  }
+
+  protected final Class<?> getClassFromBundle(String path)
+  {
+    if (path.endsWith(CLASS_EXTENSION))
+    {
+      int start = path.startsWith("/") ? 1 : 0;
+      int end = path.length() - CLASS_EXTENSION.length();
+      String className = path.substring(start, end).replace('/', '.');
+
+      try
+      {
+        ClassLoader classLoader = getAccessor().getClassLoader();
+        return classLoader.loadClass(className);
+      }
+      catch (ClassNotFoundException ex)
+      {
+        //$FALL-THROUGH$
+      }
+    }
+
+    return null;
   }
 
   private void invokeMethod(String name) throws Exception

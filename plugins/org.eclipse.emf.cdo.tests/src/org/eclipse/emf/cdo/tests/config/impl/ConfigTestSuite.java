@@ -13,7 +13,13 @@ package org.eclipse.emf.cdo.tests.config.impl;
 import org.eclipse.emf.cdo.tests.config.IConstants;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 
+import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
+import org.eclipse.net4j.util.om.OMBundle;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Test;
@@ -77,6 +83,32 @@ public abstract class ConfigTestSuite implements IConstants
 
       parent.addTest(suite);
     }
+  }
+
+  protected List<Class<? extends ConfigTest>> getTestClasses(OMBundle bundle, String packageName)
+  {
+    List<Class<? extends ConfigTest>> result = new ArrayList<Class<? extends ConfigTest>>();
+
+    for (Iterator<Class<?>> it = ((AbstractBundle)bundle).getClasses(); it.hasNext();)
+    {
+      Class<?> c = it.next();
+      if (ConfigTest.class.isAssignableFrom(c) && c.getName().startsWith(packageName))
+      {
+        @SuppressWarnings("unchecked")
+        Class<? extends ConfigTest> configTest = (Class<? extends ConfigTest>)c;
+        result.add(configTest);
+      }
+    }
+
+    Collections.sort(result, new Comparator<Class<? extends ConfigTest>>()
+    {
+      public int compare(Class<? extends ConfigTest> c1, Class<? extends ConfigTest> c2)
+      {
+        return c1.getName().compareTo(c2.getName());
+      }
+    });
+
+    return result;
   }
 
   protected abstract void initConfigSuites(TestSuite parent);

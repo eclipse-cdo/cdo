@@ -239,7 +239,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Procssing deltas..."); //$NON-NLS-1$
+      TRACER.trace("Processing deltas..."); //$NON-NLS-1$
     }
 
     for (CDOFeatureDelta listDelta : delta.getListChanges())
@@ -260,7 +260,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
    * Write calculated changes to the database
    * 
    * @param accessor
-   *          ,
    */
   private void writeResultToDatabase(IDBStoreAccessor accessor, CDOID id)
   {
@@ -279,14 +278,14 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Writing to database:"); //$NON-NLS-1$
+      TRACER.trace("Writing to database:"); //$NON-NLS-1$
     }
 
     if (clearFirst)
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format(" - clear list"); //$NON-NLS-1$
+        TRACER.trace(" - clear list"); //$NON-NLS-1$
       }
 
       clearList(accessor, id);
@@ -688,15 +687,15 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         Assert.isTrue(false);
       }
-    
+
       if (TRACER.isEnabled())
       {
         TRACER.format("  - unset list"); //$NON-NLS-1$
       }
-    
+
       // set the clear-flag
       clearFirst = true;
-    
+
       // and also clear all manipulation items
       manipulations.clear();
     }

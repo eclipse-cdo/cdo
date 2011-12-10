@@ -192,7 +192,8 @@ public abstract class AbstractCDOTest extends ConfigTest
     }
   }
 
-  protected static void commitAndSync(CDOTransaction transaction, CDOUpdatable... updatables) throws CommitException
+  protected static CDOCommitInfo commitAndSync(CDOTransaction transaction, CDOUpdatable... updatables)
+      throws CommitException
   {
     CDOCommitInfo info = transaction.commit();
     if (info != null)
@@ -205,5 +206,7 @@ public abstract class AbstractCDOTest extends ConfigTest
         }
       }
     }
+
+    return info;
   }
 }

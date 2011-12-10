@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -23,6 +24,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
@@ -847,10 +849,20 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         InternalCDOView view = object.cdoView();
 
-        CDORevisionKey newKey = key == null ? null : CDORevisionUtil.createRevisionKey(key.getID(), key.getBranch(),
-            key.getVersion() + 1);
-        InternalCDORevision newRevision = newKey == null ? null : view.getSession().getRevisionManager()
-            .getRevisionByVersion(newKey.getID(), newKey, 0, false);
+        CDORevisionKey newKey = null;
+        if (key != null)
+        {
+          int newVersion = getNewVersion(key);
+          newKey = CDORevisionUtil.createRevisionKey(key.getID(), key.getBranch(), newVersion);
+        }
+
+        InternalCDORevision newRevision = null;
+        if (newKey != null)
+        {
+          InternalCDORevisionCache cache = view.getSession().getRevisionManager().getCache();
+          newRevision = (InternalCDORevision)cache.getRevisionByVersion(newKey.getID(), newKey);
+        }
+
         if (newRevision != null)
         {
           object.cdoInternalSetRevision(newRevision);
@@ -866,6 +878,21 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           object.cdoInternalPostInvalidate();
         }
       }
+    }
+
+    private int getNewVersion(CDORevisionKey key)
+    {
+      if (key instanceof CDORevisionDelta)
+      {
+        CDORevisionDelta delta = (CDORevisionDelta)key;
+        CDORevisable target = delta.getTarget();
+        if (target != null && key.getBranch() == target.getBranch())
+        {
+          return target.getVersion();
+        }
+      }
+
+      return key.getVersion() + 1;
     }
   }
 

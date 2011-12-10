@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -693,26 +694,49 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
       return lastLookupObject;
     }
 
-    // Needed for recursive call to getObject. (from createObject/cleanObject/getResource/getObject)
-    InternalCDOObject localLookupObject = objects.get(id);
-    if (localLookupObject == null)
+    lastLookupID = null;
+    lastLookupObject = null;
+    InternalCDOObject localLookupObject = null;
+
+    if (id.isExternal())
     {
-      if (!loadOnDemand)
-      {
-        return null;
-      }
+      URI uri = URI.createURI(((CDOIDExternal)id).getURI());
+      ResourceSet resourceSet = getResourceSet();
 
-      excludeNewObject(id);
-      localLookupObject = createObject(id);
+      localLookupObject = (InternalCDOObject)CDOUtil.getCDOObject(resourceSet.getEObject(uri, loadOnDemand));
+      if (localLookupObject == null)
+      {
+        if (!loadOnDemand)
+        {
+          return null;
+        }
 
-      // CDOResource have a special way to register to the view.
-      if (!CDOModelUtil.isResource(localLookupObject.eClass()))
-      {
-        registerObject(localLookupObject);
+        throw new ObjectNotFoundException(id, this);
       }
-      else if (id.equals(getSession().getRepositoryInfo().getRootResourceID()))
+    }
+    else
+    {
+      // Needed for recursive call to getObject. (from createObject/cleanObject/getResource/getObject)
+      localLookupObject = objects.get(id);
+      if (localLookupObject == null)
       {
-        setRootResource((CDOResourceImpl)localLookupObject);
+        if (!loadOnDemand)
+        {
+          return null;
+        }
+
+        excludeNewObject(id);
+        localLookupObject = createObject(id);
+
+        // CDOResource have a special way to register to the view.
+        if (!CDOModelUtil.isResource(localLookupObject.eClass()))
+        {
+          registerObject(localLookupObject);
+        }
+        else if (id.equals(getSession().getRepositoryInfo().getRootResourceID()))
+        {
+          setRootResource((CDOResourceImpl)localLookupObject);
+        }
       }
     }
 

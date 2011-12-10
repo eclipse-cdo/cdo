@@ -150,7 +150,7 @@ public class Bugzilla_283985_3_Test extends AbstractCDOTest
   }
 
   /**
-   * Bugzilla 312205 - After detach-reattach-rollback, object is not present in tx
+   * Bug 312205 - After detach-reattach-rollback, object is not present in tx
    */
   public void test4()
   {

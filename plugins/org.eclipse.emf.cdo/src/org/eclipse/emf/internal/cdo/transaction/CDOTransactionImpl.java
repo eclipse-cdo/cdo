@@ -1202,6 +1202,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       }
 
+      // Rollback all detached objects
       Map<CDOID, CDOObject> detachedObjectsMap = itrSavepoint.getDetachedObjects();
       if (!detachedObjectsMap.isEmpty())
       {

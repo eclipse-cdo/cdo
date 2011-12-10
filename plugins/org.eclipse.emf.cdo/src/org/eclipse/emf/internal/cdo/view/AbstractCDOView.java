@@ -699,7 +699,6 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
 
         throw new ObjectNotFoundException(id, this);
       }
-
     }
     else
     {

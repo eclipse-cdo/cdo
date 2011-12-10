@@ -101,7 +101,17 @@ public class LegacyBundle extends AbstractBundle
       }
       finally
       {
-        IOUtil.close(jarFile);
+        if (jarFile != null)
+        {
+          try
+          {
+            jarFile.close();
+          }
+          catch (IOException ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+        }
       }
     }
     else

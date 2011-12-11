@@ -58,6 +58,14 @@
 	
 	<rm:searchPath name="p2">
 		
+		<!-- PLATFORM -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)">
+			<rm:uri format="{0}/eclipse/updates/3.7.x">
+				<bc:propertyRef key="eclipse.downloads" />
+			</rm:uri>
+		</rm:provider>
+		
 		<!-- EMF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -107,10 +115,10 @@
 			</rm:uri>
 		</rm:provider>
 		
-		<!-- GMP -->
+		<!-- GMF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/gmp/updates/releases">
+			<rm:uri format="{0}/modeling/gmp/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
@@ -178,14 +186,6 @@
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="http://net4j.sourceforge.net/update" />
-		</rm:provider>
-		
-		<!-- PLATFORM -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/eclipse/updates/3.7.x">
-				<bc:propertyRef key="eclipse.downloads" />
-			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
 

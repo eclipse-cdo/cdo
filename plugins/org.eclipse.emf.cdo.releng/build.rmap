@@ -42,6 +42,24 @@
 	
 	<rm:searchPath name="p2">
 		
+		<!-- PLATFORM -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)">
+			<rm:uri format="{0}/eclipse/updates/{1}milestones">
+				<bc:propertyRef key="eclipse.downloads"/>
+				<bc:propertyRef key="platform.version"/>
+			</rm:uri>
+		</rm:provider>
+		
+		<!-- EMF -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)">
+			<rm:uri format="{0}/modeling/emf/emf/updates/{1}milestones">
+				<bc:propertyRef key="eclipse.downloads"/>
+				<bc:propertyRef key="emf.version"/>
+			</rm:uri>
+		</rm:provider>
+		
 		<!-- EMF Transaction, Validation, ... -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -53,35 +71,25 @@
 		<!-- MWE -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<!--<rm:uri format="{0}/modeling/emft/mwe/updates/milestones">-->
-			<!--XXX FOR Juno M2 only-->
-			<rm:uri format="{0}/modeling/emft/mwe/updates/releases">
+			<rm:uri format="{0}/modeling/emft/mwe/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
 		
-		<!-- EMFT -->
+		<!-- EMFT 
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emft/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
+			-->
 		
 		<!-- EcoreTools -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/amalgam/temp/ecoretools-1.0.0">
 				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
-		</rm:provider>
-		
-		<!-- EMF -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/emf/updates/{1}milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-				<bc:propertyRef key="emf.version"/>
 			</rm:uri>
 		</rm:provider>
 		
@@ -116,11 +124,9 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
-		<!-- QVTOML -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/m2m/qvtoml/updates/releases">
+			<rm:uri format="{0}/modeling/m2m/qvtoml/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -130,7 +136,7 @@
 			resolutionFilter="(resolve.target.platform=true)">
 			<!-- <rm:uri format="{0}/modeling/m2t/xpand/updates/milestones"> -->
 			<!-- XXX FOR Juno M2 only-->
-			<rm:uri format="{0}/modeling/m2t/xpand/updates/releases">
+			<rm:uri format="{0}/modeling/m2t/xpand/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -153,8 +159,6 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
-		<!-- NEBULA -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/technology/nebula/proper/snapshots">
@@ -192,15 +196,6 @@
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="http://net4j.sourceforge.net/update"/>
-		</rm:provider>
-		
-		<!-- PLATFORM -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/eclipse/updates/{1}milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-				<bc:propertyRef key="platform.version"/>
-			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
 	

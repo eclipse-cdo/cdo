@@ -6,7 +6,7 @@
 	
 	<rm:property key="platform.version" mutable="true" value="3.8"/>
 	<rm:property key="emf.version" mutable="true" value="2.8"/>
-	<rm:property key="orbit.version" mutable="true" value="20111201180206"/>
+	<rm:property key="orbit.version" mutable="true" value="S20111018035124"/>
 	
 	<rm:property key="git.clone" mutable="true" value="${user.home}/git/cdo"/>
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
@@ -75,15 +75,6 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
-		<!-- EMFT 
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emft/updates/milestones">
-				<bc:propertyRef key="eclipse.downloads"/>
-			</rm:uri>
-		</rm:provider>
-			-->
 		
 		<!-- EcoreTools -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"

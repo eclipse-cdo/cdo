@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * Bug 361819.
+ * Bug 361819, bug 366066 (4.0)
  * 
  * @author Egidijus Vaisnora
  */

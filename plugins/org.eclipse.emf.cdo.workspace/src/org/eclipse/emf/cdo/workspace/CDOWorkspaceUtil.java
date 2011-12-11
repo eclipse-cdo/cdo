@@ -111,6 +111,8 @@ public final class CDOWorkspaceUtil
   }
 
   /**
+   * Returns a new configuration that can be used to create a {@link CDOWorkspace}.
+   * 
    * @since 4.1
    */
   public static CDOWorkspaceConfiguration createWorkspaceConfiguration()

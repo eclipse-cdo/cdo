@@ -58,10 +58,18 @@
 	
 	<rm:searchPath name="p2">
 		
+		<!-- EMF -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
+			resolutionFilter="(resolve.target.platform=true)">
+			<rm:uri format="{0}/modeling/emf/emf/updates/2.7.x">
+				<bc:propertyRef key="eclipse.downloads" />
+			</rm:uri>
+		</rm:provider>
+		
 		<!-- EMF Transaction, Validation, ... -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/updates/milestones">
+			<rm:uri format="{0}/modeling/emf/updates/releases">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
@@ -69,18 +77,19 @@
 		<!-- MWE -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emft/mwe/updates/milestones">
+			<rm:uri format="{0}/modeling/emft/mwe/updates/releases">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
 		
-		<!-- EMFT -->
+		<!-- EMFT 
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="{0}/modeling/emft/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
+			-->
 		
 		<!-- EcoreTools -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
@@ -90,18 +99,10 @@
 			</rm:uri>
 		</rm:provider>
 		
-		<!-- EMF -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
-			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/emf/updates/2.7milestones">
-				<bc:propertyRef key="eclipse.downloads" />
-			</rm:uri>
-		</rm:provider>
-		
 		<!-- GEF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/tools/gef/updates/milestones">
+			<rm:uri format="{0}/tools/gef/updates/releases">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
@@ -109,7 +110,7 @@
 		<!-- GMP -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/gmp/updates/milestones">
+			<rm:uri format="{0}/modeling/gmp/updates/releases">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
@@ -123,7 +124,7 @@
 		</rm:provider>
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/m2m/qvtoml/updates/releases">
+			<rm:uri format="{0}/modeling/m2m/qvtoml/updates/milestones">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
@@ -131,7 +132,7 @@
 		<!-- XPAND -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/m2t/xpand/updates/milestones">
+			<rm:uri format="{0}/modeling/m2t/xpand/updates/releases">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>
@@ -182,7 +183,7 @@
 		<!-- PLATFORM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/eclipse/updates/3.7milestones">
+			<rm:uri format="{0}/eclipse/updates/3.7.x">
 				<bc:propertyRef key="eclipse.downloads" />
 			</rm:uri>
 		</rm:provider>

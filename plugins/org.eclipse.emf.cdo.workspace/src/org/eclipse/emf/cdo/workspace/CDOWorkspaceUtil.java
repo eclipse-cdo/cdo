@@ -111,7 +111,7 @@ public final class CDOWorkspaceUtil
   }
 
   /**
-   * Returns a new configuration that can be used to create a {@link CDOWorkspace}.
+   * Returns a new configuration that can be used to checkout a new {@link CDOWorkspace} or open an existing one.
    * 
    * @since 4.1
    */

@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.performance.framework.PerformanceTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import java.util.Random;
 
@@ -28,17 +30,11 @@ public class DeleteRandomTest extends PerformanceTest
 
   private static final int AMOUNT_ELEMENTS = 1000;
 
-  private CDOSession session;
-
   private Random random = new Random();
 
-  @Override
-  protected void doSetUp() throws Exception
+  private Company initModel() throws CommitException
   {
-    super.doSetUp();
-
-    session = openSession();
-
+    CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath(RES_NAME));
 
@@ -53,30 +49,22 @@ public class DeleteRandomTest extends PerformanceTest
 
     resource.getContents().add(company);
     transaction.commit();
-    transaction.close();
+
+    return company;
   }
 
   public void test() throws Exception
   {
-    for (int currentSize = AMOUNT_ELEMENTS; currentSize > AMOUNT_ELEMENTS / 2; currentSize--)
-    {
-      CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = transaction.getResource(getResourcePath(RES_NAME));
-      Company company = (Company)resource.getContents().get(0);
+    Company company = initModel();
+    CDOTransaction transaction = (CDOTransaction)CDOUtil.getCDOObject(company).cdoView();
 
+    for (int i = 0; i < AMOUNT_ELEMENTS / 2; i++)
+    {
+      int currentSize = AMOUNT_ELEMENTS - i;
       int indexToRemove = random.nextInt(currentSize);
+
       company.getCategories().remove(indexToRemove);
       transaction.commit();
-      transaction.close();
     }
   }
-
-  @Override
-  protected void doTearDown() throws Exception
-  {
-    session.close();
-
-    super.doTearDown();
-  }
-
 }

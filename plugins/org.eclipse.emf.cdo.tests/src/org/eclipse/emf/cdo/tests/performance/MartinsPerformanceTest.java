@@ -8,10 +8,12 @@
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.performance;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -38,7 +40,8 @@ import java.util.Map;
 /**
  * @author Martin Fluegge
  */
-public class PerformanceTest extends AbstractCDOTest
+@Requires("excluded")
+public class MartinsPerformanceTest extends AbstractCDOTest
 {
   protected static EClass mapContainerEClass;
 

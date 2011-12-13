@@ -67,7 +67,7 @@ public abstract class ConfigTestSuite implements IConstants
       {
         try
         {
-          TestWrapper wrapper = new TestWrapper(testClass, scenario);
+          TestWrapper wrapper = new TestWrapper(testClass, scenario, this);
           if (wrapper.testCount() != 0)
           {
             suite.addTest(wrapper);
@@ -114,6 +114,13 @@ public abstract class ConfigTestSuite implements IConstants
   protected abstract void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario);
 
   /**
+   * Can be overridden by subclasses.
+   */
+  protected void prepareTest(ConfigTest configTest)
+  {
+  }
+
+  /**
    * @author Eike Stepper
    */
   private static final class ConstraintsViolatedException extends Exception
@@ -128,11 +135,12 @@ public abstract class ConfigTestSuite implements IConstants
   {
     private IScenario scenario;
 
-    public TestWrapper(Class<? extends ConfigTest> testClass, IScenario scenario) throws ConstraintsViolatedException
+    public TestWrapper(Class<? extends ConfigTest> testClass, IScenario scenario, ConfigTestSuite suite)
+        throws ConstraintsViolatedException
     {
       // super(testClass, testClass.getName()); // Important for the UI to set the *qualified* class name!
       this.scenario = scenario;
-      addTestsFromTestCase(testClass);
+      addTestsFromTestCase(testClass, suite);
     }
 
     @Override
@@ -156,7 +164,8 @@ public abstract class ConfigTestSuite implements IConstants
       }
     }
 
-    private void addTestsFromTestCase(final Class<?> theClass) throws ConstraintsViolatedException
+    private void addTestsFromTestCase(final Class<?> theClass, ConfigTestSuite suite)
+        throws ConstraintsViolatedException
     {
       setName(theClass.getName());
 
@@ -199,7 +208,7 @@ public abstract class ConfigTestSuite implements IConstants
         {
           if (validateConstraints(method, capabilities))
           {
-            addTestMethod(method, names, theClass);
+            addTestMethod(method, names, theClass, suite);
           }
         }
 
@@ -236,7 +245,7 @@ public abstract class ConfigTestSuite implements IConstants
       return true;
     }
 
-    private void addTestMethod(Method m, List<String> names, Class<?> theClass)
+    private void addTestMethod(Method m, List<String> names, Class<?> theClass, ConfigTestSuite suite)
     {
       String name = m.getName();
       if (names.contains(name))
@@ -255,7 +264,14 @@ public abstract class ConfigTestSuite implements IConstants
       }
 
       names.add(name);
-      addTest(createTest(theClass, name));
+      Test test = createTest(theClass, name);
+      if (test instanceof ConfigTest)
+      {
+        ConfigTest configTest = (ConfigTest)test;
+        suite.prepareTest(configTest);
+      }
+
+      addTest(test);
     }
 
     private boolean isPublicTestMethod(Method m)

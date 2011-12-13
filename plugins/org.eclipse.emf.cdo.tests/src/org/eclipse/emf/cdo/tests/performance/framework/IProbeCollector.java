@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.tests.config.IScenario;
 /**
  * @author Stefan Winkler
  */
-public interface IPerformanceResultCollector
+public interface IProbeCollector
 {
-  public void addRecord(IScenario scenario, String testName, String testCaseName, long time);
+  public void addProbe(IScenario scenario, String testName, String testCaseName, long millis);
 }

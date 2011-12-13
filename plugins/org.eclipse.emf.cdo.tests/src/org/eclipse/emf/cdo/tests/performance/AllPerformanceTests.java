@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests.performance;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
+import org.eclipse.emf.cdo.tests.performance.framework.PerformanceTestSuite;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllPerformanceTests extends ConfigTestSuite
+public class AllPerformanceTests extends PerformanceTestSuite
 {
   public static Test suite()
   {
@@ -48,7 +48,6 @@ public class AllPerformanceTests extends ConfigTestSuite
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    testClasses.addAll(getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.performance.tests"));
+    testClasses.addAll(getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.performance"));
   }
-
 }

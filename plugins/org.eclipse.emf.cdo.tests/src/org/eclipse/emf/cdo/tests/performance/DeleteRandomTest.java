@@ -8,13 +8,13 @@
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests.performance.tests;
+package org.eclipse.emf.cdo.tests.performance;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.performance.framework.AbstractCDOPerformanceMeasurement;
+import org.eclipse.emf.cdo.tests.performance.framework.PerformanceTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import java.util.Random;
@@ -22,11 +22,11 @@ import java.util.Random;
 /**
  * @author Stefan Winkler
  */
-public class DeleteRandom extends AbstractCDOPerformanceMeasurement
+public class DeleteRandomTest extends PerformanceTest
 {
   private static final String RES_NAME = "res";
 
-  private static final int AMOUNT_ELEMENTS = 20000;
+  private static final int AMOUNT_ELEMENTS = 1000;
 
   private CDOSession session;
 

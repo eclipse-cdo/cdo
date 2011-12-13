@@ -1032,6 +1032,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       clearThreadState();
     }
+    getStore().getRepository().getRevisionManager().getCache().clear();
   }
 
   @Override

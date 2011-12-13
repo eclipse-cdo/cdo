@@ -110,7 +110,10 @@ public class CreateResourceNodeAction extends ViewAction
     itemProvider.refreshViewer(true);
     itemProvider.selectElement(node, true);
 
-    String resourcePath = node.getPath();
-    CDOEditorUtil.openEditor(getPage(), transaction, resourcePath);
+    if (!createFolder)
+    {
+      String resourcePath = node.getPath();
+      CDOEditorUtil.openEditor(getPage(), transaction, resourcePath);
+    }
   }
 }

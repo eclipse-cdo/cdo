@@ -42,7 +42,7 @@ public abstract class ConfigTestSuite implements IConstants
 
   protected Test getTestSuite(String name)
   {
-    TestSuite suite = new TestSuite(name);
+    TestSuite suite = new MainSuite(name);
     initConfigSuites(suite);
     return suite;
   }
@@ -118,6 +118,31 @@ public abstract class ConfigTestSuite implements IConstants
    */
   protected void prepareTest(ConfigTest configTest)
   {
+  }
+
+  /**
+   * Can be overridden by subclasses.
+   */
+  protected void mainSuiteFinished()
+  {
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class MainSuite extends TestSuite
+  {
+    public MainSuite(String name)
+    {
+      super(name);
+    }
+
+    @Override
+    public void run(TestResult result)
+    {
+      super.run(result);
+      mainSuiteFinished();
+    }
   }
 
   /**

@@ -17,7 +17,11 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
  */
 public abstract class PerformanceTest extends AbstractCDOTest
 {
-  private IProbeCollector probeCollector;
+  private static final long NOT_PROBING = -1;
+
+  private PerformanceTestSuite suite;
+
+  private long probe;
 
   private long startTimeMillis;
 
@@ -25,27 +29,61 @@ public abstract class PerformanceTest extends AbstractCDOTest
   {
   }
 
-  void setProbeCollector(IProbeCollector probeCollector)
+  void setSuite(PerformanceTestSuite suite)
   {
-    this.probeCollector = probeCollector;
+    this.suite = suite;
   }
 
-  @Override
-  protected void doSetUp() throws Exception
+  protected final void startProbing()
   {
-    super.doSetUp();
+    assertEquals("Already probing", NOT_PROBING, startTimeMillis);
     startTimeMillis = System.currentTimeMillis();
+
+    if (probe == NOT_PROBING)
+    {
+      probe = 0L;
+    }
+  }
+
+  protected final void stopProbing()
+  {
+    if (startTimeMillis == NOT_PROBING)
+    {
+      fail("Not probing");
+    }
+
+    long stopTimeMillis = System.currentTimeMillis();
+    probe += stopTimeMillis - startTimeMillis;
+
+    startTimeMillis = NOT_PROBING;
   }
 
   @Override
-  protected void doTearDown() throws Exception
+  public void runBare() throws Throwable
   {
-    long stopTimeMillis = System.currentTimeMillis();
-    long probe = stopTimeMillis - startTimeMillis;
+    runBareBasic();
 
-    // Output test data
-    probeCollector.addProbe(getScenario(), getClass().getName(), getName(), probe);
+    int runsPerTestCase = suite.getRunsPerTestCase();
+    PerformanceRecord performanceRecord = suite.createPerformanceRecord(getScenario(), getClass().getName(), getName(),
+        runsPerTestCase);
 
-    super.doTearDown();
+    for (int i = 0; i < runsPerTestCase; i++)
+    {
+      runBareBasic();
+
+      if (probe == NOT_PROBING)
+      {
+        fail("No probe");
+      }
+
+      performanceRecord.getProbes()[i] = probe;
+    }
+  }
+
+  private void runBareBasic() throws Throwable
+  {
+    probe = NOT_PROBING;
+    startTimeMillis = NOT_PROBING;
+    super.runBare();
   }
 }

@@ -14,27 +14,33 @@ import org.eclipse.emf.cdo.tests.config.IScenario;
 
 import java.io.PrintStream;
 import java.text.MessageFormat;
+import java.util.List;
 
 /**
- * Preliminary probe collector which prints directly to a {@link PrintStream}, such as {@link System#out}.
+ * A performance record analyzer that prints directly to a {@link PrintStream}, such as {@link System#out}.
  * 
  * @author Stefan Winkler
  */
-public class PrintStreamProbeCollector implements IProbeCollector
+public class PrintStreamPerformanceRecordAnalyzer implements IPerformanceRecordAnalyzer
 {
   private PrintStream out;
 
-  public PrintStreamProbeCollector(PrintStream out)
+  public PrintStreamPerformanceRecordAnalyzer(PrintStream out)
   {
     this.out = out;
   }
 
-  public PrintStreamProbeCollector()
+  public PrintStreamPerformanceRecordAnalyzer()
   {
     this(System.out);
   }
 
-  public void addProbe(IScenario scenario, String testName, String testCaseName, long millis)
+  public void analyze(List<PerformanceRecord> performanceRecords)
+  {
+  }
+
+  @Deprecated
+  public void addProbe(IScenario scenario, String testName, String testCaseName, int run, long millis)
   {
     String message = MessageFormat.format("{0};{1};{2};{3};{4};{5};{6}", //
         scenario.getContainerConfig().getName(), //

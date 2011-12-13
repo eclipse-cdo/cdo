@@ -10,15 +10,50 @@
  */
 package org.eclipse.emf.cdo.tests.performance.framework;
 
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
 public abstract class PerformanceTestSuite extends ConfigTestSuite
 {
-  private IProbeCollector probeCollector = createProbeCollector();
+  public static final int DEFAULT_RUNS_PER_TEST_CASE = 10;
+
+  private final List<PerformanceRecord> performanceRecords = new ArrayList<PerformanceRecord>();
+
+  private final int runsPerTestCase;
+
+  public PerformanceTestSuite(int runsPerTestCase)
+  {
+    this.runsPerTestCase = runsPerTestCase;
+  }
+
+  public PerformanceTestSuite()
+  {
+    this(DEFAULT_RUNS_PER_TEST_CASE);
+  }
+
+  public int getRunsPerTestCase()
+  {
+    return runsPerTestCase;
+  }
+
+  protected PerformanceRecord createPerformanceRecord(IScenario scenario, String testName, String testCaseName, int runs)
+  {
+    PerformanceRecord performanceRecord = new PerformanceRecord(scenario, testName, testCaseName, runs);
+    performanceRecords.add(performanceRecord);
+    return performanceRecord;
+  }
+
+  protected IPerformanceRecordAnalyzer createPerformanceRecordAnalyzer()
+  {
+    return new PrintStreamPerformanceRecordAnalyzer();
+  }
 
   @Override
   protected void prepareTest(ConfigTest configTest)
@@ -27,15 +62,16 @@ public abstract class PerformanceTestSuite extends ConfigTestSuite
     if (configTest instanceof PerformanceTest)
     {
       PerformanceTest performanceTest = (PerformanceTest)configTest;
-      performanceTest.setProbeCollector(probeCollector);
+      performanceTest.setSuite(this);
     }
   }
 
-  /**
-   * Can be overridden by subclasses.
-   */
-  protected IProbeCollector createProbeCollector()
+  @Override
+  protected void mainSuiteFinished()
   {
-    return new PrintStreamProbeCollector();
+    super.mainSuiteFinished();
+
+    IPerformanceRecordAnalyzer performanceRecordAnalyzer = createPerformanceRecordAnalyzer();
+    performanceRecordAnalyzer.analyze(performanceRecords);
   }
 }

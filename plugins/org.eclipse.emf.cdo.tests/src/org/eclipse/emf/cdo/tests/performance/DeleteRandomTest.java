@@ -26,8 +26,6 @@ import java.util.Random;
  */
 public class DeleteRandomTest extends PerformanceTest
 {
-  private static final String RES_NAME = "res";
-
   private static final int AMOUNT_ELEMENTS = 1000;
 
   private Random random = new Random();
@@ -64,7 +62,10 @@ public class DeleteRandomTest extends PerformanceTest
       int indexToRemove = random.nextInt(currentSize);
 
       company.getCategories().remove(indexToRemove);
+
+      // startProbing();
       transaction.commit();
+      stopProbing();
     }
   }
 }

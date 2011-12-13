@@ -36,7 +36,7 @@ public class DeleteRandomTest extends PerformanceTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath(RES_NAME));
+    CDOResource resource = transaction.createResource(getResourcePath("res"));
 
     Company company = getModel1Factory().createCompany();
 

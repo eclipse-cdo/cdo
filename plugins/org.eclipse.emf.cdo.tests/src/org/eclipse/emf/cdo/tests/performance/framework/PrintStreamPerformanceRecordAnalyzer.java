@@ -37,20 +37,37 @@ public class PrintStreamPerformanceRecordAnalyzer implements IPerformanceRecordA
 
   public void analyze(List<PerformanceRecord> performanceRecords)
   {
-  }
+    String recordString = MessageFormat.format("{0};{1};{2};{3};{4};{5};{6}", //
+        "ContainerConfig", //
+        "RepositoryConfig", //
+        "SessionConfig", //
+        "ModelConfig", //
+        "Test name", //
+        "Test Case Name", //
+        "Average Duration");
+    out.println(recordString);
 
-  @Deprecated
-  public void addProbe(IScenario scenario, String testName, String testCaseName, int run, long millis)
-  {
-    String message = MessageFormat.format("{0};{1};{2};{3};{4};{5};{6}", //
-        scenario.getContainerConfig().getName(), //
-        scenario.getRepositoryConfig().getName(), //
-        scenario.getSessionConfig().getName(), //
-        scenario.getModelConfig().getName(), //
-        testName, //
-        testCaseName, //
-        millis);
+    for (PerformanceRecord performanceRecord : performanceRecords)
+    {
+      long durationSum = 0L;
+      for (long durationMillis : performanceRecord.getProbes())
+      {
+        durationSum += durationMillis;
+      }
+      long durationAverage = durationSum / performanceRecord.getProbes().length;
 
-    out.println(message);
+      IScenario scenario = performanceRecord.getScenario();
+
+      recordString = MessageFormat.format("{0};{1};{2};{3};{4};{5};{6}", //
+          scenario.getContainerConfig().getName(), //
+          scenario.getRepositoryConfig().getName(), //
+          scenario.getSessionConfig().getName(), //
+          scenario.getModelConfig().getName(), //
+          performanceRecord.getTestName(), //
+          performanceRecord.getTestCaseName(), //
+          durationAverage);
+
+      out.println(recordString);
+    }
   }
 }

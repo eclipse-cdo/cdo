@@ -47,6 +47,8 @@ import org.eclipse.core.runtime.Assert;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 /**
  * This is a list-to-table mapping optimized for non-audit-mode. It doesn't care about version and has delta support.
@@ -82,6 +84,8 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   private String sqlInsertValue;
 
   private String sqlDeleteItem;
+
+  private String sqlMassUpdateIndex;
 
   public NonAuditListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -148,6 +152,23 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(CDODBSchema.LIST_IDX);
     builder.append("=? "); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
+
+    // ----------- mass update item indexes --------------
+    builder = new StringBuilder();
+    builder.append("UPDATE "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" SET "); //$NON-NLS-1$
+    builder.append(CDODBSchema.LIST_IDX);
+    builder.append("="); //$NON-NLS-1$
+    builder.append(CDODBSchema.LIST_IDX);
+    builder.append("+? WHERE "); //$NON-NLS-1$
+    builder.append(CDODBSchema.LIST_REVISION_ID);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(" >= ? AND "); //$NON-NLS-1$
+    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(" <= ?"); //$NON-NLS-1$
+    sqlMassUpdateIndex = builder.toString();
   }
 
   @Override
@@ -342,61 +363,29 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         }
       }
 
-      /*
-       * Step 3: move all elements which have to be shifted up or down because of add, remove or move of other elements
-       * to their proper position. This has to be done in two phases to avoid collisions, as the index has to be unique
-       */
-      int size = manipulations.size();
-
-      /* Step 3a: shift down */
-      for (int i = 0; i < size; i++)
+      /* now perform deletes and moves ... */
+      if (deleteCounter > 0)
       {
-        ManipulationElement element = manipulations.get(i);
-
-        if ((element.type == ManipulationConstants.NONE || element.type == ManipulationConstants.SET_VALUE)
-            && element.sourceIndex > element.destinationIndex)
+        if (TRACER.isEnabled())
         {
-          if (moveStmt == null)
-          {
-            moveStmt = accessor.getStatementCache().getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-            idHandler.setCDOID(moveStmt, 2, id);
-          }
-
-          moveStmt.setInt(3, element.sourceIndex); // from index
-          moveStmt.setInt(1, element.destinationIndex); // to index
-          moveStmt.addBatch();
-          moveCounter++;
-          if (TRACER.isEnabled())
-          {
-            TRACER.format(" - move {0} -> {1} ", element.sourceIndex, element.destinationIndex); //$NON-NLS-1$
-          }
+          TRACER.format("Performing {0} delete operations", deleteCounter); //$NON-NLS-1$
         }
+
+        DBUtil.executeBatch(deleteStmt, deleteCounter);
       }
 
-      /* Step 3b: shift up */
-      for (int i = size - 1; i >= 0; i--)
+      if (moveCounter > 0)
       {
-        ManipulationElement element = manipulations.get(i);
-
-        if ((element.type == ManipulationConstants.NONE || element.type == ManipulationConstants.SET_VALUE)
-            && element.sourceIndex < element.destinationIndex)
+        if (TRACER.isEnabled())
         {
-          if (moveStmt == null)
-          {
-            moveStmt = accessor.getStatementCache().getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-            idHandler.setCDOID(moveStmt, 2, id);
-          }
-
-          moveStmt.setInt(3, element.sourceIndex); // from index
-          moveStmt.setInt(1, element.destinationIndex); // to index
-          moveStmt.addBatch();
-          moveCounter++;
-          if (TRACER.isEnabled())
-          {
-            TRACER.format(" - move {0} -> {1} ", element.sourceIndex, element.destinationIndex); //$NON-NLS-1$
-          }
+          TRACER.format("Performing {0} move operations", moveCounter); //$NON-NLS-1$
         }
+
+        DBUtil.executeBatch(moveStmt, moveCounter);
+        moveCounter = 0;
       }
+
+      performMoveOperations(accessor, id);
 
       for (ManipulationElement element : manipulations)
       {
@@ -463,17 +452,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         }
       }
 
-      // finally perform all operations
-      if (deleteCounter > 0)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Performing {0} delete operations", deleteCounter); //$NON-NLS-1$
-        }
-
-        DBUtil.executeBatch(deleteStmt, deleteCounter);
-      }
-
       if (moveCounter > 0)
       {
         if (TRACER.isEnabled())
@@ -511,6 +489,175 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     finally
     {
       releaseStatement(accessor, deleteStmt, moveStmt, insertStmt, setValueStmt);
+    }
+  }
+
+  private static class ShiftOperation
+  {
+    final int startIndex;
+
+    final int endIndex;
+
+    final int offset;
+
+    ShiftOperation(int startIndex, int endIndex, int offset)
+    {
+      this.startIndex = startIndex;
+      this.endIndex = endIndex;
+      this.offset = offset;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "range [" + startIndex + ".." + endIndex + "] offset " + offset;
+    }
+  }
+
+  /**
+   * Perform the moves re
+   * 
+   * @throws SQLException
+   */
+  private void performMoveOperations(IDBStoreAccessor accessor, CDOID id) throws SQLException
+  {
+    PreparedStatement shiftIndicesStmt = null;
+    try
+    {
+      /*
+       * Step 3: shift all elements which have to be shifted up or down because of add, remove or move of other elements
+       * to their proper position. This has to be done in two phases to avoid collisions, as the index has to be unique
+       * and shift up operations have to be executed in top to bottom order.
+       */
+
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      int size = manipulations.size();
+
+      LinkedList<ShiftOperation> shiftOperations = new LinkedList<ShiftOperation>();
+
+      // If a necessary shift is detected (source and destination indices differ), firstIndex is set to the current
+      // index
+      // and
+      // currentOffset is set to the offset of the shift operation. When a new offset is detected or the range is
+      // interrupted,
+      // we record the range and start a new one if needed.
+      int rangeStartIndex = ManipulationConstants.NO_INDEX;
+      int rangeOffset = 0;
+
+      // iterate through the manipulationElements and collect the necessary operations
+      for (int i = 0; i < size; i++)
+      {
+        ManipulationElement element = manipulations.get(i);
+
+        // shift applies only to elements which are not moved, inserted or deleted (i.e. only plain SET_VALUE and NONE
+        // are
+        // affected)
+        if (element.type == ManipulationConstants.NONE || element.type == ManipulationConstants.SET_VALUE)
+        {
+          int elementOffset = element.destinationIndex - element.sourceIndex;
+
+          // first make sure if we have to close a previous range. This is the case, if the current element's offset
+          // differs from
+          // the rangeOffset and a range is open.
+          if (elementOffset != rangeOffset && rangeStartIndex != ManipulationConstants.NO_INDEX)
+          {
+            // there is an open range but the rangeOffset differs. We have to close the open range
+            shiftOperations.add(new ShiftOperation(rangeStartIndex, i - 1, rangeOffset));
+            // and reset the state
+            rangeStartIndex = ManipulationConstants.NO_INDEX;
+            rangeOffset = 0;
+          }
+
+          // at this point, either a range is open, which means that the current element also fits in the range (i.e.
+          // the
+          // offsets match)
+          // or no range is open. In the latter case, we have to open one if the current element's offset is not 0.
+
+          if (elementOffset != 0 && rangeStartIndex == ManipulationConstants.NO_INDEX)
+          {
+            rangeStartIndex = i;
+            rangeOffset = elementOffset;
+          }
+        }
+        else
+        { // shift does not apply to this element because of its type
+          if (rangeStartIndex != ManipulationConstants.NO_INDEX)
+          {
+            // if there is an open range, we have to close and remember it
+            shiftOperations.add(new ShiftOperation(rangeStartIndex, i - 1, rangeOffset));
+            // and reset the state
+            rangeStartIndex = ManipulationConstants.NO_INDEX;
+            rangeOffset = 0;
+          }
+        }
+      }
+
+      // after the iteration, we have to make sure that we remember the last open range, if it is there
+      if (rangeStartIndex != ManipulationConstants.NO_INDEX)
+      {
+        shiftOperations.add(new ShiftOperation(rangeStartIndex, size - 1, rangeOffset));
+      }
+
+      // now process the operations. Move down operations can be performed directly, move up operations need to be
+      // performed later
+      // in the reverse direction
+      int operationCounter = shiftOperations.size();
+      ListIterator<ShiftOperation> operationIt = shiftOperations.listIterator();
+
+      while (operationIt.hasNext())
+      {
+        ShiftOperation operation = operationIt.next();
+        if (operation.offset < 0)
+        {
+          if (shiftIndicesStmt == null)
+          {
+            shiftIndicesStmt = accessor.getStatementCache().getPreparedStatement(sqlMassUpdateIndex,
+                ReuseProbability.HIGH);
+            idHandler.setCDOID(shiftIndicesStmt, 2, id);
+          }
+
+          if (TRACER.isEnabled())
+          {
+            TRACER.format(" - shift {0} ", operation); //$NON-NLS-1$
+          }
+
+          shiftIndicesStmt.setInt(1, operation.offset);
+          shiftIndicesStmt.setInt(3, operation.startIndex);
+          shiftIndicesStmt.setInt(4, operation.endIndex);
+          shiftIndicesStmt.addBatch();
+
+          operationIt.remove();
+        }
+      }
+      while (operationIt.hasPrevious())
+      {
+        ShiftOperation operation = operationIt.previous();
+        if (shiftIndicesStmt == null)
+        {
+          shiftIndicesStmt = accessor.getStatementCache().getPreparedStatement(sqlMassUpdateIndex,
+              ReuseProbability.HIGH);
+          idHandler.setCDOID(shiftIndicesStmt, 2, id);
+        }
+
+        if (TRACER.isEnabled())
+        {
+          TRACER.format(" - shift {0} ", operation); //$NON-NLS-1$
+        }
+
+        shiftIndicesStmt.setInt(1, operation.offset);
+        shiftIndicesStmt.setInt(3, operation.startIndex);
+        shiftIndicesStmt.setInt(4, operation.endIndex);
+        shiftIndicesStmt.addBatch();
+      }
+
+      if (operationCounter > 0)
+      {
+        DBUtil.executeBatch(shiftIndicesStmt, operationCounter, false);
+      }
+    }
+    finally
+    {
+      releaseStatement(accessor, shiftIndicesStmt);
     }
   }
 

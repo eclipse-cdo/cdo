@@ -523,6 +523,14 @@ public final class DBUtil
    */
   public static void executeBatch(PreparedStatement stmt, int counter)
   {
+    executeBatch(stmt, counter, true);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static void executeBatch(PreparedStatement stmt, int counter, boolean checkExactlyOne)
+  {
     try
     {
       int[] results = stmt.executeBatch();
@@ -534,9 +542,13 @@ public final class DBUtil
       for (int i = 0; i < results.length; i++)
       {
         int result = results[i];
-        if (result != 1 && result != Statement.SUCCESS_NO_INFO)
+        if (result < 0 && result != Statement.SUCCESS_NO_INFO)
         {
           throw new DBException("Result " + i + " is not successful: " + result);
+        }
+        else if (checkExactlyOne && result != 1)
+        {
+          throw new DBException("Result " + i + " did not affect exactly one row: " + result);
         }
       }
     }

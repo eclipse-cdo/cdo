@@ -79,6 +79,19 @@ public class HibernateUtil
 
   private static final String CLASS = "class"; //$NON-NLS-1$
 
+  private static IHibernateMappingProvider.Factory mappingProviderFactoryInstance = null;
+
+  public static IHibernateMappingProvider.Factory getMappingProviderFactoryInstance()
+  {
+    return mappingProviderFactoryInstance;
+  }
+
+  public static void setMappingProviderFactoryInstance(
+      IHibernateMappingProvider.Factory theMappingProviderFactoryInstance)
+  {
+    mappingProviderFactoryInstance = theMappingProviderFactoryInstance;
+  }
+
   /**
    * @return the global singleton instance
    */
@@ -191,6 +204,10 @@ public class HibernateUtil
   public IHibernateMappingProvider.Factory createMappingProviderFactory(String type)
   {
     IExtensionRegistry registry = Platform.getExtensionRegistry();
+    if (registry == null)
+    {
+      return getMappingProviderFactoryInstance();
+    }
     IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, EXT_POINT);
     for (final IConfigurationElement element : elements)
     {
@@ -211,7 +228,7 @@ public class HibernateUtil
       }
     }
 
-    return null;
+    return getMappingProviderFactoryInstance();
   }
 
   /**

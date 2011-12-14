@@ -533,6 +533,138 @@ public class RevisionDeltaTest extends AbstractCDOTest
     });
   }
 
+  public void testMultipleInserts()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry 1");
+        l.add(7, company);
+        company = getModel1Factory().createCompany();
+        company.setName("NewEntry 2");
+        l.add(12, company);
+      }
+    });
+  }
+
+  public void testInsertAndRemove()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry 1");
+        l.add(7, company);
+        l.remove(12);
+      }
+    });
+  }
+
+  public void testInsertAndMove()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry 1");
+        l.add(7, company);
+        l.move(12, 7);
+      }
+    });
+  }
+
+  public void testMoveAndDelete()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        l.move(12, 7);
+        l.remove(12);
+      }
+    });
+  }
+
+  public void testInsertAndMoveAndRemove()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry 1");
+        l.add(7, company);
+        l.move(12, 7);
+        l.remove(12);
+      }
+    });
+  }
+
+  public void testInsertAndSet()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry 1");
+        l.add(7, company);
+        Company company2 = getModel1Factory().createCompany();
+        company2.setName("NewEntry 2");
+        l.set(7, company2);
+        l.add(19, company); // <- needed because the set operation makes the company a dangling reference
+      }
+    });
+  }
+
+  public void testSetAndRemove()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        Company company = getModel1Factory().createCompany();
+        company.setName("NewEntry 1");
+        Company oldCompany = l.get(7);
+        l.set(7, company);
+        l.add(19, oldCompany);
+        l.remove(7); // <- needed because the set operation makes the company a dangling reference
+      }
+    });
+  }
+
+  public void testMultipleRemoves()
+  {
+    testStoreDelta(new ListManipulator()
+    {
+      @SuppressWarnings("unchecked")
+      public void doManipulations(EList<?> list)
+      {
+        EList<Company> l = (EList<Company>)list;
+        l.remove(7);
+        l.remove(12);
+      }
+    });
+  }
+
   private InternalCDORevision getCopyCDORevision(Object object)
   {
     return (InternalCDORevision)CDOUtil.getCDOObject((EObject)object).cdoRevision().copy();

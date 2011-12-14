@@ -385,7 +385,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         moveCounter = 0;
       }
 
-      performMoveOperations(accessor, id);
+      writeShiftOperations(accessor, id);
 
       for (ManipulationElement element : manipulations)
       {
@@ -397,7 +397,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
            */
           moveStmt.setInt(3, element.tempIndex); // from index
           moveStmt.setInt(1, element.destinationIndex); // to index
-          element.tempIndex = tempIndex;
           moveStmt.addBatch();
           moveCounter++;
 
@@ -492,34 +491,13 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     }
   }
 
-  private static class ShiftOperation
-  {
-    final int startIndex;
-
-    final int endIndex;
-
-    final int offset;
-
-    ShiftOperation(int startIndex, int endIndex, int offset)
-    {
-      this.startIndex = startIndex;
-      this.endIndex = endIndex;
-      this.offset = offset;
-    }
-
-    @Override
-    public String toString()
-    {
-      return "range [" + startIndex + ".." + endIndex + "] offset " + offset;
-    }
-  }
-
   /**
-   * Perform the moves re
+   * Perform the shift operations to adjust indexes resulting from remove, insert, and move operations.
    * 
+   * @see #writeResultToDatabase(IDBStoreAccessor, CDOID)
    * @throws SQLException
    */
-  private void performMoveOperations(IDBStoreAccessor accessor, CDOID id) throws SQLException
+  private void writeShiftOperations(IDBStoreAccessor accessor, CDOID id) throws SQLException
   {
     PreparedStatement shiftIndicesStmt = null;
     try
@@ -535,12 +513,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       LinkedList<ShiftOperation> shiftOperations = new LinkedList<ShiftOperation>();
 
-      // If a necessary shift is detected (source and destination indices differ), firstIndex is set to the current
-      // index
-      // and
-      // currentOffset is set to the offset of the shift operation. When a new offset is detected or the range is
-      // interrupted,
-      // we record the range and start a new one if needed.
+      /*
+       * If a necessary shift is detected (source and destination indices differ), firstIndex is set to the current
+       * index and currentOffset is set to the offset of the shift operation. When a new offset is detected or the range
+       * is interrupted, we record the range and start a new one if needed.
+       */
       int rangeStartIndex = ManipulationConstants.NO_INDEX;
       int rangeOffset = 0;
 
@@ -549,16 +526,18 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         ManipulationElement element = manipulations.get(i);
 
-        // shift applies only to elements which are not moved, inserted or deleted (i.e. only plain SET_VALUE and NONE
-        // are
-        // affected)
+        /*
+         * shift applies only to elements which are not moved, inserted or deleted (i.e. only plain SET_VALUE and NONE
+         * are affected)
+         */
         if (element.type == ManipulationConstants.NONE || element.type == ManipulationConstants.SET_VALUE)
         {
           int elementOffset = element.destinationIndex - element.sourceIndex;
 
-          // first make sure if we have to close a previous range. This is the case, if the current element's offset
-          // differs from
-          // the rangeOffset and a range is open.
+          /*
+           * first make sure if we have to close a previous range. This is the case, if the current element's offset
+           * differs from the rangeOffset and a range is open.
+           */
           if (elementOffset != rangeOffset && rangeStartIndex != ManipulationConstants.NO_INDEX)
           {
             // there is an open range but the rangeOffset differs. We have to close the open range
@@ -568,11 +547,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
             rangeOffset = 0;
           }
 
-          // at this point, either a range is open, which means that the current element also fits in the range (i.e.
-          // the
-          // offsets match)
-          // or no range is open. In the latter case, we have to open one if the current element's offset is not 0.
-
+          /*
+           * at this point, either a range is open, which means that the current element also fits in the range (i.e.
+           * the offsets match) or no range is open. In the latter case, we have to open one if the current element's
+           * offset is not 0.
+           */
           if (elementOffset != 0 && rangeStartIndex == ManipulationConstants.NO_INDEX)
           {
             rangeStartIndex = i;
@@ -598,9 +577,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         shiftOperations.add(new ShiftOperation(rangeStartIndex, size - 1, rangeOffset));
       }
 
-      // now process the operations. Move down operations can be performed directly, move up operations need to be
-      // performed later
-      // in the reverse direction
+      /*
+       * now process the operations. Move down operations can be performed directly, move up operations need to be
+       * performed later in the reverse direction
+       */
       int operationCounter = shiftOperations.size();
       ListIterator<ShiftOperation> operationIt = shiftOperations.listIterator();
 
@@ -966,6 +946,28 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     public void addType(int t)
     {
       type |= t;
+    }
+  }
+
+  private static class ShiftOperation
+  {
+    final int startIndex;
+
+    final int endIndex;
+
+    final int offset;
+
+    ShiftOperation(int startIndex, int endIndex, int offset)
+    {
+      this.startIndex = startIndex;
+      this.endIndex = endIndex;
+      this.offset = offset;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "range [" + startIndex + ".." + endIndex + "] offset " + offset;
     }
   }
 }

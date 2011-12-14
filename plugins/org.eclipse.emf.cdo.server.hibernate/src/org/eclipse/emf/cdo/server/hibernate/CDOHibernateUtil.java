@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.server.hibernate;
 
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateStore;
+import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 /**
  * @author Eike Stepper
@@ -21,6 +22,23 @@ public final class CDOHibernateUtil
 {
   private CDOHibernateUtil()
   {
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static IHibernateMappingProvider.Factory getMappingProviderFactoryInstance()
+  {
+    return HibernateUtil.getMappingProviderFactoryInstance();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static void setMappingProviderFactoryInstance(
+      IHibernateMappingProvider.Factory theMappingProviderFactoryInstance)
+  {
+    HibernateUtil.setMappingProviderFactoryInstance(theMappingProviderFactoryInstance);
   }
 
   public static IHibernateStore createStore(IHibernateMappingProvider mappingProvider)

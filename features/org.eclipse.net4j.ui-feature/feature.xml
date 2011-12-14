@@ -12,9 +12,11 @@
 <feature
       id="org.eclipse.net4j.ui"
       label="%featureName"
-      version="4.0.0.qualifier"
+      version="4.1.0.qualifier"
       provider-name="%providerName"
-      image="eclipse_update_120.jpg" license-feature="org.eclipse.emf.cdo.license" license-feature-version="4.0.0.qualifier">
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.cdo.license"
+      license-feature-version="4.1.0.qualifier">
 
    <description>
       %description
@@ -32,13 +34,6 @@
       <update label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
-
-   <plugin
-         id="org.eclipse.net4j.util.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="org.eclipse.net4j.ui"

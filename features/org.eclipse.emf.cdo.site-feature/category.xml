@@ -132,6 +132,12 @@
    <feature url="features/org.eclipse.emf.cdo.releng.workingsets_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.workingsets" version="1.0.0.qualifier">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
+   <feature url="features/org.eclipse.net4j.util_4.1.0.qualifier.jar" id="org.eclipse.net4j.util" version="4.1.0.qualifier">
+      <category name="org.eclipse.net4j.category"/>
+   </feature>
+   <feature url="features/org.eclipse.net4j.util.ui_4.1.0.qualifier.jar" id="org.eclipse.net4j.util.ui" version="4.1.0.qualifier">
+      <category name="org.eclipse.net4j.category"/>
+   </feature>
    <category-def name="org.eclipse.emf.releng.category" label="CDO Release Engineering"/>
    <category-def name="org.eclipse.emf.cdo.category" label="CDO Model Repository"/>
    <category-def name="org.eclipse.emf.cdo.hibernate.category" label="CDO Model Repository Hibernate (optional)"/>

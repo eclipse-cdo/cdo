@@ -10,9 +10,9 @@
 	  Eike Stepper - initial API and implementation
 -->
 <feature
-      id="org.eclipse.emf.cdo.releng.winexplorer"
+      id="org.eclipse.net4j.util.ui"
       label="%featureName"
-      version="1.0.0.qualifier"
+      version="4.1.0.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"
@@ -35,8 +35,19 @@
       <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
    </url>
 
+   <includes
+         id="org.eclipse.net4j.util"
+         version="0.0.0"/>
+
    <plugin
-         id="org.eclipse.emf.cdo.releng.winexplorer"
+         id="org.eclipse.net4j.util.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.net4j.ui.shared"
          download-size="0"
          install-size="0"
          version="0.0.0"

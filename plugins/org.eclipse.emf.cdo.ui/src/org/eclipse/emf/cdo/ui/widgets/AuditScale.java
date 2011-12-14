@@ -20,6 +20,9 @@ import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
 
 /**
+ * UI Widget representing all the historical revisions available for a
+ * {@link org.eclipse.emf.cdo.common.branch.CDOBranch branch}.
+ * 
  * @author Eike Stepper
  * @since 2.0
  */

@@ -28,7 +28,15 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 
 /**
+ * A {@link org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider AdapterFactoryLabelProvider} specialization
+ * that decorates {@link org.eclipse.emf.cdo.CDOObject objects} with a color/font code according to their current
+ * {@link org.eclipse.emf.cdo.CDOState state}.
+ * 
  * @author Eike Stepper
+ * @see org.eclipse.jface.viewers.IColorProvider
+ * @see org.eclipse.jface.viewers.IFontProvider
+ * @see org.eclipse.emf.cdo.CDOObject
+ * @see org.eclipse.emf.cdo.CDOState
  */
 public class CDOLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider, IFontProvider
 {

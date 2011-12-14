@@ -22,6 +22,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 /**
+ * Composed UI widget offering functionality for users to select {@link org.eclipse.emf.cdo.common.branch.CDOBranch
+ * branches} and a {@link org.eclipse.emf.cdo.common.branch.CDOBranchPoint timestamp} within a branch for a particular
+ * {@link org.eclipse.emf.cdo.session.CDOSession CDOSession}
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

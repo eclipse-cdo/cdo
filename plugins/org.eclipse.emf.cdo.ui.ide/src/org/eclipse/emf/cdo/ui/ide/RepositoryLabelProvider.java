@@ -25,6 +25,9 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * {@link org.eclipse.jface.viewers.ILabelProvider ILabelProvider} implementation for the CDO Team integration. Capable
+ * of providing text and image information for {@link org.eclipse.emf.cdo.ui.ide.Node nodes}
+ * 
  * @author Eike Stepper
  */
 public class RepositoryLabelProvider extends LabelProvider

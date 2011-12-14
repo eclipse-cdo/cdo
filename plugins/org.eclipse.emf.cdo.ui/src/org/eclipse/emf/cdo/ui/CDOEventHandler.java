@@ -41,7 +41,12 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * A class that handles {@link org.eclipse.net4j.util.event.IEvent events} on
+ * {@link org.eclipse.jface.viewers.TreeViewer TreeViewer}-based editors or views.
+ * 
  * @author Eike Stepper
+ * @see org.eclipse.net4j.util.event.IEvent
+ * @see org.eclipse.jface.viewers.TreeViewer
  */
 public class CDOEventHandler
 {

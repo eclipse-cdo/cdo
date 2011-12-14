@@ -79,7 +79,17 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * Implements multiple functionality related with UI representation of basic CDO concepts on
+ * {@link org.eclipse.jface.viewers.TreeViewer TreeViewer}-based editors and views.
+ * <p>
+ * For instance, behaves as {@link org.eclipse.jface.viewers.IContentProvider content} and
+ * {@link org.eclipse.jface.viewers.ILabelProvider label} provider for concepts such as {@link CDOSession},
+ * {@link CDOView}, {@link CDOResource} and {@link CDOResourceFolder}. It also providers common context menu action over
+ * those elements.
+ * 
  * @author Eike Stepper
+ * @see org.eclipse.jface.viewers.IContentProvider
+ * @see org.eclipse.jface.viewers.ILabelProvider
  */
 public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 {

@@ -40,6 +40,9 @@ import org.eclipse.swt.widgets.Text;
 import java.text.ParseException;
 
 /**
+ * UI widget allowing users to indicate {@link org.eclipse.emf.cdo.common.branch.CDOBranchPoint timestamp} of a
+ * particular historical state of a {@link org.eclipse.emf.cdo.common.branch.CDOBranch branch}
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

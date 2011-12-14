@@ -74,6 +74,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * {@link org.eclipse.jface.viewers.ITreeContentProvider ITreeContentProvider} implementation for the CDO Team
+ * integration. Capable of providing containment information for an {@link org.eclipse.core.resources.IProject project}
+ * synchronized with a repository. Understands containment information of the {@link org.eclipse.emf.cdo.ui.ide.Node
+ * node} abstraction.
+ * 
  * @author Eike Stepper
  */
 public class RepositoryContentProvider extends StructuredContentProvider<IWorkspaceRoot> implements

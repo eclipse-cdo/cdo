@@ -35,8 +35,12 @@ import org.eclipse.swt.widgets.Text;
 import java.text.MessageFormat;
 
 /**
+ * A <code>CDOSession</code> {@link org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler ExceptionHandler}
+ * implementation that shows exception information on a UI {@link ExceptionDialog dialog}
+ * 
  * @author Eike Stepper
  * @since 2.0
+ * @see org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler
  */
 public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandler, IElementProcessor
 {
@@ -119,7 +123,10 @@ public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandl
   }
 
   /**
+   * A dialog that shows CDO related exceptions in a convenient manner.
+   * 
    * @author Eike Stepper
+   * @see org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler
    */
   public static class ExceptionDialog extends TitleAreaDialog
   {

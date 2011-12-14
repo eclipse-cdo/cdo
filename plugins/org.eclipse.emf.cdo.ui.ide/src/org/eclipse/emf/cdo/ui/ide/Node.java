@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * {@link org.eclipse.core.runtime.IAdaptable Adaptable} abstraction for an UI representation of basic CDO concepts.
+ * 
  * @author Eike Stepper
  */
 public abstract class Node extends PlatformObject
@@ -64,6 +66,8 @@ public abstract class Node extends PlatformObject
   public abstract Type getType();
 
   /**
+   * Differentiates kinds of {@link org.eclipse.emf.cdo.ui.ide.Node nodes}
+   * 
    * @author Eike Stepper
    */
   public static enum Type
@@ -72,6 +76,8 @@ public abstract class Node extends PlatformObject
   }
 
   /**
+   * Convenience UI object to represent a {@link org.eclipse.emf.cdo.common.branch.CDOBranch branch}
+   * 
    * @author Victor Roldan Betancort
    */
   public static final class BranchNode extends Node
@@ -139,6 +145,9 @@ public abstract class Node extends PlatformObject
   }
 
   /**
+   * Convenience UI object to represent the {@link org.eclipse.emf.cdo.common.model.CDOPackageRegistry
+   * CDOPackageRegistry}
+   * 
    * @author Eike Stepper
    */
   public static final class PackagesNode extends Node
@@ -190,6 +199,8 @@ public abstract class Node extends PlatformObject
   }
 
   /**
+   * Convenience UI object to represent the {@link org.eclipse.emf.cdo.eresource.CDOResourceNode CDOResourceNode}
+   * 
    * @author Eike Stepper
    */
   public static final class ResourcesNode extends Node
@@ -247,6 +258,8 @@ public abstract class Node extends PlatformObject
   }
 
   /**
+   * Convenience UI object to represent the {@link org.eclipse.emf.cdo.session.CDOSession CDOSession}
+   * 
    * @author Eike Stepper
    */
   public static final class SessionsNode extends Node

@@ -37,6 +37,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
 
 /**
+ * UI widget that provides visualization of all available {@link org.eclipse.emf.cdo.common.branch.CDOBranch branches},
+ * and with the capability to select one.
+ * 
  * @author Eike Stepper
  * @since 4.0
  */

@@ -22,6 +22,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.PartInitException;
 
 /**
+ * Miscellaneous functionality associated with visualization on the Common Navigator Framework.
+ * 
  * @author Victor Roldan Betancort
  */
 public final class CommonNavigatorUtils
@@ -30,6 +32,10 @@ public final class CommonNavigatorUtils
   {
   }
 
+  /**
+   * Creates a fake {@link org.eclipse.core.runtime.IAdaptable adaptable} object whose sole purpose is to show a message
+   * in the common navigator.
+   */
   public static Object createMessageProvider(final String message, final MessageType type)
   {
     return new IAdaptable()
@@ -97,6 +103,10 @@ public final class CommonNavigatorUtils
     };
   }
 
+  /**
+   * Same as {@link #createMessageProvider(String, MessageType)}, but returning the object as an <code>Object</code>
+   * array
+   */
   public static Object[] createMessageProviderChild(final String message, final MessageType type)
   {
     Object[] result = { createMessageProvider(message, type) };
@@ -104,6 +114,8 @@ public final class CommonNavigatorUtils
   }
 
   /**
+   * Defines message decoration to be shown in the Common Navigator through {@link CommonNavigatorUtils}
+   * 
    * @author Victor Roldan Betancort
    */
   public static enum MessageType

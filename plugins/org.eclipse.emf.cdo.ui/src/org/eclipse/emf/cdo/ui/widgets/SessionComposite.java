@@ -37,6 +37,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 
 /**
+ * Simple {@link org.eclipse.swt.widgets.Composite composite} allowing users to introduce connection information with a
+ * repository. The widget recalls connection history and provides some additional functionality tweakers, as automatic
+ * EPackage registration.
+ * 
  * @author Victor Roldan Betancort
  * @since 2.0
  */

@@ -52,4 +52,20 @@ public class PerformanceRecord
   {
     return probes;
   }
+
+  public long getDurationSum()
+  {
+    long durationSum = 0L;
+    for (long probe : probes)
+    {
+      durationSum += probe;
+    }
+
+    return durationSum;
+  }
+
+  public long getDurationAvg()
+  {
+    return getDurationSum() / probes.length;
+  }
 }

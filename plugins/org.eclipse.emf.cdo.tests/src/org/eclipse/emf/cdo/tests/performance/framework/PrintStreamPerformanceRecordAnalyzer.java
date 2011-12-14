@@ -37,6 +37,16 @@ public class PrintStreamPerformanceRecordAnalyzer implements IPerformanceRecordA
 
   public void analyze(List<PerformanceRecord> performanceRecords)
   {
+    printHeader();
+
+    for (PerformanceRecord performanceRecord : performanceRecords)
+    {
+      printRecord(performanceRecord);
+    }
+  }
+
+  protected void printHeader()
+  {
     String recordString = MessageFormat.format("{0};{1};{2};{3};{4};{5};{6}", //
         "ContainerConfig", //
         "RepositoryConfig", //
@@ -45,29 +55,23 @@ public class PrintStreamPerformanceRecordAnalyzer implements IPerformanceRecordA
         "Test name", //
         "Test Case Name", //
         "Average Duration");
+  
     out.println(recordString);
+  }
 
-    for (PerformanceRecord performanceRecord : performanceRecords)
-    {
-      long durationSum = 0L;
-      for (long durationMillis : performanceRecord.getProbes())
-      {
-        durationSum += durationMillis;
-      }
-      long durationAverage = durationSum / performanceRecord.getProbes().length;
+  protected void printRecord(PerformanceRecord performanceRecord)
+  {
+    IScenario scenario = performanceRecord.getScenario();
 
-      IScenario scenario = performanceRecord.getScenario();
+    String recordString = MessageFormat.format("{0};{1};{2};{3};{4};{5};{6}", //
+        scenario.getContainerConfig().getName(), //
+        scenario.getRepositoryConfig().getName(), //
+        scenario.getSessionConfig().getName(), //
+        scenario.getModelConfig().getName(), //
+        performanceRecord.getTestName(), //
+        performanceRecord.getTestCaseName(), //
+        performanceRecord.getDurationAvg());
 
-      recordString = MessageFormat.format("{0};{1};{2};{3};{4};{5};{6}", //
-          scenario.getContainerConfig().getName(), //
-          scenario.getRepositoryConfig().getName(), //
-          scenario.getSessionConfig().getName(), //
-          scenario.getModelConfig().getName(), //
-          performanceRecord.getTestName(), //
-          performanceRecord.getTestCaseName(), //
-          durationAverage);
-
-      out.println(recordString);
-    }
+    out.println(recordString);
   }
 }

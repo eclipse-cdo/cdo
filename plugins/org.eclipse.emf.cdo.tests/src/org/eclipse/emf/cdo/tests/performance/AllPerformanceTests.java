@@ -22,6 +22,15 @@ import java.util.List;
  */
 public abstract class AllPerformanceTests extends PerformanceTestSuite
 {
+  public AllPerformanceTests()
+  {
+  }
+
+  public AllPerformanceTests(int runsPerTestCase)
+  {
+    super(runsPerTestCase);
+  }
+
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {

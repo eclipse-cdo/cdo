@@ -48,6 +48,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSingleValueFeatureDeltaImpl;
@@ -108,6 +110,7 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
@@ -207,6 +210,14 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
 
   @ExcludeFromDump
   private int lastViewID;
+
+  static
+  {
+    // Ensure that these 3 packages are registered with the global package registry in stand-alone
+    EcorePackage.eINSTANCE.getClass();
+    EresourcePackage.eINSTANCE.getClass();
+    EtypesPackage.eINSTANCE.getClass();
+  }
 
   public CDOSessionImpl()
   {

@@ -68,4 +68,24 @@ public class PerformanceRecord
   {
     return getDurationSum() / probes.length;
   }
+
+  public long getDurationMin()
+  {
+    long durationMin = Long.MAX_VALUE;
+    for (long probe : probes)
+    {
+      durationMin = Math.min(durationMin, probe);
+    }
+    return durationMin;
+  }
+
+  public long getDurationMax()
+  {
+    long durationMax = Long.MIN_VALUE;
+    for (long probe : probes)
+    {
+      durationMax = Math.max(durationMax, probe);
+    }
+    return durationMax;
+  }
 }

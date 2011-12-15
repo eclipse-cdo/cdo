@@ -55,7 +55,7 @@ public class PrintStreamPerformanceRecordAnalyzer implements IPerformanceRecordA
         "Test name", //
         "Test Case Name", //
         "Average Duration");
-  
+
     out.println(recordString);
   }
 
@@ -63,14 +63,14 @@ public class PrintStreamPerformanceRecordAnalyzer implements IPerformanceRecordA
   {
     IScenario scenario = performanceRecord.getScenario();
 
-    String recordString = MessageFormat.format("{0};{1};{2};{3};{4};{5};{6}", //
+    String recordString = MessageFormat.format("{0};{1};{2};{3};{4};{5};{6};{7};{8}", //
         scenario.getContainerConfig().getName(), //
         scenario.getRepositoryConfig().getName(), //
         scenario.getSessionConfig().getName(), //
         scenario.getModelConfig().getName(), //
         performanceRecord.getTestName(), //
         performanceRecord.getTestCaseName(), //
-        performanceRecord.getDurationAvg());
+        performanceRecord.getDurationAvg(), performanceRecord.getDurationMin(), performanceRecord.getDurationMax());
 
     out.println(recordString);
   }

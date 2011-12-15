@@ -13,22 +13,35 @@ package org.eclipse.emf.cdo.tests.performance;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
-import org.eclipse.emf.cdo.tests.performance.framework.PerformanceTestSuite;
 
 import java.util.List;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * @author Eike Stepper
  */
-public abstract class AllPerformanceTests extends PerformanceTestSuite
+public class AllPerformanceTestsMemStore extends AllPerformanceTests
 {
-  public AllPerformanceTests()
+  public static Test suite()
   {
+    return new AllPerformanceTestsMemStore().getTestSuite(AllPerformanceTestsMemStore.class.getName());
   }
 
-  public AllPerformanceTests(int runsPerTestCase)
+  @Override
+  protected void initConfigSuites(TestSuite parent)
   {
-    super(runsPerTestCase);
+    addScenario(parent, COMBINED, MEM, JVM, NATIVE);
+    addScenario(parent, COMBINED, MEM_AUDITS, JVM, NATIVE);
+    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, NATIVE);
+    addScenario(parent, COMBINED, MEM_BRANCHES_UUIDS, JVM, NATIVE);
+
+    addScenario(parent, COMBINED, MEM, JVM, LEGACY);
+    addScenario(parent, COMBINED, MEM_AUDITS, JVM, LEGACY);
+    addScenario(parent, COMBINED, MEM_BRANCHES, JVM, LEGACY);
+
+    addScenario(parent, COMBINED, MEM_BRANCHES, TCP, NATIVE);
   }
 
   @Override

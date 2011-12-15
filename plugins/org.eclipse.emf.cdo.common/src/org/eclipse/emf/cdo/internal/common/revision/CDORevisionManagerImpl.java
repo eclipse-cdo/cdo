@@ -396,28 +396,51 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   {
     if (revision != null)
     {
-      if (revision instanceof PointerCDORevision)
+      acquireAtomicRequestLock(loadAndAddLock);
+
+      try
       {
-        PointerCDORevision pointer = (PointerCDORevision)revision;
-        CDOBranchVersion target = pointer.getTarget();
-        if (target instanceof InternalCDORevision)
+        if (revision instanceof PointerCDORevision)
         {
-          revision = new PointerCDORevision(pointer.getEClass(), pointer.getID(), pointer.getBranch(),
-              pointer.getRevised(), CDOBranchUtil.copyBranchVersion(target));
+          PointerCDORevision pointer = (PointerCDORevision)revision;
+          CDOBranchVersion target = pointer.getTarget();
+          if (target instanceof InternalCDORevision)
+          {
+            revision = new PointerCDORevision(pointer.getEClass(), pointer.getID(), pointer.getBranch(),
+                pointer.getRevised(), CDOBranchUtil.copyBranchVersion(target));
+          }
         }
+
+        int oldVersion = revision.getVersion() - 1;
+        if (oldVersion >= CDORevision.UNSPECIFIED_VERSION)
+        {
+          CDOBranchVersion old = revision.getBranch().getVersion(oldVersion);
+          InternalCDORevision oldRevision = getCachedRevisionByVersion(revision.getID(), old);
+          if (!revision.isHistorical())
+          {
+            if (oldRevision != null)
+            {
+              oldRevision.setRevised(revision.getTimeStamp() - 1);
+            }
+            else
+            {
+              // Remove last revision from cache, which is not revised
+              InternalCDORevision cachedLatestRevision = getCachedRevision(revision.getID(), revision);
+              if (cachedLatestRevision != null && !cachedLatestRevision.isHistorical())
+              {
+                // Found revision is stale.
+                // We cannot revise it now because of lack information, thus remove it from the cache
+                cache.removeRevision(cachedLatestRevision.getID(), cachedLatestRevision);
+              }
+            }
+          }
+        }
+
+        cache.addRevision(revision);
       }
-
-      cache.addRevision(revision);
-
-      int oldVersion = revision.getVersion() - 1;
-      if (oldVersion >= CDORevision.UNSPECIFIED_VERSION)
+      finally
       {
-        CDOBranchVersion old = revision.getBranch().getVersion(oldVersion);
-        InternalCDORevision oldRevision = getCachedRevisionByVersion(revision.getID(), old);
-        if (oldRevision != null && oldRevision.getRevised() == CDOBranchPoint.UNSPECIFIED_DATE)
-        {
-          oldRevision.setRevised(revision.getTimeStamp() - 1);
-        }
+        releaseAtomicRequestLock(loadAndAddLock);
       }
     }
   }

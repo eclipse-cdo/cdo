@@ -93,6 +93,9 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private static final boolean LOG_MULTI_VIEW_COMMIT = false;
 
+  private static final Boolean disableServerBrowser = Boolean.valueOf(System.getProperty(
+  "org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.disableServerBrowser", "false"));
+
   private static final long serialVersionUID = 1L;
 
   private boolean supportingAudits;
@@ -344,8 +347,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     // Start default repository
     getRepository(REPOSITORY_NAME);
 
-    serverBrowser = new CDOServerBrowser(repositories);
-    serverBrowser.activate();
+    if (!disableServerBrowser)
+    {
+      serverBrowser = new CDOServerBrowser(repositories);
+      serverBrowser.activate();
+    }
   }
 
   @Override

@@ -483,7 +483,7 @@
 		<buckminster command="junit">
 			<cmdargs>
 				<arg value="-l" />
-				<arg value="org.eclipse.emf.cdo.tests/CDO AllTests.launch" />
+				<arg value="org.eclipse.emf.cdo.tests.all/CDO AutomatedTests.launch" />
 				<arg value="-o" />
 				<arg value="${test.report}" />
 				<arg value="--terseXML" />

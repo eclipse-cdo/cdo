@@ -24,7 +24,7 @@ import java.util.Random;
 /**
  * @author Stefan Winkler
  */
-public class DeleteRandomTest extends PerformanceTest
+public class DeletePerformanceTest extends PerformanceTest
 {
   private static final int AMOUNT_ELEMENTS = 10000;
 
@@ -32,6 +32,7 @@ public class DeleteRandomTest extends PerformanceTest
 
   private Company initModel() throws CommitException
   {
+    msg("Initializing model ...");
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("res"));
@@ -46,15 +47,20 @@ public class DeleteRandomTest extends PerformanceTest
     }
 
     resource.getContents().add(company);
+    msg("Committing model ...");
     transaction.commit();
+    msg("Done.");
 
     return company;
   }
 
-  public void test() throws Exception
+  @CleanRepositoriesBefore
+  public void testDeleteRandom() throws Exception
   {
     Company company = initModel();
     CDOTransaction transaction = (CDOTransaction)CDOUtil.getCDOObject(company).cdoView();
+
+    msg("Starting to remove elements ...");
 
     for (int i = 0; i < AMOUNT_ELEMENTS / 2; i++)
     {
@@ -68,4 +74,25 @@ public class DeleteRandomTest extends PerformanceTest
       stopProbing();
     }
   }
+
+  @CleanRepositoriesBefore
+  public void testDeleteDeterministic() throws Exception
+  {
+    Company company = initModel();
+    CDOTransaction transaction = (CDOTransaction)CDOUtil.getCDOObject(company).cdoView();
+
+    msg("Starting to remove elements ...");
+
+    for (int i = 0; i < AMOUNT_ELEMENTS / 2; i++)
+    {
+      int indexToRemove = AMOUNT_ELEMENTS / 2 - i;
+
+      company.getCategories().remove(indexToRemove);
+
+      startProbing();
+      transaction.commit();
+      stopProbing();
+    }
+  }
+
 }

@@ -166,9 +166,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(CDODBSchema.LIST_REVISION_ID);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" >= ? AND "); //$NON-NLS-1$
-    builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" <= ?"); //$NON-NLS-1$
+    builder.append(" BETWEEN ? AND ?"); //$NON-NLS-1$
     sqlMassUpdateIndex = builder.toString();
   }
 

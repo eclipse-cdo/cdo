@@ -26,4 +26,5 @@ Import-Package: com.mysql.jdbc.jdbc2.optional;version="[5.0.0,6.0.0)",
 Export-Package: org.eclipse.emf.cdo.tests.db;version="4.0.100";x-friends:="org.eclipse.emf.cdo.tests.all",
  org.eclipse.emf.cdo.tests.db.bundle;version="4.0.100";x-internal:=true,
  org.eclipse.emf.cdo.tests.db.capabilities;version="4.0.100";x-friends:="org.eclipse.emf.cdo.tests.all",
+ org.eclipse.emf.cdo.tests.db.performance;version="4.0.100";x-friends:="org.eclipse.emf.cdo.tests.all",
  org.eclipse.emf.cdo.tests.db.verifier;version="4.0.100";x-friends:="org.eclipse.emf.cdo.tests.all"

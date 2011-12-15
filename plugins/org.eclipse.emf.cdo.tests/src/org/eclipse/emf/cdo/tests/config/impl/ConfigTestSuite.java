@@ -40,7 +40,7 @@ public abstract class ConfigTestSuite implements IConstants
   {
   }
 
-  protected Test getTestSuite(String name)
+  public Test getTestSuite(String name)
   {
     TestSuite suite = new MainSuite(name);
     initConfigSuites(suite);

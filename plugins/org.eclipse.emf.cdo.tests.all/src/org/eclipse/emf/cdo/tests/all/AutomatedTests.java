@@ -24,8 +24,8 @@ public class AutomatedTests extends TestSuite
   public static Test suite()
   {
     TestSuite suite = new TestSuite("Automated Tests");
-    suite.addTest(AllTests.suite());
-    suite.addTest(AllTestsDBH2All.suite());
+    suite.addTest(new AllTests().getTestSuite("MEMStore Tests"));
+    suite.addTest(new AllTestsDBH2All().getTestSuite("DBStore Tests"));
     return suite;
   }
 }

@@ -139,6 +139,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.releng.wingit"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.releng.workingsets"
          version="0.0.0"/>
 

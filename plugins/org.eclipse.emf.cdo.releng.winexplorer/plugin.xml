@@ -9,6 +9,16 @@
             id="org.eclipse.emf.cdo.releng.winexplorer.contribution"
             objectClass="org.eclipse.core.resources.IResource">
          <action
+               class="org.eclipse.emf.cdo.releng.winexplorer.PromptAction"
+               enablesFor="1"
+               icon="prompt.gif"
+               id="org.eclipse.emf.cdo.releng.PromptAction"
+               label="Command Prompt"
+               menubarPath="additions"
+               state="true"
+               style="push"
+               tooltip="Open Command Prompt"/>
+         <action
                class="org.eclipse.emf.cdo.releng.winexplorer.ExplorerAction"
                enablesFor="1"
                icon="explorer.gif"
@@ -17,8 +27,7 @@
                menubarPath="additions"
                state="true"
                style="push"
-               tooltip="Open Windows Explorer">
-         </action>
+               tooltip="Open Windows Explorer"/>
       </objectContribution>
    </extension>
 

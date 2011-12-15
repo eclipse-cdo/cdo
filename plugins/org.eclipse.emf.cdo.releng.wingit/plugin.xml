@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.cdo.releng.winexplorer.contribution"
+            objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
+         <action
+               class="org.eclipse.emf.cdo.releng.wingit.GitAction"
+               enablesFor="1"
+               icon="wingit.gif"
+               id="org.eclipse.emf.cdo.releng.GitAction"
+               label="Windows Git"
+               menubarPath="additions"
+               state="true"
+               style="push"
+               tooltip="Open Windows Git Bash">
+         </action>
+      </objectContribution>
+   </extension>
+
+</plugin>

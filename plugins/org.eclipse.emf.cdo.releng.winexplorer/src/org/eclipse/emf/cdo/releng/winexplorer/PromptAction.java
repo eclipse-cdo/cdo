@@ -17,9 +17,9 @@ import java.io.File;
 /**
  * @author Eike Stepper
  */
-public class ExplorerAction extends AbstractContainerAction
+public class PromptAction extends AbstractContainerAction
 {
-  public ExplorerAction()
+  public PromptAction()
   {
   }
 
@@ -27,6 +27,6 @@ public class ExplorerAction extends AbstractContainerAction
   protected void run(IContainer container) throws Exception
   {
     String location = container.getLocation().toString().replace('/', File.separatorChar);
-    Runtime.getRuntime().exec("explorer.exe \"" + location + "\"");
+    Runtime.getRuntime().exec("cmd /c cd \"" + location + "\" && start cmd.exe");
   }
 }

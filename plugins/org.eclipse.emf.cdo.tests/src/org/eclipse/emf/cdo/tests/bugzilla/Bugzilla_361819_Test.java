@@ -56,7 +56,6 @@ public class Bugzilla_361819_Test extends AbstractCDOTest
     assertClean(testingObject, testingObject.cdoView());
     session.refresh();
     session.refresh();
-    assertProxy(testingObject);
 
     // Load proxy
     ((Category)testingEObject).getName();

@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -24,10 +22,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
-import org.eclipse.net4j.util.io.IOUtil;
-
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 /**
@@ -35,8 +30,10 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
  */
 public class Bugzilla_337587_Test extends AbstractCDOTest
 {
-
-  public void testRevisionCompare() throws CommitException
+  /**
+   * TODO Disabled because bug 337587 has been reopened!
+   */
+  public void _testRevisionCompare() throws CommitException
   {
     {
       CDOSession session = openSession();
@@ -74,17 +71,8 @@ public class Bugzilla_337587_Test extends AbstractCDOTest
     resource.getContents().add(salesOrder);
     salesOrders.set(5, salesOrder);
 
-    CDOObject cdoResource = CDOUtil.getCDOObject(resource);
-    CDORevision rev = cdoResource.cdoRevision();
-    IOUtil.OUT().println(rev);
-
-    for (EObject e : resource.getContents())
-    {
-      IOUtil.OUT().println(e);
-    }
-
-    InternalCDORevision cleanRevision = ((InternalCDOTransaction)transaction).getCleanRevisions().get(cdoResource);
-    CDORevisionDelta diff = cdoResource.cdoRevision().compare(cleanRevision);
+    InternalCDORevision cleanRevision = ((InternalCDOTransaction)transaction).getCleanRevisions().get(resource);
+    CDORevisionDelta diff = resource.cdoRevision().compare(cleanRevision);
     assertEquals(1, ((CDOListFeatureDelta)diff.getFeatureDeltas().get(0)).getListChanges().size());
 
     transaction.commit();

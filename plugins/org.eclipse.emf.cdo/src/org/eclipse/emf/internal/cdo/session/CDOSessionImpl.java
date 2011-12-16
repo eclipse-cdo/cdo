@@ -618,7 +618,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     Map<CDOID, InternalCDORevision> oldRevisions = viewedRevisions.get(branch);
 
     List<CDORevisionKey> changedObjects = new ArrayList<CDORevisionKey>();
-    for (InternalCDORevision newRevision : result.getChangedObjects(branch))
+    List<InternalCDORevision> newRevisions = result.getChangedObjects(branch);
+    for (InternalCDORevision newRevision : newRevisions)
     {
       getRevisionManager().addRevision(newRevision);
 

@@ -60,6 +60,11 @@ public final class CDODBUtil
    */
   public static final String PROP_COPY_ON_BRANCH = "copyOnBranch";
 
+  /**
+   * @since 4.1
+   */
+  public static final String PROP_ZEROBASED_INDEX = "forceZeroBasedIndex";
+
   private CDODBUtil()
   {
   }

@@ -10,8 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -30,10 +29,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
  */
 public class Bugzilla_337587_Test extends AbstractCDOTest
 {
-  /**
-   * TODO Disabled because bug 337587 has been reopened!
-   */
-  public void _testRevisionCompare() throws CommitException
+  public void testRevisionCompare() throws CommitException
   {
     {
       CDOSession session = openSession();
@@ -71,9 +67,18 @@ public class Bugzilla_337587_Test extends AbstractCDOTest
     resource.getContents().add(salesOrder);
     salesOrders.set(5, salesOrder);
 
-    InternalCDORevision cleanRevision = ((InternalCDOTransaction)transaction).getCleanRevisions().get(resource);
-    CDORevisionDelta diff = resource.cdoRevision().compare(cleanRevision);
-    assertEquals(1, ((CDOListFeatureDelta)diff.getFeatureDeltas().get(0)).getListChanges().size());
+    CDOObject cdoResource = CDOUtil.getCDOObject(resource);
+    InternalCDORevision cleanRevision = ((InternalCDOTransaction)transaction).getCleanRevisions().get(cdoResource);
+
+    try
+    {
+      cdoResource.cdoRevision().compare(cleanRevision);
+      fail("Expected IllegalStateException during comparing EList with CDOProxyElement");
+    }
+    catch (IllegalStateException expected)
+    {
+      // expected exception
+    }
 
     transaction.commit();
   }

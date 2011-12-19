@@ -6,19 +6,32 @@
          point="org.eclipse.ui.popupMenus">
       <objectContribution
             adaptable="true"
-            id="org.eclipse.emf.cdo.releng.winexplorer.contribution"
+            id="org.eclipse.emf.cdo.releng.wingit.contribution1"
             objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
          <action
                class="org.eclipse.emf.cdo.releng.wingit.GitAction"
                enablesFor="1"
-               icon="wingit.gif"
-               id="org.eclipse.emf.cdo.releng.GitAction"
+               icon="icons/wingit.gif"
+               id="org.eclipse.emf.cdo.releng.wingit.GitAction"
                label="Windows Git"
                menubarPath="additions"
                state="true"
                style="push"
-               tooltip="Open Windows Git Bash">
-         </action>
+               tooltip="Open Windows Git Bash"/>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="org.eclipse.emf.cdo.releng.wingit.contribution2"
+            objectClass="org.eclipse.mylyn.tasks.core.ITaskAttachment">
+         <action
+               class="org.eclipse.emf.cdo.releng.wingit.ApplyPatchToGitAction"
+               enablesFor="1"
+               icon="icons/apply-patch.gif"
+               id="org.eclipse.emf.cdo.releng.wingit.ApplyPatchToGitAction"
+               label="Apply Patch To Git"
+               menubarPath="actions"
+               style="pulldown"
+               tooltip="Apply patch to a Git repository"/>
       </objectContribution>
    </extension>
 

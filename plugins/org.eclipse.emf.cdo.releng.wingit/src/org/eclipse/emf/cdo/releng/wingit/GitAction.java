@@ -12,30 +12,20 @@ package org.eclipse.emf.cdo.releng.wingit;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
 public class GitAction implements IObjectActionDelegate
 {
-  private static final String GIT_BASH = "C:\\Program Files (x86)\\Git\\bin\\sh.exe";
-
   private IWorkbenchPart targetPart;
-
-  private String gitBash;
 
   private Repository repository;
 
@@ -67,118 +57,17 @@ public class GitAction implements IObjectActionDelegate
   {
     if (repository != null)
     {
-      initGitBash();
+      String gitBash = WinGit.getGitBash(targetPart.getSite().getShell());
 
       try
       {
         File workTree = repository.getWorkTree();
         Runtime.getRuntime().exec(
-            "cmd /c cd \"" + workTree.getAbsolutePath() + "\" && start cmd.exe /c \"" + GIT_BASH + "\" --login -i");
+            "cmd /c cd \"" + workTree.getAbsolutePath() + "\" && start cmd.exe /c \"" + gitBash + "\" --login -i");
       }
       catch (Exception ex)
       {
         ex.printStackTrace();
-      }
-    }
-  }
-
-  protected void initGitBash()
-  {
-    if (gitBash == null)
-    {
-      File stateFile = Activator.getDefault().getStateLocation().append("git-bash.txt").toFile();
-      if (stateFile.isFile())
-      {
-        gitBash = loadFile(stateFile);
-      }
-
-      if (gitBash == null)
-      {
-        gitBash = getPath(GIT_BASH);
-      }
-
-      if (!new File(gitBash).isFile())
-      {
-        gitBash = getPath(gitBash);
-      }
-
-      saveFile(stateFile, gitBash);
-    }
-  }
-
-  private String getPath(String initial)
-  {
-    InputDialog dialog = new InputDialog(targetPart.getSite().getShell(), "Git Bash", "Location:", initial,
-        new IInputValidator()
-        {
-          public String isValid(String newText)
-          {
-            return new File(newText).isFile() ? null : "Not a file!";
-          }
-        });
-
-    if (dialog.open() != InputDialog.OK)
-    {
-      throw new IllegalStateException("Git bash not found at " + gitBash);
-    }
-
-    return dialog.getValue();
-  }
-
-  private String loadFile(File file)
-  {
-    FileReader in = null;
-
-    try
-    {
-      in = new FileReader(file);
-      return new BufferedReader(in).readLine();
-    }
-    catch (IOException ex)
-    {
-      return null;
-    }
-    finally
-    {
-      if (in != null)
-      {
-        try
-        {
-          in.close();
-        }
-        catch (IOException ex)
-        {
-          // Ignore
-        }
-      }
-    }
-  }
-
-  private void saveFile(File file, String content)
-  {
-    FileWriter out = null;
-
-    try
-    {
-      out = new FileWriter(file);
-      out.write(content);
-    }
-    catch (IOException ex)
-    {
-      throw new IllegalStateException("Could not write to " + file, ex);
-    }
-    finally
-    {
-      if (out != null)
-      {
-        try
-        {
-          out.close();
-        }
-        catch (IOException ex)
-        {
-          // Ignore
-        }
       }
     }
   }

@@ -11,8 +11,9 @@
 package org.eclipse.emf.cdo.releng;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,14 +37,14 @@ public class PrintReleaseDeliverablesForPlan
       }
 
       File propertiesFile = new File(featureFolder, "feature.properties");
-      FileReader reader = null;
+      InputStream in = null;
 
       try
       {
-        reader = new FileReader(propertiesFile);
+        in = new FileInputStream(propertiesFile);
 
         Properties properties = new Properties();
-        properties.load(reader);
+        properties.load(in);
 
         String name = properties.getProperty("featureName");
         String description = properties.getProperty("description");
@@ -52,9 +53,9 @@ public class PrintReleaseDeliverablesForPlan
       }
       finally
       {
-        if (reader != null)
+        if (in != null)
         {
-          reader.close();
+          in.close();
         }
       }
     }

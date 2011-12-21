@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 
@@ -23,6 +24,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public class HorizontalNonAuditMappingStrategy extends AbstractHorizontalMappingStrategy
 {
+  private boolean forceZeroBasedIndex;
+
   public HorizontalNonAuditMappingStrategy()
   {
   }
@@ -42,6 +45,11 @@ public class HorizontalNonAuditMappingStrategy extends AbstractHorizontalMapping
     return true;
   }
 
+  public boolean shallForceZeroBasedIndex()
+  {
+    return forceZeroBasedIndex;
+  }
+
   @Override
   public IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature)
   {
@@ -58,5 +66,14 @@ public class HorizontalNonAuditMappingStrategy extends AbstractHorizontalMapping
   protected IClassMapping doCreateClassMapping(EClass eClass)
   {
     return new HorizontalNonAuditClassMapping(this, eClass);
+  }
+
+  @Override
+  protected void doAfterActivate() throws Exception
+  {
+    super.doAfterActivate();
+
+    String value = getProperties().get(CDODBUtil.PROP_ZEROBASED_INDEX);
+    forceZeroBasedIndex = value == null ? false : Boolean.valueOf(value);
   }
 }

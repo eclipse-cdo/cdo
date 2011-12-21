@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.BasicAbstractListTableMapping;
 import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -52,9 +53,8 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
     super.addSimpleChunk(index);
     prepareAddition();
 
-    builder.append(CDODBSchema.LIST_IDX);
-    builder.append('=');
-    builder.append(index);
+    ((BasicAbstractListTableMapping)referenceMapping).addSimpleChunkWhere(getAccessor(), getRevision().getID(),
+        builder, index);
   }
 
   @Override
@@ -63,11 +63,8 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
     super.addRangedChunk(fromIndex, toIndex);
     prepareAddition();
 
-    builder.append(CDODBSchema.LIST_IDX);
-    builder.append(" BETWEEN "); //$NON-NLS-1$
-    builder.append(fromIndex);
-    builder.append(" AND "); //$NON-NLS-1$
-    builder.append(toIndex - 1);
+    ((BasicAbstractListTableMapping)referenceMapping).addRangedChunkWhere(getAccessor(), getRevision().getID(),
+        builder, fromIndex, toIndex);
   }
 
   public List<Chunk> executeRead()

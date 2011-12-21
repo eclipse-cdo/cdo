@@ -78,9 +78,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
   private String sqlDeleteItem;
 
-  private String sqlMassUpdateIndex;
+  private String sqlShiftDownIndex;
 
   private String sqlReadCurrentIndexOffset;
+
+  private String sqlShiftUpIndex;
 
   public NonAuditListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -161,7 +163,14 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(CDODBSchema.LIST_IDX);
     builder.append(" BETWEEN ? AND ?"); //$NON-NLS-1$
-    sqlMassUpdateIndex = builder.toString();
+    // getMappingStrategy().getStore().getDBAdapter()
+
+    // needed because of MySQL:
+    builder.append("/*! ORDER BY "); //$NON-NLS-1$ /
+    builder.append(CDODBSchema.LIST_IDX);
+    sqlShiftDownIndex = builder.toString() + " */"; //$NON-NLS-1$
+    builder.append(" DESC"); //$NON-NLS-1$
+    sqlShiftUpIndex = builder.toString() + " */"; //$NON-NLS-1$
 
     // ----------- read current index offset --------------
     builder = new StringBuilder();
@@ -251,7 +260,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       stmt = accessor.getStatementCache().getPreparedStatement(sqlReadCurrentIndexOffset, ReuseProbability.HIGH);
       getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
       rset = stmt.executeQuery();
-      if (!rset.first())
+      if (!rset.next())
       {
         // list is empty. Return the default offset of 0.
         return 0;
@@ -937,147 +946,165 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
      */
     private void writeShiftOperations(IDBStoreAccessor accessor, CDOID id) throws SQLException
     {
-      PreparedStatement shiftIndicesStmt = null;
-      try
+      /*
+       * Step 3: shift all elements which have to be shifted up or down because of add, remove or move of other elements
+       * to their proper position. This has to be done in two phases to avoid collisions, as the index has to be unique
+       * and shift up operations have to be executed in top to bottom order.
+       */
+
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      int size = manipulations.size();
+
+      LinkedList<ShiftOperation> shiftOperations = new LinkedList<ShiftOperation>();
+
+      /*
+       * If a necessary shift is detected (source and destination indices differ), firstIndex is set to the current
+       * index and currentOffset is set to the offset of the shift operation. When a new offset is detected or the range
+       * is interrupted, we record the range and start a new one if needed.
+       */
+      int rangeStartIndex = ManipulationConstants.NO_INDEX;
+      int rangeOffset = 0;
+      int lastElementIndex = ManipulationConstants.NO_INDEX;
+
+      // iterate through the manipulationElements and collect the necessary operations
+      for (int i = 0; i < size; i++)
       {
-        /*
-         * Step 3: shift all elements which have to be shifted up or down because of add, remove or move of other
-         * elements to their proper position. This has to be done in two phases to avoid collisions, as the index has to
-         * be unique and shift up operations have to be executed in top to bottom order.
-         */
-
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-        int size = manipulations.size();
-
-        LinkedList<ShiftOperation> shiftOperations = new LinkedList<ShiftOperation>();
+        ManipulationElement element = manipulations.get(i);
 
         /*
-         * If a necessary shift is detected (source and destination indices differ), firstIndex is set to the current
-         * index and currentOffset is set to the offset of the shift operation. When a new offset is detected or the
-         * range is interrupted, we record the range and start a new one if needed.
+         * shift applies only to elements which are not moved, inserted or deleted (i.e. only plain SET_VALUE and NONE
+         * are affected)
          */
-        int rangeStartIndex = ManipulationConstants.NO_INDEX;
-        int rangeOffset = 0;
-        int lastElementIndex = ManipulationConstants.NO_INDEX;
-
-        // iterate through the manipulationElements and collect the necessary operations
-        for (int i = 0; i < size; i++)
+        if (element.type == ManipulationConstants.NONE || element.type == ManipulationConstants.SET_VALUE)
         {
-          ManipulationElement element = manipulations.get(i);
+          int elementOffset = element.destinationIndex - element.sourceIndex;
 
           /*
-           * shift applies only to elements which are not moved, inserted or deleted (i.e. only plain SET_VALUE and NONE
-           * are affected)
+           * first make sure if we have to close a previous range. This is the case, if the current element's offset
+           * differs from the rangeOffset and a range is open.
            */
-          if (element.type == ManipulationConstants.NONE || element.type == ManipulationConstants.SET_VALUE)
+          if (elementOffset != rangeOffset && rangeStartIndex != ManipulationConstants.NO_INDEX)
           {
-            int elementOffset = element.destinationIndex - element.sourceIndex;
-
-            /*
-             * first make sure if we have to close a previous range. This is the case, if the current element's offset
-             * differs from the rangeOffset and a range is open.
-             */
-            if (elementOffset != rangeOffset && rangeStartIndex != ManipulationConstants.NO_INDEX)
-            {
-              // there is an open range but the rangeOffset differs. We have to close the open range
-              shiftOperations.add(new ShiftOperation(rangeStartIndex, lastElementIndex, rangeOffset));
-              // and reset the state
-              rangeStartIndex = ManipulationConstants.NO_INDEX;
-              rangeOffset = 0;
-            }
-
-            /*
-             * at this point, either a range is open, which means that the current element also fits in the range (i.e.
-             * the offsets match) or no range is open. In the latter case, we have to open one if the current element's
-             * offset is not 0.
-             */
-            if (elementOffset != 0 && rangeStartIndex == ManipulationConstants.NO_INDEX)
-            {
-              rangeStartIndex = element.sourceIndex;
-              rangeOffset = elementOffset;
-            }
+            // there is an open range but the rangeOffset differs. We have to close the open range
+            shiftOperations.add(new ShiftOperation(rangeStartIndex, lastElementIndex, rangeOffset));
+            // and reset the state
+            rangeStartIndex = ManipulationConstants.NO_INDEX;
+            rangeOffset = 0;
           }
-          else
-          { // shift does not apply to this element because of its type
-            if (rangeStartIndex != ManipulationConstants.NO_INDEX)
-            {
-              // if there is an open range, we have to close and remember it
-              shiftOperations.add(new ShiftOperation(rangeStartIndex, lastElementIndex, rangeOffset));
-              // and reset the state
-              rangeStartIndex = ManipulationConstants.NO_INDEX;
-              rangeOffset = 0;
-            }
+
+          /*
+           * at this point, either a range is open, which means that the current element also fits in the range (i.e.
+           * the offsets match) or no range is open. In the latter case, we have to open one if the current element's
+           * offset is not 0.
+           */
+          if (elementOffset != 0 && rangeStartIndex == ManipulationConstants.NO_INDEX)
+          {
+            rangeStartIndex = element.sourceIndex;
+            rangeOffset = elementOffset;
           }
-          lastElementIndex = element.sourceIndex;
         }
-
-        // after the iteration, we have to make sure that we remember the last open range, if it is there
-        if (rangeStartIndex != ManipulationConstants.NO_INDEX)
-        {
-          shiftOperations.add(new ShiftOperation(rangeStartIndex, lastElementIndex, rangeOffset));
+        else
+        { // shift does not apply to this element because of its type
+          if (rangeStartIndex != ManipulationConstants.NO_INDEX)
+          {
+            // if there is an open range, we have to close and remember it
+            shiftOperations.add(new ShiftOperation(rangeStartIndex, lastElementIndex, rangeOffset));
+            // and reset the state
+            rangeStartIndex = ManipulationConstants.NO_INDEX;
+            rangeOffset = 0;
+          }
         }
+        lastElementIndex = element.sourceIndex;
+      }
 
-        /*
-         * now process the operations. Move down operations can be performed directly, move up operations need to be
-         * performed later in the reverse direction
-         */
-        int operationCounter = shiftOperations.size();
-        ListIterator<ShiftOperation> operationIt = shiftOperations.listIterator();
+      // after the iteration, we have to make sure that we remember the last open range, if it is there
+      if (rangeStartIndex != ManipulationConstants.NO_INDEX)
+      {
+        shiftOperations.add(new ShiftOperation(rangeStartIndex, lastElementIndex, rangeOffset));
+      }
+
+      /*
+       * now process the operations. Move down operations can be performed directly, move up operations need to be
+       * performed later in the reverse direction
+       */
+      ListIterator<ShiftOperation> operationIt = shiftOperations.listIterator();
+
+      PreparedStatement shiftDownStmt = null;
+      int operationCounter = 0;
+
+      try
+      {
 
         while (operationIt.hasNext())
         {
           ShiftOperation operation = operationIt.next();
           if (operation.offset < 0)
           {
-            if (shiftIndicesStmt == null)
+            if (shiftDownStmt == null)
             {
-              shiftIndicesStmt = accessor.getStatementCache().getPreparedStatement(sqlMassUpdateIndex,
+              shiftDownStmt = accessor.getStatementCache().getPreparedStatement(sqlShiftDownIndex,
                   ReuseProbability.HIGH);
-              idHandler.setCDOID(shiftIndicesStmt, 2, id);
+              idHandler.setCDOID(shiftDownStmt, 2, id);
             }
 
             if (TRACER.isEnabled())
             {
-              TRACER.format(" - shift {0} ", operation); //$NON-NLS-1$
+              TRACER.format(" - shift down {0} ", operation); //$NON-NLS-1$
             }
 
-            shiftIndicesStmt.setInt(1, operation.offset);
-            shiftIndicesStmt.setInt(3, operation.startIndex);
-            shiftIndicesStmt.setInt(4, operation.endIndex);
-            shiftIndicesStmt.addBatch();
+            shiftDownStmt.setInt(1, operation.offset);
+            shiftDownStmt.setInt(3, operation.startIndex);
+            shiftDownStmt.setInt(4, operation.endIndex);
+            shiftDownStmt.addBatch();
+            operationCounter++;
 
             operationIt.remove();
           }
         }
-        while (operationIt.hasPrevious())
-        {
-          ShiftOperation operation = operationIt.previous();
-          if (shiftIndicesStmt == null)
-          {
-            shiftIndicesStmt = accessor.getStatementCache().getPreparedStatement(sqlMassUpdateIndex,
-                ReuseProbability.HIGH);
-            idHandler.setCDOID(shiftIndicesStmt, 2, id);
-          }
-
-          if (TRACER.isEnabled())
-          {
-            TRACER.format(" - shift {0} ", operation); //$NON-NLS-1$
-          }
-
-          shiftIndicesStmt.setInt(1, operation.offset);
-          shiftIndicesStmt.setInt(3, operation.startIndex);
-          shiftIndicesStmt.setInt(4, operation.endIndex);
-          shiftIndicesStmt.addBatch();
-        }
-
         if (operationCounter > 0)
         {
-          executeBatch(shiftIndicesStmt, operationCounter, false);
+          executeBatch(shiftDownStmt, operationCounter, false);
         }
       }
       finally
       {
-        releaseStatement(accessor, shiftIndicesStmt);
+        releaseStatement(accessor, shiftDownStmt);
+      }
+
+      PreparedStatement shiftUpStmt = null;
+      operationCounter = 0;
+      try
+      {
+
+        while (operationIt.hasPrevious())
+        {
+          ShiftOperation operation = operationIt.previous();
+          if (shiftUpStmt == null)
+          {
+            shiftUpStmt = accessor.getStatementCache().getPreparedStatement(sqlShiftUpIndex, ReuseProbability.HIGH);
+            idHandler.setCDOID(shiftUpStmt, 2, id);
+          }
+
+          if (TRACER.isEnabled())
+          {
+            TRACER.format(" - shift up {0} ", operation); //$NON-NLS-1$
+          }
+
+          shiftUpStmt.setInt(1, operation.offset);
+          shiftUpStmt.setInt(3, operation.startIndex);
+          shiftUpStmt.setInt(4, operation.endIndex);
+          shiftUpStmt.addBatch();
+          operationCounter++;
+        }
+
+        if (operationCounter > 0)
+        {
+          executeBatch(shiftUpStmt, operationCounter, false);
+        }
+      }
+      finally
+      {
+        releaseStatement(accessor, shiftUpStmt);
       }
     }
 

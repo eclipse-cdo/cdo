@@ -10,8 +10,11 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
-import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping2;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -19,7 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * @author Stefan Winkler
  */
-public abstract class BasicAbstractListTableMapping implements IListMapping
+public abstract class BasicAbstractListTableMapping implements IListMapping2
 {
   private IMappingStrategy mappingStrategy;
 
@@ -49,4 +52,22 @@ public abstract class BasicAbstractListTableMapping implements IListMapping
   {
     return feature;
   }
+
+  public void addSimpleChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int index)
+  {
+    builder.append(CDODBSchema.LIST_IDX);
+    builder.append('=');
+    builder.append(index);
+  }
+
+  public void addRangedChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex,
+      int toIndex)
+  {
+    builder.append(CDODBSchema.LIST_IDX);
+    builder.append(" BETWEEN "); //$NON-NLS-1$
+    builder.append(fromIndex);
+    builder.append(" AND "); //$NON-NLS-1$
+    builder.append(toIndex - 1);
+  }
+
 }

@@ -55,17 +55,17 @@ public class DeletePerformanceTest extends PerformanceTest
   }
 
   @CleanRepositoriesBefore
-  public void testDeleteRandom() throws Exception
+  public void _testDeleteRandom() throws Exception
   {
     Company company = initModel();
     CDOTransaction transaction = (CDOTransaction)CDOUtil.getCDOObject(company).cdoView();
 
     msg("Starting to remove elements ...");
 
-    for (int i = 0; i < AMOUNT_ELEMENTS / 2; i++)
+    for (int i = 0; i < AMOUNT_ELEMENTS / 4; i++)
     {
       int currentSize = AMOUNT_ELEMENTS - i;
-      int indexToRemove = random.nextInt(currentSize);
+      int indexToRemove = random.nextInt(currentSize - 1);
 
       company.getCategories().remove(indexToRemove);
 
@@ -76,14 +76,14 @@ public class DeletePerformanceTest extends PerformanceTest
   }
 
   @CleanRepositoriesBefore
-  public void testDeleteDeterministic() throws Exception
+  public void testDeleteEveryOther() throws Exception
   {
     Company company = initModel();
     CDOTransaction transaction = (CDOTransaction)CDOUtil.getCDOObject(company).cdoView();
 
     msg("Starting to remove elements ...");
 
-    for (int i = 0; i < AMOUNT_ELEMENTS / 2; i++)
+    for (int i = 0; i < AMOUNT_ELEMENTS / 4; i++)
     {
       int indexToRemove = AMOUNT_ELEMENTS / 2 - i;
 
@@ -95,4 +95,23 @@ public class DeletePerformanceTest extends PerformanceTest
     }
   }
 
+  @CleanRepositoriesBefore
+  public void _testDeleteAtBeginning() throws Exception
+  {
+    Company company = initModel();
+    CDOTransaction transaction = (CDOTransaction)CDOUtil.getCDOObject(company).cdoView();
+
+    msg("Starting to remove elements ...");
+
+    for (int i = 0; i < AMOUNT_ELEMENTS / 4; i++)
+    {
+      int indexToRemove = 0;
+
+      company.getCategories().remove(indexToRemove);
+
+      startProbing();
+      transaction.commit();
+      stopProbing();
+    }
+  }
 }

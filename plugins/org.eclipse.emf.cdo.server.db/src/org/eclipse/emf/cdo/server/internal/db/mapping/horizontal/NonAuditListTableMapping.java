@@ -27,11 +27,11 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.IPreparedStatementCache;
 import org.eclipse.emf.cdo.server.db.IPreparedStatementCache.ReuseProbability;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
-import org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -185,14 +185,14 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   }
 
   @Override
-  public void addSimpleChunkWhere(DBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int index)
+  public void addSimpleChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int index)
   {
     int offset = getCurrentIndexOffset(accessor, cdoid);
     super.addSimpleChunkWhere(accessor, cdoid, builder, index + offset);
   }
 
   @Override
-  public void addRangedChunkWhere(DBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex,
+  public void addRangedChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex,
       int toIndex)
   {
     int offset = getCurrentIndexOffset(accessor, cdoid);
@@ -232,11 +232,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
    */
   public void clearList(IDBStoreAccessor accessor, CDOID id)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlClear, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlClear, ReuseProbability.HIGH);
       getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
       DBUtil.update(stmt, false);
     }
@@ -246,18 +247,19 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     }
     finally
     {
-      accessor.getStatementCache().releasePreparedStatement(stmt);
+      statementCache.releasePreparedStatement(stmt);
     }
   }
 
   public int getCurrentIndexOffset(IDBStoreAccessor accessor, CDOID id)
   {
+    IPreparedStatementCache statementCache = accessor.getStatementCache();
     PreparedStatement stmt = null;
     ResultSet rset = null;
 
     try
     {
-      stmt = accessor.getStatementCache().getPreparedStatement(sqlReadCurrentIndexOffset, ReuseProbability.HIGH);
+      stmt = statementCache.getPreparedStatement(sqlReadCurrentIndexOffset, ReuseProbability.HIGH);
       getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
       rset = stmt.executeQuery();
       if (!rset.next())
@@ -733,6 +735,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     private void writeResultToDatabase(IDBStoreAccessor accessor, CDOID id)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IPreparedStatementCache statementCache = accessor.getStatementCache();
       PreparedStatement deleteStmt = null;
       PreparedStatement moveStmt = null;
       PreparedStatement setValueStmt = null;
@@ -770,7 +773,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
             if (deleteStmt == null)
             {
-              deleteStmt = accessor.getStatementCache().getPreparedStatement(sqlDeleteItem, ReuseProbability.HIGH);
+              deleteStmt = statementCache.getPreparedStatement(sqlDeleteItem, ReuseProbability.HIGH);
               idHandler.setCDOID(deleteStmt, 1, id);
             }
 
@@ -792,7 +795,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
              */
             if (moveStmt == null)
             {
-              moveStmt = accessor.getStatementCache().getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+              moveStmt = statementCache.getPreparedStatement(sqlUpdateIndex, ReuseProbability.HIGH);
               idHandler.setCDOID(moveStmt, 2, id);
             }
 
@@ -860,7 +863,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
              */
             if (setValueStmt == null)
             {
-              setValueStmt = accessor.getStatementCache().getPreparedStatement(sqlUpdateValue, ReuseProbability.HIGH);
+              setValueStmt = statementCache.getPreparedStatement(sqlUpdateValue, ReuseProbability.HIGH);
               idHandler.setCDOID(setValueStmt, 2, id);
             }
 
@@ -882,7 +885,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
              */
             if (insertStmt == null)
             {
-              insertStmt = accessor.getStatementCache().getPreparedStatement(sqlInsertValue, ReuseProbability.HIGH);
+              insertStmt = statementCache.getPreparedStatement(sqlInsertValue, ReuseProbability.HIGH);
               idHandler.setCDOID(insertStmt, 1, id);
             }
 
@@ -1029,6 +1032,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
        */
       ListIterator<ShiftOperation> operationIt = shiftOperations.listIterator();
 
+      IPreparedStatementCache statementCache = accessor.getStatementCache();
       PreparedStatement shiftDownStmt = null;
       int operationCounter = 0;
 
@@ -1042,8 +1046,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           {
             if (shiftDownStmt == null)
             {
-              shiftDownStmt = accessor.getStatementCache().getPreparedStatement(sqlShiftDownIndex,
-                  ReuseProbability.HIGH);
+              shiftDownStmt = statementCache.getPreparedStatement(sqlShiftDownIndex, ReuseProbability.HIGH);
               idHandler.setCDOID(shiftDownStmt, 2, id);
             }
 
@@ -1073,6 +1076,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       PreparedStatement shiftUpStmt = null;
       operationCounter = 0;
+
       try
       {
 
@@ -1081,7 +1085,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           ShiftOperation operation = operationIt.previous();
           if (shiftUpStmt == null)
           {
-            shiftUpStmt = accessor.getStatementCache().getPreparedStatement(sqlShiftUpIndex, ReuseProbability.HIGH);
+            shiftUpStmt = statementCache.getPreparedStatement(sqlShiftUpIndex, ReuseProbability.HIGH);
             idHandler.setCDOID(shiftUpStmt, 2, id);
           }
 
@@ -1113,7 +1117,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   /**
    * @author Eike Stepper
    */
-  private static final class ManipulationConstants
+  private static interface ManipulationConstants
   {
     public static final int NO_INDEX = Integer.MIN_VALUE;
 
@@ -1133,7 +1137,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   /**
    * @author Eike Stepper
    */
-  private static final class ManipulationElement
+  private static final class ManipulationElement implements ManipulationConstants
   {
     public int type;
 
@@ -1148,7 +1152,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     public ManipulationElement(int srcIdx, int dstIdx, Object val, int t)
     {
       sourceIndex = srcIdx;
-      tempIndex = ManipulationConstants.NO_INDEX;
+      tempIndex = NO_INDEX;
       destinationIndex = dstIdx;
       value = val;
       type = t;
@@ -1159,7 +1163,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
      */
     public static ManipulationElement createOriginalElement(int index)
     {
-      return new ManipulationElement(index, index, ManipulationConstants.NIL, ManipulationConstants.NONE);
+      return new ManipulationElement(index, index, NIL, NONE);
     }
 
     /**
@@ -1167,7 +1171,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
      */
     public static ManipulationElement createInsertedElement(int index, Object value)
     {
-      return new ManipulationElement(ManipulationConstants.NO_INDEX, index, value, ManipulationConstants.INSERT);
+      return new ManipulationElement(NO_INDEX, index, value, ManipulationConstants.INSERT);
     }
 
     public boolean is(int t)
@@ -1181,6 +1185,9 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static class ShiftOperation
   {
     final int startIndex;

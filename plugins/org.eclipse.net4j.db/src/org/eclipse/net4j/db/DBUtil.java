@@ -518,6 +518,7 @@ public final class DBUtil
     }
   }
 
+
   public static int update(Connection connection, String sql)
   {
     trace(sql);

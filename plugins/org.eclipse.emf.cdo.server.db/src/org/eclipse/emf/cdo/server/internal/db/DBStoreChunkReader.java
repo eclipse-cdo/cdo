@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
-import org.eclipse.emf.cdo.server.db.mapping.IListMapping2;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.BasicAbstractListTableMapping;
 import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -53,9 +53,11 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
     super.addSimpleChunk(index);
     prepareAddition();
 
-    if (referenceMapping instanceof IListMapping2)
+    if (referenceMapping instanceof BasicAbstractListTableMapping) // backport of Bug 366686; in 4.1 the new
+                                                                   // IListMapping2 interface is used
     {
-      ((IListMapping2)referenceMapping).addSimpleChunkWhere(getAccessor(), getRevision().getID(), builder, index);
+      ((BasicAbstractListTableMapping)referenceMapping).addSimpleChunkWhere(getAccessor(), getRevision().getID(),
+          builder, index);
     }
     else
     {
@@ -71,10 +73,11 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
     super.addRangedChunk(fromIndex, toIndex);
     prepareAddition();
 
-    if (referenceMapping instanceof IListMapping2)
+    if (referenceMapping instanceof BasicAbstractListTableMapping)// backport of Bug 366686; in 4.1 the new
+    // IListMapping2 interface is used
     {
-      ((IListMapping2)referenceMapping).addRangedChunkWhere(getAccessor(), getRevision().getID(), builder, fromIndex,
-          toIndex);
+      ((BasicAbstractListTableMapping)referenceMapping).addRangedChunkWhere(getAccessor(), getRevision().getID(),
+          builder, fromIndex, toIndex);
     }
     else
     {

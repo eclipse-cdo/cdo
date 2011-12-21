@@ -47,11 +47,6 @@ public final class CDODBUtil
    */
   public static final String EXT_POINT_MAPPING_STRATEGIES = "mappingStrategies"; //$NON-NLS-1$
 
-  /**
-   * @since 4.1
-   */
-  public static final String PROP_ZEROBASED_INDEX = "forceZeroBasedIndex";
-
   private CDODBUtil()
   {
   }

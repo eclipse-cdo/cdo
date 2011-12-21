@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.mapping.IListMapping2;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * @author Stefan Winkler
  */
-public abstract class BasicAbstractListTableMapping implements IListMapping2
+public abstract class BasicAbstractListTableMapping implements IListMapping
 {
   private IMappingStrategy mappingStrategy;
 

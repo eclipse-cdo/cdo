@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author Eike Stepper
@@ -64,26 +66,44 @@ public class OSGiBundle extends AbstractBundle
 
   public Iterator<Class<?>> getClasses()
   {
-    final Bundle bundle = getBundleContext().getBundle();
+    final Queue<String> folders = new LinkedList<String>();
+    folders.offer("/");
 
     return new AbstractIterator<Class<?>>()
     {
-      private Enumeration<String> entryPaths = bundle.getEntryPaths("/");
+      private Enumeration<String> entryPaths;
 
       @Override
       protected Object computeNextElement()
       {
-        while (entryPaths.hasMoreElements())
+        for (;;)
         {
-          String entryPath = entryPaths.nextElement();
-          Class<?> c = getClassFromBundle(entryPath);
-          if (c != null)
+          while (entryPaths != null && entryPaths.hasMoreElements())
           {
-            return c;
+            String entryPath = entryPaths.nextElement();
+            if (entryPath.endsWith("/"))
+            {
+              folders.offer(entryPath);
+            }
+            else
+            {
+              Class<?> c = getClassFromBundle(entryPath);
+              if (c != null)
+              {
+                return c;
+              }
+            }
           }
-        }
 
-        return END_OF_DATA;
+          String folder = folders.poll();
+          if (folder == null)
+          {
+            return END_OF_DATA;
+          }
+
+          Bundle bundle = getBundleContext().getBundle();
+          entryPaths = bundle.getEntryPaths(folder);
+        }
       }
     };
   }

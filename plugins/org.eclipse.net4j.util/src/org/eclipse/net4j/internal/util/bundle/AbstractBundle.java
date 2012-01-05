@@ -385,14 +385,33 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
       int end = path.length() - CLASS_EXTENSION.length();
       String className = path.substring(start, end).replace('/', '.');
 
-      try
+      for (;;)
       {
-        ClassLoader classLoader = getAccessor().getClassLoader();
-        return classLoader.loadClass(className);
-      }
-      catch (ClassNotFoundException ex)
-      {
-        //$FALL-THROUGH$
+        try
+        {
+          ClassLoader classLoader = getAccessor().getClassLoader();
+          Class<?> c = classLoader.loadClass(className);
+          if (c != null)
+          {
+            return c;
+          }
+        }
+        catch (NoClassDefFoundError ex)
+        {
+          //$FALL-THROUGH$
+        }
+        catch (ClassNotFoundException ex)
+        {
+          //$FALL-THROUGH$
+        }
+
+        int dot = className.indexOf('.');
+        if (dot == -1)
+        {
+          break;
+        }
+
+        className = className.substring(dot + 1);
       }
     }
 

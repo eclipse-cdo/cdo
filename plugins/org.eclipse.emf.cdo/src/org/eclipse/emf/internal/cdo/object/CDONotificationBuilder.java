@@ -13,6 +13,7 @@ package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -31,6 +32,7 @@ import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +87,13 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
     this.oldRevision = oldRevision;
     revisionDelta.accept(this);
     return notification;
+  }
+
+  public synchronized NotificationChain buildNotification(InternalCDOObject object, InternalCDORevision newRevision)
+  {
+    InternalCDORevision oldRevision = (InternalCDORevision)CDORevisionFactory.DEFAULT.createRevision(object.eClass());
+    CDORevisionDelta revisionDelta = newRevision.compare(oldRevision);
+    return buildNotification(object, oldRevision, revisionDelta, null);
   }
 
   @Override

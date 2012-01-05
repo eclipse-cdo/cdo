@@ -461,31 +461,21 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     public static final int NO_REVISION_PREFETCHING = 1;
 
     /**
-     * Returns the reference type to be used in the internal object cache.
+     * Returns <code>true</code> if the {@link CDOObject objects} in this view will notify their
+     * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>loaded</em>,
+     * <code>false</code> otherwise.
      * 
-     * @return Either {@link ReferenceType#STRONG STRONG}, {@link ReferenceType#SOFT SOFT} or {@link ReferenceType#WEAK
-     *         WEAK}.
+     * @since 4.1
      */
-    public ReferenceType getCacheReferenceType();
+    public boolean isLoadNotificationEnabled();
 
     /**
-     * Sets the reference type to be used in the internal object cache to either {@link ReferenceType#STRONG STRONG},
-     * {@link ReferenceType#SOFT SOFT} or {@link ReferenceType#WEAK WEAK}. If <code>null</code> is passed the default
-     * reference type {@link ReferenceType#SOFT SOFT} is set. If the given reference type does not differ from the one
-     * being currently set the new value is ignored and <code>false</code> is returned. Otherwise existing object
-     * references are converted to the new type and <code>true</code> is returned.
+     * Specifies whether the {@link CDOObject objects} in this view will notify their
+     * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>loaded</em> or not.
+     * 
+     * @since 4.1
      */
-    public boolean setCacheReferenceType(ReferenceType referenceType);
-
-    /**
-     * @since 3.0
-     */
-    public CDOInvalidationPolicy getInvalidationPolicy();
-
-    /**
-     * @since 3.0
-     */
-    public void setInvalidationPolicy(CDOInvalidationPolicy policy);
+    public void setLoadNotificationEnabled(boolean enabled);
 
     /**
      * Returns <code>true</code> if the {@link CDOObject objects} in this view will notify their
@@ -504,6 +494,16 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
      * @see CDOInvalidationNotification
      */
     public void setInvalidationNotificationEnabled(boolean enabled);
+
+    /**
+     * @since 3.0
+     */
+    public CDOInvalidationPolicy getInvalidationPolicy();
+
+    /**
+     * @since 3.0
+     */
+    public void setInvalidationPolicy(CDOInvalidationPolicy policy);
 
     /**
      * Returns the current set of {@link CDOAdapterPolicy change subscription policies}.
@@ -552,6 +552,23 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
      * @see #getChangeSubscriptionPolicies()
      */
     public void removeChangeSubscriptionPolicy(CDOAdapterPolicy policy);
+
+    /**
+     * Returns the reference type to be used in the internal object cache.
+     * 
+     * @return Either {@link ReferenceType#STRONG STRONG}, {@link ReferenceType#SOFT SOFT} or {@link ReferenceType#WEAK
+     *         WEAK}.
+     */
+    public ReferenceType getCacheReferenceType();
+
+    /**
+     * Sets the reference type to be used in the internal object cache to either {@link ReferenceType#STRONG STRONG},
+     * {@link ReferenceType#SOFT SOFT} or {@link ReferenceType#WEAK WEAK}. If <code>null</code> is passed the default
+     * reference type {@link ReferenceType#SOFT SOFT} is set. If the given reference type does not differ from the one
+     * being currently set the new value is ignored and <code>false</code> is returned. Otherwise existing object
+     * references are converted to the new type and <code>true</code> is returned.
+     */
+    public boolean setCacheReferenceType(ReferenceType referenceType);
 
     // TODO
     public CDOAdapterPolicy getStrongReferencePolicy();
@@ -617,6 +634,56 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
     /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setLoadNotificationEnabled(boolean) load notification enabled} option has changed.
+     * 
+     * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     * @since 4.1
+     */
+    public interface LoadNotificationEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setInvalidationNotificationEnabled(boolean) invalidation notification enabled} option has changed.
+     * 
+     * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface InvalidationNotificationEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setInvalidationPolicy(CDOInvalidationPolicy) invalidation policy} option has changed.
+     * 
+     * @author Eike Stepper
+     * @since 3.0
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface InvalidationPolicyEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#addChangeSubscriptionPolicy(CDOAdapterPolicy) change subscription policies} option has changed.
+     * 
+     * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface ChangeSubscriptionPoliciesEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setCacheReferenceType(ReferenceType) cache reference type} option has changed.
      * 
      * @author Eike Stepper
@@ -664,43 +731,6 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
      * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface StaleReferencePolicyEvent extends IOptionsEvent
-    {
-    }
-
-    /**
-     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
-     * {@link Options#addChangeSubscriptionPolicy(CDOAdapterPolicy) change subscription policies} option has changed.
-     * 
-     * @author Eike Stepper
-     * @noextend This interface is not intended to be extended by clients.
-     * @noimplement This interface is not intended to be implemented by clients.
-     */
-    public interface ChangeSubscriptionPoliciesEvent extends IOptionsEvent
-    {
-    }
-
-    /**
-     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
-     * {@link Options#setInvalidationPolicy(CDOInvalidationPolicy) invalidation policy} option has changed.
-     * 
-     * @author Eike Stepper
-     * @since 3.0
-     * @noextend This interface is not intended to be extended by clients.
-     * @noimplement This interface is not intended to be implemented by clients.
-     */
-    public interface InvalidationPolicyEvent extends IOptionsEvent
-    {
-    }
-
-    /**
-     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
-     * {@link Options#setInvalidationNotificationEnabled(boolean) invalidation notification enabled} option has changed.
-     * 
-     * @author Eike Stepper
-     * @noextend This interface is not intended to be extended by clients.
-     * @noimplement This interface is not intended to be implemented by clients.
-     */
-    public interface InvalidationNotificationEvent extends IOptionsEvent
     {
     }
 

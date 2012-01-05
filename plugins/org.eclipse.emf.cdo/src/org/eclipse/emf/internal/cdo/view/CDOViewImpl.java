@@ -1622,6 +1622,8 @@ public class CDOViewImpl extends AbstractCDOView
    */
   protected class OptionsImpl extends Notifier implements Options
   {
+    private boolean loadNotificationEnabled;
+
     private boolean invalidationNotificationEnabled;
 
     private CDOInvalidationPolicy invalidationPolicy = CDOInvalidationPolicy.DEFAULT;
@@ -1647,23 +1649,23 @@ public class CDOViewImpl extends AbstractCDOView
       return CDOViewImpl.this;
     }
 
-    public CDOInvalidationPolicy getInvalidationPolicy()
+    public boolean isLoadNotificationEnabled()
     {
       synchronized (CDOViewImpl.this)
       {
-        return invalidationPolicy;
+        return loadNotificationEnabled;
       }
     }
 
-    public void setInvalidationPolicy(CDOInvalidationPolicy policy)
+    public void setLoadNotificationEnabled(boolean enabled)
     {
       IEvent event = null;
       synchronized (CDOViewImpl.this)
       {
-        if (invalidationPolicy != policy)
+        if (loadNotificationEnabled != enabled)
         {
-          invalidationPolicy = policy;
-          event = new InvalidationPolicyEventImpl();
+          loadNotificationEnabled = enabled;
+          event = new LoadNotificationEventImpl();
         }
       }
 
@@ -1687,6 +1689,29 @@ public class CDOViewImpl extends AbstractCDOView
         {
           invalidationNotificationEnabled = enabled;
           event = new InvalidationNotificationEventImpl();
+        }
+      }
+
+      fireEvent(event);
+    }
+
+    public CDOInvalidationPolicy getInvalidationPolicy()
+    {
+      synchronized (CDOViewImpl.this)
+      {
+        return invalidationPolicy;
+      }
+    }
+
+    public void setInvalidationPolicy(CDOInvalidationPolicy policy)
+    {
+      IEvent event = null;
+      synchronized (CDOViewImpl.this)
+      {
+        if (invalidationPolicy != policy)
+        {
+          invalidationPolicy = policy;
+          event = new InvalidationPolicyEventImpl();
         }
       }
 
@@ -1979,6 +2004,19 @@ public class CDOViewImpl extends AbstractCDOView
       private static final long serialVersionUID = 1L;
 
       public ChangeSubscriptionPoliciesEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class LoadNotificationEventImpl extends OptionsEvent implements LoadNotificationEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public LoadNotificationEventImpl()
       {
         super(OptionsImpl.this);
       }

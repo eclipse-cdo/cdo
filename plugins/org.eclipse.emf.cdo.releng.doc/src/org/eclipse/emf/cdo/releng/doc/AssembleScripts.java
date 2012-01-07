@@ -31,6 +31,7 @@ import java.io.BufferedWriter;
 import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -77,6 +78,11 @@ public class AssembleScripts
     {
       String workspacePath = args.length == 0 ? "../.." : args[0];
       workspace = new File(workspacePath).getCanonicalFile();
+      if (!workspace.isDirectory())
+      {
+        throw new FileNotFoundException("Not a folder: " + workspacePath);
+      }
+
       plugins = new File(workspace, "plugins");
       releng = new File(plugins, "org.eclipse.emf.cdo.releng.doc");
 

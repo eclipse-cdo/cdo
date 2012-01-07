@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
 <project name="JavaDoc" default="build" basedir="../..">
 
+	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.1.properties" />
+	<property name="path.tp" value=".target" />
+	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
+		
 	<property name="releng.project" value="plugins/org.eclipse.emf.cdo.releng.doc" />
-	<property name="supplemental" value="/develop/bin/org.eclipse.emf.cdo.releng.doc.supplemental" />
 
 	<target name="assemble.scripts">
 		<java classname="org.eclipse.emf.cdo.releng.doc.AssembleScripts" failonerror="true">
 			<classpath path="${releng.project}/bin" />
-			<classpath path="${supplemental}/tools.jar" />
+			<classpath path="${path.supplemental}/tools.jar" />
 			<classpath>
-				<fileset dir="_target/plugins">
+				<fileset dir="${path.tp}/plugins">
 					<include name="**/*.jar" />
 				</fileset>
 			</classpath>

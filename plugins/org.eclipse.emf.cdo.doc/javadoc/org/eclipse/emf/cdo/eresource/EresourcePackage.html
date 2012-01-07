@@ -104,15 +104,19 @@ Interface EresourcePackage</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="EresourcePackage.html" title="&#171;interface&#187; EresourcePackage" alt="" coords="346,117,477,157"/>
-<area shape="rect" id="node2" href="EresourceFactory.html" title="&#171;interface&#187; EresourceFactory" alt="" coords="5,13,131,53"/>
-<area shape="rect" id="node3" title="&#171;interface&#187; EPackage (org.eclipse.emf.ecore)" alt="" coords="160,6,315,61"/>
-<area shape="rect" id="node4" href="CDOResourceNode.html" title="&#171;interface&#187; CDOResourceNode" alt="" coords="345,13,479,53"/>
-<area shape="rect" id="node5" href="CDOResourceFolder.html" title="&#171;interface&#187; CDOResourceFolder" alt="" coords="509,13,651,53"/>
-<area shape="rect" id="node6" href="CDOResource.html" title="&#171;interface&#187; CDOResource" alt="" coords="681,13,785,53"/>
-<area shape="rect" id="node7" href="util/EresourceSwitch.html" title="EresourceSwitch (org.eclipse.emf.cdo.eresource.util)" alt="" coords="41,213,265,253"/>
-<area shape="rect" id="node8" href="impl/EresourcePackageImpl.html" title="EresourcePackageImpl (org.eclipse.emf.cdo.eresource.impl)" alt="" coords="296,213,528,253"/>
-<area shape="rect" id="node9" href="util/EresourceAdapterFactory.html" title="EresourceAdapterFactory (org.eclipse.emf.cdo.eresource.util)" alt="" coords="558,213,783,253"/>
+<area shape="rect" id="node1" href="util/EresourceAdapterFactory.html" title="EresourceAdapterFactory (org.eclipse.emf.cdo.eresource.util)" alt="" coords="617,181,842,221"/>
+<area shape="rect" id="node2" href="impl/EresourcePackageImpl.html" title="EresourcePackageImpl (org.eclipse.emf.cdo.eresource.impl)" alt="" coords="613,240,845,280"/>
+<area shape="rect" id="node3" href="util/EresourceSwitch.html" title="EresourceSwitch (org.eclipse.emf.cdo.eresource.util)" alt="" coords="617,299,842,339"/>
+<area shape="rect" id="node4" href="CDOBinaryResource.html" title="&#171;interface&#187; CDOBinaryResource" alt="" coords="11,5,154,45"/>
+<area shape="rect" id="node5" href="CDOFileResource.html" title="&#171;interface&#187; CDOFileResource" alt="" coords="19,64,146,104"/>
+<area shape="rect" id="node6" href="CDOResource.html" title="&#171;interface&#187; CDOResource" alt="" coords="30,123,135,163"/>
+<area shape="rect" id="node7" href="CDOResourceFolder.html" title="&#171;interface&#187; CDOResourceFolder" alt="" coords="12,181,153,221"/>
+<area shape="rect" id="node8" href="CDOResourceLeaf.html" title="&#171;interface&#187; CDOResourceLeaf" alt="" coords="18,240,147,280"/>
+<area shape="rect" id="node9" href="CDOResourceNode.html" title="&#171;interface&#187; CDOResourceNode" alt="" coords="15,299,150,339"/>
+<area shape="rect" id="node10" href="CDOTextResource.html" title="&#171;interface&#187; CDOTextResource" alt="" coords="17,357,148,397"/>
+<area shape="rect" id="node11" title="&#171;interface&#187; EPackage (org.eclipse.emf.ecore)" alt="" coords="5,417,160,471"/>
+<area shape="rect" id="node12" href="EresourceFactory.html" title="&#171;interface&#187; EresourceFactory" alt="" coords="20,491,145,531"/>
+<area shape="rect" id="node13" href="EresourcePackage.html" title="&#171;interface&#187; EresourcePackage" alt="" coords="321,240,453,280"/>
 </map>
 
 <CENTER><IMG SRC="EresourcePackage.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -164,8 +168,7 @@ Interface EresourcePackage</H2>
  each feature of each class,
  each enum,
  and each data type
- 
- <!</TD>
+ </TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.ecore.EPackage"><!-- --></A>
@@ -185,6 +188,94 @@ Interface EresourcePackage</H2>
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Field Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_BINARY_RESOURCE">CDO_BINARY_RESOURCE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOBinaryResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO Binary Resource</em></CODE></A>' class. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_BINARY_RESOURCE__CONTENTS">CDO_BINARY_RESOURCE__CONTENTS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Contents</b></em>' attribute. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_BINARY_RESOURCE__FOLDER">CDO_BINARY_RESOURCE__FOLDER</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Folder</b></em>' container reference. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_BINARY_RESOURCE__NAME">CDO_BINARY_RESOURCE__NAME</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Name</b></em>' attribute. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_BINARY_RESOURCE__PATH">CDO_BINARY_RESOURCE__PATH</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Path</b></em>' attribute. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_BINARY_RESOURCE_FEATURE_COUNT">CDO_BINARY_RESOURCE_FEATURE_COUNT</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>CDO Binary Resource</em>' class. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_FILE_RESOURCE">CDO_FILE_RESOURCE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOFileResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO File Resource</em></CODE></A>' class. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_FILE_RESOURCE__FOLDER">CDO_FILE_RESOURCE__FOLDER</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Folder</b></em>' container reference. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_FILE_RESOURCE__NAME">CDO_FILE_RESOURCE__NAME</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Name</b></em>' attribute. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_FILE_RESOURCE__PATH">CDO_FILE_RESOURCE__PATH</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Path</b></em>' attribute. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_FILE_RESOURCE_FEATURE_COUNT">CDO_FILE_RESOURCE_FEATURE_COUNT</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>CDO File Resource</em>' class. <!</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -350,6 +441,46 @@ Interface EresourcePackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_RESOURCE_LEAF">CDO_RESOURCE_LEAF</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceLeafImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO Resource Leaf</em></CODE></A>' class. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_RESOURCE_LEAF__FOLDER">CDO_RESOURCE_LEAF__FOLDER</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Folder</b></em>' container reference. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_RESOURCE_LEAF__NAME">CDO_RESOURCE_LEAF__NAME</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Name</b></em>' attribute. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_RESOURCE_LEAF__PATH">CDO_RESOURCE_LEAF__PATH</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Path</b></em>' attribute. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_RESOURCE_LEAF_FEATURE_COUNT">CDO_RESOURCE_LEAF_FEATURE_COUNT</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>CDO Resource Leaf</em>' class. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_RESOURCE_NODE">CDO_RESOURCE_NODE</A></B></CODE>
 
 <BR>
@@ -386,6 +517,54 @@ Interface EresourcePackage</H2>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>CDO Resource Node</em>' class. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_TEXT_RESOURCE">CDO_TEXT_RESOURCE</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO Text Resource</em></CODE></A>' class. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_TEXT_RESOURCE__CONTENTS">CDO_TEXT_RESOURCE__CONTENTS</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Contents</b></em>' attribute. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_TEXT_RESOURCE__FOLDER">CDO_TEXT_RESOURCE__FOLDER</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Folder</b></em>' container reference. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_TEXT_RESOURCE__NAME">CDO_TEXT_RESOURCE__NAME</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Name</b></em>' attribute. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_TEXT_RESOURCE__PATH">CDO_TEXT_RESOURCE__PATH</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The feature id for the '<em><b>Path</b></em>' attribute. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#CDO_TEXT_RESOURCE_FEATURE_COUNT">CDO_TEXT_RESOURCE_FEATURE_COUNT</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The number of structural features of the '<em>CDO Text Resource</em>' class. <!</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -452,6 +631,31 @@ Interface EresourcePackage</H2>
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
 <B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOBinaryResource_Contents()">getCDOBinaryResource_Contents</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html#getContents()"><CODE><em>Contents</em></CODE></A>'. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOBinaryResource()">getCDOBinaryResource</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE><em>CDO Binary Resource</em></CODE></A>'. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOFileResource()">getCDOFileResource</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE><em>CDO File Resource</em></CODE></A>
+ '. <!</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -553,6 +757,15 @@ Interface EresourcePackage</H2>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOResourceLeaf()">getCDOResourceLeaf</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE><em>CDO Resource Leaf</em></CODE></A>
+ '. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOResourceNode_Folder()">getCDOResourceNode_Folder</A></B>()</CODE>
 
@@ -583,6 +796,23 @@ Interface EresourcePackage</H2>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE><em>CDO Resource Node</em></CODE></A>
+ '. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOTextResource_Contents()">getCDOTextResource_Contents</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html#getContents()"><CODE><em>Contents</em></CODE></A>'. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOTextResource()">getCDOTextResource</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE><em>CDO Text Resource</em></CODE></A>
  '. <!</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
@@ -737,11 +967,9 @@ CDO_RESOURCE_NODE</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_NODE</B></PRE>
 <DL>
-<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceNodeImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO Resource Node</em></CODE></A>' class. <!-- begin-user-doc -->
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceNodeImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO Resource Node</em></CODE></A>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceNodeImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE>CDOResourceNodeImpl</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/EresourcePackageImpl.html#getCDOResourceNode()"><CODE>EresourcePackageImpl.getCDOResourceNode()</CODE></A>, 
 <A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_NODE">Constant Field Values</A><DT><B>Generated</B></DT>
@@ -755,11 +983,9 @@ CDO_RESOURCE_NODE__FOLDER</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_NODE__FOLDER</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+<DD>The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_NODE__FOLDER">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
@@ -773,11 +999,9 @@ CDO_RESOURCE_NODE__NAME</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_NODE__NAME</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+<DD>The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_NODE__NAME">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
@@ -791,11 +1015,9 @@ CDO_RESOURCE_NODE__PATH</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_NODE__PATH</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+<DD>The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_NODE__PATH">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
@@ -809,11 +1031,10 @@ CDO_RESOURCE_NODE_FEATURE_COUNT</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_NODE_FEATURE_COUNT</B></PRE>
 <DL>
-<DD>The number of structural features of the '<em>CDO Resource Node</em>' class. <!-- begin-user-doc -->
+<DD>The number of structural features of the '<em>CDO Resource Node</em>' class. <!-- begin-user-doc --> <!--
+ end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_NODE_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
@@ -827,11 +1048,9 @@ CDO_RESOURCE_FOLDER</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_FOLDER</B></PRE>
 <DL>
-<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceFolderImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO Resource Folder</em></CODE></A>' class. <!-- begin-user-doc -->
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceFolderImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO Resource Folder</em></CODE></A>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceFolderImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE>CDOResourceFolderImpl</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/EresourcePackageImpl.html#getCDOResourceFolder()"><CODE>EresourcePackageImpl.getCDOResourceFolder()</CODE></A>, 
 <A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_FOLDER">Constant Field Values</A><DT><B>Generated</B></DT>
@@ -845,11 +1064,9 @@ CDO_RESOURCE_FOLDER__FOLDER</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_FOLDER__FOLDER</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+<DD>The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_FOLDER__FOLDER">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
@@ -863,11 +1080,9 @@ CDO_RESOURCE_FOLDER__NAME</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_FOLDER__NAME</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+<DD>The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_FOLDER__NAME">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
@@ -881,11 +1096,9 @@ CDO_RESOURCE_FOLDER__PATH</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_FOLDER__PATH</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+<DD>The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_FOLDER__PATH">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
@@ -899,11 +1112,10 @@ CDO_RESOURCE_FOLDER__NODES</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_FOLDER__NODES</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Nodes</b></em>' containment reference list. <!-- begin-user-doc -->
+<DD>The feature id for the '<em><b>Nodes</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+ end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_FOLDER__NODES">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
@@ -917,12 +1129,101 @@ CDO_RESOURCE_FOLDER_FEATURE_COUNT</H3>
 <PRE>
 static final int <B>CDO_RESOURCE_FOLDER_FEATURE_COUNT</B></PRE>
 <DL>
-<DD>The number of structural features of the '<em>CDO Resource Folder</em>' class. <!-- begin-user-doc -->
+<DD>The number of structural features of the '<em>CDO Resource Folder</em>' class. <!-- begin-user-doc --> <!--
+ end-user-doc -->
+<P>
+<DL>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_FOLDER_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_RESOURCE_LEAF"><!-- --></A><H3>
+CDO_RESOURCE_LEAF</H3>
+<PRE>
+static final int <B>CDO_RESOURCE_LEAF</B></PRE>
+<DL>
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceLeafImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO Resource Leaf</em></CODE></A>' class. <!-- begin-user-doc -->
 <P>
 <DL>
 <DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_FOLDER_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceLeafImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE>CDOResourceLeafImpl</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/EresourcePackageImpl.html#getCDOResourceLeaf()"><CODE>EresourcePackageImpl.getCDOResourceLeaf()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_LEAF">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD>NOT</DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_RESOURCE_LEAF__FOLDER"><!-- --></A><H3>
+CDO_RESOURCE_LEAF__FOLDER</H3>
+<PRE>
+static final int <B>CDO_RESOURCE_LEAF__FOLDER</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_LEAF__FOLDER">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_RESOURCE_LEAF__NAME"><!-- --></A><H3>
+CDO_RESOURCE_LEAF__NAME</H3>
+<PRE>
+static final int <B>CDO_RESOURCE_LEAF__NAME</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_LEAF__NAME">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_RESOURCE_LEAF__PATH"><!-- --></A><H3>
+CDO_RESOURCE_LEAF__PATH</H3>
+<PRE>
+static final int <B>CDO_RESOURCE_LEAF__PATH</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_LEAF__PATH">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_RESOURCE_LEAF_FEATURE_COUNT"><!-- --></A><H3>
+CDO_RESOURCE_LEAF_FEATURE_COUNT</H3>
+<PRE>
+static final int <B>CDO_RESOURCE_LEAF_FEATURE_COUNT</B></PRE>
+<DL>
+<DD>The number of structural features of the '<em>CDO Resource Leaf</em>' class. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE_LEAF_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
   <DD></DD>
@@ -952,11 +1253,9 @@ CDO_RESOURCE__FOLDER</H3>
 <PRE>
 static final int <B>CDO_RESOURCE__FOLDER</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+<DD>The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE__FOLDER">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
@@ -970,11 +1269,9 @@ CDO_RESOURCE__NAME</H3>
 <PRE>
 static final int <B>CDO_RESOURCE__NAME</B></PRE>
 <DL>
-<DD>The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+<DD>The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
 <P>
 <DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0<!-- end-user-doc --></DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_RESOURCE__NAME">Constant Field Values</A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Ordered</B></DT>
@@ -1162,6 +1459,312 @@ static final int <B>CDO_RESOURCE_FEATURE_COUNT</B></PRE>
 </DL>
 <HR>
 
+<A NAME="CDO_FILE_RESOURCE"><!-- --></A><H3>
+CDO_FILE_RESOURCE</H3>
+<PRE>
+static final int <B>CDO_FILE_RESOURCE</B></PRE>
+<DL>
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOFileResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO File Resource</em></CODE></A>' class. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOFileResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE>CDOFileResourceImpl</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/EresourcePackageImpl.html#getCDOFileResource()"><CODE>EresourcePackageImpl.getCDOFileResource()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_FILE_RESOURCE">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD>NOT</DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_FILE_RESOURCE__FOLDER"><!-- --></A><H3>
+CDO_FILE_RESOURCE__FOLDER</H3>
+<PRE>
+static final int <B>CDO_FILE_RESOURCE__FOLDER</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_FILE_RESOURCE__FOLDER">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_FILE_RESOURCE__NAME"><!-- --></A><H3>
+CDO_FILE_RESOURCE__NAME</H3>
+<PRE>
+static final int <B>CDO_FILE_RESOURCE__NAME</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_FILE_RESOURCE__NAME">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_FILE_RESOURCE__PATH"><!-- --></A><H3>
+CDO_FILE_RESOURCE__PATH</H3>
+<PRE>
+static final int <B>CDO_FILE_RESOURCE__PATH</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_FILE_RESOURCE__PATH">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_FILE_RESOURCE_FEATURE_COUNT"><!-- --></A><H3>
+CDO_FILE_RESOURCE_FEATURE_COUNT</H3>
+<PRE>
+static final int <B>CDO_FILE_RESOURCE_FEATURE_COUNT</B></PRE>
+<DL>
+<DD>The number of structural features of the '<em>CDO File Resource</em>' class. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_FILE_RESOURCE_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_BINARY_RESOURCE"><!-- --></A><H3>
+CDO_BINARY_RESOURCE</H3>
+<PRE>
+static final int <B>CDO_BINARY_RESOURCE</B></PRE>
+<DL>
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOBinaryResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO Binary Resource</em></CODE></A>' class. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOBinaryResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE>CDOBinaryResourceImpl</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/EresourcePackageImpl.html#getCDOBinaryResource()"><CODE>EresourcePackageImpl.getCDOBinaryResource()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_BINARY_RESOURCE">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD>NOT</DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_BINARY_RESOURCE__FOLDER"><!-- --></A><H3>
+CDO_BINARY_RESOURCE__FOLDER</H3>
+<PRE>
+static final int <B>CDO_BINARY_RESOURCE__FOLDER</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_BINARY_RESOURCE__FOLDER">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_BINARY_RESOURCE__NAME"><!-- --></A><H3>
+CDO_BINARY_RESOURCE__NAME</H3>
+<PRE>
+static final int <B>CDO_BINARY_RESOURCE__NAME</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_BINARY_RESOURCE__NAME">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_BINARY_RESOURCE__PATH"><!-- --></A><H3>
+CDO_BINARY_RESOURCE__PATH</H3>
+<PRE>
+static final int <B>CDO_BINARY_RESOURCE__PATH</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_BINARY_RESOURCE__PATH">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_BINARY_RESOURCE__CONTENTS"><!-- --></A><H3>
+CDO_BINARY_RESOURCE__CONTENTS</H3>
+<PRE>
+static final int <B>CDO_BINARY_RESOURCE__CONTENTS</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Contents</b></em>' attribute. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_BINARY_RESOURCE__CONTENTS">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_BINARY_RESOURCE_FEATURE_COUNT"><!-- --></A><H3>
+CDO_BINARY_RESOURCE_FEATURE_COUNT</H3>
+<PRE>
+static final int <B>CDO_BINARY_RESOURCE_FEATURE_COUNT</B></PRE>
+<DL>
+<DD>The number of structural features of the '<em>CDO Binary Resource</em>' class. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_BINARY_RESOURCE_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_TEXT_RESOURCE"><!-- --></A><H3>
+CDO_TEXT_RESOURCE</H3>
+<PRE>
+static final int <B>CDO_TEXT_RESOURCE</B></PRE>
+<DL>
+<DD>The meta object id for the '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE><em>CDO Text Resource</em></CODE></A>' class. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOTextResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl"><CODE>CDOTextResourceImpl</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/EresourcePackageImpl.html#getCDOTextResource()"><CODE>EresourcePackageImpl.getCDOTextResource()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_TEXT_RESOURCE">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD>NOT</DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_TEXT_RESOURCE__FOLDER"><!-- --></A><H3>
+CDO_TEXT_RESOURCE__FOLDER</H3>
+<PRE>
+static final int <B>CDO_TEXT_RESOURCE__FOLDER</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Folder</b></em>' container reference. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_TEXT_RESOURCE__FOLDER">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_TEXT_RESOURCE__NAME"><!-- --></A><H3>
+CDO_TEXT_RESOURCE__NAME</H3>
+<PRE>
+static final int <B>CDO_TEXT_RESOURCE__NAME</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_TEXT_RESOURCE__NAME">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_TEXT_RESOURCE__PATH"><!-- --></A><H3>
+CDO_TEXT_RESOURCE__PATH</H3>
+<PRE>
+static final int <B>CDO_TEXT_RESOURCE__PATH</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Path</b></em>' attribute. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_TEXT_RESOURCE__PATH">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_TEXT_RESOURCE__CONTENTS"><!-- --></A><H3>
+CDO_TEXT_RESOURCE__CONTENTS</H3>
+<PRE>
+static final int <B>CDO_TEXT_RESOURCE__CONTENTS</B></PRE>
+<DL>
+<DD>The feature id for the '<em><b>Contents</b></em>' attribute. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_TEXT_RESOURCE__CONTENTS">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
+<A NAME="CDO_TEXT_RESOURCE_FEATURE_COUNT"><!-- --></A><H3>
+CDO_TEXT_RESOURCE_FEATURE_COUNT</H3>
+<PRE>
+static final int <B>CDO_TEXT_RESOURCE_FEATURE_COUNT</B></PRE>
+<DL>
+<DD>The number of structural features of the '<em>CDO Text Resource</em>' class. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.CDO_TEXT_RESOURCE_FEATURE_COUNT">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Ordered</B></DT>
+  <DD></DD>
+</DL>
+</DL>
+<HR>
+
 <A NAME="RESOURCE_SET"><!-- --></A><H3>
 RESOURCE_SET</H3>
 <PRE>
@@ -1173,7 +1776,7 @@ static final int <B>RESOURCE_SET</B></PRE>
 <DT><B>See Also:</B><DD><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>ResourceSet</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/EresourcePackageImpl.html#getResourceSet()"><CODE>EresourcePackageImpl.getResourceSet()</CODE></A>, 
 <A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.RESOURCE_SET">Constant Field Values</A><DT><B>Generated</B></DT>
-  <DD></DD>
+  <DD>NOT</DD>
 </DL>
 </DL>
 <HR>
@@ -1189,7 +1792,7 @@ static final int <B>URI</B></PRE>
 <DT><B>See Also:</B><DD><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><CODE>URI</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/EresourcePackageImpl.html#getURI()"><CODE>EresourcePackageImpl.getURI()</CODE></A>, 
 <A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.URI">Constant Field Values</A><DT><B>Generated</B></DT>
-  <DD></DD>
+  <DD>NOT</DD>
 </DL>
 </DL>
 <HR>
@@ -1205,7 +1808,7 @@ static final int <B>DIAGNOSTIC</B></PRE>
 <DT><B>See Also:</B><DD><A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>Resource.Diagnostic</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/eresource/impl/EresourcePackageImpl.html#getDiagnostic()"><CODE>EresourcePackageImpl.getDiagnostic()</CODE></A>, 
 <A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.EresourcePackage.DIAGNOSTIC">Constant Field Values</A><DT><B>Generated</B></DT>
-  <DD></DD>
+  <DD>NOT</DD>
 </DL>
 </DL>
 
@@ -1549,6 +2152,137 @@ getCDOResource_TimeStamp</H3>
 
 <DT><B>Returns:</B><DD>the meta object for the attribute '<em>Time Stamp</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html#getTimeStamp()"><CODE>CDOResource.getTimeStamp()</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOResource()"><CODE>getCDOResource()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCDOResourceLeaf()"><!-- --></A><H3>
+getCDOResourceLeaf</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getCDOResourceLeaf</B>()</PRE>
+<DL>
+<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE><em>CDO Resource Leaf</em></CODE></A>
+ '. <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for class '<em>CDO Resource Leaf</em>'.<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>CDOResourceLeaf</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCDOFileResource()"><!-- --></A><H3>
+getCDOFileResource</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getCDOFileResource</B>()</PRE>
+<DL>
+<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE><em>CDO File Resource</em></CODE></A>
+ '. <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for class '<em>CDO File Resource</em>'.<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>CDOFileResource</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCDOBinaryResource()"><!-- --></A><H3>
+getCDOBinaryResource</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getCDOBinaryResource</B>()</PRE>
+<DL>
+<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE><em>CDO Binary Resource</em></CODE></A>'. <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for class '<em>CDO Binary Resource</em>'.<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>CDOBinaryResource</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCDOBinaryResource_Contents()"><!-- --></A><H3>
+getCDOBinaryResource_Contents</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getCDOBinaryResource_Contents</B>()</PRE>
+<DL>
+<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html#getContents()"><CODE><em>Contents</em></CODE></A>'. <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Contents</em>'.<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOBinaryResource.html#getContents()"><CODE>CDOBinaryResource.getContents()</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOBinaryResource()"><CODE>getCDOBinaryResource()</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCDOTextResource()"><!-- --></A><H3>
+getCDOTextResource</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</A> <B>getCDOTextResource</B>()</PRE>
+<DL>
+<DD>Returns the meta object for class '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE><em>CDO Text Resource</em></CODE></A>
+ '. <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for class '<em>CDO Text Resource</em>'.<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>CDOTextResource</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCDOTextResource_Contents()"><!-- --></A><H3>
+getCDOTextResource_Contents</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</A> <B>getCDOTextResource_Contents</B>()</PRE>
+<DL>
+<DD>Returns the meta object for the attribute '<A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html#getContents()"><CODE><em>Contents</em></CODE></A>'. <!-- begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for the attribute '<em>Contents</em>'.<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOTextResource.html#getContents()"><CODE>CDOTextResource.getContents()</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/eresource/EresourcePackage.html#getCDOTextResource()"><CODE>getCDOTextResource()</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 </DL>
 </DD>

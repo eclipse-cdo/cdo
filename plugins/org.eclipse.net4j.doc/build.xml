@@ -5,6 +5,10 @@
 	<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->
 	<!-- =========================================== -->
 
+	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.1.properties" />
+	<property name="path.tp" value=".target" />
+	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
+
 	<property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />
 	<property name="platform.link"
 	          value="http://help.eclipse.org/juno/topic/org.eclipse.platform.doc.isv/reference/api" />
@@ -18,11 +22,10 @@
 	<property name="schemadoc.destdir" value="${project.path}/schemadoc" />
 	<property name="article.destdir" value="${project.path}/html" />
 	<property name="article.sources" value="${project.path}/src" />
-	<property name="supplemental" value="/develop/bin/org.eclipse.emf.cdo.releng.doc.supplemental" />
 	<property name="schema.skip" value="true" />
 
 	<path id="javadoc.classpath">
-		<fileset dir="_target/plugins">
+		<fileset dir="${path.tp}/plugins">
 			<include name="**/*.jar" />
 			<exclude name="**/*carbon*" />
 			<exclude name="**/*.source_*" />
@@ -34,10 +37,10 @@
 		<dirset dir="plugins">
 			<include name="*/bin" />
 		</dirset>
-		<fileset dir="${supplemental}">
+		<fileset dir="${path.supplemental}">
 			<include name="*.jar" />
 		</fileset>
-		<dirset dir="${supplemental}">
+		<dirset dir="${path.supplemental}">
 			<include name="bin" />
 		</dirset>
 	</path>
@@ -78,7 +81,7 @@
 		         overview="${project.path}/overview.html"
 		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
-			<doclet name="org.jboss.apiviz.APIviz" path="${supplemental}/bin">
+			<doclet name="org.jboss.apiviz.APIviz" path="${path.supplemental}/bin">
 				<param name="-nopackagediagram" />
 				<param name="-nosubtypes" />
 				<param name="-warningsfile" value="${warningsfile}" />
@@ -276,7 +279,7 @@
 		         private="true">
 
 			<doclet name="org.eclipse.emf.cdo.releng.doc.article.impl.ArticleDoclet"
-			        path="plugins/org.eclipse.emf.cdo.releng.doc/bin;${supplemental}/bin;${supplemental}/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar;${supplemental}/org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar;${supplemental}/org.eclipse.emf.common_2.7.0.v20110605-0747.jar;${supplemental}/dom4j-1.6.1.jar;${supplemental}/poi-3.8-beta4-20110826.jar;${supplemental}/poi-ooxml-3.8-beta4-20110826.jar;${supplemental}/poi-ooxml-schemas-3.8-beta4-20110826.jar;${supplemental}/xmlbeans-2.3.0.jar">
+			        path="plugins/org.eclipse.emf.cdo.releng.doc/bin;${path.supplemental}/bin;${path.supplemental}/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar;${path.supplemental}/org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar;${path.supplemental}/org.eclipse.emf.common_2.7.0.v20110605-0747.jar;${path.supplemental}/dom4j-1.6.1.jar;${path.supplemental}/poi-3.8-beta4-20110826.jar;${path.supplemental}/poi-ooxml-3.8-beta4-20110826.jar;${path.supplemental}/poi-ooxml-schemas-3.8-beta4-20110826.jar;${path.supplemental}/xmlbeans-2.3.0.jar">
 				<param name="-starttime" value="${start.time}" />
 				<param name="-basefolder" value="${basedir}" />
 				<param name="-project" value="org.eclipse.net4j.doc" />

@@ -191,6 +191,15 @@ Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/view
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;interface</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.LoadNotificationEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.LoadNotificationEvent</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;An <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><CODE>options event</CODE></A> fired from view <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()"><CODE>options</CODE></A> when the
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setLoadNotificationEnabled(boolean)"><CODE>load notification enabled</CODE></A> option has changed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;interface</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.ReferencePolicyEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options.ReferencePolicyEvent</A></B></CODE>
 
 <BR>
@@ -353,6 +362,16 @@ Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/view
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;boolean</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#isLoadNotificationEnabled()">isLoadNotificationEnabled</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns <code>true</code> if the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> in this view will notify their
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapters</CODE></A> about the fact that they are <em>loaded</em>,
+ <code>false</code> otherwise.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#removeChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)">removeChangeSubscriptionPolicy</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</A>&nbsp;policy)</CODE>
 
@@ -385,6 +404,15 @@ Encapsulates a set of notifying <A HREF="../../../../../org/eclipse/emf/cdo/view
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setLoadNotificationEnabled(boolean)">setLoadNotificationEnabled</A></B>(boolean&nbsp;enabled)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies whether the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> in this view will notify their
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapters</CODE></A> about the fact that they are <em>loaded</em> or not.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -499,70 +527,40 @@ getContainer</H3>
 </DL>
 <HR>
 
-<A NAME="getCacheReferenceType()"><!-- --></A><H3>
-getCacheReferenceType</H3>
+<A NAME="isLoadNotificationEnabled()"><!-- --></A><H3>
+isLoadNotificationEnabled</H3>
 <PRE>
-<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ref">ReferenceType</A> <B>getCacheReferenceType</B>()</PRE>
+boolean <B>isLoadNotificationEnabled</B>()</PRE>
 <DL>
-<DD>Returns the reference type to be used in the internal object cache.
+<DD>Returns <code>true</code> if the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> in this view will notify their
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapters</CODE></A> about the fact that they are <em>loaded</em>,
+ <code>false</code> otherwise.
 <P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
-
-<DT><B>Returns:</B><DD>Either <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#STRONG" title="class or interface in org.eclipse.net4j.util.ref"><CODE>STRONG</CODE></A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><CODE>SOFT</CODE></A> or <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#WEAK" title="class or interface in org.eclipse.net4j.util.ref"><CODE>WEAK</CODE></A>.</DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
 </DD>
 </DL>
 <HR>
 
-<A NAME="setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)"><!-- --></A><H3>
-setCacheReferenceType</H3>
+<A NAME="setLoadNotificationEnabled(boolean)"><!-- --></A><H3>
+setLoadNotificationEnabled</H3>
 <PRE>
-boolean <B>setCacheReferenceType</B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ref">ReferenceType</A>&nbsp;referenceType)</PRE>
+void <B>setLoadNotificationEnabled</B>(boolean&nbsp;enabled)</PRE>
 <DL>
-<DD>Sets the reference type to be used in the internal object cache to either <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#STRONG" title="class or interface in org.eclipse.net4j.util.ref"><CODE>STRONG</CODE></A>,
- <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><CODE>SOFT</CODE></A> or <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#WEAK" title="class or interface in org.eclipse.net4j.util.ref"><CODE>WEAK</CODE></A>. If <code>null</code> is passed the default
- reference type <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><CODE>SOFT</CODE></A> is set. If the given reference type does not differ from the one
- being currently set the new value is ignored and <code>false</code> is returned. Otherwise existing object
- references are converted to the new type and <code>true</code> is returned.
+<DD>Specifies whether the <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><CODE>objects</CODE></A> in this view will notify their
+ <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><CODE>adapters</CODE></A> about the fact that they are <em>loaded</em> or not.
 <P>
 <DD><DL>
 </DL>
 </DD>
 <DD><DL>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="getInvalidationPolicy()"><!-- --></A><H3>
-getInvalidationPolicy</H3>
-<PRE>
-<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</A> <B>getInvalidationPolicy</B>()</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
 <DT><B>Since:</B></DT>
-  <DD>3.0</DD>
-</DL>
-</DD>
-</DL>
-<HR>
-
-<A NAME="setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)"><!-- --></A><H3>
-setInvalidationPolicy</H3>
-<PRE>
-void <B>setInvalidationPolicy</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</A>&nbsp;policy)</PRE>
-<DL>
-<DD><DL>
-</DL>
-</DD>
-<DD><DL>
-<DT><B>Since:</B></DT>
-  <DD>3.0</DD>
+  <DD>4.1</DD>
 </DL>
 </DD>
 </DL>
@@ -600,6 +598,38 @@ void <B>setInvalidationNotificationEnabled</B>(boolean&nbsp;enabled)</PRE>
 </DD>
 <DD><DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/CDOInvalidationNotification.html" title="interface in org.eclipse.emf.cdo"><CODE>CDOInvalidationNotification</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getInvalidationPolicy()"><!-- --></A><H3>
+getInvalidationPolicy</H3>
+<PRE>
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</A> <B>getInvalidationPolicy</B>()</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)"><!-- --></A><H3>
+setInvalidationPolicy</H3>
+<PRE>
+void <B>setInvalidationPolicy</B>(<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOInvalidationPolicy</A>&nbsp;policy)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>3.0</DD>
+</DL>
 </DD>
 </DL>
 <HR>
@@ -675,6 +705,43 @@ void <B>removeChangeSubscriptionPolicy</B>(<A HREF="../../../../../org/eclipse/e
 <DD><DL>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><CODE>addChangeSubscriptionPolicy(CDOAdapterPolicy)</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getChangeSubscriptionPolicies()"><CODE>getChangeSubscriptionPolicies()</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getCacheReferenceType()"><!-- --></A><H3>
+getCacheReferenceType</H3>
+<PRE>
+<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ref">ReferenceType</A> <B>getCacheReferenceType</B>()</PRE>
+<DL>
+<DD>Returns the reference type to be used in the internal object cache.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>Either <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#STRONG" title="class or interface in org.eclipse.net4j.util.ref"><CODE>STRONG</CODE></A>, <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><CODE>SOFT</CODE></A> or <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#WEAK" title="class or interface in org.eclipse.net4j.util.ref"><CODE>WEAK</CODE></A>.</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)"><!-- --></A><H3>
+setCacheReferenceType</H3>
+<PRE>
+boolean <B>setCacheReferenceType</B>(<A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.ref">ReferenceType</A>&nbsp;referenceType)</PRE>
+<DL>
+<DD>Sets the reference type to be used in the internal object cache to either <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#STRONG" title="class or interface in org.eclipse.net4j.util.ref"><CODE>STRONG</CODE></A>,
+ <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><CODE>SOFT</CODE></A> or <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#WEAK" title="class or interface in org.eclipse.net4j.util.ref"><CODE>WEAK</CODE></A>. If <code>null</code> is passed the default
+ reference type <A HREF="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#SOFT" title="class or interface in org.eclipse.net4j.util.ref"><CODE>SOFT</CODE></A> is set. If the given reference type does not differ from the one
+ being currently set the new value is ignored and <code>false</code> is returned. Otherwise existing object
+ references are converted to the new type and <code>true</code> is returned.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
 </DD>
 </DL>
 <HR>

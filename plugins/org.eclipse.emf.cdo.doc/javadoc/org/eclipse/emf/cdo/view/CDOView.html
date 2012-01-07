@@ -108,22 +108,23 @@ Interface CDOView</H2>
 
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="../common/CDOCommonView.html" title="&#171;interface&#187; CDOCommonView (org.eclipse.emf.cdo.common)" alt="" coords="15,5,212,59"/>
-<area shape="rect" id="node2" href="../CDOObject.html" title="&#171;interface&#187; CDOObject (org.eclipse.emf.cdo)" alt="" coords="42,78,185,133"/>
-<area shape="rect" id="node3" href="CDOObjectHandler.html" title="&#171;interface&#187; CDOObjectHandler" alt="" coords="671,368,803,408"/>
-<area shape="rect" id="node4" href="CDOQuery.html" title="&#171;interface&#187; CDOQuery" alt="" coords="71,152,156,192"/>
-<area shape="rect" id="node5" href="../session/CDOSession.html" title="&#171;interface&#187; CDOSession (org.eclipse.emf.cdo.session)" alt="" coords="17,211,209,266"/>
-<area shape="rect" id="node6" href="../transaction/CDOTransaction.html" title="&#171;interface&#187; CDOTransaction (org.eclipse.emf.cdo.transaction)" alt="" coords="632,427,843,482"/>
-<area shape="rect" id="node7" href="../util/CDOUpdatable.html" title="&#171;interface&#187; CDOUpdatable (org.eclipse.emf.cdo.util)" alt="" coords="31,285,195,339"/>
-<area shape="rect" id="node8" href="CDOView.html" title="&#171;interface&#187; CDOView" alt="" coords="387,417,472,457"/>
-<area shape="rect" id="node9" href="CDOView.Options.html" title="&#171;interface&#187; CDOView.Options" alt="" coords="674,501,801,541"/>
-<area shape="rect" id="node10" href="CDOViewAdaptersNotifiedEvent.html" title="&#171;interface&#187; CDOViewAdaptersNotifiedEvent" alt="" coords="11,359,216,399"/>
-<area shape="rect" id="node11" href="CDOViewContainer.html" title="&#171;interface&#187; CDOViewContainer" alt="" coords="47,417,180,457"/>
-<area shape="rect" id="node12" href="CDOViewDurabilityChangedEvent.html" title="&#171;interface&#187; CDOViewDurabilityChangedEvent" alt="" coords="6,476,221,516"/>
-<area shape="rect" id="node13" href="CDOViewInvalidationEvent.html" title="&#171;interface&#187; CDOViewInvalidationEvent" alt="" coords="27,535,200,575"/>
-<area shape="rect" id="node14" href="CDOViewLocksChangedEvent.html" title="&#171;interface&#187; CDOViewLocksChangedEvent" alt="" coords="15,593,211,633"/>
-<area shape="rect" id="node15" href="CDOViewSet.html" title="&#171;interface&#187; CDOViewSet" alt="" coords="64,652,163,692"/>
-<area shape="rect" id="node16" href="CDOViewTargetChangedEvent.html" title="&#171;interface&#187; CDOViewTargetChangedEvent" alt="" coords="15,711,212,751"/>
-<area shape="rect" id="node17" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="23,770,203,825"/>
+<area shape="rect" id="node2" href="../ui/CDOEditorInput.html" title="&#171;interface&#187; CDOEditorInput (org.eclipse.emf.cdo.ui)" alt="" coords="35,78,192,133"/>
+<area shape="rect" id="node3" href="../CDOObject.html" title="&#171;interface&#187; CDOObject (org.eclipse.emf.cdo)" alt="" coords="42,151,185,206"/>
+<area shape="rect" id="node4" href="CDOObjectHandler.html" title="&#171;interface&#187; CDOObjectHandler" alt="" coords="671,412,803,452"/>
+<area shape="rect" id="node5" href="CDOQuery.html" title="&#171;interface&#187; CDOQuery" alt="" coords="71,225,156,265"/>
+<area shape="rect" id="node6" href="../session/CDOSession.html" title="&#171;interface&#187; CDOSession (org.eclipse.emf.cdo.session)" alt="" coords="17,285,209,339"/>
+<area shape="rect" id="node7" href="../transaction/CDOTransaction.html" title="&#171;interface&#187; CDOTransaction (org.eclipse.emf.cdo.transaction)" alt="" coords="632,471,843,526"/>
+<area shape="rect" id="node8" href="../util/CDOUpdatable.html" title="&#171;interface&#187; CDOUpdatable (org.eclipse.emf.cdo.util)" alt="" coords="31,358,195,413"/>
+<area shape="rect" id="node9" href="CDOView.html" title="&#171;interface&#187; CDOView" alt="" coords="387,461,472,501"/>
+<area shape="rect" id="node10" href="CDOView.Options.html" title="&#171;interface&#187; CDOView.Options" alt="" coords="674,545,801,585"/>
+<area shape="rect" id="node11" href="CDOViewAdaptersNotifiedEvent.html" title="&#171;interface&#187; CDOViewAdaptersNotifiedEvent" alt="" coords="11,432,216,472"/>
+<area shape="rect" id="node12" href="CDOViewContainer.html" title="&#171;interface&#187; CDOViewContainer" alt="" coords="47,491,180,531"/>
+<area shape="rect" id="node13" href="CDOViewDurabilityChangedEvent.html" title="&#171;interface&#187; CDOViewDurabilityChangedEvent" alt="" coords="6,549,221,589"/>
+<area shape="rect" id="node14" href="CDOViewInvalidationEvent.html" title="&#171;interface&#187; CDOViewInvalidationEvent" alt="" coords="27,608,200,648"/>
+<area shape="rect" id="node15" href="CDOViewLocksChangedEvent.html" title="&#171;interface&#187; CDOViewLocksChangedEvent" alt="" coords="15,667,211,707"/>
+<area shape="rect" id="node16" href="CDOViewSet.html" title="&#171;interface&#187; CDOViewSet" alt="" coords="64,725,163,765"/>
+<area shape="rect" id="node17" href="CDOViewTargetChangedEvent.html" title="&#171;interface&#187; CDOViewTargetChangedEvent" alt="" coords="15,784,212,824"/>
+<area shape="rect" id="node18" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="23,843,203,898"/>
 </map>
 
 <CENTER><IMG SRC="CDOView.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -252,12 +253,29 @@ A read-only view to the state of the object graph in the repository of the under
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#disableDurableLocking(boolean)">disableDurableLocking</A></B>(boolean&nbsp;releaseLocks)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Disables the storage of all information that's needed to <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)"><CODE>reopen</CODE></A> this view at a
+ later point in time.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking()">enableDurableLocking</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enables the storage of all information that's needed to <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)"><CODE>reopen</CODE></A> this view at a
+ later point in time.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)">enableDurableLocking</A></B>(boolean&nbsp;enable)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enables or disables the storage of all information that's needed to <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)"><CODE>reopen</CODE></A> this
- view at a later point in time.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking()"><CODE>enableDurableLocking()</CODE></A> instead or <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#disableDurableLocking(boolean)"><CODE>disableDurableLocking(boolean)</CODE></A>, respectively.</I></TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -1237,12 +1255,10 @@ void <B>unlockObjects</B>()</PRE>
 <A NAME="enableDurableLocking(boolean)"><!-- --></A><H3>
 enableDurableLocking</H3>
 <PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>enableDurableLocking</B>(boolean&nbsp;enable)</PRE>
+<FONT SIZE="-1"><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</A>
+</FONT><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>enableDurableLocking</B>(boolean&nbsp;enable)</PRE>
 <DL>
-<DD>Enables or disables the storage of all information that's needed to <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)"><CODE>reopen</CODE></A> this
- view at a later point in time. This information includes the <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch point</CODE></A>, the user ID of
- the <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A>, whether it's a read-only view or a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A> and all the
- locks that are acquired or will be acquired while durable locking is enabled.
+<DD><B>Deprecated.</B>&nbsp;<I>Use <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking()"><CODE>enableDurableLocking()</CODE></A> instead or <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#disableDurableLocking(boolean)"><CODE>disableDurableLocking(boolean)</CODE></A>, respectively.</I>
 <P>
 <DD><DL>
 </DL>
@@ -1250,15 +1266,52 @@ enableDurableLocking</H3>
 <DD><DL>
 <DT><B>Since:</B></DT>
   <DD>4.0</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="enableDurableLocking()"><!-- --></A><H3>
+enableDurableLocking</H3>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>enableDurableLocking</B>()</PRE>
+<DL>
+<DD>Enables the storage of all information that's needed to <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)"><CODE>reopen</CODE></A> this view at a
+ later point in time. This information includes the <A HREF="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><CODE>branch point</CODE></A>, the user ID of the
+ <A HREF="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><CODE>session</CODE></A>, whether it's a read-only view or a <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><CODE>transaction</CODE></A> and all the locks
+ that are acquired or will be acquired while durable locking is enabled.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
 <DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)"><CODE>CDOViewContainer.openView(String)</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String, org.eclipse.emf.ecore.resource.ResourceSet)"><CODE>CDOViewContainer.openView(String, ResourceSet)</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(java.lang.String)"><CODE>CDOTransactionContainer.openTransaction(String)</CODE></A>, 
 <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(java.lang.String, org.eclipse.emf.ecore.resource.ResourceSet)"><CODE>CDOTransactionContainer.openTransaction(String, ResourceSet)</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)"><CODE>lockObjects(Collection, IRWLockManager.LockType, long)</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)"><CODE>unlockObjects(Collection, IRWLockManager.LockType)</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects()"><CODE>unlockObjects()</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoReadLock()"><CODE>CDOObject.cdoReadLock()</CODE></A>, 
-<A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()"><CODE>CDOObject.cdoWriteLock()</CODE></A></DL>
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#disableDurableLocking(boolean)"><CODE>disableDurableLocking(boolean)</CODE></A></DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="disableDurableLocking(boolean)"><!-- --></A><H3>
+disableDurableLocking</H3>
+<PRE>
+void <B>disableDurableLocking</B>(boolean&nbsp;releaseLocks)</PRE>
+<DL>
+<DD>Disables the storage of all information that's needed to <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)"><CODE>reopen</CODE></A> this view at a
+ later point in time. If such information is stored when this method is called it is removed. Note that locks
+ acquired by this view are only released if <code>true</code> is passed to the <code>releaseLocks</code> parameter.
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking()"><CODE>enableDurableLocking()</CODE></A></DL>
 </DD>
 </DL>
 <HR>

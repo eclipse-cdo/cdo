@@ -305,7 +305,7 @@ Class LogDialog</H2>
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.dialogs.TrayDialog</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>closeTray, createButtonBar, createHelpControl, getLayout, getTray, isDialogHelpAvailable, isHelpAvailable, openTray, setDialogHelpAvailable, setHelpAvailable</CODE></TD>
+<TD><CODE>closeTray, createButtonBar, createHelpControl, getLayout, getTray, handleShellCloseEvent, isDialogHelpAvailable, isHelpAvailable, openTray, setDialogHelpAvailable, setHelpAvailable</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.jface.dialogs.Dialog"><!-- --></A>
@@ -323,7 +323,7 @@ Class LogDialog</H2>
 <TH ALIGN="left"><B>Methods inherited from class org.eclipse.jface.window.Window</B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE>canHandleShellCloseEvent, constrainShellSize, createShell, getConstrainedShellBounds, getContents, getDefaultImage, getDefaultImages, getDefaultOrientation, getParentShell, getReturnCode, getShell, getShellListener, getShellStyle, getWindowManager, handleFontChange, handleShellCloseEvent, open, setBlockOnOpen, setDefaultImage, setDefaultImages, setDefaultModalParent, setDefaultOrientation, setExceptionHandler, setParentShell, setReturnCode, setShellStyle, setWindowManager</CODE></TD>
+<TD><CODE>canHandleShellCloseEvent, constrainShellSize, createShell, getConstrainedShellBounds, getContents, getDefaultImage, getDefaultImages, getDefaultOrientation, getParentShell, getReturnCode, getShell, getShellListener, getShellStyle, getWindowManager, handleFontChange, open, setBlockOnOpen, setDefaultImage, setDefaultImages, setDefaultModalParent, setDefaultOrientation, setExceptionHandler, setParentShell, setReturnCode, setShellStyle, setWindowManager</CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -430,7 +430,7 @@ close</H3>
 public boolean <B>close</B>()</PRE>
 <DL>
 <DD><DL>
-<DT><B>Overrides:</B><DD><CODE>close</CODE> in class <CODE>org.eclipse.jface.dialogs.TrayDialog</CODE></DL>
+<DT><B>Overrides:</B><DD><CODE>close</CODE> in class <CODE>org.eclipse.jface.dialogs.Dialog</CODE></DL>
 </DD>
 <DD><DL>
 </DL>

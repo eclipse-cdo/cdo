@@ -138,7 +138,8 @@ A call-back interface primarily intended to allow implementers to prevent the vi
             <A HREF="../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A>&nbsp;area)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A call-back method primarily intended to allow implementers to prevent the view from being opened by throwing an
+ exception.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -163,6 +164,9 @@ void <B>openingView</B>(<A HREF="../../../../../org/eclipse/emf/cdo/common/CDOCo
                  <A HREF="../../../../../org/eclipse/emf/cdo/common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</A>&nbsp;area)
                  throws <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</A></PRE>
 <DL>
+<DD>A call-back method primarily intended to allow implementers to prevent the view from being opened by throwing an
+ exception. See <A HREF="../../../../../org/eclipse/emf/cdo/server/ILockingManager.html#addDurableViewHandler(org.eclipse.emf.cdo.server.ILockingManager.DurableViewHandler)"><CODE>ILockingManager.addDurableViewHandler(DurableViewHandler)</CODE></A>.
+<P>
 <DD><DL>
 
 <DT><B>Throws:</B>

@@ -88,6 +88,10 @@ Constructor for class org.eclipse.net4j.util.container.delegate.<A HREF="./org/e
 <DT><A HREF="./org/eclipse/net4j/util/container/delegate/AbstractDelegator.DelegatingIterator.html" title="class in org.eclipse.net4j.util.container.delegate"><B>AbstractDelegator.DelegatingIterator</B></A> - Class in <A HREF="./org/eclipse/net4j/util/container/delegate/package-summary.html">org.eclipse.net4j.util.container.delegate</A><DD>A delegating <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Iterator.html?is-external=true" title="class or interface in java.util"><CODE>iterator</CODE></A>.<DT><A HREF="./org/eclipse/net4j/util/container/delegate/AbstractDelegator.DelegatingIterator.html#AbstractDelegator.DelegatingIterator(java.util.Iterator)"><B>AbstractDelegator.DelegatingIterator(Iterator&lt;E&gt;)</B></A> - 
 Constructor for class org.eclipse.net4j.util.container.delegate.<A HREF="./org/eclipse/net4j/util/container/delegate/AbstractDelegator.DelegatingIterator.html" title="class in org.eclipse.net4j.util.container.delegate">AbstractDelegator.DelegatingIterator</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html" title="class in org.eclipse.net4j.util.collection"><B>AbstractIterator</B></A>&lt;<A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html" title="type parameter in AbstractIterator">T</A>&gt; - Class in <A HREF="./org/eclipse/net4j/util/collection/package-summary.html">org.eclipse.net4j.util.collection</A><DD>An abstract base class for custom iterators that only requires to implement a single <A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html#computeNextElement()"><CODE>AbstractIterator.computeNextElement()</CODE></A>
+ method.<DT><A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html#AbstractIterator()"><B>AbstractIterator()</B></A> - 
+Constructor for class org.eclipse.net4j.util.collection.<A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractIterator</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/util/om/log/AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log"><B>AbstractLogHandler</B></A> - Class in <A HREF="./org/eclipse/net4j/util/om/log/package-summary.html">org.eclipse.net4j.util.om.log</A><DD>&nbsp;<DT><A HREF="./org/eclipse/net4j/util/om/log/AbstractLogHandler.html#AbstractLogHandler(org.eclipse.net4j.util.om.log.OMLogger.Level)"><B>AbstractLogHandler(OMLogger.Level)</B></A> - 
 Constructor for class org.eclipse.net4j.util.om.log.<A HREF="./org/eclipse/net4j/util/om/log/AbstractLogHandler.html" title="class in org.eclipse.net4j.util.om.log">AbstractLogHandler</A>
 <DD>&nbsp;
@@ -852,6 +856,9 @@ Constructor for class org.eclipse.net4j.util.concurrent.<A HREF="./org/eclipse/n
 <DT><A HREF="./org/eclipse/net4j/util/concurrent/CompletionWorkSerializer.html#CompletionWorkSerializer()"><B>CompletionWorkSerializer()</B></A> - 
 Constructor for class org.eclipse.net4j.util.concurrent.<A HREF="./org/eclipse/net4j/util/concurrent/CompletionWorkSerializer.html" title="class in org.eclipse.net4j.util.concurrent">CompletionWorkSerializer</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html#computeNextElement()"><B>computeNextElement()</B></A> - 
+Method in class org.eclipse.net4j.util.collection.<A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractIterator</A>
+<DD>Returns the next iteration element, or <A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html#END_OF_DATA"><CODE>AbstractIterator.END_OF_DATA</CODE></A> if the end of the iteration has been reached.
 <DT><A HREF="./org/eclipse/net4j/util/ui/widgets/CoolBarComposite.CoolBarLayout.html#computeSize(org.eclipse.swt.widgets.Composite, int, int, boolean)"><B>computeSize(Composite, int, int, boolean)</B></A> - 
 Method in class org.eclipse.net4j.util.ui.widgets.<A HREF="./org/eclipse/net4j/util/ui/widgets/CoolBarComposite.CoolBarLayout.html" title="class in org.eclipse.net4j.util.ui.widgets">CoolBarComposite.CoolBarLayout</A>
 <DD>&nbsp;
@@ -2117,6 +2124,9 @@ Method in class org.eclipse.net4j.util.security.<A HREF="./org/eclipse/net4j/uti
 <DT><A HREF="./org/eclipse/net4j/util/security/ResponseNegotiator.html#encryptToken(char[], byte[])"><B>encryptToken(char[], byte[])</B></A> - 
 Method in class org.eclipse.net4j.util.security.<A HREF="./org/eclipse/net4j/util/security/ResponseNegotiator.html" title="class in org.eclipse.net4j.util.security">ResponseNegotiator</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html#END_OF_DATA"><B>END_OF_DATA</B></A> - 
+Static variable in class org.eclipse.net4j.util.collection.<A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractIterator</A>
+<DD>The token to be used in <A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html#computeNextElement()"><CODE>AbstractIterator.computeNextElement()</CODE></A> to indicate the end of the iteration.
 <DT><A HREF="./org/eclipse/net4j/util/ref/KeyedReference.html#enqueue()"><B>enqueue()</B></A> - 
 Method in interface org.eclipse.net4j.util.ref.<A HREF="./org/eclipse/net4j/util/ref/KeyedReference.html" title="interface in org.eclipse.net4j.util.ref">KeyedReference</A>
 <DD>&nbsp;
@@ -2913,6 +2923,9 @@ Method in interface org.eclipse.net4j.util.ui.views.<A HREF="./org/eclipse/net4j
 <DT><A HREF="./org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html#getChildren(org.eclipse.jface.viewers.TreePath)"><B>getChildren(TreePath)</B></A> - 
 Method in class org.eclipse.net4j.util.ui.views.<A HREF="./org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ContainerPathItemProvider</A>
 <DD><B>Deprecated.</B>&nbsp;&nbsp;
+<DT><A HREF="./org/eclipse/net4j/util/om/OMBundle.html#getClasses()"><B>getClasses()</B></A> - 
+Method in interface org.eclipse.net4j.util.om.<A HREF="./org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/util/ui/widgets/CoolBarComposite.html#getClientControl()"><B>getClientControl()</B></A> - 
 Method in class org.eclipse.net4j.util.ui.widgets.<A HREF="./org/eclipse/net4j/util/ui/widgets/CoolBarComposite.html" title="class in org.eclipse.net4j.util.ui.widgets">CoolBarComposite</A>
 <DD>&nbsp;
@@ -4865,6 +4878,9 @@ Method in class org.eclipse.net4j.util.concurrent.<A HREF="./org/eclipse/net4j/u
 <DT><A HREF="./org/eclipse/net4j/util/concurrent/RWOLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, CONTEXT, OBJECT)"><B>hasLockByOthers(IRWLockManager.LockType, CONTEXT, OBJECT)</B></A> - 
 Method in class org.eclipse.net4j.util.concurrent.<A HREF="./org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html#hasNext()"><B>hasNext()</B></A> - 
+Method in class org.eclipse.net4j.util.collection.<A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractIterator</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/util/collection/ArrayIterator.html#hasNext()"><B>hasNext()</B></A> - 
 Method in class org.eclipse.net4j.util.collection.<A HREF="./org/eclipse/net4j/util/collection/ArrayIterator.html" title="class in org.eclipse.net4j.util.collection">ArrayIterator</A>
 <DD>&nbsp;
@@ -5898,6 +5914,9 @@ Method in class org.eclipse.net4j.util.container.<A HREF="./org/eclipse/net4j/ut
 <DT><A HREF="./org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html#newProxy(java.lang.ClassLoader, T, java.lang.Class, org.eclipse.net4j.util.lifecycle.ILifecycle)"><B>newProxy(ClassLoader, T, Class&lt;?&gt;, ILifecycle)</B></A> - 
 Static method in class org.eclipse.net4j.util.lifecycle.<A HREF="./org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html" title="class in org.eclipse.net4j.util.lifecycle">LifecycleUtil.Delegator</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html#next()"><B>next()</B></A> - 
+Method in class org.eclipse.net4j.util.collection.<A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractIterator</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/util/collection/ArrayIterator.html#next()"><B>next()</B></A> - 
 Method in class org.eclipse.net4j.util.collection.<A HREF="./org/eclipse/net4j/util/collection/ArrayIterator.html" title="class in org.eclipse.net4j.util.collection">ArrayIterator</A>
 <DD>&nbsp;
@@ -6913,6 +6932,9 @@ Constructor for class org.eclipse.net4j.util.om.trace.<A HREF="./org/eclipse/net
 <DT><A HREF="./org/eclipse/net4j/util/om/trace/RemoteTraceServer.PrintListener.html#RemoteTraceServer.PrintListener()"><B>RemoteTraceServer.PrintListener()</B></A> - 
 Constructor for class org.eclipse.net4j.util.om.trace.<A HREF="./org/eclipse/net4j/util/om/trace/RemoteTraceServer.PrintListener.html" title="class in org.eclipse.net4j.util.om.trace">RemoteTraceServer.PrintListener</A>
 <DD>&nbsp;
+<DT><A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html#remove()"><B>remove()</B></A> - 
+Method in class org.eclipse.net4j.util.collection.<A HREF="./org/eclipse/net4j/util/collection/AbstractIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractIterator</A>
+<DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/util/collection/ArrayIterator.html#remove()"><B>remove()</B></A> - 
 Method in class org.eclipse.net4j.util.collection.<A HREF="./org/eclipse/net4j/util/collection/ArrayIterator.html" title="class in org.eclipse.net4j.util.collection">ArrayIterator</A>
 <DD>Unsupported.
@@ -7416,7 +7438,7 @@ Method in class org.eclipse.net4j.util.ui.widgets.<A HREF="./org/eclipse/net4j/u
 <DD>&nbsp;
 <DT><A HREF="./org/eclipse/net4j/util/om/OMBundle.html#setBundleContext(java.lang.Object)"><B>setBundleContext(Object)</B></A> - 
 Method in interface org.eclipse.net4j.util.om.<A HREF="./org/eclipse/net4j/util/om/OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</A>
-<DD>&nbsp;
+<DD><B>Deprecated.</B>&nbsp;<I>For internal use only.</I>
 <DT><A HREF="./org/eclipse/net4j/util/cache/Cache.html#setCacheMonitor(org.eclipse.net4j.util.cache.ICacheMonitor)"><B>setCacheMonitor(ICacheMonitor)</B></A> - 
 Method in class org.eclipse.net4j.util.cache.<A HREF="./org/eclipse/net4j/util/cache/Cache.html" title="class in org.eclipse.net4j.util.cache">Cache</A>
 <DD>&nbsp;

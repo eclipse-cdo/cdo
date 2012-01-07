@@ -101,8 +101,10 @@ Interface CDOEditorInput</H2>
 </DL>
 
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" title="&#171;interface&#187; IEditorInput (org.eclipse.ui)" alt="" coords="8,6,115,61"/>
-<area shape="rect" id="node2" href="CDOEditorInput.html" title="&#171;interface&#187; CDOEditorInput" alt="" coords="5,100,117,140"/>
+<area shape="rect" id="node1" href="CDOEditorUtil.html" title="&#171;static&#187; CDOEditorUtil" alt="" coords="5,208,107,248"/>
+<area shape="rect" id="node2" title="&#171;interface&#187; IEditorInput (org.eclipse.ui)" alt="" coords="85,6,192,61"/>
+<area shape="rect" id="node3" href="../view/CDOView.html" title="&#171;interface&#187; CDOView (org.eclipse.emf.cdo.view)" alt="" coords="137,201,308,255"/>
+<area shape="rect" id="node4" href="CDOEditorInput.html" title="&#171;interface&#187; CDOEditorInput" alt="" coords="83,104,195,144"/>
 </map>
 
 <CENTER><IMG SRC="CDOEditorInput.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
@@ -110,10 +112,21 @@ Interface CDOEditorInput</H2>
 
 
 <P>
+An specialized <CODE>IEditorInput</CODE> for the CDO editor. A <code>CDOEditorInput</code> is
+ associated with a <A HREF="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><CODE>CDOResource</CODE></A>, accessed through a
+ <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>CDOView</CODE></A> instance.
+ <p>
+ For related operations, see
+ <A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOEditorUtil.html#createCDOEditorInput(org.eclipse.emf.cdo.view.CDOView, java.lang.String, boolean)"><CODE>CDOEditorUtil</CODE></A>
+<P>
+
+<P>
 <DL>
 <DT><B>Since:</B></DT>
   <DD>2.0</DD>
-</DL>
+<DT><B>See Also:</B><DD><CODE>IEditorInput</CODE>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOEditorUtil.html" title="class in org.eclipse.emf.cdo.ui"><CODE>CDOEditorUtil</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>CDOView</CODE></A></DL>
 <HR>
 
 <P>
@@ -132,7 +145,7 @@ Interface CDOEditorInput</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOEditorInput.html#getResourcePath()">getResourcePath</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the path to the</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -140,7 +153,7 @@ Interface CDOEditorInput</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOEditorInput.html#getView()">getView</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the CDOView associated with this CDOEditorInput</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -148,7 +161,7 @@ Interface CDOEditorInput</H2>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/ui/CDOEditorInput.html#isViewOwned()">isViewOwned</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns true if the CDO editor instance is responsible for the underlying org.eclipse.emf.cdo.view.CDOView</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_org.eclipse.ui.IEditorInput"><!-- --></A>
@@ -187,6 +200,8 @@ getView</H3>
 <PRE>
 <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</A> <B>getView</B>()</PRE>
 <DL>
+<DD>Returns the CDOView associated with this CDOEditorInput
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -201,6 +216,8 @@ isViewOwned</H3>
 <PRE>
 boolean <B>isViewOwned</B>()</PRE>
 <DL>
+<DD>Returns true if the CDO editor instance is responsible for the underlying org.eclipse.emf.cdo.view.CDOView
+<P>
 <DD><DL>
 </DL>
 </DD>
@@ -215,6 +232,8 @@ getResourcePath</H3>
 <PRE>
 <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getResourcePath</B>()</PRE>
 <DL>
+<DD>Returns the path to the
+<P>
 <DD><DL>
 </DL>
 </DD>

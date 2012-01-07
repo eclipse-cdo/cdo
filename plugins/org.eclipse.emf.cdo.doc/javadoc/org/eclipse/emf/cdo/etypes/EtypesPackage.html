@@ -119,15 +119,13 @@ Interface EtypesPackage</H2>
 
 
 <P>
-<!-- begin-user-doc --> The <b>Package</b> for the Etypes model. It contains accessors for the meta objects to
- represent
+<!-- begin-user-doc --> The <b>Package</b> for the model. It contains accessors for the meta objects to represent
  <ul>
  <li>each class,</li>
  <li>each feature of each class,</li>
  <li>each enum,</li>
  <li>and each data type</li>
  </ul>
- <!-- end-user-doc -->
 <P>
 
 <P>
@@ -136,6 +134,10 @@ Interface EtypesPackage</H2>
   <DD></DD>
 <DT><B>Model</B></DT>
   <DD>kind="package"</DD>
+<DT><B>No Implement</B></DT>
+  <DD>This interface is not intended to be implemented by clients. <!-- end-user-doc --></DD>
+<DT><B>No Extend</B></DT>
+  <DD>This interface is not intended to be extended by clients.</DD>
 </DL>
 <HR>
 
@@ -160,8 +162,7 @@ Interface EtypesPackage</H2>
  each feature of each class,
  each enum,
  and each data type
- 
- <!</TD>
+ </TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.emf.ecore.EPackage"><!-- --></A>
@@ -297,6 +298,14 @@ Interface EtypesPackage</H2>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>static&nbsp;int</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#LOB">LOB</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The meta object id for the '<em>Lob</em>' data type. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;int</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#MODEL_ELEMENT">MODEL_ELEMENT</A></B></CODE>
 
 <BR>
@@ -401,6 +410,14 @@ Interface EtypesPackage</H2>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the factory that creates the instances of the model. <!</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A></CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getLob()">getLob</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the meta object for data type '<A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob"><CODE><em>Lob</em></CODE></A>'. <!</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -747,6 +764,24 @@ static final int <B>CLOB</B></PRE>
   <DD></DD>
 </DL>
 </DL>
+<HR>
+
+<A NAME="LOB"><!-- --></A><H3>
+LOB</H3>
+<PRE>
+static final int <B>LOB</B></PRE>
+<DL>
+<DD>The meta object id for the '<em>Lob</em>' data type. <!-- begin-user-doc -->
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1 <!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob"><CODE>CDOLob</CODE></A>, 
+<A HREF="../../../../../org/eclipse/emf/cdo/etypes/impl/EtypesPackageImpl.html#getLob()"><CODE>EtypesPackageImpl.getLob()</CODE></A>, 
+<A HREF="../../../../../constant-values.html#org.eclipse.emf.cdo.etypes.EtypesPackage.LOB">Constant Field Values</A><DT><B>Generated</B></DT>
+  <DD></DD>
+</DL>
+</DL>
 
 <!-- ============ METHOD DETAIL ========== -->
 
@@ -940,7 +975,7 @@ getBlob</H3>
 <DT><B>Returns:</B><DD>the meta object for data type '<em>Blob</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="class in org.eclipse.emf.cdo.common.lob"><CODE>CDOBlob</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Model</B></DT>
-  <DD>instanceClass="org.eclipse.emf.cdo.etypes.CDOBlob"</DD>
+  <DD>instanceClass="org.eclipse.emf.cdo.common.lob.CDOBlob"</DD>
 </DL>
 </DD>
 </DL>
@@ -962,7 +997,31 @@ getClob</H3>
 <DT><B>Returns:</B><DD>the meta object for data type '<em>Clob</em>'.<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html" title="class in org.eclipse.emf.cdo.common.lob"><CODE>CDOClob</CODE></A><DT><B>Generated</B></DT>
   <DD></DD>
 <DT><B>Model</B></DT>
-  <DD>instanceClass="org.eclipse.emf.cdo.etypes.CDOClob"</DD>
+  <DD>instanceClass="org.eclipse.emf.cdo.common.lob.CDOClob"</DD>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="getLob()"><!-- --></A><H3>
+getLob</H3>
+<PRE>
+<A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</A> <B>getLob</B>()</PRE>
+<DL>
+<DD>Returns the meta object for data type '<A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob"><CODE><em>Lob</em></CODE></A>'. <!--
+ begin-user-doc -->
+<P>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+
+<DT><B>Returns:</B><DD>the meta object for data type '<em>Lob</em>'.<DT><B>Since:</B></DT>
+  <DD>4.1<!-- end-user-doc --></DD>
+<DT><B>See Also:</B><DD><A HREF="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob"><CODE>CDOLob</CODE></A><DT><B>Generated</B></DT>
+  <DD></DD>
+<DT><B>Model</B></DT>
+  <DD>instanceClass="org.eclipse.emf.cdo.common.lob.CDOLob"</DD>
 </DL>
 </DD>
 </DL>

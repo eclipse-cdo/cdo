@@ -53,6 +53,8 @@
 	         classpathref="javadoc.classpath" />
 
 	<target name="build.java">
+		<echo message="Building JavaDoc for org.eclipse.net4j.util.doc" />
+		
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${javadoc.destdir}" defaultexcludes="true">
 				<include name="**/*" />
@@ -235,6 +237,8 @@
 	</target>
 
 	<target name="build.schema" unless="schema.skip">
+		<echo message="Building SchemaDoc for org.eclipse.net4j.util.doc" />
+		
 		<delete includeemptydirs="true" failonerror="false">
 			<fileset dir="${schemadoc.destdir}" defaultexcludes="true">
 				<include name="**/*" />
@@ -258,6 +262,8 @@
 	</target>
 
 	<target name="build.article" unless="article.skip">
+		<echo message="Building Articles for org.eclipse.net4j.util.doc" />
+		
 		<tstamp>
 			<format property="start.time" pattern="y-M-D-H-m-s-S" />
 		</tstamp>

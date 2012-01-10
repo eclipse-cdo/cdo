@@ -6,6 +6,7 @@
   <topic label="Programmer's Guide" href="html/programmers/index.html">
     <topic label="Developing Client Applications" href="html/programmers/client/index.html">
       <topic label="Understanding the Architecture of a Client Application" href="html/programmers/client/Architecture.html" />
+      <topic label="View Providers" href="html/programmers/client/ViewProviders.html" />
     </topic>
     <topic label="Dealing with Servers" href="html/programmers/server/index.html">
       <topic label="Understanding the Architecture of a Repository" href="html/programmers/server/Architecture.html" />

@@ -40,7 +40,7 @@ public class ExpectedIOTest extends AbstractOMTest
 
   public void testInputStream() throws Exception
   {
-    final File file = File.createTempFile("ExpectedIOTest", ".tmp");
+    final File file = createTempFile("ExpectedIOTest", ".tmp");
     final int LOOPS = 30;
 
     Thread producer = new Thread("PRODUCER")

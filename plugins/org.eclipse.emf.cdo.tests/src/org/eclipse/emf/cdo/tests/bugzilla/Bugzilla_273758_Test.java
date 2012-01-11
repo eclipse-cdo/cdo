@@ -77,7 +77,7 @@ public class Bugzilla_273758_Test extends AbstractCDOTest
       List<EObject> sourceContents = new ArrayList<EObject>(collection);
 
       // Target Resource
-      File file = File.createTempFile("exportModel1", null);
+      File file = createTempFile("exportModel1", null);
       String tempFileURI = file.toURI().toString();
       TestEMFUtil.saveXMI(tempFileURI, sourceContents);
 

@@ -633,6 +633,16 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     public void setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy prefetchingPolicy);
 
     /**
+     * @since 4.1
+     */
+    public CDOFeatureAnalyzer getFeatureAnalyzer();
+
+    /**
+     * @since 4.1
+     */
+    public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer);
+
+    /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setLoadNotificationEnabled(boolean) load notification enabled} option has changed.
      * 
@@ -744,6 +754,16 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
      * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface RevisionPrefetchingPolicyEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     * @since 4.1
+     */
+    public interface FeatureAnalyzerEvent extends IOptionsEvent
     {
     }
   }

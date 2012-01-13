@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
@@ -55,6 +56,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   public static final String PROP_TEST_SESSION_CONFIGURATION = "test.session.SessionConfiguration";
 
   public static final String PROP_TEST_CREDENTIALS_PROVIDER = "test.session.CredentialsProvider";
+
+  public static final String PROP_TEST_FETCH_RULE_MANAGER = "test.session.FetchRuleManager";
 
   private static final long serialVersionUID = 1L;
 
@@ -168,6 +171,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   protected IPasswordCredentialsProvider getTestCredentialsProvider()
   {
     return (IPasswordCredentialsProvider)getTestProperty(PROP_TEST_CREDENTIALS_PROVIDER);
+  }
+
+  protected CDOFetchRuleManager getTestFetchRuleManager()
+  {
+    return (CDOFetchRuleManager)getTestProperty(PROP_TEST_FETCH_RULE_MANAGER);
   }
 
   protected abstract CDOSessionConfiguration createSessionConfiguration(String repositoryName);

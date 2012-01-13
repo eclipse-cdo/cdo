@@ -37,12 +37,6 @@
                 <message_argument value="CDOSession"/>
             </message_arguments>
         </filter>
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="CDOCommonSession"/>
-                <message_argument value="CDOSession"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/session/CDOSession.java" type="org.eclipse.emf.cdo.session.CDOSession$Options">
         <filter id="571473929">

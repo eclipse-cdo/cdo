@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.event.Notifier;
 
@@ -90,6 +91,16 @@ public abstract class TestSessionConfiguration extends Notifier implements CDOSe
   }
 
   public void setIDGenerator(CDOIDGenerator idGenerator)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOFetchRuleManager getFetchRuleManager()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager)
   {
     throw new UnsupportedOperationException();
   }

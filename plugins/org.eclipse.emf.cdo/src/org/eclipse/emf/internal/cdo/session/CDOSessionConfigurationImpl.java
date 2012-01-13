@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
@@ -51,6 +52,8 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   private CDOSession.ExceptionHandler exceptionHandler;
 
   private CDOIDGenerator idGenerator;
+
+  private CDOFetchRuleManager fetchRuleManager;
 
   private InternalCDOBranchManager branchManager;
 
@@ -170,6 +173,17 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   {
     checkNotOpen();
     this.idGenerator = idGenerator;
+  }
+
+  public CDOFetchRuleManager getFetchRuleManager()
+  {
+    return fetchRuleManager;
+  }
+
+  public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager)
+  {
+    checkNotOpen();
+    this.fetchRuleManager = fetchRuleManager;
   }
 
   public InternalCDOBranchManager getBranchManager()
@@ -295,6 +309,7 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
 
     session.setMainBranchLocal(mainBranchLocal);
     session.setExceptionHandler(exceptionHandler);
+    session.setFetchRuleManager(fetchRuleManager);
     session.setIDGenerator(idGenerator);
     session.setAuthenticator(authenticator);
     session.setRevisionManager(revisionManager);

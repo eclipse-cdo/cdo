@@ -52,8 +52,10 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
   public void setViewSet(InternalCDOViewSet viewSet);
 
+  @Deprecated
   public CDOFeatureAnalyzer getFeatureAnalyzer();
 
+  @Deprecated
   public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer);
 
   /**

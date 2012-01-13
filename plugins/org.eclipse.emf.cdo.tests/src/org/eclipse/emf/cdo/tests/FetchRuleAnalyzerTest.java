@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
@@ -23,11 +24,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.internal.cdo.analyzer.CDOFeatureAnalyzerModelBased;
-import org.eclipse.emf.internal.cdo.analyzer.CDOFetchRuleManagerThreadLocal;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
-import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,17 +84,15 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
     }
 
     msg("Opening session");
-    InternalCDOSession session = (InternalCDOSession)openSession();
-    session.setFetchRuleManager(new CDOFetchRuleManagerThreadLocal());
+    getTestProperties().put(SessionConfig.PROP_TEST_FETCH_RULE_MANAGER, CDOUtil.createThreadLocalFetchRuleManager());
+    CDOSession session = openSession();
 
     msg("Opening transaction");
-    InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
-    CDOFeatureAnalyzerModelBased featureanalyzerModelBased = new CDOFeatureAnalyzerModelBased();
-    transaction.setFeatureAnalyzer(featureanalyzerModelBased);
+    CDOTransaction transaction = session.openTransaction();
+    transaction.options().setFeatureAnalyzer(CDOUtil.createModelBasedFeatureAnalyzer());
     transaction.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
 
     msg("Getting resource");
-
     for (CDOObject companyObject : listOfCompany)
     {
       Company company = (Company)transaction.getObject(companyObject.cdoID(), true);
@@ -107,9 +103,9 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
     }
 
     // Number of fetch should be 20.
-    assertEquals(20, featureanalyzerModelBased.getFetchCount());
+    assertEquals(20, new CDOFeatureAnalyzerModelBased().getFetchCount());
 
-    List<CDOFetchRule> fetchRules = featureanalyzerModelBased.getFetchRules(null);
+    List<CDOFetchRule> fetchRules = new CDOFeatureAnalyzerModelBased().getFetchRules(null);
 
     assertEquals(2, fetchRules.size());
 

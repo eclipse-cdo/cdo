@@ -119,8 +119,6 @@ public class CDOViewImpl extends AbstractCDOView
 
   private String durableLockingID;
 
-  private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
-
   private ChangeSubscriptionManager changeSubscriptionManager = new ChangeSubscriptionManager();
 
   private AdapterManager adapterManager = new AdapterManager();
@@ -652,17 +650,19 @@ public class CDOViewImpl extends AbstractCDOView
   /**
    * @since 2.0
    */
+  @Deprecated
   public synchronized CDOFeatureAnalyzer getFeatureAnalyzer()
   {
-    return featureAnalyzer;
+    return options().getFeatureAnalyzer();
   }
 
   /**
    * @since 2.0
    */
+  @Deprecated
   public synchronized void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer)
   {
-    this.featureAnalyzer = featureAnalyzer == null ? CDOFeatureAnalyzer.NOOP : featureAnalyzer;
+    options.setFeatureAnalyzer(featureAnalyzer);
   }
 
   /**
@@ -1120,7 +1120,6 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     changeSubscriptionManager = null;
-    featureAnalyzer = null;
     options = null;
     super.doDeactivate();
   }
@@ -1633,6 +1632,8 @@ public class CDOViewImpl extends AbstractCDOView
     private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil
         .createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
 
+    private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
+
     private CDOStaleReferencePolicy staleReferencePolicy = CDOStaleReferencePolicy.EXCEPTION;
 
     private HashBag<CDOAdapterPolicy> changeSubscriptionPolicies = new HashBag<CDOAdapterPolicy>();
@@ -1837,6 +1838,34 @@ public class CDOViewImpl extends AbstractCDOView
         {
           revisionPrefetchingPolicy = prefetchingPolicy;
           event = new RevisionPrefetchingPolicyEventImpl();
+        }
+      }
+
+      fireEvent(event);
+    }
+
+    public CDOFeatureAnalyzer getFeatureAnalyzer()
+    {
+      synchronized (CDOViewImpl.this)
+      {
+        return featureAnalyzer;
+      }
+    }
+
+    public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer)
+    {
+      if (featureAnalyzer == null)
+      {
+        featureAnalyzer = CDOFeatureAnalyzer.NOOP;
+      }
+
+      IEvent event = null;
+      synchronized (CDOViewImpl.this)
+      {
+        if (this.featureAnalyzer != featureAnalyzer)
+        {
+          this.featureAnalyzer = featureAnalyzer;
+          event = new FeatureAnalyzerEventImpl();
         }
       }
 
@@ -2078,6 +2107,19 @@ public class CDOViewImpl extends AbstractCDOView
       private static final long serialVersionUID = 1L;
 
       public RevisionPrefetchingPolicyEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class FeatureAnalyzerEventImpl extends OptionsEvent implements FeatureAnalyzerEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public FeatureAnalyzerEventImpl()
       {
         super(OptionsImpl.this);
       }

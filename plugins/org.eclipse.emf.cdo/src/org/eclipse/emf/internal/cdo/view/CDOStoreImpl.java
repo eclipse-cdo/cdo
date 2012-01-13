@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaIm
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
+import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -180,13 +181,15 @@ public final class CDOStoreImpl implements CDOStore
         TRACER.format("get({0}, {1}, {2})", cdoObject, feature, index); //$NON-NLS-1$
       }
 
-      view.getFeatureAnalyzer().preTraverseFeature(cdoObject, feature, index);
+      CDOFeatureAnalyzer featureAnalyzer = view.options().getFeatureAnalyzer();
+
+      featureAnalyzer.preTraverseFeature(cdoObject, feature, index);
       InternalCDORevision revision = getRevisionForReading(cdoObject);
 
       Object value = revision.get(feature, index);
       value = convertToEMF(eObject, revision, feature, index, value);
 
-      view.getFeatureAnalyzer().postTraverseFeature(cdoObject, feature, index, value);
+      featureAnalyzer.postTraverseFeature(cdoObject, feature, index, value);
       return value;
     }
   }

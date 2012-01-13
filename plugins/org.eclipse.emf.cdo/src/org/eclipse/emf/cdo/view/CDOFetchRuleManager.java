@@ -28,6 +28,7 @@ import java.util.List;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
+// TODO Move to package org.eclipse.emf.cdo.session
 public interface CDOFetchRuleManager
 {
   public CDOID getContext();

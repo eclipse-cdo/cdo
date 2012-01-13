@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.protocol.CDOAuthenticator;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
@@ -96,6 +97,21 @@ public interface CDOSessionConfiguration extends INotifier
    * @since 4.1
    */
   public void setIDGenerator(CDOIDGenerator idGenerator);
+
+  /**
+   * @see CDOSession#getFetchRuleManager()
+   * @since 4.1
+   */
+  public CDOFetchRuleManager getFetchRuleManager();
+
+  /**
+   * A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter. If not
+   * <code>null</code>, the passed generator <b>must be</b> thread-safe.
+   * 
+   * @see CDOSession#getFetchRuleManager()
+   * @since 4.1
+   */
+  public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager);
 
   /**
    * Returns the authenticator of this configuration, never <code>null</code>.

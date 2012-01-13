@@ -23,11 +23,16 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
+import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleObject;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
+import org.eclipse.emf.internal.cdo.analyzer.CDOFeatureAnalyzerModelBased;
+import org.eclipse.emf.internal.cdo.analyzer.CDOFeatureAnalyzerUI;
+import org.eclipse.emf.internal.cdo.analyzer.CDOFetchRuleManagerThreadLocal;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
@@ -167,6 +172,14 @@ public final class CDOUtil
   /**
    * @since 2.0
    */
+  public static CDOCollectionLoadingPolicy createCollectionLoadingPolicy(int initialChunkSize, int resolveChunkSize)
+  {
+    return new CDOCollectionLoadingPolicyImpl(initialChunkSize, resolveChunkSize);
+  }
+
+  /**
+   * @since 2.0
+   */
   public static CDORevisionPrefetchingPolicy createRevisionPrefetchingPolicy(int chunkSize)
   {
     if (chunkSize <= 0)
@@ -178,11 +191,35 @@ public final class CDOUtil
   }
 
   /**
-   * @since 2.0
+   * @since 4.1
    */
-  public static CDOCollectionLoadingPolicy createCollectionLoadingPolicy(int initialChunkSize, int resolveChunkSize)
+  public static CDOFetchRuleManager createThreadLocalFetchRuleManager()
   {
-    return new CDOCollectionLoadingPolicyImpl(initialChunkSize, resolveChunkSize);
+    return new CDOFetchRuleManagerThreadLocal();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static CDOFeatureAnalyzer createModelBasedFeatureAnalyzer()
+  {
+    return new CDOFeatureAnalyzerModelBased();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static CDOFeatureAnalyzer createUIFeatureAnalyzer()
+  {
+    return new CDOFeatureAnalyzerUI();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static CDOFeatureAnalyzer createUIFeatureAnalyzer(long maxTimeBetweenOperation)
+  {
+    return new CDOFeatureAnalyzerUI(maxTimeBetweenOperation);
   }
 
   /**

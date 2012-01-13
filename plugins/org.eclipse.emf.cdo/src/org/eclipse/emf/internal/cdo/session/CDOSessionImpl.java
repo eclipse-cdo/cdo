@@ -182,13 +182,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private CDORepositoryInfo repositoryInfo;
 
-  private CDOFetchRuleManager ruleManager = new NOOPFetchRuleManager()
-  {
-    public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
-    {
-      return options().getCollectionLoadingPolicy();
-    }
-  };
+  private CDOFetchRuleManager fetchRuleManager;
 
   private IRWOLockManager<CDOSessionImpl, Object> lockManager = new RWOLockManager<CDOSessionImpl, Object>();
 
@@ -344,7 +338,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    */
   public CDOFetchRuleManager getFetchRuleManager()
   {
-    return ruleManager;
+    return fetchRuleManager;
   }
 
   /**
@@ -352,7 +346,18 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    */
   public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager)
   {
-    ruleManager = fetchRuleManager;
+    if (fetchRuleManager == null)
+    {
+      fetchRuleManager = new NOOPFetchRuleManager()
+      {
+        public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
+        {
+          return options().getCollectionLoadingPolicy();
+        }
+      };
+    }
+
+    this.fetchRuleManager = fetchRuleManager;
   }
 
   public CDOAuthenticator getAuthenticator()

@@ -37,7 +37,7 @@ import java.util.List;
  * 
  * @author Simon McDuff
  */
-public class FetchRuleAnalyzerTest extends AbstractCDOTest
+public class _FetchRuleAnalyzerTest_DISABLED_ extends AbstractCDOTest
 {
   public void testLoadObject() throws Exception
   {
@@ -99,7 +99,7 @@ public class FetchRuleAnalyzerTest extends AbstractCDOTest
 
     for (CDOObject companyObject : listOfCompany)
     {
-      Company company = (Company)transaction.getObject(companyObject.cdoID(), true);
+      Company company = (Company)CDOUtil.getEObject(transaction.getObject(companyObject.cdoID(), true));
       for (PurchaseOrder purchaseOrder : company.getPurchaseOrders())
       {
         purchaseOrder.getSupplier();

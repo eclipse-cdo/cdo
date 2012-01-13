@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.util;
 
+import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
@@ -54,23 +55,29 @@ public class CDOModificationTrackingAdapter extends CDOLazyContentAdapter
   @Override
   public void notifyChanged(Notification notification)
   {
-    if (!notification.isTouch())
+    if (notification.isTouch())
     {
-      Object notifier = notification.getNotifier();
+      return;
+    }
 
-      // Listen to changes on Resources, only if its the Resource when this adapter is installed on
-      if (notifier == container)
-      {
-        // The only attribute that triggers modified = true is "contents". The rest are ignored.
-        if (notification.getFeature() == EresourcePackage.Literals.CDO_RESOURCE__CONTENTS)
-        {
-          container.setModified(true);
-        }
-      }
-      else if (!(notifier instanceof Resource))
+    if (notification instanceof CDONotification)
+    {
+      return;
+    }
+
+    // Listen to changes on Resources, only if its the Resource when this adapter is installed on
+    Object notifier = notification.getNotifier();
+    if (notifier == container)
+    {
+      // The only attribute that triggers modified = true is "contents". The rest are ignored.
+      if (notification.getFeature() == EresourcePackage.Literals.CDO_RESOURCE__CONTENTS)
       {
         container.setModified(true);
       }
+    }
+    else if (!(notifier instanceof Resource))
+    {
+      container.setModified(true);
     }
   }
 }

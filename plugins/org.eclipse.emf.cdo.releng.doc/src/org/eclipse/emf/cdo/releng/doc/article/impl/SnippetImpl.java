@@ -1,8 +1,12 @@
 /*
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
@@ -206,9 +210,13 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ArticlePackage.SNIPPET__FORMATTER,
           oldFormatter, newFormatter);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -224,18 +232,26 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     {
       NotificationChain msgs = null;
       if (formatter != null)
+      {
         msgs = ((InternalEObject)formatter).eInverseRemove(this, ArticlePackage.FORMATTER__SNIPPET, Formatter.class,
             msgs);
+      }
       if (newFormatter != null)
+      {
         msgs = ((InternalEObject)newFormatter).eInverseAdd(this, ArticlePackage.FORMATTER__SNIPPET, Formatter.class,
             msgs);
+      }
       msgs = basicSetFormatter(newFormatter, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.SNIPPET__FORMATTER, newFormatter,
           newFormatter));
+    }
   }
 
   /**
@@ -253,8 +269,10 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getCallouts()).basicAdd(otherEnd, msgs);
     case ArticlePackage.SNIPPET__FORMATTER:
       if (formatter != null)
+      {
         msgs = ((InternalEObject)formatter).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
             - ArticlePackage.SNIPPET__FORMATTER, null, msgs);
+      }
       return basicSetFormatter((Formatter)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.dawn.examples.acore.edit" version="2">
+    <resource path="src/org/eclipse/emf/cdo/dawn/examples/acore/provider/AAttributeItemProvider.java" type="org.eclipse.emf.cdo.dawn.examples.acore.provider.AAttributeItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.examples.acore.provider.AAttributeItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/examples/acore/provider/ABasicClassItemProvider.java" type="org.eclipse.emf.cdo.dawn.examples.acore.provider.ABasicClassItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.examples.acore.provider.ABasicClassItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/examples/acore/provider/AClassChildItemProvider.java" type="org.eclipse.emf.cdo.dawn.examples.acore.provider.AClassChildItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.examples.acore.provider.AClassChildItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/examples/acore/provider/AClassItemProvider.java" type="org.eclipse.emf.cdo.dawn.examples.acore.provider.AClassItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.examples.acore.provider.AClassItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/examples/acore/provider/ACoreRootItemProvider.java" type="org.eclipse.emf.cdo.dawn.examples.acore.provider.ACoreRootItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.examples.acore.provider.ACoreRootItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/examples/acore/provider/AInterfaceItemProvider.java" type="org.eclipse.emf.cdo.dawn.examples.acore.provider.AInterfaceItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.examples.acore.provider.AInterfaceItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/examples/acore/provider/AOperationItemProvider.java" type="org.eclipse.emf.cdo.dawn.examples.acore.provider.AOperationItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.examples.acore.provider.AOperationItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/examples/acore/provider/AParameterItemProvider.java" type="org.eclipse.emf.cdo.dawn.examples.acore.provider.AParameterItemProvider">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.examples.acore.provider.AParameterItemProvider"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/examples/acore/provider/AcoreEditPlugin.java" type="org.eclipse.emf.cdo.dawn.examples.acore.provider.AcoreEditPlugin">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.examples.acore.provider.AcoreEditPlugin"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/dawn/examples/acore/provider/AcoreItemProviderAdapterFactory.java" type="org.eclipse.emf.cdo.dawn.examples.acore.provider.AcoreItemProviderAdapterFactory">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.dawn.examples.acore.provider.AcoreItemProviderAdapterFactory"/>
+                <message_argument value="copyright"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

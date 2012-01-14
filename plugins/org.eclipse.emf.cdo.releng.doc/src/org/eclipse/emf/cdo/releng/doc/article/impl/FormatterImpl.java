@@ -1,8 +1,12 @@
-/**
- * <copyright>
- * </copyright>
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
@@ -62,7 +66,9 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
   public Snippet getSnippet()
   {
     if (eContainerFeatureID() != ArticlePackage.FORMATTER__SNIPPET)
+    {
       return null;
+    }
     return (Snippet)eContainer();
   }
 
@@ -95,22 +101,32 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
    */
   public void setSnippet(Snippet newSnippet)
   {
-    if (newSnippet != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.FORMATTER__SNIPPET && newSnippet != null))
+    if (newSnippet != eInternalContainer() || eContainerFeatureID() != ArticlePackage.FORMATTER__SNIPPET
+        && newSnippet != null)
     {
       if (EcoreUtil.isAncestor(this, newSnippet))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newSnippet != null)
+      {
         msgs = ((InternalEObject)newSnippet).eInverseAdd(this, ArticlePackage.SNIPPET__FORMATTER, Snippet.class, msgs);
+      }
       msgs = basicSetSnippet(newSnippet, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.FORMATTER__SNIPPET, newSnippet, newSnippet));
+    }
   }
 
   /**
@@ -125,7 +141,9 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
     {
     case ArticlePackage.FORMATTER__SNIPPET:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetSnippet((Snippet)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);

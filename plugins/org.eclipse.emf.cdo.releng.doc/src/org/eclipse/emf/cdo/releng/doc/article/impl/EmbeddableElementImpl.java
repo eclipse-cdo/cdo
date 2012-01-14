@@ -1,8 +1,12 @@
 /*
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
@@ -102,7 +106,9 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
   public Documentation getDocumentation()
   {
     if (eContainerFeatureID() != ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION)
+    {
       return null;
+    }
     return (Documentation)eContainer();
   }
 
@@ -125,23 +131,33 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
   public void setDocumentation(Documentation newDocumentation)
   {
     if (newDocumentation != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION && newDocumentation != null))
+        || eContainerFeatureID() != ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION && newDocumentation != null)
     {
       if (EcoreUtil.isAncestor(this, newDocumentation))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newDocumentation != null)
+      {
         msgs = ((InternalEObject)newDocumentation).eInverseAdd(this, ArticlePackage.DOCUMENTATION__EMBEDDABLE_ELEMENTS,
             Documentation.class, msgs);
+      }
       msgs = basicSetDocumentation(newDocumentation, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION,
           newDocumentation, newDocumentation));
+    }
   }
 
   /**
@@ -166,7 +182,9 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
     {
     case ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetDocumentation((Documentation)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);

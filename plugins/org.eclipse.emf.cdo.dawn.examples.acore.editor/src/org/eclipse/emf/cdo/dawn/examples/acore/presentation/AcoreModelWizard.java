@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -76,13 +76,6 @@ import java.util.StringTokenizer;
  */
 public class AcoreModelWizard extends Wizard implements INewWizard
 {
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n \r\nContributors:\r\n    Martin Fluegge - initial API and implementation\r\n";
-
   /**
    * The supported extensions for created files. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -605,8 +598,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
         + FILE_EXTENSIONS.get(0));
     addPage(newFileCreationPage);
 
-    // Try and get the resource selection to determine a current directory
-    // for the file dialog.
+    // Try and get the resource selection to determine a current directory for the file dialog.
     //
     if (selection != null && !selection.isEmpty())
     {

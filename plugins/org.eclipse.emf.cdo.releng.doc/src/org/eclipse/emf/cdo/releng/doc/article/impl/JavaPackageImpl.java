@@ -1,8 +1,12 @@
 /*
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
@@ -92,7 +96,9 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.JAVA_PACKAGE__NAME, oldName, name));
+    }
   }
 
   /**
@@ -103,7 +109,9 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
   public Plugin getPlugin()
   {
     if (eContainerFeatureID() != ArticlePackage.JAVA_PACKAGE__PLUGIN)
+    {
       return null;
+    }
     return (Plugin)eContainer();
   }
 
@@ -125,22 +133,32 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
    */
   public void setPlugin(Plugin newPlugin)
   {
-    if (newPlugin != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.JAVA_PACKAGE__PLUGIN && newPlugin != null))
+    if (newPlugin != eInternalContainer() || eContainerFeatureID() != ArticlePackage.JAVA_PACKAGE__PLUGIN
+        && newPlugin != null)
     {
       if (EcoreUtil.isAncestor(this, newPlugin))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newPlugin != null)
+      {
         msgs = ((InternalEObject)newPlugin).eInverseAdd(this, ArticlePackage.PLUGIN__PACKAGES, Plugin.class, msgs);
+      }
       msgs = basicSetPlugin(newPlugin, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.JAVA_PACKAGE__PLUGIN, newPlugin, newPlugin));
+    }
   }
 
   /**
@@ -155,7 +173,9 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
     {
     case ArticlePackage.JAVA_PACKAGE__PLUGIN:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetPlugin((Plugin)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -278,7 +298,9 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

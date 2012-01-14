@@ -80,7 +80,7 @@
 		         windowtitle="${javadoc.name}"
 		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
 		         overview="${project.path}/overview.html"
-		         bottom="&lt;i>Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
+		         bottom="&lt;i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
 			<doclet name="org.jboss.apiviz.APIviz" path="${path.supplemental}/bin">
 				<param name="-nopackagediagram" />

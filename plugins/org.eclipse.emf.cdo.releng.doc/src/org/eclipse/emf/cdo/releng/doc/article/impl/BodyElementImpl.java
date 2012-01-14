@@ -1,8 +1,12 @@
 /*
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
@@ -80,7 +84,9 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
   public BodyElementContainer getContainer()
   {
     if (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CONTAINER)
+    {
       return null;
+    }
     return (BodyElementContainer)eContainer();
   }
 
@@ -102,24 +108,34 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    */
   public void setContainer(BodyElementContainer newContainer)
   {
-    if (newContainer != eInternalContainer()
-        || (eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CONTAINER && newContainer != null))
+    if (newContainer != eInternalContainer() || eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CONTAINER
+        && newContainer != null)
     {
       if (EcoreUtil.isAncestor(this, newContainer))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newContainer != null)
+      {
         msgs = ((InternalEObject)newContainer).eInverseAdd(this, ArticlePackage.BODY_ELEMENT_CONTAINER__ELEMENTS,
             BodyElementContainer.class, msgs);
+      }
       msgs = basicSetContainer(newContainer, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.BODY_ELEMENT__CONTAINER, newContainer,
           newContainer));
+    }
   }
 
   /**
@@ -144,7 +160,9 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
     {
     case ArticlePackage.BODY_ELEMENT__CONTAINER:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetContainer((BodyElementContainer)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);

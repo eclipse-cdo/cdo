@@ -1,8 +1,12 @@
 /*
- * <copyright>
- * </copyright>
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.doc.article.impl;
 
@@ -378,7 +382,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
   public static ArticlePackage init()
   {
     if (isInited)
+    {
       return (ArticlePackage)EPackage.Registry.INSTANCE.getEPackage(ArticlePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     ArticlePackageImpl theArticlePackage = (ArticlePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ArticlePackageImpl ? EPackage.Registry.INSTANCE
@@ -1256,7 +1262,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -1397,7 +1405,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -1410,63 +1420,62 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    documentationEClass.getESuperTypes().add(this.getStructuralElement());
-    categoryEClass.getESuperTypes().add(this.getBody());
-    articleEClass.getESuperTypes().add(this.getChapter());
-    chapterEClass.getESuperTypes().add(this.getBody());
-    snippetEClass.getESuperTypes().add(this.getEmbeddableElement());
-    diagramEClass.getESuperTypes().add(this.getBodyElement());
-    factoryEClass.getESuperTypes().add(this.getEmbeddableElement());
-    javaElementEClass.getESuperTypes().add(this.getLinkTarget());
-    structuralElementEClass.getESuperTypes().add(this.getLinkTarget());
-    linkTargetEClass.getESuperTypes().add(this.getIdentifiable());
-    calloutEClass.getESuperTypes().add(this.getBodyElementContainer());
-    embeddableElementEClass.getESuperTypes().add(this.getIdentifiable());
-    externalTargetEClass.getESuperTypes().add(this.getLinkTarget());
-    bodyEClass.getESuperTypes().add(this.getStructuralElement());
-    bodyEClass.getESuperTypes().add(this.getBodyElementContainer());
-    textEClass.getESuperTypes().add(this.getBodyElement());
-    linkEClass.getESuperTypes().add(this.getBodyElement());
-    embeddingEClass.getESuperTypes().add(this.getBodyElement());
-    sourceCodeEClass.getESuperTypes().add(this.getExternalTarget());
-    javadocEClass.getESuperTypes().add(this.getCategory());
-    externalArticleEClass.getESuperTypes().add(this.getArticle());
-    schemadocEClass.getESuperTypes().add(this.getCategory());
-    tocEClass.getESuperTypes().add(this.getBodyElement());
-    pluginResourceEClass.getESuperTypes().add(this.getExternalArticle());
-    excelEClass.getESuperTypes().add(this.getBodyElement());
-    javaFormatterEClass.getESuperTypes().add(this.getFormatter());
-    xmlFormatterEClass.getESuperTypes().add(this.getFormatter());
-    imageEClass.getESuperTypes().add(this.getBodyElement());
+    documentationEClass.getESuperTypes().add(getStructuralElement());
+    categoryEClass.getESuperTypes().add(getBody());
+    articleEClass.getESuperTypes().add(getChapter());
+    chapterEClass.getESuperTypes().add(getBody());
+    snippetEClass.getESuperTypes().add(getEmbeddableElement());
+    diagramEClass.getESuperTypes().add(getBodyElement());
+    factoryEClass.getESuperTypes().add(getEmbeddableElement());
+    javaElementEClass.getESuperTypes().add(getLinkTarget());
+    structuralElementEClass.getESuperTypes().add(getLinkTarget());
+    linkTargetEClass.getESuperTypes().add(getIdentifiable());
+    calloutEClass.getESuperTypes().add(getBodyElementContainer());
+    embeddableElementEClass.getESuperTypes().add(getIdentifiable());
+    externalTargetEClass.getESuperTypes().add(getLinkTarget());
+    bodyEClass.getESuperTypes().add(getStructuralElement());
+    bodyEClass.getESuperTypes().add(getBodyElementContainer());
+    textEClass.getESuperTypes().add(getBodyElement());
+    linkEClass.getESuperTypes().add(getBodyElement());
+    embeddingEClass.getESuperTypes().add(getBodyElement());
+    sourceCodeEClass.getESuperTypes().add(getExternalTarget());
+    javadocEClass.getESuperTypes().add(getCategory());
+    externalArticleEClass.getESuperTypes().add(getArticle());
+    schemadocEClass.getESuperTypes().add(getCategory());
+    tocEClass.getESuperTypes().add(getBodyElement());
+    pluginResourceEClass.getESuperTypes().add(getExternalArticle());
+    excelEClass.getESuperTypes().add(getBodyElement());
+    javaFormatterEClass.getESuperTypes().add(getFormatter());
+    xmlFormatterEClass.getESuperTypes().add(getFormatter());
+    imageEClass.getESuperTypes().add(getBodyElement());
 
     // Initialize classes and features; add operations and parameters
     initEClass(documentationEClass, Documentation.class, "Documentation", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDocumentation_Context(), this.getContext(), this.getContext_Documentations(), "context", null, 1,
-        1, Documentation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+    initEReference(getDocumentation_Context(), getContext(), getContext_Documentations(), "context", null, 1, 1,
+        Documentation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDocumentation_EmbeddableElements(), this.getEmbeddableElement(),
-        this.getEmbeddableElement_Documentation(), "embeddableElements", null, 0, -1, Documentation.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getDocumentation_Dependencies(), this.getDocumentation(), null, "dependencies", null, 0, -1,
+    initEReference(getDocumentation_EmbeddableElements(), getEmbeddableElement(), getEmbeddableElement_Documentation(),
+        "embeddableElements", null, 0, -1, Documentation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDocumentation_Dependencies(), getDocumentation(), null, "dependencies", null, 0, -1,
         Documentation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDocumentation_Project(), ecorePackage.getEString(), "project", null, 1, 1, Documentation.class,
         !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getDocumentation_Plugins(), this.getPlugin(), null, "plugins", null, 0, -1, Documentation.class,
+    initEReference(getDocumentation_Plugins(), getPlugin(), null, "plugins", null, 0, -1, Documentation.class,
         !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         IS_DERIVED, IS_ORDERED);
 
     initEClass(contextEClass, Context.class, "Context", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getContext_BaseFolder(), this.getFile(), "baseFolder", null, 1, 1, Context.class, !IS_TRANSIENT,
+    initEAttribute(getContext_BaseFolder(), getFile(), "baseFolder", null, 1, 1, Context.class, !IS_TRANSIENT,
         !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getContext_Project(), ecorePackage.getEString(), "project", null, 1, 1, Context.class,
         !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getContext_Documentations(), this.getDocumentation(), this.getDocumentation_Context(),
-        "documentations", null, 1, -1, Context.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getContext_Root(), this.getRootDoc(), "root", null, 1, 1, Context.class, IS_TRANSIENT, IS_VOLATILE,
+    initEReference(getContext_Documentations(), getDocumentation(), getDocumentation_Context(), "documentations", null,
+        1, -1, Context.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getContext_Root(), getRootDoc(), "root", null, 1, 1, Context.class, IS_TRANSIENT, IS_VOLATILE,
         !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1474,15 +1483,15 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEClass(articleEClass, Article.class, "Article", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(chapterEClass, Chapter.class, "Chapter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getChapter_Article(), this.getArticle(), null, "article", null, 1, 1, Chapter.class, IS_TRANSIENT,
+    initEReference(getChapter_Article(), getArticle(), null, "article", null, 1, 1, Chapter.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
 
     initEClass(snippetEClass, Snippet.class, "Snippet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSnippet_Callouts(), this.getCallout(), this.getCallout_Snippet(), "callouts", null, 0, -1,
-        Snippet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSnippet_Formatter(), this.getFormatter(), this.getFormatter_Snippet(), "formatter", null, 1, 1,
+    initEReference(getSnippet_Callouts(), getCallout(), getCallout_Snippet(), "callouts", null, 0, -1, Snippet.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getSnippet_Formatter(), getFormatter(), getFormatter_Snippet(), "formatter", null, 1, 1,
         Snippet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1492,24 +1501,24 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     initEClass(javaElementEClass, JavaElement.class, "JavaElement", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getJavaElement_ClassFile(), this.getFile(), "classFile", null, 0, 1, JavaElement.class,
-        !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getJavaElement_ClassFile(), getFile(), "classFile", null, 0, 1, JavaElement.class, !IS_TRANSIENT,
+        !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(structuralElementEClass, StructuralElement.class, "StructuralElement", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStructuralElement_Children(), this.getStructuralElement(), this.getStructuralElement_Parent(),
-        "children", null, 0, -1, StructuralElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+    initEReference(getStructuralElement_Children(), getStructuralElement(), getStructuralElement_Parent(), "children",
+        null, 0, -1, StructuralElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStructuralElement_Parent(), this.getStructuralElement(), this.getStructuralElement_Children(),
-        "parent", null, 0, 1, StructuralElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+    initEReference(getStructuralElement_Parent(), getStructuralElement(), getStructuralElement_Children(), "parent",
+        null, 0, 1, StructuralElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getStructuralElement_Title(), ecorePackage.getEString(), "title", null, 1, 1,
         StructuralElement.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getStructuralElement_Documentation(), this.getDocumentation(), null, "documentation", null, 1, 1,
+    initEReference(getStructuralElement_Documentation(), getDocumentation(), null, "documentation", null, 1, 1,
         StructuralElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStructuralElement_Doc(), this.getDoc(), "doc", null, 1, 1, StructuralElement.class, IS_TRANSIENT,
+    initEAttribute(getStructuralElement_Doc(), getDoc(), "doc", null, 1, 1, StructuralElement.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(linkTargetEClass, LinkTarget.class, "LinkTarget", IS_ABSTRACT, !IS_INTERFACE,
@@ -1521,20 +1530,19 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     EOperation op = addEOperation(linkTargetEClass, ecorePackage.getEString(), "linkFrom", 1, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getStructuralElement(), "source", 1, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, getStructuralElement(), "source", 1, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(calloutEClass, Callout.class, "Callout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCallout_Snippet(), this.getSnippet(), this.getSnippet_Callouts(), "snippet", null, 1, 1,
-        Callout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCallout_Snippet(), getSnippet(), getSnippet_Callouts(), "snippet", null, 1, 1, Callout.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(embeddableElementEClass, EmbeddableElement.class, "EmbeddableElement", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEmbeddableElement_Documentation(), this.getDocumentation(),
-        this.getDocumentation_EmbeddableElements(), "documentation", null, 1, 1, EmbeddableElement.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getEmbeddableElement_Doc(), this.getDoc(), "doc", null, 1, 1, EmbeddableElement.class, IS_TRANSIENT,
+    initEReference(getEmbeddableElement_Documentation(), getDocumentation(), getDocumentation_EmbeddableElements(),
+        "documentation", null, 1, 1, EmbeddableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEmbeddableElement_Doc(), getDoc(), "doc", null, 1, 1, EmbeddableElement.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(externalTargetEClass, ExternalTarget.class, "ExternalTarget", !IS_ABSTRACT, !IS_INTERFACE,
@@ -1548,33 +1556,33 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEClass(bodyEClass, Body.class, "Body", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBody_Category(), this.getCategory(), null, "category", null, 0, 1, Body.class, IS_TRANSIENT,
+    initEReference(getBody_Category(), getCategory(), null, "category", null, 0, 1, Body.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED,
         IS_ORDERED);
 
     initEClass(bodyElementContainerEClass, BodyElementContainer.class, "BodyElementContainer", IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBodyElementContainer_Elements(), this.getBodyElement(), this.getBodyElement_Container(),
-        "elements", null, 0, -1, BodyElementContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+    initEReference(getBodyElementContainer_Elements(), getBodyElement(), getBodyElement_Container(), "elements", null,
+        0, -1, BodyElementContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(bodyElementEClass, BodyElement.class, "BodyElement", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBodyElement_Container(), this.getBodyElementContainer(), this.getBodyElementContainer_Elements(),
+    initEReference(getBodyElement_Container(), getBodyElementContainer(), getBodyElementContainer_Elements(),
         "container", null, 1, 1, BodyElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBodyElement_Tag(), this.getTag(), "tag", null, 0, 1, BodyElement.class, IS_TRANSIENT,
-        IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBodyElement_Tag(), getTag(), "tag", null, 0, 1, BodyElement.class, IS_TRANSIENT, IS_VOLATILE,
+        !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(textEClass, Text.class, "Text", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(linkEClass, Link.class, "Link", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLink_Target(), this.getLinkTarget(), null, "target", null, 0, 1, Link.class, !IS_TRANSIENT,
+    initEReference(getLink_Target(), getLinkTarget(), null, "target", null, 0, 1, Link.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
     initEClass(embeddingEClass, Embedding.class, "Embedding", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEmbedding_Element(), this.getEmbeddableElement(), null, "element", null, 1, 1, Embedding.class,
+    initEReference(getEmbedding_Element(), getEmbeddableElement(), null, "element", null, 1, 1, Embedding.class,
         !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -1584,22 +1592,22 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEClass(pluginEClass, Plugin.class, "Plugin", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPlugin_Name(), ecorePackage.getEString(), "name", null, 1, 1, Plugin.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPlugin_Packages(), this.getJavaPackage(), this.getJavaPackage_Plugin(), "packages", null, 1, -1,
+    initEReference(getPlugin_Packages(), getJavaPackage(), getJavaPackage_Plugin(), "packages", null, 1, -1,
         Plugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPlugin_Label(), ecorePackage.getEString(), "label", null, 1, 1, Plugin.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPlugin_ExtensionPoints(), this.getExtensionPoint(), this.getExtensionPoint_Plugin(),
-        "extensionPoints", null, 0, -1, Plugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPlugin_ExtensionPoints(), getExtensionPoint(), getExtensionPoint_Plugin(), "extensionPoints",
+        null, 0, -1, Plugin.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(javaPackageEClass, JavaPackage.class, "JavaPackage", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getJavaPackage_Name(), ecorePackage.getEString(), "name", null, 1, 1, JavaPackage.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getJavaPackage_Plugin(), this.getPlugin(), this.getPlugin_Packages(), "plugin", null, 1, 1,
-        JavaPackage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getJavaPackage_Plugin(), getPlugin(), getPlugin_Packages(), "plugin", null, 1, 1, JavaPackage.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(javadocEClass, Javadoc.class, "Javadoc", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1614,8 +1622,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getExtensionPoint_Name(), ecorePackage.getEString(), "name", null, 1, 1, ExtensionPoint.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExtensionPoint_Plugin(), this.getPlugin(), this.getPlugin_ExtensionPoints(), "plugin", null, 1,
-        1, ExtensionPoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+    initEReference(getExtensionPoint_Plugin(), getPlugin(), getPlugin_ExtensionPoints(), "plugin", null, 1, 1,
+        ExtensionPoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(tocEClass, Toc.class, "Toc", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1628,7 +1636,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEClass(excelEClass, Excel.class, "Excel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(formatterEClass, Formatter.class, "Formatter", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFormatter_Snippet(), this.getSnippet(), this.getSnippet_Formatter(), "snippet", null, 1, 1,
+    initEReference(getFormatter_Snippet(), getSnippet(), getSnippet_Formatter(), "snippet", null, 1, 1,
         Formatter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1637,11 +1645,11 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
     initEClass(xmlFormatterEClass, XmlFormatter.class, "XmlFormatter", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getXmlFormatter_File(), this.getFile(), "file", null, 0, 1, XmlFormatter.class, !IS_TRANSIENT,
+    initEAttribute(getXmlFormatter_File(), getFile(), "file", null, 0, 1, XmlFormatter.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(imageEClass, Image.class, "Image", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getImage_File(), this.getFile(), "file", null, 1, 1, Image.class, IS_TRANSIENT, IS_VOLATILE,
+    initEAttribute(getImage_File(), getFile(), "file", null, 1, 1, Image.class, IS_TRANSIENT, IS_VOLATILE,
         !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types

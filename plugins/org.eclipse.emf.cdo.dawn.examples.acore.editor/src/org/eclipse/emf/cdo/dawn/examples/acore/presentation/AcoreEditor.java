@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -137,13 +137,6 @@ import java.util.Map;
 public class AcoreEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
     IMenuListener, IViewerProvider, IGotoMarker
 {
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n \r\nContributors:\r\n    Martin Fluegge - initial API and implementation\r\n";
-
   /**
    * This keeps track of the editing domain that is used to track all changes to the model. <!-- begin-user-doc --> <!--
    * end-user-doc -->
@@ -714,13 +707,11 @@ public class AcoreEditor extends MultiPageEditorPart implements IEditingDomainPr
     adapterFactory.addAdapterFactory(new AcoreItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
-    // Create the command stack that will notify this editor as commands are
-    // executed.
+    // Create the command stack that will notify this editor as commands are executed.
     //
     BasicCommandStack commandStack = new BasicCommandStack();
 
-    // Add a listener to set the most recent command's affected objects to
-    // be the selection of the viewer with focus.
+    // Add a listener to set the most recent command's affected objects to be the selection of the viewer with focus.
     //
     commandStack.addCommandStackListener(new CommandStackListener()
     {
@@ -780,8 +771,7 @@ public class AcoreEditor extends MultiPageEditorPart implements IEditingDomainPr
       {
         public void run()
         {
-          // Try to select the items in the current content viewer of
-          // the editor.
+          // Try to select the items in the current content viewer of the editor.
           //
           if (currentViewer != null)
           {
@@ -906,8 +896,7 @@ public class AcoreEditor extends MultiPageEditorPart implements IEditingDomainPr
         //
         selectionChangedListener = new ISelectionChangedListener()
         {
-          // This just notifies those things that are affected by the
-          // section.
+          // This just notifies those things that are affected by the section.
           //
           public void selectionChanged(SelectionChangedEvent selectionChangedEvent)
           {
@@ -934,8 +923,7 @@ public class AcoreEditor extends MultiPageEditorPart implements IEditingDomainPr
       //
       currentViewer = viewer;
 
-      // Set the editors selection based on the current viewer's
-      // selection.
+      // Set the editors selection based on the current viewer's selection.
       //
       setSelection(currentViewer == null ? StructuredSelection.EMPTY : currentViewer.getSelection());
     }
@@ -1510,8 +1498,7 @@ public class AcoreEditor extends MultiPageEditorPart implements IEditingDomainPr
         //
         Object selectedElement = selectedElements.next();
 
-        // If it's the selection viewer, then we want it to select the
-        // same selection as this selection.
+        // If it's the selection viewer, then we want it to select the same selection as this selection.
         //
         if (currentViewerPane.getViewer() == selectionViewer)
         {
@@ -1566,8 +1553,7 @@ public class AcoreEditor extends MultiPageEditorPart implements IEditingDomainPr
     final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
     saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
 
-    // Do the work within an operation because this is a long running
-    // activity that modifies the workbench.
+    // Do the work within an operation because this is a long running activity that modifies the workbench.
     //
     WorkspaceModifyOperation operation = new WorkspaceModifyOperation()
     {
@@ -1690,7 +1676,7 @@ public class AcoreEditor extends MultiPageEditorPart implements IEditingDomainPr
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
+    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()

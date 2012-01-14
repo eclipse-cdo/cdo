@@ -12,9 +12,11 @@
 <feature
       id="org.eclipse.emf.cdo.dawn.sdk"
       label="%featureName"
-      version="1.0.0.qualifier"
+      version="2.0.0.qualifier"
       provider-name="%providerName"
-      image="eclipse_update_120.jpg" license-feature="org.eclipse.emf.cdo.license" license-feature-version="4.1.0.qualifier">
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.cdo.license"
+      license-feature-version="4.1.0.qualifier">
 
    <description>
       %description
@@ -67,7 +69,7 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.apache.commons.lang.source"
          download-size="0"

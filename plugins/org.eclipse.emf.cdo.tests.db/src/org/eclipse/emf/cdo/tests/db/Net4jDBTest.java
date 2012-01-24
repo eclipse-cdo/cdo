@@ -308,8 +308,7 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.TIME, HOURS_toMillis(11) + MINUTES_toMillis(59) + TimeUnit.SECONDS.toMillis(59));
 
     // Following tests fail on H2 as 24h == 1 day => 0
-    //
-    // registerColumn(DBType.TIME, HOURS_toMillis(24));
+    registerColumn(DBType.TIME, HOURS_toMillis(24));
 
     doTest(getName());
   }
@@ -321,8 +320,7 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.TIME, HOURS_toMillis(11) + MINUTES_toMillis(59) + TimeUnit.SECONDS.toMillis(59));
 
     // Following tests fail on H2 as 24h == 1 day => 0
-    //
-    // registerColumn(DBType.TIME, HOURS_toMillis(24));
+    registerColumn(DBType.TIME, HOURS_toMillis(24));
 
     doTest(getName());
   }
@@ -434,20 +432,23 @@ public class Net4jDBTest extends AbstractCDOTest
     c = 1;
     for (Pair<DBType, Object> column : columns)
     {
-      Object actual = readTypeValue(ins, column.getElement1());
-      Class<? extends Object> type = column.getElement2().getClass();
+      DBType dbType = column.getElement1();
+      Object expected = column.getElement2();
+
+      Object actual = readTypeValue(ins, dbType);
+      Class<? extends Object> type = expected.getClass();
       if (type.isArray())
       {
         Class<?> componentType = type.getComponentType();
         if (componentType == byte.class)
         {
-          assertEquals("Error in column " + c + " of type " + column.getElement1(), true,
-              Arrays.equals((byte[])column.getElement2(), (byte[])actual));
+          assertEquals("Error in column " + c + " of type " + dbType, true,
+              Arrays.equals((byte[])expected, (byte[])actual));
         }
         else if (componentType == char.class)
         {
-          assertEquals("Error in column " + c + " with type " + column.getElement1(), true,
-              Arrays.equals((char[])column.getElement2(), (char[])actual));
+          assertEquals("Error in column " + c + " with type " + dbType, true,
+              Arrays.equals((char[])expected, (char[])actual));
         }
         else
         {
@@ -456,7 +457,13 @@ public class Net4jDBTest extends AbstractCDOTest
       }
       else
       {
-        assertEquals("Error in column " + c + " with type " + column.getElement1(), column.getElement2(), actual);
+        if (dbType == DBType.TIME)
+        {
+          actual = (Long)actual % 86400000L;
+          expected = (Long)expected % 86400000L;
+        }
+
+        assertEquals("Error in column " + c + " with type " + dbType, expected, actual);
       }
 
       ++c;
@@ -703,7 +710,7 @@ public class Net4jDBTest extends AbstractCDOTest
 
   private long HOURS_toMillis(int hours)
   {
-    return 1000L * 60L * 60L * hours;
+    return MINUTES_toMillis(60 * hours);
   }
 
   private long MINUTES_toMillis(int minutes)

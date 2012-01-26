@@ -189,6 +189,11 @@ public class CDOViewImpl extends AbstractCDOView
     this.session = session;
   }
 
+  public int getSessionID()
+  {
+    return session.getSessionID();
+  }
+
   public synchronized boolean setBranchPoint(CDOBranchPoint branchPoint)
   {
     checkActive();
@@ -554,6 +559,11 @@ public class CDOViewImpl extends AbstractCDOView
     checkActive();
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
     return sessionProtocol.isObjectLocked(this, object, lockType, byOthers);
+  }
+
+  public boolean isDurableView()
+  {
+    return durableLockingID != null;
   }
 
   public synchronized String getDurableLockingID()

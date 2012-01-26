@@ -520,6 +520,22 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getTransactionHandlers2();
   }
 
+  /**
+   * @since 4.1
+   */
+  public int getSessionID()
+  {
+    return delegate.getSessionID();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public boolean isDurableView()
+  {
+    return delegate.isDurableView();
+  }
+
   public int getViewID()
   {
     return delegate.getViewID();

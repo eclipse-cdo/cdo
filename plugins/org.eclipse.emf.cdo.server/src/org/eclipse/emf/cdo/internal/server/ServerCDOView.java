@@ -191,6 +191,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
+  public int getSessionID()
+  {
+    return session.getSessionID();
+  }
+
+  public boolean isDurableView()
+  {
+    return false;
+  }
+
   public String getDurableLockingID()
   {
     return null;

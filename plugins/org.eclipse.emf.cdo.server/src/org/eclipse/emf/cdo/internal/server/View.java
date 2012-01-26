@@ -73,6 +73,11 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     return session;
   }
 
+  public int getSessionID()
+  {
+    return session.getSessionID();
+  }
+
   public int getViewID()
   {
     return viewID;
@@ -91,6 +96,11 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   public boolean isReadOnly()
   {
     return true;
+  }
+
+  public boolean isDurableView()
+  {
+    return durableLockingID != null;
   }
 
   public String getDurableLockingID()

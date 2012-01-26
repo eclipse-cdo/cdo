@@ -580,6 +580,16 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       return durableLockingID;
     }
 
+    public boolean isDurableView()
+    {
+      return true;
+    }
+
+    public int getSessionID()
+    {
+      throw new UnsupportedOperationException();
+    }
+
     public int getViewID()
     {
       throw new UnsupportedOperationException();

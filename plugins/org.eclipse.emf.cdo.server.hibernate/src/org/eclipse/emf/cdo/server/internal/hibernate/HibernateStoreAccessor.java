@@ -53,6 +53,7 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -643,12 +644,16 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     // NOTE: the same flow is also present in the super class (StoreAccessor)
     // changes in flow can mean that the flow here also has to change
 
+    monitor.begin(3);
     HibernateThreadContext.setCommitContext(context);
     if (context.getNewPackageUnits().length > 0)
     {
-      writePackageUnits(context.getNewPackageUnits(), monitor);
+      writePackageUnits(context.getNewPackageUnits(), monitor.fork());
     }
 
+    // Note: instead of an Async here, we could do much more fine-grained monitoring below. But this
+    // simplistic solution is sufficient to prevent timeout errors.
+    final Async async = monitor.forkAsync();
     try
     {
       // start with fresh hibernate session to prevent side effects
@@ -755,8 +760,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       OM.LOG.error(e);
       throw WrappedException.wrap(e);
     }
+    finally
+    {
+      async.stop();
+    }
 
-    context.applyIDMappings(monitor);
+    context.applyIDMappings(monitor.fork());
+    monitor.done();
   }
 
   private void repairContainerIDs(List<InternalCDORevision> repairContainerIDs, Session session)

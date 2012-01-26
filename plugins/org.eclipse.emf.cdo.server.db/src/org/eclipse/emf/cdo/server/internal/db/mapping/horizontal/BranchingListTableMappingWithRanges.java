@@ -1027,6 +1027,7 @@ public class BranchingListTableMappingWithRanges extends BasicAbstractListTableM
             else
             {
               value = getValueFromBase(accessor, id, branchId, index);
+              if (TRACER.isEnabled())
               {
                 TRACER.format("moveOneDown add historic entry at: {0}", index); //$NON-NLS-1$
               }

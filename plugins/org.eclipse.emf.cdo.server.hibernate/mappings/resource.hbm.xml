@@ -73,10 +73,10 @@
 	<class name="org.eclipse.emf.cdo.server.internal.hibernate.HibernateStoreLob" table="`cdo_lob`" lazy="false">
 		<id name="id"/>
 		<property name="clob">
-			<column name="`clob`"/>
+			<column name="`c_lob`"/>
 		</property>
 		<property name="blob">
-			<column name="`blob`"/>
+			<column name="`b_lob`"/>
 		</property>
 		<property name="size">
 			<column name="`size`"/>

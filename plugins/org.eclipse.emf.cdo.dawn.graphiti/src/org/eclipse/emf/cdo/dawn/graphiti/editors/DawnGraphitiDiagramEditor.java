@@ -19,11 +19,12 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.ui.editor.DefaultPersistencyBehavior;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
-import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
+import org.eclipse.graphiti.ui.editor.IDiagramEditorInput;
 import org.eclipse.graphiti.ui.internal.services.GraphitiUiInternal;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -43,6 +44,8 @@ public class DawnGraphitiDiagramEditor extends DiagramEditor implements IDawnEdi
 
   private IDawnEditorSupport dawnEditorSupport;
 
+  private DefaultPersistencyBehavior persistencyBehavior;
+
   public DawnGraphitiDiagramEditor()
   {
     dawnEditorSupport = new DawnGraphitiEditorSupport(this);
@@ -55,14 +58,17 @@ public class DawnGraphitiDiagramEditor extends DiagramEditor implements IDawnEdi
     {
       CDOConnectionUtil.instance.getCurrentSession();
       final URIEditorInput uriInput = (URIEditorInput)input;
-      final TransactionalEditingDomain domain = DawnGraphitiDiagramEditorFactory.createResourceSetAndEditingDomain();
+
+      // TODO Check, if needed:
+      // final TransactionalEditingDomain domain = DawnGraphitiUtil.createResourceSetAndEditingDomain();
+
       URI diagramFileUri = uriInput.getURI();
       if (diagramFileUri != null)
       {
         // the file's first base node has to be a diagram
 
         URI diagramUri = GraphitiUiInternal.getEmfService().mapDiagramFileUriToDiagramUri(diagramFileUri);
-        input = new DawnGraphitiEditorInput(diagramUri, domain, null, true);
+        input = new DawnGraphitiEditorInput(diagramUri, null);
       }
     }
 
@@ -73,9 +79,10 @@ public class DawnGraphitiDiagramEditor extends DiagramEditor implements IDawnEdi
   public void setInput(IEditorInput input)
   {
     super.setInput(input);
-    DiagramEditorInput iDawnEditorInput = (DiagramEditorInput)input;
+    IDiagramEditorInput diagramEditorInput = (IDiagramEditorInput)input;
 
-    Resource eResource = iDawnEditorInput.getDiagram().eResource();
+    Diagram diagram = persistencyBehavior.loadDiagram(diagramEditorInput.getUri());
+    Resource eResource = diagram.eResource();
 
     /**
      * TODO check if this can be always done this way and if the view can be canceled from the DawnEditorInput or if
@@ -122,10 +129,19 @@ public class DawnGraphitiDiagramEditor extends DiagramEditor implements IDawnEdi
   }
 
   @Override
-  public void doSave(IProgressMonitor monitor)
+  protected DefaultPersistencyBehavior createPersistencyBehavior()
   {
-    dawnEditorSupport.setDirty(false);
-    super.doSave(monitor);
+    persistencyBehavior = new DefaultPersistencyBehavior(this)
+    {
+      @Override
+      public void saveDiagram(IProgressMonitor monitor)
+      {
+        dawnEditorSupport.setDirty(false);
+        super.saveDiagram(monitor);
+      }
+    };
+
+    return persistencyBehavior;
   }
 
   @Override

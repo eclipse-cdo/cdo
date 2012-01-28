@@ -123,6 +123,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.releng.projectcopy"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.releng.relativepaths"
          version="0.0.0"/>
 

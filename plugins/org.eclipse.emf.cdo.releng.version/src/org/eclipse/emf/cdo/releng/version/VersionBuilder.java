@@ -247,7 +247,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     for (BundleSpecification requiredBundle : description.getRequiredBundles())
     {
       VersionRange range = requiredBundle.getVersionRange();
-      if (isUnspecified(range.getMaximum()))
+      if (isUnspecified(range.getRight()))
       {
         addRequireMarker(requiredBundle.getName(), "dependency must specify a version range");
       }
@@ -268,7 +268,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     for (ImportPackageSpecification importPackage : description.getImportPackages())
     {
       VersionRange range = importPackage.getVersionRange();
-      if (isUnspecified(range.getMaximum()))
+      if (isUnspecified(range.getRight()))
       {
         addImportMarker(importPackage.getName(), "dependency must specify a version range");
       }

@@ -223,6 +223,8 @@ public class BuildMonitor implements IResourceChangeListener
 
   private static void writeStampFile(File stampFile, long buildNumber)
   {
+    stampFile.getParentFile().mkdirs();
+
     Properties properties = new Properties();
     properties.setProperty(PROP_BUILD_NUMBER, Long.toString(buildNumber));
 

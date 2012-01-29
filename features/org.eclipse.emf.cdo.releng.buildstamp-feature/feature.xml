@@ -36,7 +36,7 @@
    </url>
 
    <plugin
-         id="org.eclipse.emf.cdo.releng.projectcopy"
+         id="org.eclipse.emf.cdo.releng.buildstamp"
          download-size="0"
          install-size="0"
          version="0.0.0"

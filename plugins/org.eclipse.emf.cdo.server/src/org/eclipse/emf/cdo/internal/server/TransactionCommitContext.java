@@ -86,11 +86,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -799,7 +801,7 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         // First lock all objects (incl. possible ref targets).
         // This is a transient operation, it does not check for existance!
-        lockManager.lock(LockType.WRITE, transaction, lockedObjects, 1000);
+        lockManager.lock2(LockType.WRITE, transaction, lockedObjects, 1000);
 
         // If all locks could be acquired, check if locked targets do still exist
         if (lockedTargets != null)
@@ -949,8 +951,31 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     if (!lockedObjects.isEmpty())
     {
-      lockManager.unlock(LockType.WRITE, transaction, lockedObjects);
+      lockManager.unlock2(LockType.WRITE, transaction, lockedObjects);
       lockedObjects.clear();
+    }
+
+    if (detachedObjects.length > 0)
+    {
+      boolean branching = getTransaction().getRepository().isSupportingBranches();
+      Collection<? extends Object> unlockables = null;
+      if (branching)
+      {
+        List<CDOIDAndBranch> keys = new LinkedList<CDOIDAndBranch>();
+        for (CDOID id : detachedObjects)
+        {
+          CDOIDAndBranch idAndBranch = CDOIDUtil.createIDAndBranch(id, transaction.getBranch());
+          keys.add(idAndBranch);
+        }
+
+        unlockables = keys;
+      }
+      else
+      {
+        unlockables = Arrays.asList(detachedObjects);
+      }
+
+      lockManager.unlock2(transaction, unlockables);
     }
   }
 

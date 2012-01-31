@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -50,7 +51,7 @@ public interface IManagedContainer extends IContainer<Object>, ILifecycle
 
   public Set<String> getFactoryTypes(String productGroup);
 
-  public IFactory getFactory(String productGroup, String factoryType);
+  public IFactory getFactory(String productGroup, String factoryType) throws FactoryNotFoundException;
 
   public Object putElement(String productGroup, String factoryType, String description, Object element);
 
@@ -60,18 +61,20 @@ public interface IManagedContainer extends IContainer<Object>, ILifecycle
 
   public Object[] getElements(String productGroup, String factoryType);
 
-  public Object getElement(String productGroup, String factoryType, String description);
+  public Object getElement(String productGroup, String factoryType, String description)
+      throws FactoryNotFoundException, ProductCreationException;
 
   /**
    * @since 2.0
    */
-  public Object getElement(String productGroup, String factoryType, String description, boolean activate);
+  public Object getElement(String productGroup, String factoryType, String description, boolean activate)
+      throws FactoryNotFoundException, ProductCreationException;
 
   public Object removeElement(String productGroup, String factoryType, String description);
 
   public void clearElements();
 
-  public void loadElements(InputStream stream) throws IOException;
+  public void loadElements(InputStream stream) throws IOException, FactoryNotFoundException, ProductCreationException;
 
   public void saveElements(OutputStream stream) throws IOException;
 }

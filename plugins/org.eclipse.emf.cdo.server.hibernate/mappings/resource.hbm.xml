@@ -79,7 +79,7 @@
 			<column name="`b_lob`"/>
 		</property>
 		<property name="size">
-			<column name="`size`"/>
+			<column name="`lobsize`"/>
 		</property>
 	</class>
 

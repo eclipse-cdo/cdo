@@ -59,6 +59,7 @@
 				</properties>
 				<args>
 					<jvmarg value="-Xmx4096m" />
+					<jvmarg value="-Dsite.pack200=${site.signing}" />
 					<jvmarg value="-Declipse.p2.mirrors=false" />
 					<jvmarg value="-Declipse.p2.unsignedPolicy=allow" />
 					<jvmarg value="-Dgit.clone=${git.clone}" />

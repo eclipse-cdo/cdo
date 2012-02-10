@@ -65,9 +65,13 @@ public class GitAction implements IObjectActionDelegate
         Runtime.getRuntime().exec(
             "cmd /c cd \"" + workTree.getAbsolutePath() + "\" && start cmd.exe /c \"" + gitBash + "\" --login -i");
       }
+      catch (RuntimeException ex)
+      {
+        throw ex;
+      }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        throw new RuntimeException(ex);
       }
     }
   }

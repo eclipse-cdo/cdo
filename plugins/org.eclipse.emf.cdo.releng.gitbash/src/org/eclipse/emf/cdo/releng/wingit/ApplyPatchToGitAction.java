@@ -24,6 +24,7 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.mylyn.tasks.core.ITaskAttachment;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
@@ -41,6 +42,8 @@ import java.io.OutputStreamWriter;
  */
 public class ApplyPatchToGitAction extends BaseSelectionListenerAction implements IViewActionDelegate, IMenuCreator
 {
+  private IViewPart view;
+
   private ISelection currentSelection;
 
   private Menu dropDownMenu;
@@ -57,7 +60,7 @@ public class ApplyPatchToGitAction extends BaseSelectionListenerAction implement
 
   public void init(IViewPart view)
   {
-    // ignore
+    this.view = view;
   }
 
   public void run(IAction action)
@@ -153,8 +156,7 @@ public class ApplyPatchToGitAction extends BaseSelectionListenerAction implement
         IStorage storage = org.eclipse.mylyn.internal.tasks.ui.editors.TaskAttachmentStorage.create(attachment);
         File file = savePatch(storage);
 
-        // TODO Do apply patch here:
-        System.out.println("Applying " + file.getAbsolutePath() + " to " + repository.getWorkTree());
+        applyPatch(file);
       }
       catch (Exception ex)
       {
@@ -216,6 +218,18 @@ public class ApplyPatchToGitAction extends BaseSelectionListenerAction implement
           {
           }
         }
+      }
+    }
+
+    protected void applyPatch(File file)
+    {
+      if (repository != null)
+      {
+        Shell shell = view.getSite().getShell();
+        File workTree = repository.getWorkTree();
+        String command = "apply \"" + file.getAbsolutePath() + "\"";
+
+        GitBash.executeCommand(shell, workTree, command);
       }
     }
   }

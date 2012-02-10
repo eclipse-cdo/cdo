@@ -62,6 +62,24 @@ public class GitBash
     return executable;
   }
 
+  public static void executeCommand(Shell shell, File workTree, String command)
+  {
+    try
+    {
+      String gitBash = getExecutable(shell);
+      String prefix = "cd \"" + workTree.getAbsolutePath() + "\" && \"" + gitBash + "\" --login -i ";
+      Runtime.getRuntime().exec(prefix + command);
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new RuntimeException(ex);
+    }
+  }
+
   private static String openInputDialog(String initial, Shell shell)
   {
     InputDialog dialog = new InputDialog(shell, "Git Bash", "Location:", initial, new IInputValidator()

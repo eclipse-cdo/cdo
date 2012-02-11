@@ -47,7 +47,12 @@ public class Activator extends AbstractUIPlugin
 
   public static void log(String message)
   {
-    plugin.getLog().log(new Status(IStatus.INFO, PLUGIN_ID, message));
+    log(message, IStatus.INFO);
+  }
+
+  protected static void log(String message, int severity)
+  {
+    plugin.getLog().log(new Status(severity, PLUGIN_ID, message));
   }
 
   public static void log(IStatus status)

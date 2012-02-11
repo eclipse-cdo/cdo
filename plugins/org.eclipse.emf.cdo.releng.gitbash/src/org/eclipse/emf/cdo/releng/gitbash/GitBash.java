@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.gitbash;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -85,14 +86,9 @@ public class GitBash
       }
 
       int exitValue = process.waitFor();
-      if (exitValue == 0)
-      {
-        Activator.log("Command '" + command + "' executed successfully\n" + output);
-      }
-      else
-      {
-        throw new RuntimeException("Command '" + command + "' failed: " + exitValue + "\n" + output);
-      }
+      String message = exitValue == 0 ? "executed successfully" : "failed: " + exitValue;
+      int severity = exitValue == 0 ? IStatus.INFO : IStatus.ERROR;
+      Activator.log("Command '" + command + "' " + message + "\n" + output, severity);
     }
     catch (RuntimeException ex)
     {

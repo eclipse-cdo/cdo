@@ -15,6 +15,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -23,13 +24,13 @@ import java.io.File;
 /**
  * @author Eike Stepper
  */
-public class GitAction implements IObjectActionDelegate
+public abstract class AbstractRepositoryAction implements IObjectActionDelegate
 {
   private IWorkbenchPart targetPart;
 
   private Repository repository;
 
-  public GitAction()
+  public AbstractRepositoryAction()
   {
   }
 
@@ -57,13 +58,9 @@ public class GitAction implements IObjectActionDelegate
   {
     if (repository != null)
     {
-      String gitBash = GitBash.getExecutable(targetPart.getSite().getShell());
-
       try
       {
-        File workTree = repository.getWorkTree();
-        Runtime.getRuntime().exec(
-            "cmd /c cd \"" + workTree.getAbsolutePath() + "\" && start cmd.exe /c \"" + gitBash + "\" --login -i");
+        run(targetPart.getSite().getShell(), repository.getWorkTree());
       }
       catch (Exception ex)
       {
@@ -71,4 +68,6 @@ public class GitAction implements IObjectActionDelegate
       }
     }
   }
+
+  protected abstract void run(Shell shell, File workTree) throws Exception;
 }

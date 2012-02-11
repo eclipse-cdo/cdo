@@ -17,13 +17,31 @@
          point="org.eclipse.ui.popupMenus">
       <objectContribution
             adaptable="true"
-            id="org.eclipse.emf.cdo.releng.wingit.contribution1"
+            id="org.eclipse.emf.cdo.releng.gitbash.contribution1"
             objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
          <action
-               class="org.eclipse.emf.cdo.releng.gitbash.GitAction"
+               class="org.eclipse.emf.cdo.releng.gitbash.GitResetHardAction"
                enablesFor="1"
-               icon="icons/wingit.gif"
-               id="org.eclipse.emf.cdo.releng.wingit.GitAction"
+               id="org.eclipse.emf.cdo.releng.gitbash.GitResetHardAction"
+               label="Git Reset Hard"
+               menubarPath="additions"
+               state="true"
+               style="push"
+               tooltip="Execute Git reset --hard"/>
+         <action
+               class="org.eclipse.emf.cdo.releng.gitbash.GitAddAllAction"
+               enablesFor="1"
+               id="org.eclipse.emf.cdo.releng.gitbash.GitAddAllAction"
+               label="Git Add All"
+               menubarPath="additions"
+               state="true"
+               style="push"
+               tooltip="Execute Git add --all"/>
+         <action
+               class="org.eclipse.emf.cdo.releng.gitbash.GitBashAction"
+               enablesFor="1"
+               icon="icons/gitbash.gif"
+               id="org.eclipse.emf.cdo.releng.gitbash.GitAction"
                label="Git Bash"
                menubarPath="additions"
                state="true"
@@ -32,13 +50,13 @@
       </objectContribution>
       <objectContribution
             adaptable="false"
-            id="org.eclipse.emf.cdo.releng.wingit.contribution2"
+            id="org.eclipse.emf.cdo.releng.gitbash.contribution2"
             objectClass="org.eclipse.mylyn.tasks.core.ITaskAttachment">
          <action
-               class="org.eclipse.emf.cdo.releng.gitbash.ApplyPatchToGitAction"
+               class="org.eclipse.emf.cdo.releng.gitbash.GitApplyAction"
                enablesFor="1"
                icon="icons/apply-patch.gif"
-               id="org.eclipse.emf.cdo.releng.wingit.ApplyPatchToGitAction"
+               id="org.eclipse.emf.cdo.releng.gitbash.GitApplyAction"
                label="Apply Patch To Git"
                menubarPath="actions"
                style="pulldown"

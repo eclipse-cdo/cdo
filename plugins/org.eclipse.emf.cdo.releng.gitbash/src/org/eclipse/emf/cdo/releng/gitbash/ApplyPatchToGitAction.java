@@ -33,6 +33,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -242,10 +243,36 @@ public class ApplyPatchToGitAction extends BaseSelectionListenerAction implement
       {
         Shell shell = targetPart.getSite().getShell();
         File workTree = repository.getWorkTree();
-        String command = "apply \"" + file.getAbsolutePath() + "\"";
+        String command = "git apply " + file.getAbsolutePath().replace('\\', '/');
 
         GitBash.executeCommand(shell, workTree, command);
       }
     }
+  }
+
+  public static void main(String[] args) throws IOException, InterruptedException
+  {
+    File workTree = new File("C:\\develop\\git\\cdo");
+    String gitBash = "C:\\Program Files (x86)\\Git\\bin\\sh.exe";
+
+    ProcessBuilder builder = new ProcessBuilder(gitBash, "--login", "-c",
+        "git apply C:/develop/patches/git-patch-357613.txt");
+    builder.directory(workTree);
+    builder.redirectErrorStream(true);
+
+    Process process = builder.start();
+
+    // String prefix = "cmd /c cd \"" + workTree.getAbsolutePath() + "\" && \"" + gitBash + "\"";
+    // String command = "apply C:/develop/patches/git-patch-357613.txt";
+    // Process process = Runtime.getRuntime().exec(prefix + " " + command);
+    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+    String line;
+    while ((line = reader.readLine()) != null)
+    {
+      System.out.println(line);
+    }
+
+    System.out.println(process.waitFor());
   }
 }

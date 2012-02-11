@@ -19,13 +19,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * @author Eike Stepper
  */
 public class GitBash
 {
-  private static final String GIT_BASH = "C:\\Program Files (x86)\\Git\\bin\\sh.exe";
+  private static final String DEFAULT_EXECUTABLE = "C:\\Program Files (x86)\\Git\\bin\\sh.exe";
 
   /**
    * The path to the Git Bash executable.
@@ -48,7 +49,7 @@ public class GitBash
 
       if (executable == null)
       {
-        executable = openInputDialog(GIT_BASH, shell);
+        executable = openInputDialog(DEFAULT_EXECUTABLE, shell);
       }
 
       if (!new File(executable).isFile())
@@ -67,8 +68,31 @@ public class GitBash
     try
     {
       String gitBash = getExecutable(shell);
-      String prefix = "cmd /c cd \"" + workTree.getAbsolutePath() + "\" && \"" + gitBash + "\" --login -i ";
-      Runtime.getRuntime().exec(prefix + command);
+
+      ProcessBuilder builder = new ProcessBuilder(gitBash, "--login", "-c", command);
+      builder.directory(workTree);
+      builder.redirectErrorStream(true);
+
+      Process process = builder.start();
+      BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+      StringBuilder output = new StringBuilder();
+      String line;
+      while ((line = reader.readLine()) != null)
+      {
+        output.append(line);
+        output.append("\n");
+      }
+
+      int exitValue = process.waitFor();
+      if (exitValue == 0)
+      {
+        Activator.log("Command '" + command + "' executed successfully\n" + output);
+      }
+      else
+      {
+        throw new RuntimeException("Command '" + command + "' failed: " + exitValue + "\n" + output);
+      }
     }
     catch (RuntimeException ex)
     {

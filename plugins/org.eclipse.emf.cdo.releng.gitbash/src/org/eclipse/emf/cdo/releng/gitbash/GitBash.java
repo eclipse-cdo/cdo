@@ -67,7 +67,7 @@ public class GitBash
     try
     {
       String gitBash = getExecutable(shell);
-      String prefix = "cd \"" + workTree.getAbsolutePath() + "\" && \"" + gitBash + "\" --login -i ";
+      String prefix = "cmd /c cd \"" + workTree.getAbsolutePath() + "\" && \"" + gitBash + "\" --login -i ";
       Runtime.getRuntime().exec(prefix + command);
     }
     catch (RuntimeException ex)

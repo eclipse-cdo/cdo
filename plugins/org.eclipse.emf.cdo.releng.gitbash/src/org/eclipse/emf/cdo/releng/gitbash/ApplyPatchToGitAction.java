@@ -36,6 +36,10 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -122,7 +126,18 @@ public class ApplyPatchToGitAction extends BaseSelectionListenerAction implement
     }
 
     Repository[] repositories = org.eclipse.egit.core.Activator.getDefault().getRepositoryCache().getAllRepositories();
-    for (Repository repository : repositories)
+    List<Repository> sorted = Arrays.asList(repositories);
+    Collections.sort(sorted, new Comparator<Repository>()
+    {
+      public int compare(Repository r1, Repository r2)
+      {
+        String n1 = r1.getWorkTree().getName();
+        String n2 = r2.getWorkTree().getName();
+        return n1.compareTo(n2);
+      }
+    });
+
+    for (Repository repository : sorted)
     {
       RepositorySelectionAction action = new RepositorySelectionAction(attachment, repository);
       ActionContributionItem item = new ActionContributionItem(action);

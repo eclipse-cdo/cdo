@@ -5,7 +5,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-Activator: org.eclipse.emf.cdo.releng.wingit.Activator
+Bundle-Activator: org.eclipse.emf.cdo.releng.gitbash.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.ui;bundle-version="[3.4.0,4.0.0)",
@@ -15,4 +15,4 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.mylyn.tasks.ui;bundle-version="[3.3.0,4.0.0)";resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.cdo.releng.wingit;version="1.0.0";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.releng.gitbash;version="1.0.0";x-internal:=true

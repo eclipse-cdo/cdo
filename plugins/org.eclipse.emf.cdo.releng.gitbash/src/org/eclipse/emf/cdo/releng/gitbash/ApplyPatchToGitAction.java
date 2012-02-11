@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.wingit;
+package org.eclipse.emf.cdo.releng.gitbash;
 
 import org.eclipse.core.resources.IStorage;
 import org.eclipse.core.runtime.CoreException;
@@ -160,7 +160,7 @@ public class ApplyPatchToGitAction extends BaseSelectionListenerAction implement
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        Activator.log(ex);
       }
     }
 

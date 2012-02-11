@@ -8,8 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.wingit;
+package org.eclipse.emf.cdo.releng.gitbash;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
@@ -40,6 +43,40 @@ public class Activator extends AbstractUIPlugin
   {
     plugin = null;
     super.stop(context);
+  }
+
+  public static void log(String message)
+  {
+    plugin.getLog().log(new Status(IStatus.INFO, PLUGIN_ID, message));
+  }
+
+  public static void log(IStatus status)
+  {
+    plugin.getLog().log(status);
+  }
+
+  public static String log(Throwable t)
+  {
+    IStatus status = getStatus(t);
+    log(status);
+    return status.getMessage();
+  }
+
+  public static IStatus getStatus(Throwable t)
+  {
+    if (t instanceof CoreException)
+    {
+      CoreException coreException = (CoreException)t;
+      return coreException.getStatus();
+    }
+  
+    String msg = t.getLocalizedMessage();
+    if (msg == null || msg.length() == 0)
+    {
+      msg = t.getClass().getName();
+    }
+  
+    return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
   }
 
   public static Activator getDefault()

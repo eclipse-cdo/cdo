@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.wingit;
+package org.eclipse.emf.cdo.releng.gitbash;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.IAction;
@@ -65,13 +65,9 @@ public class GitAction implements IObjectActionDelegate
         Runtime.getRuntime().exec(
             "cmd /c cd \"" + workTree.getAbsolutePath() + "\" && start cmd.exe /c \"" + gitBash + "\" --login -i");
       }
-      catch (RuntimeException ex)
-      {
-        throw ex;
-      }
       catch (Exception ex)
       {
-        throw new RuntimeException(ex);
+        Activator.log(ex);
       }
     }
   }

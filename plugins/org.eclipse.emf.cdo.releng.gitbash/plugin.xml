@@ -20,22 +20,22 @@
             id="org.eclipse.emf.cdo.releng.wingit.contribution1"
             objectClass="org.eclipse.egit.ui.internal.repository.tree.RepositoryNode">
          <action
-               class="org.eclipse.emf.cdo.releng.wingit.GitAction"
+               class="org.eclipse.emf.cdo.releng.gitbash.GitAction"
                enablesFor="1"
                icon="icons/wingit.gif"
                id="org.eclipse.emf.cdo.releng.wingit.GitAction"
-               label="Windows Git"
+               label="Git Bash"
                menubarPath="additions"
                state="true"
                style="push"
-               tooltip="Open Windows Git Bash"/>
+               tooltip="Open Git Bash"/>
       </objectContribution>
       <objectContribution
             adaptable="false"
             id="org.eclipse.emf.cdo.releng.wingit.contribution2"
             objectClass="org.eclipse.mylyn.tasks.core.ITaskAttachment">
          <action
-               class="org.eclipse.emf.cdo.releng.wingit.ApplyPatchToGitAction"
+               class="org.eclipse.emf.cdo.releng.gitbash.ApplyPatchToGitAction"
                enablesFor="1"
                icon="icons/apply-patch.gif"
                id="org.eclipse.emf.cdo.releng.wingit.ApplyPatchToGitAction"

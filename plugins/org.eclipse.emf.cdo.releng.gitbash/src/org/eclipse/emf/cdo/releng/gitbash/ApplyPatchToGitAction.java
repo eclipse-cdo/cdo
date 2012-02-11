@@ -25,8 +25,8 @@ import org.eclipse.mylyn.tasks.core.ITaskAttachment;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IViewActionDelegate;
-import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IObjectActionDelegate;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
 
 import java.io.BufferedReader;
@@ -40,9 +40,9 @@ import java.io.OutputStreamWriter;
 /**
  * @author Eike Stepper
  */
-public class ApplyPatchToGitAction extends BaseSelectionListenerAction implements IViewActionDelegate, IMenuCreator
+public class ApplyPatchToGitAction extends BaseSelectionListenerAction implements IObjectActionDelegate, IMenuCreator
 {
-  private IViewPart view;
+  private IWorkbenchPart targetPart;
 
   private ISelection currentSelection;
 
@@ -58,9 +58,9 @@ public class ApplyPatchToGitAction extends BaseSelectionListenerAction implement
     super(text);
   }
 
-  public void init(IViewPart view)
+  public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {
-    this.view = view;
+    this.targetPart = targetPart;
   }
 
   public void run(IAction action)
@@ -225,7 +225,7 @@ public class ApplyPatchToGitAction extends BaseSelectionListenerAction implement
     {
       if (repository != null)
       {
-        Shell shell = view.getSite().getShell();
+        Shell shell = targetPart.getSite().getShell();
         File workTree = repository.getWorkTree();
         String command = "apply \"" + file.getAbsolutePath() + "\"";
 

@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin
 {
-  public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.wingit";
+  public static final String PLUGIN_ID = "org.eclipse.emf.cdo.releng.gitbash";
 
   private static Activator plugin;
 
@@ -69,13 +69,13 @@ public class Activator extends AbstractUIPlugin
       CoreException coreException = (CoreException)t;
       return coreException.getStatus();
     }
-  
+
     String msg = t.getLocalizedMessage();
     if (msg == null || msg.length() == 0)
     {
       msg = t.getClass().getName();
     }
-  
+
     return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
   }
 

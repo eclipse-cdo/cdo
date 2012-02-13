@@ -122,83 +122,81 @@ public class Bugzilla_329254_Test extends AbstractCDOTest
 
     sessionId2 = session2.getSessionID();
 
-    CDOTransaction transaction1 = session1.openTransaction();
-    final CDOTransaction transaction2 = session2.openTransaction();
-    final CDOTransaction transaction3 = session1.openTransaction();
-    CDOTransaction transaction4 = session2.openTransaction();
-    CDOTransaction transaction5 = session1.openTransaction();
+    CDOTransaction transaction10 = session1.openTransaction();
+    final CDOTransaction transaction11async = session1.openTransaction();
+    final CDOTransaction transaction21async = session2.openTransaction();
+    CDOTransaction transaction12 = session1.openTransaction();
+    CDOTransaction transaction22 = session2.openTransaction();
 
-    // create initial model.
-    CDOResource resource = transaction1.createResource(getResourcePath("/test"));
-    Company company1 = getModel1Factory().createCompany();
-    company1.setName("company1");
-    resource.getContents().add(company1);
-    commitAndSync(transaction1, transaction2, transaction3);
+    // Create initial model.
+    CDOResource resource = transaction10.createResource(getResourcePath("/test"));
+    final Company company10 = getModel1Factory().createCompany();
+    company10.setName("company");
+    resource.getContents().add(company10);
+    commitAndSync(transaction10, transaction11async, transaction21async);
 
-    // do concurrent changes on company to produce an error.
-    Company company2 = transaction2.getObject(company1);
-    company2.setStreet("street1");
-
-    Company company3 = transaction3.getObject(company1);
-    company3.setCity("city1");
-
-    Thread commitThread1 = new Thread()
+    Thread thread11 = new Thread()
     {
       @Override
       public void run()
       {
         try
         {
-          transaction3.commit();
+          // Do concurrent changes on company to produce an error.
+          Company company11 = transaction11async.getObject(company10);
+          company11.setCity("city");
+          transaction11async.commit();
         }
-        catch (CommitException ex)
+        catch (Exception ex)
         {
-          ex.printStackTrace();
+          IOUtil.OUT().println("Simulated problem in thread 11: " + ex.getClass().getName());
         }
       }
     };
 
-    Thread commitThread2 = new Thread()
+    Thread thread21 = new Thread()
     {
       @Override
       public void run()
       {
         try
         {
-          transaction2.commit();
+          // Do concurrent changes on company to produce an error.
+          Company company21 = transaction21async.getObject(company10);
+          company21.setStreet("street");
+          transaction21async.commit();
         }
-        catch (CommitException ex)
+        catch (Exception ex)
         {
-          ex.printStackTrace();
+          IOUtil.OUT().println("Simulated problem in thread 21: " + ex.getClass().getName());
         }
       }
     };
 
-    commitThread1.start();
-    commitThread2.start();
+    thread11.start();
+    thread21.start();
 
-    commitThread1.join();
-    commitThread2.join();
+    thread11.join();
+    thread21.join();
 
-    transaction4.waitForUpdate(transaction3.getLastCommitTime(), DEFAULT_TIMEOUT);
-    transaction4.waitForUpdate(transaction2.getLastCommitTime(), DEFAULT_TIMEOUT);
+    transaction22.waitForUpdate(transaction11async.getLastCommitTime(), DEFAULT_TIMEOUT);
+    transaction22.waitForUpdate(transaction21async.getLastCommitTime(), DEFAULT_TIMEOUT);
 
-    // do another commit.
-    Company company4 = transaction4.getObject(company1);
+    // Do another commit.
+    Company company4 = transaction22.getObject(company10);
     company4.setName("company2");
-    commitAndSync(transaction4, transaction1, transaction5);
+    commitAndSync(transaction22, transaction10, transaction12);
 
-    // check if update arrived.
-    assertEquals(company4.getName(), company1.getName());
+    // Check if update arrived.
+    assertEquals(company4.getName(), company10.getName());
 
-    // check committing on the other session too.
-    Company company5 = transaction5.getObject(company1);
+    // Check committing on the other session too.
+    Company company5 = transaction12.getObject(company10);
     company5.setName("company3");
-    commitAndSync(transaction5, transaction4);
+    commitAndSync(transaction12, transaction22);
 
-    // check if update arrived.
+    // Check if update arrived.
     assertEquals(company5.getName(), company4.getName());
-
   }
 
   @CleanRepositoriesBefore

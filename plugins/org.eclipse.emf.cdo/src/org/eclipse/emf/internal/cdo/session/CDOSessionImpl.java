@@ -92,6 +92,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.QueueRunner;
 import org.eclipse.net4j.util.concurrent.RWLockManager;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.Event;
@@ -178,6 +179,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
   private CDOSession.Options options = createOptions();
 
   private OutOfSequenceInvalidations outOfSequenceInvalidations = new OutOfSequenceInvalidations();
+
+  private QueueRunner invalidationRunner;
 
   private CDORepositoryInfo repositoryInfo;
 
@@ -1199,25 +1202,53 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     long nextPreviousTimeStamp = lastUpdateTime;
     for (;;)
     {
-      Pair<CDOCommitInfo, InternalCDOTransaction> currentPair;
       synchronized (outOfSequenceInvalidations)
       {
-        currentPair = outOfSequenceInvalidations.remove(nextPreviousTimeStamp);
+        Pair<CDOCommitInfo, InternalCDOTransaction> currentPair = outOfSequenceInvalidations
+            .remove(nextPreviousTimeStamp);
+
+        // If we don't have the invalidation that follows the last one we processed,
+        // then there is nothing we can do right now
+        if (currentPair == null)
+        {
+          break;
+        }
+
+        final CDOCommitInfo currentCommitInfo = currentPair.getElement1();
+        final InternalCDOTransaction currentSender = currentPair.getElement2();
+        nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
+
+        if (sender == null)
+        {
+          QueueRunner invalidationRunner = getInvalidationRunner();
+          invalidationRunner.addWork(new Runnable()
+          {
+            public void run()
+            {
+              invalidateOrdered(currentCommitInfo, currentSender);
+            }
+          });
+        }
+        else
+        {
+          invalidateOrdered(currentCommitInfo, currentSender);
+        }
       }
-
-      // If we don't have the invalidation that follows the last one we processed,
-      // then there is nothing we can do right now
-      if (currentPair == null)
-      {
-        break;
-      }
-
-      CDOCommitInfo currentCommitInfo = currentPair.getElement1();
-      InternalCDOTransaction currentSender = currentPair.getElement2();
-      nextPreviousTimeStamp = currentCommitInfo.getTimeStamp();
-
-      invalidateOrdered(currentCommitInfo, currentSender);
     }
+  }
+
+  /**
+   * This method is synchronized on outOfSequenceInvalidations by the caller!
+   */
+  private QueueRunner getInvalidationRunner()
+  {
+    if (invalidationRunner == null)
+    {
+      invalidationRunner = new QueueRunner();
+      invalidationRunner.activate();
+    }
+
+    return invalidationRunner;
   }
 
   private void invalidateOrdered(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
@@ -1475,6 +1506,8 @@ public abstract class CDOSessionImpl extends Container<CDOView> implements Inter
     }
 
     views.clear();
+
+    LifecycleUtil.deactivate(invalidationRunner);
     outOfSequenceInvalidations.clear();
 
     unhookSessionProtocol();

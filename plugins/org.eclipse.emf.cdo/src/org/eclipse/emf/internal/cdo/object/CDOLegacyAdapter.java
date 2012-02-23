@@ -14,7 +14,9 @@ package org.eclipse.emf.internal.cdo.object;
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -22,6 +24,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.CDOStore;
@@ -88,33 +91,96 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
     CDOStore store = view.getStore();
     if (EMFUtil.isPersistent(feature))
     {
-      switch (msg.getEventType())
+      int eventType = msg.getEventType();
+      int position = msg.getPosition();
+      Object oldValue = msg.getOldValue();
+      Object newValue = msg.getNewValue();
+
+      switch (eventType)
       {
       case Notification.SET:
-        store.set(instance, feature, msg.getPosition(), msg.getNewValue());
+      {
+        store.set(instance, feature, position, newValue);
+        if (feature instanceof EReference)
+        {
+          EReference reference = (EReference)feature;
+          if (reference.isContainment())
+          {
+            if (oldValue != null)
+            {
+              InternalEObject oldChild = (InternalEObject)oldValue;
+              setContainer(store, oldChild, null, 0);
+            }
+
+            if (newValue != null)
+            {
+              InternalEObject newChild = (InternalEObject)newValue;
+              setContainer(store, newChild, this, reference.getFeatureID());
+            }
+          }
+        }
+
         break;
+      }
 
       case Notification.UNSET:
+      {
+        if (feature instanceof EReference)
+        {
+          EReference reference = (EReference)feature;
+          if (reference.isContainment())
+          {
+            @SuppressWarnings("unchecked")
+            List<Object> list = (List<Object>)oldValue;
+            for (Object child : list)
+            {
+              if (child != null)
+              {
+                setContainer(store, (InternalEObject)child, null, 0);
+              }
+            }
+          }
+        }
+
         store.unset(instance, feature);
         break;
+      }
 
       case Notification.MOVE:
-        // TODO Is that correct?
-        store.move(instance, feature, msg.getPosition(), (Integer)msg.getOldValue());
+        store.move(instance, feature, position, (Integer)oldValue);
         break;
 
       case Notification.ADD:
-        store.add(instance, feature, msg.getPosition(), msg.getNewValue());
+        store.add(instance, feature, position, newValue);
+        if (newValue != null && feature instanceof EReference)
+        {
+          EReference reference = (EReference)feature;
+          if (reference.isContainment())
+          {
+            InternalEObject newChild = (InternalEObject)newValue;
+            setContainer(store, newChild, this, reference.getFeatureID());
+          }
+        }
+
         break;
 
       case Notification.ADD_MANY:
       {
-        int pos = msg.getPosition();
+        int pos = position;
         @SuppressWarnings("unchecked")
-        List<Object> list = (List<Object>)msg.getNewValue();
+        List<Object> list = (List<Object>)newValue;
         for (Object object : list)
         {
           store.add(instance, feature, pos++, object);
+          if (object != null && feature instanceof EReference)
+          {
+            EReference reference = (EReference)feature;
+            if (reference.isContainment())
+            {
+              InternalEObject newChild = (InternalEObject)object;
+              setContainer(store, newChild, this, reference.getFeatureID());
+            }
+          }
         }
 
         break;
@@ -122,17 +188,33 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
 
       case Notification.REMOVE:
       {
-        store.remove(instance, feature, msg.getPosition());
+        InternalEObject oldChild = (InternalEObject)store.remove(instance, feature, position);
+        if (oldChild != null && feature instanceof EReference)
+        {
+          EReference reference = (EReference)feature;
+          if (reference.isContainment())
+          {
+            setContainer(store, oldChild, null, 0);
+          }
+        }
         break;
       }
 
       case Notification.REMOVE_MANY:
       {
         @SuppressWarnings("unchecked")
-        List<Object> list = (List<Object>)msg.getOldValue();
+        List<Object> list = (List<Object>)oldValue;
         for (int i = list.size() - 1; i >= 0; --i)
         {
-          store.remove(instance, feature, i);
+          InternalEObject oldChild = (InternalEObject)store.remove(instance, feature, i);
+          if (oldChild != null && feature instanceof EReference)
+          {
+            EReference reference = (EReference)feature;
+            if (reference.isContainment())
+            {
+              setContainer(store, oldChild, null, 0);
+            }
+          }
         }
 
         break;
@@ -142,6 +224,23 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       // Align Container for bidirectional references because this is not set in the store. See Bugzilla_246622_Test
       instanceToRevisionContainment();
     }
+  }
+
+  private void setContainer(CDOStore store, InternalEObject object, InternalEObject container, int containingFeatureID)
+  {
+    if (object instanceof CDOObjectImpl)
+    {
+      // Don't touch native objects
+      return;
+    }
+
+    if (FSMUtil.isTransient(CDOUtil.getCDOObject(object)))
+    {
+      // Don't touch transient objects
+      return;
+    }
+
+    store.setContainer(object, null, container, containingFeatureID);
   }
 
   /**

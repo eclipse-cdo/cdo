@@ -88,7 +88,6 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       return;
     }
 
-    CDOStore store = view.getStore();
     if (EMFUtil.isPersistent(feature))
     {
       int eventType = msg.getEventType();
@@ -99,130 +98,158 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       switch (eventType)
       {
       case Notification.SET:
-      {
-        store.set(instance, feature, position, newValue);
-        if (feature instanceof EReference)
-        {
-          EReference reference = (EReference)feature;
-          if (reference.isContainment())
-          {
-            if (oldValue != null)
-            {
-              InternalEObject oldChild = (InternalEObject)oldValue;
-              setContainer(store, oldChild, null, 0);
-            }
-
-            if (newValue != null)
-            {
-              InternalEObject newChild = (InternalEObject)newValue;
-              setContainer(store, newChild, this, reference.getFeatureID());
-            }
-          }
-        }
-
+        notifySet(feature, position, oldValue, newValue);
         break;
-      }
 
       case Notification.UNSET:
-      {
-        if (feature instanceof EReference)
-        {
-          EReference reference = (EReference)feature;
-          if (reference.isContainment())
-          {
-            @SuppressWarnings("unchecked")
-            List<Object> list = (List<Object>)oldValue;
-            for (Object child : list)
-            {
-              if (child != null)
-              {
-                setContainer(store, (InternalEObject)child, null, 0);
-              }
-            }
-          }
-        }
-
-        store.unset(instance, feature);
+        notifyUnset(feature, oldValue);
         break;
-      }
 
       case Notification.MOVE:
-        store.move(instance, feature, position, (Integer)oldValue);
+        notifyMove(feature, position, oldValue);
         break;
 
       case Notification.ADD:
-        store.add(instance, feature, position, newValue);
-        if (newValue != null && feature instanceof EReference)
-        {
-          EReference reference = (EReference)feature;
-          if (reference.isContainment())
-          {
-            InternalEObject newChild = (InternalEObject)newValue;
-            setContainer(store, newChild, this, reference.getFeatureID());
-          }
-        }
-
+        notifyAdd(feature, position, newValue);
         break;
 
       case Notification.ADD_MANY:
-      {
-        int pos = position;
-        @SuppressWarnings("unchecked")
-        List<Object> list = (List<Object>)newValue;
-        for (Object object : list)
-        {
-          store.add(instance, feature, pos++, object);
-          if (object != null && feature instanceof EReference)
-          {
-            EReference reference = (EReference)feature;
-            if (reference.isContainment())
-            {
-              InternalEObject newChild = (InternalEObject)object;
-              setContainer(store, newChild, this, reference.getFeatureID());
-            }
-          }
-        }
-
+        notifyAddMany(feature, position, newValue);
         break;
-      }
 
       case Notification.REMOVE:
-      {
-        InternalEObject oldChild = (InternalEObject)store.remove(instance, feature, position);
-        if (oldChild != null && feature instanceof EReference)
-        {
-          EReference reference = (EReference)feature;
-          if (reference.isContainment())
-          {
-            setContainer(store, oldChild, null, 0);
-          }
-        }
+        notifyRemove(feature, position);
         break;
-      }
 
       case Notification.REMOVE_MANY:
-      {
-        @SuppressWarnings("unchecked")
-        List<Object> list = (List<Object>)oldValue;
-        for (int i = list.size() - 1; i >= 0; --i)
-        {
-          InternalEObject oldChild = (InternalEObject)store.remove(instance, feature, i);
-          if (oldChild != null && feature instanceof EReference)
-          {
-            EReference reference = (EReference)feature;
-            if (reference.isContainment())
-            {
-              setContainer(store, oldChild, null, 0);
-            }
-          }
-        }
-
+        notifyRemoveMany(feature, oldValue);
         break;
-      }
       }
 
       // Align Container for bidirectional references because this is not set in the store. See Bugzilla_246622_Test
       instanceToRevisionContainment();
+    }
+  }
+
+  protected void notifySet(EStructuralFeature feature, int position, Object oldValue, Object newValue)
+  {
+    CDOStore store = view.getStore();
+    store.set(instance, feature, position, newValue);
+    if (feature instanceof EReference)
+    {
+      EReference reference = (EReference)feature;
+      if (reference.isContainment())
+      {
+        if (oldValue != null)
+        {
+          InternalEObject oldChild = (InternalEObject)oldValue;
+          setContainer(store, oldChild, null, 0);
+        }
+
+        if (newValue != null)
+        {
+          InternalEObject newChild = (InternalEObject)newValue;
+          setContainer(store, newChild, this, reference.getFeatureID());
+        }
+      }
+    }
+  }
+
+  protected void notifyUnset(EStructuralFeature feature, Object oldValue)
+  {
+    CDOStore store = view.getStore();
+    if (feature instanceof EReference)
+    {
+      EReference reference = (EReference)feature;
+      if (reference.isContainment())
+      {
+        @SuppressWarnings("unchecked")
+        List<Object> list = (List<Object>)oldValue;
+        for (Object child : list)
+        {
+          if (child != null)
+          {
+            setContainer(store, (InternalEObject)child, null, 0);
+          }
+        }
+      }
+    }
+
+    store.unset(instance, feature);
+  }
+
+  protected void notifyMove(EStructuralFeature feature, int position, Object oldValue)
+  {
+    CDOStore store = view.getStore();
+    store.move(instance, feature, position, (Integer)oldValue);
+  }
+
+  protected void notifyAdd(EStructuralFeature feature, int position, Object newValue)
+  {
+    CDOStore store = view.getStore();
+    store.add(instance, feature, position, newValue);
+    if (newValue != null && feature instanceof EReference)
+    {
+      EReference reference = (EReference)feature;
+      if (reference.isContainment())
+      {
+        InternalEObject newChild = (InternalEObject)newValue;
+        setContainer(store, newChild, this, reference.getFeatureID());
+      }
+    }
+  }
+
+  protected void notifyAddMany(EStructuralFeature feature, int position, Object newValue)
+  {
+    CDOStore store = view.getStore();
+    int pos = position;
+    @SuppressWarnings("unchecked")
+    List<Object> list = (List<Object>)newValue;
+    for (Object object : list)
+    {
+      store.add(instance, feature, pos++, object);
+      if (object != null && feature instanceof EReference)
+      {
+        EReference reference = (EReference)feature;
+        if (reference.isContainment())
+        {
+          InternalEObject newChild = (InternalEObject)object;
+          setContainer(store, newChild, this, reference.getFeatureID());
+        }
+      }
+    }
+  }
+
+  protected void notifyRemove(EStructuralFeature feature, int position)
+  {
+    CDOStore store = view.getStore();
+    InternalEObject oldChild = (InternalEObject)store.remove(instance, feature, position);
+    if (oldChild != null && feature instanceof EReference)
+    {
+      EReference reference = (EReference)feature;
+      if (reference.isContainment())
+      {
+        setContainer(store, oldChild, null, 0);
+      }
+    }
+  }
+
+  protected void notifyRemoveMany(EStructuralFeature feature, Object oldValue)
+  {
+    CDOStore store = view.getStore();
+    @SuppressWarnings("unchecked")
+    List<Object> list = (List<Object>)oldValue;
+    for (int i = list.size() - 1; i >= 0; --i)
+    {
+      InternalEObject oldChild = (InternalEObject)store.remove(instance, feature, i);
+      if (oldChild != null && feature instanceof EReference)
+      {
+        EReference reference = (EReference)feature;
+        if (reference.isContainment())
+        {
+          setContainer(store, oldChild, null, 0);
+        }
+      }
     }
   }
 
@@ -240,7 +267,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       return;
     }
 
-    store.setContainer(object, null, container, containingFeatureID);
+    store.setContainer(object, null, container, InternalEObject.EOPPOSITE_FEATURE_BASE - containingFeatureID);
   }
 
   /**

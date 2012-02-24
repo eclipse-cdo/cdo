@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EReference;
 
 /**
  * @author Steve Monnier
@@ -77,6 +78,11 @@ public class Bugzilla_372307_Test extends AbstractCDOTest
     id1 = CDOUtil.getCDOObject(session1d.eContainer()).cdoID();
     id2 = CDOUtil.getCDOObject(session2d.eContainer()).cdoID();
     assertEquals("Container of D should have the same CDOID in both sessions", id1, id2);
+
+    // Validate that the containment feature of D on both sessions are not null, and equal
+    EReference ownedDs_Feature = getModel6Package().getA_OwnedDs();
+    assertEquals(ownedDs_Feature, session1d.eContainmentFeature());
+    assertEquals(ownedDs_Feature, session2d.eContainmentFeature());
   }
 
   public void testMoveElementToOtherContainerSingleValued() throws Exception
@@ -109,5 +115,10 @@ public class Bugzilla_372307_Test extends AbstractCDOTest
     C session2d = transaction2.getObject(session1d);
 
     assertEquals(CDOUtil.getCDOObject(session1a2).cdoID(), CDOUtil.getCDOObject(session2d.eContainer()).cdoID());
+
+    // Validate that the containment feature of D on both sessions are not null, and equal
+    EReference ownedC_Feature = getModel6Package().getB_OwnedC();
+    assertEquals(ownedC_Feature, session1d.eContainmentFeature());
+    assertEquals(ownedC_Feature, session2d.eContainmentFeature());
   }
 }

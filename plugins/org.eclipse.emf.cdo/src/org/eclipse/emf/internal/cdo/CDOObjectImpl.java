@@ -1013,7 +1013,9 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     }
     else
     {
-      cdoStore().setContainer(this, cdoDirectResource(), newEContainer, newContainerFeatureID);
+      CDOResource directResource = cdoDirectResource();
+      CDOStore store = cdoStore();
+      store.setContainer(this, directResource, newEContainer, newContainerFeatureID);
     }
   }
 

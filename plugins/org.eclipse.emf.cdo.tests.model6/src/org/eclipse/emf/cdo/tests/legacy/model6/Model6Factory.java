@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the model. It provides a create method for each non-abstract class of
@@ -30,13 +31,6 @@ import org.eclipse.emf.cdo.tests.model6.Root;
  */
 public interface Model6Factory extends org.eclipse.emf.cdo.tests.model6.Model6Factory
 {
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
   /**
    * The singleton instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -75,6 +69,14 @@ public interface Model6Factory extends org.eclipse.emf.cdo.tests.model6.Model6Fa
    * @generated
    */
   ContainmentObject createContainmentObject();
+
+  /**
+   * Returns a new object of class '<em>Unordered List</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Unordered List</em>'.
+   * @generated
+   */
+  UnorderedList createUnorderedList();
 
   /**
    * Returns a new object of class '<em>A</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->

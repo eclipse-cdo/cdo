@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.tests.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -57,6 +58,13 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * @generated
    */
   private EClass containmentObjectEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EClass unorderedListEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -317,6 +325,36 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * 
    * @generated
    */
+  public EClass getUnorderedList()
+  {
+    return unorderedListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getUnorderedList_Contained()
+  {
+    return (EReference)unorderedListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EReference getUnorderedList_Referenced()
+  {
+    return (EReference)unorderedListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   public EClass getA()
   {
     return aEClass;
@@ -481,6 +519,10 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     createEReference(containmentObjectEClass, CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL);
     createEReference(containmentObjectEClass, CONTAINMENT_OBJECT__CONTAINMENT_LIST);
 
+    unorderedListEClass = createEClass(UNORDERED_LIST);
+    createEReference(unorderedListEClass, UNORDERED_LIST__CONTAINED);
+    createEReference(unorderedListEClass, UNORDERED_LIST__REFERENCED);
+
     aEClass = createEClass(A);
     createEReference(aEClass, A__OWNED_DS);
     createEReference(aEClass, A__OWNED_BS);
@@ -576,6 +618,15 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     initEReference(getContainmentObject_ContainmentList(), this.getBaseObject(), null, "containmentList", null, 0, -1,
         ContainmentObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(unorderedListEClass, UnorderedList.class, "UnorderedList", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getUnorderedList_Contained(), this.getUnorderedList(), null, "contained", null, 0, -1,
+        UnorderedList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+    initEReference(getUnorderedList_Referenced(), this.getUnorderedList(), null, "referenced", null, 0, -1,
+        UnorderedList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
     initEClass(aEClass, org.eclipse.emf.cdo.tests.model6.A.class, "A", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

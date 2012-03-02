@@ -61,6 +61,14 @@ public interface Model6Factory extends EFactory
   ContainmentObject createContainmentObject();
 
   /**
+   * Returns a new object of class '<em>Unordered List</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return a new object of class '<em>Unordered List</em>'.
+   * @generated
+   */
+  UnorderedList createUnorderedList();
+
+  /**
    * Returns a new object of class '<em>A</em>'. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @return a new object of class '<em>A</em>'.

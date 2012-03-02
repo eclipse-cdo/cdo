@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -137,6 +138,14 @@ public class Model6Switch<T>
         result = defaultCase(theEObject);
       return result;
     }
+    case Model6Package.UNORDERED_LIST:
+    {
+      UnorderedList unorderedList = (UnorderedList)theEObject;
+      T result = caseUnorderedList(unorderedList);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
     case Model6Package.A:
     {
       A a = (A)theEObject;
@@ -246,6 +255,21 @@ public class Model6Switch<T>
    * @generated
    */
   public T caseContainmentObject(ContainmentObject object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Unordered List</em>'. <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
+   * 
+   * @param object
+   *          the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Unordered List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUnorderedList(UnorderedList object)
   {
     return null;
   }

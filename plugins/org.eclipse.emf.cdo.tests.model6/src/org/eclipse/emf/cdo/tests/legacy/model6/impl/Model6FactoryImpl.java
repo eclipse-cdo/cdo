@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -36,13 +37,6 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 {
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -94,6 +88,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createReferenceObject();
     case Model6Package.CONTAINMENT_OBJECT:
       return createContainmentObject();
+    case Model6Package.UNORDERED_LIST:
+      return createUnorderedList();
     case Model6Package.A:
       return createA();
     case Model6Package.B:
@@ -153,6 +149,17 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   {
     ContainmentObjectImpl containmentObject = new ContainmentObjectImpl();
     return containmentObject;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public UnorderedList createUnorderedList()
+  {
+    UnorderedListImpl unorderedList = new UnorderedListImpl();
+    return unorderedList;
   }
 
   /**

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model6"
-    nsURI="http://www.eclipse.org/emf/CDO/tests/model6/1.0.0" nsPrefix="model6">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model6" nsURI="http://www.eclipse.org/emf/CDO/tests/model6/1.0.0"
+    nsPrefix="model6">
   <eClassifiers xsi:type="ecore:EClass" name="Root">
     <eStructuralFeatures xsi:type="ecore:EReference" name="listA" upperBound="-1"
         eType="#//BaseObject" containment="true"/>
@@ -30,6 +29,12 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="containmentList" upperBound="-1"
         eType="#//BaseObject" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnorderedList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contained" ordered="false"
+        upperBound="-1" eType="#//UnorderedList" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referenced" ordered="false"
+        upperBound="-1" eType="#//UnorderedList"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="A">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedDs" upperBound="-1"

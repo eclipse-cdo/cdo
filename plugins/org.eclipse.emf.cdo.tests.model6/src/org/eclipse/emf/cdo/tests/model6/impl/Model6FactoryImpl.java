@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
+import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -87,6 +88,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createReferenceObject();
     case Model6Package.CONTAINMENT_OBJECT:
       return createContainmentObject();
+    case Model6Package.UNORDERED_LIST:
+      return createUnorderedList();
     case Model6Package.A:
       return createA();
     case Model6Package.B:
@@ -146,6 +149,17 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   {
     ContainmentObjectImpl containmentObject = new ContainmentObjectImpl();
     return containmentObject;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public UnorderedList createUnorderedList()
+  {
+    UnorderedListImpl unorderedList = new UnorderedListImpl();
+    return unorderedList;
   }
 
   /**

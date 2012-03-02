@@ -31,13 +31,6 @@ import org.eclipse.emf.ecore.EReference;
 public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Package
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -49,7 +42,7 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
    * 
    * @generated
    */
-  String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/model6/1.0.0";
+  String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/model6/1.0.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -294,6 +287,42 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int CONTAINMENT_OBJECT_FEATURE_COUNT = BASE_OBJECT_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.UnorderedListImpl
+   * <em>Unordered List</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.UnorderedListImpl
+   * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getUnorderedList()
+   * @generated
+   */
+  int UNORDERED_LIST = 4;
+
+  /**
+   * The feature id for the '<em><b>Contained</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNORDERED_LIST__CONTAINED = 0;
+
+  /**
+   * The feature id for the '<em><b>Referenced</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNORDERED_LIST__REFERENCED = 1;
+
+  /**
+   * The number of structural features of the '<em>Unordered List</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int UNORDERED_LIST_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.AImpl <em>A</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -301,7 +330,7 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getA()
    * @generated
    */
-  int A = 4;
+  int A = 5;
 
   /**
    * The feature id for the '<em><b>Owned Ds</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -337,7 +366,7 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getB()
    * @generated
    */
-  int B = 5;
+  int B = 6;
 
   /**
    * The feature id for the '<em><b>Owned C</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
@@ -364,7 +393,7 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getC()
    * @generated
    */
-  int C = 6;
+  int C = 7;
 
   /**
    * The number of structural features of the '<em>C</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -382,7 +411,7 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getD()
    * @generated
    */
-  int D = 7;
+  int D = 8;
 
   /**
    * The feature id for the '<em><b>Data</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -408,7 +437,7 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getE()
    * @generated
    */
-  int E = 8;
+  int E = 9;
 
   /**
    * The feature id for the '<em><b>Owned As</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -435,7 +464,7 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getF()
    * @generated
    */
-  int F = 9;
+  int F = 10;
 
   /**
    * The feature id for the '<em><b>Owned Es</b></em>' containment reference list. <!-- begin-user-doc --> <!--
@@ -625,6 +654,40 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
    * @generated
    */
   EReference getContainmentObject_ContainmentList();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model6.UnorderedList
+   * <em>Unordered List</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for class '<em>Unordered List</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model6.UnorderedList
+   * @generated
+   */
+  EClass getUnorderedList();
+
+  /**
+   * Returns the meta object for the containment reference list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model6.UnorderedList#getContained <em>Contained</em>}'. <!-- begin-user-doc
+   * --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the containment reference list '<em>Contained</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model6.UnorderedList#getContained()
+   * @see #getUnorderedList()
+   * @generated
+   */
+  EReference getUnorderedList_Contained();
+
+  /**
+   * Returns the meta object for the reference list '
+   * {@link org.eclipse.emf.cdo.tests.legacy.model6.UnorderedList#getReferenced <em>Referenced</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the reference list '<em>Referenced</em>'.
+   * @see org.eclipse.emf.cdo.tests.legacy.model6.UnorderedList#getReferenced()
+   * @see #getUnorderedList()
+   * @generated
+   */
+  EReference getUnorderedList_Referenced();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model6.A <em>A</em>}'. <!--

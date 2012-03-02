@@ -961,6 +961,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   /**
+   * @since 4.1
+   */
+  public InternalCDOSavepoint getFirstSavepoint()
+  {
+    return firstSavepoint;
+  }
+
+  /**
    * @since 2.0
    */
   public synchronized InternalCDOSavepoint getLastSavepoint()

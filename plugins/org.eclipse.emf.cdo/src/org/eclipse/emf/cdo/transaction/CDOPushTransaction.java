@@ -400,6 +400,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getRevision(id);
   }
 
+  /**
+   * @since 4.1
+   */
+  public CDOSavepoint getFirstSavepoint()
+  {
+    return delegate.getFirstSavepoint();
+  }
+
   public CDOSavepoint getLastSavepoint()
   {
     return delegate.getLastSavepoint();

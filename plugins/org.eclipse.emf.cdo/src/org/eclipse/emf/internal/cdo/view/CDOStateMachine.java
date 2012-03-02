@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
@@ -49,6 +50,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -660,9 +662,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
       InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-      CDORevision cleanRevision = transaction.getCleanRevisions().get(object);
-
+      InternalCDORevision cleanRevision = transaction.getCleanRevisions().get(object).copy();
       CDOID id = cleanRevision.getID();
+
+      // Bug 373096: Determine clean revision of the CURRENT/LAST savepoint
+      InternalCDOSavepoint savepoint = getFirstSavePoint(transaction);
+      while (savepoint.getNextSavepoint() != null)
+      {
+        CDORevisionDelta delta = savepoint.getRevisionDeltas().get(id);
+        if (delta != null)
+        {
+          delta.apply(cleanRevision);
+        }
+
+        savepoint = savepoint.getNextSavepoint();
+      }
+
       object.cdoInternalSetID(id);
       object.cdoInternalSetView(transaction);
 
@@ -693,6 +708,23 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       // Add the object to the set of reattached objects
       Map<CDOID, CDOObject> reattachedObjects = transaction.getLastSavepoint().getReattachedObjects();
       reattachedObjects.put(id, object);
+    }
+
+    private InternalCDOSavepoint getFirstSavePoint(InternalCDOTransaction transaction)
+    {
+      if (transaction instanceof CDOTransactionImpl)
+      {
+        CDOTransactionImpl impl = (CDOTransactionImpl)transaction;
+        return impl.getFirstSavepoint();
+      }
+
+      InternalCDOSavepoint savepoint = transaction.getLastSavepoint();
+      while (savepoint.getPreviousSavepoint() != null)
+      {
+        savepoint = savepoint.getPreviousSavepoint();
+      }
+
+      return savepoint;
     }
   }
 

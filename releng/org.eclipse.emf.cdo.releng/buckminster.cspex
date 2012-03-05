@@ -6,6 +6,7 @@
 		<cs:dependency name="org.eclipse.emf.cdo.examples.server" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.efs" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.ui.efs" componentType="osgi.bundle"/>
+		<cs:dependency name="org.eclipse.emf.cdo.tests.all" componentType="osgi.bundle"/>
 
 		<cs:dependency name="org.eclipse.equinox.executable" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.platform" componentType="eclipse.feature"/>

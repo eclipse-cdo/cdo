@@ -253,8 +253,6 @@
 					<args>
 						<arg value="-r" />
 						<arg value="${buckminster.headless}" />
-						<arg value="-r" />
-						<arg value="${buckminster.external}" />
 						<arg value="-d" />
 						<arg value="${tools}/buckminster" />
 						<arg value="-p" />
@@ -417,7 +415,7 @@
 		<buckminster command="import">
 			<cmdargs>
 				<!--<jvmarg value="-Dorg.eclipse.update.jarprocessor.pack200=/shared/common/jdk-1.6.0_26.x86_64/bin" />-->
-				
+
 				<arg value="-B" />
 				<arg value="${hudson.WORKSPACE}/bom.xml" />
 

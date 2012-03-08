@@ -29,21 +29,21 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListA <em>List A</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListB <em>List B</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListC <em>List C</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListD <em>List D</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListA <em>List A</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListB <em>List B</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListC <em>List C</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListD <em>List D</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RootImpl extends EObjectImpl implements Root
 {
   /**
-   * The cached value of the '{@link #getListA() <em>List A</em>}' containment reference list. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getListA() <em>List A</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getListA()
    * @generated
    * @ordered
@@ -51,9 +51,9 @@ public class RootImpl extends EObjectImpl implements Root
   protected EList<BaseObject> listA;
 
   /**
-   * The cached value of the '{@link #getListB() <em>List B</em>}' containment reference list. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getListB() <em>List B</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getListB()
    * @generated
    * @ordered
@@ -61,9 +61,9 @@ public class RootImpl extends EObjectImpl implements Root
   protected EList<BaseObject> listB;
 
   /**
-   * The cached value of the '{@link #getListC() <em>List C</em>}' containment reference list. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getListC() <em>List C</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getListC()
    * @generated
    * @ordered
@@ -71,9 +71,9 @@ public class RootImpl extends EObjectImpl implements Root
   protected EList<BaseObject> listC;
 
   /**
-   * The cached value of the '{@link #getListD() <em>List D</em>}' containment reference list. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getListD() <em>List D</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getListD()
    * @generated
    * @ordered
@@ -82,7 +82,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected RootImpl()
@@ -92,7 +91,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -103,7 +101,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<BaseObject> getListA()
@@ -117,7 +114,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<BaseObject> getListB()
@@ -131,7 +127,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<BaseObject> getListC()
@@ -145,7 +140,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<BaseObject> getListD()
@@ -159,7 +153,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -181,7 +174,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -203,7 +195,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -234,7 +225,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -260,7 +250,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

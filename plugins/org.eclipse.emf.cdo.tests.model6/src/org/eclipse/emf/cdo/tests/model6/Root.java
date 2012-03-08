@@ -15,16 +15,17 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Root</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListA <em>List A</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListB <em>List B</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListC <em>List C</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListD <em>List D</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListA <em>List A</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListB <em>List B</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListC <em>List C</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListD <em>List D</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot()
  * @model
  * @generated
@@ -32,14 +33,14 @@ import org.eclipse.emf.ecore.EObject;
 public interface Root extends EObject
 {
   /**
-   * Returns the value of the '<em><b>List A</b></em>' containment reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model6.BaseObject}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>List A</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model6.BaseObject}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>List A</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>List A</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListA()
    * @model containment="true"
@@ -48,14 +49,14 @@ public interface Root extends EObject
   EList<BaseObject> getListA();
 
   /**
-   * Returns the value of the '<em><b>List B</b></em>' containment reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model6.BaseObject}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>List B</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model6.BaseObject}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>List B</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>List B</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListB()
    * @model containment="true"
@@ -64,14 +65,14 @@ public interface Root extends EObject
   EList<BaseObject> getListB();
 
   /**
-   * Returns the value of the '<em><b>List C</b></em>' containment reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model6.BaseObject}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>List C</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model6.BaseObject}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>List C</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>List C</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListC()
    * @model containment="true"
@@ -80,14 +81,14 @@ public interface Root extends EObject
   EList<BaseObject> getListC();
 
   /**
-   * Returns the value of the '<em><b>List D</b></em>' containment reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.tests.model6.BaseObject}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>List D</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model6.BaseObject}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>List D</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>List D</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListD()
    * @model containment="true"

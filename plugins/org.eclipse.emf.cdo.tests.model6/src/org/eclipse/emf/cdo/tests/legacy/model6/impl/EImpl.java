@@ -29,18 +29,18 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.EImpl#getOwnedAs <em>Owned As</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.EImpl#getOwnedAs <em>Owned As</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class EImpl extends EObjectImpl implements E
 {
   /**
-   * The cached value of the '{@link #getOwnedAs() <em>Owned As</em>}' containment reference list. <!-- begin-user-doc
+   * The cached value of the '{@link #getOwnedAs() <em>Owned As</em>}' containment reference list.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getOwnedAs()
    * @generated
    * @ordered
@@ -49,7 +49,6 @@ public class EImpl extends EObjectImpl implements E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected EImpl()
@@ -59,7 +58,6 @@ public class EImpl extends EObjectImpl implements E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -70,7 +68,6 @@ public class EImpl extends EObjectImpl implements E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<A> getOwnedAs()
@@ -84,7 +81,6 @@ public class EImpl extends EObjectImpl implements E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -100,7 +96,6 @@ public class EImpl extends EObjectImpl implements E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -116,7 +111,6 @@ public class EImpl extends EObjectImpl implements E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -135,7 +129,6 @@ public class EImpl extends EObjectImpl implements E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -152,7 +145,6 @@ public class EImpl extends EObjectImpl implements E
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

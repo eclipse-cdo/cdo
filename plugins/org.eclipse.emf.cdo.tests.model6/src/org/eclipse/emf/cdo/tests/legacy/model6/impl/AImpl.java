@@ -30,19 +30,19 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.AImpl#getOwnedDs <em>Owned Ds</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.AImpl#getOwnedBs <em>Owned Bs</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.AImpl#getOwnedDs <em>Owned Ds</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.AImpl#getOwnedBs <em>Owned Bs</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class AImpl extends EObjectImpl implements A
 {
   /**
-   * The cached value of the '{@link #getOwnedDs() <em>Owned Ds</em>}' containment reference list. <!-- begin-user-doc
+   * The cached value of the '{@link #getOwnedDs() <em>Owned Ds</em>}' containment reference list.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getOwnedDs()
    * @generated
    * @ordered
@@ -50,9 +50,9 @@ public class AImpl extends EObjectImpl implements A
   protected EList<D> ownedDs;
 
   /**
-   * The cached value of the '{@link #getOwnedBs() <em>Owned Bs</em>}' containment reference list. <!-- begin-user-doc
+   * The cached value of the '{@link #getOwnedBs() <em>Owned Bs</em>}' containment reference list.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getOwnedBs()
    * @generated
    * @ordered
@@ -61,7 +61,6 @@ public class AImpl extends EObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected AImpl()
@@ -71,7 +70,6 @@ public class AImpl extends EObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -82,7 +80,6 @@ public class AImpl extends EObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<D> getOwnedDs()
@@ -96,7 +93,6 @@ public class AImpl extends EObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<B> getOwnedBs()
@@ -110,7 +106,6 @@ public class AImpl extends EObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -128,7 +123,6 @@ public class AImpl extends EObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -146,7 +140,6 @@ public class AImpl extends EObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -169,7 +162,6 @@ public class AImpl extends EObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -189,7 +181,6 @@ public class AImpl extends EObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

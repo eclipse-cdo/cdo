@@ -26,18 +26,18 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BImpl#getOwnedC <em>Owned C</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BImpl#getOwnedC <em>Owned C</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class BImpl extends EObjectImpl implements B
 {
   /**
-   * The cached value of the '{@link #getOwnedC() <em>Owned C</em>}' containment reference. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getOwnedC() <em>Owned C</em>}' containment reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getOwnedC()
    * @generated
    * @ordered
@@ -46,7 +46,6 @@ public class BImpl extends EObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected BImpl()
@@ -56,7 +55,6 @@ public class BImpl extends EObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +65,6 @@ public class BImpl extends EObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public C getOwnedC()
@@ -77,7 +74,6 @@ public class BImpl extends EObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotificationChain basicSetOwnedC(C newOwnedC, NotificationChain msgs)
@@ -98,7 +94,6 @@ public class BImpl extends EObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setOwnedC(C newOwnedC)
@@ -122,7 +117,6 @@ public class BImpl extends EObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -138,7 +132,6 @@ public class BImpl extends EObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -154,7 +147,6 @@ public class BImpl extends EObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -171,7 +163,6 @@ public class BImpl extends EObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -188,7 +179,6 @@ public class BImpl extends EObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

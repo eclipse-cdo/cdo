@@ -29,18 +29,18 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.FImpl#getOwnedEs <em>Owned Es</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.FImpl#getOwnedEs <em>Owned Es</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class FImpl extends EObjectImpl implements F
 {
   /**
-   * The cached value of the '{@link #getOwnedEs() <em>Owned Es</em>}' containment reference list. <!-- begin-user-doc
+   * The cached value of the '{@link #getOwnedEs() <em>Owned Es</em>}' containment reference list.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getOwnedEs()
    * @generated
    * @ordered
@@ -49,7 +49,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected FImpl()
@@ -59,7 +58,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -70,7 +68,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<E> getOwnedEs()
@@ -84,7 +81,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -100,7 +96,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -116,7 +111,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -135,7 +129,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -152,7 +145,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

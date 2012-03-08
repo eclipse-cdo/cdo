@@ -21,11 +21,11 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.UnorderedListImpl#getContained <em>Contained</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.UnorderedListImpl#getReferenced <em>Referenced</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.UnorderedListImpl#getContained <em>Contained</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.UnorderedListImpl#getReferenced <em>Referenced</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class UnorderedListImpl extends EObjectImpl implements UnorderedList
@@ -41,9 +41,9 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
   protected EList<UnorderedList> contained;
 
   /**
-   * The cached value of the '{@link #getReferenced() <em>Referenced</em>}' reference list. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getReferenced() <em>Referenced</em>}' reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getReferenced()
    * @generated
    * @ordered
@@ -52,7 +52,6 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected UnorderedListImpl()
@@ -62,7 +61,6 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -73,7 +71,6 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<UnorderedList> getContained()
@@ -88,7 +85,6 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<UnorderedList> getReferenced()
@@ -103,7 +99,6 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -119,7 +114,6 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -137,7 +131,6 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -160,7 +153,6 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -180,7 +172,6 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

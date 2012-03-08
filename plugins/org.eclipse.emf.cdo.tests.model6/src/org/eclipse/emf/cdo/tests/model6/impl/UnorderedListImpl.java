@@ -15,18 +15,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.UnorderedListImpl#getContained <em>Contained</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.UnorderedListImpl#getReferenced <em>Referenced</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.UnorderedListImpl#getContained <em>Contained</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.UnorderedListImpl#getReferenced <em>Referenced</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class UnorderedListImpl extends CDOObjectImpl implements UnorderedList
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected UnorderedListImpl()
@@ -36,7 +35,6 @@ public class UnorderedListImpl extends CDOObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -47,7 +45,6 @@ public class UnorderedListImpl extends CDOObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -58,7 +55,6 @@ public class UnorderedListImpl extends CDOObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -69,7 +65,6 @@ public class UnorderedListImpl extends CDOObjectImpl implements UnorderedList
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

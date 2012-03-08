@@ -30,13 +30,11 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentOptional <em>Containment
- * Optional</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentList <em>Containment List
- * </em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentOptional <em>Containment Optional</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentList <em>Containment List</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ContainmentObjectImpl extends BaseObjectImpl implements ContainmentObject
@@ -44,7 +42,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
   /**
    * The cached value of the '{@link #getContainmentOptional() <em>Containment Optional</em>}' containment reference.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see #getContainmentOptional()
    * @generated
    * @ordered
@@ -63,7 +60,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ContainmentObjectImpl()
@@ -73,7 +69,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -84,7 +79,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BaseObject getContainmentOptional()
@@ -94,7 +88,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotificationChain basicSetContainmentOptional(BaseObject newContainmentOptional, NotificationChain msgs)
@@ -115,7 +108,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setContainmentOptional(BaseObject newContainmentOptional)
@@ -140,7 +132,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<BaseObject> getContainmentList()
@@ -155,7 +146,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -173,7 +163,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -191,7 +180,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -213,7 +201,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -233,7 +220,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

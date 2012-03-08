@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
+import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
+import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
@@ -30,86 +32,97 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import java.util.Map;
+
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model6PackageImpl extends EPackageImpl implements Model6Package
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass rootEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass baseObjectEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass referenceObjectEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass containmentObjectEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass unorderedListEClass = null;
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass propertiesMapEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass propertiesMapEntryEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass propertiesMapEntryValueEClass = null;
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass aEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass bEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass cEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass dEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass eEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass fEClass = null;
@@ -121,7 +134,7 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.tests.legacy.model6.Model6Package#eNS_URI
    * @see #init()
@@ -134,18 +147,17 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link Model6Package#eINSTANCE} when that field is accessed. Clients should not
-   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
+   *
+   * <p>This method is used to initialize {@link Model6Package#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -180,7 +192,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getRoot()
@@ -190,7 +201,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getRoot_ListA()
@@ -200,7 +210,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getRoot_ListB()
@@ -210,7 +219,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getRoot_ListC()
@@ -220,7 +228,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getRoot_ListD()
@@ -230,7 +237,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getBaseObject()
@@ -240,7 +246,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getBaseObject_AttributeOptional()
@@ -250,7 +255,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getBaseObject_AttributeRequired()
@@ -260,7 +264,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getBaseObject_AttributeList()
@@ -270,7 +273,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getReferenceObject()
@@ -280,7 +282,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getReferenceObject_ReferenceOptional()
@@ -290,7 +291,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getReferenceObject_ReferenceList()
@@ -300,7 +300,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getContainmentObject()
@@ -310,7 +309,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getContainmentObject_ContainmentOptional()
@@ -320,7 +318,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getContainmentObject_ContainmentList()
@@ -330,7 +327,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getUnorderedList()
@@ -340,7 +336,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getUnorderedList_Contained()
@@ -350,7 +345,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getUnorderedList_Referenced()
@@ -359,8 +353,97 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPropertiesMap()
+  {
+    return propertiesMapEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPropertiesMap_Label()
+  {
+    return (EAttribute)propertiesMapEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPropertiesMap_PersistentMap()
+  {
+    return (EReference)propertiesMapEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPropertiesMap_TransientMap()
+  {
+    return (EReference)propertiesMapEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPropertiesMapEntry()
+  {
+    return propertiesMapEntryEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPropertiesMapEntry_Key()
+  {
+    return (EAttribute)propertiesMapEntryEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPropertiesMapEntry_Value()
+  {
+    return (EReference)propertiesMapEntryEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPropertiesMapEntryValue()
+  {
+    return propertiesMapEntryValueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPropertiesMapEntryValue_Label()
+  {
+    return (EAttribute)propertiesMapEntryValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getA()
@@ -370,7 +453,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getA_OwnedDs()
@@ -380,7 +462,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getA_OwnedBs()
@@ -390,7 +471,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getB()
@@ -400,7 +480,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getB_OwnedC()
@@ -410,7 +489,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getC()
@@ -420,7 +498,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getD()
@@ -430,7 +507,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getD_Data()
@@ -440,7 +516,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getE()
@@ -450,7 +525,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getE_OwnedAs()
@@ -460,7 +534,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getF()
@@ -470,7 +543,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getF_OwnedEs()
@@ -480,7 +552,6 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model6Factory getModel6Factory()
@@ -490,15 +561,14 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
@@ -533,6 +603,18 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     createEReference(unorderedListEClass, UNORDERED_LIST__CONTAINED);
     createEReference(unorderedListEClass, UNORDERED_LIST__REFERENCED);
 
+    propertiesMapEClass = createEClass(PROPERTIES_MAP);
+    createEAttribute(propertiesMapEClass, PROPERTIES_MAP__LABEL);
+    createEReference(propertiesMapEClass, PROPERTIES_MAP__PERSISTENT_MAP);
+    createEReference(propertiesMapEClass, PROPERTIES_MAP__TRANSIENT_MAP);
+
+    propertiesMapEntryEClass = createEClass(PROPERTIES_MAP_ENTRY);
+    createEAttribute(propertiesMapEntryEClass, PROPERTIES_MAP_ENTRY__KEY);
+    createEReference(propertiesMapEntryEClass, PROPERTIES_MAP_ENTRY__VALUE);
+
+    propertiesMapEntryValueEClass = createEClass(PROPERTIES_MAP_ENTRY_VALUE);
+    createEAttribute(propertiesMapEntryValueEClass, PROPERTIES_MAP_ENTRY_VALUE__LABEL);
+
     aEClass = createEClass(A);
     createEReference(aEClass, A__OWNED_DS);
     createEReference(aEClass, A__OWNED_BS);
@@ -554,15 +636,14 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
@@ -639,6 +720,31 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     initEReference(getUnorderedList_Referenced(), getUnorderedList(), null, "referenced", null, 0, -1,
         UnorderedList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+    initEClass(propertiesMapEClass, PropertiesMap.class, "PropertiesMap", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPropertiesMap_Label(), ecorePackage.getEString(), "label", null, 0, 1, PropertiesMap.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPropertiesMap_PersistentMap(), getPropertiesMapEntry(), null, "persistentMap", null, 0, -1,
+        PropertiesMap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPropertiesMap_TransientMap(), getPropertiesMapEntry(), null, "transientMap", null, 0, -1,
+        PropertiesMap.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(propertiesMapEntryEClass, Map.Entry.class, "PropertiesMapEntry", !IS_ABSTRACT, !IS_INTERFACE,
+        !IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPropertiesMapEntry_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPropertiesMapEntry_Value(), getPropertiesMapEntryValue(), null, "value", null, 0, 1,
+        Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(propertiesMapEntryValueEClass, PropertiesMapEntryValue.class, "PropertiesMapEntryValue", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPropertiesMapEntryValue_Label(), ecorePackage.getEString(), "label", null, 0, 1,
+        PropertiesMapEntryValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(aEClass, A.class, "A", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getA_OwnedDs(), getD(), null, "ownedDs", null, 0, -1, A.class, !IS_TRANSIENT, !IS_VOLATILE,

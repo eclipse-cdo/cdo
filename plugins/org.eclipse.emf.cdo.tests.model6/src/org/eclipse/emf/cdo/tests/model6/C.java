@@ -14,7 +14,8 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>C</b></em>'. <!-- end-user-doc -->
- * 
+ *
+ *
  * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getC()
  * @model
  * @generated

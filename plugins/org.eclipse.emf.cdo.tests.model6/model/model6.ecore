@@ -36,6 +36,21 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="referenced" ordered="false"
         upperBound="-1" eType="#//UnorderedList"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertiesMap">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="persistentMap" upperBound="-1"
+        eType="#//PropertiesMapEntry" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transientMap" upperBound="-1"
+        eType="#//PropertiesMapEntry" transient="true" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertiesMapEntry" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//PropertiesMapEntryValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertiesMapEntryValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="A">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedDs" upperBound="-1"
         eType="#//D" containment="true"/>

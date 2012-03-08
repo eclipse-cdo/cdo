@@ -23,17 +23,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BImpl#getOwnedC <em>Owned C</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BImpl#getOwnedC <em>Owned C</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class BImpl extends CDOObjectImpl implements B
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected BImpl()
@@ -43,7 +42,6 @@ public class BImpl extends CDOObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -54,7 +52,6 @@ public class BImpl extends CDOObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -65,7 +62,6 @@ public class BImpl extends CDOObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public C getOwnedC()
@@ -75,7 +71,6 @@ public class BImpl extends CDOObjectImpl implements B
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setOwnedC(C newOwnedC)

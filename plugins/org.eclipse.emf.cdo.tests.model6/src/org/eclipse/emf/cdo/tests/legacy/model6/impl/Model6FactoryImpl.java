@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
+import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
+import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
@@ -30,16 +32,17 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
+import java.util.Map;
+
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static Model6Factory init()
@@ -61,8 +64,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Model6FactoryImpl()
@@ -72,7 +75,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -90,6 +92,12 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createContainmentObject();
     case Model6Package.UNORDERED_LIST:
       return createUnorderedList();
+    case Model6Package.PROPERTIES_MAP:
+      return createPropertiesMap();
+    case Model6Package.PROPERTIES_MAP_ENTRY:
+      return (EObject)createPropertiesMapEntry();
+    case Model6Package.PROPERTIES_MAP_ENTRY_VALUE:
+      return createPropertiesMapEntryValue();
     case Model6Package.A:
       return createA();
     case Model6Package.B:
@@ -109,7 +117,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Root createRoot()
@@ -120,7 +127,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BaseObject createBaseObject()
@@ -131,7 +137,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ReferenceObject createReferenceObject()
@@ -142,7 +147,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ContainmentObject createContainmentObject()
@@ -153,7 +157,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public UnorderedList createUnorderedList()
@@ -163,8 +166,40 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PropertiesMap createPropertiesMap()
+  {
+    PropertiesMapImpl propertiesMap = new PropertiesMapImpl();
+    return propertiesMap;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Map.Entry<String, PropertiesMapEntryValue> createPropertiesMapEntry()
+  {
+    PropertiesMapEntryImpl propertiesMapEntry = new PropertiesMapEntryImpl();
+    return propertiesMapEntry;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PropertiesMapEntryValue createPropertiesMapEntryValue()
+  {
+    PropertiesMapEntryValueImpl propertiesMapEntryValue = new PropertiesMapEntryValueImpl();
+    return propertiesMapEntryValue;
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public A createA()
@@ -175,7 +210,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public B createB()
@@ -186,7 +220,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public C createC()
@@ -197,7 +230,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public D createD()
@@ -208,7 +240,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public E createE()
@@ -219,7 +250,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public F createF()
@@ -230,7 +260,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model6Package getModel6Package()
@@ -240,7 +269,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

@@ -132,7 +132,7 @@ public abstract class CDOLobUserType implements UserType, ParameterizedType
     int pos = lobId.indexOf(SEPARATOR);
 
     byte[] id = HexUtil.hexToBytes(lobId.substring(0, pos));
-    long size = Long.parseLong(lobId.substring(pos + 1));
+    long size = Long.parseLong(lobId.substring(pos + SEPARATOR.length()));
     return createLob(id, size);
   }
 

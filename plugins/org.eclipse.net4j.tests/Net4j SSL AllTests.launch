@@ -16,5 +16,5 @@
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit3"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.net4j.tests.AllSSLTests"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.net4j.tests"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx700m -Ddebug=true -Dorg.eclipse.net4j.tcp.ssl.passphrase=ab987c -Dorg.eclipse.net4j.tcp.ssl.trust=file:///${workspace_loc:org.eclipse.net4j.tests}/sslKey/testTrust  -Dorg.eclipse.net4j.tcp.ssl.key=file:///${workspace_loc:org.eclipse.net4j.tests}/sslKey/testKeys"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx700m -Ddebug=true -Dorg.eclipse.net4j.tcp.ssl.passphrase=ab987c -Dorg.eclipse.net4j.tcp.ssl.trust=file:///${workspace_loc:org.eclipse.net4j.tests}/sslKey/testTrust  -Dorg.eclipse.net4j.tcp.ssl.key=file:///${workspace_loc:org.eclipse.net4j.tests}/sslKey/testKeys&#13;&#10;-Djavax.net.debug=all -Dcheck.validity.certificate=false"/>
 </launchConfiguration>

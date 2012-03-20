@@ -21,6 +21,7 @@ import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -28,16 +29,14 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
+import javax.security.cert.X509Certificate;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
+import java.security.cert.Certificate;
+import java.util.Enumeration;
 
 /**
  * A utility class with various static factory and convenience methods for SSL transport.
@@ -52,6 +51,11 @@ public class SSLUtil
    * The variable for SSL Engine
    */
   private static final String PROTOCOL = "TLS";
+
+  /**
+   * The X.509 certificate type.
+   */
+  private static final String X509_CERTIFICATE_TYPE = "X.509";
 
   private static String configFile;
 
@@ -112,9 +116,7 @@ public class SSLUtil
         .getElement(TCPConnectorFactory.PRODUCT_GROUP, SSLConnectorFactory.TYPE, description);
   }
 
-  public static synchronized SSLEngine createSSLEngine(boolean client, String host, int port)
-      throws NoSuchAlgorithmException, KeyStoreException, CertificateException, IOException, UnrecoverableKeyException,
-      KeyManagementException
+  public static synchronized SSLEngine createSSLEngine(boolean client, String host, int port) throws Exception
   {
     // Get values from the system properties.
     SSLProperties sslProperties = new SSLProperties();
@@ -187,24 +189,12 @@ public class SSLUtil
 
     KeyManager[] keyManagers = null;
     TrustManager[] trustManagers = null;
-
+    String checkValidity = OMPlatform.INSTANCE.getProperty(SSLProperties.CHECK_VALIDITY_CERTIFICATE);
+    boolean checkValidtyStatus = checkValidity == null || Boolean.valueOf(checkValidity);
     if (client)
     {
       // Initial key material(private key) for the client.
-      KeyStore ksTrust = KeyStore.getInstance(KeyStore.getDefaultType());
-
-      InputStream in = null;
-
-      try
-      {
-        in = new URL(trustPath).openStream();
-        ksTrust.load(in, pass);
-      }
-      finally
-      {
-        IOUtil.close(in);
-      }
-
+      KeyStore ksTrust = createKeyStore(trustPath, pass, checkValidtyStatus);
       // Initial the trust manager factory
       TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
       tmf.init(ksTrust);
@@ -214,18 +204,7 @@ public class SSLUtil
     else
     {
       // Initial key material (private key) for the server.
-      KeyStore ksKeys = KeyStore.getInstance(KeyStore.getDefaultType());
-      InputStream in = null;
-
-      try
-      {
-        in = new URL(keyPath).openStream();
-        ksKeys.load(in, pass);
-      }
-      finally
-      {
-        IOUtil.close(in);
-      }
+      KeyStore ksKeys = createKeyStore(keyPath, pass, checkValidtyStatus);
 
       // Initial the key manager factory.
       KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
@@ -240,6 +219,42 @@ public class SSLUtil
     SSLEngine sslEngine = sslContext.createSSLEngine(host, port);
     sslEngine.setUseClientMode(client);
     return sslEngine;
+  }
+
+  private static KeyStore createKeyStore(String path, char[] password, boolean checkValidity) throws Exception
+  {
+    // Initial key material
+    KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+
+    InputStream in = null;
+
+    try
+    {
+      in = new URL(path).openStream();
+      keyStore.load(in, password);
+
+      if (checkValidity)
+      {
+        // Check validity license key
+        Enumeration<String> aliasesIter = keyStore.aliases();
+        while (aliasesIter.hasMoreElements())
+        {
+          String alias = aliasesIter.nextElement();
+          Certificate cert = keyStore.getCertificate(alias);
+          if (cert.getType() == X509_CERTIFICATE_TYPE)
+          {
+            X509Certificate x509cert = X509Certificate.getInstance(cert.getEncoded());
+            x509cert.checkValidity();
+          }
+        }
+      }
+    }
+    finally
+    {
+      IOUtil.close(in);
+    }
+
+    return keyStore;
   }
 
   public static synchronized int getHandShakeTimeOut()

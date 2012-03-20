@@ -37,6 +37,8 @@ public class SSLProperties
 
   public static final String HANDSHAKE_WAITTIME = "org.eclipse.net4j.tcp.ssl.handshake.waittime";
 
+  public static final String CHECK_VALIDITY_CERTIFICATE = "check.validity.certificate";
+
   private Properties localProperties;
 
   public SSLProperties()

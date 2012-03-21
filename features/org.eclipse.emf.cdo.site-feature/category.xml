@@ -123,6 +123,9 @@
    <feature id="org.eclipse.emf.cdo.releng.relativepaths" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
+   <feature id="org.eclipse.emf.cdo.releng.tasks" version="0.0.0">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
    <feature id="org.eclipse.emf.cdo.releng.windowtitle" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>

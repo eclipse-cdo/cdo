@@ -31,14 +31,13 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static Model6Factory init()
@@ -60,8 +59,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Model6FactoryImpl()
@@ -71,7 +70,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -106,7 +104,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Root createRoot()
@@ -117,7 +114,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BaseObject createBaseObject()
@@ -128,7 +124,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ReferenceObject createReferenceObject()
@@ -139,7 +134,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ContainmentObject createContainmentObject()
@@ -150,7 +144,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public A createA()
@@ -161,7 +154,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public B createB()
@@ -172,7 +164,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public C createC()
@@ -183,7 +174,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public D createD()
@@ -194,7 +184,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public E createE()
@@ -205,7 +194,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public F createF()
@@ -216,7 +204,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model6Package getModel6Package()
@@ -226,7 +213,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

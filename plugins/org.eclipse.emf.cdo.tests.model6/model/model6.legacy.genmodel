@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<genmodel:GenModel xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Eike Stepper - initial API and implementation"
     modelDirectory="/org.eclipse.emf.cdo.tests.model6/src" editDirectory="" editorDirectory=""
     modelPluginID="org.eclipse.emf.cdo.tests.model6" modelName="model6" updateClasspath="false"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" providerRootExtendsClass="" runtimeVersion="2.6">
+    containmentProxies="true" complianceLevel="5.0" providerRootExtendsClass="" runtimeVersion="2.6">
   <foreignModel>model6.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Model6" basePackage="org.eclipse.emf.cdo.tests.legacy" disposableProviderFactory="true"
@@ -29,6 +28,23 @@
     <genClasses ecoreClass="model6.ecore#//ContainmentObject">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//ContainmentObject/containmentOptional"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//ContainmentObject/containmentList"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//A">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//A/ownedDs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//A/ownedBs"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//B">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//B/ownedC"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//C"/>
+    <genClasses ecoreClass="model6.ecore#//D">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//D/data"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//E">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//E/ownedAs"/>
+    </genClasses>
+    <genClasses ecoreClass="model6.ecore#//F">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model6.ecore#//F/ownedEs"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

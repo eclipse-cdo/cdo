@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.cdo.tests.legacy.model6.Model6Factory
  * @model kind="package"
  * @generated
@@ -32,35 +31,34 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNAME = "model6";
 
   /**
-   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace URI.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/tests/legacy/model6/1.0.0";
 
   /**
-   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_PREFIX = "model6";
 
   /**
-   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the package.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   Model6Package eINSTANCE = org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl.init();
@@ -68,7 +66,6 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl <em>Root</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getRoot()
    * @generated
@@ -76,53 +73,52 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int ROOT = 0;
 
   /**
-   * The feature id for the '<em><b>List A</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>List A</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int ROOT__LIST_A = 0;
 
   /**
-   * The feature id for the '<em><b>List B</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>List B</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int ROOT__LIST_B = 1;
 
   /**
-   * The feature id for the '<em><b>List C</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>List C</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int ROOT__LIST_C = 2;
 
   /**
-   * The feature id for the '<em><b>List D</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>List D</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int ROOT__LIST_D = 3;
 
   /**
-   * The number of structural features of the '<em>Root</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Root</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ROOT_FEATURE_COUNT = 4;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl
-   * <em>Base Object</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl <em>Base Object</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getBaseObject()
    * @generated
@@ -166,9 +162,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int BASE_OBJECT_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ReferenceObjectImpl
-   * <em>Reference Object</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ReferenceObjectImpl <em>Reference Object</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.ReferenceObjectImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getReferenceObject()
    * @generated
@@ -221,18 +216,17 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int REFERENCE_OBJECT__REFERENCE_LIST = BASE_OBJECT_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Reference Object</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Reference Object</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int REFERENCE_OBJECT_FEATURE_COUNT = BASE_OBJECT_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl
-   * <em>Containment Object</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl <em>Containment Object</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl
    * @see org.eclipse.emf.cdo.tests.legacy.model6.impl.Model6PackageImpl#getContainmentObject()
    * @generated
@@ -267,27 +261,27 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int CONTAINMENT_OBJECT__ATTRIBUTE_LIST = BASE_OBJECT__ATTRIBUTE_LIST;
 
   /**
-   * The feature id for the '<em><b>Containment Optional</b></em>' containment reference. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Containment Optional</b></em>' containment reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL = BASE_OBJECT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Containment List</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Containment List</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int CONTAINMENT_OBJECT__CONTAINMENT_LIST = BASE_OBJECT_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Containment Object</em>' class. <!-- begin-user-doc --> <!--
+   * The number of structural features of the '<em>Containment Object</em>' class.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
@@ -304,26 +298,26 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int A = 4;
 
   /**
-   * The feature id for the '<em><b>Owned Ds</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Owned Ds</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int A__OWNED_DS = 0;
 
   /**
-   * The feature id for the '<em><b>Owned Bs</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Owned Bs</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int A__OWNED_BS = 1;
 
   /**
-   * The number of structural features of the '<em>A</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>A</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -349,8 +343,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int B__OWNED_C = 0;
 
   /**
-   * The number of structural features of the '<em>B</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>B</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -367,8 +361,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int C = 6;
 
   /**
-   * The number of structural features of the '<em>C</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>C</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -385,16 +379,16 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int D = 7;
 
   /**
-   * The feature id for the '<em><b>Data</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Data</b></em>' containment reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int D__DATA = 0;
 
   /**
-   * The number of structural features of the '<em>D</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>D</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -411,17 +405,17 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int E = 8;
 
   /**
-   * The feature id for the '<em><b>Owned As</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Owned As</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int E__OWNED_AS = 0;
 
   /**
-   * The number of structural features of the '<em>E</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>E</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -438,17 +432,17 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   int F = 9;
 
   /**
-   * The feature id for the '<em><b>Owned Es</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Owned Es</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int F__OWNED_ES = 0;
 
   /**
-   * The number of structural features of the '<em>F</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>F</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -465,10 +459,9 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EClass getRoot();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.Root#getListA <em>List A</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model6.Root#getListA <em>List A</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>List A</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.Root#getListA()
    * @see #getRoot()
@@ -477,10 +470,9 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EReference getRoot_ListA();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.Root#getListB <em>List B</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model6.Root#getListB <em>List B</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>List B</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.Root#getListB()
    * @see #getRoot()
@@ -489,10 +481,9 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EReference getRoot_ListB();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.Root#getListC <em>List C</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model6.Root#getListC <em>List C</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>List C</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.Root#getListC()
    * @see #getRoot()
@@ -501,10 +492,9 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EReference getRoot_ListC();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.Root#getListD <em>List D</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model6.Root#getListD <em>List D</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>List D</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.Root#getListD()
    * @see #getRoot()
@@ -513,9 +503,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EReference getRoot_ListD();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model6.BaseObject <em>Base Object</em>}
-   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model6.BaseObject <em>Base Object</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Base Object</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.BaseObject
    * @generated
@@ -559,9 +548,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EAttribute getBaseObject_AttributeList();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model6.ReferenceObject
-   * <em>Reference Object</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model6.ReferenceObject <em>Reference Object</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Reference Object</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.ReferenceObject
    * @generated
@@ -569,10 +557,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EClass getReferenceObject();
 
   /**
-   * Returns the meta object for the reference '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.ReferenceObject#getReferenceOptional <em>Reference Optional</em>}'.
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.legacy.model6.ReferenceObject#getReferenceOptional <em>Reference Optional</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the reference '<em>Reference Optional</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.ReferenceObject#getReferenceOptional()
    * @see #getReferenceObject()
@@ -593,9 +579,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EReference getReferenceObject_ReferenceList();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model6.ContainmentObject
-   * <em>Containment Object</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.legacy.model6.ContainmentObject <em>Containment Object</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Containment Object</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.ContainmentObject
    * @generated
@@ -603,10 +588,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EClass getContainmentObject();
 
   /**
-   * Returns the meta object for the containment reference '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.ContainmentObject#getContainmentOptional
-   * <em>Containment Optional</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.legacy.model6.ContainmentObject#getContainmentOptional <em>Containment Optional</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Containment Optional</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.ContainmentObject#getContainmentOptional()
    * @see #getContainmentObject()
@@ -615,10 +598,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EReference getContainmentObject_ContainmentOptional();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.ContainmentObject#getContainmentList <em>Containment List</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model6.ContainmentObject#getContainmentList <em>Containment List</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Containment List</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.ContainmentObject#getContainmentList()
    * @see #getContainmentObject()
@@ -637,10 +618,9 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EClass getA();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.A#getOwnedDs <em>Owned Ds</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model6.A#getOwnedDs <em>Owned Ds</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Owned Ds</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.A#getOwnedDs()
    * @see #getA()
@@ -649,10 +629,9 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EReference getA_OwnedDs();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.A#getOwnedBs <em>Owned Bs</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model6.A#getOwnedBs <em>Owned Bs</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Owned Bs</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.A#getOwnedBs()
    * @see #getA()
@@ -671,9 +650,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EClass getB();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.legacy.model6.B#getOwnedC
-   * <em>Owned C</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.legacy.model6.B#getOwnedC <em>Owned C</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Owned C</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.B#getOwnedC()
    * @see #getB()
@@ -702,9 +680,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EClass getD();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.legacy.model6.D#getData
-   * <em>Data</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the containment reference '{@link org.eclipse.emf.cdo.tests.legacy.model6.D#getData <em>Data</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Data</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.D#getData()
    * @see #getD()
@@ -723,10 +700,9 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EClass getE();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.E#getOwnedAs <em>Owned As</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model6.E#getOwnedAs <em>Owned As</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Owned As</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.E#getOwnedAs()
    * @see #getE()
@@ -745,10 +721,9 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EClass getF();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.tests.legacy.model6.F#getOwnedEs <em>Owned Es</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.legacy.model6.F#getOwnedEs <em>Owned Es</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Owned Es</em>'.
    * @see org.eclipse.emf.cdo.tests.legacy.model6.F#getOwnedEs()
    * @see #getF()
@@ -757,8 +732,8 @@ public interface Model6Package extends org.eclipse.emf.cdo.tests.model6.Model6Pa
   EReference getF_OwnedEs();
 
   /**
-   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the factory that creates the instances of the model.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the factory that creates the instances of the model.
    * @generated
    */

@@ -24,17 +24,16 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.FImpl#getOwnedEs <em>Owned Es</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.FImpl#getOwnedEs <em>Owned Es</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class FImpl extends CDOObjectImpl implements F
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected FImpl()
@@ -44,7 +43,6 @@ public class FImpl extends CDOObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -55,7 +53,6 @@ public class FImpl extends CDOObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -66,7 +63,6 @@ public class FImpl extends CDOObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

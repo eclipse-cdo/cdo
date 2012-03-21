@@ -29,25 +29,24 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.FImpl#getOwnedEs <em>Owned Es</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.FImpl#getOwnedEs <em>Owned Es</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class FImpl extends EObjectImpl implements F
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The cached value of the '{@link #getOwnedEs() <em>Owned Es</em>}' containment reference list. <!-- begin-user-doc
+   * The cached value of the '{@link #getOwnedEs() <em>Owned Es</em>}' containment reference list.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getOwnedEs()
    * @generated
    * @ordered
@@ -56,7 +55,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected FImpl()
@@ -66,7 +64,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -77,21 +74,19 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<E> getOwnedEs()
   {
     if (ownedEs == null)
     {
-      ownedEs = new EObjectContainmentEList<E>(E.class, this, Model6Package.F__OWNED_ES);
+      ownedEs = new EObjectContainmentEList.Resolving<E>(E.class, this, Model6Package.F__OWNED_ES);
     }
     return ownedEs;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -107,7 +102,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -123,7 +117,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -142,7 +135,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -159,7 +151,6 @@ public class FImpl extends EObjectImpl implements F
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

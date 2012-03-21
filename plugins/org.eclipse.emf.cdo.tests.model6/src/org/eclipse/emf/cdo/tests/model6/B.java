@@ -14,13 +14,14 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>B</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.B#getOwnedC <em>Owned C</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.B#getOwnedC <em>Owned C</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getB()
  * @model
  * @generated
@@ -40,11 +41,9 @@ public interface B extends EObject
   C getOwnedC();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model6.B#getOwnedC <em>Owned C</em>}' containment
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Owned C</em>' containment reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model6.B#getOwnedC <em>Owned C</em>}' containment reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Owned C</em>' containment reference.
    * @see #getOwnedC()
    * @generated
    */

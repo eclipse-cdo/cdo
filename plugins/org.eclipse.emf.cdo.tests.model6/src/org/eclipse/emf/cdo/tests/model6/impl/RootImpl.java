@@ -24,20 +24,19 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListA <em>List A</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListB <em>List B</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListC <em>List C</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListD <em>List D</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListA <em>List A</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListB <em>List B</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListC <em>List C</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListD <em>List D</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RootImpl extends CDOObjectImpl implements Root
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected RootImpl()
@@ -47,7 +46,6 @@ public class RootImpl extends CDOObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -58,7 +56,6 @@ public class RootImpl extends CDOObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -69,7 +66,6 @@ public class RootImpl extends CDOObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -80,7 +76,6 @@ public class RootImpl extends CDOObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -91,7 +86,6 @@ public class RootImpl extends CDOObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -102,7 +96,6 @@ public class RootImpl extends CDOObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

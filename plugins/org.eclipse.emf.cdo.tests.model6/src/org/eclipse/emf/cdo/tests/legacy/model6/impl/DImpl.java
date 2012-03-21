@@ -26,25 +26,24 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.DImpl#getData <em>Data</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.DImpl#getData <em>Data</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class DImpl extends EObjectImpl implements D
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * The cached value of the '{@link #getData() <em>Data</em>}' containment reference. <!-- begin-user-doc --> <!--
+   * The cached value of the '{@link #getData() <em>Data</em>}' containment reference.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @see #getData()
    * @generated
    * @ordered
@@ -53,7 +52,6 @@ public class DImpl extends EObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected DImpl()
@@ -63,7 +61,6 @@ public class DImpl extends EObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -74,7 +71,6 @@ public class DImpl extends EObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EObject getData()
@@ -84,7 +80,6 @@ public class DImpl extends EObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotificationChain basicSetData(EObject newData, NotificationChain msgs)
@@ -105,7 +100,6 @@ public class DImpl extends EObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setData(EObject newData)
@@ -127,7 +121,6 @@ public class DImpl extends EObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -143,7 +136,6 @@ public class DImpl extends EObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -159,7 +151,6 @@ public class DImpl extends EObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -176,7 +167,6 @@ public class DImpl extends EObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -193,7 +183,6 @@ public class DImpl extends EObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

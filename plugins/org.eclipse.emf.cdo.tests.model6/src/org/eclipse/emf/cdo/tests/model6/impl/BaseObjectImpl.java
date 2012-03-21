@@ -23,19 +23,18 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl#getAttributeOptional <em>Attribute Optional</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl#getAttributeRequired <em>Attribute Required</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl#getAttributeList <em>Attribute List</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl#getAttributeOptional <em>Attribute Optional</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl#getAttributeRequired <em>Attribute Required</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl#getAttributeList <em>Attribute List</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected BaseObjectImpl()
@@ -45,7 +44,6 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +64,6 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAttributeOptional()
@@ -77,7 +73,6 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAttributeOptional(String newAttributeOptional)
@@ -87,7 +82,6 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAttributeRequired()
@@ -97,7 +91,6 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAttributeRequired(String newAttributeRequired)
@@ -107,7 +100,6 @@ public class BaseObjectImpl extends CDOObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

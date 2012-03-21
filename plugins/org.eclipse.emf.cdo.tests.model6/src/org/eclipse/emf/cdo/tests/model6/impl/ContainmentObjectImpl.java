@@ -35,7 +35,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ContainmentObjectImpl()
@@ -45,7 +44,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BaseObject getContainmentOptional()
@@ -66,7 +63,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setContainmentOptional(BaseObject newContainmentOptional)
@@ -76,7 +72,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

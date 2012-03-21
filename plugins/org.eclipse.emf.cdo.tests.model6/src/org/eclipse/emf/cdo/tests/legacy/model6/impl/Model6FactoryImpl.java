@@ -31,21 +31,19 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public static final String copyright = "Copyright (c) 2004 - 2011 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
 
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static Model6Factory init()
@@ -67,8 +65,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public Model6FactoryImpl()
@@ -78,7 +76,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -113,7 +110,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Root createRoot()
@@ -124,7 +120,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BaseObject createBaseObject()
@@ -135,7 +130,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ReferenceObject createReferenceObject()
@@ -146,7 +140,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ContainmentObject createContainmentObject()
@@ -157,7 +150,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public A createA()
@@ -168,7 +160,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public B createB()
@@ -179,7 +170,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public C createC()
@@ -190,7 +180,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public D createD()
@@ -201,7 +190,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public E createE()
@@ -212,7 +200,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public F createF()
@@ -223,7 +210,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Model6Package getModel6Package()
@@ -233,7 +219,6 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

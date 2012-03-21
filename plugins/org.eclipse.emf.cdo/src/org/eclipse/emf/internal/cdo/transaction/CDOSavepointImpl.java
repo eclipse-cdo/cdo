@@ -307,7 +307,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         return Collections.unmodifiableMap(getRevisionDeltas());
       }
 
-      // We need to combined the result for all delta in different Savepoint
+      // We need to combine the result for all deltas in different savepoints
       Map<CDOID, CDORevisionDelta> allRevisionDeltas = new HashMap<CDOID, CDORevisionDelta>();
       for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint
           .getNextSavepoint())
@@ -332,9 +332,13 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
           }
         }
 
+        Set<CDOID> reattachedObjects = savepoint.getReattachedObjects().keySet();
         for (CDOID detachedID : savepoint.getDetachedObjects().keySet())
         {
-          allRevisionDeltas.remove(detachedID);
+          if (!reattachedObjects.contains(detachedID))
+          {
+            allRevisionDeltas.remove(detachedID);
+          }
         }
       }
 

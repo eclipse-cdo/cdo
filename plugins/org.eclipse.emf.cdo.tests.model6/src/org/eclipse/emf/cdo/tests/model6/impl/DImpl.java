@@ -23,17 +23,16 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.DImpl#getData <em>Data</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.DImpl#getData <em>Data</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class DImpl extends CDOObjectImpl implements D
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected DImpl()
@@ -43,7 +42,6 @@ public class DImpl extends CDOObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -54,7 +52,6 @@ public class DImpl extends CDOObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -65,7 +62,6 @@ public class DImpl extends CDOObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EObject getData()
@@ -75,7 +71,6 @@ public class DImpl extends CDOObjectImpl implements D
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setData(EObject newData)

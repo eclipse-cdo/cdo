@@ -2065,13 +2065,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     // The super implementation will return null for a transient (unattached) object;
     // but in a tx, an transient object may previously have been attached. So we consult
     // the cleanRevisions if that's the case.
-    if (getDetachedObjects().containsValue(object))
+    CDORevisionKey revKey = cleanRevisions.get(object);
+    if (revKey != null && getDetachedObjects().containsValue(object))
     {
-      CDORevisionKey revKey = cleanRevisions.get(object);
-      if (revKey != null)
-      {
-        id = revKey.getID();
-      }
+      id = revKey.getID();
     }
 
     return id;

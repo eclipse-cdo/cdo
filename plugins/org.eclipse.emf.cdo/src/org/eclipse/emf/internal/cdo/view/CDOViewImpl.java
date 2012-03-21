@@ -955,16 +955,19 @@ public class CDOViewImpl extends AbstractCDOView
 
     if (detachedObjects != null)
     {
-      for (CDOObject detachedObject : detachedObjects)
+      if (options().isDetachmentNotificationEnabled())
       {
-        InternalCDOObject object = (InternalCDOObject)detachedObject;
-        if (object.eNotificationRequired())
+        for (CDOObject detachedObject : detachedObjects)
         {
-          // if (!isLocked(object))
+          InternalCDOObject object = (InternalCDOObject)detachedObject;
+          if (object.eNotificationRequired())
           {
-            NotificationImpl notification = new CDODeltaNotificationImpl(object, CDONotification.DETACH_OBJECT,
-                Notification.NO_FEATURE_ID, null, null);
-            notification.dispatch();
+            // if (!isLocked(object))
+            {
+              NotificationImpl notification = new CDODeltaNotificationImpl(object, CDONotification.DETACH_OBJECT,
+                  Notification.NO_FEATURE_ID, null, null);
+              notification.dispatch();
+            }
           }
         }
       }
@@ -1511,7 +1514,7 @@ public class CDOViewImpl extends AbstractCDOView
 
   /**
    * A separate class for better monitor debugging.
-   * 
+   *
    * @author Eike Stepper
    */
   private static final class InvalidationRunnerLock
@@ -1633,6 +1636,8 @@ public class CDOViewImpl extends AbstractCDOView
   {
     private boolean loadNotificationEnabled;
 
+    private boolean detachmentNotificationEnabled;
+
     private boolean invalidationNotificationEnabled;
 
     private CDOInvalidationPolicy invalidationPolicy = CDOInvalidationPolicy.DEFAULT;
@@ -1677,6 +1682,29 @@ public class CDOViewImpl extends AbstractCDOView
         {
           loadNotificationEnabled = enabled;
           event = new LoadNotificationEventImpl();
+        }
+      }
+
+      fireEvent(event);
+    }
+
+    public boolean isDetachmentNotificationEnabled()
+    {
+      synchronized (CDOViewImpl.this)
+      {
+        return detachmentNotificationEnabled;
+      }
+    }
+
+    public void setDetachmentNotificationEnabled(boolean enabled)
+    {
+      IEvent event = null;
+      synchronized (CDOViewImpl.this)
+      {
+        if (detachmentNotificationEnabled != enabled)
+        {
+          detachmentNotificationEnabled = enabled;
+          event = new DetachmentNotificationEventImpl();
         }
       }
 
@@ -2056,6 +2084,19 @@ public class CDOViewImpl extends AbstractCDOView
       private static final long serialVersionUID = 1L;
 
       public LoadNotificationEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class DetachmentNotificationEventImpl extends OptionsEvent implements DetachmenNotificationEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public DetachmentNotificationEventImpl()
       {
         super(OptionsImpl.this);
       }

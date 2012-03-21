@@ -69,6 +69,35 @@ public class BImpl extends EObjectImpl implements B
    */
   public C getOwnedC()
   {
+    if (ownedC != null && ownedC.eIsProxy())
+    {
+      InternalEObject oldOwnedC = (InternalEObject)ownedC;
+      ownedC = (C)eResolveProxy(oldOwnedC);
+      if (ownedC != oldOwnedC)
+      {
+        InternalEObject newOwnedC = (InternalEObject)ownedC;
+        NotificationChain msgs = oldOwnedC.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C,
+            null, null);
+        if (newOwnedC.eInternalContainer() == null)
+        {
+          msgs = newOwnedC.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.B__OWNED_C, null, msgs);
+        }
+        if (msgs != null)
+          msgs.dispatch();
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.B__OWNED_C, oldOwnedC, ownedC));
+      }
+    }
+    return ownedC;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public C basicGetOwnedC()
+  {
     return ownedC;
   }
 
@@ -140,7 +169,9 @@ public class BImpl extends EObjectImpl implements B
     switch (featureID)
     {
     case Model6Package.B__OWNED_C:
-      return getOwnedC();
+      if (resolve)
+        return getOwnedC();
+      return basicGetOwnedC();
     }
     return super.eGet(featureID, resolve, coreType);
   }

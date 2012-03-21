@@ -826,7 +826,7 @@ public interface Model6Package extends EPackage
    * @return the meta object for class '<em>Properties Map Entry</em>'.
    * @see java.util.Map.Entry
    * @model keyDataType="org.eclipse.emf.ecore.EString"
-   *        valueType="org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue" valueContainment="true"
+   *        valueType="org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue" valueContainment="true" valueResolveProxies="true"
    * @generated
    */
   EClass getPropertiesMapEntry();

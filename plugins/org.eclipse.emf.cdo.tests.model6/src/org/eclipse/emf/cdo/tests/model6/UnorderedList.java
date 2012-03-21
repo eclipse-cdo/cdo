@@ -33,7 +33,7 @@ public interface UnorderedList extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Contained</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getUnorderedList_Contained()
-   * @model containment="true" ordered="false"
+   * @model containment="true" resolveProxies="true" ordered="false"
    * @generated
    */
   EList<UnorderedList> getContained();

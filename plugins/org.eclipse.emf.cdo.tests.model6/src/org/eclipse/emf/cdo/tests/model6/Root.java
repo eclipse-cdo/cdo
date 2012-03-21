@@ -43,7 +43,7 @@ public interface Root extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>List A</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListA()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<BaseObject> getListA();
@@ -59,7 +59,7 @@ public interface Root extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>List B</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListB()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<BaseObject> getListB();
@@ -75,7 +75,7 @@ public interface Root extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>List C</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListC()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<BaseObject> getListC();
@@ -91,7 +91,7 @@ public interface Root extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>List D</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot_ListD()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<BaseObject> getListD();

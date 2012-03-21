@@ -74,7 +74,7 @@ public class EImpl extends EObjectImpl implements E
   {
     if (ownedAs == null)
     {
-      ownedAs = new EObjectContainmentEList<A>(A.class, this, Model6Package.E__OWNED_AS);
+      ownedAs = new EObjectContainmentEList.Resolving<A>(A.class, this, Model6Package.E__OWNED_AS);
     }
     return ownedAs;
   }

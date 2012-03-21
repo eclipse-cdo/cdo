@@ -112,6 +112,37 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
    */
   public PropertiesMapEntryValue getTypedValue()
   {
+    if (value != null && value.eIsProxy())
+    {
+      InternalEObject oldValue = (InternalEObject)value;
+      value = (PropertiesMapEntryValue)eResolveProxy(oldValue);
+      if (value != oldValue)
+      {
+        InternalEObject newValue = (InternalEObject)value;
+        NotificationChain msgs = oldValue.eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+            - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null, null);
+        if (newValue.eInternalContainer() == null)
+        {
+          msgs = newValue.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - Model6Package.PROPERTIES_MAP_ENTRY__VALUE, null,
+              msgs);
+        }
+        if (msgs != null)
+          msgs.dispatch();
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.PROPERTIES_MAP_ENTRY__VALUE,
+              oldValue, value));
+      }
+    }
+    return value;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PropertiesMapEntryValue basicGetTypedValue()
+  {
     return value;
   }
 
@@ -190,7 +221,9 @@ public class PropertiesMapEntryImpl extends EObjectImpl implements BasicEMap.Ent
     case Model6Package.PROPERTIES_MAP_ENTRY__KEY:
       return getTypedKey();
     case Model6Package.PROPERTIES_MAP_ENTRY__VALUE:
-      return getTypedValue();
+      if (resolve)
+        return getTypedValue();
+      return basicGetTypedValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }

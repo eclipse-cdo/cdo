@@ -86,7 +86,7 @@ public class AImpl extends EObjectImpl implements A
   {
     if (ownedDs == null)
     {
-      ownedDs = new EObjectContainmentEList<D>(D.class, this, Model6Package.A__OWNED_DS);
+      ownedDs = new EObjectContainmentEList.Resolving<D>(D.class, this, Model6Package.A__OWNED_DS);
     }
     return ownedDs;
   }
@@ -99,7 +99,7 @@ public class AImpl extends EObjectImpl implements A
   {
     if (ownedBs == null)
     {
-      ownedBs = new EObjectContainmentEList<B>(B.class, this, Model6Package.A__OWNED_BS);
+      ownedBs = new EObjectContainmentEList.Resolving<B>(B.class, this, Model6Package.A__OWNED_BS);
     }
     return ownedBs;
   }

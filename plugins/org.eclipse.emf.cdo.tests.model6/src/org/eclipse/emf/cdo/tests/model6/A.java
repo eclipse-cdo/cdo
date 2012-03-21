@@ -41,7 +41,7 @@ public interface A extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Owned Ds</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getA_OwnedDs()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<D> getOwnedDs();
@@ -57,7 +57,7 @@ public interface A extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Owned Bs</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getA_OwnedBs()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<B> getOwnedBs();

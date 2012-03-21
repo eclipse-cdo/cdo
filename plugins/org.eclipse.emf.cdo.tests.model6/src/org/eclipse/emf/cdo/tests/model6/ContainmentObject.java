@@ -40,7 +40,7 @@ public interface ContainmentObject extends BaseObject
    * @return the value of the '<em>Containment Optional</em>' containment reference.
    * @see #setContainmentOptional(BaseObject)
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getContainmentObject_ContainmentOptional()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   BaseObject getContainmentOptional();
@@ -65,7 +65,7 @@ public interface ContainmentObject extends BaseObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Containment List</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getContainmentObject_ContainmentList()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<BaseObject> getContainmentList();

@@ -40,7 +40,7 @@ public interface F extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Owned Es</em>' containment reference list.
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getF_OwnedEs()
-   * @model containment="true"
+   * @model containment="true" resolveProxies="true"
    * @generated
    */
   EList<E> getOwnedEs();

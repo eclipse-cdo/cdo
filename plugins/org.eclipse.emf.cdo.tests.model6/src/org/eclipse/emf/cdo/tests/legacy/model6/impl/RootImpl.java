@@ -107,7 +107,7 @@ public class RootImpl extends EObjectImpl implements Root
   {
     if (listA == null)
     {
-      listA = new EObjectContainmentEList<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_A);
+      listA = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_A);
     }
     return listA;
   }
@@ -120,7 +120,7 @@ public class RootImpl extends EObjectImpl implements Root
   {
     if (listB == null)
     {
-      listB = new EObjectContainmentEList<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_B);
+      listB = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_B);
     }
     return listB;
   }
@@ -133,7 +133,7 @@ public class RootImpl extends EObjectImpl implements Root
   {
     if (listC == null)
     {
-      listC = new EObjectContainmentEList<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_C);
+      listC = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_C);
     }
     return listC;
   }
@@ -146,7 +146,7 @@ public class RootImpl extends EObjectImpl implements Root
   {
     if (listD == null)
     {
-      listD = new EObjectContainmentEList<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_D);
+      listD = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_D);
     }
     return listD;
   }

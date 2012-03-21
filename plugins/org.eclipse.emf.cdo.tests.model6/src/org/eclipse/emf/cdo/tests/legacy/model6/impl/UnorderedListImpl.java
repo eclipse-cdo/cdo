@@ -77,7 +77,7 @@ public class UnorderedListImpl extends EObjectImpl implements UnorderedList
   {
     if (contained == null)
     {
-      contained = new EObjectContainmentEList<UnorderedList>(UnorderedList.class, this,
+      contained = new EObjectContainmentEList.Resolving<UnorderedList>(UnorderedList.class, this,
           Model6Package.UNORDERED_LIST__CONTAINED);
     }
     return contained;

@@ -83,6 +83,37 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
    */
   public BaseObject getContainmentOptional()
   {
+    if (containmentOptional != null && containmentOptional.eIsProxy())
+    {
+      InternalEObject oldContainmentOptional = (InternalEObject)containmentOptional;
+      containmentOptional = (BaseObject)eResolveProxy(oldContainmentOptional);
+      if (containmentOptional != oldContainmentOptional)
+      {
+        InternalEObject newContainmentOptional = (InternalEObject)containmentOptional;
+        NotificationChain msgs = oldContainmentOptional.eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+            - Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, null, null);
+        if (newContainmentOptional.eInternalContainer() == null)
+        {
+          msgs = newContainmentOptional.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+              - Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, null, msgs);
+        }
+        if (msgs != null)
+          msgs.dispatch();
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+              Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, oldContainmentOptional, containmentOptional));
+      }
+    }
+    return containmentOptional;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BaseObject basicGetContainmentOptional()
+  {
     return containmentOptional;
   }
 
@@ -138,7 +169,7 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
   {
     if (containmentList == null)
     {
-      containmentList = new EObjectContainmentEList<BaseObject>(BaseObject.class, this,
+      containmentList = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this,
           Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_LIST);
     }
     return containmentList;
@@ -171,7 +202,9 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
     switch (featureID)
     {
     case Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL:
-      return getContainmentOptional();
+      if (resolve)
+        return getContainmentOptional();
+      return basicGetContainmentOptional();
     case Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_LIST:
       return getContainmentList();
     }

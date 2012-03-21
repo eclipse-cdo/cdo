@@ -310,6 +310,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
+  public boolean isDetachmentNotificationEnabled()
+  {
+    return false;
+  }
+
+  public void setDetachmentNotificationEnabled(boolean enabled)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public boolean isInvalidationNotificationEnabled()
   {
     return false;

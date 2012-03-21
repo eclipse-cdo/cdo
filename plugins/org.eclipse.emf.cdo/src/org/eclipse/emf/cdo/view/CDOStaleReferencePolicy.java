@@ -28,7 +28,7 @@ import java.lang.reflect.Proxy;
 
 /**
  * Specifies a policy on how to deal with stale references.
- * 
+ *
  * @author Simon McDuff
  * @since 3.0
  */
@@ -59,7 +59,8 @@ public interface CDOStaleReferencePolicy
    */
   public static final CDOStaleReferencePolicy PROXY = new CDOStaleReferencePolicy()
   {
-    public Object processStaleReference(EObject source, final EStructuralFeature feature, int index, final CDOID target)
+    public Object processStaleReference(final EObject source, final EStructuralFeature feature, int index,
+        final CDOID target)
     {
       final EClassifier type = feature.getEType();
       InvocationHandler handler = new InvocationHandler()
@@ -74,6 +75,11 @@ public interface CDOStaleReferencePolicy
           if (arg1.getName().equals("eClass")) //$NON-NLS-1$
           {
             return type;
+          }
+
+          if (arg1.getName().equals("eAdapters")) //$NON-NLS-1$
+          {
+            return source.eAdapters();
           }
 
           throw new ObjectNotFoundException(target);

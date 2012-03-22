@@ -830,7 +830,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   /**
    * Iterates up the eContainers of an object and returns <code>true</code> on the first parent locked by another view.
-   * 
+   *
    * @return <code>true</code> if any parent is locked, <code>false</code> otherwise.
    */
   private boolean isContainerLocked(InternalCDORevisionDelta delta)
@@ -1003,19 +1003,32 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private InternalCDORevision computeDirtyObject(InternalCDORevisionDelta delta)
   {
+    CDOBranch branch = transaction.getBranch();
     CDOID id = delta.getID();
 
-    InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
-    if (oldRevision == null)
+    InternalCDORevision oldRevision = null;
+
+    try
     {
-      throw new IllegalStateException("Origin revision not found for " + delta);
+      oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
+      if (oldRevision != null)
+      {
+        if (ObjectUtil.equals(oldRevision.getBranch(), branch) && oldRevision.isHistorical())
+        {
+          oldRevision = null;
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      oldRevision = null;
     }
 
-    CDOBranch branch = transaction.getBranch();
-    if (ObjectUtil.equals(oldRevision.getBranch(), branch) && oldRevision.isHistorical())
+    if (oldRevision == null)
     {
       throw new ConcurrentModificationException("Attempt by " + transaction + " to modify historical revision: "
-          + oldRevision);
+          + delta);
     }
 
     // Make sure all chunks are loaded

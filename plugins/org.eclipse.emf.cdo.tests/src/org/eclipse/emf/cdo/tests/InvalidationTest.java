@@ -664,7 +664,7 @@ public class InvalidationTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return testAdapter.getNotifications().length == 2;
+        return testAdapter.getNotifications().length == 1;
       }
     }.assertNoTimeOut();
   }
@@ -758,7 +758,7 @@ public class InvalidationTest extends AbstractCDOTest
       @Override
       protected boolean successful()
       {
-        return testAdapter.getNotifications().length == 2;
+        return testAdapter.getNotifications().length == 1;
       }
     }.assertNoTimeOut();
   }

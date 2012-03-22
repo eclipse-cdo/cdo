@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.transaction;
 
+import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -119,6 +120,11 @@ public abstract class CDOPostEventTransactionHandler implements CDOTransactionHa
     @Override
     public void notifyChanged(Notification msg)
     {
+      if (msg instanceof CDONotification)
+      {
+        return;
+      }
+
       if (isModifyingEvent(msg.getEventType()))
       {
         Object notifier = msg.getNotifier();

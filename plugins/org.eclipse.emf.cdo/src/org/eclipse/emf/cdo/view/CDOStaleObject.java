@@ -10,15 +10,17 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.cdo.common.id.CDOWithID;
+
 /**
  * A marker interface for stale objects as produced by {@link CDOStaleReferencePolicy#PROXY}.
- * 
+ *
  * @author Simon McDuff
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  * @apiviz.exclude
  */
-public interface CDOStaleObject
+public interface CDOStaleObject extends CDOWithID
 {
 }

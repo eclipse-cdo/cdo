@@ -484,7 +484,26 @@ public abstract class AbstractCDOView extends Lifecycle implements InternalCDOVi
     URI uri = CDOURIUtil.createResourceURI(this, path);
     ResourceSet resourceSet = getResourceSet();
     ensureURIs(resourceSet); // Bug 337523
-    return (CDOResource)resourceSet.getResource(uri, loadInDemand);
+
+    try
+    {
+      return (CDOResource)resourceSet.getResource(uri, loadInDemand);
+    }
+    catch (RuntimeException ex)
+    {
+      EList<Resource> resources = resourceSet.getResources();
+      for (int i = resources.size() - 1; i >= 0; --i)
+      {
+        Resource resource = resources.get(i);
+        if (uri.equals(resource.getURI()))
+        {
+          resources.remove(i);
+          break;
+        }
+      }
+
+      throw ex;
+    }
   }
 
   /**

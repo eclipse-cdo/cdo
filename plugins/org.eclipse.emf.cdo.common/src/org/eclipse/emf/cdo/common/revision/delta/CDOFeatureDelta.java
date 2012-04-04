@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.common.revision.delta;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.NotifierImpl;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
@@ -31,7 +32,7 @@ public interface CDOFeatureDelta
   /**
    * @since 3.0
    */
-  public static final Object UNKNOWN_VALUE = new Object()
+  public static final Object UNKNOWN_VALUE = new NotifierImpl()
   {
     @Override
     public String toString()

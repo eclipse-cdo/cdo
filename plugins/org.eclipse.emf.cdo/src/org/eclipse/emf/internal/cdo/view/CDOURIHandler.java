@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
+import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -54,8 +56,14 @@ public class CDOURIHandler implements URIHandler
 
   public boolean canHandle(URI uri)
   {
-    return CDO_URI_SCHEME.equals(uri.scheme())
-        && view.getSession().getRepositoryInfo().getUUID().equals(CDOURIUtil.extractRepositoryUUID(uri));
+    if (CDO_URI_SCHEME.equals(uri.scheme()))
+    {
+      String uuid = view.getSession().getRepositoryInfo().getUUID();
+      return uuid.equals(CDOURIUtil.extractRepositoryUUID(uri));
+    }
+
+    CDOViewProvider[] viewProviders = CDOViewProviderRegistry.INSTANCE.getViewProviders(uri);
+    return viewProviders.length != 0;
   }
 
   public boolean exists(URI uri, Map<?, ?> options)

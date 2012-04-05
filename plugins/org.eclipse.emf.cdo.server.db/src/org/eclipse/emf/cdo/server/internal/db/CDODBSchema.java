@@ -239,21 +239,21 @@ public class CDODBSchema extends DBSchema
   /**
    * Field names of featuremap tables
    */
-  public static final String FEATUREMAP_REVISION_ID = "cdo_id"; //$NON-NLS-1$
+  public static final String FEATUREMAP_REVISION_ID = LIST_REVISION_ID;
 
-  public static final String FEATUREMAP_VERSION = "cdo_version"; //$NON-NLS-1$
+  public static final String FEATUREMAP_VERSION = LIST_REVISION_VERSION;
 
-  public static final String FEATUREMAP_VERSION_ADDED = "cdo_version_added"; //$NON-NLS-1$
+  public static final String FEATUREMAP_VERSION_ADDED = LIST_REVISION_VERSION_ADDED;
 
-  public static final String FEATUREMAP_VERSION_REMOVED = "cdo_version_removed"; //$NON-NLS-1$
+  public static final String FEATUREMAP_VERSION_REMOVED = LIST_REVISION_VERSION_REMOVED;
 
-  public static final String FEATUREMAP_BRANCH = "cdo_branch"; //$NON-NLS-1$
+  public static final String FEATUREMAP_BRANCH = LIST_REVISION_BRANCH;
 
-  public static final String FEATUREMAP_IDX = "cdo_idx"; //$NON-NLS-1$
+  public static final String FEATUREMAP_IDX = LIST_IDX;
 
-  public static final String FEATUREMAP_TAG = "cdo_tag"; //$NON-NLS-1$
+  public static final String FEATUREMAP_TAG = LIST_FEATURE;
 
-  public static final String FEATUREMAP_VALUE = "cdo_value"; //$NON-NLS-1$
+  public static final String FEATUREMAP_VALUE = LIST_VALUE;
 
   private CDODBSchema()
   {

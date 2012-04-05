@@ -122,6 +122,13 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   private EClass fEClass = null;
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass gEClass = null;
+
+  /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
    * EPackage.Registry} by the package package URI value.
    * <p>
@@ -543,6 +550,46 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getG()
+  {
+    return gEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getG_Dummy()
+  {
+    return (EAttribute)gEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getG_Reference()
+  {
+    return (EReference)gEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getG_List()
+  {
+    return (EReference)gEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -622,6 +669,11 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
 
     fEClass = createEClass(F);
     createEReference(fEClass, F__OWNED_ES);
+
+    gEClass = createEClass(G);
+    createEAttribute(gEClass, G__DUMMY);
+    createEReference(gEClass, G__REFERENCE);
+    createEReference(gEClass, G__LIST);
   }
 
   /**
@@ -769,6 +821,24 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     initEReference(getF_OwnedEs(), this.getE(), null, "ownedEs", null, 0, -1, org.eclipse.emf.cdo.tests.model6.F.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+
+    initEClass(gEClass, org.eclipse.emf.cdo.tests.model6.G.class, "G", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getG_Dummy(), ecorePackage.getEString(), "dummy", null, 1, 1,
+        org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getG_Reference(), this.getBaseObject(), null, "reference", null, 1, 1,
+        org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getG_List(), this.getBaseObject(), null, "list", null, 0, -1,
+        org.eclipse.emf.cdo.tests.model6.G.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    addEOperation(gEClass, ecorePackage.getEBoolean(), "isAttributeModified", 1, 1, IS_UNIQUE, IS_ORDERED);
+
+    addEOperation(gEClass, ecorePackage.getEBoolean(), "isReferenceModified", 1, 1, IS_UNIQUE, IS_ORDERED);
+
+    addEOperation(gEClass, ecorePackage.getEBoolean(), "isListModified", 1, 1, IS_UNIQUE, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

@@ -77,4 +77,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedEs" upperBound="-1"
         eType="#//E" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="G">
+    <eOperations name="isAttributeModified" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isReferenceModified" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isListModified" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dummy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
+        eType="#//BaseObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="list" upperBound="-1" eType="#//BaseObject"/>
+  </eClassifiers>
 </ecore:EPackage>

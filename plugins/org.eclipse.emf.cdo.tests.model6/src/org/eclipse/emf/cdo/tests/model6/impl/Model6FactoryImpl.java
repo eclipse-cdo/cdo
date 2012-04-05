@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
+import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
@@ -112,6 +113,8 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createE();
     case Model6Package.F:
       return createF();
+    case Model6Package.G:
+      return createG();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -258,6 +261,17 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   {
     FImpl f = new FImpl();
     return f;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public G createG()
+  {
+    GImpl g = new GImpl();
+    return g;
   }
 
   /**

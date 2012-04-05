@@ -591,6 +591,52 @@ public interface Model6Package extends EPackage
   int F_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.GImpl <em>G</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model6.impl.GImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getG()
+   * @generated
+   */
+  int G = 14;
+
+  /**
+   * The feature id for the '<em><b>Dummy</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int G__DUMMY = 0;
+
+  /**
+   * The feature id for the '<em><b>Reference</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int G__REFERENCE = 1;
+
+  /**
+   * The feature id for the '<em><b>List</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int G__LIST = 2;
+
+  /**
+   * The number of structural features of the '<em>G</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int G_FEATURE_COUNT = 3;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Root <em>Root</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -995,6 +1041,49 @@ public interface Model6Package extends EPackage
   EReference getF_OwnedEs();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.G <em>G</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>G</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.G
+   * @generated
+   */
+  EClass getG();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model6.G#getDummy <em>Dummy</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Dummy</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.G#getDummy()
+   * @see #getG()
+   * @generated
+   */
+  EAttribute getG_Dummy();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model6.G#getReference <em>Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Reference</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.G#getReference()
+   * @see #getG()
+   * @generated
+   */
+  EReference getG_Reference();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model6.G#getList <em>List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>List</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.G#getList()
+   * @see #getG()
+   * @generated
+   */
+  EReference getG_List();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the factory that creates the instances of the model.
@@ -1349,6 +1438,40 @@ public interface Model6Package extends EPackage
      * @generated
      */
     EReference F__OWNED_ES = eINSTANCE.getF_OwnedEs();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.GImpl <em>G</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.tests.model6.impl.GImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getG()
+     * @generated
+     */
+    EClass G = eINSTANCE.getG();
+
+    /**
+     * The meta object literal for the '<em><b>Dummy</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute G__DUMMY = eINSTANCE.getG_Dummy();
+
+    /**
+     * The meta object literal for the '<em><b>Reference</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference G__REFERENCE = eINSTANCE.getG_Reference();
+
+    /**
+     * The meta object literal for the '<em><b>List</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference G__LIST = eINSTANCE.getG_List();
 
   }
 

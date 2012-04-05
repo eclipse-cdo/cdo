@@ -134,6 +134,15 @@ public interface Model6Factory extends EFactory
   F createF();
 
   /**
+   * Returns a new object of class '<em>G</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>G</em>'.
+   * @generated
+   */
+  G createG();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the package supported by this factory.

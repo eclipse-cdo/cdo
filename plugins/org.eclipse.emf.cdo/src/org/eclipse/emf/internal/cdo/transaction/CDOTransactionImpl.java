@@ -17,6 +17,7 @@ package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
@@ -66,6 +67,7 @@ import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -1443,8 +1445,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       if (lastSavepoint == firstSavepoint && options().isAutoReleaseLocksEnabled())
       {
-        // Unlock all objects
-        unlockObjects(null, null);
+        CDORepositoryInfo repositoryInfo = getSession().getRepositoryInfo();
+        if (isDurableView() && repositoryInfo.getState() == CDOCommonRepository.State.ONLINE
+            || repositoryInfo.getType() == CDOCommonRepository.Type.MASTER)
+        {
+          // Unlock all objects
+          unlockObjects(null, null);
+        }
       }
 
       // Send notifications
@@ -2178,7 +2185,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * Bug 298561: This override removes references to remotely detached objects that are present in any DIRTY or NEW
    * objects.
-   * 
+   *
    * @since 3.0
    */
   /*
@@ -2476,7 +2483,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   /**
    * Generates {@link CDOIDTemp temporary} ID values.
-   * 
+   *
    * @author Eike Stepper
    */
   private static final class TempIDGenerator implements CDOIDGenerator

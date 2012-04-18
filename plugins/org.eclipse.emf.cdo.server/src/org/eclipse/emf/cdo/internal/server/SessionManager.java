@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -30,6 +31,8 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.IRandomizer;
@@ -53,6 +56,27 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   public static final int DEFAULT_TOKEN_LENGTH = 1024;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
+
+  private IListener repositoryListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOCommonRepository.StateChangedEvent)
+      {
+        CDOCommonRepository.StateChangedEvent e = (CDOCommonRepository.StateChangedEvent)event;
+        CDOCommonRepository.State state = e.getNewState();
+        switch (state)
+        {
+        case INITIAL:
+        case OFFLINE:
+        case SYNCING:
+        case ONLINE:
+
+          break;
+        }
+      }
+    }
+  };
 
   private InternalRepository repository;
 
@@ -96,7 +120,16 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   public void setRepository(InternalRepository repository)
   {
     checkInactive();
+    if (this.repository != null)
+    {
+      this.repository.removeListener(repositoryListener);
+    }
+
     this.repository = repository;
+    if (this.repository != null)
+    {
+      this.repository.addListener(repositoryListener);
+    }
   }
 
   public String getEncryptionAlgorithmName()
@@ -203,6 +236,15 @@ public class SessionManager extends Container<ISession> implements InternalSessi
    */
   public InternalSession openSession(ISessionProtocol sessionProtocol)
   {
+    if (sessionProtocol != null)
+    {
+      CDOID rootResourceID = repository.getRootResourceID();
+      if (CDOIDUtil.isNull(rootResourceID))
+      {
+        throw new IllegalStateException("Root resource has not been initialized in " + repository);
+      }
+    }
+
     int id = lastSessionID.incrementAndGet();
     if (TRACER.isEnabled())
     {

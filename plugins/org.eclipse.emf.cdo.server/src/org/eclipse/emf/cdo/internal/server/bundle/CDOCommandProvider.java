@@ -50,7 +50,9 @@ import java.io.OutputStream;
  */
 public class CDOCommandProvider implements CommandProvider
 {
-  private static final String INDENT = "  ";
+  private static final String NEW_LINE = "\r\n"; //$NON-NLS-1$
+
+  private static final String INDENT = "   "; //$NON-NLS-1$
 
   public CDOCommandProvider(BundleContext bundleContext)
   {
@@ -60,17 +62,17 @@ public class CDOCommandProvider implements CommandProvider
   public String getHelp()
   {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("---CDO commands---\n");
-    buffer.append("\tcdo list - list all active repositories\n");
-    buffer.append("\tcdo start - start repositories from a config file\n");
-    buffer.append("\tcdo stop - stop a repository\n");
-    buffer.append("\tcdo export - export the contents of a repository to an XML file\n");
-    buffer.append("\tcdo import - import the contents of a repository from an XML file\n");
-    buffer.append("\tcdo sessions - dump the sessions of a repository\n");
-    buffer.append("\tcdo packages - dump the packages of a repository\n");
-    buffer.append("\tcdo branches - dump the branches of a repository\n");
-    buffer.append("\tcdo locks - dump the durable locking areas of a repository\n");
-    buffer.append("\tcdo deletelocks - delete a durable locking area of a repository\n");
+    buffer.append("---CDO commands---" + NEW_LINE);
+    buffer.append(INDENT + "cdo list - list all active repositories" + NEW_LINE);
+    buffer.append(INDENT + "cdo start - start repositories from a config file" + NEW_LINE);
+    buffer.append(INDENT + "cdo stop - stop a repository" + NEW_LINE);
+    buffer.append(INDENT + "cdo export - export the contents of a repository to an XML file" + NEW_LINE);
+    buffer.append(INDENT + "cdo import - import the contents of a repository from an XML file" + NEW_LINE);
+    buffer.append(INDENT + "cdo sessions - dump the sessions of a repository" + NEW_LINE);
+    buffer.append(INDENT + "cdo packages - dump the packages of a repository" + NEW_LINE);
+    buffer.append(INDENT + "cdo branches - dump the branches of a repository" + NEW_LINE);
+    buffer.append(INDENT + "cdo locks - dump the durable locking areas of a repository" + NEW_LINE);
+    buffer.append(INDENT + "cdo deletelocks - delete a durable locking area of a repository" + NEW_LINE);
     return buffer.toString();
   }
 

@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreatedEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.team.IRepositoryManager;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
@@ -78,7 +77,7 @@ import java.util.Set;
  * integration. Capable of providing containment information for an {@link org.eclipse.core.resources.IProject project}
  * synchronized with a repository. Understands containment information of the {@link org.eclipse.emf.cdo.ui.ide.Node
  * node} abstraction.
- * 
+ *
  * @author Eike Stepper
  */
 public class RepositoryContentProvider extends StructuredContentProvider<IWorkspaceRoot> implements
@@ -498,7 +497,7 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
         {
           CDOEditorInput editorInput = CDOEditorUtil.createCDOEditorInput(view, ((CDOResource)selection).getPath(),
               true);
-          page.openEditor(editorInput, CDOEditor.EDITOR_ID);
+          page.openEditor(editorInput, CDOEditorUtil.getEditorID());
         }
         catch (PartInitException ex)
         {

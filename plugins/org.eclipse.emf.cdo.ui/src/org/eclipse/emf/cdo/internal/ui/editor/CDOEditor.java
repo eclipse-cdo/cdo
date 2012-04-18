@@ -206,11 +206,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * @ADDED
    */
-  public static final String EDITOR_ID = "org.eclipse.emf.cdo.ui.CDOEditor"; //$NON-NLS-1$
-
-  /**
-   * @ADDED
-   */
   private static final Object EMPTY_INPUT = new Object();
 
   /**

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -47,7 +47,7 @@ import org.eclipse.ui.PlatformUI;
  * {@link org.eclipse.emf.cdo.ui.defs.impl.CDOEditorDefImpl#getResourcePath <em>Resource Path</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
@@ -182,8 +182,10 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
       if (cdoView != oldCdoView)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW,
               oldCdoView, cdoView));
+        }
       }
     }
     return cdoView;
@@ -207,8 +209,10 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
     CDOViewDef oldCdoView = cdoView;
     cdoView = newCdoView;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW, oldCdoView,
           cdoView));
+    }
   }
 
   /**
@@ -229,8 +233,10 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
     String oldResourcePath = resourcePath;
     resourcePath = newResourcePath;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH,
           oldResourcePath, resourcePath));
+    }
   }
 
   /**
@@ -244,7 +250,9 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
     {
     case CDOUIDefsPackage.CDO_EDITOR_DEF__CDO_VIEW:
       if (resolve)
+      {
         return getCdoView();
+      }
       return basicGetCdoView();
     case CDOUIDefsPackage.CDO_EDITOR_DEF__RESOURCE_PATH:
       return getResourcePath();
@@ -315,7 +323,9 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (resourcePath: ");
@@ -332,7 +342,7 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
 
   /**
    * Open a {@link CDOEditor} for a given resource path.
-   * 
+   *
    * @param resourcePath
    *          the resource path to open an editor for
    * @return the editor part that was opened, <tt>null</tt> if an exception occurred while opening it
@@ -359,7 +369,7 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
   /**
    * Gets the editor id. if the public property #editorID is set, this ID is returned. Otherwise the default
    * CDOEditor#EDITOR_ID is returned.
-   * 
+   *
    * @param editorID
    *          the editor id
    * @return the string
@@ -369,7 +379,7 @@ public class CDOEditorDefImpl extends EditorDefImpl implements CDOEditorDef
     String editorID = getEditorID();
     if (editorID == null || editorID.length() <= 0)
     {
-      editorID = CDOEditor.EDITOR_ID;
+      editorID = CDOEditorUtil.getEditorID();
     }
     return editorID;
   }

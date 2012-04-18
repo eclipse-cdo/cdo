@@ -619,6 +619,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     public static final String PROP_TEST_DELAYED2_COMMIT_HANDLING = "test.delayed2.commit.handling";
 
+    public static final String PROP_TEST_HINDER_INITIAL_REPLICATION = "test.hinder.initial.replication";
+
     private static final long serialVersionUID = 1L;
 
     private transient IAcceptor masterAcceptor;
@@ -667,6 +669,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     protected InternalRepository createRepository(String name)
     {
       boolean failover = getTestFailover();
+      boolean hinderInitialReplication = getTestHinderInitialReplication();
       Map<String, String> props = getRepositoryProperties();
 
       final String masterName = "master";
@@ -679,7 +682,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
           master = createMasterRepository(masterName, name, props, failover);
           repositories.put(masterName, master);
           LifecycleUtil.activate(master);
-          startMasterTransport();
+
+          if (!hinderInitialReplication)
+          {
+            startMasterTransport();
+          }
         }
       }
 
@@ -807,6 +814,17 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       if (result == null)
       {
         result = 0L;
+      }
+
+      return result;
+    }
+
+    protected boolean getTestHinderInitialReplication()
+    {
+      Boolean result = (Boolean)getTestProperty(PROP_TEST_HINDER_INITIAL_REPLICATION);
+      if (result == null)
+      {
+        result = false;
       }
 
       return result;

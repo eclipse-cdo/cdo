@@ -77,6 +77,7 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
     testProperties.put(OfflineConfig.PROP_TEST_DELAYED_COMMIT_HANDLING, getTestDelayedCommitHandling());
     testProperties.put(OfflineConfig.PROP_TEST_DELAYED2_COMMIT_HANDLING, getTestDelayed2CommitHandling());
     testProperties.put(OfflineConfig.PROP_TEST_FAILOVER, isFailover());
+    testProperties.put(OfflineConfig.PROP_TEST_HINDER_INITIAL_REPLICATION, isHinderInitialReplication());
     return testProperties;
   }
 
@@ -98,6 +99,11 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   protected long getTestDelayed2CommitHandling()
   {
     return 0L;
+  }
+
+  protected boolean isHinderInitialReplication()
+  {
+    return false;
   }
 
   protected static void checkEvent(final TestListener listener, int newPackageUnits, int newObjects,

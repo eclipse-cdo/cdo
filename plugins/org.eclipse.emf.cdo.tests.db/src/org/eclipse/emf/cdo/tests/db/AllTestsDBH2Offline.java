@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.offline.Bugzilla_326047_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_328352_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_329014_Test;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_376470_Test;
+import org.eclipse.emf.cdo.tests.offline.Bugzilla_376566_Test;
 import org.eclipse.emf.cdo.tests.offline.FailoverTest;
 import org.eclipse.emf.cdo.tests.offline.OfflineDelayedTest;
 import org.eclipse.emf.cdo.tests.offline.OfflineLockRawReplicationTest;
@@ -66,6 +67,7 @@ public class AllTestsDBH2Offline extends DBConfigs
     testClasses.add(Bugzilla_325097_Test.class);
     testClasses.add(Bugzilla_319552_Test.class);
     testClasses.add(Bugzilla_376470_Test.class);
+    testClasses.add(Bugzilla_376566_Test.class);
     testClasses.add(Bugzilla_351078_DB_Test.class);
 
     testClasses.add(FailoverTest.class);

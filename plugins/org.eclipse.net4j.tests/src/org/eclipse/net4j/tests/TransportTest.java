@@ -114,14 +114,39 @@ public abstract class TransportTest extends AbstractProtocolTest
   public void testSendBuffer() throws Exception
   {
     startTransport();
-    IConnector iConnecter = getConnector();
-    IChannel channel = iConnecter.openChannel();
+    IConnector connecter = getConnector();
+    IChannel channel = connecter.openChannel();
     for (int i = 0; i < 3; i++)
     {
-      IBuffer buffer = provideBuffer(iConnecter);
+      IBuffer buffer = provideBuffer(connecter);
 
       ByteBuffer byteBuffer = buffer.startPutting(channel.getID());
       byteBuffer.putInt(1970);
+      channel.sendBuffer(buffer);
+    }
+  }
+
+  public void testSendEmptyBuffer() throws Exception
+  {
+    startTransport();
+    IConnector connecter = getConnector();
+    IChannel channel = connecter.openChannel();
+    for (int i = 0; i < 3; i++)
+    {
+      IBuffer buffer = provideBuffer(connecter);
+      buffer.startPutting(channel.getID());
+      channel.sendBuffer(buffer);
+    }
+  }
+
+  public void testSendEmptyBuffer2() throws Exception
+  {
+    startTransport();
+    IConnector connecter = getConnector();
+    IChannel channel = connecter.openChannel();
+    for (int i = 0; i < 3; i++)
+    {
+      IBuffer buffer = provideBuffer(connecter);
       channel.sendBuffer(buffer);
     }
   }
@@ -146,6 +171,49 @@ public abstract class TransportTest extends AbstractProtocolTest
     }
 
     assertEquals(true, counter.await(2, TimeUnit.SECONDS));
+  }
+
+  public void testHandleEmptyBuffer() throws Exception
+  {
+    final int COUNT = 3;
+    final CountDownLatch counter = new CountDownLatch(COUNT);
+    container.registerFactory(new TestProtocol.ServerFactory(counter));
+    // need to handle about separating container between client and server for SSL.
+    registerClientFactory(new TestProtocol.ClientFactory());
+
+    startTransport();
+    IConnector connecter = getConnector();
+    IChannel channel = connecter.openChannel(TestProtocol.ClientFactory.TYPE, null);
+    for (int i = 0; i < COUNT; i++)
+    {
+      IBuffer buffer = provideBuffer(connecter);
+      buffer.startPutting(channel.getID());
+      channel.sendBuffer(buffer);
+      sleep(50);
+    }
+
+    assertEquals(COUNT, counter.getCount());
+  }
+
+  public void testHandleEmptyBuffer2() throws Exception
+  {
+    final int COUNT = 3;
+    final CountDownLatch counter = new CountDownLatch(COUNT);
+    container.registerFactory(new TestProtocol.ServerFactory(counter));
+    // need to handle about separating container between client and server for SSL.
+    registerClientFactory(new TestProtocol.ClientFactory());
+
+    startTransport();
+    IConnector connecter = getConnector();
+    IChannel channel = connecter.openChannel(TestProtocol.ClientFactory.TYPE, null);
+    for (int i = 0; i < COUNT; i++)
+    {
+      IBuffer buffer = provideBuffer(connecter);
+      channel.sendBuffer(buffer);
+      sleep(50);
+    }
+
+    assertEquals(COUNT, counter.getCount());
   }
 
   public void testStreaming() throws Exception

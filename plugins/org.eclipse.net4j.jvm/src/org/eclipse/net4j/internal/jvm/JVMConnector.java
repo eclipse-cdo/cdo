@@ -22,11 +22,12 @@ import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.spi.net4j.Connector;
 import org.eclipse.spi.net4j.InternalChannel;
 
+import java.nio.ByteBuffer;
 import java.util.Queue;
 
 /**
  * TODO Remove peer channels
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class JVMConnector extends Connector implements IJVMConnector
@@ -78,6 +79,15 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
 
     Queue<IBuffer> localQueue = localChannel.getSendQueue();
     IBuffer buffer = localQueue.poll();
+
+    ByteBuffer byteBuffer = buffer.getByteBuffer();
+    if (byteBuffer.position() == IBuffer.HEADER_SIZE)
+    {
+      // Just release this empty buffer has been written
+      buffer.release();
+      return;
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.trace("Multiplexing " + buffer.formatContent(true)); //$NON-NLS-1$

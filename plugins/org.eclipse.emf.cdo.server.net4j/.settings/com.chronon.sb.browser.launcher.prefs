@@ -1,0 +1,7 @@
+auto.defaultPkgs=
+auto.excludePkgs=
+auto.partialPkgs=
+eclipse.preferences.version=1
+isManual=true
+manual.excludeExprs=
+manual.includeExprs=org.eclipse.**

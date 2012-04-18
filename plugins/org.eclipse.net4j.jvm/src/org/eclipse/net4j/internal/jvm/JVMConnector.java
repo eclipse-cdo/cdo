@@ -83,7 +83,7 @@ public abstract class JVMConnector extends Connector implements IJVMConnector
     ByteBuffer byteBuffer = buffer.getByteBuffer();
     if (byteBuffer.position() == IBuffer.HEADER_SIZE)
     {
-      // Just release this empty buffer has been written
+      // Just release this empty buffer
       buffer.release();
       return;
     }

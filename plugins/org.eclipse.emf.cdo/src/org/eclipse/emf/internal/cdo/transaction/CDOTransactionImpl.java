@@ -17,6 +17,7 @@ package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -61,6 +62,7 @@ import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -1405,8 +1407,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       if (lastSavepoint == firstSavepoint && options().isAutoReleaseLocksEnabled())
       {
-        // Unlock all objects
-        unlockObjects(null, null);
+        CDORepositoryInfo repositoryInfo = getSession().getRepositoryInfo();
+        if (repositoryInfo.getType() == CDOCommonRepository.Type.MASTER)
+        {
+          // Unlock all objects
+          unlockObjects(null, null);
+        }
       }
 
       // Send notifications

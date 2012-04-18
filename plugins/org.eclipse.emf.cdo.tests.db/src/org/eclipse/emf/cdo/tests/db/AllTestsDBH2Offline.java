@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_376470_Test;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 import org.eclipse.emf.cdo.tests.offline.Bugzilla_319552_Test;
@@ -90,6 +91,7 @@ public class AllTestsDBH2Offline extends DBConfigs
     testClasses.add(Bugzilla_326047_Test.class);
     testClasses.add(Bugzilla_325097_Test.class);
     testClasses.add(Bugzilla_319552_Test.class);
+    testClasses.add(Bugzilla_376470_Test.class);
 
     testClasses.add(FailoverTest.class);
   }

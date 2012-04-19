@@ -795,6 +795,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public synchronized CDOResourceFolder createResourceFolder(String path)
   {
+    if (path.endsWith(CDOURIUtil.SEGMENT_SEPARATOR))
+    {
+      path = path.substring(0, path.length() - 1);
+    }
+
     CDOResourceFolder folder = EresourceFactory.eINSTANCE.createCDOResourceFolder();
     int pos = path.lastIndexOf(CDOURIUtil.SEGMENT_SEPARATOR_CHAR);
     if (pos <= 0)
@@ -810,7 +815,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       folder.setName(name);
 
       path = path.substring(0, pos);
-      CDOResourceNode parent = getResourceNode(path);
+      CDOResourceNode parent = null;
+
+      try
+      {
+        parent = getResourceNode(path);
+      }
+      catch (Exception ex)
+      {
+        parent = createResourceFolder(path);
+      }
+
       if (parent instanceof CDOResourceFolder)
       {
         ((CDOResourceFolder)parent).getNodes().add(folder);

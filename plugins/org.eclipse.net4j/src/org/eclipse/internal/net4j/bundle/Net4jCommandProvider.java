@@ -51,7 +51,7 @@ public class Net4jCommandProvider implements CommandProvider
       for (String productGroup : getContainer().getProductGroups())
       {
         interpreter.println(productGroup);
-        printFactoryTypes(interpreter, productGroup, "  ");
+        printFactoryTypes(interpreter, productGroup, INDENT);
       }
     }
     catch (Exception ex)
@@ -101,7 +101,7 @@ public class Net4jCommandProvider implements CommandProvider
     for (String factoryType : container.getFactoryTypes(productGroup))
     {
       interpreter.println(prefix + factoryType);
-      printElements(interpreter, container.getElements(productGroup, factoryType), prefix + "  ");
+      printElements(interpreter, container.getElements(productGroup, factoryType), prefix + INDENT);
     }
   }
 
@@ -113,7 +113,7 @@ public class Net4jCommandProvider implements CommandProvider
       if (element instanceof IContainer)
       {
         IContainer<?> container = (IContainer<?>)element;
-        printElements(interpreter, container.getElements(), prefix + "  ");
+        printElements(interpreter, container.getElements(), prefix + INDENT);
       }
     }
   }

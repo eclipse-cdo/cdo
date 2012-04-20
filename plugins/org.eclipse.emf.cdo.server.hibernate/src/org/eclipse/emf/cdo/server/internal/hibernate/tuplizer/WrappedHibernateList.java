@@ -36,7 +36,7 @@ import java.util.ListIterator;
  * Wraps a moveable list so that hibernate always sees an object view while cdo always sees a cdoid view. The same for
  * EEnum: cdo wants to see an int (the ordinal), hibernate the real eenum value. This to support querying with EENum
  * parameters.
- * 
+ *
  * @author Martin Taal
  */
 public class WrappedHibernateList implements InternalCDOList
@@ -157,28 +157,38 @@ public class WrappedHibernateList implements InternalCDOList
     this.delegate = delegate;
   }
 
-  protected Object getObject(Object o)
+  private static Object convertToCDO(Object value)
   {
-    if (o == null)
+    if (value == null)
     {
       return null;
     }
 
-    // is already resolved
-    if (!(o instanceof CDOID))
+    // Eike: This seems wrong to me:
+    // if (value instanceof CDOID)
+    // {
+    // return HibernateUtil.getInstance().getCDORevision((CDOID)value);
+    // }
+
+    if (value instanceof CDORevision || value instanceof HibernateProxy)
     {
-      return o;
+      return HibernateUtil.getInstance().getCDOID(value);
     }
 
-    return HibernateUtil.getInstance().getCDORevision((CDOID)o);
+    if (value instanceof EEnumLiteral)
+    {
+      return ((EEnumLiteral)value).getValue();
+    }
+
+    return value;
   }
 
-  protected List<Object> getObjects(List<?> ids)
+  private static List<Object> convertToCDO(List<?> ids)
   {
     List<Object> result = new ArrayList<Object>();
     for (Object o : ids)
     {
-      result.add(getObject(o));
+      result.add(convertToCDO(o));
     }
 
     return result;
@@ -253,18 +263,7 @@ public class WrappedHibernateList implements InternalCDOList
       return delegateValue;
     }
 
-    final Object value = getObject(delegateValue);
-    if (value instanceof CDORevision || value instanceof HibernateProxy)
-    {
-      return HibernateUtil.getInstance().getCDOID(value);
-    }
-
-    if (value instanceof EEnumLiteral)
-    {
-      return ((EEnumLiteral)value).getValue();
-    }
-
-    return value;
+    return convertToCDO(delegateValue);
   }
 
   public Object get(int index, boolean resolve)
@@ -345,7 +344,7 @@ public class WrappedHibernateList implements InternalCDOList
 
   public List<Object> subList(int fromIndex, int toIndex)
   {
-    return getObjects(getDelegate().subList(fromIndex, toIndex));
+    return convertToCDO(getDelegate().subList(fromIndex, toIndex));
   }
 
   public Object[] toArray()
@@ -388,20 +387,8 @@ public class WrappedHibernateList implements InternalCDOList
 
     public Object next()
     {
-      Object o = delegate.next();
-
-      if (o instanceof CDOID)
-      {
-        return HibernateUtil.getInstance().getCDORevision((CDOID)o);
-      }
-
-      // CDO always wants to have the integer for an EENUM
-      if (o instanceof EEnumLiteral)
-      {
-        return ((EEnumLiteral)o).getValue();
-      }
-
-      return o;
+      Object value = delegate.next();
+      return convertToCDO(value);
     }
 
     public void remove()
@@ -441,13 +428,8 @@ public class WrappedHibernateList implements InternalCDOList
 
     public Object next()
     {
-      Object o = delegate.next();
-      if (o instanceof CDOID)
-      {
-        return HibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());
-      }
-
-      return o;
+      Object value = delegate.next();
+      return convertToCDO(value);
     }
 
     public int nextIndex()
@@ -457,13 +439,8 @@ public class WrappedHibernateList implements InternalCDOList
 
     public Object previous()
     {
-      Object o = delegate.previous();
-      if (o instanceof CDOID)
-      {
-        return HibernateUtil.getInstance().getCDORevision((CDOID)delegate.next());
-      }
-
-      return o;
+      Object value = delegate.previous();
+      return convertToCDO(value);
     }
 
     public int previousIndex()

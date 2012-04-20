@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
@@ -92,7 +94,7 @@ import java.util.Set;
  * HibernateStoreAccessor corresponds roughly to a Hibernate session. It offers methods to create and close them and
  * implements transaction handling. The main update/create/delete operations are done in the
  * {@link #write(InternalCommitContext, OMMonitor)} method.
- * 
+ *
  * @see HibernateStore
  * @see HibernatePackageHandler
  * @author Eike Stepper
@@ -129,7 +131,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Constructor
-   * 
+   *
    * @param store
    *          the {@link Store} used by the accessor.
    * @param session
@@ -146,7 +148,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Constructor for a specific transaction
-   * 
+   *
    * @param store
    *          the HibernateStore backing this accessor
    * @param transaction
@@ -179,7 +181,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Starts a hibernate session and begins a transaction.
-   * 
+   *
    * @since 2.0
    */
   public void beginHibernateSession()
@@ -197,7 +199,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Calls {@link #endHibernateSession()}, commits the transaction and closes the session.
-   * 
+   *
    * @since 2.0
    */
   public void commitRollbackHibernateSession()
@@ -207,7 +209,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Commits/rollbacks and closes the session
-   * 
+   *
    * @since 2.0
    */
   public void endHibernateSession()
@@ -272,7 +274,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Closes/commits the current hibernate session if there is one, and starts a new one and begins a transaction.
-   * 
+   *
    * @return a newly created Hibernate Session
    */
   public Session getNewHibernateSession()
@@ -311,7 +313,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Note: the Hibernate store does not support the {@link StoreChunkReader} concept!.
-   * 
+   *
    * @return a {@link HibernateStoreChunkReader} (which throws UnsupportedOperationExceptions for most methods
    */
   public HibernateStoreChunkReader createChunkReader(InternalCDORevision revision, EStructuralFeature feature)
@@ -331,7 +333,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Loads the package units from the database and returns the EPackage instances.
-   * 
+   *
    * @return the loaded EPackage instances.
    * @see HibernatePackageHandler
    */
@@ -342,7 +344,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Reads the revision from the database. using the passed id.
-   * 
+   *
    * @param id
    *          identifies the CDORevision to read
    * @param branchPoint
@@ -480,7 +482,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Queries for resources in a certain folder and returns them in the context object
-   * 
+   *
    * @param context
    *          the context provides input parameters (the folder) and is used to store the results of the query.
    * @since 2.0
@@ -618,7 +620,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Commits the session, see {@link #commitRollbackHibernateSession()}.
-   * 
+   *
    * @param monitor
    *          not used
    */
@@ -632,7 +634,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   /**
    * Performs the main write and update actions. Persists new EPackages, updates changed objects, creates new ones and
    * removes deleted objects. Updates both container as well as resource associations.
-   * 
+   *
    * @param context
    *          the context contains the changed, new and to-be-removed objects
    * @param monitor
@@ -826,7 +828,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   /**
    * Writes package units to the datbaase.
-   * 
+   *
    * @param packageUnits
    *          the package units to write to the database
    * @param monitor
@@ -1023,6 +1025,56 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
 
     return lob;
+  }
+
+  public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
+      throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
+      OMMonitor monitor) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
+  {
+    // TODO: implement HibernateStoreAccessor.rawStore(packageUnits, monitor)
+    throw new UnsupportedOperationException("Needed for server import!");
+  }
+
+  public void rawStore(InternalCDORevision revision, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(byte[] id, long size, Reader reader) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
+      OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void rawCommit(double commitWork, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override

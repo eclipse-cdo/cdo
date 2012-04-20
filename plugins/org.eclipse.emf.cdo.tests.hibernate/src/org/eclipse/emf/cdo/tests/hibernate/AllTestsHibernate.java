@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.hibernate;
 import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
 import org.eclipse.emf.cdo.tests.AuditTest;
-import org.eclipse.emf.cdo.tests.BackupTest;
 import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
 import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.BranchingWithCacheClearTest;
@@ -141,7 +140,7 @@ public class AllTestsHibernate extends AllConfigs
 
     // Backup not yet supported
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=339492
-    testClasses.remove(BackupTest.class);
+    // testClasses.remove(BackupTest.class);
 
     // Branching not supported
     testClasses.remove(BranchingTest.class);
@@ -201,7 +200,7 @@ public class AllTestsHibernate extends AllConfigs
   /**
    * Overridden because one testcase does not pass as Hibernate currently does not store the isset boolean values in the
    * database.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class HibernateUnsetTest extends UnsetTest

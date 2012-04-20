@@ -1047,7 +1047,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public void rawStore(InternalCDORevision revision, OMMonitor monitor)
   {
-    throw new UnsupportedOperationException();
+    // TODO: implement HibernateStoreAccessor.rawStore(revision, monitor)
+    throw new UnsupportedOperationException("Needed for server import!");
   }
 
   public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
@@ -1068,7 +1069,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public void rawCommit(double commitWork, OMMonitor monitor)
   {
-    throw new UnsupportedOperationException();
+    // TODO: implement HibernateStoreAccessor.rawCommit(commitWork, monitor)
+    throw new UnsupportedOperationException("Needed for server import!");
   }
 
   @Deprecated

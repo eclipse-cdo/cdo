@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.hibernate;
 import org.eclipse.emf.cdo.tests.AllConfigs;
 import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
 import org.eclipse.emf.cdo.tests.AuditTest;
+import org.eclipse.emf.cdo.tests.BackupTest;
 import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
 import org.eclipse.emf.cdo.tests.BranchingTest;
 import org.eclipse.emf.cdo.tests.BranchingWithCacheClearTest;
@@ -79,11 +80,18 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(HibernateTimeStampTest.class);
+    // testClasses.add(FeatureMapTest.class);
+    // testClasses.add(Hibernate_BackupTest.class);
+    // // testClasses.add(HibernateTimeStampTest.class);
     // if (true)
     // {
     // return;
     // }
+
+    // Use a hibnernate specific test class
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=339492
+    testClasses.add(Hibernate_BackupTest.class);
+    testClasses.remove(BackupTest.class);
 
     testClasses.add(HibernateTimeStampTest.class);
     testClasses.add(Hibernate_Bugzilla_279982_Test.class);
@@ -137,10 +145,6 @@ public class AllTestsHibernate extends AllConfigs
 
     // OCL querying not supported
     testClasses.remove(OCLQueryTest.class);
-
-    // Backup not yet supported
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=339492
-    // testClasses.remove(BackupTest.class);
 
     // Branching not supported
     testClasses.remove(BranchingTest.class);
@@ -348,5 +352,30 @@ public class AllTestsHibernate extends AllConfigs
         assertEquals(true, e.getMessage().contains("org.hibernate.ObjectNotFoundException"));
       }
     }
+  }
+
+  public static class Hibernate_BackupTest extends BackupTest
+  {
+
+    @Override
+    public void testExportFeatureMap() throws Exception
+    {
+    }
+
+    @Override
+    public void testExportExternalReference() throws Exception
+    {
+    }
+
+    @Override
+    public void testImportFeatureMap() throws Exception
+    {
+    }
+
+    @Override
+    public void testImportExternalReference() throws Exception
+    {
+    }
+
   }
 }

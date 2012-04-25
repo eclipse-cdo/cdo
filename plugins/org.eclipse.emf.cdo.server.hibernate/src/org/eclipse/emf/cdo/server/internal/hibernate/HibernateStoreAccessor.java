@@ -1030,7 +1030,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
-    throw new UnsupportedOperationException();
+    // we won't export any store specific stuff...
+    // throw new UnsupportedOperationException();
   }
 
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
@@ -1041,36 +1042,39 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
 
   public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {
-    // TODO: implement HibernateStoreAccessor.rawStore(packageUnits, monitor)
-    throw new UnsupportedOperationException("Needed for server import!");
+    if (packageUnits != null && packageUnits.length != 0)
+    {
+      getStore().getPackageHandler().writePackageUnits(packageUnits);
+    }
+    // forces a new hibernate session
+    commit(monitor);
   }
 
   public void rawStore(InternalCDORevision revision, OMMonitor monitor)
   {
-    // TODO: implement HibernateStoreAccessor.rawStore(revision, monitor)
-    throw new UnsupportedOperationException("Needed for server import!");
+    getHibernateSession().merge(revision);
   }
 
   public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
   {
-    throw new UnsupportedOperationException();
+    writeBlob(id, size, inputStream);
   }
 
   public void rawStore(byte[] id, long size, Reader reader) throws IOException
   {
-    throw new UnsupportedOperationException();
+    writeClob(id, size, reader);
   }
 
   public void rawStore(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
       OMMonitor monitor)
   {
-    throw new UnsupportedOperationException();
+    // don't support commit info, but don't throw an exception either
+    // throw new UnsupportedOperationException();
   }
 
   public void rawCommit(double commitWork, OMMonitor monitor)
   {
-    // TODO: implement HibernateStoreAccessor.rawCommit(commitWork, monitor)
-    throw new UnsupportedOperationException("Needed for server import!");
+    commit(monitor);
   }
 
   @Deprecated

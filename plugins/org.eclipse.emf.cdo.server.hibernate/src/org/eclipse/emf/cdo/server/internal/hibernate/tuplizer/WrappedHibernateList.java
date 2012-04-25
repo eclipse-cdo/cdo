@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -137,6 +138,12 @@ public class WrappedHibernateList implements InternalCDOList
       list.add(type.copyValue(get(i)));
     }
 
+    if (classifier instanceof EClass)
+    {
+      WrappedHibernateList wrapped = new WrappedHibernateList();
+      wrapped.setDelegate(list);
+      return wrapped;
+    }
     return list;
   }
 

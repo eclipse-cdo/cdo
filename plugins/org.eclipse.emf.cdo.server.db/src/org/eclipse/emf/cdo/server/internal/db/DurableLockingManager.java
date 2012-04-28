@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -492,11 +492,15 @@ public class DurableLockingManager extends Lifecycle
     builder = new StringBuilder();
     builder.append("DELETE FROM ");
     builder.append(lockAreas);
-    builder.append(" a WHERE EXISTS (SELECT * FROM ");
+    builder.append(" WHERE EXISTS (SELECT * FROM ");
     builder.append(locks);
-    builder.append(" l WHERE l.");
+    builder.append(" WHERE ");
+    builder.append(locks);
+    builder.append(".");
     builder.append(locksArea);
-    builder.append("=a.");
+    builder.append("=");
+    builder.append(lockAreas);
+    builder.append(".");
     builder.append(lockAreasID);
     builder.append(")");
     sqlDeleteLockAreas = builder.toString();

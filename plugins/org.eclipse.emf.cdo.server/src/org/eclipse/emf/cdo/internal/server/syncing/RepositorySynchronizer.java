@@ -89,7 +89,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
 
-  private boolean rawReplication;
+  private boolean rawReplication = true;
 
   private int maxRecommits = DEFAULT_MAX_RECOMMITS;
 

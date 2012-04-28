@@ -260,7 +260,6 @@ public abstract class FailoverExample
 
     IRepositorySynchronizer synchronizer = CDOServerUtil.createRepositorySynchronizer(factory);
     synchronizer.setRetryInterval(2);
-    synchronizer.setRawReplication(true);
     synchronizer.setMaxRecommits(10);
     synchronizer.setRecommitInterval(2);
     return synchronizer;

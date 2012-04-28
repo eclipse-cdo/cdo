@@ -143,6 +143,24 @@ public interface Model6Factory extends EFactory
   G createG();
 
   /**
+   * Returns a new object of class '<em>My Enum List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>My Enum List</em>'.
+   * @generated
+   */
+  MyEnumList createMyEnumList();
+
+  /**
+   * Returns a new object of class '<em>My Enum List Unsettable</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>My Enum List Unsettable</em>'.
+   * @generated
+   */
+  MyEnumListUnsettable createMyEnumListUnsettable();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the package supported by this factory.

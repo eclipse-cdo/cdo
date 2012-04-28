@@ -14,6 +14,9 @@ import org.eclipse.emf.cdo.tests.model6.BaseObject;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
+import org.eclipse.emf.cdo.tests.model6.MyEnum;
+import org.eclipse.emf.cdo.tests.model6.MyEnumList;
+import org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
@@ -22,6 +25,7 @@ import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -127,6 +131,27 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
    * @generated
    */
   private EClass gEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass myEnumListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass myEnumListUnsettableEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum myEnumEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -590,6 +615,56 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMyEnumList()
+  {
+    return myEnumListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMyEnumList_MyEnum()
+  {
+    return (EAttribute)myEnumListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMyEnumListUnsettable()
+  {
+    return myEnumListUnsettableEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMyEnumListUnsettable_MyEnum()
+  {
+    return (EAttribute)myEnumListUnsettableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EEnum getMyEnum()
+  {
+    return myEnumEEnum;
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -674,6 +749,15 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     createEAttribute(gEClass, G__DUMMY);
     createEReference(gEClass, G__REFERENCE);
     createEReference(gEClass, G__LIST);
+
+    myEnumListEClass = createEClass(MY_ENUM_LIST);
+    createEAttribute(myEnumListEClass, MY_ENUM_LIST__MY_ENUM);
+
+    myEnumListUnsettableEClass = createEClass(MY_ENUM_LIST_UNSETTABLE);
+    createEAttribute(myEnumListUnsettableEClass, MY_ENUM_LIST_UNSETTABLE__MY_ENUM);
+
+    // Create enums
+    myEnumEEnum = createEEnum(MY_ENUM);
   }
 
   /**
@@ -839,6 +923,24 @@ public class Model6PackageImpl extends EPackageImpl implements Model6Package
     addEOperation(gEClass, ecorePackage.getEBoolean(), "isReferenceModified", 1, 1, IS_UNIQUE, IS_ORDERED);
 
     addEOperation(gEClass, ecorePackage.getEBoolean(), "isListModified", 1, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEClass(myEnumListEClass, MyEnumList.class, "MyEnumList", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMyEnumList_MyEnum(), this.getMyEnum(), "myEnum", null, 0, -1, MyEnumList.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(myEnumListUnsettableEClass, MyEnumListUnsettable.class, "MyEnumListUnsettable", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMyEnumListUnsettable_MyEnum(), this.getMyEnum(), "myEnum", null, 0, -1,
+        MyEnumListUnsettable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    // Initialize enums and add enum literals
+    initEEnum(myEnumEEnum, MyEnum.class, "MyEnum");
+    addEEnumLiteral(myEnumEEnum, MyEnum.ZERO);
+    addEEnumLiteral(myEnumEEnum, MyEnum.ONE);
+    addEEnumLiteral(myEnumEEnum, MyEnum.TWO);
+    addEEnumLiteral(myEnumEEnum, MyEnum.THREE);
 
     // Create resource
     createResource(eNS_URI);

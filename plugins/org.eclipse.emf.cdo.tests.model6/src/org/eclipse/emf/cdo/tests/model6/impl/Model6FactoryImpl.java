@@ -21,6 +21,9 @@ import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.Model6Factory;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
+import org.eclipse.emf.cdo.tests.model6.MyEnum;
+import org.eclipse.emf.cdo.tests.model6.MyEnumList;
+import org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
@@ -28,6 +31,7 @@ import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.tests.model6.UnorderedList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
@@ -115,8 +119,46 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
       return createF();
     case Model6Package.G:
       return createG();
+    case Model6Package.MY_ENUM_LIST:
+      return createMyEnumList();
+    case Model6Package.MY_ENUM_LIST_UNSETTABLE:
+      return createMyEnumListUnsettable();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object createFromString(EDataType eDataType, String initialValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+    case Model6Package.MY_ENUM:
+      return createMyEnumFromString(eDataType, initialValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String convertToString(EDataType eDataType, Object instanceValue)
+  {
+    switch (eDataType.getClassifierID())
+    {
+    case Model6Package.MY_ENUM:
+      return convertMyEnumToString(eDataType, instanceValue);
+    default:
+      throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
   }
 
@@ -272,6 +314,52 @@ public class Model6FactoryImpl extends EFactoryImpl implements Model6Factory
   {
     GImpl g = new GImpl();
     return g;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MyEnumList createMyEnumList()
+  {
+    MyEnumListImpl myEnumList = new MyEnumListImpl();
+    return myEnumList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MyEnumListUnsettable createMyEnumListUnsettable()
+  {
+    MyEnumListUnsettableImpl myEnumListUnsettable = new MyEnumListUnsettableImpl();
+    return myEnumListUnsettable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MyEnum createMyEnumFromString(EDataType eDataType, String initialValue)
+  {
+    MyEnum result = MyEnum.get(initialValue);
+    if (result == null)
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
+          + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertMyEnumToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.model6;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -637,6 +638,72 @@ public interface Model6Package extends EPackage
   int G_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.MyEnumListImpl <em>My Enum List</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model6.impl.MyEnumListImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnumList()
+   * @generated
+   */
+  int MY_ENUM_LIST = 15;
+
+  /**
+   * The feature id for the '<em><b>My Enum</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MY_ENUM_LIST__MY_ENUM = 0;
+
+  /**
+   * The number of structural features of the '<em>My Enum List</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MY_ENUM_LIST_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.impl.MyEnumListUnsettableImpl <em>My Enum List Unsettable</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model6.impl.MyEnumListUnsettableImpl
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnumListUnsettable()
+   * @generated
+   */
+  int MY_ENUM_LIST_UNSETTABLE = 16;
+
+  /**
+   * The feature id for the '<em><b>My Enum</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MY_ENUM_LIST_UNSETTABLE__MY_ENUM = 0;
+
+  /**
+   * The number of structural features of the '<em>My Enum List Unsettable</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MY_ENUM_LIST_UNSETTABLE_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+   * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnum()
+   * @generated
+   */
+  int MY_ENUM = 17;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.Root <em>Root</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -1084,6 +1151,58 @@ public interface Model6Package extends EPackage
   EReference getG_List();
 
   /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.MyEnumList <em>My Enum List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>My Enum List</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.MyEnumList
+   * @generated
+   */
+  EClass getMyEnumList();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model6.MyEnumList#getMyEnum <em>My Enum</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>My Enum</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.MyEnumList#getMyEnum()
+   * @see #getMyEnumList()
+   * @generated
+   */
+  EAttribute getMyEnumList_MyEnum();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable <em>My Enum List Unsettable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>My Enum List Unsettable</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable
+   * @generated
+   */
+  EClass getMyEnumListUnsettable();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable#getMyEnum <em>My Enum</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>My Enum</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable#getMyEnum()
+   * @see #getMyEnumListUnsettable()
+   * @generated
+   */
+  EAttribute getMyEnumListUnsettable_MyEnum();
+
+  /**
+   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for enum '<em>My Enum</em>'.
+   * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+   * @generated
+   */
+  EEnum getMyEnum();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the factory that creates the instances of the model.
@@ -1472,6 +1591,52 @@ public interface Model6Package extends EPackage
      * @generated
      */
     EReference G__LIST = eINSTANCE.getG_List();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.MyEnumListImpl <em>My Enum List</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.tests.model6.impl.MyEnumListImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnumList()
+     * @generated
+     */
+    EClass MY_ENUM_LIST = eINSTANCE.getMyEnumList();
+
+    /**
+     * The meta object literal for the '<em><b>My Enum</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MY_ENUM_LIST__MY_ENUM = eINSTANCE.getMyEnumList_MyEnum();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.impl.MyEnumListUnsettableImpl <em>My Enum List Unsettable</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.tests.model6.impl.MyEnumListUnsettableImpl
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnumListUnsettable()
+     * @generated
+     */
+    EClass MY_ENUM_LIST_UNSETTABLE = eINSTANCE.getMyEnumListUnsettable();
+
+    /**
+     * The meta object literal for the '<em><b>My Enum</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MY_ENUM_LIST_UNSETTABLE__MY_ENUM = eINSTANCE.getMyEnumListUnsettable_MyEnum();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.tests.model6.MyEnum <em>My Enum</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.tests.model6.MyEnum
+     * @see org.eclipse.emf.cdo.tests.model6.impl.Model6PackageImpl#getMyEnum()
+     * @generated
+     */
+    EEnum MY_ENUM = eINSTANCE.getMyEnum();
 
   }
 

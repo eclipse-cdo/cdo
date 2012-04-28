@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
 import org.eclipse.emf.cdo.tests.model6.G;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
+import org.eclipse.emf.cdo.tests.model6.MyEnumList;
+import org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
 import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
@@ -180,6 +182,18 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
     public Adapter caseG(G object)
     {
       return createGAdapter();
+    }
+
+    @Override
+    public Adapter caseMyEnumList(MyEnumList object)
+    {
+      return createMyEnumListAdapter();
+    }
+
+    @Override
+    public Adapter caseMyEnumListUnsettable(MyEnumListUnsettable object)
+    {
+      return createMyEnumListUnsettableAdapter();
     }
 
     @Override
@@ -409,6 +423,36 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createGAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.MyEnumList <em>My Enum List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.MyEnumList
+   * @generated
+   */
+  public Adapter createMyEnumListAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable <em>My Enum List Unsettable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model6.MyEnumListUnsettable
+   * @generated
+   */
+  public Adapter createMyEnumListUnsettableAdapter()
   {
     return null;
   }

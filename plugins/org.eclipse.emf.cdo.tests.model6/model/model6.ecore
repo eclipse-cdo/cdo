@@ -86,4 +86,18 @@
         eType="#//BaseObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="list" upperBound="-1" eType="#//BaseObject"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MyEnum">
+    <eLiterals name="ZERO"/>
+    <eLiterals name="ONE" value="1"/>
+    <eLiterals name="TWO" value="2"/>
+    <eLiterals name="THREE" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MyEnumList">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="myEnum" upperBound="-1"
+        eType="#//MyEnum"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MyEnumListUnsettable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="myEnum" upperBound="-1"
+        eType="#//MyEnum" unsettable="true"/>
+  </eClassifiers>
 </ecore:EPackage>

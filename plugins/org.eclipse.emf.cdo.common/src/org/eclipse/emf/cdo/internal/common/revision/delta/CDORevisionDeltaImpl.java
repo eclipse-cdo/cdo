@@ -31,6 +31,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.PartialCollectionLoadingNotSupportedException;
+import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -366,7 +368,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
             {
               for (Object element : list)
               {
-                if (element instanceof CDOElementProxy)
+                if (element instanceof CDOElementProxy || element == CDOListImpl.UNINITIALIZED)
                 {
                   throw new PartialCollectionLoadingNotSupportedException("List contains proxy elements");
                 }

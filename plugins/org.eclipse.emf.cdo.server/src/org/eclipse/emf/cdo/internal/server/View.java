@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -26,6 +27,8 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.options.IOptionsContainer;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
@@ -141,8 +144,27 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
       }
       else if (newRevision != oldRevision)
       {
+        // Fix for Bugzilla 369646: ensure that revisions are fully loaded
+        ensureRevisionChunks((InternalCDORevision)newRevision);
+        ensureRevisionChunks((InternalCDORevision)oldRevision);
+
         CDORevisionDelta delta = newRevision.compare(oldRevision);
         allChangedObjects.add(delta);
+      }
+    }
+  }
+
+  // TODO: Eike can this be put in the Repository class?
+  /**
+   * Make sure that all lists of the given revision are fully loaded.
+   */
+  private void ensureRevisionChunks(InternalCDORevision revision)
+  {
+    for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(revision.getEClass()))
+    {
+      if (feature.isMany())
+      {
+        getRepository().ensureChunk(revision, feature, 0, revision.getList(feature).size());
       }
     }
   }

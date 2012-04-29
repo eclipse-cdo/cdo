@@ -25,6 +25,10 @@ import org.osgi.framework.BundleContext;
  */
 public class Net4jCommandProvider implements CommandProvider
 {
+  private static final String NEW_LINE = "\r\n"; //$NON-NLS-1$
+
+  private static final String INDENT = "   "; //$NON-NLS-1$
+
   public Net4jCommandProvider(BundleContext bundleContext)
   {
     bundleContext.registerService(CommandProvider.class.getName(), this, null);
@@ -33,10 +37,10 @@ public class Net4jCommandProvider implements CommandProvider
   public String getHelp()
   {
     StringBuffer buffer = new StringBuffer();
-    buffer.append("---Net4j commands---\n");
-    buffer.append("\telements - list all managed elements\n");
-    buffer.append("\tacceptors - list all active acceptors, their connectors and channels\n");
-    buffer.append("\tconnectors - list all active connectors and their channels\n");
+    buffer.append("---Net4j commands---" + NEW_LINE);
+    buffer.append(INDENT + "elements - list all managed elements" + NEW_LINE);
+    buffer.append(INDENT + "acceptors - list all active acceptors, their connectors and channels" + NEW_LINE);
+    buffer.append(INDENT + "connectors - list all active connectors and their channels" + NEW_LINE);
     return buffer.toString();
   }
 
@@ -47,7 +51,7 @@ public class Net4jCommandProvider implements CommandProvider
       for (String productGroup : getContainer().getProductGroups())
       {
         interpreter.println(productGroup);
-        printFactoryTypes(interpreter, productGroup, "  ");
+        printFactoryTypes(interpreter, productGroup, INDENT);
       }
     }
     catch (Exception ex)
@@ -97,7 +101,7 @@ public class Net4jCommandProvider implements CommandProvider
     for (String factoryType : container.getFactoryTypes(productGroup))
     {
       interpreter.println(prefix + factoryType);
-      printElements(interpreter, container.getElements(productGroup, factoryType), prefix + "  ");
+      printElements(interpreter, container.getElements(productGroup, factoryType), prefix + INDENT);
     }
   }
 
@@ -109,7 +113,7 @@ public class Net4jCommandProvider implements CommandProvider
       if (element instanceof IContainer)
       {
         IContainer<?> container = (IContainer<?>)element;
-        printElements(interpreter, container.getElements(), prefix + "  ");
+        printElements(interpreter, container.getElements(), prefix + INDENT);
       }
     }
   }

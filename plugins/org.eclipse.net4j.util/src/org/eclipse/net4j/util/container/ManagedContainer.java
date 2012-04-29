@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.FactoryKey;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -187,7 +188,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     return result;
   }
 
-  public IFactory getFactory(String productGroup, String factoryType)
+  public IFactory getFactory(String productGroup, String factoryType) throws FactoryNotFoundException
   {
     FactoryKey key = new FactoryKey(productGroup, factoryType);
     IFactory factory = getFactoryRegistry().get(key);
@@ -264,6 +265,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   }
 
   public Object getElement(String productGroup, String factoryType, String description)
+      throws FactoryNotFoundException, ProductCreationException
   {
     return getElement(productGroup, factoryType, description, true);
   }
@@ -272,6 +274,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
    * @since 2.0
    */
   public Object getElement(String productGroup, String factoryType, String description, boolean activate)
+      throws FactoryNotFoundException, ProductCreationException
   {
     checkActive();
     ElementKey key = new ElementKey(productGroup, factoryType, description);
@@ -377,7 +380,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     }
   }
 
-  public void loadElements(InputStream stream) throws IOException
+  public void loadElements(InputStream stream) throws IOException, FactoryNotFoundException, ProductCreationException
   {
     checkActive();
     synchronized (elementRegistry)
@@ -493,6 +496,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   }
 
   protected Object createElement(String productGroup, String factoryType, String description)
+      throws FactoryNotFoundException, ProductCreationException
   {
     IFactory factory = getFactory(productGroup, factoryType);
     return factory.create(description);

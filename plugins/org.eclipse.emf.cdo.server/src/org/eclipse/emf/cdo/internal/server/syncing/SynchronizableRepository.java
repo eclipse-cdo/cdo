@@ -106,7 +106,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
  * <li>Implement raw replication for NUMERIC and DECIMAL.
  * <li>Notify new branches during raw replication.
  * </ul>
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class SynchronizableRepository extends Repository.Default implements InternalSynchronizableRepository
@@ -482,6 +482,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   {
     super.doActivate();
 
+    // Makes setRootResource() being called later in RepositorySynchronizer.ConnectRunnable
+    setState(INITIAL);
+
     InternalStore store = getStore();
     if (!store.isFirstStart())
     {
@@ -558,7 +561,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   @Override
   protected void initRootResource()
   {
-    setState(INITIAL);
+    // Do nothing
   }
 
   @Override

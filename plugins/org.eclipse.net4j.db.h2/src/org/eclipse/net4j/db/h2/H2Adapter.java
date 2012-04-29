@@ -19,6 +19,7 @@ import org.h2.jdbcx.JdbcDataSource;
 import javax.sql.DataSource;
 
 import java.sql.Driver;
+import java.sql.SQLException;
 
 /**
  * @author Eike Stepper
@@ -74,5 +75,12 @@ public class H2Adapter extends DBAdapter
   public String[] getReservedWords()
   {
     return getSQL92ReservedWords();
+  }
+
+  @Override
+  public boolean isDuplicateKeyException(SQLException ex)
+  {
+    String sqlState = ex.getSQLState();
+    return "23001".equals(sqlState) || "23505".equals(sqlState);
   }
 }

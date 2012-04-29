@@ -80,11 +80,18 @@ public class AllTestsHibernate extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     // testClasses.clear();
-    // testClasses.add(HibernateTimeStampTest.class);
+    // testClasses.add(FeatureMapTest.class);
+    // testClasses.add(Hibernate_BackupTest.class);
+    // // testClasses.add(HibernateTimeStampTest.class);
     // if (true)
     // {
     // return;
     // }
+
+    // Use a hibnernate specific test class
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=339492
+    testClasses.add(Hibernate_BackupTest.class);
+    testClasses.remove(BackupTest.class);
 
     testClasses.add(HibernateTimeStampTest.class);
     testClasses.add(Hibernate_Bugzilla_279982_Test.class);
@@ -138,10 +145,6 @@ public class AllTestsHibernate extends AllConfigs
 
     // OCL querying not supported
     testClasses.remove(OCLQueryTest.class);
-
-    // Backup not yet supported
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=339492
-    testClasses.remove(BackupTest.class);
 
     // Branching not supported
     testClasses.remove(BranchingTest.class);
@@ -201,7 +204,7 @@ public class AllTestsHibernate extends AllConfigs
   /**
    * Overridden because one testcase does not pass as Hibernate currently does not store the isset boolean values in the
    * database.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class HibernateUnsetTest extends UnsetTest
@@ -349,5 +352,30 @@ public class AllTestsHibernate extends AllConfigs
         assertEquals(true, e.getMessage().contains("org.hibernate.ObjectNotFoundException"));
       }
     }
+  }
+
+  public static class Hibernate_BackupTest extends BackupTest
+  {
+
+    @Override
+    public void testExportFeatureMap() throws Exception
+    {
+    }
+
+    @Override
+    public void testExportExternalReference() throws Exception
+    {
+    }
+
+    @Override
+    public void testImportFeatureMap() throws Exception
+    {
+    }
+
+    @Override
+    public void testImportExternalReference() throws Exception
+    {
+    }
+
   }
 }

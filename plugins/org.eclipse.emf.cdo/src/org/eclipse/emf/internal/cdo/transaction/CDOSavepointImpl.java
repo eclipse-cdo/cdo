@@ -332,9 +332,13 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
           }
         }
 
+        Set<CDOID> reattachedObjects = savepoint.getReattachedObjects().keySet();
         for (CDOID detachedID : savepoint.getDetachedObjects().keySet())
         {
-          allRevisionDeltas.remove(detachedID);
+          if (!reattachedObjects.contains(detachedID))
+          {
+            allRevisionDeltas.remove(detachedID);
+          }
         }
       }
 

@@ -247,7 +247,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     for (BundleSpecification requiredBundle : description.getRequiredBundles())
     {
       VersionRange range = requiredBundle.getVersionRange();
-      if (isUnspecified(range.getMaximum()))
+      if (isUnspecified(getMaximum(range)))
       {
         addRequireMarker(requiredBundle.getName(), "dependency must specify a version range");
       }
@@ -268,7 +268,7 @@ public class VersionBuilder extends IncrementalProjectBuilder
     for (ImportPackageSpecification importPackage : description.getImportPackages())
     {
       VersionRange range = importPackage.getVersionRange();
-      if (isUnspecified(range.getMaximum()))
+      if (isUnspecified(getMaximum(range)))
       {
         addImportMarker(importPackage.getName(), "dependency must specify a version range");
       }
@@ -285,6 +285,13 @@ public class VersionBuilder extends IncrementalProjectBuilder
         }
       }
     }
+  }
+
+  @SuppressWarnings("deprecation")
+  private Version getMaximum(VersionRange range)
+  {
+    VersionUtil.someDeprecatedCode(); // Just make sure that this method refers to some deprecated code
+    return range.getMaximum();
   }
 
   private boolean isUnspecified(Version version)

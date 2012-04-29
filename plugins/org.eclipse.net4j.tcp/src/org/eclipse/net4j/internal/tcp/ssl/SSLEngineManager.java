@@ -26,11 +26,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.concurrent.Executor;
 
 /**
@@ -69,8 +64,7 @@ public class SSLEngineManager
 
   private Object writeLock = new WriteLock();
 
-  public SSLEngineManager(boolean client, String host, int port, Executor executor) throws NoSuchAlgorithmException,
-      KeyStoreException, CertificateException, IOException, UnrecoverableKeyException, KeyManagementException
+  public SSLEngineManager(boolean client, String host, int port, Executor executor) throws Exception
   {
     this.executor = executor;
 

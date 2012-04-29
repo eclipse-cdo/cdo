@@ -11,12 +11,15 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Address;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.VAT;
+import org.eclipse.emf.cdo.tests.model6.PropertiesMap;
+import org.eclipse.emf.cdo.tests.model6.PropertiesMapEntryValue;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -45,7 +48,7 @@ import java.util.Map;
  * type)</i> below and re-run the test. Or run MapDynamicTest as local JUnit test run. If you do not need the test to be
  * integrated into our test framework the second approach is recommended because it gives you a detailed overview over
  * the passing/failing tests.
- * 
+ *
  * @author Martin Fluegge
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -56,6 +59,28 @@ public class MapTest extends AbstractCDOTest
   protected static Map<EDataType, List> dummyData = new HashMap<EDataType, List>();
 
   protected static int count;
+
+  public void testTransientMap() throws Exception
+  {
+    PropertiesMapEntryValue value1 = getModel6Factory().createPropertiesMapEntryValue();
+    value1.setLabel("value1");
+  
+    PropertiesMapEntryValue value2 = getModel6Factory().createPropertiesMapEntryValue();
+    value2.setLabel("value2");
+  
+    PropertiesMap propertiesMap = getModel6Factory().createPropertiesMap();
+    propertiesMap.setLabel("TransientMap");
+    propertiesMap.getTransientMap().put("key1", value1);
+    propertiesMap.getTransientMap().put("key2", value2);
+  
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    resource.getContents().add(propertiesMap);
+  
+    transaction.commit();
+    assertEquals(false, EMFUtil.isPersistent(getModel6Package().getPropertiesMap_TransientMap()));
+  }
 
   public void testIntegerStringMap() throws Exception
   {
@@ -437,7 +462,6 @@ public class MapTest extends AbstractCDOTest
 
   public static EPackage createPackage()
   {
-
     EcoreFactory theCoreFactory = EcoreFactory.eINSTANCE;
     EcorePackage theCorePackage = EcorePackage.eINSTANCE;
 

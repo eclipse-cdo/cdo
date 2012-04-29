@@ -92,11 +92,6 @@ public class CDORevisionImpl extends BaseCDORevision
 
   public void freeze()
   {
-    if (getEClass().getName().equals("Node"))
-    {
-      System.out.println();
-    }
-
     frozen = true;
 
     EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(getEClass());

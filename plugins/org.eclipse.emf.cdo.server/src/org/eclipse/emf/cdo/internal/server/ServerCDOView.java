@@ -191,6 +191,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
+  public int getSessionID()
+  {
+    return session.getSessionID();
+  }
+
+  public boolean isDurableView()
+  {
+    return false;
+  }
+
   public String getDurableLockingID()
   {
     return null;
@@ -296,6 +306,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   public void setInvalidationPolicy(CDOInvalidationPolicy policy)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isDetachmentNotificationEnabled()
+  {
+    return false;
+  }
+
+  public void setDetachmentNotificationEnabled(boolean enabled)
   {
     throw new UnsupportedOperationException();
   }

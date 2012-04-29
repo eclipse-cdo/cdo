@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -203,6 +204,11 @@ public class SessionManager extends Container<ISession> implements InternalSessi
    */
   public InternalSession openSession(ISessionProtocol sessionProtocol)
   {
+    if (sessionProtocol != null)
+    {
+      ensureRootResourceInitialized();
+    }
+
     int id = lastSessionID.incrementAndGet();
     if (TRACER.isEnabled())
     {
@@ -221,6 +227,29 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     fireElementAddedEvent(session);
     sendRemoteSessionNotification(session, CDOProtocolConstants.REMOTE_SESSION_OPENED);
     return session;
+  }
+
+  protected void ensureRootResourceInitialized()
+  {
+    for (int i = 0; i < 20; i++)
+    {
+      CDOID rootResourceID = repository.getRootResourceID();
+      if (!CDOIDUtil.isNull(rootResourceID))
+      {
+        return;
+      }
+
+      try
+      {
+        Thread.sleep(100);
+      }
+      catch (InterruptedException ex)
+      {
+        break;
+      }
+    }
+
+    throw new IllegalStateException("Root resource has not been initialized in " + repository);
   }
 
   protected InternalSession createSession(int id, String userID, ISessionProtocol protocol)

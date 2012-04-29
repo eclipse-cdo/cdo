@@ -17,6 +17,7 @@ package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
@@ -66,6 +67,7 @@ import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -793,6 +795,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public synchronized CDOResourceFolder createResourceFolder(String path)
   {
+    if (path.endsWith(CDOURIUtil.SEGMENT_SEPARATOR))
+    {
+      path = path.substring(0, path.length() - 1);
+    }
+
     CDOResourceFolder folder = EresourceFactory.eINSTANCE.createCDOResourceFolder();
     int pos = path.lastIndexOf(CDOURIUtil.SEGMENT_SEPARATOR_CHAR);
     if (pos <= 0)
@@ -808,7 +815,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       folder.setName(name);
 
       path = path.substring(0, pos);
-      CDOResourceNode parent = getResourceNode(path);
+      CDOResourceNode parent = null;
+
+      try
+      {
+        parent = getResourceNode(path);
+      }
+      catch (Exception ex)
+      {
+        parent = createResourceFolder(path);
+      }
+
       if (parent instanceof CDOResourceFolder)
       {
         ((CDOResourceFolder)parent).getNodes().add(folder);
@@ -958,6 +975,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public synchronized void detach(CDOResourceImpl cdoResource)
   {
     CDOStateMachine.INSTANCE.detach(cdoResource);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public InternalCDOSavepoint getFirstSavepoint()
+  {
+    return firstSavepoint;
   }
 
   /**
@@ -1435,8 +1460,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       if (lastSavepoint == firstSavepoint && options().isAutoReleaseLocksEnabled())
       {
-        // Unlock all objects
-        unlockObjects(null, null);
+        CDORepositoryInfo repositoryInfo = getSession().getRepositoryInfo();
+        if (isDurableView() && repositoryInfo.getState() == CDOCommonRepository.State.ONLINE
+            || repositoryInfo.getType() == CDOCommonRepository.Type.MASTER)
+        {
+          // Unlock all objects
+          unlockObjects(null, null);
+        }
       }
 
       // Send notifications
@@ -2170,7 +2200,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * Bug 298561: This override removes references to remotely detached objects that are present in any DIRTY or NEW
    * objects.
-   * 
+   *
    * @since 3.0
    */
   /*
@@ -2468,7 +2498,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   /**
    * Generates {@link CDOIDTemp temporary} ID values.
-   * 
+   *
    * @author Eike Stepper
    */
   private static final class TempIDGenerator implements CDOIDGenerator

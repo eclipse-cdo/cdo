@@ -51,6 +51,11 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public InternalCDOSavepoint setSavepoint();
 
   /**
+   * @since 4.1
+   */
+  public InternalCDOSavepoint getFirstSavepoint();
+
+  /**
    * @since 3.0
    */
   public InternalCDOSavepoint getLastSavepoint();

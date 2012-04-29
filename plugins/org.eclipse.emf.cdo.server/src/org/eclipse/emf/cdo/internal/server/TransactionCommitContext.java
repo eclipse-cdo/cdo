@@ -86,11 +86,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -799,7 +801,7 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         // First lock all objects (incl. possible ref targets).
         // This is a transient operation, it does not check for existance!
-        lockManager.lock(LockType.WRITE, transaction, lockedObjects, 1000);
+        lockManager.lock2(LockType.WRITE, transaction, lockedObjects, 1000);
 
         // If all locks could be acquired, check if locked targets do still exist
         if (lockedTargets != null)
@@ -828,7 +830,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   /**
    * Iterates up the eContainers of an object and returns <code>true</code> on the first parent locked by another view.
-   * 
+   *
    * @return <code>true</code> if any parent is locked, <code>false</code> otherwise.
    */
   private boolean isContainerLocked(InternalCDORevisionDelta delta)
@@ -949,8 +951,31 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     if (!lockedObjects.isEmpty())
     {
-      lockManager.unlock(LockType.WRITE, transaction, lockedObjects);
+      lockManager.unlock2(LockType.WRITE, transaction, lockedObjects);
       lockedObjects.clear();
+    }
+
+    if (detachedObjects.length > 0)
+    {
+      boolean branching = getTransaction().getRepository().isSupportingBranches();
+      Collection<? extends Object> unlockables = null;
+      if (branching)
+      {
+        List<CDOIDAndBranch> keys = new LinkedList<CDOIDAndBranch>();
+        for (CDOID id : detachedObjects)
+        {
+          CDOIDAndBranch idAndBranch = CDOIDUtil.createIDAndBranch(id, transaction.getBranch());
+          keys.add(idAndBranch);
+        }
+
+        unlockables = keys;
+      }
+      else
+      {
+        unlockables = Arrays.asList(detachedObjects);
+      }
+
+      lockManager.unlock2(transaction, unlockables);
     }
   }
 
@@ -978,19 +1003,32 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private InternalCDORevision computeDirtyObject(InternalCDORevisionDelta delta)
   {
+    CDOBranch branch = transaction.getBranch();
     CDOID id = delta.getID();
 
-    InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
-    if (oldRevision == null)
+    InternalCDORevision oldRevision = null;
+
+    try
     {
-      throw new IllegalStateException("Origin revision not found for " + delta);
+      oldRevision = revisionManager.getRevisionByVersion(id, delta, CDORevision.UNCHUNKED, true);
+      if (oldRevision != null)
+      {
+        if (ObjectUtil.equals(oldRevision.getBranch(), branch) && oldRevision.isHistorical())
+        {
+          oldRevision = null;
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+      oldRevision = null;
     }
 
-    CDOBranch branch = transaction.getBranch();
-    if (ObjectUtil.equals(oldRevision.getBranch(), branch) && oldRevision.isHistorical())
+    if (oldRevision == null)
     {
       throw new ConcurrentModificationException("Attempt by " + transaction + " to modify historical revision: "
-          + oldRevision);
+          + delta);
     }
 
     // Make sure all chunks are loaded

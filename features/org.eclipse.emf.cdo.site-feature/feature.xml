@@ -115,11 +115,19 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.releng.buildstamp"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.releng.launches"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.cdo.releng.manifests"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.projectcopy"
          version="0.0.0"/>
 
    <includes
@@ -139,7 +147,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.wingit"
+         id="org.eclipse.emf.cdo.releng.gitbash"
          version="0.0.0"/>
 
    <includes

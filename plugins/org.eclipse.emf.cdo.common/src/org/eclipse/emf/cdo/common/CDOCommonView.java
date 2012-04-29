@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.common;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
@@ -30,7 +31,7 @@ import org.eclipse.net4j.util.options.IOptionsEvent;
  * @apiviz.landmark
  * @apiviz.has {@link CDOCommonView.Options}
  */
-public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, IOptionsContainer, Closeable
+public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevisionProvider, IOptionsContainer, Closeable
 {
   public int getViewID();
 

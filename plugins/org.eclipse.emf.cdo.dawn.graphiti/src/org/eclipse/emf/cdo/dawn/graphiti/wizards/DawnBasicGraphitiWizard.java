@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.dawn.graphiti.wizards;
 
 import org.eclipse.emf.cdo.dawn.graphiti.DawnGraphitiUIPlugin;
 import org.eclipse.emf.cdo.dawn.graphiti.editors.DawnGraphitiDiagramEditor;
-import org.eclipse.emf.cdo.dawn.graphiti.editors.DawnGraphitiDiagramEditorFactory;
 import org.eclipse.emf.cdo.dawn.graphiti.editors.DawnGraphitiEditorInput;
+import org.eclipse.emf.cdo.dawn.graphiti.util.DawnGraphitiUtil;
 import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
 import org.eclipse.emf.cdo.dawn.ui.composites.CDOResourceNodeChooserComposite.ResourceChooserValidator;
 import org.eclipse.emf.cdo.dawn.ui.wizards.DawnCreateNewDiagramResourceWizardPage;
@@ -135,8 +135,7 @@ public class DawnBasicGraphitiWizard extends Wizard implements INewWizard
     Resource diagramResource = createDiagramResource(diagramResourceURI, diagram, editingDomain);
 
     String providerId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagram.getDiagramTypeId());
-    DiagramEditorInput editorInput = new DawnGraphitiEditorInput(EcoreUtil.getURI(diagram), editingDomain, providerId,
-        true, diagramResource);
+    DiagramEditorInput editorInput = new DawnGraphitiEditorInput(EcoreUtil.getURI(diagram), providerId, diagramResource);
 
     try
     {
@@ -181,8 +180,7 @@ public class DawnBasicGraphitiWizard extends Wizard implements INewWizard
 
   private TransactionalEditingDomain createEditingDomain(URI diagramResourceURI, final Diagram diagram)
   {
-    final TransactionalEditingDomain editingDomain = DawnGraphitiDiagramEditorFactory
-        .createResourceSetAndEditingDomain();
+    final TransactionalEditingDomain editingDomain = DawnGraphitiUtil.createResourceSetAndEditingDomain();
 
     return editingDomain;
   }

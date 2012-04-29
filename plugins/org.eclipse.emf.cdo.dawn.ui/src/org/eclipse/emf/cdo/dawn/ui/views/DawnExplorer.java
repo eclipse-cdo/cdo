@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.dawn.ui.DawnEditorInput;
 import org.eclipse.emf.cdo.dawn.ui.helper.EditorDescriptionHelper;
 import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -159,7 +158,7 @@ public class DawnExplorer extends CDOSessionsView
                 true);
             try
             {
-              DawnExplorer.this.getSite().getPage().openEditor(editorInput, CDOEditor.EDITOR_ID);
+              DawnExplorer.this.getSite().getPage().openEditor(editorInput, CDOEditorUtil.getEditorID());
             }
             catch (PartInitException e)
             {

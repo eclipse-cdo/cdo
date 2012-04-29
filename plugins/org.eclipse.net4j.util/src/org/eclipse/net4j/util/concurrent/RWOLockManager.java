@@ -102,6 +102,52 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     unlock2(type, context, objectsToUnlock);
   }
 
+  public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context,
+      Collection<? extends OBJECT> objectsToUnlock)
+  {
+    if (objectsToUnlock.isEmpty())
+    {
+      return EMPTY_RESULT;
+    }
+
+    Set<LockState<OBJECT, CONTEXT>> lockStates = new HashSet<LockState<OBJECT, CONTEXT>>();
+
+    Iterator<? extends OBJECT> it = objectsToUnlock.iterator();
+    while (it.hasNext())
+    {
+      OBJECT o = it.next();
+      LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(o);
+
+      if (lockState == null)
+      {
+        continue;
+      }
+
+      for (LockType lockType : LockType.values())
+      {
+        while (lockState.canUnlock(lockType, context))
+        {
+          lockState.unlock(lockType, context);
+          lockStates.add(lockState);
+        }
+      }
+    }
+
+    for (LockState<OBJECT, CONTEXT> lockState : lockStates)
+    {
+      removeLockStateForContext(context, lockState);
+
+      if (lockState.hasNoLocks())
+      {
+        objectToLockStateMap.remove(lockState.getLockedObject());
+      }
+    }
+
+    notifyAll();
+
+    return new LinkedList<RWOLockManager.LockState<OBJECT, CONTEXT>>(lockStates);
+  }
+
   public synchronized List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context,
       Collection<? extends OBJECT> objectsToUnlock)
   {

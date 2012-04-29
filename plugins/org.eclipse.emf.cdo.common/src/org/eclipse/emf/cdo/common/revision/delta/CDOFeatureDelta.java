@@ -14,11 +14,12 @@ package org.eclipse.emf.cdo.common.revision.delta;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.NotifierImpl;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * Represents a change delta between two values of a single {@link EStructuralFeature feature}.
- * 
+ *
  * @author Simon McDuff
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -36,7 +37,7 @@ public interface CDOFeatureDelta
   /**
    * @since 3.0
    */
-  public static final Object UNKNOWN_VALUE = new Object()
+  public static final Object UNKNOWN_VALUE = new NotifierImpl()
   {
     @Override
     public String toString()
@@ -68,7 +69,7 @@ public interface CDOFeatureDelta
 
   /**
    * Enumerates the possible types of {@link CDOFeatureDelta feature deltas}.
-   * 
+   *
    * @author Simon McDuff
    */
   public enum Type

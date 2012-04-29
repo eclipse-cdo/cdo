@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A CDO repository.
@@ -118,6 +119,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   public void validateTimeStamp(long timeStamp) throws IllegalArgumentException;
 
   /**
+   * @since 4.1
+   */
+  public CDOCommitInfoHandler[] getCommitInfoHandlers();
+
+  /**
    * @since 4.0
    */
   public void addCommitInfoHandler(CDOCommitInfoHandler handler);
@@ -126,6 +132,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
    * @since 4.0
    */
   public void removeCommitInfoHandler(CDOCommitInfoHandler handler);
+
+  /**
+   * @since 4.1
+   */
+  public Set<Handler> getHandlers();
 
   /**
    * @since 2.0

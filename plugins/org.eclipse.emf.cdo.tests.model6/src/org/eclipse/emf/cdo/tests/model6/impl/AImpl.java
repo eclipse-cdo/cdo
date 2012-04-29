@@ -25,18 +25,17 @@ import org.eclipse.emf.ecore.EClass;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.AImpl#getOwnedDs <em>Owned Ds</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.model6.impl.AImpl#getOwnedBs <em>Owned Bs</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.AImpl#getOwnedDs <em>Owned Ds</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.AImpl#getOwnedBs <em>Owned Bs</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class AImpl extends CDOObjectImpl implements A
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected AImpl()
@@ -46,7 +45,6 @@ public class AImpl extends CDOObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -57,7 +55,6 @@ public class AImpl extends CDOObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -68,7 +65,6 @@ public class AImpl extends CDOObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -79,7 +75,6 @@ public class AImpl extends CDOObjectImpl implements A
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

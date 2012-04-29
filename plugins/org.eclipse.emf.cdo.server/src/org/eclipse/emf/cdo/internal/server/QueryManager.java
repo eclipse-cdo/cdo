@@ -307,13 +307,15 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
     public void addListener()
     {
       InternalView view = getQueryResult().getView();
-      view.getSession().addListener(sessionListener);
+      InternalSession session = view.getSession();
+      session.addListener(sessionListener);
     }
 
     public void removeListener()
     {
       InternalView view = getQueryResult().getView();
-      view.getSession().removeListener(sessionListener);
+      InternalSession session = view.getSession();
+      session.removeListener(sessionListener);
     }
   }
 }

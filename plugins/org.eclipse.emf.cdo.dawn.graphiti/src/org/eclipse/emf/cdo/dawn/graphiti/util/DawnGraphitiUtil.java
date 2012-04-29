@@ -10,8 +10,20 @@
  */
 package org.eclipse.emf.cdo.dawn.graphiti.util;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.cdo.dawn.preferences.PreferenceConstants;
+import org.eclipse.emf.cdo.dawn.transaction.DawnTransactionalEditingDomainImpl;
+import org.eclipse.emf.cdo.dawn.util.connection.CDOConnectionUtil;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.transaction.TransactionalCommandStack;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.impl.TransactionalEditingDomainImpl;
+import org.eclipse.emf.workspace.WorkspaceEditingDomainFactory;
+
+import org.eclipse.core.commands.operations.DefaultOperationHistory;
 import org.eclipse.gef.EditPart;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
@@ -25,6 +37,26 @@ import java.util.List;
  */
 public class DawnGraphitiUtil
 {
+  public static TransactionalEditingDomain createResourceSetAndEditingDomain()
+  {
+    // TODO check if this is still needed here
+    CDOConnectionUtil.instance.init(PreferenceConstants.getRepositoryName(), PreferenceConstants.getProtocol(),
+        PreferenceConstants.getServerName());
+    CDOConnectionUtil.instance.getCurrentSession();
+
+    final ResourceSet resourceSet = new ResourceSetImpl();
+
+    @SuppressWarnings("restriction")
+    final TransactionalCommandStack workspaceCommandStack = new org.eclipse.graphiti.ui.internal.editor.GFWorkspaceCommandStackImpl(
+        new DefaultOperationHistory());
+
+    final TransactionalEditingDomainImpl editingDomain = new DawnTransactionalEditingDomainImpl(
+        new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE), workspaceCommandStack,
+        resourceSet);
+    WorkspaceEditingDomainFactory.INSTANCE.mapResourceSet(editingDomain);
+    return editingDomain;
+  }
+
   /**
    * This method tries to find an editpart for a given pictogram element. It recursivly searches all children for the
    * given editpart if the model matches to pictogramElement.

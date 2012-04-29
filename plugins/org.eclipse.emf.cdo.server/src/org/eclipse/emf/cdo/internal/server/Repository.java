@@ -842,6 +842,14 @@ public class Repository extends Container<Object> implements InternalRepository
     timeStampAuthority.failCommit(timestamp);
   }
 
+  public CDOCommitInfoHandler[] getCommitInfoHandlers()
+  {
+    synchronized (commitInfoHandlers)
+    {
+      return commitInfoHandlers.toArray(new CDOCommitInfoHandler[commitInfoHandlers.size()]);
+    }
+  }
+
   /**
    * @since 4.0
    */
@@ -871,13 +879,7 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     sessionManager.sendCommitNotification(sender, commitInfo);
 
-    CDOCommitInfoHandler[] handlers;
-    synchronized (commitInfoHandlers)
-    {
-      handlers = commitInfoHandlers.toArray(new CDOCommitInfoHandler[commitInfoHandlers.size()]);
-    }
-
-    for (CDOCommitInfoHandler handler : handlers)
+    for (CDOCommitInfoHandler handler : getCommitInfoHandlers())
     {
       try
       {
@@ -994,6 +996,23 @@ public class Repository extends Container<Object> implements InternalRepository
   public long getTimeStamp()
   {
     return System.currentTimeMillis();
+  }
+
+  public Set<Handler> getHandlers()
+  {
+    Set<Handler> handlers = new HashSet<Handler>();
+
+    synchronized (readAccessHandlers)
+    {
+      handlers.addAll(readAccessHandlers);
+    }
+
+    synchronized (writeAccessHandlers)
+    {
+      handlers.addAll(writeAccessHandlers);
+    }
+
+    return handlers;
   }
 
   /**

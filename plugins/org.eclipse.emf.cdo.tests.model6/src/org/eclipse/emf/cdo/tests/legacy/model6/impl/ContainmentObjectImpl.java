@@ -30,28 +30,18 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentOptional <em>Containment
- * Optional</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentList <em>Containment List
- * </em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentOptional <em>Containment Optional</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.ContainmentObjectImpl#getContainmentList <em>Containment List</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ContainmentObjectImpl extends BaseObjectImpl implements ContainmentObject
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
    * The cached value of the '{@link #getContainmentOptional() <em>Containment Optional</em>}' containment reference.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see #getContainmentOptional()
    * @generated
    * @ordered
@@ -70,7 +60,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ContainmentObjectImpl()
@@ -80,7 +69,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -91,17 +79,46 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BaseObject getContainmentOptional()
+  {
+    if (containmentOptional != null && containmentOptional.eIsProxy())
+    {
+      InternalEObject oldContainmentOptional = (InternalEObject)containmentOptional;
+      containmentOptional = (BaseObject)eResolveProxy(oldContainmentOptional);
+      if (containmentOptional != oldContainmentOptional)
+      {
+        InternalEObject newContainmentOptional = (InternalEObject)containmentOptional;
+        NotificationChain msgs = oldContainmentOptional.eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+            - Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, null, null);
+        if (newContainmentOptional.eInternalContainer() == null)
+        {
+          msgs = newContainmentOptional.eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+              - Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, null, msgs);
+        }
+        if (msgs != null)
+          msgs.dispatch();
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+              Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, oldContainmentOptional, containmentOptional));
+      }
+    }
+    return containmentOptional;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BaseObject basicGetContainmentOptional()
   {
     return containmentOptional;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public NotificationChain basicSetContainmentOptional(BaseObject newContainmentOptional, NotificationChain msgs)
@@ -122,7 +139,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setContainmentOptional(BaseObject newContainmentOptional)
@@ -147,14 +163,13 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<BaseObject> getContainmentList()
   {
     if (containmentList == null)
     {
-      containmentList = new EObjectContainmentEList<BaseObject>(BaseObject.class, this,
+      containmentList = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this,
           Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_LIST);
     }
     return containmentList;
@@ -162,7 +177,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -180,7 +194,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -189,7 +202,9 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
     switch (featureID)
     {
     case Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL:
-      return getContainmentOptional();
+      if (resolve)
+        return getContainmentOptional();
+      return basicGetContainmentOptional();
     case Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_LIST:
       return getContainmentList();
     }
@@ -198,7 +213,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -220,7 +234,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -240,7 +253,6 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

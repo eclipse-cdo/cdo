@@ -29,28 +29,21 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListA <em>List A</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListB <em>List B</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListC <em>List C</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListD <em>List D</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListA <em>List A</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListB <em>List B</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListC <em>List C</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.RootImpl#getListD <em>List D</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class RootImpl extends EObjectImpl implements Root
 {
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
-  /**
-   * The cached value of the '{@link #getListA() <em>List A</em>}' containment reference list. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getListA() <em>List A</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getListA()
    * @generated
    * @ordered
@@ -58,9 +51,9 @@ public class RootImpl extends EObjectImpl implements Root
   protected EList<BaseObject> listA;
 
   /**
-   * The cached value of the '{@link #getListB() <em>List B</em>}' containment reference list. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getListB() <em>List B</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getListB()
    * @generated
    * @ordered
@@ -68,9 +61,9 @@ public class RootImpl extends EObjectImpl implements Root
   protected EList<BaseObject> listB;
 
   /**
-   * The cached value of the '{@link #getListC() <em>List C</em>}' containment reference list. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getListC() <em>List C</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getListC()
    * @generated
    * @ordered
@@ -78,9 +71,9 @@ public class RootImpl extends EObjectImpl implements Root
   protected EList<BaseObject> listC;
 
   /**
-   * The cached value of the '{@link #getListD() <em>List D</em>}' containment reference list. <!-- begin-user-doc -->
+   * The cached value of the '{@link #getListD() <em>List D</em>}' containment reference list.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @see #getListD()
    * @generated
    * @ordered
@@ -89,7 +82,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected RootImpl()
@@ -99,7 +91,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -110,63 +101,58 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<BaseObject> getListA()
   {
     if (listA == null)
     {
-      listA = new EObjectContainmentEList<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_A);
+      listA = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_A);
     }
     return listA;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<BaseObject> getListB()
   {
     if (listB == null)
     {
-      listB = new EObjectContainmentEList<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_B);
+      listB = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_B);
     }
     return listB;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<BaseObject> getListC()
   {
     if (listC == null)
     {
-      listC = new EObjectContainmentEList<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_C);
+      listC = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_C);
     }
     return listC;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<BaseObject> getListD()
   {
     if (listD == null)
     {
-      listD = new EObjectContainmentEList<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_D);
+      listD = new EObjectContainmentEList.Resolving<BaseObject>(BaseObject.class, this, Model6Package.ROOT__LIST_D);
     }
     return listD;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -188,7 +174,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -210,7 +195,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -241,7 +225,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -267,7 +250,6 @@ public class RootImpl extends EObjectImpl implements Root
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

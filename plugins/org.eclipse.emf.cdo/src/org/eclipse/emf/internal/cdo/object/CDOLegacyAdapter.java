@@ -14,7 +14,9 @@ package org.eclipse.emf.internal.cdo.object;
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -22,6 +24,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.CDOStore;
@@ -85,63 +88,186 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       return;
     }
 
-    CDOStore store = view.getStore();
     if (EMFUtil.isPersistent(feature))
     {
-      switch (msg.getEventType())
+      int eventType = msg.getEventType();
+      int position = msg.getPosition();
+      Object oldValue = msg.getOldValue();
+      Object newValue = msg.getNewValue();
+
+      switch (eventType)
       {
       case Notification.SET:
-        store.set(instance, feature, msg.getPosition(), msg.getNewValue());
+        notifySet(feature, position, oldValue, newValue);
         break;
 
       case Notification.UNSET:
-        store.unset(instance, feature);
+        notifyUnset(feature, oldValue);
         break;
 
       case Notification.MOVE:
-        // TODO Is that correct?
-        store.move(instance, feature, msg.getPosition(), (Integer)msg.getOldValue());
+        notifyMove(feature, position, oldValue);
         break;
 
       case Notification.ADD:
-        store.add(instance, feature, msg.getPosition(), msg.getNewValue());
+        notifyAdd(feature, position, newValue);
         break;
 
       case Notification.ADD_MANY:
-      {
-        int pos = msg.getPosition();
-        @SuppressWarnings("unchecked")
-        List<Object> list = (List<Object>)msg.getNewValue();
-        for (Object object : list)
-        {
-          store.add(instance, feature, pos++, object);
-        }
-
+        notifyAddMany(feature, position, newValue);
         break;
-      }
 
       case Notification.REMOVE:
-      {
-        store.remove(instance, feature, msg.getPosition());
+        notifyRemove(feature, position);
         break;
-      }
 
       case Notification.REMOVE_MANY:
-      {
-        @SuppressWarnings("unchecked")
-        List<Object> list = (List<Object>)msg.getOldValue();
-        for (int i = list.size() - 1; i >= 0; --i)
-        {
-          store.remove(instance, feature, i);
-        }
-
+        notifyRemoveMany(feature, oldValue);
         break;
-      }
       }
 
       // Align Container for bidirectional references because this is not set in the store. See Bugzilla_246622_Test
       instanceToRevisionContainment();
     }
+  }
+
+  protected void notifySet(EStructuralFeature feature, int position, Object oldValue, Object newValue)
+  {
+    CDOStore store = view.getStore();
+    store.set(instance, feature, position, newValue);
+    if (feature instanceof EReference)
+    {
+      EReference reference = (EReference)feature;
+      if (reference.isContainment())
+      {
+        if (oldValue != null)
+        {
+          InternalEObject oldChild = (InternalEObject)oldValue;
+          setContainer(store, oldChild, null, 0);
+        }
+
+        if (newValue != null)
+        {
+          InternalEObject newChild = (InternalEObject)newValue;
+          setContainer(store, newChild, this, reference.getFeatureID());
+        }
+      }
+    }
+  }
+
+  protected void notifyUnset(EStructuralFeature feature, Object oldValue)
+  {
+    CDOStore store = view.getStore();
+    if (feature instanceof EReference)
+    {
+      EReference reference = (EReference)feature;
+      if (reference.isContainment())
+      {
+        @SuppressWarnings("unchecked")
+        List<Object> list = (List<Object>)oldValue;
+        for (Object child : list)
+        {
+          if (child != null)
+          {
+            setContainer(store, (InternalEObject)child, null, 0);
+          }
+        }
+      }
+    }
+
+    store.unset(instance, feature);
+  }
+
+  protected void notifyMove(EStructuralFeature feature, int position, Object oldValue)
+  {
+    CDOStore store = view.getStore();
+    store.move(instance, feature, position, (Integer)oldValue);
+  }
+
+  protected void notifyAdd(EStructuralFeature feature, int position, Object newValue)
+  {
+    CDOStore store = view.getStore();
+    store.add(instance, feature, position, newValue);
+    if (newValue != null && feature instanceof EReference)
+    {
+      EReference reference = (EReference)feature;
+      if (reference.isContainment())
+      {
+        InternalEObject newChild = (InternalEObject)newValue;
+        setContainer(store, newChild, this, reference.getFeatureID());
+      }
+    }
+  }
+
+  protected void notifyAddMany(EStructuralFeature feature, int position, Object newValue)
+  {
+    CDOStore store = view.getStore();
+    int pos = position;
+    @SuppressWarnings("unchecked")
+    List<Object> list = (List<Object>)newValue;
+    for (Object object : list)
+    {
+      store.add(instance, feature, pos++, object);
+      if (object != null && feature instanceof EReference)
+      {
+        EReference reference = (EReference)feature;
+        if (reference.isContainment())
+        {
+          InternalEObject newChild = (InternalEObject)object;
+          setContainer(store, newChild, this, reference.getFeatureID());
+        }
+      }
+    }
+  }
+
+  protected void notifyRemove(EStructuralFeature feature, int position)
+  {
+    CDOStore store = view.getStore();
+    InternalEObject oldChild = (InternalEObject)store.remove(instance, feature, position);
+    if (oldChild != null && feature instanceof EReference)
+    {
+      EReference reference = (EReference)feature;
+      if (reference.isContainment())
+      {
+        setContainer(store, oldChild, null, 0);
+      }
+    }
+  }
+
+  protected void notifyRemoveMany(EStructuralFeature feature, Object oldValue)
+  {
+    CDOStore store = view.getStore();
+    @SuppressWarnings("unchecked")
+    List<Object> list = (List<Object>)oldValue;
+    for (int i = list.size() - 1; i >= 0; --i)
+    {
+      InternalEObject oldChild = (InternalEObject)store.remove(instance, feature, i);
+      if (oldChild != null && feature instanceof EReference)
+      {
+        EReference reference = (EReference)feature;
+        if (reference.isContainment())
+        {
+          setContainer(store, oldChild, null, 0);
+        }
+      }
+    }
+  }
+
+  private void setContainer(CDOStore store, InternalEObject object, InternalEObject container, int containingFeatureID)
+  {
+    if (object instanceof CDOObjectImpl)
+    {
+      // Don't touch native objects
+      return;
+    }
+
+    if (FSMUtil.isTransient(CDOUtil.getCDOObject(object)))
+    {
+      // Don't touch transient objects
+      return;
+    }
+
+    store.setContainer(object, null, container, InternalEObject.EOPPOSITE_FEATURE_BASE - containingFeatureID);
   }
 
   /**

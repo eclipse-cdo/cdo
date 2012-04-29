@@ -48,7 +48,6 @@ import java.util.Map;
  * TODO remove this suppress warning as soon as I have found a way to workaround the problem that the Graphiti editor
  * which is extended is internal
  */
-@SuppressWarnings("restriction")
 public class DawnGraphitiEditorSupport extends DawnAbstractEditorSupport
 {
   private DawnGraphitiHandler dawnGraphitiHandler;

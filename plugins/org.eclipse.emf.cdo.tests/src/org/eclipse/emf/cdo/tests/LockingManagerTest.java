@@ -14,9 +14,12 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -24,11 +27,13 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.LockTimeoutException;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
+import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -1147,5 +1152,43 @@ public class LockingManagerTest extends AbstractLockingTest
 
     session1.close();
     session2.close();
+  }
+
+  public void testDeleteLockedObject() throws Exception
+  {
+    CDOSession session1 = openSession();
+    CDOSession session2 = openSession();
+
+    CDOTransaction tx = session1.openTransaction();
+    tx.options().setAutoReleaseLocksEnabled(false);
+    CDOResource resource = tx.createResource(getResourcePath("/res1"));
+    Category category1 = getModel1Factory().createCategory();
+    resource.getContents().add(category1);
+    tx.commit();
+
+    CDOID id = CDOUtil.getCDOObject(category1).cdoID();
+
+    writeLock(category1);
+
+    resource.getContents().remove(category1);
+    tx.commit();
+
+    CDOView controlView = session2.openView();
+
+    try
+    {
+      controlView.getObject(id);
+      fail("Should have thrown " + ObjectNotFoundException.class.getSimpleName());
+    }
+    catch (ObjectNotFoundException ignore)
+    {
+      // Do nothing
+    }
+
+    InternalLockManager mgr = getRepository().getLockingManager();
+    boolean branching = getRepository().isSupportingBranches();
+    Object key = branching ? CDOIDUtil.createIDAndBranch(id, tx.getBranch()) : id;
+    LockState<Object, IView> state = mgr.getLockState(key);
+    assertNull(state);
   }
 }

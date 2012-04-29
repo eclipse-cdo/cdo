@@ -35,7 +35,6 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ReferenceObjectImpl()
@@ -45,7 +44,6 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +54,6 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BaseObject getReferenceOptional()
@@ -66,7 +63,6 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setReferenceOptional(BaseObject newReferenceOptional)
@@ -76,7 +72,6 @@ public class ReferenceObjectImpl extends BaseObjectImpl implements ReferenceObje
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

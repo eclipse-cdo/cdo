@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -38,7 +37,7 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.eresource.CDOResource} object. <!-- begin-user-doc
  * -->
- * 
+ *
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  * @generated
  */
@@ -48,7 +47,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public CDOResourceItemProvider(AdapterFactory adapterFactory)
@@ -58,7 +57,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
 
   /**
    * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -79,7 +78,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
 
   /**
    * This adds a property descriptor for the URI feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addURIPropertyDescriptor(Object object)
@@ -95,7 +94,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
 
   /**
    * This adds a property descriptor for the Modified feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addModifiedPropertyDescriptor(Object object)
@@ -111,7 +110,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
 
   /**
    * This adds a property descriptor for the Loaded feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addLoadedPropertyDescriptor(Object object)
@@ -128,7 +127,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
   /**
    * This adds a property descriptor for the Tracking Modification feature. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   protected void addTrackingModificationPropertyDescriptor(Object object)
@@ -146,7 +145,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
 
   /**
    * This adds a property descriptor for the Time Stamp feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addTimeStampPropertyDescriptor(Object object)
@@ -165,7 +164,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
    * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
    * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -181,7 +180,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -195,7 +194,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
 
   /**
    * This returns CDOResource.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -206,20 +205,20 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     CDOResource resource = (CDOResource)object;
-    URI uri = resource.getURI();
-    return uri == null ? resource.toString() : uri.toString();
+    String name = resource.getName();
+    return name == null ? resource.toString() : name;
   }
 
   /**
    * Returns the parent of the argument CDOResource
-   * 
+   *
    * @ADDED
    * @since 2.0
    */
@@ -238,7 +237,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
    * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -268,7 +267,7 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
   /**
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
    * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.server.syncing;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -88,7 +89,7 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
 
-  private boolean rawReplication;
+  private boolean rawReplication = true;
 
   private int maxRecommits = DEFAULT_MAX_RECOMMITS;
 
@@ -248,7 +249,8 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
   {
     synchronized (connectLock)
     {
-      if (localRepository.getState().isConnected())
+      State state = localRepository.getState();
+      if (state.isConnected())
       {
         return;
       }
@@ -396,7 +398,8 @@ public class RepositorySynchronizer extends QueueRunner implements InternalRepos
 
     private void setRootResourceID()
     {
-      if (localRepository.getState() == CDOCommonRepository.State.INITIAL)
+      State state = localRepository.getState();
+      if (state == CDOCommonRepository.State.INITIAL)
       {
         CDOID rootResourceID = remoteSession.getRepositoryInfo().getRootResourceID();
         localRepository.setRootResourceID(rootResourceID);

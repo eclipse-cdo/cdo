@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.view;
 
 import org.eclipse.emf.cdo.CDOAdapter;
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
+import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.CDOCommonView;
@@ -60,13 +61,13 @@ import java.util.Set;
  * Mutable objects can be provided by a {@link CDOTransaction transaction}.
  * <p>
  * A view is opened through API of the underlying session like this:
- * 
+ *
  * <pre>
  *   CDOSession session = ...
  *   CDOView view = session.openView();
  *   ...
  * </pre>
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -86,7 +87,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 {
   /**
    * Returns the {@link CDOSession session} this view was opened by.
-   * 
+   *
    * @return The session this view was opened by, or <code>null</code> if this view is closed.
    * @see #close()
    * @see #isClosed()
@@ -97,7 +98,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
   /**
    * Returns the {@link CDOViewSet view set} this view is associated with.
-   * 
+   *
    * @return The view set this view is associated with, never <code>null</code>.
    * @see CDOViewSet#getViews()
    */
@@ -107,7 +108,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    * Returns the {@link ResourceSet resource set} this view is associated with.
    * <p>
    * Same as calling <tt>getViewSet().getResourceSet()</tt>.
-   * 
+   *
    * @see CDOViewSet#getResourceSet()
    */
   public ResourceSet getResourceSet();
@@ -119,7 +120,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    * Objects} provided by this view will be {@link CDORevision#isValid(long) valid} at this time. The special value
    * {@link CDOCommonView#UNSPECIFIED_DATE UNSPECIFIED_DATE} denotes a "floating view" that always shows the latest
    * state of the repository.
-   * 
+   *
    * @return <code>true</code> if the branch point was changed, <code>false</code> otherwise.
    * @since 3.0
    */
@@ -128,21 +129,21 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   /**
    * Same as calling {@link #setBranchPoint(CDOBranch, long) setBranchPoint(branchPoint.getBranch(),
    * branchPoint.getTimeStamp())}.
-   * 
+   *
    * @since 3.0
    */
   public boolean setBranchPoint(CDOBranchPoint branchPoint);
 
   /**
    * Same as calling {@link #setBranchPoint(CDOBranch, long) setBranchPoint(branch, getTimeStamp())}.
-   * 
+   *
    * @since 3.0
    */
   public boolean setBranch(CDOBranch branch);
 
   /**
    * Same as calling {@link #setBranchPoint(CDOBranch, long) setBranchPoint(getBranch(), timeStamp)}.
-   * 
+   *
    * @since 3.0
    */
   public boolean setTimeStamp(long timeStamp);
@@ -162,7 +163,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    * Returns always <code>false</code>.
    * <p>
    * This method has a special implementation in {@link CDOTransaction} as well.
-   * 
+   *
    * @see CDOTransaction#isDirty()
    */
   public boolean isDirty();
@@ -171,14 +172,14 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    * Returns always <code>false</code>.
    * <p>
    * This method has a special implementation in {@link CDOTransaction} as well.
-   * 
+   *
    * @see CDOTransaction#hasConflict()
    */
   public boolean hasConflict();
 
   /**
    * Returns <code>true</code> if a resource with the given path exists in the repository, <code>false</code>.
-   * 
+   *
    * @see #getResource(String, boolean)
    */
   public boolean hasResource(String path);
@@ -190,14 +191,14 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
   /**
    * Same as {@link #getResource(String, boolean) getResource(String, true)}.
-   * 
+   *
    * @see ResourceSet#getResource(URI, boolean)
    */
   public CDOResource getResource(String path);
 
   /**
    * Returns the resource node with the given path.
-   * 
+   *
    * @return never <code>null</code>.
    * @throws CDOException
    *           if no such resource node exists.
@@ -215,7 +216,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   /**
    * Returns a list of the resources in the given folder with a name equal to or starting with the value of the name
    * parameter.
-   * 
+   *
    * @param folder
    *          The folder to search in, or <code>null</code> for top level resource nodes.
    * @param name
@@ -229,7 +230,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   /**
    * Returns an iterator over the resources in the given folder with a name equal to or starting with the value of the
    * name parameter. The underlying query will be executed asynchronously.
-   * 
+   *
    * @param folder
    *          The folder to search in, or <code>null</code> for top level resource nodes.
    * @param name
@@ -244,7 +245,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   /**
    * Returns a list of {@link CDOObjectReference object references} that represent the cross references to the specified
    * target object.
-   * 
+   *
    * @param targetObject
    *          The target object that referencing objects are requested for.
    * @param sourceReferences
@@ -259,7 +260,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   /**
    * Returns a list of {@link CDOObjectReference object references} that represent the cross references to the specified
    * target objects.
-   * 
+   *
    * @param targetObjects
    *          The set of target objects that referencing objects are requested for.
    * @param sourceReferences
@@ -274,7 +275,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   /**
    * Returns an iterator over the {@link CDOObjectReference object references} that represent the cross references to
    * the specified target objects. The underlying query will be executed asynchronously.
-   * 
+   *
    * @param targetObjects
    *          The set of target objects that referencing objects are requested for.
    * @param sourceReferences
@@ -289,7 +290,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
   /**
    * Returns the object for the given CDOID.
-   * 
+   *
    * @param loadOnDemand
    *          whether to create and load the object, if it doesn't already exist.
    * @return the object resolved by the CDOID if the id is not <code>null</code>, or <code>null</code> if there isn't
@@ -301,7 +302,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    * Returns the object for the given CDOID.
    * <p>
    * Same as <code>getObject(id, true)</code>.
-   * 
+   *
    * @see #getObject(CDOID, boolean)
    */
   public CDOObject getObject(CDOID id);
@@ -331,7 +332,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
   /**
    * Locks the given objects. Once the objects are locked, they will not be changed remotely or go in conflict state.
-   * 
+   *
    * @since 3.0
    */
   public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)
@@ -349,7 +350,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
   /**
    * Unlocks all locked objects of this view.
-   * 
+   *
    * @since 2.0
    */
   public void unlockObjects();
@@ -366,7 +367,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    * later point in time. This information includes the {@link CDOBranchPoint branch point}, the user ID of the
    * {@link CDOSession session}, whether it's a read-only view or a {@link CDOTransaction transaction} and all the locks
    * that are acquired or will be acquired while durable locking is enabled.
-   * 
+   *
    * @see CDOSession#openView(String)
    * @see CDOSession#openView(String, ResourceSet)
    * @see CDOSession#openTransaction(String)
@@ -380,7 +381,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
    * Disables the storage of all information that's needed to {@link CDOSession#openView(String) reopen} this view at a
    * later point in time. If such information is stored when this method is called it is removed. Note that locks
    * acquired by this view are only released if <code>true</code> is passed to the <code>releaseLocks</code> parameter.
-   * 
+   *
    * @see #enableDurableLocking()
    * @since 4.1
    */
@@ -403,7 +404,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
   /**
    * Same as <code>createQuery(language, queryString, null)</code>.
-   * 
+   *
    * @see #createQuery(String, String, Object)
    * @since 2.0
    */
@@ -426,7 +427,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
   /**
    * Encapsulates a set of notifying {@link CDOView view} configuration options.
-   * 
+   *
    * @author Simon McDuff
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -448,7 +449,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
   {
     /**
      * Returns the {@link CDOView view} of this options object.
-     * 
+     *
      * @since 4.0
      */
     public CDOView getContainer();
@@ -464,7 +465,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
      * Returns <code>true</code> if the {@link CDOObject objects} in this view will notify their
      * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>loaded</em>,
      * <code>false</code> otherwise.
-     * 
+     *
      * @since 4.1
      */
     public boolean isLoadNotificationEnabled();
@@ -472,16 +473,36 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     /**
      * Specifies whether the {@link CDOObject objects} in this view will notify their
      * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>loaded</em> or not.
-     * 
+     *
      * @since 4.1
      */
     public void setLoadNotificationEnabled(boolean enabled);
 
     /**
      * Returns <code>true</code> if the {@link CDOObject objects} in this view will notify their
+     * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>detached</em> (due to
+     * remote changes), <code>false</code> otherwise.
+     *
+     * @see CDONotification#DETACH_OBJECT
+     * @since 4.1
+     */
+    public boolean isDetachmentNotificationEnabled();
+
+    /**
+     * Specifies whether the {@link CDOObject objects} in this view will notify their
+     * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>detached</em> (due to
+     * remote changes) or not.
+     *
+     * @see CDONotification#DETACH_OBJECT
+     * @since 4.1
+     */
+    public void setDetachmentNotificationEnabled(boolean enabled);
+
+    /**
+     * Returns <code>true</code> if the {@link CDOObject objects} in this view will notify their
      * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>invalidated</em> (due to
      * remote changes), <code>false</code> otherwise.
-     * 
+     *
      * @see CDOInvalidationNotification
      */
     public boolean isInvalidationNotificationEnabled();
@@ -490,7 +511,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
      * Specifies whether the {@link CDOObject objects} in this view will notify their
      * {@link org.eclipse.emf.common.notify.Adapter adapters} about the fact that they are <em>invalidated</em> (due to
      * remote changes) or not.
-     * 
+     *
      * @see CDOInvalidationNotification
      */
     public void setInvalidationNotificationEnabled(boolean enabled);
@@ -507,7 +528,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
     /**
      * Returns the current set of {@link CDOAdapterPolicy change subscription policies}.
-     * 
+     *
      * @return The current set of change subscription policies, never <code>null</code>.
      * @see #addChangeSubscriptionPolicy(CDOAdapterPolicy)
      */
@@ -539,7 +560,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
      * You can subscribe to temporary objects. Even if you cannot receive notifications from other
      * {@link CDOTransaction} for these because they are only local to you, at commit time these objects will be
      * registered automatically.
-     * 
+     *
      * @see #removeChangeSubscriptionPolicy(CDOAdapterPolicy)
      * @see #getChangeSubscriptionPolicies()
      */
@@ -547,7 +568,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
     /**
      * Removes a change subscription policy from this view.
-     * 
+     *
      * @see #addChangeSubscriptionPolicy(CDOAdapterPolicy)
      * @see #getChangeSubscriptionPolicies()
      */
@@ -555,7 +576,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
     /**
      * Returns the reference type to be used in the internal object cache.
-     * 
+     *
      * @return Either {@link ReferenceType#STRONG STRONG}, {@link ReferenceType#SOFT SOFT} or {@link ReferenceType#WEAK
      *         WEAK}.
      */
@@ -584,7 +605,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
     /**
      * Returns the CDOStaleReferencePolicy in use.
-     * 
+     *
      * @since 3.0
      * @deprecated Use {@link #getStaleReferencePolicy()}
      */
@@ -593,7 +614,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
     /**
      * Sets a policy on how to deal with stale references.
-     * 
+     *
      * @since 3.0
      * @deprecated Use {@link #setStaleReferencePolicy(CDOStaleReferencePolicy)}
      */
@@ -602,14 +623,14 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
     /**
      * Returns the CDOStaleReferencePolicy in use.
-     * 
+     *
      * @since 4.1
      */
     public CDOStaleReferencePolicy getStaleReferencePolicy();
 
     /**
      * Sets a policy on how to deal with stale references.
-     * 
+     *
      * @since 4.1
      */
     public void setStaleReferencePolicy(CDOStaleReferencePolicy policy);
@@ -645,7 +666,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setLoadNotificationEnabled(boolean) load notification enabled} option has changed.
-     * 
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -657,8 +678,21 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
 
     /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
+     * {@link Options#setDetachmentNotificationEnabled(boolean) detachment notification enabled} option has changed.
+     *
+     * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     * @since 4.1
+     */
+    public interface DetachmenNotificationEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setInvalidationNotificationEnabled(boolean) invalidation notification enabled} option has changed.
-     * 
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -670,7 +704,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setInvalidationPolicy(CDOInvalidationPolicy) invalidation policy} option has changed.
-     * 
+     *
      * @author Eike Stepper
      * @since 3.0
      * @noextend This interface is not intended to be extended by clients.
@@ -683,7 +717,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#addChangeSubscriptionPolicy(CDOAdapterPolicy) change subscription policies} option has changed.
-     * 
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -695,7 +729,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setCacheReferenceType(ReferenceType) cache reference type} option has changed.
-     * 
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -707,7 +741,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setStrongReferencePolicy(CDOAdapterPolicy) strong reference policy} option has changed.
-     * 
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -720,7 +754,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setStrongReferencePolicy(CDOAdapterPolicy) strong reference policy} option has changed.
-     * 
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -735,7 +769,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
     /**
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setStaleReferenceBehaviour(CDOStaleReferencePolicy) stale reference type} option has changed.
-     * 
+     *
      * @since 3.0
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
@@ -748,7 +782,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, INotifier
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy) revision prefetching policy} option has
      * changed.
-     * 
+     *
      * @author Eike Stepper
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.

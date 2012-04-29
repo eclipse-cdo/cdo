@@ -27,25 +27,16 @@ import java.util.Collection;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeOptional <em>Attribute Optional
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeRequired <em>Attribute Required
- * </em>}</li>
- * <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeList <em>Attribute List</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeOptional <em>Attribute Optional</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeRequired <em>Attribute Required</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.legacy.model6.impl.BaseObjectImpl#getAttributeList <em>Attribute List</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class BaseObjectImpl extends EObjectImpl implements BaseObject
 {
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  public static final String copyright = "Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.\r\nAll rights reserved. This program and the accompanying materials\r\nare made available under the terms of the Eclipse Public License v1.0\r\nwhich accompanies this distribution, and is available at\r\nhttp://www.eclipse.org/legal/epl-v10.html\r\n\r\nContributors:\r\n   Eike Stepper - initial API and implementation";
-
   /**
    * The default value of the '{@link #getAttributeOptional() <em>Attribute Optional</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -87,9 +78,9 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
   protected String attributeRequired = ATTRIBUTE_REQUIRED_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getAttributeList() <em>Attribute List</em>}' attribute list. <!-- begin-user-doc
+   * The cached value of the '{@link #getAttributeList() <em>Attribute List</em>}' attribute list.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @see #getAttributeList()
    * @generated
    * @ordered
@@ -98,7 +89,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected BaseObjectImpl()
@@ -108,7 +98,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -119,7 +108,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAttributeOptional()
@@ -129,7 +117,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAttributeOptional(String newAttributeOptional)
@@ -143,7 +130,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getAttributeRequired()
@@ -153,7 +139,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setAttributeRequired(String newAttributeRequired)
@@ -167,7 +152,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EList<String> getAttributeList()
@@ -181,7 +165,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -201,7 +184,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -226,7 +208,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -249,7 +230,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -271,7 +251,6 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override

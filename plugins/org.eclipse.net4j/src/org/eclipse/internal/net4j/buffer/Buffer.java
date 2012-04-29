@@ -263,6 +263,12 @@ public class Buffer implements InternalBuffer
   {
     try
     {
+      if (byteBuffer.position() == HEADER_SIZE)
+      {
+        clear();
+        return true; // *Pretend* that this empty buffer has been written
+      }
+
       if (state != BufferState.PUTTING && state != BufferState.WRITING)
       {
         throw new IllegalStateException(toString());

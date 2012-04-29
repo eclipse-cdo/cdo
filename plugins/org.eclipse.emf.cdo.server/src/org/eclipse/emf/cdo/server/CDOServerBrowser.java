@@ -77,7 +77,7 @@ import java.util.Set;
  * Actual content is contributed through pluggable {@link CDOServerBrowser.Page pages}.
  * <p>
  * <b>Note:</b> Don't use this server in production, it's unsecure and does not perform or scale!
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -349,13 +349,21 @@ public class CDOServerBrowser extends Worker
     pages.add(new LobsPage());
     pages.add(new HistoryPage());
 
-    IPluginContainer container = IPluginContainer.INSTANCE;
+    IManagedContainer container = getPagesContainer();
     Set<String> factoryTypes = container.getFactoryTypes(Page.PRODUCT_GROUP);
     for (String factoryType : factoryTypes)
     {
       Page page = (Page)container.getElement(Page.PRODUCT_GROUP, factoryType, null);
       pages.add(page);
     }
+  }
+
+  /**
+   * @since 4.1
+   */
+  protected IManagedContainer getPagesContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 
   @Override
@@ -384,7 +392,7 @@ public class CDOServerBrowser extends Worker
 
   /**
    * A {@link CDOServerBrowser server browser} for the repositories in a {@link IManagedContainer managed container}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class ContainerBased extends CDOServerBrowser
@@ -420,6 +428,17 @@ public class CDOServerBrowser extends Worker
     public IContainer<?> getContainer()
     {
       return container;
+    }
+
+    @Override
+    protected IManagedContainer getPagesContainer()
+    {
+      if (container instanceof IManagedContainer)
+      {
+        return (IManagedContainer)container;
+      }
+
+      return IPluginContainer.INSTANCE;
     }
 
     @Override
@@ -462,7 +481,7 @@ public class CDOServerBrowser extends Worker
     /**
      * Creates {@link CDOServerBrowser server browsers} for the repositories in a {@link IManagedContainer managed
      * container}.
-     * 
+     *
      * @author Eike Stepper
      */
     public static class Factory extends org.eclipse.net4j.util.factory.Factory
@@ -507,7 +526,7 @@ public class CDOServerBrowser extends Worker
 
   /**
    * Represents pluggable content for a {@link CDOServerBrowser server browser}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static interface Page
@@ -525,7 +544,7 @@ public class CDOServerBrowser extends Worker
 
   /**
    * An abstract base implementation of a {@link Page server browser page}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static abstract class AbstractPage implements Page
@@ -553,7 +572,7 @@ public class CDOServerBrowser extends Worker
 
   /**
    * A {@link Page server browser page} that renders the package registry contents of a repository.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class PackagesPage extends AbstractPage
@@ -623,7 +642,7 @@ public class CDOServerBrowser extends Worker
 
   /**
    * A {@link Page server browser page} that renders {@link CDORevision revisions}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static abstract class RevisionsPage extends AbstractPage
@@ -915,7 +934,7 @@ public class CDOServerBrowser extends Worker
 
     /**
      * A {@link Page server browser page} that renders the {@link CDORevision revisions} in a revision cache.
-     * 
+     *
      * @author Eike Stepper
      */
     public static class FromCache extends RevisionsPage
@@ -941,7 +960,7 @@ public class CDOServerBrowser extends Worker
 
     /**
      * A {@link Page server browser page} that renders the {@link CDORevision revisions} in a {@link IStore store}.
-     * 
+     *
      * @author Eike Stepper
      */
     public static class FromStore extends RevisionsPage
@@ -968,7 +987,7 @@ public class CDOServerBrowser extends Worker
 
   /**
    * A {@link Page server browser page} that renders {@link CDOLobInfo large object infos}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class LobsPage extends AbstractPage
@@ -1097,7 +1116,7 @@ public class CDOServerBrowser extends Worker
 
   /**
    * A {@link Page server browser page} that renders {@link CDOCommitInfo commit infos}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class HistoryPage extends AbstractPage

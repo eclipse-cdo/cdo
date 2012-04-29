@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model6"
-    nsURI="http://www.eclipse.org/emf/CDO/tests/model6/1.0.0" nsPrefix="model6">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model6" nsURI="http://www.eclipse.org/emf/CDO/tests/model6/1.0.0"
+    nsPrefix="model6">
   <eClassifiers xsi:type="ecore:EClass" name="Root">
     <eStructuralFeatures xsi:type="ecore:EReference" name="listA" upperBound="-1"
         eType="#//BaseObject" containment="true"/>
@@ -31,6 +30,27 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="containmentList" upperBound="-1"
         eType="#//BaseObject" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnorderedList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contained" ordered="false"
+        upperBound="-1" eType="#//UnorderedList" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referenced" ordered="false"
+        upperBound="-1" eType="#//UnorderedList"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertiesMap">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="persistentMap" upperBound="-1"
+        eType="#//PropertiesMapEntry" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transientMap" upperBound="-1"
+        eType="#//PropertiesMapEntry" transient="true" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertiesMapEntry" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//PropertiesMapEntryValue"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertiesMapEntryValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="A">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedDs" upperBound="-1"
         eType="#//D" containment="true"/>
@@ -56,5 +76,28 @@
   <eClassifiers xsi:type="ecore:EClass" name="F">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedEs" upperBound="-1"
         eType="#//E" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="G">
+    <eOperations name="isAttributeModified" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isReferenceModified" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isListModified" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dummy" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
+        eType="#//BaseObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="list" upperBound="-1" eType="#//BaseObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MyEnum">
+    <eLiterals name="ZERO"/>
+    <eLiterals name="ONE" value="1"/>
+    <eLiterals name="TWO" value="2"/>
+    <eLiterals name="THREE" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MyEnumList">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="myEnum" upperBound="-1"
+        eType="#//MyEnum"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MyEnumListUnsettable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="myEnum" upperBound="-1"
+        eType="#//MyEnum" unsettable="true"/>
   </eClassifiers>
 </ecore:EPackage>

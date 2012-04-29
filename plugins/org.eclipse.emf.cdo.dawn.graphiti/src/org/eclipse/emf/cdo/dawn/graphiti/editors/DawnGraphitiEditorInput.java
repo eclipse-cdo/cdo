@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
 
@@ -28,25 +27,16 @@ public class DawnGraphitiEditorInput extends DiagramEditorInput implements IDawn
 {
   private DawnEditorInput input;
 
-  public DawnGraphitiEditorInput(URI uri, TransactionalEditingDomain domain, String providerId,
-      boolean disposeEditingDomain)
+  public DawnGraphitiEditorInput(URI uri, String providerId)
   {
-    super(uri, domain, providerId, disposeEditingDomain);
+    super(uri, providerId);
     input = new DawnEditorInput(uri);
   }
 
-  public DawnGraphitiEditorInput(URI uri, TransactionalEditingDomain domain, String providerId,
-      boolean disposeEditingDomain, Resource resource)
+  public DawnGraphitiEditorInput(URI uri, String providerId, Resource resource)
   {
-    this(uri, domain, providerId, disposeEditingDomain);
+    this(uri, providerId);
     input.setResource((CDOResource)resource);
-  }
-
-  public DawnGraphitiEditorInput(String diagramUriString, TransactionalEditingDomain domain, String providerID,
-      boolean disposeEditingDomain)
-  {
-    super(diagramUriString, domain, providerID, disposeEditingDomain);
-    input = new DawnEditorInput(URI.createURI(diagramUriString));
   }
 
   public CDOView getView()
@@ -72,6 +62,6 @@ public class DawnGraphitiEditorInput extends DiagramEditorInput implements IDawn
   @Override
   public String getFactoryId()
   {
-    return DawnGraphitiDiagramEditorFactory.class.getName();
+    return DawnGraphitiDiagramEditorInputFactory.class.getName();
   }
 }

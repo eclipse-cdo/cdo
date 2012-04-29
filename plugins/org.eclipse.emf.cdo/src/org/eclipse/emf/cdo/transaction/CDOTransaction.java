@@ -123,6 +123,11 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public CDOSavepoint setSavepoint();
 
   /**
+   * @since 4.1
+   */
+  public CDOSavepoint getFirstSavepoint();
+
+  /**
    * @since 3.0
    */
   public CDOSavepoint getLastSavepoint();

@@ -400,6 +400,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getRevision(id);
   }
 
+  /**
+   * @since 4.1
+   */
+  public CDOSavepoint getFirstSavepoint()
+  {
+    return delegate.getFirstSavepoint();
+  }
+
   public CDOSavepoint getLastSavepoint()
   {
     return delegate.getLastSavepoint();
@@ -518,6 +526,22 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public CDOTransactionHandler2[] getTransactionHandlers2()
   {
     return delegate.getTransactionHandlers2();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public int getSessionID()
+  {
+    return delegate.getSessionID();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public boolean isDurableView()
+  {
+    return delegate.isDurableView();
   }
 
   public int getViewID()

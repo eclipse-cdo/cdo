@@ -30,14 +30,37 @@ import java.util.List;
 
 /**
  * Some utility methods to cope with CDOEditor and CDOEditorInput
- * 
+ *
  * @author Victor Roldan Betancort
  * @since 2.0
  */
 public final class CDOEditorUtil
 {
+  /**
+   * @since 4.1
+   */
+  public static final String EDITOR_ID = "org.eclipse.emf.cdo.ui.CDOEditor"; //$NON-NLS-1$
+
+  private static String editorID = EDITOR_ID;
+
   private CDOEditorUtil()
   {
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static String getEditorID()
+  {
+    return editorID;
+  }
+
+  /**
+   * @since 4.1
+   */
+  public static void setEditorID(String editorID)
+  {
+    CDOEditorUtil.editorID = editorID;
   }
 
   /**
@@ -50,7 +73,7 @@ public final class CDOEditorUtil
 
   /**
    * Opens the specified resource in CDOEditor
-   * 
+   *
    * @param page
    *          The page in which the editor will be open
    * @param view
@@ -76,7 +99,7 @@ public final class CDOEditorUtil
           else
           {
             IEditorInput input = CDOEditorUtil.createCDOEditorInput(view, resourcePath, false);
-            page.openEditor(input, CDOEditor.EDITOR_ID);
+            page.openEditor(input, CDOEditorUtil.getEditorID());
           }
         }
         catch (Exception ex)
@@ -89,7 +112,7 @@ public final class CDOEditorUtil
 
   /**
    * Returns references to possibly opened instances of CDOEditor with certain CDOView and resource
-   * 
+   *
    * @param page
    *          The page where to search for opened editors
    * @param view
@@ -105,7 +128,7 @@ public final class CDOEditorUtil
     {
       try
       {
-        if (ObjectUtil.equals(editorReference.getId(), CDOEditor.EDITOR_ID))
+        if (ObjectUtil.equals(editorReference.getId(), CDOEditorUtil.getEditorID()))
         {
           IEditorInput editorInput = editorReference.getEditorInput();
           if (editorInput instanceof CDOEditorInput)
@@ -132,7 +155,7 @@ public final class CDOEditorUtil
 
   /**
    * Refreshes all editor's viewers that are using certain CDOView.
-   * 
+   *
    * @param page
    *          the IWorkbenchPage where CDOEditor is opened
    * @param view

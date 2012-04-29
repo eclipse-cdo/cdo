@@ -16,14 +16,33 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * A {@link IRWLockManager read/write lock manager} that supports {@link IRWLockManager.LockType#OPTION write option}
+ * locks.
+ * 
  * @author Caspar De Groot
  * @since 3.2
  */
 public interface IRWOLockManager<OBJECT, CONTEXT> extends IRWLockManager<OBJECT, CONTEXT>
 {
+  /**
+   * Adds locks of the given type, owned by the given context on the given objects.
+   */
   public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context,
       Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException;
 
+  /**
+   * Removes all locks of the given type, owned by the given context on the given objects.
+   */
   public List<LockState<OBJECT, CONTEXT>> unlock2(LockType type, CONTEXT context,
       Collection<? extends OBJECT> objectsToUnlock);
+
+  /**
+   * Removes all locks owned by the given context on any objects.
+   */
+  public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context);
+
+  /**
+   * Removes all locks owned by the given context.
+   */
+  public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context, Collection<? extends OBJECT> objectsToUnlock);
 }

@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.tests.config.impl;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
@@ -25,6 +26,7 @@ import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepository.Handler;
 import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.ISession;
@@ -94,7 +96,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   private static final boolean LOG_MULTI_VIEW_COMMIT = false;
 
   private static final Boolean disableServerBrowser = Boolean.valueOf(System.getProperty(
-  "org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.disableServerBrowser", "false"));
+      "org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.disableServerBrowser", "false"));
 
   private static final long serialVersionUID = 1L;
 
@@ -367,6 +369,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       removeResourcePathChecker();
     }
 
+    resourcePathChecker = null;
     super.tearDown();
   }
 
@@ -442,20 +445,23 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected void removeResourcePathChecker()
   {
-    if (resourcePathChecker != null)
+    InternalRepository[] array;
+    synchronized (repositories)
     {
-      InternalRepository[] array;
-      synchronized (repositories)
+      array = repositories.values().toArray(new InternalRepository[repositories.size()]);
+    }
+
+    for (InternalRepository repository : array)
+    {
+      for (Handler handler : repository.getHandlers())
       {
-        array = repositories.values().toArray(new InternalRepository[repositories.size()]);
+        repository.removeHandler(handler);
       }
 
-      for (InternalRepository repository : array)
+      for (CDOCommitInfoHandler handler : repository.getCommitInfoHandlers())
       {
-        repository.removeHandler(resourcePathChecker);
+        repository.removeCommitInfoHandler(handler);
       }
-
-      resourcePathChecker = null;
     }
   }
 
@@ -613,6 +619,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     public static final String PROP_TEST_DELAYED2_COMMIT_HANDLING = "test.delayed2.commit.handling";
 
+    public static final String PROP_TEST_HINDER_INITIAL_REPLICATION = "test.hinder.initial.replication";
+
     private static final long serialVersionUID = 1L;
 
     private transient IAcceptor masterAcceptor;
@@ -661,6 +669,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     protected InternalRepository createRepository(String name)
     {
       boolean failover = getTestFailover();
+      boolean hinderInitialReplication = getTestHinderInitialReplication();
       Map<String, String> props = getRepositoryProperties();
 
       final String masterName = "master";
@@ -673,7 +682,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
           master = createMasterRepository(masterName, name, props, failover);
           repositories.put(masterName, master);
           LifecycleUtil.activate(master);
-          startMasterTransport();
+
+          if (!hinderInitialReplication)
+          {
+            startMasterTransport();
+          }
         }
       }
 
@@ -801,6 +814,17 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       if (result == null)
       {
         result = 0L;
+      }
+
+      return result;
+    }
+
+    protected boolean getTestHinderInitialReplication()
+    {
+      Boolean result = (Boolean)getTestProperty(PROP_TEST_HINDER_INITIAL_REPLICATION);
+      if (result == null)
+      {
+        result = false;
       }
 
       return result;

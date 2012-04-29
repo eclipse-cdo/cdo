@@ -52,6 +52,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -663,9 +664,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
       InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-      CDORevision cleanRevision = transaction.getCleanRevisions().get(object);
-
+      InternalCDORevision cleanRevision = transaction.getCleanRevisions().get(object).copy();
       CDOID id = cleanRevision.getID();
+
+      // Bug 373096: Determine clean revision of the CURRENT/LAST savepoint
+      InternalCDOSavepoint savepoint = transaction.getFirstSavepoint();
+      while (savepoint.getNextSavepoint() != null)
+      {
+        CDORevisionDelta delta = savepoint.getRevisionDeltas().get(id);
+        if (delta != null)
+        {
+          delta.apply(cleanRevision);
+        }
+
+        savepoint = savepoint.getNextSavepoint();
+      }
+
       object.cdoInternalSetID(id);
       object.cdoInternalSetView(transaction);
 

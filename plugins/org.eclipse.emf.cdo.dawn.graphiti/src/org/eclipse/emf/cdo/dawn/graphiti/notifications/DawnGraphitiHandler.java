@@ -63,7 +63,6 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
   /**
    * @since 2.0
    */
-  @SuppressWarnings("restriction")
   @Override
   public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
   {
@@ -183,11 +182,8 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
 
     Display.getDefault().asyncExec(new Runnable()
     {
-
       public void run()
       {
-
-        @SuppressWarnings("restriction")
         RootEditPart rootEditPart = ((DiagramEditor)editor).getGraphicalViewer().getRootEditPart();
         DawnDiagramUpdater.refreshEditPart(rootEditPart);
       }
@@ -217,7 +213,6 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
     // }
   }
 
-  @SuppressWarnings("restriction")
   protected void refresh(CDOObject object)
   {
     DawnDiagramUpdater.refreshEditPart(((DiagramEditor)editor).getGraphicalViewer().getRootEditPart());

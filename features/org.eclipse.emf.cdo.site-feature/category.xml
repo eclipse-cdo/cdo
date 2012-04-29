@@ -114,37 +114,46 @@
    <feature id="org.eclipse.emf.cdo.releng.help" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.releng.launches_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.launches" version="1.0.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.releng.launches" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.releng.manifests_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.manifests" version="1.0.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.releng.manifests" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.releng.relativepaths_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.relativepaths" version="1.0.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.releng.relativepaths" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.releng.windowtitle_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.windowtitle" version="1.0.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.releng.tasks" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.releng.winexplorer_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.winexplorer" version="1.0.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.releng.windowtitle" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.releng.workingsets_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.workingsets" version="1.0.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.releng.winexplorer" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
-   <feature url="features/org.eclipse.net4j.util_4.1.0.qualifier.jar" id="org.eclipse.net4j.util" version="4.1.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.releng.workingsets" version="0.0.0">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
+   <feature id="org.eclipse.net4j.util" version="0.0.0">
       <category name="org.eclipse.net4j.category"/>
    </feature>
-   <feature url="features/org.eclipse.net4j.util.ui_4.1.0.qualifier.jar" id="org.eclipse.net4j.util.ui" version="4.1.0.qualifier">
+   <feature id="org.eclipse.net4j.util.ui" version="0.0.0">
       <category name="org.eclipse.net4j.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.releng.tasks_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.tasks" version="1.0.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.releng.tasks" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.migrator_4.1.0.qualifier.jar" id="org.eclipse.emf.cdo.migrator" version="4.1.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.migrator" version="0.0.0">
       <category name="org.eclipse.emf.cdo.category"/>
    </feature>
-   <feature url="features/org.eclipse.emf.cdo.releng.wingit_1.0.0.qualifier.jar" id="org.eclipse.emf.cdo.releng.wingit" version="1.0.0.qualifier">
+   <feature id="org.eclipse.emf.cdo.releng.gitbash" version="0.0.0">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.releng.projectcopy" version="0.0.0">
+      <category name="org.eclipse.emf.releng.category"/>
+   </feature>
+   <feature id="org.eclipse.emf.cdo.releng.buildstamp" version="0.0.0">
       <category name="org.eclipse.emf.releng.category"/>
    </feature>
    <category-def name="org.eclipse.emf.releng.category" label="CDO Release Engineering"/>

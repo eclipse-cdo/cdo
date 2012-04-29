@@ -41,7 +41,6 @@ import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -834,145 +833,44 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
     return new CDOStoreFeatureMap(eStructuralFeature);
   }
 
-  @Override
-  protected EList<?> createList(final EStructuralFeature eStructuralFeature)
+  /**
+   * @since 4.1
+   */
+  protected CDOStoreEcoreEMap createMap(EStructuralFeature eStructuralFeature)
   {
-    final EClassifier eType = eStructuralFeature.getEType();
+    return new CDOStoreEcoreEMap(eStructuralFeature);
+  }
 
-    // Answer from Christian Damus
-    // Java ensures that string constants are interned, so this is actually
-    // more efficient than .equals() and it's correct
-    if (eType.getInstanceClassName() == "java.util.Map$Entry") //$NON-NLS-1$
+  /**
+   * @since 4.1
+   */
+  protected CDOStoreUnorderedEList<Object> createUnorderedList(EStructuralFeature eStructuralFeature)
+  {
+    return new CDOStoreUnorderedEList<Object>(eStructuralFeature);
+  }
+
+  @Override
+  protected EList<?> createList(EStructuralFeature eStructuralFeature)
+  {
+    if (isMap(eStructuralFeature))
     {
-      class EStoreEcoreEMap extends EcoreEMap<Object, Object> implements InternalCDOLoadable
-      {
-        private static final long serialVersionUID = 1L;
+      return createMap(eStructuralFeature);
+    }
 
-        public EStoreEcoreEMap()
-        {
-          super((EClass)eType, BasicEMap.Entry.class, null);
-          delegateEList = new BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this, eStructuralFeature)
-          {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void unset()
-            {
-              super.unset();
-              doClear();
-            }
-
-            @Override
-            protected void didAdd(int index, BasicEMap.Entry<Object, Object> newObject)
-            {
-              EStoreEcoreEMap.this.doPut(newObject);
-            }
-
-            @Override
-            protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject,
-                BasicEMap.Entry<Object, Object> oldObject)
-            {
-              didRemove(index, oldObject);
-              didAdd(index, newObject);
-            }
-
-            @Override
-            protected void didRemove(int index, BasicEMap.Entry<Object, Object> oldObject)
-            {
-              EStoreEcoreEMap.this.doRemove(oldObject);
-            }
-
-            @Override
-            protected void didClear(int size, Object[] oldObjects)
-            {
-              EStoreEcoreEMap.this.doClear();
-            }
-
-            @Override
-            protected void didMove(int index, BasicEMap.Entry<Object, Object> movedObject, int oldIndex)
-            {
-              EStoreEcoreEMap.this.doMove(movedObject);
-            }
-          };
-
-          size = delegateEList.size();
-        }
-
-        private void checkListForReading()
-        {
-          if (!FSMUtil.isTransient(CDOObjectImpl.this))
-          {
-            CDOStateMachine.INSTANCE.read(CDOObjectImpl.this);
-          }
-        }
-
-        /**
-         * Ensures that the entry data is created and is populated with contents of the delegate list.
-         */
-        @Override
-        protected synchronized void ensureEntryDataExists()
-        {
-          checkListForReading();
-          super.ensureEntryDataExists();
-        }
-
-        @Override
-        public int size()
-        {
-          checkListForReading();
-          return size;
-        }
-
-        @Override
-        public boolean isEmpty()
-        {
-          checkListForReading();
-          return size == 0;
-        }
-
-        @Override
-        public boolean contains(Object object)
-        {
-          checkListForReading();
-          return super.contains(object);
-        }
-
-        @Override
-        public boolean containsAll(Collection<?> collection)
-        {
-          checkListForReading();
-          return super.containsAll(collection);
-        }
-
-        @Override
-        public boolean containsKey(Object key)
-        {
-          checkListForReading();
-          return super.containsKey(key);
-        }
-
-        @Override
-        public boolean containsValue(Object value)
-        {
-          checkListForReading();
-          return super.containsValue(value);
-        }
-
-        public void cdoInternalPostLoad()
-        {
-          entryData = null;
-          size = delegateEList.size();
-        }
-
-        public void cdoInternalPreLoad()
-        {
-        }
-      }
-
-      return new EStoreEcoreEMap();
+    if (!eStructuralFeature.isOrdered())
+    {
+      return createUnorderedList(eStructuralFeature);
     }
 
     return super.createList(eStructuralFeature);
+  }
+
+  private boolean isMap(EStructuralFeature eStructuralFeature)
+  {
+    // Answer from Christian Damus:
+    // Java ensures that string constants are interned, so this is actually
+    // more efficient than .equals() and it's correct
+    return eStructuralFeature.getEType().getInstanceClassName() == "java.util.Map$Entry"; //$NON-NLS-1$
   }
 
   @Override
@@ -1397,6 +1295,163 @@ public class CDOObjectImpl extends EStoreEObjectImpl implements InternalCDOObjec
       {
         settings[dynamicFeatureID] = feature.getDefaultValue();
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.1
+   */
+  public class CDOStoreEcoreEMap extends EcoreEMap<Object, Object> implements InternalCDOLoadable
+  {
+    private static final long serialVersionUID = 1L;
+
+    public CDOStoreEcoreEMap(EStructuralFeature eStructuralFeature)
+    {
+      super((EClass)eStructuralFeature.getEType(), BasicEMap.Entry.class, null);
+      delegateEList = new BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this, eStructuralFeature)
+      {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void unset()
+        {
+          super.unset();
+          doClear();
+        }
+
+        @Override
+        protected void didAdd(int index, BasicEMap.Entry<Object, Object> newObject)
+        {
+          CDOStoreEcoreEMap.this.doPut(newObject);
+        }
+
+        @Override
+        protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject,
+            BasicEMap.Entry<Object, Object> oldObject)
+        {
+          didRemove(index, oldObject);
+          didAdd(index, newObject);
+        }
+
+        @Override
+        protected void didRemove(int index, BasicEMap.Entry<Object, Object> oldObject)
+        {
+          CDOStoreEcoreEMap.this.doRemove(oldObject);
+        }
+
+        @Override
+        protected void didClear(int size, Object[] oldObjects)
+        {
+          CDOStoreEcoreEMap.this.doClear();
+        }
+
+        @Override
+        protected void didMove(int index, BasicEMap.Entry<Object, Object> movedObject, int oldIndex)
+        {
+          CDOStoreEcoreEMap.this.doMove(movedObject);
+        }
+      };
+
+      size = delegateEList.size();
+    }
+
+    private void checkListForReading()
+    {
+      if (!FSMUtil.isTransient(CDOObjectImpl.this))
+      {
+        CDOStateMachine.INSTANCE.read(CDOObjectImpl.this);
+      }
+    }
+
+    /**
+     * Ensures that the entry data is created and is populated with contents of the delegate list.
+     */
+    @Override
+    protected synchronized void ensureEntryDataExists()
+    {
+      checkListForReading();
+      super.ensureEntryDataExists();
+    }
+
+    @Override
+    public int size()
+    {
+      checkListForReading();
+      return size;
+    }
+
+    @Override
+    public boolean isEmpty()
+    {
+      checkListForReading();
+      return size == 0;
+    }
+
+    @Override
+    public boolean contains(Object object)
+    {
+      checkListForReading();
+      return super.contains(object);
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> collection)
+    {
+      checkListForReading();
+      return super.containsAll(collection);
+    }
+
+    @Override
+    public boolean containsKey(Object key)
+    {
+      checkListForReading();
+      return super.containsKey(key);
+    }
+
+    @Override
+    public boolean containsValue(Object value)
+    {
+      checkListForReading();
+      return super.containsValue(value);
+    }
+
+    public void cdoInternalPostLoad()
+    {
+      entryData = null;
+      size = delegateEList.size();
+    }
+
+    public void cdoInternalPreLoad()
+    {
+    }
+  }
+
+  /**
+   * @author Andras Peteri
+   * @since 4.1
+   */
+  public class CDOStoreUnorderedEList<E> extends BasicEStoreEList<E>
+  {
+    private static final long serialVersionUID = 1L;
+
+    public CDOStoreUnorderedEList(EStructuralFeature feature)
+    {
+      super(CDOObjectImpl.this, feature);
+    }
+
+    @Override
+    public E remove(int index)
+    {
+      boolean oldObjectIsLast = index == size() - 1;
+      E oldObject = super.remove(index);
+
+      if (!oldObjectIsLast)
+      {
+        move(index, size() - 1);
+      }
+
+      return oldObject;
     }
   }
 

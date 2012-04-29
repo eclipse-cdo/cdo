@@ -79,7 +79,7 @@ import java.util.concurrent.Callable;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'.
- * 
+ *
  * @extends Resource.Internal
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  *           <p>
@@ -105,7 +105,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * The default URI converter when there is no resource set.
-   * 
+   *
    * @ADDED
    */
   private static URIConverter defaultURIConverter;
@@ -122,7 +122,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * TODO Set to true in commit()?
-   * 
+   *
    * @ADDED
    */
   private boolean existing;
@@ -168,7 +168,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected CDOResourceImpl()
@@ -178,7 +178,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -189,7 +189,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    * @since 2.0
    */
@@ -254,7 +254,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ResourceSet getResourceSet()
@@ -264,7 +264,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setResourceSet(ResourceSet newResourceSet)
@@ -274,7 +274,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 2.0 <!-- end-user-doc -->
    * @generated
    */
@@ -285,7 +285,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -310,7 +310,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 2.0 <!-- end-user-doc -->
    * @generated
    */
@@ -321,7 +321,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public void setURI(URI newURI)
@@ -332,7 +332,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @SuppressWarnings("unchecked")
@@ -358,7 +358,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public boolean isModified()
@@ -368,7 +368,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public void setModified(boolean newModified)
@@ -398,7 +398,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public boolean isLoaded()
@@ -441,7 +441,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public boolean isTrackingModification()
@@ -451,7 +451,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.0 <!-- end-user-doc -->
    * @generated
    */
@@ -462,7 +462,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public void setTrackingModification(boolean newTrackingModification)
@@ -499,7 +499,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public EList<Diagnostic> getErrors()
@@ -535,7 +535,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public EList<Diagnostic> getWarnings()
@@ -571,7 +571,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public long getTimeStamp()
@@ -581,7 +581,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setTimeStamp(long newTimeStamp)
@@ -615,7 +615,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    * <b>Note:</b> This resource is not actually used to lookup the resulting object in CDO. Only the CDOView is used for
    * this lookup! This means that this resource can be used to resolve <em>any</em> fragment with a CDOID of the
    * associated CDOView.
-   * 
+   *
    * @ADDED
    */
   public EObject getEObject(String uriFragment)
@@ -992,7 +992,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    * Returns the URI converter. This typically gets the {@link ResourceSet#getURIConverter converter} from the
    * {@link #getResourceSet containing} resource set, but it calls {@link #getDefaultURIConverter} when there is no
    * containing resource set.
-   * 
+   *
    * @return the URI converter.
    * @ADDED
    */
@@ -1004,7 +1004,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * Returns the default URI converter that's used when there is no resource set.
-   * 
+   *
    * @return the default URI converter.
    * @see #getURIConverter
    * @ADDED
@@ -1290,16 +1290,20 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   {
     if (!FSMUtil.isTransient(this))
     {
-      InternalCDOTransaction transaction = cdoView().toTransaction();
-      InternalCDOObject cdoObject = FSMUtil.adapt(object, transaction);
-
-      if (CDOUtil.isLegacyObject(cdoObject) && FSMUtil.isClean(cdoObject))
+      InternalCDOView view = cdoView();
+      if (view instanceof InternalCDOTransaction) // Bug 376075
       {
-        // Bug 352204
-        return;
-      }
+        InternalCDOTransaction transaction = (InternalCDOTransaction)view;
+        InternalCDOObject cdoObject = FSMUtil.adapt(object, transaction);
 
-      attached(cdoObject, transaction);
+        if (CDOUtil.isLegacyObject(cdoObject) && FSMUtil.isClean(cdoObject))
+        {
+          // Bug 352204
+          return;
+        }
+
+        attached(cdoObject, transaction);
+      }
     }
   }
 
@@ -1318,8 +1322,12 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   {
     if (!FSMUtil.isTransient(this))
     {
-      InternalCDOObject cdoObject = FSMUtil.adapt(object, cdoView());
-      CDOStateMachine.INSTANCE.detach(cdoObject);
+      InternalCDOView view = cdoView();
+      if (view instanceof InternalCDOTransaction) // Bug 376075
+      {
+        InternalCDOObject cdoObject = FSMUtil.adapt(object, view);
+        CDOStateMachine.INSTANCE.detach(cdoObject);
+      }
     }
   }
 
@@ -1501,7 +1509,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   /**
    * An implementation of a CDO specific '<em><b>contents</b></em>' list.
-   * 
+   *
    * @ADDED
    * @author Eike Stepper
    * @since 2.0
@@ -1517,7 +1525,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
     /**
      * Optimization taken from ResourceImpl.EContentList.contains.
-     * 
+     *
      * @since 2.0
      */
     @Override

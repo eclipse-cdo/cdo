@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rm:rmap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0"
 	xmlns:psf="http://www.eclipse.org/buckminster/PSFProvider-1.0" xmlns:rm="http://www.eclipse.org/buckminster/RMap-1.0">
-	
+
 	<!-- Properties -->
-	
+
 	<rm:property key="platform.version" mutable="true" value="3.8"/>
 	<rm:property key="emf.version" mutable="true" value="2.8"/>
-	<rm:property key="orbit.version" mutable="true" value="S20111201180206"/>
-	
+	<rm:property key="orbit.version" mutable="true" value="S20120308061416"/>
+
 	<rm:property key="git.clone" mutable="true" value="${user.home}/git/cdo"/>
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>
 	<rm:property key="resolve.target.platform" mutable="true" value="true"/>
 	<rm:property key="build.type" mutable="true" value="N"/>
-	
+
 	<!-- Locators -->
-	
+
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.emf\.cdo(?:\..+)?$"/>
 	<rm:locator searchPathRef="git" pattern="^org\.eclipse\.net4j(?:\..+)?$"/>
 	<rm:locator searchPathRef="git" pattern="^org\.gastro(?:\..+)?$"/>
-	
+
 	<rm:locator searchPathRef="p2"/>
-	
+
 	<!-- Search Paths -->
-	
+
 	<rm:searchPath name="git">
 		<rm:provider componentTypes="osgi.bundle" readerType="git">
 			<rm:property key="git.remote.uri" value="git://git.eclipse.org/gitroot/cdo/cdo.git"/>
@@ -39,9 +39,9 @@
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
-	
+
 	<rm:searchPath name="p2">
-		
+
 		<!-- PLATFORM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -50,7 +50,7 @@
 				<bc:propertyRef key="platform.version"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- EMF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -59,7 +59,7 @@
 				<bc:propertyRef key="emf.version"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- EMF Transaction, Validation, ... -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -67,7 +67,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- MWE -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -75,7 +75,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- EcoreTools -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -83,7 +83,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- GEF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -91,7 +91,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- Graphiti -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -99,7 +99,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- GMP -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -107,7 +107,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- OCL -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -121,7 +121,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- XPAND -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -131,7 +131,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- SWTBOT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -142,7 +142,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- MYLYN -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -150,7 +150,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- EGIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -158,7 +158,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- NEBULA -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -166,7 +166,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- ORBIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -175,7 +175,7 @@
 				<bc:propertyRef key="orbit.version"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- TENEO -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -183,7 +183,7 @@
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
-		
+
 		<!-- EVLER.ORG -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
@@ -192,12 +192,12 @@
 			<!-- ############################################################### -->
 			<rm:uri format="http://www.elver.org/eclipse/update"/>
 		</rm:provider>
-		
+
 		<!-- SF.NET -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
 			<rm:uri format="http://net4j.sourceforge.net/update"/>
 		</rm:provider>
 	</rm:searchPath>
-	
+
 </rm:rmap>

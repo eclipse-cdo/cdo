@@ -8,17 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.server;
-
-import org.eclipse.emf.cdo.common.security.CDOPermission;
 
 /**
- * Provides the protection level of protectable entities in the context of a specific user.
- *
- * @author Eike Stepper
- * @since 4.1
+ * Common concepts for dealing with permissions and protectable entities.
  */
-public interface IPermissionManager
-{
-  public CDOPermission getPermission(Object object, String userID);
-}
+package org.eclipse.emf.cdo.common.security;
+

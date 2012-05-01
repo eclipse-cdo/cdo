@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.common.security;
 
 /**
+ * Provides the protection level of protectable entities.
+ *
  * @author Eike Stepper
  * @since 4.1
  */
@@ -25,6 +27,8 @@ public interface CDOPermissionProvider
   public CDOPermission getPermission(Object object);
 
   /**
+   * Provides a constant protection level for all protectable entities.
+   *
    * @author Eike Stepper
    */
   public static final class Constant implements CDOPermissionProvider

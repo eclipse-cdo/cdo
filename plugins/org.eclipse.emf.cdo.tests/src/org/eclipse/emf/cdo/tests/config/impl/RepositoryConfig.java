@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepository.Handler;
@@ -90,6 +91,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public static final String PROP_TEST_SESSION_MANAGER = "test.repository.SessionManager";
 
   public static final String PROP_TEST_USER_MANAGER = "test.repository.UserManager";
+
+  public static final String PROP_TEST_PERMISSION_MANAGER = "test.repository.PermissionManager";
 
   public static final String PROP_TEST_QUERY_HANDLER_PROVIDER = "test.repository.QueryHandlerProvider";
 
@@ -492,7 +495,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     if (userManager != null)
     {
       sessionManager.setUserManager(userManager);
-      repository.setSessionManager(sessionManager);
+    }
+
+    IPermissionManager permissionManager = getTestPermissionManager();
+    if (permissionManager != null)
+    {
+      sessionManager.setPermissionManager(permissionManager);
     }
 
     IQueryHandlerProvider queryHandlerProvider = getTestQueryHandlerProvider();
@@ -522,6 +530,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected IUserManager getTestUserManager()
   {
     return (IUserManager)getTestProperty(PROP_TEST_USER_MANAGER);
+  }
+
+  protected IPermissionManager getTestPermissionManager()
+  {
+    return (IPermissionManager)getTestProperty(PROP_TEST_PERMISSION_MANAGER);
   }
 
   protected IQueryHandlerProvider getTestQueryHandlerProvider()

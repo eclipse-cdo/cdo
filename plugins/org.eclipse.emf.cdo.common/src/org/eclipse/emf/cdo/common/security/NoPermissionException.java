@@ -20,22 +20,21 @@ public class NoPermissionException extends SecurityException
 {
   private static final long serialVersionUID = 1L;
 
-  public NoPermissionException()
+  private Object protectableObject;
+
+  public NoPermissionException(Object protectableObject)
   {
+    this(protectableObject, "No permission to access " + protectableObject);
   }
 
-  public NoPermissionException(String message)
+  public NoPermissionException(Object protectableObject, String message)
   {
     super(message);
+    this.protectableObject = protectableObject;
   }
 
-  public NoPermissionException(Throwable cause)
+  public Object getProtectableObject()
   {
-    super(cause);
-  }
-
-  public NoPermissionException(String message, Throwable cause)
-  {
-    super(message, cause);
+    return protectableObject;
   }
 }

@@ -34,8 +34,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
-import org.eclipse.emf.cdo.common.security.NoReadPermissionException;
-import org.eclipse.emf.cdo.common.security.NoWritePermissionException;
+import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
@@ -146,12 +145,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     readSystemValues(in);
 
-    flags = (byte)(in.readByte() & PERMISSION_MASK);
-
-    if (isReadable())
+    byte permissionBits = (byte)(in.readByte() & PERMISSION_MASK);
+    if (permissionBits != CDOPermission.NONE.ordinal())
     {
       readValues(in);
     }
+
+    flags = permissionBits;
 
     if (READING.isEnabled())
     {
@@ -686,16 +686,19 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   {
     flags |= FROZEN_FLAG;
 
-    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(getEClass());
-    for (int i = 0; i < features.length; i++)
+    if (isReadable())
     {
-      EStructuralFeature feature = features[i];
-      if (feature.isMany())
+      EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(getEClass());
+      for (int i = 0; i < features.length; i++)
       {
-        InternalCDOList list = (InternalCDOList)getValue(i);
-        if (list != null)
+        EStructuralFeature feature = features[i];
+        if (feature.isMany())
         {
-          list.freeze();
+          InternalCDOList list = (InternalCDOList)doGetValue(i);
+          if (list != null)
+          {
+            list.freeze();
+          }
         }
       }
     }
@@ -703,26 +706,15 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   protected Object getValue(int featureIndex)
   {
-    if (isReadable())
-    {
-      return doGetValue(featureIndex);
-    }
-
-    throw new NoReadPermissionException("No permission to read from " + this);
+    checkReadable();
+    return doGetValue(featureIndex);
   }
 
   protected void setValue(int featureIndex, Object value)
   {
     checkFrozen(featureIndex, value);
-
-    if (isWritable())
-    {
-      doSetValue(featureIndex, value);
-    }
-    else
-    {
-      throw new NoWritePermissionException("No permission to write to " + this);
-    }
+    checkWritable();
+    doSetValue(featureIndex, value);
   }
 
   protected abstract void initValues(EStructuralFeature[] allPersistentFeatures);
@@ -766,6 +758,22 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       }
 
       throw new IllegalStateException("Cannot modify a frozen revision");
+    }
+  }
+
+  private void checkReadable()
+  {
+    if (!isReadable())
+    {
+      throw new NoPermissionException(this);
+    }
+  }
+
+  private void checkWritable()
+  {
+    if (!isWritable())
+    {
+      throw new NoPermissionException(this);
     }
   }
 

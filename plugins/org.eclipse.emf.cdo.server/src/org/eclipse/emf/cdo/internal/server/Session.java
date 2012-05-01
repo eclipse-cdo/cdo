@@ -354,15 +354,15 @@ public class Session extends Container<IView> implements InternalSession
     return (CDOID)idObject;
   }
 
-  public CDOPermission getPermission(Object object)
+  public CDOPermission getPermission(Object protectableObject)
   {
     IPermissionManager permissionManager = manager.getPermissionManager();
     if (permissionManager != null)
     {
-      return permissionManager.getPermission(object, userID);
+      return permissionManager.getPermission(protectableObject, userID);
     }
 
-    return CDORevision.PERMISSION_PROVIDER.getPermission(object);
+    return CDORevision.PERMISSION_PROVIDER.getPermission(protectableObject);
   }
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)

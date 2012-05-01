@@ -62,11 +62,11 @@ public interface CDORevision extends CDORevisionKey, CDORevisable
    */
   public static final CDOPermissionProvider PERMISSION_PROVIDER = new CDOPermissionProvider()
   {
-    public CDOPermission getPermission(Object object)
+    public CDOPermission getPermission(Object protectableObject)
     {
-      if (object instanceof CDORevision)
+      if (protectableObject instanceof CDORevision)
       {
-        CDORevision revision = (CDORevision)object;
+        CDORevision revision = (CDORevision)protectableObject;
         return revision.getPermission();
       }
 

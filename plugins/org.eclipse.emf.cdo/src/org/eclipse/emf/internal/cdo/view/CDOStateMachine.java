@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.common.util.PartialCollectionLoadingNotSupportedException;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -187,7 +188,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * The object is already attached in EMF world. It contains all the information needed to know where it will be
    * connected.
-   * 
+   *
    * @since 2.0
    */
   public void attach(InternalCDOObject object, InternalCDOTransaction transaction)
@@ -513,7 +514,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * <li>Registration with the {@link CDOTransaction}
    * <li>Changing state to {@link CDOState#PREPARED PREPARED}
    * </ol>
-   * 
+   *
    * @see AttachTransition
    * @author Eike Stepper
    */
@@ -640,7 +641,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * </ol>
    * <li>Changing state to {@link CDOState#NEW NEW}
    * </ol>
-   * 
+   *
    * @see PrepareTransition
    * @author Eike Stepper
    */
@@ -655,7 +656,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   /**
    * Bug 283985 (Re-attachment)
-   * 
+   *
    * @author Caspar De Groot
    */
   private final class ReattachTransition implements
@@ -802,6 +803,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       InternalCDOTransaction transaction = object.cdoView().toTransaction();
       InternalCDORevision cleanRevision = object.cdoRevision();
+      if (!cleanRevision.isWritable())
+      {
+        throw new NoPermissionException(cleanRevision);
+      }
+
       transaction.getCleanRevisions().put(object, cleanRevision);
 
       // Copy revision
@@ -820,6 +826,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
+      InternalCDORevision revision = object.cdoRevision();
+      if (!revision.isWritable())
+      {
+        throw new NoPermissionException(revision);
+      }
+
       InternalCDOTransaction transaction = object.cdoView().toTransaction();
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
@@ -832,6 +844,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object featureDelta)
     {
+      InternalCDORevision revision = object.cdoRevision();
+      if (!revision.isWritable())
+      {
+        throw new NoPermissionException(revision);
+      }
+
       InternalCDOTransaction transaction = object.cdoView().toTransaction();
       transaction.registerFeatureDelta(object, (CDOFeatureDelta)featureDelta);
     }
@@ -973,6 +991,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         INSTANCE.detachRemote(object);
         CDOInvalidationPolicy policy = view.options().getInvalidationPolicy();
         policy.handleInvalidObject(object);
+      }
+
+      if (forWrite && !revision.isWritable())
+      {
+        throw new NoPermissionException(revision);
       }
 
       object.cdoInternalSetRevision(revision);

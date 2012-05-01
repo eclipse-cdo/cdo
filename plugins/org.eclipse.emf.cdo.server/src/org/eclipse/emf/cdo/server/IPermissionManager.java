@@ -13,12 +13,12 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 
 /**
- * Provides the protection level of protectable entities in the context of a specific user.
+ * Provides the protection level of protectable objects in the context of a specific user.
  *
  * @author Eike Stepper
  * @since 4.1
  */
 public interface IPermissionManager
 {
-  public CDOPermission getPermission(Object object, String userID);
+  public CDOPermission getPermission(Object protectableObject, String userID);
 }

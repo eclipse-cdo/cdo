@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -32,7 +33,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalSession extends ISession, CDOIDProvider, CDOCommonSession.Options
+public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionProvider, CDOCommonSession.Options
 {
   public static final int TEMP_VIEW_ID = 0;
 

@@ -14,15 +14,12 @@
  */
 package org.eclipse.emf.cdo.internal.common.revision;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -33,8 +30,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 public class CDORevisionImpl extends BaseCDORevision
 {
   private Object[] values;
-
-  private transient boolean frozen;
 
   public CDORevisionImpl(EClass eClass)
   {
@@ -78,61 +73,14 @@ public class CDORevisionImpl extends BaseCDORevision
   }
 
   @Override
-  protected Object getValue(int featureIndex)
+  protected Object doGetValue(int featureIndex)
   {
     return values[featureIndex];
   }
 
   @Override
-  protected void setValue(int featureIndex, Object value)
+  protected void doSetValue(int featureIndex, Object value)
   {
-    checkFrozen(featureIndex, value);
     values[featureIndex] = value;
-  }
-
-  public void freeze()
-  {
-    frozen = true;
-
-    EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(getEClass());
-    for (int i = 0; i < features.length; i++)
-    {
-      EStructuralFeature feature = features[i];
-      if (feature.isMany())
-      {
-        InternalCDOList list = (InternalCDOList)values[i];
-        if (list != null)
-        {
-          list.freeze();
-        }
-      }
-    }
-  }
-
-  private void checkFrozen(int featureIndex, Object value)
-  {
-    if (frozen)
-    {
-      Object oldValue = values[featureIndex];
-
-      // Exception 1: Setting an empty list as the value for an isMany feature, is
-      // allowed if the old value is null. This is a case of lazy initialization.
-      boolean newIsEmptyList = value instanceof EList<?> && ((EList<?>)value).size() == 0;
-      if (newIsEmptyList && oldValue == null)
-      {
-        return;
-      }
-
-      // Exception 2a: Replacing a temp ID with a regular ID is allowed (happens during
-      // postCommit of new objects)
-      // Exception 2b: Replacing a temp ID with another temp ID is also allowed (happens
-      // when changes are imported in a PushTx).
-      if (oldValue instanceof CDOIDTemp && value instanceof CDOID)
-      {
-        return;
-      }
-
-      throw new IllegalStateException("Cannot modify a frozen revision");
-    }
   }
 }

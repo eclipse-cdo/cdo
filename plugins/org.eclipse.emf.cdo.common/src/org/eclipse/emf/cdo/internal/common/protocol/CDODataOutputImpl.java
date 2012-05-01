@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
@@ -551,6 +552,11 @@ public abstract class CDODataOutputImpl extends ExtendedDataOutput.Delegating im
   public CDOIDProvider getIDProvider()
   {
     return null;
+  }
+
+  public CDOPermissionProvider getPermissionProvider()
+  {
+    return CDORevision.PERMISSION_PROVIDER;
   }
 
   protected StringIO getPackageURICompressor()

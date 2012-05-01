@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -29,6 +30,8 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  * @since 2.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface InternalCDORevision extends CDORevision, CDORevisionData, CDOReferenceAdjustable
 {
@@ -113,6 +116,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    * @since 3.0
    */
   public InternalCDORevision copy();
+
+  /**
+   * @since 4.1
+   */
+  public void setPermission(CDOPermission permission);
 
   /**
    * @since 4.0

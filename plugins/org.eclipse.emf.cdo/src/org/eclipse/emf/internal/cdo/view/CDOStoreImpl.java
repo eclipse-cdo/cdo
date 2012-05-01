@@ -65,7 +65,7 @@ import java.util.List;
  * It is important since these objects could changed and we need to keep a reference to {@link EObject} until the end.
  * It is the reason why {@link CDOStoreImpl} always call {@link InternalCDOView#convertObjectToID(Object, boolean)} with
  * true.
- * 
+ *
  * @author Eike Stepper
  */
 public final class CDOStoreImpl implements CDOStore
@@ -616,8 +616,13 @@ public final class CDOStoreImpl implements CDOStore
     {
       if (value != null)
       {
-        if (feature.isMany() && index != EStore.NO_INDEX)
+        if (feature.isMany())
         {
+          if (index == EStore.NO_INDEX)
+          {
+            return value;
+          }
+
           value = resolveProxy(revision, feature, index, value);
           if (value instanceof CDOID)
           {

@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
+import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
@@ -990,6 +991,11 @@ public class TransactionCommitContext implements InternalCommitContext
         if (dirtyObjects[i] == null)
         {
           throw new IllegalStateException("Can not retrieve origin revision for " + dirtyObjectDeltas[i]); //$NON-NLS-1$
+        }
+
+        if (!dirtyObjects[i].isWritable())
+        {
+          throw new NoPermissionException(dirtyObjects[i]);
         }
 
         monitor.worked();

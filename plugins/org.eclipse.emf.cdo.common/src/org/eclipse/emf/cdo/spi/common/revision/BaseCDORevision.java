@@ -32,6 +32,9 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
+import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
@@ -41,6 +44,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EReference;
@@ -57,9 +61,11 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  * @since 3.0
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public abstract class BaseCDORevision extends AbstractCDORevision
 {
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, BaseCDORevision.class);
 
   private static final PerfTracer READING = new PerfTracer(OM.PERF_REVISION_READING, BaseCDORevision.class);
@@ -71,6 +77,10 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   private static final byte SET_NULL = 1;
 
   private static final byte SET_NOT_NULL = 2;
+
+  private static final byte FROZEN_FLAG = 0x04;
+
+  private static final byte PERMISSION_MASK = 0x03;
 
   private CDOID id;
 
@@ -89,6 +99,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private int containingFeatureID;
 
+  private transient byte flags = CDOPermission.WRITE.getBits();
+
   /**
    * @since 3.0
    */
@@ -104,6 +116,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       containingFeatureID = 0;
       initValues(getAllPersistentFeatures());
     }
+
+    flags = CDOPermission.WRITE.getBits();
   }
 
   protected BaseCDORevision(BaseCDORevision source)
@@ -116,6 +130,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     resourceID = source.resourceID;
     containerID = source.containerID;
     containingFeatureID = source.containingFeatureID;
+    flags = (byte)(source.flags & PERMISSION_MASK);
   }
 
   /**
@@ -129,7 +144,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
 
     readSystemValues(in);
-    readValues(in);
+
+    byte permissionBits = (byte)(in.readByte() & PERMISSION_MASK);
+    if (permissionBits != CDOPermission.NONE.ordinal())
+    {
+      readValues(in);
+    }
+
+    flags = permissionBits;
 
     if (READING.isEnabled())
     {
@@ -178,7 +200,15 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
 
     writeSystemValues(out);
-    writeValues(out, referenceChunk);
+
+    CDOPermissionProvider permissionProvider = out.getPermissionProvider();
+    CDOPermission permission = permissionProvider.getPermission(this);
+    out.writeByte(permission.getBits());
+
+    if (permission != CDOPermission.NONE)
+    {
+      writeValues(out, referenceChunk);
+    }
 
     if (WRITING.isEnabled())
     {
@@ -629,7 +659,27 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     if (list == null && size != -1)
     {
       list = CDOListFactory.DEFAULT.createList(size, 0, 0);
-      setValue(featureIndex, list);
+
+      synchronized (this)
+      {
+        CDOPermission permission = getPermission();
+        if (permission != CDOPermission.WRITE)
+        {
+          setPermission(CDOPermission.WRITE);
+        }
+
+        try
+        {
+          setValue(featureIndex, list);
+        }
+        finally
+        {
+          if (permission != CDOPermission.WRITE)
+          {
+            setPermission(permission);
+          }
+        }
+      }
     }
 
     return list;
@@ -641,15 +691,118 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     setValue(featureIndex, list);
   }
 
+  /**
+   * @since 4.1
+   */
+  public CDOPermission getPermission()
+  {
+    return CDOPermission.get(flags & PERMISSION_MASK);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void setPermission(CDOPermission permission)
+  {
+    flags = (byte)(flags & ~PERMISSION_MASK | permission.getBits() & PERMISSION_MASK);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void freeze()
+  {
+    flags |= FROZEN_FLAG;
+
+    if (isReadable())
+    {
+      EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(getEClass());
+      for (int i = 0; i < features.length; i++)
+      {
+        EStructuralFeature feature = features[i];
+        if (feature.isMany())
+        {
+          InternalCDOList list = (InternalCDOList)doGetValue(i);
+          if (list != null)
+          {
+            list.freeze();
+          }
+        }
+      }
+    }
+  }
+
+  protected Object getValue(int featureIndex)
+  {
+    checkReadable();
+    return doGetValue(featureIndex);
+  }
+
+  protected void setValue(int featureIndex, Object value)
+  {
+    checkFrozen(featureIndex, value);
+    checkWritable();
+    doSetValue(featureIndex, value);
+  }
+
   protected abstract void initValues(EStructuralFeature[] allPersistentFeatures);
 
-  protected abstract Object getValue(int featureIndex);
+  /**
+   * @since 4.1
+   */
+  protected abstract Object doGetValue(int featureIndex);
 
-  protected abstract void setValue(int featureIndex, Object value);
+  /**
+   * @since 4.1
+   */
+  protected abstract void doSetValue(int featureIndex, Object value);
 
   private CDOList getValueAsList(int i)
   {
     return (CDOList)getValue(i);
+  }
+
+  private void checkFrozen(int featureIndex, Object value)
+  {
+    if ((flags & FROZEN_FLAG) != 0)
+    {
+      Object oldValue = getValue(featureIndex);
+
+      // Exception 1: Setting an empty list as the value for an isMany feature, is
+      // allowed if the old value is null. This is a case of lazy initialization.
+      boolean newIsEmptyList = value instanceof EList<?> && ((EList<?>)value).size() == 0;
+      if (newIsEmptyList && oldValue == null)
+      {
+        return;
+      }
+
+      // Exception 2a: Replacing a temp ID with a regular ID is allowed (happens during
+      // postCommit of new objects)
+      // Exception 2b: Replacing a temp ID with another temp ID is also allowed (happens
+      // when changes are imported in a PushTx).
+      if (oldValue instanceof CDOIDTemp && value instanceof CDOID)
+      {
+        return;
+      }
+
+      throw new IllegalStateException("Cannot modify a frozen revision");
+    }
+  }
+
+  private void checkReadable()
+  {
+    if (!isReadable())
+    {
+      throw new NoPermissionException(this);
+    }
+  }
+
+  private void checkWritable()
+  {
+    if (!isWritable())
+    {
+      throw new NoPermissionException(this);
+    }
   }
 
   private void writeValues(CDODataOutput out, int referenceChunk) throws IOException

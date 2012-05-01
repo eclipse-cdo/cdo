@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -250,6 +251,22 @@ public class StubCDORevision extends AbstractCDORevision
    * @since 4.0
    */
   public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
+   * @since 4.1
+   */
+  public CDOPermission getPermission()
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void setPermission(CDOPermission permission)
   {
     throw new UnsupportedOperationException(getExceptionMessage());
   }

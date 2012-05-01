@@ -75,7 +75,10 @@ public class CDOEntityMapper extends EntityMapper
           CDOHibernateConstants.CONTAINER_PROPERTY_COLUMN);
 
       final Element versionElement = entityElement.addElement("property"); //$NON-NLS-1$
-      versionElement.addAttribute("name", getHbmContext().getVersionColumnName()); //$NON-NLS-1$
+      // add cdo_teneo prefix to prop name prevent name clashes with
+      // efeatures which are accidentally called version
+      // https://bugs.eclipse.org/bugs/show_bug.cgi?id=378050
+      versionElement.addAttribute("name", "cdo_teneo_" + getHbmContext().getVersionColumnName()); //$NON-NLS-1$
       versionElement.addElement("meta").addAttribute("attribute", "version").setText("true");
       versionElement.addElement("column").addAttribute("name", getHbmContext().getVersionColumnName()); //$NON-NLS-1$//$NON-NLS-2$
       versionElement.addAttribute("type", Integer.class.getName()); //$NON-NLS-1$

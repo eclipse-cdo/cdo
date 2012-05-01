@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -1037,7 +1038,13 @@ public class TransactionCommitContext implements InternalCommitContext
     }
 
     // Make sure all chunks are loaded
-    repository.ensureChunks(oldRevision);
+    for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(oldRevision.getEClass()))
+    {
+      if (feature.isMany())
+      {
+        repository.ensureChunk(oldRevision, feature, 0, oldRevision.getList(feature).size());
+      }
+    }
 
     InternalCDORevision newRevision = oldRevision.copy();
     newRevision.adjustForCommit(branch, timeStamp);

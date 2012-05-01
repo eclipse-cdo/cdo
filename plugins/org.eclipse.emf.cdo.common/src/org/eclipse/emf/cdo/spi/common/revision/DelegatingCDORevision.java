@@ -354,20 +354,4 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   {
     getDelegate().freeze();
   }
-
-  /**
-   * @since 4.1
-   */
-  public boolean isUnchunked()
-  {
-    return getDelegate().isUnchunked();
-  }
-
-  /**
-   * @since 4.1
-   */
-  public void setUnchunked()
-  {
-    getDelegate().setUnchunked();
-  }
 }

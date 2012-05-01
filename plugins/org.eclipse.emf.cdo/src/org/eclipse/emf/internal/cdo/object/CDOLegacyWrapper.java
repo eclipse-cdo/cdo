@@ -331,8 +331,6 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     {
       instanceToRevisionFeature(feature, packageRegistry);
     }
-
-    revision.setUnchunked();
   }
 
   protected void instanceToRevisionContainment()

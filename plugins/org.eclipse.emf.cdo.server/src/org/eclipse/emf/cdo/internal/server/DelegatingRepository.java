@@ -10,22 +10,38 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
+import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
+import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
+import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalQueryManager;
@@ -33,16 +49,26 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Semaphore;
 
 /**
  * @author Eike Stepper
@@ -283,5 +309,234 @@ public abstract class DelegatingRepository implements InternalRepository
   public void validateTimeStamp(long timeStamp) throws IllegalArgumentException
   {
     getDelegate().validateTimeStamp(timeStamp);
+  }
+
+  public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
+  {
+    getDelegate().loadCommitInfos(branch, startTime, endTime, handler);
+  }
+
+  public CDOCommitData loadCommitData(long timeStamp)
+  {
+    return getDelegate().loadCommitData(timeStamp);
+  }
+
+  public Type getType()
+  {
+    return getDelegate().getType();
+  }
+
+  public State getState()
+  {
+    return getDelegate().getState();
+  }
+
+  public String getStoreType()
+  {
+    return getDelegate().getStoreType();
+  }
+
+  public Set<ObjectType> getObjectIDTypes()
+  {
+    return getDelegate().getObjectIDTypes();
+  }
+
+  public IDGenerationLocation getIDGenerationLocation()
+  {
+    return getDelegate().getIDGenerationLocation();
+  }
+
+  public CDOID getRootResourceID()
+  {
+    return getDelegate().getRootResourceID();
+  }
+
+  public Object processPackage(Object value)
+  {
+    return getDelegate().processPackage(value);
+  }
+
+  public boolean isSupportingEcore()
+  {
+    return getDelegate().isSupportingEcore();
+  }
+
+  public boolean isEnsuringReferentialIntegrity()
+  {
+    return getDelegate().isEnsuringReferentialIntegrity();
+  }
+
+  public void setType(Type type)
+  {
+    getDelegate().setType(type);
+  }
+
+  public long waitForCommit(long timeout)
+  {
+    return getDelegate().waitForCommit(timeout);
+  }
+
+  public void setState(State state)
+  {
+    getDelegate().setState(state);
+  }
+
+  public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
+  {
+    return getDelegate().loadBranches(startID, endID, branchHandler);
+  }
+
+  public Semaphore getPackageRegistryCommitLock()
+  {
+    return getDelegate().getPackageRegistryCommitLock();
+  }
+
+  public CDOCommitInfoHandler[] getCommitInfoHandlers()
+  {
+    return getDelegate().getCommitInfoHandlers();
+  }
+
+  public void addCommitInfoHandler(CDOCommitInfoHandler handler)
+  {
+    getDelegate().addCommitInfoHandler(handler);
+  }
+
+  public void removeCommitInfoHandler(CDOCommitInfoHandler handler)
+  {
+    getDelegate().removeCommitInfoHandler(handler);
+  }
+
+  public InternalCDOCommitInfoManager getCommitInfoManager()
+  {
+    return getDelegate().getCommitInfoManager();
+  }
+
+  public Set<Handler> getHandlers()
+  {
+    return getDelegate().getHandlers();
+  }
+
+  public void setInitialPackages(EPackage... initialPackages)
+  {
+    getDelegate().setInitialPackages(initialPackages);
+  }
+
+  public InternalLockManager getLockingManager()
+  {
+    return getDelegate().getLockingManager();
+  }
+
+  public InternalCommitContext createCommitContext(InternalTransaction transaction)
+  {
+    return getDelegate().createCommitContext(transaction);
+  }
+
+  public long[] forceCommitTimeStamp(long timestamp, OMMonitor monitor)
+  {
+    return getDelegate().forceCommitTimeStamp(timestamp, monitor);
+  }
+
+  public void endCommit(long timeStamp)
+  {
+    getDelegate().endCommit(timeStamp);
+  }
+
+  public void failCommit(long timeStamp)
+  {
+    getDelegate().failCommit(timeStamp);
+  }
+
+  public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo)
+  {
+    getDelegate().sendCommitNotification(sender, commitInfo);
+  }
+
+  public void setRootResourceID(CDOID rootResourceID)
+  {
+    getDelegate().setRootResourceID(rootResourceID);
+  }
+
+  public void setLastCommitTimeStamp(long commitTimeStamp)
+  {
+    getDelegate().setLastCommitTimeStamp(commitTimeStamp);
+  }
+
+  public void ensureChunks(InternalCDORevision revision)
+  {
+    getDelegate().ensureChunks(revision);
+  }
+
+  public void replicate(CDOReplicationContext context)
+  {
+    getDelegate().replicate(context);
+  }
+
+  public CDOReplicationInfo replicateRaw(CDODataOutput out, int lastReplicatedBranchID, long lastReplicatedCommitTime)
+      throws IOException
+  {
+    return getDelegate().replicateRaw(out, lastReplicatedBranchID, lastReplicatedCommitTime);
+  }
+
+  public CDOChangeSetData getChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint)
+  {
+    return getDelegate().getChangeSet(startPoint, endPoint);
+  }
+
+  public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
+      CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
+  {
+    return getDelegate().getMergeData(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo, monitor);
+  }
+
+  public void queryLobs(List<byte[]> ids)
+  {
+    getDelegate().queryLobs(ids);
+  }
+
+  public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
+  {
+    getDelegate().handleLobs(fromTime, toTime, handler);
+  }
+
+  public void loadLob(byte[] id, OutputStream out) throws IOException
+  {
+    getDelegate().loadLob(id, out);
+  }
+
+  public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
+      CDORevisionHandler handler)
+  {
+    getDelegate().handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
+  }
+
+  public boolean isSkipInitialization()
+  {
+    return getDelegate().isSkipInitialization();
+  }
+
+  public void setSkipInitialization(boolean skipInitialization)
+  {
+    getDelegate().setSkipInitialization(skipInitialization);
+  }
+
+  public void initSystemPackages()
+  {
+    getDelegate().initSystemPackages();
+  }
+
+  public void initMainBranch(InternalCDOBranchManager branchManager, long timeStamp)
+  {
+    getDelegate().initMainBranch(branchManager, timeStamp);
+  }
+
+  public LockObjectsResult lock(InternalView view, LockType type, List<CDORevisionKey> keys, boolean recursive,
+      long timeout)
+  {
+    return getDelegate().lock(view, type, keys, recursive, timeout);
+  }
+
+  public UnlockObjectsResult unlock(InternalView view, LockType type, List<CDOID> ids, boolean recursive)
+  {
+    return getDelegate().unlock(view, type, ids, recursive);
   }
 }

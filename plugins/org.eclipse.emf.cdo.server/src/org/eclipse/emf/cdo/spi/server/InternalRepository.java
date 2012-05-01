@@ -122,7 +122,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * Returns a commit time stamp that is guaranteed to be unique in this repository. At index 1 of the returned
    * <code>long</code> array is the previous commit time.
-   * 
+   *
    * @since 4.0
    */
   public long[] createCommitTimeStamp(OMMonitor monitor);
@@ -131,7 +131,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    * Like {@link #createCommitTimeStamp(OMMonitor)}, but forces the repository to use the timestamp value passed in as
    * the argument. This should be called only to force the timestamp of the first commit of a new repository to be equal
    * to its creation time.
-   * 
+   *
    * @since 4.0
    */
   public long[] forceCommitTimeStamp(long timestamp, OMMonitor monitor);
@@ -139,7 +139,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * Notifies the repository of the completion of a commit. The value passed in must be a value obtained earlier through
    * {@link #createCommitTimeStamp(OMMonitor)}
-   * 
+   *
    * @since 4.0
    */
   public void endCommit(long timeStamp);
@@ -147,7 +147,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * Notifies the repository of the failure of a commit. The value passed in must be a value obtained earlier through
    * {@link #createCommitTimeStamp(OMMonitor)}
-   * 
+   *
    * @since 4.0
    */
   public void failCommit(long timeStamp);
@@ -163,6 +163,11 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    * @since 4.0
    */
   public void setLastCommitTimeStamp(long commitTimeStamp);
+
+  /**
+   * @since 4.1
+   */
+  public void ensureChunks(InternalCDORevision revision);
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,
       int chunkEnd);

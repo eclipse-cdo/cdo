@@ -65,7 +65,6 @@ import java.util.Map;
  */
 public abstract class BaseCDORevision extends AbstractCDORevision
 {
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, BaseCDORevision.class);
 
   private static final PerfTracer READING = new PerfTracer(OM.PERF_REVISION_READING, BaseCDORevision.class);
@@ -78,9 +77,11 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final byte SET_NOT_NULL = 2;
 
+  private static final byte PERMISSION_MASK = 0x03;
+
   private static final byte FROZEN_FLAG = 0x04;
 
-  private static final byte PERMISSION_MASK = 0x03;
+  private static final byte UNCHUNKED_FLAG = 0x08;
 
   private CDOID id;
 
@@ -145,13 +146,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     readSystemValues(in);
 
-    byte permissionBits = (byte)(in.readByte() & PERMISSION_MASK);
-    if (permissionBits != CDOPermission.NONE.ordinal())
+    byte flagBits = (byte)(in.readByte() & ~FROZEN_FLAG);
+    if ((flagBits & PERMISSION_MASK) != CDOPermission.NONE.ordinal())
     {
       readValues(in);
     }
 
-    flags = permissionBits;
+    flags = flagBits;
 
     if (READING.isEnabled())
     {
@@ -203,7 +204,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     CDOPermissionProvider permissionProvider = out.getPermissionProvider();
     CDOPermission permission = permissionProvider.getPermission(this);
-    out.writeByte(permission.getBits());
+    out.writeByte(permission.getBits() | flags & UNCHUNKED_FLAG);
 
     if (permission != CDOPermission.NONE)
     {
@@ -730,6 +731,22 @@ public abstract class BaseCDORevision extends AbstractCDORevision
         }
       }
     }
+  }
+
+  /**
+   * @since 4.1
+   */
+  public boolean isUnchunked()
+  {
+    return (flags & UNCHUNKED_FLAG) != 0;
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void setUnchunked()
+  {
+    flags |= UNCHUNKED_FLAG;
   }
 
   protected Object getValue(int featureIndex)

@@ -264,6 +264,14 @@ public class StubCDORevision extends AbstractCDORevision
   }
 
   /**
+   * @since 4.1
+   */
+  public void setPermission(CDOPermission permission)
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
    * @since 4.0
    */
   public void freeze()

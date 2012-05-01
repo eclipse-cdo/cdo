@@ -659,7 +659,27 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     if (list == null && size != -1)
     {
       list = CDOListFactory.DEFAULT.createList(size, 0, 0);
-      setValue(featureIndex, list);
+
+      synchronized (this)
+      {
+        CDOPermission permission = getPermission();
+        if (permission != CDOPermission.WRITE)
+        {
+          setPermission(CDOPermission.WRITE);
+        }
+
+        try
+        {
+          setValue(featureIndex, list);
+        }
+        finally
+        {
+          if (permission != CDOPermission.WRITE)
+          {
+            setPermission(permission);
+          }
+        }
+      }
     }
 
     return list;
@@ -677,6 +697,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   public CDOPermission getPermission()
   {
     return CDOPermission.get(flags & PERMISSION_MASK);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void setPermission(CDOPermission permission)
+  {
+    flags = (byte)(flags & ~PERMISSION_MASK | permission.getBits() & PERMISSION_MASK);
   }
 
   /**

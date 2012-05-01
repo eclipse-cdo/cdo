@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
+import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -35,6 +37,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
+@CleanRepositoriesAfter
 public class Bugzilla_343084_Test extends AbstractCDOTest
 {
   private static final String REPO_NAME = "protectedrepo";
@@ -166,6 +169,7 @@ public class Bugzilla_343084_Test extends AbstractCDOTest
     }
   }
 
+  @Skips(ModelConfig.CAPABILITY_LEGACY)
   public void testPermissionManagerNONE() throws Exception
   {
     {

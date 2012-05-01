@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
@@ -100,7 +101,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    * will be called. This happens for example if <i>internalPostInvalidate()</i> is called. The leads to another
    * <i>revisionToInstance()</i> call while the first call has not finished. This is certainly not so cool. That's why
    * <b>underConstruction</b> will flag that <i>revisionToInstance()</i> is still running and avoid the second call.
-   * 
+   *
    * @since 3.0
    */
   private boolean underConstruction;
@@ -359,6 +360,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
   protected void revisionToInstance()
   {
+
     if (underConstruction)
     {
       // Return if revisionToInstance was called before to avoid doubled calls
@@ -379,6 +381,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     }
 
     Counter counter = recursionCounter.get();
+
     try
     {
       registerWrapper(this);
@@ -422,13 +425,28 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
    */
   protected void revisionToInstanceContainer()
   {
-    Object containerID = revision.getContainerID();
-    InternalEObject container = getEObjectFromPotentialID(view, null, containerID);
-
-    EObject oldContainer = instance.eContainer();
-    if (oldContainer != container)
+    CDOPermission permission = revision.getPermission();
+    if (permission != CDOPermission.WRITE)
     {
-      setInstanceContainer(container, revision.getContainingFeatureID());
+      revision.setPermission(CDOPermission.WRITE);
+    }
+
+    try
+    {
+      Object containerID = revision.getContainerID();
+      InternalEObject container = getEObjectFromPotentialID(view, null, containerID);
+      EObject oldContainer = instance.eContainer();
+      if (oldContainer != container)
+      {
+        setInstanceContainer(container, revision.getContainingFeatureID());
+      }
+    }
+    finally
+    {
+      if (permission != CDOPermission.WRITE)
+      {
+        revision.setPermission(permission);
+      }
     }
   }
 
@@ -586,7 +604,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   /**
    * This method retrieves the value from the feature at the given index. It retrieves the value either from the views's
    * store or the internal pre-registration Map.
-   * 
+   *
    * @param feature
    *          the feature to retrieve the value from
    * @param index
@@ -942,7 +960,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
   /**
    * Adds an object to the pre-registered objects list which hold all created objects even if they are not registered in
    * the view
-   * 
+   *
    * @since 3.0
    */
   protected static void registerWrapper(CDOLegacyWrapper wrapper)

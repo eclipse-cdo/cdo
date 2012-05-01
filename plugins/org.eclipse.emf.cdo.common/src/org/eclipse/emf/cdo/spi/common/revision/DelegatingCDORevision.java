@@ -326,6 +326,14 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   /**
    * @since 4.1
    */
+  public void setPermission(CDOPermission permission)
+  {
+    getDelegate().setPermission(permission);
+  }
+
+  /**
+   * @since 4.1
+   */
   public boolean isReadable()
   {
     return getDelegate().isReadable();

@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -24,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * Encapsulates the immutable system information of a <b>single</b> CDO {@link EObject object} between two
  * {@link CDOCommitInfo commits} in a {@link CDOBranch branch} and provides access to its modeled
  * {@link CDORevisionData data}.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -56,6 +58,23 @@ public interface CDORevision extends CDORevisionKey, CDORevisable
   public static final int DEPTH_INFINITE = -1;
 
   /**
+   * @since 4.1
+   */
+  public static final CDOPermissionProvider PERMISSION_PROVIDER = new CDOPermissionProvider()
+  {
+    public CDOPermission getPermission(Object object)
+    {
+      if (object instanceof CDORevision)
+      {
+        CDORevision revision = (CDORevision)object;
+        return revision.getPermission();
+      }
+
+      return CDOPermission.NONE;
+    }
+  };
+
+  /**
    * @since 2.0
    */
   public EClass getEClass();
@@ -63,7 +82,7 @@ public interface CDORevision extends CDORevisionKey, CDORevisable
   /**
    * Returns <code>true</code> exactly if {@link #getTimeStamp()} does not return {@link #UNSPECIFIED_DATE},
    * <code>false</code> otherwise.
-   * 
+   *
    * @since 3.0
    */
   public boolean isHistorical();
@@ -100,4 +119,19 @@ public interface CDORevision extends CDORevisionKey, CDORevisable
    * @since 2.0
    */
   public CDORevision copy();
+
+  /**
+   * @since 4.1
+   */
+  public CDOPermission getPermission();
+
+  /**
+   * @since 4.1
+   */
+  public boolean isReadable();
+
+  /**
+   * @since 4.1
+   */
+  public boolean isWritable();
 }

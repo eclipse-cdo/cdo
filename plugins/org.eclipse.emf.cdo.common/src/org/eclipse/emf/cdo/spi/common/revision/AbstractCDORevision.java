@@ -121,6 +121,22 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   }
 
   /**
+   * @since 4.1
+   */
+  public boolean isReadable()
+  {
+    return getPermission().isReadable();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public boolean isWritable()
+  {
+    return getPermission().isWritable();
+  }
+
+  /**
    * @since 3.0
    */
   public void adjustForCommit(CDOBranch branch, long timeStamp)

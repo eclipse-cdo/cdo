@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.internal.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
@@ -140,6 +141,12 @@ public abstract class CDOServerIndication extends IndicationWithResponse
 
       @Override
       public CDOIDProvider getIDProvider()
+      {
+        return getSession();
+      }
+
+      @Override
+      public CDOPermissionProvider getPermissionProvider()
       {
         return getSession();
       }

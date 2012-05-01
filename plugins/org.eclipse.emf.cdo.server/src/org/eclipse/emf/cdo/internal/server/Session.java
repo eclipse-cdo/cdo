@@ -28,7 +28,9 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.internal.common.commit.DelegatingCommitInfo;
+import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -313,7 +315,7 @@ public class Session extends Container<IView> implements InternalSession
 
   /**
    * TODO I can't see how recursion is controlled/limited
-   * 
+   *
    * @since 2.0
    */
   public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk,
@@ -350,6 +352,17 @@ public class Session extends Container<IView> implements InternalSession
   public CDOID provideCDOID(Object idObject)
   {
     return (CDOID)idObject;
+  }
+
+  public CDOPermission getPermission(Object object)
+  {
+    IPermissionManager permissionManager = manager.getPermissionManager();
+    if (permissionManager != null)
+    {
+      return permissionManager.getPermission(object, userID);
+    }
+
+    return CDORevision.PERMISSION_PROVIDER.getPermission(object);
   }
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)

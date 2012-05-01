@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -312,6 +313,30 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   public void convertEObjects(CDOIDProvider oidProvider)
   {
     getDelegate().convertEObjects(oidProvider);
+  }
+
+  /**
+   * @since 4.1
+   */
+  public CDOPermission getPermission()
+  {
+    return getDelegate().getPermission();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public boolean isReadable()
+  {
+    return getDelegate().isReadable();
+  }
+
+  /**
+   * @since 4.1
+   */
+  public boolean isWritable()
+  {
+    return getDelegate().isWritable();
   }
 
   /**

@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -49,7 +50,7 @@ import java.io.IOException;
 
 /**
  * Provides I/O methods for writing various CDO data types and concepts to streams.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -60,6 +61,11 @@ public interface CDODataOutput extends ExtendedDataOutput
   public CDOPackageRegistry getPackageRegistry();
 
   public CDOIDProvider getIDProvider();
+
+  /**
+   * @since 4.1
+   */
+  public CDOPermissionProvider getPermissionProvider();
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 

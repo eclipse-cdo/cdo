@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult;
@@ -71,6 +72,8 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   private IRandomizer randomizer;
 
   private IUserManager userManager;
+
+  private IPermissionManager permissionManager;
 
   private final Map<Integer, InternalSession> sessions = new HashMap<Integer, InternalSession>();
 
@@ -163,6 +166,16 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   public void setUserManager(IUserManager userManager)
   {
     this.userManager = userManager;
+  }
+
+  public IPermissionManager getPermissionManager()
+  {
+    return permissionManager;
+  }
+
+  public void setPermissionManager(IPermissionManager permissionManager)
+  {
+    this.permissionManager = permissionManager;
   }
 
   public InternalSession[] getSessions()

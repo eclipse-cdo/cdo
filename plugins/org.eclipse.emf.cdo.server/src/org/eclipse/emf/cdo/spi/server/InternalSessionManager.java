@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -34,7 +35,22 @@ public interface InternalSessionManager extends ISessionManager
 
   public void setRepository(InternalRepository repository);
 
+  /**
+   * @since 4.1
+   */
+  public IUserManager getUserManager();
+
   public void setUserManager(IUserManager userManager);
+
+  /**
+   * @since 4.1
+   */
+  public IPermissionManager getPermissionManager();
+
+  /**
+   * @since 4.1
+   */
+  public void setPermissionManager(IPermissionManager permissionManager);
 
   public InternalSession[] getSessions();
 

@@ -77,11 +77,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private static final byte SET_NOT_NULL = 2;
 
-  private static final byte PERMISSION_MASK = 0x03;
-
   private static final byte FROZEN_FLAG = 0x04;
 
   private static final byte UNCHUNKED_FLAG = 0x08;
+
+  private static final byte PERMISSION_MASK = 0x03;
+
+  private static final byte TRANSFER_MASK = PERMISSION_MASK | UNCHUNKED_FLAG;
 
   private CDOID id;
 
@@ -100,7 +102,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private int containingFeatureID;
 
-  private transient byte flags = CDOPermission.WRITE.getBits();
+  private transient byte flags;
 
   /**
    * @since 3.0
@@ -131,7 +133,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     resourceID = source.resourceID;
     containerID = source.containerID;
     containingFeatureID = source.containingFeatureID;
-    flags = (byte)(source.flags & PERMISSION_MASK);
+    flags = (byte)(source.flags & TRANSFER_MASK);
   }
 
   /**
@@ -146,7 +148,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     readSystemValues(in);
 
-    byte flagBits = (byte)(in.readByte() & ~FROZEN_FLAG);
+    byte flagBits = (byte)(in.readByte() & TRANSFER_MASK);
     if ((flagBits & PERMISSION_MASK) != CDOPermission.NONE.ordinal())
     {
       readValues(in);
@@ -204,7 +206,20 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     CDOPermissionProvider permissionProvider = out.getPermissionProvider();
     CDOPermission permission = permissionProvider.getPermission(this);
-    out.writeByte(permission.getBits() | flags & UNCHUNKED_FLAG);
+
+    int bits = flags & TRANSFER_MASK & ~PERMISSION_MASK;
+    bits |= permission.getBits();
+
+    if (referenceChunk == CDORevision.UNCHUNKED)
+    {
+      bits |= UNCHUNKED_FLAG;
+    }
+    else
+    {
+      bits &= ~UNCHUNKED_FLAG;
+    }
+
+    out.writeByte(bits);
 
     if (permission != CDOPermission.NONE)
     {
@@ -717,7 +732,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     if (isReadable())
     {
-      EStructuralFeature[] features = CDOModelUtil.getAllPersistentFeatures(getEClass());
+      EStructuralFeature[] features = getAllPersistentFeatures();
       for (int i = 0; i < features.length; i++)
       {
         EStructuralFeature feature = features[i];

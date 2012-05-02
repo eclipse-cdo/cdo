@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -31,9 +32,9 @@ import org.eclipse.net4j.util.io.IOUtil;
  * @author Eike Stepper
  */
 @CleanRepositoriesBefore
+@Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class Bugzilla_369646_Test extends AbstractCDOTest
 {
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testSetBranchWithSubBranches() throws Exception
   {
     // Note: as of bug 369646, this fails with DBStore and range-based branching mapping strategy.
@@ -50,20 +51,19 @@ public class Bugzilla_369646_Test extends AbstractCDOTest
     res.getContents().add(c);
     transaction.commit();
 
-    // create two cascading branches
+    // Create two cascading branches
     CDOBranch sub1 = transaction.getBranch().createBranch("sub1");
     CDOBranch sub2 = sub1.createBranch("sub2");
 
-    // now delete the contents in the sub2 branch
+    // Now delete the contents in the sub2 branch
     transaction.setBranch(sub2);
     res.getContents().remove(0);
     transaction.commit();
 
-    // and now try to switch the transaction to the parent branch
+    // And now try to switch the transaction to the parent branch
     transaction.setBranch(sub1);
   }
 
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testSetBranchWithPCL() throws Exception
   {
     {
@@ -85,32 +85,32 @@ public class Bugzilla_369646_Test extends AbstractCDOTest
 
       transaction.commit();
 
-      // create a branch
+      // Create a branch
       CDOBranch sub1 = transaction.getBranch().createBranch("sub1");
       transaction.setBranch(sub1);
 
-      // modify list in branch
+      // Modify list in branch
       cat.getCategories().remove(3);
       cat.getCategories().remove(7);
 
-      // commit
+      // Commit
       transaction.commit();
       session.close();
     }
 
-    // now clear the cache on server
+    // Now clear the cache on server
     clearCache(getRepository().getRevisionManager());
 
-    // open a new session with PCL enabled
+    // Open a new session with PCL enabled
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
 
-    // load the categroy in the resource (is now partially loaded)
+    // Load the categroy in the resource (is now partially loaded)
     CDOView view = session.openView();
     CDOResource res = view.getResource(getResourcePath("/test"));
     Category cat = (Category)res.getContents().get(0);
 
-    // and switch view target
+    // And switch view target
     view.setBranch(view.getBranch().getBranches()[0]);
     IOUtil.OUT().println("Result: " + cat.getCategories());
   }

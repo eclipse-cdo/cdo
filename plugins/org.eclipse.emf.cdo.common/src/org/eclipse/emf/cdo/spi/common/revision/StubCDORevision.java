@@ -284,7 +284,7 @@ public class StubCDORevision extends AbstractCDORevision
    */
   public boolean isUnchunked()
   {
-    throw new UnsupportedOperationException(getExceptionMessage());
+    return true;
   }
 
   /**
@@ -292,7 +292,7 @@ public class StubCDORevision extends AbstractCDORevision
    */
   public void setUnchunked()
   {
-    throw new UnsupportedOperationException(getExceptionMessage());
+    // Do nothing
   }
 
   private String getExceptionMessage()

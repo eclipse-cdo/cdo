@@ -11,17 +11,11 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-import org.eclipse.emf.cdo.server.IStore;
-import org.eclipse.emf.cdo.server.db.CDODBUtil;
-import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.OfflineConfig;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
 
@@ -32,14 +26,12 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public class H2OfflineConfig extends OfflineConfig
+public class H2OfflineConfig extends DBOfflineConfig
 {
   private static final long serialVersionUID = 1L;
 
@@ -47,31 +39,9 @@ public class H2OfflineConfig extends OfflineConfig
 
   private static JdbcDataSource defaultDataSource;
 
-  private boolean withRanges;
-
-  private boolean copyOnBranch;
-
   public H2OfflineConfig(boolean withRanges, boolean copyOnBranch, IDGenerationLocation idGenerationLocation)
   {
-    super("H2Offline", idGenerationLocation);
-    this.withRanges = withRanges;
-    this.copyOnBranch = copyOnBranch;
-  }
-
-  @Override
-  protected String getStoreName()
-  {
-    return MEMConfig.STORE_NAME;
-  }
-
-  public boolean isWithRanges()
-  {
-    return withRanges;
-  }
-
-  public boolean isCopyOnBranch()
-  {
-    return copyOnBranch;
+    super("H2Offline", withRanges, copyOnBranch, idGenerationLocation);
   }
 
   @Override
@@ -79,62 +49,15 @@ public class H2OfflineConfig extends OfflineConfig
   {
     super.initCapabilities(capabilities);
     capabilities.add(H2Config.DB_ADAPTER_NAME);
-
-    if (isWithRanges())
-    {
-      capabilities.add(DBConfig.CAPABILITY_RANGES);
-    }
-
-    if (isCopyOnBranch())
-    {
-      capabilities.add(DBConfig.CAPABILITY_COPY_ON_BRANCH);
-    }
-  }
-
-  public IStore createStore(String repoName)
-  {
-    IMappingStrategy mappingStrategy = createMappingStrategy();
-    mappingStrategy.setProperties(createMappingStrategyProperties());
-
-    IDBAdapter dbAdapter = createDBAdapter();
-
-    DataSource dataSource = createDataSource(repoName);
-    IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
-
-    return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
   }
 
   @Override
-  public void setUp() throws Exception
-  {
-    CDODBUtil.prepareContainer(IPluginContainer.INSTANCE);
-    super.setUp();
-  }
-
-  protected Map<String, String> createMappingStrategyProperties()
-  {
-    Map<String, String> props = new HashMap<String, String>();
-    props.put(IMappingStrategy.PROP_QUALIFIED_NAMES, "true");
-    props.put(CDODBUtil.PROP_COPY_ON_BRANCH, Boolean.toString(copyOnBranch));
-    return props;
-  }
-
-  protected IMappingStrategy createMappingStrategy()
-  {
-    return CDODBUtil.createHorizontalMappingStrategy(isSupportingAudits(), isSupportingBranches(), withRanges);
-  }
-
-  @Override
-  protected String getMappingStrategySpecialization()
-  {
-    return (withRanges ? "-ranges" : "") + (copyOnBranch ? "-copy" : "");
-  }
-
   protected IDBAdapter createDBAdapter()
   {
     return new H2Adapter();
   }
 
+  @Override
   protected DataSource createDataSource(String repoName)
   {
     if (reusableFolder == null)

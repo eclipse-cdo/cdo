@@ -785,8 +785,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    */
   public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex)
   {
-    CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
-    return policy.resolveProxy(revision, feature, accessIndex, serverIndex);
+    if (!((InternalCDORevision)revision).isUnchunked())
+    {
+      CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
+      return policy.resolveProxy(revision, feature, accessIndex, serverIndex);
+    }
+
+    return revision.data().get(feature, accessIndex);
   }
 
   /**
@@ -794,26 +799,31 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    */
   public void resolveAllElementProxies(CDORevision revision)
   {
-    CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
-    for (EStructuralFeature feature : revision.getEClass().getEAllStructuralFeatures())
+    if (!((InternalCDORevision)revision).isUnchunked())
     {
-      if (feature instanceof EReference)
+      CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
+      for (EStructuralFeature feature : revision.getEClass().getEAllStructuralFeatures())
       {
-        EReference reference = (EReference)feature;
-        if (reference.isMany() && EMFUtil.isPersistent(reference))
+        if (feature instanceof EReference)
         {
-          CDOList list = ((InternalCDORevision)revision).getList(reference);
-          for (Iterator<Object> it = list.iterator(); it.hasNext();)
+          EReference reference = (EReference)feature;
+          if (reference.isMany() && EMFUtil.isPersistent(reference))
           {
-            Object element = it.next();
-            if (element instanceof CDOElementProxy)
+            CDOList list = ((InternalCDORevision)revision).getList(reference);
+            for (Iterator<Object> it = list.iterator(); it.hasNext();)
             {
-              policy.resolveAllProxies(revision, reference);
-              break;
+              Object element = it.next();
+              if (element instanceof CDOElementProxy)
+              {
+                policy.resolveAllProxies(revision, reference);
+                break;
+              }
             }
           }
         }
       }
+
+      ((InternalCDORevision)revision).setUnchunked();
     }
   }
 
@@ -1359,7 +1369,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   /**
    * A separate class for better monitor debugging.
-   * 
+   *
    * @author Eike Stepper
    */
   private static final class LastUpdateTimeLock

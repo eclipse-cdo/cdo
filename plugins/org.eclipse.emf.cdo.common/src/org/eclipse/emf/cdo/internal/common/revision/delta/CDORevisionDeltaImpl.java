@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.PartialCollectionLoadingNotSupportedException;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
-import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;

@@ -279,6 +279,22 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException(getExceptionMessage());
   }
 
+  /**
+   * @since 4.1
+   */
+  public boolean isUnchunked()
+  {
+    return true;
+  }
+
+  /**
+   * @since 4.1
+   */
+  public void setUnchunked()
+  {
+    // Do nothing
+  }
+
   private String getExceptionMessage()
   {
     return "Unsupported operation in " + this;

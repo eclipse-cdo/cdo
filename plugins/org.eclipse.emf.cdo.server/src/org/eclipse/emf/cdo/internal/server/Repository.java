@@ -471,10 +471,14 @@ public class Repository extends Container<Object> implements InternalRepository
       {
         if (isSupportingAudits())
         {
-          // Case "Pointer"?
           InternalCDORevision target = loadRevisionTarget(id, branchPoint, referenceChunk, accessor);
           if (target != null)
           {
+            if (referenceChunk == CDORevision.UNCHUNKED)
+            {
+              target.setUnchunked();
+            }
+
             CDOBranch branch = branchPoint.getBranch();
             long revised = loadRevisionRevised(id, branch);
             PointerCDORevision pointer = new PointerCDORevision(target.getEClass(), id, branch, revised, target);
@@ -497,6 +501,11 @@ public class Repository extends Container<Object> implements InternalRepository
       }
       else
       {
+        if (referenceChunk == CDORevision.UNCHUNKED)
+        {
+          revision.setUnchunked();
+        }
+
         revision.freeze();
         info.setResult(revision);
       }
@@ -543,6 +552,10 @@ public class Repository extends Container<Object> implements InternalRepository
     return accessor.readRevisionByVersion(id, branchVersion, referenceChunk, revisionManager);
   }
 
+  /**
+   * @deprecated Not used.
+   */
+  @Deprecated
   protected void ensureChunks(InternalCDORevision revision, int referenceChunk, IStoreAccessor accessor)
   {
     EClass eClass = revision.getEClass();
@@ -559,12 +572,33 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
+  public void ensureChunks(InternalCDORevision revision)
+  {
+    if (!revision.isUnchunked())
+    {
+      for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(revision.getEClass()))
+      {
+        if (feature.isMany())
+        {
+          ensureChunk(revision, feature, 0, revision.getList(feature).size());
+        }
+      }
+
+      revision.setUnchunked();
+    }
+  }
+
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart,
       int chunkEnd)
   {
-    MoveableList<Object> list = revision.getList(feature);
-    chunkEnd = Math.min(chunkEnd, list.size());
-    return ensureChunk(revision, feature, StoreThreadLocal.getAccessor(), list, chunkStart, chunkEnd);
+    if (!revision.isUnchunked())
+    {
+      MoveableList<Object> list = revision.getList(feature);
+      chunkEnd = Math.min(chunkEnd, list.size());
+      return ensureChunk(revision, feature, StoreThreadLocal.getAccessor(), list, chunkStart, chunkEnd);
+    }
+
+    return null;
   }
 
   protected IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature,

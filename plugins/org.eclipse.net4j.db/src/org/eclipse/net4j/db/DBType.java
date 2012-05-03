@@ -14,11 +14,17 @@ package org.eclipse.net4j.db;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.io.TMPUtil;
 
 import java.io.ByteArrayInputStream;
-import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -28,7 +34,7 @@ import java.sql.SQLException;
 
 /**
  * Enumerates the SQL data types that are compatible with the DB framework.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  */
@@ -511,34 +517,7 @@ public enum DBType
       long length = in.readLong();
       if (length > 0)
       {
-        reader = new Reader()
-        {
-          @Override
-          public int read(char[] cbuf, int off, int len) throws IOException
-          {
-            int read = 0;
-
-            try
-            {
-              while (read < len)
-              {
-                cbuf[off++] = in.readChar();
-                read++;
-              }
-            }
-            catch (EOFException ex)
-            {
-              read = -1;
-            }
-
-            return read;
-          }
-
-          @Override
-          public void close() throws IOException
-          {
-          }
-        };
+        reader = createFileReader(in, length);
       }
       else
       {
@@ -553,6 +532,7 @@ public enum DBType
           @Override
           public void close() throws IOException
           {
+            // Do nothing
           }
         };
       }
@@ -560,6 +540,34 @@ public enum DBType
       statement.setCharacterStream(column, reader, (int)length);
       reader.close();
       return null;
+    }
+
+    private FileReader createFileReader(final ExtendedDataInput in, long length) throws IOException
+    {
+      FileWriter fw = null;
+
+      try
+      {
+        final File tempFile = TMPUtil.createTempFile("lob-", ".tmp");
+        tempFile.deleteOnExit();
+
+        fw = new FileWriter(tempFile);
+        IOUtil.copyCharacter(new InputStreamReader(new ExtendedDataInput.Stream(in)), fw, length);
+
+        return new FileReader(tempFile)
+        {
+          @Override
+          public void close() throws IOException
+          {
+            super.close();
+            tempFile.delete();
+          }
+        };
+      }
+      finally
+      {
+        IOUtil.close(fw);
+      }
     }
   },
 
@@ -824,11 +832,7 @@ public enum DBType
       try
       {
         out.writeLong(length);
-        while (length-- > 0)
-        {
-          int b = stream.read();
-          out.writeByte(b + Byte.MIN_VALUE);
-        }
+        IOUtil.copyBinary(stream, new ExtendedDataOutput.Stream(out), length);
       }
       finally
       {
@@ -855,14 +859,7 @@ public enum DBType
       {
         if (length > 0)
         {
-          value = new InputStream()
-          {
-            @Override
-            public int read() throws IOException
-            {
-              return in.readByte() - Byte.MIN_VALUE;
-            }
-          };
+          value = createFileInputStream(in, length);
         }
         else
         {
@@ -877,6 +874,34 @@ public enum DBType
       }
 
       return null;
+    }
+
+    private FileInputStream createFileInputStream(final ExtendedDataInput in, long length) throws IOException
+    {
+      FileOutputStream fos = null;
+
+      try
+      {
+        final File tempFile = TMPUtil.createTempFile("lob-", ".tmp");
+        tempFile.deleteOnExit();
+
+        fos = new FileOutputStream(tempFile);
+        IOUtil.copyBinary(new ExtendedDataInput.Stream(in), fos, length);
+
+        return new FileInputStream(tempFile)
+        {
+          @Override
+          public void close() throws IOException
+          {
+            super.close();
+            tempFile.delete();
+          }
+        };
+      }
+      finally
+      {
+        IOUtil.close(fos);
+      }
     }
   };
 

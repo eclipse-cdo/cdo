@@ -55,8 +55,6 @@ public class AllTestsDBMysqlOffline extends DBConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    testClasses.add(Bugzilla_377727_Test.class);
-
     testClasses.add(FailoverTest.class);
     testClasses.add(OfflineTest.class);
     testClasses.add(OfflineRawTest.class);
@@ -65,7 +63,6 @@ public class AllTestsDBMysqlOffline extends DBConfigs
     testClasses.add(OfflineLockReplicationTest.class);
     testClasses.add(OfflineLockRawReplicationTest.class);
 
-    testClasses.add(Bugzilla_377727_Test.class);
     testClasses.add(Bugzilla_329014_Test.class);
     testClasses.add(Bugzilla_328352_Test.class);
     testClasses.add(Bugzilla_326047_Test.class);
@@ -74,5 +71,6 @@ public class AllTestsDBMysqlOffline extends DBConfigs
     testClasses.add(Bugzilla_376470_Test.class);
     testClasses.add(Bugzilla_376566_Test.class);
     testClasses.add(Bugzilla_376567_Test.class);
+    testClasses.add(Bugzilla_377727_Test.class);
   }
 }

@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -1102,13 +1101,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       }
 
       // Make sure all chunks are loaded
-      for (EStructuralFeature feature : CDOModelUtil.getAllPersistentFeatures(oldRevision.getEClass()))
-      {
-        if (feature.isMany())
-        {
-          repository.ensureChunk(oldRevision, feature, 0, oldRevision.getList(feature).size());
-        }
-      }
+      repository.ensureChunks(oldRevision);
 
       InternalCDORevision newRevision = oldRevision.copy();
       newRevision.adjustForCommit(accessor.getTransaction().getBranch(), created);

@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.common.util.EList;
 
 import java.util.Iterator;
@@ -34,30 +36,24 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     CDORevision revisionToRemove = null;
 
     {
-      msg("Opening session");
       CDOSession session = openSession();
-
-      msg("Attaching transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-      msg("Creating customer");
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
       resource.getContents().add(customer);
+
       revisionToRemove = CDOUtil.getCDOObject(customer).cdoRevision();
+
       for (int i = 0; i < 100; i++)
       {
-        msg("Creating salesOrder" + i);
         SalesOrder salesOrder = getModel1Factory().createSalesOrder();
         salesOrder.setId(i);
         salesOrder.setCustomer(customer);
         resource.getContents().add(salesOrder);
       }
 
-      msg("Committing");
       transaction.commit();
       session.close();
     }
@@ -65,13 +61,10 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     revisionManager.getCache().removeRevision(revisionToRemove.getID(), revisionToRemove);
 
-    msg("Opening session");
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
-    msg("Attaching transaction");
     CDOTransaction transaction = session.openTransaction();
-    msg("Loading resource");
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     Customer customer = (Customer)resource.getContents().get(0);
@@ -79,12 +72,10 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     int i = 0;
     for (Iterator<SalesOrder> it = salesOrders.iterator(); it.hasNext();)
     {
-      msg(i++);
+      IOUtil.OUT().println(i++);
       SalesOrder salesOrder = it.next();
-      msg(salesOrder);
+      IOUtil.OUT().println(salesOrder);
     }
-
-    session.close();
   }
 
   public void testWriteNative() throws Exception
@@ -92,30 +83,22 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     CDORevision revisionToRemove = null;
 
     {
-      msg("Opening session");
       CDOSession session = openSession();
-
-      msg("Attaching transaction");
       CDOTransaction transaction = session.openTransaction();
-
-      msg("Creating resource");
       CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-      msg("Creating customer");
       Customer customer = getModel1Factory().createCustomer();
       customer.setName("customer");
       resource.getContents().add(customer);
 
       for (int i = 0; i < 100; i++)
       {
-        msg("Creating salesOrder" + i);
         SalesOrder salesOrder = getModel1Factory().createSalesOrder();
         salesOrder.setId(i);
         salesOrder.setCustomer(customer);
         resource.getContents().add(salesOrder);
       }
 
-      msg("Committing");
       transaction.commit();
       revisionToRemove = CDOUtil.getCDOObject(customer).cdoRevision();
       session.close();
@@ -124,14 +107,10 @@ public class ChunkingWithMEMTest extends AbstractCDOTest
     InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
     revisionManager.getCache().removeRevision(revisionToRemove.getID(), revisionToRemove);
 
-    msg("Opening session");
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
 
-    msg("Attaching transaction");
     CDOTransaction transaction = session.openTransaction();
-
-    msg("Loading resource");
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
     Customer customer = (Customer)resource.getContents().get(0);

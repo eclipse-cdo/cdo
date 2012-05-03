@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
@@ -53,11 +55,10 @@ public class ChunkingTest extends AbstractCDOTest
       }
 
       transaction.commit();
+      session.close();
     }
 
     clearCache(getRepository().getRevisionManager());
-
-    // ************************************************************* //
 
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));
@@ -70,9 +71,9 @@ public class ChunkingTest extends AbstractCDOTest
     int i = 0;
     for (Iterator<SalesOrder> it = salesOrders.iterator(); it.hasNext();)
     {
-      msg(i++);
+      IOUtil.OUT().println(i++);
       SalesOrder salesOrder = it.next();
-      msg(salesOrder);
+      IOUtil.OUT().println(salesOrder);
     }
   }
 
@@ -96,11 +97,10 @@ public class ChunkingTest extends AbstractCDOTest
       }
 
       transaction.commit();
+      session.close();
     }
 
     clearCache(getRepository().getRevisionManager());
-
-    // ************************************************************* //
 
     CDOSession session = openSession();
     session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(10, 10));

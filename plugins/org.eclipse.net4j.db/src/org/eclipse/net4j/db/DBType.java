@@ -832,7 +832,7 @@ public enum DBType
       try
       {
         out.writeLong(length);
-        IOUtil.copyBinary(stream, new ExtendedDataOutput.Stream(out), length);
+        IOUtil.copyBinary(stream, new ExtendedDataOutput.Stream(out), length, false);
       }
       finally
       {
@@ -855,24 +855,21 @@ public enum DBType
       long length = in.readLong();
       InputStream value = null;
 
-      try
+      if (length > 0)
       {
-        if (length > 0)
-        {
-          value = createFileInputStream(in, length);
-        }
-        else
-        {
-          value = new ByteArrayInputStream(new byte[0]);
-        }
-
-        statement.setBinaryStream(column, value, (int)length);
+        value = createFileInputStream(in, length);
       }
-      finally
+      else
       {
-        IOUtil.close(value);
+        value = new ByteArrayInputStream(new byte[0]);
       }
 
+      statement.setBinaryStream(column, value, (int)length);
+
+      // XXX cannot close the input stream here, because
+      // it is still used in executeBatch() later.
+      // so maybe we could return it here and let the caller
+      // collect and close the streams.
       return null;
     }
 
@@ -886,7 +883,7 @@ public enum DBType
         tempFile.deleteOnExit();
 
         fos = new FileOutputStream(tempFile);
-        IOUtil.copyBinary(new ExtendedDataInput.Stream(in), fos, length);
+        IOUtil.copyBinary(new ExtendedDataInput.Stream(in), fos, length, false);
 
         return new FileInputStream(tempFile)
         {

@@ -187,7 +187,7 @@ public interface ExtendedDataInput extends DataInput
     {
       try
       {
-        return delegate.readByte() - Byte.MIN_VALUE;
+        return delegate.readUnsignedByte();
       }
       catch (EOFException ex)
       {

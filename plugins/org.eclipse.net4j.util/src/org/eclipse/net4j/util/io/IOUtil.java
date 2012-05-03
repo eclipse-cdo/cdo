@@ -447,12 +447,21 @@ public final class IOUtil
    */
   public static void copyBinary(InputStream inputStream, OutputStream outputStream, long size) throws IOException
   {
-    if (!(inputStream instanceof BufferedInputStream) && !(inputStream instanceof ByteArrayInputStream))
+    copyBinary(inputStream, outputStream, size, true);
+  }
+
+  /**
+   * @since 3.2
+   */
+  public static void copyBinary(InputStream inputStream, OutputStream outputStream, long size, boolean buffered)
+      throws IOException
+  {
+    if (buffered && !(inputStream instanceof BufferedInputStream) && !(inputStream instanceof ByteArrayInputStream))
     {
       inputStream = new BufferedInputStream(inputStream);
     }
 
-    if (!(outputStream instanceof BufferedOutputStream) && !(outputStream instanceof ByteArrayOutputStream))
+    if (buffered && !(outputStream instanceof BufferedOutputStream) && !(outputStream instanceof ByteArrayOutputStream))
     {
       outputStream = new BufferedOutputStream(outputStream);
     }

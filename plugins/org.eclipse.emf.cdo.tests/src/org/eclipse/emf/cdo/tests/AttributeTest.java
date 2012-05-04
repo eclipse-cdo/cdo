@@ -100,7 +100,7 @@ public class AttributeTest extends AbstractCDOTest
   }
 
   // XXX disabled because of Bug 289445
-  @Skips("Postgresql")
+  // @Skips("Postgresql")
   @CleanRepositoriesBefore
   public void testByteArray() throws Exception
   {
@@ -144,7 +144,7 @@ public class AttributeTest extends AbstractCDOTest
   }
 
   // XXX disabled because of Bug 289445
-  @Skips("Postgresql")
+  // @Skips("Postgresql")
   @CleanRepositoriesBefore
   public void testByteArrayEmpty() throws Exception
   {
@@ -182,7 +182,7 @@ public class AttributeTest extends AbstractCDOTest
   }
 
   // XXX disabled because of Bug 289445
-  @Skips("Postgresql")
+  // @Skips("Postgresql")
   @CleanRepositoriesBefore
   public void testByteArrayNull() throws Exception
   {

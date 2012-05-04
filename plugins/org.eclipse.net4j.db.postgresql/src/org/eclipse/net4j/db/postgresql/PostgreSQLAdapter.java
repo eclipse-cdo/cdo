@@ -99,6 +99,7 @@ public class PostgreSQLAdapter extends DBAdapter
     case VARCHAR:
     case CLOB:
       return "text"; //$NON-NLS-1$
+    case VARBINARY:
     case BLOB:
       return "bytea"; //$NON-NLS-1$
     case DOUBLE:

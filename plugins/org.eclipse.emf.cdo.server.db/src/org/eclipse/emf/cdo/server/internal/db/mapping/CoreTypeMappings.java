@@ -173,7 +173,7 @@ public class CoreTypeMappings
       {
         return null;
       }
-      
+
       int pos = str.indexOf('-');
 
       byte[] id = HexUtil.hexToBytes(str.substring(0, pos));
@@ -225,7 +225,7 @@ public class CoreTypeMappings
       {
         return null;
       }
-      
+
       int pos = str.indexOf('-');
 
       byte[] id = HexUtil.hexToBytes(str.substring(0, pos));
@@ -689,6 +689,38 @@ public class CoreTypeMappings
   /**
    * @author Eike Stepper
    */
+  public static class TMBytesVarbinary extends AbstractTypeMapping
+  {
+    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
+        + ".ByteArrayVarbinary", EcorePackage.eINSTANCE.getEByteArray(), DBType.VARBINARY));
+
+    @Override
+    public Object getResultSetValue(ResultSet resultSet) throws SQLException
+    {
+      return resultSet.getBytes(getField().getName());
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class Factory extends AbstractTypeMappingFactory
+    {
+      public Factory(Descriptor descriptor)
+      {
+        super(descriptor);
+      }
+
+      @Override
+      public ITypeMapping create(String description) throws ProductCreationException
+      {
+        return new TMBytesVarbinary();
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static class TMBoolean extends AbstractTypeMapping
   {
     public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Boolean",
@@ -857,7 +889,7 @@ public class CoreTypeMappings
       {
         return null;
       }
-      
+
       EFactory factory = getFeature().getEType().getEPackage().getEFactoryInstance();
       return factory.convertToString((EDataType)getFeature().getEType(), defaultValue);
     }

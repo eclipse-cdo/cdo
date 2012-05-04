@@ -127,6 +127,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
     container.registerFactory(CoreTypeMappings.TMByte.FACTORY);
     container.registerFactory(CoreTypeMappings.TMByte.FACTORY_OBJECT);
     container.registerFactory(CoreTypeMappings.TMBytes.FACTORY);
+    container.registerFactory(CoreTypeMappings.TMBytesVarbinary.FACTORY);
     container.registerFactory(CoreTypeMappings.TMCharacter.FACTORY);
     container.registerFactory(CoreTypeMappings.TMCharacter.FACTORY_OBJECT);
     container.registerFactory(CoreTypeMappings.TMCustom.FACTORY_VARCHAR);

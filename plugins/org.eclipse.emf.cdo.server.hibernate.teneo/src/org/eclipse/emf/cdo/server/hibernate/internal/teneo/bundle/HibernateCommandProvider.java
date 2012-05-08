@@ -86,7 +86,7 @@ public class HibernateCommandProvider implements CommandProvider
 
   private void exportHbm(CommandInterpreter interpreter) throws Exception
   {
-    String syntax = "Syntax: hibernate hbm <repository-name> <export-file>";
+    String syntax = "Syntax: hibernate mapping <repository-name> <export-file>";
     InternalRepository repository = getRepository(interpreter, syntax);
     String exportFile = nextArgument(interpreter, syntax);
     OutputStream out = null;

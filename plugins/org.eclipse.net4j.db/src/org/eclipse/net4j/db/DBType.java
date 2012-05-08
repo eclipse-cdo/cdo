@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
 
 import java.io.ByteArrayInputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -24,7 +25,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -552,7 +552,37 @@ public enum DBType
         tempFile.deleteOnExit();
 
         fw = new FileWriter(tempFile);
-        IOUtil.copyCharacter(new InputStreamReader(new ExtendedDataInput.Stream(in)), fw, length);
+
+        Reader reader = new Reader()
+        {
+          @Override
+          public int read(char[] cbuf, int off, int len) throws IOException
+          {
+            int read = 0;
+
+            try
+            {
+              while (read < len)
+              {
+                cbuf[off++] = in.readChar();
+                read++;
+              }
+            }
+            catch (EOFException ex)
+            {
+              read = -1;
+            }
+
+            return read;
+          }
+
+          @Override
+          public void close() throws IOException
+          {
+          }
+        };
+
+        IOUtil.copyCharacter(reader, fw, length);
 
         return new FileReader(tempFile)
         {

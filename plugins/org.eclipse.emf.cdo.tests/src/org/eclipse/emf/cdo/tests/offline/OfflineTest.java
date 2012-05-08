@@ -15,20 +15,28 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.syncing.OfflineClone;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractSyncingTest;
+import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model3.File;
+import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.util.TestListener;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -424,5 +432,140 @@ public class OfflineTest extends AbstractSyncingTest
 
     CDOTransaction transaction = cloneSession.openTransaction();
     transaction.commit();
+  }
+
+  public void _testDisconnectAndSyncBLOB() throws Exception
+  {
+    TestListener listener = new TestListener();
+    InternalRepository clone = getRepository();
+    waitForOnline(clone);
+
+    {
+      getOfflineConfig().stopMasterTransport();
+      waitForOffline(clone);
+
+      CDOSession masterSession = openSession("master");
+      CDOTransaction masterTransaction = masterSession.openTransaction();
+      CDOResource masterResource = masterTransaction.createResource("/master/resource");
+
+      InputStream inputStream = null;
+
+      try
+      {
+        inputStream = OM.BUNDLE.getInputStream("copyright.txt");
+        CDOBlob blob = new CDOBlob(inputStream);
+
+        Image image = getModel3Factory().createImage();
+        image.setWidth(320);
+        image.setHeight(200);
+        image.setData(blob);
+
+        masterResource.getContents().add(image);
+      }
+      finally
+      {
+        IOUtil.close(inputStream);
+      }
+
+      masterTransaction.commit();
+      masterTransaction.close();
+      masterSession.addListener(listener);
+
+      getOfflineConfig().startMasterTransport();
+      waitForOnline(clone);
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/master/resource");
+
+    Image image = (Image)resource.getContents().get(0);
+
+    InputStream fromDisk = null;
+
+    try
+    {
+      fromDisk = OM.BUNDLE.getInputStream("copyright.txt");
+      IOUtil.equals(fromDisk, image.getData().getContents());
+    }
+    finally
+    {
+      IOUtil.close(fromDisk);
+    }
+  }
+
+  public void _testDisconnectAndSyncCLOB() throws Exception
+  {
+    TestListener listener = new TestListener();
+    InternalRepository clone = getRepository();
+    waitForOnline(clone);
+
+    {
+      getOfflineConfig().stopMasterTransport();
+      waitForOffline(clone);
+
+      CDOSession masterSession = openSession("master");
+      CDOTransaction masterTransaction = masterSession.openTransaction();
+      CDOResource masterResource = masterTransaction.createResource("/master/resource");
+
+      InputStream inputStream = null;
+
+      try
+      {
+        inputStream = OM.BUNDLE.getInputStream("copyright.txt");
+        CDOClob clob = new CDOClob(new InputStreamReader(inputStream));
+
+        File file = getModel3Factory().createFile();
+        file.setName("copyright.txt");
+        file.setData(clob);
+
+        masterResource.getContents().add(file);
+      }
+      finally
+      {
+        IOUtil.close(inputStream);
+      }
+
+      try
+      {
+        inputStream = OM.BUNDLE.getInputStream("copyright.txt");
+        CDOClob clob = new CDOClob(new InputStreamReader(inputStream));
+
+        File file = getModel3Factory().createFile();
+        file.setName("plugin.properties");
+        file.setData(clob);
+
+        masterResource.getContents().add(file);
+      }
+      finally
+      {
+        IOUtil.close(inputStream);
+      }
+
+      masterTransaction.commit();
+      masterTransaction.close();
+      masterSession.addListener(listener);
+
+      getOfflineConfig().startMasterTransport();
+      waitForOnline(clone);
+    }
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource("/master/resource");
+
+    File file = (File)resource.getContents().get(0);
+
+    InputStream fromDisk = null;
+
+    try
+    {
+      fromDisk = OM.BUNDLE.getInputStream("copyright.txt");
+      IOUtil.equals(new InputStreamReader(fromDisk), file.getData().getContents());
+    }
+    finally
+    {
+      IOUtil.close(fromDisk);
+    }
   }
 }

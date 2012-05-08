@@ -14,9 +14,15 @@ package org.eclipse.net4j.db;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.io.TMPUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -28,7 +34,7 @@ import java.sql.SQLException;
 
 /**
  * Enumerates the SQL data types that are compatible with the DB framework.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  */
@@ -511,7 +517,43 @@ public enum DBType
       long length = in.readLong();
       if (length > 0)
       {
+        reader = createFileReader(in, length);
+      }
+      else
+      {
         reader = new Reader()
+        {
+          @Override
+          public int read(char[] cbuf, int off, int len) throws IOException
+          {
+            return -1;
+          }
+
+          @Override
+          public void close() throws IOException
+          {
+            // Do nothing
+          }
+        };
+      }
+
+      statement.setCharacterStream(column, reader, (int)length);
+      // reader.close();
+      return null;
+    }
+
+    private FileReader createFileReader(final ExtendedDataInput in, long length) throws IOException
+    {
+      FileWriter fw = null;
+
+      try
+      {
+        final File tempFile = TMPUtil.createTempFile("lob-", ".tmp");
+        tempFile.deleteOnExit();
+
+        fw = new FileWriter(tempFile);
+
+        Reader reader = new Reader()
         {
           @Override
           public int read(char[] cbuf, int off, int len) throws IOException
@@ -539,27 +581,23 @@ public enum DBType
           {
           }
         };
-      }
-      else
-      {
-        reader = new Reader()
-        {
-          @Override
-          public int read(char[] cbuf, int off, int len) throws IOException
-          {
-            return -1;
-          }
 
+        IOUtil.copyCharacter(reader, fw, length);
+
+        return new FileReader(tempFile)
+        {
           @Override
           public void close() throws IOException
           {
+            super.close();
+            tempFile.delete();
           }
         };
       }
-
-      statement.setCharacterStream(column, reader, (int)length);
-      reader.close();
-      return null;
+      finally
+      {
+        IOUtil.close(fw);
+      }
     }
   },
 
@@ -824,11 +862,7 @@ public enum DBType
       try
       {
         out.writeLong(length);
-        while (length-- > 0)
-        {
-          int b = stream.read();
-          out.writeByte(b + Byte.MIN_VALUE);
-        }
+        IOUtil.copyBinary(stream, new ExtendedDataOutput.Stream(out), length);
       }
       finally
       {
@@ -851,32 +885,50 @@ public enum DBType
       long length = in.readLong();
       InputStream value = null;
 
+      if (length > 0)
+      {
+        value = createFileInputStream(in, length);
+      }
+      else
+      {
+        value = new ByteArrayInputStream(new byte[0]);
+      }
+
+      statement.setBinaryStream(column, value, (int)length);
+
+      // XXX cannot close the input stream here, because
+      // it is still used in executeBatch() later.
+      // so maybe we could return it here and let the caller
+      // collect and close the streams.
+      return null;
+    }
+
+    private FileInputStream createFileInputStream(final ExtendedDataInput in, long length) throws IOException
+    {
+      FileOutputStream fos = null;
+
       try
       {
-        if (length > 0)
-        {
-          value = new InputStream()
-          {
-            @Override
-            public int read() throws IOException
-            {
-              return in.readByte() - Byte.MIN_VALUE;
-            }
-          };
-        }
-        else
-        {
-          value = new ByteArrayInputStream(new byte[0]);
-        }
+        final File tempFile = TMPUtil.createTempFile("lob-", ".tmp");
+        tempFile.deleteOnExit();
 
-        statement.setBinaryStream(column, value, (int)length);
+        fos = new FileOutputStream(tempFile);
+        IOUtil.copyBinary(new ExtendedDataInput.Stream(in), fos, length);
+
+        return new FileInputStream(tempFile)
+        {
+          @Override
+          public void close() throws IOException
+          {
+            super.close();
+            tempFile.delete();
+          }
+        };
       }
       finally
       {
-        IOUtil.close(value);
+        IOUtil.close(fos);
       }
-
-      return null;
     }
   };
 

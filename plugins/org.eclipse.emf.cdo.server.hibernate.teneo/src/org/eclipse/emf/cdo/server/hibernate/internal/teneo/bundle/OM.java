@@ -7,6 +7,7 @@
  * 
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Erdal Karaca - added HibernateCommandProvider
  */
 package org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle;
 
@@ -40,5 +41,12 @@ public abstract class OM
     {
       super(BUNDLE);
     }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      new HibernateCommandProvider(bundleContext);
+    }
   }
+
 }

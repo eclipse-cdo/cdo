@@ -34,7 +34,7 @@ import java.util.Map;
 
 /**
  * Various static methods that may help with Net4j-specific CDO {@link CDONet4jSession sessions}.
- * 
+ *
  * @since 2.0
  * @author Eike Stepper
  * @apiviz.uses {@link CDONet4jSessionConfiguration} - - creates
@@ -60,30 +60,43 @@ public final class CDONet4jUtil
 
   static
   {
-    if (!OMPlatform.INSTANCE.isOSGiRunning())
+    try
     {
-      CDOUtil.registerResourceFactory(null); // Ensure that the normal resource factory is registered
-
-      Map<String, Object> map = Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap();
-      if (!map.containsKey(PROTOCOL_TCP))
+      if (!OMPlatform.INSTANCE.isOSGiRunning())
       {
-        map.put(PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
-      }
+        CDOUtil.registerResourceFactory(null); // Ensure that the normal resource factory is registered
 
-      if (!map.containsKey(PROTOCOL_SSL))
-      {
-        map.put(PROTOCOL_SSL, CDOResourceFactory.INSTANCE);
-      }
+        Map<String, Object> map = Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap();
+        if (!map.containsKey(PROTOCOL_TCP))
+        {
+          map.put(PROTOCOL_TCP, CDOResourceFactory.INSTANCE);
+        }
 
-      if (!map.containsKey(PROTOCOL_JVM))
-      {
-        map.put(PROTOCOL_JVM, CDOResourceFactory.INSTANCE);
-      }
+        if (!map.containsKey(PROTOCOL_SSL))
+        {
+          map.put(PROTOCOL_SSL, CDOResourceFactory.INSTANCE);
+        }
 
-      int priority = CDOViewProvider.DEFAULT_PRIORITY - 100;
-      CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.TCP(priority));
-      CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.SSL(priority));
-      CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.JVM(priority));
+        if (!map.containsKey(PROTOCOL_JVM))
+        {
+          map.put(PROTOCOL_JVM, CDOResourceFactory.INSTANCE);
+        }
+
+        int priority = CDOViewProvider.DEFAULT_PRIORITY - 100;
+        CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.TCP(priority));
+        CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.SSL(priority));
+        CDOViewProviderRegistry.INSTANCE.addViewProvider(new CDONet4jViewProvider.JVM(priority));
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      ex.printStackTrace();
+      throw ex;
+    }
+    catch (Error ex)
+    {
+      ex.printStackTrace();
+      throw ex;
     }
   }
 

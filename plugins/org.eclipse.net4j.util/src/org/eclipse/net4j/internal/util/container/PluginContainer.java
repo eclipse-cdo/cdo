@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.internal.util.container;
 
-import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.factory.PluginFactoryRegistry;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -59,17 +58,10 @@ public class PluginContainer extends ManagedContainer implements IPluginContaine
   {
     if (instance == null)
     {
-      instance = new PluginContainer();
+      PluginContainer container = new PluginContainer();
+      container.activate();
 
-      try
-      {
-        instance.activate();
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-        instance = null;
-      }
+      instance = container; // Leave instance==null in case of a Throwable in activate()
     }
 
     return instance;

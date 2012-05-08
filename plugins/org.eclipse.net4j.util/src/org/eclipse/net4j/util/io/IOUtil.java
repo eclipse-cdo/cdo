@@ -447,35 +447,20 @@ public final class IOUtil
    */
   public static void copyBinary(InputStream inputStream, OutputStream outputStream, long size) throws IOException
   {
-    copyBinary(inputStream, outputStream, size, true);
-  }
-
-  /**
-   * @since 3.2
-   */
-  public static void copyBinary(InputStream inputStream, OutputStream outputStream, long size, boolean buffered)
-      throws IOException
-  {
-    if (buffered && !(inputStream instanceof BufferedInputStream) && !(inputStream instanceof ByteArrayInputStream))
-    {
-      inputStream = new BufferedInputStream(inputStream);
-    }
-
-    if (buffered && !(outputStream instanceof BufferedOutputStream) && !(outputStream instanceof ByteArrayOutputStream))
-    {
-      outputStream = new BufferedOutputStream(outputStream);
-    }
+    byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
 
     while (size > 0L)
     {
-      int b = inputStream.read();
-      if (b == EOF)
+      int bytesToCopy = (int)Math.min(size, buffer.length);
+
+      int bytesRead = inputStream.read(buffer, 0, bytesToCopy);
+      if (bytesRead < bytesToCopy)
       {
         throw new EOFException();
       }
 
-      outputStream.write(b);
-      --size;
+      outputStream.write(buffer, 0, bytesToCopy);
+      size -= bytesRead;
     }
 
     outputStream.flush();
@@ -513,26 +498,20 @@ public final class IOUtil
    */
   public static void copyCharacter(Reader reader, Writer writer, long size) throws IOException
   {
-    if (!(reader instanceof BufferedReader) && !(reader instanceof CharArrayReader))
-    {
-      reader = new BufferedReader(reader);
-    }
-
-    if (!(writer instanceof BufferedWriter) && !(writer instanceof CharArrayWriter))
-    {
-      writer = new BufferedWriter(writer);
-    }
+    char[] buffer = new char[DEFAULT_BUFFER_SIZE];
 
     while (size > 0L)
     {
-      int c = reader.read();
-      if (c == EOF)
+      int charsToCopy = (int)Math.min(size, buffer.length);
+
+      int charsRead = reader.read(buffer, 0, charsToCopy);
+      if (charsRead < charsToCopy)
       {
         throw new EOFException();
       }
 
-      writer.write(c);
-      --size;
+      writer.write(buffer, 0, charsRead);
+      size -= charsRead;
     }
 
     writer.flush();
@@ -794,6 +773,35 @@ public final class IOUtil
         }
 
         if (byte1 == -1)// Implies byte2 == -1
+        {
+          return true;
+        }
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  /**
+   * @since 3.2
+   */
+  public static boolean equals(Reader reader1, Reader reader2) throws IORuntimeException
+  {
+    try
+    {
+      for (;;)
+      {
+        int char1 = reader1.read();
+        int char2 = reader2.read();
+
+        if (char1 != char2)
+        {
+          return false;
+        }
+
+        if (char1 == -1)// Implies char2 == -1
         {
           return true;
         }

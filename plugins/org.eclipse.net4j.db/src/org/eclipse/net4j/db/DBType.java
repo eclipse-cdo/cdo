@@ -538,7 +538,7 @@ public enum DBType
       }
 
       statement.setCharacterStream(column, reader, (int)length);
-      reader.close();
+      // reader.close();
       return null;
     }
 
@@ -832,7 +832,7 @@ public enum DBType
       try
       {
         out.writeLong(length);
-        IOUtil.copyBinary(stream, new ExtendedDataOutput.Stream(out), length, false);
+        IOUtil.copyBinary(stream, new ExtendedDataOutput.Stream(out), length);
       }
       finally
       {
@@ -883,7 +883,7 @@ public enum DBType
         tempFile.deleteOnExit();
 
         fos = new FileOutputStream(tempFile);
-        IOUtil.copyBinary(new ExtendedDataInput.Stream(in), fos, length, false);
+        IOUtil.copyBinary(new ExtendedDataInput.Stream(in), fos, length);
 
         return new FileInputStream(tempFile)
         {

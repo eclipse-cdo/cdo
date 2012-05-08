@@ -36,7 +36,7 @@ import java.util.Properties;
  * https://bugs.eclipse.org/bugs/show_bug.cgi?id=378797
  * 
  * Exports the hbm through the following osgi command:
- * hibernate export repo1 /tmp/hbm.xml
+ * hibernate mapping repo1 /tmp/hbm.xml
  * 
  * @author Erdal Karaca
  */
@@ -55,7 +55,7 @@ public class HibernateCommandProvider implements CommandProvider
   {
     StringBuffer buffer = new StringBuffer();
     buffer.append("---CDO Hibernate commands---" + NEW_LINE);
-    buffer.append(INDENT + "hibernate export - export generated hibernate file" + NEW_LINE);
+    buffer.append(INDENT + "hibernate mapping - export generated hibernate file" + NEW_LINE);
     return buffer.toString();
   }
 
@@ -101,7 +101,7 @@ public class HibernateCommandProvider implements CommandProvider
       final CDOMappingGenerator mappingGenerator = new CDOMappingGenerator();
       final String mapping = mappingGenerator.generateMapping(ePackages, props);
       out.write(mapping.getBytes());
-      interpreter.println("Repository exported");
+      interpreter.println("Hibernate mapping exported");
     }
     finally
     {

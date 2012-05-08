@@ -350,11 +350,17 @@ public class CDOServerBrowser extends Worker
     pages.add(new HistoryPage());
 
     IManagedContainer container = getPagesContainer();
-    Set<String> factoryTypes = container.getFactoryTypes(Page.PRODUCT_GROUP);
-    for (String factoryType : factoryTypes)
+    for (String factoryType : container.getFactoryTypes(Page.PRODUCT_GROUP))
     {
-      Page page = (Page)container.getElement(Page.PRODUCT_GROUP, factoryType, null);
-      pages.add(page);
+      try
+      {
+        Page page = (Page)container.getElement(Page.PRODUCT_GROUP, factoryType, null);
+        pages.add(page);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
     }
   }
 

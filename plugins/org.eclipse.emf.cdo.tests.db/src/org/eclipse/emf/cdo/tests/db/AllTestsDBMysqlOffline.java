@@ -37,19 +37,19 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AllTestsDBH2Offline extends DBConfigs
+public class AllTestsDBMysqlOffline extends DBConfigs
 {
   public static Test suite()
   {
-    return new AllTestsDBH2Offline().getTestSuite("CDO Tests (DBStore H2 Horizontal - offline mode)");
+    return new AllTestsDBMysqlOffline().getTestSuite("CDO Tests (DBStore Mysql Horizontal - offline mode)");
   }
 
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // addScenario(parent, COMBINED, new H2OfflineConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
-    addScenario(parent, COMBINED, new H2OfflineConfig(false, false, IDGenerationLocation.CLIENT), JVM, NATIVE);
-    // addScenario(parent, COMBINED, new H2OfflineConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    // addScenario(parent, COMBINED, new MysqlOfflineConfig(false, false, IDGenerationLocation.STORE), JVM, NATIVE);
+    addScenario(parent, COMBINED, new MysqlOfflineConfig(false, false, IDGenerationLocation.CLIENT), JVM, NATIVE);
+    // addScenario(parent, COMBINED, new MysqlOfflineConfig(true, false, IDGenerationLocation.STORE), JVM, NATIVE);
   }
 
   @Override

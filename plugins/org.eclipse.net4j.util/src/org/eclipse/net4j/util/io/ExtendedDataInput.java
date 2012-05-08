@@ -168,7 +168,6 @@ public interface ExtendedDataInput extends DataInput
    * @author Eike Stepper
    * @since 2.0
    */
-  @Deprecated
   public static class Stream extends InputStream
   {
     private ExtendedDataInput delegate;

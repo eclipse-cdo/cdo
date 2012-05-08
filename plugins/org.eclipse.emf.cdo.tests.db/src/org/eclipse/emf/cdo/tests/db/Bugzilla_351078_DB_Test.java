@@ -36,7 +36,8 @@ public class Bugzilla_351078_DB_Test extends Bugzilla_351078_Test
   {
     super.check(master, masterCompany, when);
 
-    H2OfflineConfig config = (H2OfflineConfig)getRepositoryConfig();
+    // XXX use capabilities?!
+    DBOfflineConfig config = (DBOfflineConfig)getRepositoryConfig();
     if (config.isWithRanges())
     {
       byte[] masterTable = readTable(master);

@@ -339,7 +339,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       repositories = new HashMap<String, InternalRepository>();
     }
 
-    final IManagedContainer serverContainer = getCurrentTest().getServerContainer();
+    IManagedContainer serverContainer = getCurrentTest().getServerContainer();
     OCLQueryHandler.prepareContainer(serverContainer);
     CDONet4jServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
     {
@@ -354,15 +354,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     if (enableServerBrowser)
     {
-      serverBrowser = new CDOServerBrowser(repositories)
-      {
-        @Override
-        protected IManagedContainer getPagesContainer()
-        {
-          return serverContainer;
-        }
-      };
-
+      serverBrowser = new CDOServerBrowser(repositories);
       serverBrowser.activate();
     }
   }

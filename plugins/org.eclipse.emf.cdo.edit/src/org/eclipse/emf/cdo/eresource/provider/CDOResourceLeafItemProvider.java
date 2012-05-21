@@ -1,8 +1,12 @@
-/**
- * <copyright>
- * </copyright>
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.eresource.provider;
 
@@ -28,7 +32,7 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.eresource.CDOResourceLeaf} object. <!--
  * begin-user-doc -->
- * 
+ *
  * @since 4.1
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  * @generated
@@ -39,7 +43,7 @@ public class CDOResourceLeafItemProvider extends CDOResourceNodeItemProvider imp
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public CDOResourceLeafItemProvider(AdapterFactory adapterFactory)
@@ -49,7 +53,7 @@ public class CDOResourceLeafItemProvider extends CDOResourceNodeItemProvider imp
 
   /**
    * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -65,7 +69,7 @@ public class CDOResourceLeafItemProvider extends CDOResourceNodeItemProvider imp
 
   /**
    * This returns CDOResourceLeaf.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -76,7 +80,7 @@ public class CDOResourceLeafItemProvider extends CDOResourceNodeItemProvider imp
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -90,7 +94,7 @@ public class CDOResourceLeafItemProvider extends CDOResourceNodeItemProvider imp
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
    * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -103,7 +107,7 @@ public class CDOResourceLeafItemProvider extends CDOResourceNodeItemProvider imp
   /**
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
    * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

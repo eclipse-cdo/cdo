@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -39,7 +39,7 @@ public final class Version implements Comparable<Version>
 
   public int compareTo(Version o)
   {
-    return major < o.major ? 1 : major == o.major ? (minor < o.minor ? 1 : minor == o.minor ? 0 : -1) : -1;
+    return major < o.major ? 1 : major == o.major ? minor < o.minor ? 1 : minor == o.minor ? 0 : -1 : -1;
   }
 
   @Override

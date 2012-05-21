@@ -1,9 +1,10 @@
 /*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -51,7 +52,7 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
   /**
    * The cached value of the '{@link #getContainmentList() <em>Containment List</em>}' containment reference list. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getContainmentList()
    * @generated
    * @ordered
@@ -98,10 +99,14 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
               - Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, null, msgs);
         }
         if (msgs != null)
+        {
           msgs.dispatch();
+        }
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, oldContainmentOptional, containmentOptional));
+        }
       }
     }
     return containmentOptional;
@@ -130,9 +135,13 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, oldContainmentOptional, newContainmentOptional);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -147,18 +156,26 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
     {
       NotificationChain msgs = null;
       if (containmentOptional != null)
+      {
         msgs = ((InternalEObject)containmentOptional).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
             - Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, null, msgs);
+      }
       if (newContainmentOptional != null)
+      {
         msgs = ((InternalEObject)newContainmentOptional).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
             - Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL, null, msgs);
+      }
       msgs = basicSetContainmentOptional(newContainmentOptional, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL,
           newContainmentOptional, newContainmentOptional));
+    }
   }
 
   /**
@@ -203,7 +220,9 @@ public class ContainmentObjectImpl extends BaseObjectImpl implements Containment
     {
     case Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_OPTIONAL:
       if (resolve)
+      {
         return getContainmentOptional();
+      }
       return basicGetContainmentOptional();
     case Model6Package.CONTAINMENT_OBJECT__CONTAINMENT_LIST:
       return getContainmentList();

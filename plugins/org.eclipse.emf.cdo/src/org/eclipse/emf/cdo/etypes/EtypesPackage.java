@@ -1,8 +1,12 @@
-/**
- * <copyright>
- * </copyright>
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.etypes;
 
@@ -20,7 +24,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * 
+ *
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.etypes.EtypesFactory
@@ -31,28 +35,28 @@ public interface EtypesPackage extends EPackage
 {
   /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNAME = "etypes"; //$NON-NLS-1$
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/Etypes/4.0.0"; //$NON-NLS-1$
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_PREFIX = "etypes"; //$NON-NLS-1$
 
   /**
    * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   EtypesPackage eINSTANCE = org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl.init();
@@ -60,7 +64,7 @@ public interface EtypesPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.etypes.impl.ModelElementImpl <em>Model Element</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.etypes.impl.ModelElementImpl
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getModelElement()
    * @generated
@@ -70,7 +74,7 @@ public interface EtypesPackage extends EPackage
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -79,7 +83,7 @@ public interface EtypesPackage extends EPackage
   /**
    * The number of structural features of the '<em>Model Element</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -88,7 +92,7 @@ public interface EtypesPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl <em>Annotation</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.etypes.impl.AnnotationImpl
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getAnnotation()
    * @generated
@@ -98,7 +102,7 @@ public interface EtypesPackage extends EPackage
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -106,7 +110,7 @@ public interface EtypesPackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Source</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -114,7 +118,7 @@ public interface EtypesPackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Details</b></em>' map. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -123,7 +127,7 @@ public interface EtypesPackage extends EPackage
   /**
    * The feature id for the '<em><b>Model Element</b></em>' container reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -132,7 +136,7 @@ public interface EtypesPackage extends EPackage
   /**
    * The feature id for the '<em><b>Contents</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -140,7 +144,7 @@ public interface EtypesPackage extends EPackage
 
   /**
    * The feature id for the '<em><b>References</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -148,7 +152,7 @@ public interface EtypesPackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Annotation</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -156,7 +160,7 @@ public interface EtypesPackage extends EPackage
 
   /**
    * The meta object id for the '<em>Blob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.common.lob.CDOBlob
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
    * @generated
@@ -165,7 +169,7 @@ public interface EtypesPackage extends EPackage
 
   /**
    * The meta object id for the '<em>Clob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.common.lob.CDOClob
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClob()
    * @generated
@@ -174,7 +178,7 @@ public interface EtypesPackage extends EPackage
 
   /**
    * The meta object id for the '<em>Lob</em>' data type. <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.common.lob.CDOLob
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getLob()
@@ -185,7 +189,7 @@ public interface EtypesPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.etypes.ModelElement <em>Model Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Model Element</em>'.
    * @see org.eclipse.emf.cdo.etypes.ModelElement
    * @generated
@@ -196,7 +200,7 @@ public interface EtypesPackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.etypes.ModelElement#getAnnotations <em>Annotations</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Annotations</em>'.
    * @see org.eclipse.emf.cdo.etypes.ModelElement#getAnnotations()
    * @see #getModelElement()
@@ -207,7 +211,7 @@ public interface EtypesPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.etypes.Annotation <em>Annotation</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Annotation</em>'.
    * @see org.eclipse.emf.cdo.etypes.Annotation
    * @generated
@@ -217,7 +221,7 @@ public interface EtypesPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.etypes.Annotation#getSource <em>Source</em>}
    * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Source</em>'.
    * @see org.eclipse.emf.cdo.etypes.Annotation#getSource()
    * @see #getAnnotation()
@@ -228,7 +232,7 @@ public interface EtypesPackage extends EPackage
   /**
    * Returns the meta object for the map '{@link org.eclipse.emf.cdo.etypes.Annotation#getDetails <em>Details</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the map '<em>Details</em>'.
    * @see org.eclipse.emf.cdo.etypes.Annotation#getDetails()
    * @see #getAnnotation()
@@ -239,7 +243,7 @@ public interface EtypesPackage extends EPackage
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.etypes.Annotation#getModelElement
    * <em>Model Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Model Element</em>'.
    * @see org.eclipse.emf.cdo.etypes.Annotation#getModelElement()
    * @see #getAnnotation()
@@ -251,7 +255,7 @@ public interface EtypesPackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.etypes.Annotation#getContents <em>Contents</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Contents</em>'.
    * @see org.eclipse.emf.cdo.etypes.Annotation#getContents()
    * @see #getAnnotation()
@@ -262,7 +266,7 @@ public interface EtypesPackage extends EPackage
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.etypes.Annotation#getReferences
    * <em>References</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>References</em>'.
    * @see org.eclipse.emf.cdo.etypes.Annotation#getReferences()
    * @see #getAnnotation()
@@ -273,7 +277,7 @@ public interface EtypesPackage extends EPackage
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.lob.CDOBlob <em>Blob</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for data type '<em>Blob</em>'.
    * @see org.eclipse.emf.cdo.common.lob.CDOBlob
    * @model instanceClass="org.eclipse.emf.cdo.common.lob.CDOBlob"
@@ -284,7 +288,7 @@ public interface EtypesPackage extends EPackage
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.lob.CDOClob <em>Clob</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for data type '<em>Clob</em>'.
    * @see org.eclipse.emf.cdo.common.lob.CDOClob
    * @model instanceClass="org.eclipse.emf.cdo.common.lob.CDOClob"
@@ -295,7 +299,7 @@ public interface EtypesPackage extends EPackage
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.lob.CDOLob <em>Lob</em>}'. <!--
    * begin-user-doc -->
-   * 
+   *
    * @since 4.1<!-- end-user-doc -->
    * @return the meta object for data type '<em>Lob</em>'.
    * @see org.eclipse.emf.cdo.common.lob.CDOLob
@@ -306,7 +310,7 @@ public interface EtypesPackage extends EPackage
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -320,7 +324,7 @@ public interface EtypesPackage extends EPackage
    * <li>each enum,</li>
    * <li>and each data type</li>
    * </ul>
-   * 
+   *
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
    * @generated
@@ -330,7 +334,7 @@ public interface EtypesPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.etypes.impl.ModelElementImpl <em>Model Element</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.etypes.impl.ModelElementImpl
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getModelElement()
      * @generated
@@ -340,7 +344,7 @@ public interface EtypesPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference MODEL_ELEMENT__ANNOTATIONS = eINSTANCE.getModelElement_Annotations();
@@ -348,7 +352,7 @@ public interface EtypesPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl <em>Annotation</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.etypes.impl.AnnotationImpl
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getAnnotation()
      * @generated
@@ -358,7 +362,7 @@ public interface EtypesPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Source</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute ANNOTATION__SOURCE = eINSTANCE.getAnnotation_Source();
@@ -366,7 +370,7 @@ public interface EtypesPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Details</b></em>' map feature. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated
      */
     EReference ANNOTATION__DETAILS = eINSTANCE.getAnnotation_Details();
@@ -374,7 +378,7 @@ public interface EtypesPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Model Element</b></em>' container reference feature. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference ANNOTATION__MODEL_ELEMENT = eINSTANCE.getAnnotation_ModelElement();
@@ -382,7 +386,7 @@ public interface EtypesPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Contents</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference ANNOTATION__CONTENTS = eINSTANCE.getAnnotation_Contents();
@@ -390,14 +394,14 @@ public interface EtypesPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>References</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference ANNOTATION__REFERENCES = eINSTANCE.getAnnotation_References();
 
     /**
      * The meta object literal for the '<em>Blob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.common.lob.CDOBlob
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
      * @generated
@@ -406,7 +410,7 @@ public interface EtypesPackage extends EPackage
 
     /**
      * The meta object literal for the '<em>Clob</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.common.lob.CDOClob
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClob()
      * @generated
@@ -415,7 +419,7 @@ public interface EtypesPackage extends EPackage
 
     /**
      * The meta object literal for the '<em>Lob</em>' data type. <!-- begin-user-doc -->
-     * 
+     *
      * @since 4.1<!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.common.lob.CDOLob
      * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getLob()

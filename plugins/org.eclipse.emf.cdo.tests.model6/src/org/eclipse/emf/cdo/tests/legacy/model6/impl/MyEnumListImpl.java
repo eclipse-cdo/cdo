@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.legacy.model6.impl;
 
@@ -150,7 +158,9 @@ public class MyEnumListImpl extends EObjectImpl implements MyEnumList
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (myEnum: ");
@@ -159,4 +169,4 @@ public class MyEnumListImpl extends EObjectImpl implements MyEnumList
     return result.toString();
   }
 
-} //MyEnumListImpl
+} // MyEnumListImpl

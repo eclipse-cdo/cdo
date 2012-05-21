@@ -1,10 +1,10 @@
-/**
+/*
  * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -41,7 +41,7 @@ import java.io.IOException;
  * <li>When importing changes through a Push Transaction, features of non committed new elements are correctly set. See
  * Bug 359966: [Legacy] Issues when trying to import changes from PushTransaction in legacy mode</li>
  * </ul>
- * 
+ *
  * @author Alex Lagarde
  */
 public class Bugzilla_359966_Test extends AbstractCDOTest
@@ -109,7 +109,7 @@ public class Bugzilla_359966_Test extends AbstractCDOTest
 
   /**
    * Creates a Push Transaction with the given options.
-   * 
+   *
    * @param fileForStoringChanges
    *          the file that CDOPushTransaction should use to store changes (can be null)
    * @param reconstructSavePoints

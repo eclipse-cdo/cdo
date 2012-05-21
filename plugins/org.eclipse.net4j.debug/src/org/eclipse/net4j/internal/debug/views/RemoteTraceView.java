@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004 - 2010 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -175,8 +175,8 @@ public class RemoteTraceView extends ViewPart
 
     clearAction.setText(Messages.getString("RemoteTraceView.9")); //$NON-NLS-1$
     clearAction.setToolTipText(Messages.getString("RemoteTraceView.10")); //$NON-NLS-1$
-    clearAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
-        ISharedImages.IMG_TOOL_DELETE));
+    clearAction.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages()
+        .getImageDescriptor(ISharedImages.IMG_TOOL_DELETE));
 
     doubleClickAction = new Action()
     {

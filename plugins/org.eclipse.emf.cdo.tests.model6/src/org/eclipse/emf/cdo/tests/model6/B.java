@@ -1,10 +1,10 @@
-/**
+/*
  * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -31,7 +31,7 @@ public interface B extends EObject
   /**
    * Returns the value of the '<em><b>Owned C</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * --> <!-- begin-model-doc --> The style of the node. <!-- end-model-doc -->
-   * 
+   *
    * @return the value of the '<em>Owned C</em>' containment reference.
    * @see #setOwnedC(C)
    * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getB_OwnedC()

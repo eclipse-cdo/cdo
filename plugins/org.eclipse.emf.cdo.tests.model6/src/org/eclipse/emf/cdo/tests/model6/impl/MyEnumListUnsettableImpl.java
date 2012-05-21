@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.model6.impl;
 
@@ -89,4 +97,4 @@ public class MyEnumListUnsettableImpl extends CDOObjectImpl implements MyEnumLis
     return eIsSet(Model6Package.Literals.MY_ENUM_LIST_UNSETTABLE__MY_ENUM);
   }
 
-} //MyEnumListUnsettableImpl
+} // MyEnumListUnsettableImpl

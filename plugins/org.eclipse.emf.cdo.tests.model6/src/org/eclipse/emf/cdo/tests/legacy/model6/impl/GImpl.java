@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.legacy.model6.impl;
 
@@ -148,7 +156,9 @@ public class GImpl extends EObjectImpl implements G
     String oldDummy = dummy;
     dummy = newDummy;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.G__DUMMY, oldDummy, dummy));
+    }
   }
 
   /**
@@ -165,7 +175,9 @@ public class GImpl extends EObjectImpl implements G
       if (reference != oldReference)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model6Package.G__REFERENCE, oldReference, reference));
+        }
       }
     }
     return reference;
@@ -191,7 +203,9 @@ public class GImpl extends EObjectImpl implements G
     BaseObject oldReference = reference;
     reference = newReference;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.G__REFERENCE, oldReference, reference));
+    }
   }
 
   /**
@@ -252,7 +266,9 @@ public class GImpl extends EObjectImpl implements G
       return getDummy();
     case Model6Package.G__REFERENCE:
       if (resolve)
+      {
         return getReference();
+      }
       return basicGetReference();
     case Model6Package.G__LIST:
       return getList();
@@ -337,7 +353,9 @@ public class GImpl extends EObjectImpl implements G
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (dummy: ");

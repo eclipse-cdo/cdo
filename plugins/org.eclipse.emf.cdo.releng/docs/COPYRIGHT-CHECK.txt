@@ -1,0 +1,5 @@
+Stepper@ACER ~/cdo/plugins (master)
+
+find . -name '*.java' -exec grep -L -F 'Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.' {} \; > java-missing.txt
+
+for f in `find . -name '*.java'`; do head -1 $f | grep -q -F '/**' && echo $f; done > java-wrong.txt

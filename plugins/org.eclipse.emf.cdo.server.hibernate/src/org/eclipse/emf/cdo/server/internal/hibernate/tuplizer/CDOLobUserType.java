@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLob;
 
 import org.eclipse.net4j.util.HexUtil;
 
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
@@ -75,11 +76,12 @@ public abstract class CDOLobUserType implements UserType, ParameterizedType
     return x.equals(y);
   }
 
-  public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
+  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner)
+      throws SQLException
   {
     try
     {
-      final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[0]);
+      final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[0], sessionImplementor);
       if (rs.wasNull())
       {
         return null;
@@ -93,7 +95,8 @@ public abstract class CDOLobUserType implements UserType, ParameterizedType
     }
   }
 
-  public void nullSafeSet(PreparedStatement statement, Object value, int index) throws SQLException
+  public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor sessionImplementor)
+      throws SQLException
   {
     try
     {

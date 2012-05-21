@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.proxy.AbstractLazyInitializer;
 
 import java.io.Serializable;

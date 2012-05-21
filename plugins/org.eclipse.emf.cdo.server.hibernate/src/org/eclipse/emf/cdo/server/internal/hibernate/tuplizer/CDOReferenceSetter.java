@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
 import org.hibernate.HibernateException;
-import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 
 /**
  * @author Martin Taal

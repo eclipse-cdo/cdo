@@ -39,8 +39,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-import org.hibernate.event.MergeEventListener;
+import org.hibernate.event.service.spi.EventListenerRegistry;
+import org.hibernate.event.spi.EventType;
+import org.hibernate.internal.SessionFactoryImpl;
 import org.hibernate.mapping.PersistentClass;
+import org.hibernate.service.ServiceRegistry;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.type.StandardBasicTypes;
 
@@ -232,6 +235,7 @@ public class HibernateStore extends Store implements IHibernateStore
     return hibernateConfiguration;
   }
 
+  @SuppressWarnings("deprecation")
   public synchronized SessionFactory getHibernateSessionFactory()
   {
     if (hibernateSessionFactory == null)
@@ -254,6 +258,9 @@ public class HibernateStore extends Store implements IHibernateStore
         // this has to be done before the classmapping is iterated
         // otherwise it is not initialized
         hibernateSessionFactory = hibernateConfiguration.buildSessionFactory();
+        ServiceRegistry serviceRegistry = ((SessionFactoryImpl)hibernateSessionFactory).getServiceRegistry();
+        final EventListenerRegistry eventListenerRegistry = serviceRegistry.getService(EventListenerRegistry.class);
+        eventListenerRegistry.setListeners(EventType.MERGE, new CDOMergeEventListener());
 
         final Iterator<?> iterator = hibernateConfiguration.getClassMappings();
         while (iterator.hasNext())
@@ -522,9 +529,6 @@ public class HibernateStore extends Store implements IHibernateStore
       in = OM.BUNDLE.getInputStream(RESOURCE_HBM_PATH);
       hibernateConfiguration.addInputStream(in);
       hibernateConfiguration.setInterceptor(new CDOInterceptor());
-
-      hibernateConfiguration.getEventListeners().setMergeEventListeners(
-          new MergeEventListener[] { new CDOMergeEventListener() });
 
       // make a local copy as it is adapted in the next if-statement
       // and we want to keep the original one untouched, if not

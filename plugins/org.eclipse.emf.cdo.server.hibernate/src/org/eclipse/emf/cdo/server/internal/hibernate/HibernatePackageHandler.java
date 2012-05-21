@@ -48,7 +48,7 @@ import java.util.Properties;
  * Delegate which stores and retrieves cdo packages.
  * <p>
  * TODO extend {@link Lifecycle}. See {@link #doActivate()} and {@link #doDeactivate()}.
- * 
+ *
  * @author Eike Stepper
  * @author Martin Taal
  */
@@ -92,7 +92,7 @@ public class HibernatePackageHandler extends Lifecycle
         {
           final String rootNSUri = packageUnit.getTopLevelPackageInfo().getPackageURI();
           final EPackage rootEPackage = registry.getEPackage(rootNSUri);
-          hbPackageUnitDTO.setEPackageByteArray(EMFUtil.getEPackageBytes(rootEPackage, true, registry));
+          hbPackageUnitDTO.setEPackageByteArray(session, EMFUtil.getEPackageBytes(rootEPackage, true, registry));
         }
 
         if (session.get(CDO_PACKAGE_UNIT_ENTITY_NAME, hbPackageUnitDTO.getNsUri()) == null)
@@ -279,6 +279,7 @@ public class HibernatePackageHandler extends Lifecycle
     }
   }
 
+  @SuppressWarnings("deprecation")
   public synchronized SessionFactory getSessionFactory()
   {
     if (sessionFactory == null)

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.net4j.util.WrappedException;
 
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.usertype.UserType;
 
@@ -77,9 +78,10 @@ public class CDOIDAnyUserType implements UserType
     return x.equals(y);
   }
 
-  public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws SQLException
+  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner)
+      throws SQLException
   {
-    final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[0]);
+    final String value = StandardBasicTypes.STRING.nullSafeGet(rs, names[0], sessionImplementor);
     if (rs.wasNull())
     {
       return null;
@@ -94,7 +96,8 @@ public class CDOIDAnyUserType implements UserType
     return id;
   }
 
-  public void nullSafeSet(PreparedStatement statement, Object value, int index) throws SQLException
+  public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor sessionImplementor)
+      throws SQLException
   {
     if (value == null || value instanceof CDOID && ((CDOID)value).isNull())
     {

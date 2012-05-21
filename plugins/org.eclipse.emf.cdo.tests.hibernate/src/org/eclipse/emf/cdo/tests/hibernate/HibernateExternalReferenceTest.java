@@ -45,6 +45,12 @@ public class HibernateExternalReferenceTest extends ExternalReferenceTest
   }
 
   @Override
+  public void testOneXMIResourceManyViewsOnOneResourceSet()
+  {
+
+  }
+
+  @Override
   protected void doSetUp() throws Exception
   {
     final IRepositoryConfig repConfig = getRepositoryConfig();

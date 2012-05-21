@@ -179,7 +179,7 @@
 		<!-- TENEO -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false"
 			resolutionFilter="(resolve.target.platform=true)">
-			<rm:uri format="{0}/modeling/emf/teneo/updates/1.2.0/interim">
+			<rm:uri format="{0}/modeling/emf/teneo/updates/2.0.0/interim">
 				<bc:propertyRef key="eclipse.downloads"/>
 			</rm:uri>
 		</rm:provider>
@@ -190,7 +190,7 @@
 			<!-- ############################################################### -->
 			<!-- ## Do not forget to adjust hibernate feature.properties (3x) ## -->
 			<!-- ############################################################### -->
-			<rm:uri format="http://www.elver.org/eclipse/update"/>
+			<rm:uri format="http://www.elver.org/eclipse/2.0.0/update"/>
 		</rm:provider>
 
 		<!-- SF.NET -->

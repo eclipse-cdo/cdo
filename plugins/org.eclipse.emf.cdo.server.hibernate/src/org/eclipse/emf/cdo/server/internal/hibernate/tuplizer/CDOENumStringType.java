@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
 
@@ -134,7 +135,8 @@ public class CDOENumStringType implements UserType, ParameterizedType
    * (non-Javadoc)
    * @see org.hibernate.usertype.UserType#nullSafeGet(java.sql.ResultSet, java.lang.String[], java.lang.Object)
    */
-  public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws HibernateException, SQLException
+  public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor sessionImplementor, Object owner)
+      throws HibernateException, SQLException
   {
     final String literal = rs.getString(names[0]);
     if (rs.wasNull())
@@ -163,7 +165,8 @@ public class CDOENumStringType implements UserType, ParameterizedType
    * (non-Javadoc)
    * @see org.hibernate.usertype.UserType#nullSafeSet(java.sql.PreparedStatement, java.lang.Object, int)
    */
-  public void nullSafeSet(PreparedStatement st, Object value, int index) throws HibernateException, SQLException
+  public void nullSafeSet(PreparedStatement st, Object value, int index, SessionImplementor sessionImplementor)
+      throws HibernateException, SQLException
   {
     if (value == null)
     {

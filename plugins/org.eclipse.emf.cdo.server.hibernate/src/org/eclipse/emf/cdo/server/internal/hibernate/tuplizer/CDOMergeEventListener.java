@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
-import org.hibernate.engine.SessionImplementor;
-import org.hibernate.event.def.DefaultMergeEventListener;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.event.internal.DefaultMergeEventListener;
 import org.hibernate.persister.entity.EntityPersister;
 
 import java.util.Map;

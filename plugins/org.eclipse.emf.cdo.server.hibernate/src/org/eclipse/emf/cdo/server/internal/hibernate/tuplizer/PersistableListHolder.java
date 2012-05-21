@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import org.hibernate.collection.PersistentCollection;
+import org.hibernate.collection.spi.PersistentCollection;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -66,7 +66,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.hibernate.Criteria;
 import org.hibernate.FlushMode;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
@@ -973,7 +972,6 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     }
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
@@ -986,14 +984,13 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       // deprecated usage, non-deprecated api uses a session
       // TODO: research which session to use
-      lob.setBlob(Hibernate.createBlob(inputStream, (int)size));
+      lob.setBlob(getHibernateSession().getLobHelper().createBlob(inputStream, (int)size));
       lob.setSize((int)size);
       lob.setClob(null);
       getHibernateSession().saveOrUpdate(lob);
     }
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
@@ -1006,7 +1003,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     {
       // deprecated usage, non-deprecated api uses a session
       // TODO: research which session to use
-      lob.setClob(Hibernate.createClob(reader, (int)size));
+      lob.setClob(getHibernateSession().getLobHelper().createClob(reader, (int)size));
       lob.setSize((int)size);
       lob.setBlob(null);
       getHibernateSession().saveOrUpdate(lob);

@@ -12,8 +12,7 @@ package org.eclipse.emf.cdo.tests.db.capabilities;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnectionProvider;
-
-import org.hsqldb.jdbc.jdbcDataSource;
+import org.eclipse.net4j.db.hsqldb.HSQLDBDataSource;
 
 /**
  * @author Stefan Winkler
@@ -25,7 +24,7 @@ public class HsqlTest extends AbstractCapabilityTest
   public HsqlTest()
   {
     super("hsqldb");
-    jdbcDataSource hsqlds = new jdbcDataSource();
+    HSQLDBDataSource hsqlds = new HSQLDBDataSource();
     hsqlds.setDatabase("jdbc:hsqldb:file:c:/temp/hsql_test");
     hsqlds.setUser("sa");
 

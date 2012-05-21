@@ -31,9 +31,11 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.hibernate.EntityMode;
 import org.hibernate.EntityNameResolver;
 import org.hibernate.HibernateException;
-import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
+import org.hibernate.metamodel.binding.AttributeBinding;
+import org.hibernate.metamodel.binding.EntityBinding;
 import org.hibernate.property.Getter;
 import org.hibernate.property.Setter;
 import org.hibernate.proxy.ProxyFactory;
@@ -350,5 +352,29 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     {
       eAnnotation.getDetails().put(HibernateStore.ID_TYPE_EANNOTATION_KEY, prop.getType().getName());
     }
+  }
+
+  @Override
+  protected Instantiator buildInstantiator(EntityBinding arg0)
+  {
+    return null;
+  }
+
+  @Override
+  protected Getter buildPropertyGetter(AttributeBinding arg0)
+  {
+    return null;
+  }
+
+  @Override
+  protected Setter buildPropertySetter(AttributeBinding arg0)
+  {
+    return null;
+  }
+
+  @Override
+  protected ProxyFactory buildProxyFactory(EntityBinding arg0, Getter arg1, Setter arg2)
+  {
+    return null;
   }
 }

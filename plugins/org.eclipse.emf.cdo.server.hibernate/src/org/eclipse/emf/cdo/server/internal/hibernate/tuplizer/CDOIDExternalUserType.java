@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.internal.hibernate.HibernateUtil;
 
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
 
@@ -74,7 +75,8 @@ public class CDOIDExternalUserType implements UserType, ParameterizedType
     return x.equals(y);
   }
 
-  public Object nullSafeGet(ResultSet resultSet, String[] names, Object owner) throws SQLException
+  public Object nullSafeGet(ResultSet resultSet, String[] names, SessionImplementor sessionImplementor, Object owner)
+      throws SQLException
   {
     final String data = resultSet.getString(names[0]);
     if (data == null)
@@ -85,7 +87,8 @@ public class CDOIDExternalUserType implements UserType, ParameterizedType
     return CDOIDUtil.createExternal(data);
   }
 
-  public void nullSafeSet(PreparedStatement statement, Object value, int index) throws SQLException
+  public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor sessionImplementor)
+      throws SQLException
   {
     if (value == null)
     {

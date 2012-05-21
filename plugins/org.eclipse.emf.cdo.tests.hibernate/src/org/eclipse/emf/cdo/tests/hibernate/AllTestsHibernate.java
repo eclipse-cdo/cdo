@@ -96,11 +96,11 @@ public class AllTestsHibernate extends AllConfigs
     testClasses.add(HibernateTimeStampTest.class);
     testClasses.add(Hibernate_Bugzilla_279982_Test.class);
     testClasses.add(Hibernate_ContainmentTest.class);
-    testClasses.add(HibernateXATransactionTest.class);
+    // removed stalls
+    // testClasses.add(HibernateXATransactionTest.class);
     testClasses.add(Hibernate_Bugzilla_308895_Test.class);
     testClasses.add(HibernateExternalAnnotationTest.class);
     testClasses.add(HibernateMultiValuedOfAttributeTest.class);
-    testClasses.add(HibernateXATransactionTest.class);
     testClasses.add(HibernateExternalReferenceTest.class);
     testClasses.add(HibernateQueryTest.class);
     testClasses.add(HibernateQueryNoCachingTest.class);

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.server.hibernate.teneo;singleton:=true
-Bundle-Version: 3.0.200.qualifier
+Bundle-Version: 4.1.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -13,17 +13,17 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.cdo.server;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.common;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.server.hibernate;bundle-version="[4.0.0,5.0.0)"
-Import-Package: org.eclipse.emf.teneo;version="[1.1.2,2.0.0)",
- org.eclipse.emf.teneo.annotations.mapper;version="[1.1.2,2.0.0)",
- org.eclipse.emf.teneo.annotations.pamodel;version="[1.1.2,2.0.0)",
- org.eclipse.emf.teneo.annotations.pannotation;version="[1.1.2,2.0.0)",
- org.eclipse.emf.teneo.annotations.xml;version="[1.1.2,2.0.0)",
- org.eclipse.emf.teneo.extension;version="[1.1.2,2.0.0)",
- org.eclipse.emf.teneo.hibernate.annotations;version="[1.1.2,2.0.0)",
- org.eclipse.emf.teneo.hibernate.mapper;version="[1.1.2,2.0.0)",
- org.eclipse.emf.teneo.simpledom;version="[1.1.2,2.0.0)"
-Export-Package: org.eclipse.emf.cdo.server.hibernate.internal.teneo;version="3.0.200";x-friends:="org.eclipse.emf.cdo.tests.hibernate",
- org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle;version="3.0.200";x-friends:="org.eclipse.emf.cdo.tests.hibernate",
- org.eclipse.emf.cdo.server.hibernate.teneo;version="3.0.200"
+Import-Package: org.eclipse.emf.teneo;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.teneo.annotations.mapper;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.teneo.annotations.pamodel;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.teneo.annotations.pannotation;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.teneo.annotations.xml;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.teneo.extension;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.teneo.hibernate.annotations;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.teneo.hibernate.mapper;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.teneo.simpledom;version="[2.0.0,3.0.0)"
+Export-Package: org.eclipse.emf.cdo.server.hibernate.internal.teneo;version="4.1.0";x-friends:="org.eclipse.emf.cdo.tests.hibernate",
+ org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle;version="4.1.0";x-friends:="org.eclipse.emf.cdo.tests.hibernate",
+ org.eclipse.emf.cdo.server.hibernate.teneo;version="4.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.emf.cdo.server.hibernate.internal.teneo.bundle.OM$Activator

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.net4j.db.hsqldb" version="2">
+    <resource path="src/org/eclipse/net4j/db/hsqldb/HSQLDBDataSource.java" type="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource">
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.db.hsqldb.HSQLDBDataSource"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

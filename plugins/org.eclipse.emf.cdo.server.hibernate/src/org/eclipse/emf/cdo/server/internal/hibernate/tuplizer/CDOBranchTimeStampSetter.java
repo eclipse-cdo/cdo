@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.server.internal.hibernate.CDOHibernateBranchPointImpl
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
-import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 
 /**
  * Sets the time stamp information in the revision.

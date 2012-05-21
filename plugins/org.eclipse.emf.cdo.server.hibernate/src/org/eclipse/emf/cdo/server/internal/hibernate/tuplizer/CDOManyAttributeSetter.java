@@ -14,8 +14,8 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.hibernate.HibernateException;
-import org.hibernate.collection.PersistentCollection;
-import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.collection.spi.PersistentCollection;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 
 import java.util.List;
 

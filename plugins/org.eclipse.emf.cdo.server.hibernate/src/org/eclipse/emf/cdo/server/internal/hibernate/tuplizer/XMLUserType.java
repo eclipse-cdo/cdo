@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.UserType;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -150,8 +151,8 @@ public class XMLUserType implements UserType
     return "String"; //$NON-NLS-1$ 
   }
 
-  public Object nullSafeGet(ResultSet arg0, java.lang.String[] arg1, Object arg2) throws HibernateException,
-      SQLException
+  public Object nullSafeGet(ResultSet arg0, java.lang.String[] arg1, SessionImplementor sessionImplementor, Object arg2)
+      throws HibernateException, SQLException
   {
     final Object value = arg0.getObject(arg1[0]);
     if (arg0.wasNull())
@@ -162,7 +163,8 @@ public class XMLUserType implements UserType
     return convertToString(value);
   }
 
-  public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2) throws HibernateException, SQLException
+  public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2, SessionImplementor sessionImplementor)
+      throws HibernateException, SQLException
   {
     if (arg1 == null)
     {

@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
 
 import org.hibernate.HibernateException;
 import org.hibernate.PropertyNotFoundException;
-import org.hibernate.engine.SessionFactoryImplementor;
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.property.Getter;
 import org.hibernate.property.PropertyAccessor;
 import org.hibernate.property.Setter;

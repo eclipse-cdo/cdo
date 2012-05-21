@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
 
-import org.hibernate.Hibernate;
+import org.hibernate.Session;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -41,6 +41,8 @@ public class HibernateCDOPackageUnitDTO
   private InternalCDOPackageInfo[] packageInfos;
 
   private byte[] ePackageByteArray;
+
+  private Blob ePackageBlob;
 
   public HibernateCDOPackageUnitDTO()
   {
@@ -88,9 +90,10 @@ public class HibernateCDOPackageUnitDTO
     return ePackageByteArray;
   }
 
-  public void setEPackageByteArray(byte[] ePackageByteArray)
+  public void setEPackageByteArray(Session session, byte[] ePackageByteArray)
   {
     this.ePackageByteArray = ePackageByteArray;
+    ePackageBlob = session.getLobHelper().createBlob(ePackageByteArray);
   }
 
   public void setEPackageBlob(Blob ePackageBlob)
@@ -127,12 +130,13 @@ public class HibernateCDOPackageUnitDTO
     }
   }
 
-  @SuppressWarnings("deprecation")
+  /**
+   * NOTE: should not be called directly only by Hibernate when persisting
+   * use {@link #setEPackageByteArray(Session, byte[])}
+   */
   public Blob getEPackageBlob()
   {
-    // deprecated usage, non-deprecated api uses a session
-    // TODO: research which session to use
-    return Hibernate.createBlob(getEPackageByteArray());
+    return ePackageBlob;
   }
 
   public InternalCDOPackageUnit createCDOPackageUnit(InternalCDOPackageRegistry packageRegistry)

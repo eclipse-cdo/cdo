@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate.tuplizer;
 
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.id.UUIDHexGenerator;
 import org.hibernate.persister.entity.EntityPersister;
 

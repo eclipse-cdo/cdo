@@ -12,7 +12,7 @@
 
 package org.eclipse.emf.cdo.examples.hibernate.server;
 
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.id.UUIDHexGenerator;
 import org.hibernate.persister.entity.EntityPersister;
 

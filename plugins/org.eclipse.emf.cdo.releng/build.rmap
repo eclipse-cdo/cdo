@@ -6,7 +6,7 @@
 
 	<rm:property key="platform.version" mutable="true" value="3.8"/>
 	<rm:property key="emf.version" mutable="true" value="2.8"/>
-	<rm:property key="orbit.version" mutable="true" value="S20120516174413"/>
+	<rm:property key="orbit.version" mutable="true" value="S20120519125550"/>
 
 	<rm:property key="git.clone" mutable="true" value="${user.home}/git/cdo"/>
 	<rm:property key="eclipse.downloads" mutable="true" value="http://download.eclipse.org"/>

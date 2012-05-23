@@ -37,9 +37,16 @@ Class description missing: org.eclipse.emf.cdo.server.ocl.CDOExtentMap.class(CDO
 Class description missing: org.eclipse.emf.cdo.server.ocl.OCLExtentCreator.class(OCLExtentCreator.java:22)
 Class description missing: org.eclipse.emf.cdo.server.ocl.OCLQueryHandler$Factory.class(OCLQueryHandler.java:369)
 Class description missing: org.eclipse.emf.cdo.server.ocl.OCLQueryHandler.class(OCLQueryHandler.java:70)
+Class description missing: org.eclipse.emf.cdo.team.IRepositoryManager.class(IRepositoryManager.java:20)
+Class description missing: org.eclipse.emf.cdo.team.IRepositoryProject.class(IRepositoryProject.java:21)
 Class description missing: org.eclipse.emf.cdo.transaction.CDOPostEventTransactionHandler$Default.class(CDOPostEventTransactionHandler.java:97)
 Class description missing: org.eclipse.emf.cdo.transaction.CDOPostEventTransactionHandler.class(CDOPostEventTransactionHandler.java:28)
 Class description missing: org.eclipse.emf.cdo.util.CDOBalancedTree.class(CDOBalancedTree.java:30)
 Class description missing: org.eclipse.emf.cdo.view.CDOView$Options$FeatureAnalyzerEvent.class(CDOView.java:800)
+Class description missing: org.eclipse.emf.cdo.workspace.CDOWorkspace$DirtyStateChangedEvent.class(CDOWorkspace.java:81)
+Class description missing: org.eclipse.emf.cdo.workspace.efs.CDOFS.class(CDOFS.java:55)
 Class description missing: org.eclipse.emf.internal.cdo.CDOObjectImpl$CDOStoreEcoreEMap.class(CDOObjectImpl.java:1306)
 Class description missing: org.eclipse.emf.internal.cdo.CDOObjectImpl$CDOStoreUnorderedEList.class(CDOObjectImpl.java:1435)
+Package description missing: org.eclipse.emf.cdo.team
+Package description missing: org.eclipse.emf.cdo.workspace
+Package description missing: org.eclipse.emf.cdo.workspace.efs

@@ -27,12 +27,21 @@
   <article:Plugin name="org.eclipse.emf.cdo.net4j" label="CDO Model Repository Client Net4j Support">
     <packages name="org.eclipse.emf.cdo.net4j"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.team" label="CDO Model Repository Client Team Support">
+    <packages name="org.eclipse.emf.cdo.team"/>
+  </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.ui" label="CDO Model Repository Client UI">
     <packages name="org.eclipse.emf.cdo.ui"/>
     <packages name="org.eclipse.emf.cdo.ui.widgets"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.ui.ide" label="CDO Model Repository Client UI IDE">
     <packages name="org.eclipse.emf.cdo.ui.ide"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.workspace" label="CDO Model Repository Client Workspace">
+    <packages name="org.eclipse.emf.cdo.workspace"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.workspace.efs" label="CDO Model Repository Client Workspace EFS">
+    <packages name="org.eclipse.emf.cdo.workspace.efs"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.common" label="CDO Model Repository Common">
     <packages name="org.eclipse.emf.cdo.common"/>

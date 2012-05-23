@@ -105,6 +105,10 @@ Packages that use <A HREF="../../../../../org/eclipse/emf/cdo/transaction/packag
 <TD><A HREF="#org.eclipse.emf.cdo.util"><B>org.eclipse.emf.cdo.util</B></A></TD>
 <TD>Client utility classes, some common interfaces and exceptions.&nbsp;</TD>
 </TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><A HREF="#org.eclipse.emf.cdo.workspace"><B>org.eclipse.emf.cdo.workspace</B></A></TD>
+<TD>&nbsp;&nbsp;</TD>
+</TR>
 </TABLE>
 &nbsp;
 <P>
@@ -287,6 +291,28 @@ Classes in <A HREF="../../../../../org/eclipse/emf/cdo/transaction/package-summa
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A distributed (XA) transaction that can atomically commit the changes to multiple <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><CODE>resource sets</CODE></A>,
  each represented by a registered <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view set</CODE></A>.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+<A NAME="org.eclipse.emf.cdo.workspace"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+Classes in <A HREF="../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</A> used by <A HREF="../../../../../org/eclipse/emf/cdo/workspace/package-summary.html">org.eclipse.emf.cdo.workspace</A></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOMerger.html#org.eclipse.emf.cdo.workspace"><B>CDOMerger</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Calculates the changes between a source <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set</CODE></A> and a target <A HREF="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><CODE>change set</CODE></A>
+ and returns the result relative to their common ancestor.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/class-use/CDOTransaction.html#org.eclipse.emf.cdo.workspace"><B>CDOTransaction</B></A></B>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A read-write view to the <em>current</em> (i.e. latest) state of the object graph in the repository.</TD>
 </TR>
 </TABLE>
 &nbsp;

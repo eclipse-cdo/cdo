@@ -40,12 +40,21 @@
       <topic label="CDO Model Repository Client Net4j Support" href="javadoc/org/eclipse/emf/cdo/net4j/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.net4j" href="javadoc/org/eclipse/emf/cdo/net4j/package-summary.html" icon="package" />
       </topic>
+      <topic label="CDO Model Repository Client Team Support" href="javadoc/org/eclipse/emf/cdo/team/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.team" href="javadoc/org/eclipse/emf/cdo/team/package-summary.html" icon="package" />
+      </topic>
       <topic label="CDO Model Repository Client UI" href="javadoc/org/eclipse/emf/cdo/ui/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.ui" href="javadoc/org/eclipse/emf/cdo/ui/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.ui.widgets" href="javadoc/org/eclipse/emf/cdo/ui/widgets/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Client UI IDE" href="javadoc/org/eclipse/emf/cdo/ui/ide/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.ui.ide" href="javadoc/org/eclipse/emf/cdo/ui/ide/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Client Workspace" href="javadoc/org/eclipse/emf/cdo/workspace/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.workspace" href="javadoc/org/eclipse/emf/cdo/workspace/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Client Workspace EFS" href="javadoc/org/eclipse/emf/cdo/workspace/efs/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.workspace.efs" href="javadoc/org/eclipse/emf/cdo/workspace/efs/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Common" href="javadoc/org/eclipse/emf/cdo/common/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.common" href="javadoc/org/eclipse/emf/cdo/common/package-summary.html" icon="package" />

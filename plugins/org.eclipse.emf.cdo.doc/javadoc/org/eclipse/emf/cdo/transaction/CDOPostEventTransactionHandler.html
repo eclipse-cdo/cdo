@@ -1,0 +1,591 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--NewPage-->
+<HTML>
+<HEAD>
+
+<TITLE>
+CDOPostEventTransactionHandler (CDO Model Repository Documentation)
+</TITLE>
+
+<META NAME="date" CONTENT="">
+
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
+<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="CDOPostEventTransactionHandler (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT>
+</NOSCRIPT>
+
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<HR>
+
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<A NAME="navbar_top"><!-- --></A>
+<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_top_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOPostEventTransactionHandler.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html" title="class in org.eclipse.emf.cdo.transaction"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="CDOPostEventTransactionHandler.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_top"></A>
+<!-- ========= END OF TOP NAVBAR ========= -->
+
+<HR>
+<!-- ======== START OF CLASS DATA ======== -->
+<H2>
+<FONT SIZE="-1">
+org.eclipse.emf.cdo.transaction</FONT>
+<BR>
+Class CDOPostEventTransactionHandler</H2>
+<PRE>
+<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
+  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.emf.cdo.transaction.CDOPostEventTransactionHandler</B>
+</PRE>
+<DL>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</A>, <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandlerBase.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandlerBase</A></DD>
+</DL>
+<DL>
+<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html" title="class in org.eclipse.emf.cdo.transaction">CDOPostEventTransactionHandler.Default</A></DD>
+</DL>
+<HR>
+<DL>
+  <DT>public abstract class <B>CDOPostEventTransactionHandler</B>
+  <DD>extends <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A>
+  <DD>implements <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler</A>
+</DL>
+
+<map id="APIVIZ" name="APIVIZ">
+<area shape="rect" id="node1" href="CDOTransactionHandler.html" title="&#171;interface&#187; CDOTransactionHandler" alt="" coords="57,5,217,45"/>
+<area shape="rect" id="node2" href="CDOPostEventTransactionHandler.html" title="CDOPostEventTransactionHandler" alt="" coords="26,85,248,110"/>
+<area shape="rect" id="node3" href="CDOPostEventTransactionHandler.Default.html" title="CDOPostEventTransactionHandler.Default" alt="" coords="5,150,269,175"/>
+</map>
+
+<CENTER><IMG SRC="CDOPostEventTransactionHandler.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
+
+
+
+<P>
+<DL>
+<DT><B>Since:</B></DT>
+  <DD>4.1</DD>
+</DL>
+<HR>
+
+<P>
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+
+<A NAME="nested_class_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Nested Class Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>static&nbsp;class</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html" title="class in org.eclipse.emf.cdo.transaction">CDOPostEventTransactionHandler.Default</A></B></CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+<A NAME="constructor_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Constructor Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#CDOPostEventTransactionHandler()">CDOPostEventTransactionHandler</A></B>()</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="method_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
+<B>Method Summary</B></FONT></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#attachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">attachedObject</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+               <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
+               <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</A>&nbsp;msg)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called by a <code>CDOTransaction</code> <b>before</b> an object is added.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                     <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>&nbsp;commitContext)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called by a <code>CDOTransaction</code> <b>after</b> it is being committed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                      <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>&nbsp;commitContext)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called by a <code>CDOTransaction</code> <b>before</b> it is being committed.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">detachedObject</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+               <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
+               <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</A>&nbsp;msg)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called by a <code>CDOTransaction</code> <b>before</b> an object is detached.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>protected abstract &nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">modifiedObject</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+               <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
+               <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</A>&nbsp;msg)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
+                <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;featureDelta)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called by a <code>CDOTransaction</code> <b>before</b> an object is modified.</TD>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
+<CODE>&nbsp;void</CODE></FONT></TD>
+<TD><CODE><B><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">rolledBackTransaction</A></B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction)</CODE>
+
+<BR>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Called by a <code>CDOTransaction</code> <b>after</b> it is rolled back.</TD>
+</TR>
+</TABLE>
+&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
+<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
+</TR>
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
+</TR>
+</TABLE>
+&nbsp;
+<P>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+<A NAME="constructor_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Constructor Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="CDOPostEventTransactionHandler()"><!-- --></A><H3>
+CDOPostEventTransactionHandler</H3>
+<PRE>
+public <B>CDOPostEventTransactionHandler</B>()</PRE>
+<DL>
+</DL>
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<A NAME="method_detail"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
+<B>Method Detail</B></FONT></TH>
+</TR>
+</TABLE>
+
+<A NAME="attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)"><!-- --></A><H3>
+attachingObject</H3>
+<PRE>
+public void <B>attachingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                            <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">CDOTransactionHandler1</A></CODE></B></DD>
+<DD>Called by a <code>CDOTransaction</code> <b>before</b> an object is added. The implementor of this method is allowed
+ to throw an unchecked exception that will propagate up to the operation that is about to add the object (thereby
+ preventing the operation from successful completion).
+ <p>
+ <b>Note:</b> Implementors <b>must not</b> start threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> and wait for their
+ completion since deadlocks can result. The following example causes a deadlock:<br>
+ 
+ <pre>
+ getDisplay().syncExec(new Runnable()
+ {
+   public void run()
+   {
+     try
+     {
+       cdoObject.getName();
+     }
+     catch (Exception ignore)
+     {
+     }
+   }
+ });
+ </pre>
+ 
+ If you need to synchronously execute threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> you should use
+ <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOAsyncTransactionHandler</CODE></A>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><!-- --></A><H3>
+modifyingObject</H3>
+<PRE>
+public void <B>modifyingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                            <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
+                            <A HREF="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</A>&nbsp;featureDelta)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">CDOTransactionHandler1</A></CODE></B></DD>
+<DD>Called by a <code>CDOTransaction</code> <b>before</b> an object is modified. The implementor of this method is
+ allowed to throw an unchecked exception that will propagate up to the operation that is about to modify the object
+ (thereby preventing the operation from completing successfully).
+ <p>
+ <b>Note:</b> Implementors <b>must not</b> start threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> and wait for their
+ completion since deadlocks can result. The following example causes a deadlock:<br>
+ 
+ <pre>
+ getDisplay().syncExec(new Runnable()
+ {
+   public void run()
+   {
+     try
+     {
+       cdoObject.getName();
+     }
+     catch (Exception ignore)
+     {
+     }
+   }
+ });
+ </pre>
+ 
+ If you need to synchronously execute threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> you should use
+ <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOAsyncTransactionHandler</CODE></A>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)"><!-- --></A><H3>
+detachingObject</H3>
+<PRE>
+public void <B>detachingObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                            <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">CDOTransactionHandler1</A></CODE></B></DD>
+<DD>Called by a <code>CDOTransaction</code> <b>before</b> an object is detached. The implementor of this method is
+ allowed to throw an unchecked exception that will propagate up to the operation that is about to remove the object
+ (thereby preventing the operation from completing successfully).
+ <p>
+ <b>Note:</b> Implementors <b>must not</b> start threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> and wait for their
+ completion since deadlocks can result. The following example causes a deadlock:<br>
+ 
+ <pre>
+ getDisplay().syncExec(new Runnable()
+ {
+   public void run()
+   {
+     try
+     {
+       cdoObject.getName();
+     }
+     catch (Exception ignore)
+     {
+     }
+   }
+ });
+ </pre>
+ 
+ If you need to synchronously execute threads which access the <A HREF="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><CODE>view</CODE></A> you should use
+ <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction"><CODE>CDOAsyncTransactionHandler</CODE></A>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)"><!-- --></A><H3>
+committingTransaction</H3>
+<PRE>
+public void <B>committingTransaction</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                                  <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>&nbsp;commitContext)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">CDOTransactionHandler2</A></CODE></B></DD>
+<DD>Called by a <code>CDOTransaction</code> <b>before</b> it is being committed. The implementor of this method is
+ allowed to throw an unchecked exception that will propagate up to the operation that is about to commit the
+ transaction (thereby preventing the operation from completing successfully). The implementor of this method is
+ allowed to apply changes to the object graph managed by the transaction.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)"><!-- --></A><H3>
+committedTransaction</H3>
+<PRE>
+public void <B>committedTransaction</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                                 <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</A>&nbsp;commitContext)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">CDOTransactionHandler2</A></CODE></B></DD>
+<DD>Called by a <code>CDOTransaction</code> <b>after</b> it is being committed. The implementor of this method is
+ <b>not</b> allowed to throw an unchecked exception.
+ <p>
+ If you're interested in the results of the commit operation consider to implement
+ <A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext, org.eclipse.emf.cdo.common.commit.CDOCommitInfo)"><CODE>CDOTransactionHandler3.committedTransaction()</CODE></A>.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)"><!-- --></A><H3>
+rolledBackTransaction</H3>
+<PRE>
+public void <B>rolledBackTransaction</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction)</PRE>
+<DL>
+<DD><B>Description copied from interface: <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">CDOTransactionHandler2</A></CODE></B></DD>
+<DD>Called by a <code>CDOTransaction</code> <b>after</b> it is rolled back. If the implementor of this method throws an
+ exception it will be logged as an error and subsequent handlers will be further called.
+<P>
+<DD><DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">rolledBackTransaction</A></CODE> in interface <CODE><A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</A></CODE></DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="attachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)"><!-- --></A><H3>
+attachedObject</H3>
+<PRE>
+protected abstract void <B>attachedObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                                       <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
+                                       <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</A>&nbsp;msg)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)"><!-- --></A><H3>
+modifiedObject</H3>
+<PRE>
+protected abstract void <B>modifiedObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                                       <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
+                                       <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</A>&nbsp;msg)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<HR>
+
+<A NAME="detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)"><!-- --></A><H3>
+detachedObject</H3>
+<PRE>
+protected abstract void <B>detachedObject</B>(<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</A>&nbsp;transaction,
+                                       <A HREF="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</A>&nbsp;object,
+                                       <A HREF="http://download.eclipse.org/modeling/emf/emf/javadoc/2.7.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</A>&nbsp;msg)</PRE>
+<DL>
+<DD><DL>
+</DL>
+</DD>
+<DD><DL>
+</DL>
+</DD>
+</DL>
+<!-- ========= END OF CLASS DATA ========= -->
+<HR>
+
+
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<A NAME="navbar_bottom"><!-- --></A>
+<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
+<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
+<TR>
+<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
+<A NAME="navbar_bottom_firstrow"><!-- --></A>
+<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
+  <TR ALIGN="center" VALIGN="top">
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/CDOPostEventTransactionHandler.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
+  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
+  </TR>
+</TABLE>
+</TD>
+<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
+</EM>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html" title="class in org.eclipse.emf.cdo.transaction"><B>NEXT CLASS</B></A></FONT></TD>
+<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
+  <A HREF="../../../../../index.html?org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html" target="_top"><B>FRAMES</B></A>  &nbsp;
+&nbsp;<A HREF="CDOPostEventTransactionHandler.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
+&nbsp;<SCRIPT type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+  }
+  //-->
+</SCRIPT>
+<NOSCRIPT>
+  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
+</NOSCRIPT>
+
+
+</FONT></TD>
+</TR>
+<TR>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+  SUMMARY:&nbsp;<A HREF="#nested_class_summary">NESTED</A>&nbsp;|&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_summary">METHOD</A></FONT></TD>
+<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
+DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;<A HREF="#method_detail">METHOD</A></FONT></TD>
+</TR>
+</TABLE>
+<A NAME="skip-navbar_bottom"></A>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+
+<HR>
+<i>Copyright (c) 2004 - 2012 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

@@ -118,9 +118,12 @@
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/embedded/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/mem/*.java" />
+				<include name="org.eclipse.emf.cdo.team/src/org/eclipse/emf/cdo/team/*.java" />
 				<include name="org.eclipse.emf.cdo.ui.ide/src/org/eclipse/emf/cdo/ui/ide/*.java" />
 				<include name="org.eclipse.emf.cdo.ui/src/org/eclipse/emf/cdo/ui/*.java" />
 				<include name="org.eclipse.emf.cdo.ui/src/org/eclipse/emf/cdo/ui/widgets/*.java" />
+				<include name="org.eclipse.emf.cdo.workspace.efs/src/org/eclipse/emf/cdo/workspace/efs/*.java" />
+				<include name="org.eclipse.emf.cdo.workspace/src/org/eclipse/emf/cdo/workspace/*.java" />
 				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/*.java" />
 				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/eresource/*.java" />
 				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/eresource/impl/*.java" />
@@ -162,12 +165,21 @@
 			<group title="CDO Model Repository Client Net4j Support">
 				<package name="org.eclipse.emf.cdo.net4j" />
 			</group>
+			<group title="CDO Model Repository Client Team Support">
+				<package name="org.eclipse.emf.cdo.team" />
+			</group>
 			<group title="CDO Model Repository Client UI">
 				<package name="org.eclipse.emf.cdo.ui" />
 				<package name="org.eclipse.emf.cdo.ui.widgets" />
 			</group>
 			<group title="CDO Model Repository Client UI IDE">
 				<package name="org.eclipse.emf.cdo.ui.ide" />
+			</group>
+			<group title="CDO Model Repository Client Workspace">
+				<package name="org.eclipse.emf.cdo.workspace" />
+			</group>
+			<group title="CDO Model Repository Client Workspace EFS">
+				<package name="org.eclipse.emf.cdo.workspace.efs" />
 			</group>
 			<group title="CDO Model Repository Common">
 				<package name="org.eclipse.emf.cdo.common" />
